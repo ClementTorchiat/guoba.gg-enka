@@ -1,8 +1,8 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Score Bar)
+   SCRIPT PRINCIPAL (Version Finale : Coaching & Potentiel)
    ========================================= */
 
-// ... (SVG_PATHS, createSvg, getRollCount, MAPPINGS inchangés) ...
+// --- 1. CONFIGURATION DES SVG ---
 const SVG_PATHS = {
     "heart": "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z",
     "sword": "M14.5 17.5L12 15l-2.5 2.5L12 20l2.5-2.5zm5.7-9.3l-2.4-2.4c-.4-.4-1-.4-1.4 0l-9.5 9.5 2.4 2.4 9.5-9.5c.4-.4.4-1 0-1.4zM5.1 14.9L2.7 17.3c-.4.4-.4 1 0 1.4l2.4 2.4c.4.4 1 .4 1.4 0l2.4-2.4-3.8-3.8z",
@@ -141,7 +141,6 @@ function formatValueDisplay(key, val) {
 
 function formatStat(propId, value) {
     let key = STAT_MAPPING[propId];
-    // Fix: Si la clé est déjà au format "pyro_dmg_" ou "dmgBonus", on la garde
     if (!key && (STAT_LABELS[propId] || propId === 'dmgBonus')) {
         key = propId;
     }
@@ -242,30 +241,21 @@ function toggleBuff(charIndex, buffIndex) {
     renderShowcase(charIndex);
 }
 
-// --- GENERATION BARRE DE SCORE ---
+// --- FONCTIONS COACHING & SCORE BAR ---
+
 function generateScoreBar(totalRolls) {
-    const maxScale = 45; // Valeur max de l'échelle (ARCHON est à ~43)
-
-    // Position du curseur (limité à 100%)
+    const maxScale = 45;
     const percent = Math.min((totalRolls / maxScale) * 100, 100);
-
-    // Définition des breakpoints à afficher sur la barre
     const markers = [
-        { val: 12, label: "B" },
-        { val: 18, label: "A" },
-        { val: 24, label: "S" },
-        { val: 30, label: "SS" },
-        { val: 34, label: "SSS" },
-        { val: 38, label: "WTF" },
+        { val: 12, label: "B" }, { val: 18, label: "A" }, { val: 24, label: "S" },
+        { val: 30, label: "SS" }, { val: 34, label: "SSS" }, { val: 38, label: "WTF" },
         { val: 43, label: "ARCHON" }
     ];
-
     let markersHtml = "";
     markers.forEach(m => {
         const left = (m.val / maxScale) * 100;
         markersHtml += `<div class="score-marker" style="left: ${left}%;">${m.label}</div>`;
     });
-
     return `
         <div class="score-bar-container">
             <div class="score-bar-track">
@@ -276,6 +266,45 @@ function generateScoreBar(totalRolls) {
             </div>
         </div>
     `;
+}
+
+function calculatePotentialScore(persoObj, config) {
+    let fakeArtefacts = persoObj.artefacts.map(art => {
+        let newSubs = art.subStats.map(sub => {
+            const rolls = getRollCount(sub.key, sub.value);
+            const maxValRoll = window.MAX_ROLLS && window.MAX_ROLLS[sub.key];
+            const potentialValue = maxValRoll ? (rolls * maxValRoll) : sub.value;
+            return { key: sub.key, value: potentialValue };
+        });
+        return { ...art, subStats: newSubs, mainStat: art.mainStat };
+    });
+    let fakePerso = { ...persoObj, artefacts: fakeArtefacts };
+    return calculateCharacterScore(fakePerso, config);
+}
+
+function getSetRecommendation(activeSets, config) {
+    // AJOUT DE LA SÉCURITÉ : on vérifie que la liste n'est pas vide (.length > 0)
+    if (!config || !config.bestSets || config.bestSets.length === 0) return null;
+
+    // Vérifie si on a déjà un Best Set
+    const hasBest = activeSets.some(s => config.bestSets.includes(s));
+    if (hasBest) return { type: 'success', msg: "Vous utilisez le meilleur set recommandé !" };
+
+    // Vérifie si on a un Good Set
+    const hasGood = config.goodSets && activeSets.some(s => config.goodSets.includes(s));
+
+    // On prend le premier Best Set de la liste pour le conseiller
+    // Maintenant c'est sûr, bestSets[0] existe grâce au if du début
+    const recommended = config.bestSets[0].split(':')[0];
+
+    // Mapping inverse (Clé -> Nom FR)
+    // On cherche dans SET_NAME_MAPPING quel nom FR correspond à la clé "recommended"
+    // (Note: C'est une recherche approximative car le mapping est Nom FR -> Clé EN)
+    const recName = Object.keys(SET_NAME_MAPPING).find(key => SET_NAME_MAPPING[key] === recommended) || recommended;
+
+    if (hasGood) return { type: 'info', msg: `Set correct, mais <b>${recName} (4p)</b> serait optimal.` };
+
+    return { type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.` };
 }
 
 // --- PROCESS ---
@@ -425,7 +454,7 @@ function processData(data) {
     if(globalPersoData.length > 0) renderShowcase(0);
 }
 
-// ... (RENDER SIDEBAR Identique) ...
+// --- RENDER ---
 function renderSidebar() {
     const list = document.getElementById('sidebar-list');
     if(!list) return;
@@ -454,6 +483,10 @@ function renderShowcase(index) {
     const p = globalPersoData[index];
     const container = document.getElementById('main-container');
     if(!container) return;
+
+    // --- FIX: RECUPERATION CONFIG (POUR COACHING) ---
+    const configKey = p.nom.replace(/\s+/g, '') || "Default";
+    const config = window.CHARACTER_CONFIG[configKey] || window.CHARACTER_CONFIG[p.nom] || window.DEFAULT_CONFIG;
 
     const s = p.combatStats;
     const b = p.buffedStats;
@@ -504,6 +537,7 @@ function renderShowcase(index) {
                         <div style="font-size:0.9rem; color:var(--accent-gold); font-weight:bold;">C${p.cons}</div>
                     </div>
                 </div>
+                
                 <h3 style="font-size:0.8rem; color:#888; text-transform:uppercase; margin-bottom:5px;">Stats Menu</h3>
                 ${statLine(createSvg('heart'), "PV Max", Math.round(s.hp))}
                 ${statLine(createSvg('sword'), "ATQ", Math.round(s.atk))}
@@ -527,8 +561,44 @@ function renderShowcase(index) {
                         <span style="color:${ev.grade.color}; font-weight:bold; font-size:1.2rem;">${ev.grade.letter}</span>
                     </div>
                 </div>
-                
+
                 ${generateScoreBar(ev.totalRolls)}
+
+                ${(() => {
+        const potential = calculatePotentialScore(p, config);
+        const gain = (potential.score - ev.score).toFixed(1);
+        const setAdvice = getSetRecommendation(ev.setBonus, config);
+
+        return `
+                    <div style="background:rgba(255, 255, 255, 0.05); border:1px solid #444; border-radius:8px; padding:15px; margin-top:20px;">
+                        <h4 style="color:#fff; margin-bottom:10px; font-size:0.9rem; text-transform:uppercase; border-bottom:1px solid #444; padding-bottom:5px;">
+                            <i class="fa-solid fa-chart-line" style="color:var(--accent-gold)"></i> Analyse & Potentiel
+                        </h4>
+                        
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                            <span style="font-size:0.8rem; color:#ccc;">Potentiel Max (Rolls parfaits)</span>
+                            <div style="text-align:right;">
+                                <span style="font-weight:bold; color:var(--accent-gold);">${potential.score}</span>
+                                <span style="font-size:0.75rem; color:#22c55e;">(+${gain})</span>
+                            </div>
+                        </div>
+                        <div style="width:100%; background:#333; height:6px; border-radius:3px; margin-bottom:15px; position:relative;">
+                            <div style="height:100%; background:#fff; width:${Math.min((ev.score / potential.score)*100, 100)}%; border-radius:3px; position:absolute;"></div>
+                            <div style="height:100%; background:var(--accent-gold); width:100%; opacity:0.3; border-radius:3px;"></div>
+                        </div>
+
+                        ${setAdvice ? `
+                        <div style="font-size:0.8rem; background:rgba(0,0,0,0.2); padding:8px; border-radius:4px; border-left:3px solid ${setAdvice.type === 'success' ? '#22c55e' : (setAdvice.type === 'warning' ? '#eab308' : '#3b82f6')}; color:#ddd;">
+                            ${setAdvice.msg}
+                        </div>
+                        ` : ''}
+                        
+                        <div style="margin-top:10px; font-size:0.75rem; color:#888; font-style:italic;">
+                            * Simulation avec stats max (ex: 3.9% TC).
+                        </div>
+                    </div>
+                    `;
+    })()}
 
             </div>
         </div>
