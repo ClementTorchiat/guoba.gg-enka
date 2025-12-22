@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Score Bar dans Coaching)
+   SCRIPT PRINCIPAL (Version Finale : Layout Structuré par Familles)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -250,7 +250,6 @@ function calculatePotentialScore(persoObj, config) {
     return calculateCharacterScore(fakePerso, config);
 }
 
-// CONSEIL CRITIQUE
 function getCritAdvice(cr, cd) {
     if (cr > 100) return { color: '#ff4d4d', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Inutile de dépasser 100%.` };
     if (cr >= 85) return { color: '#22c55e', msg: "Taux CRIT excellent (>85%). Ne vous souciez plus du ratio, foncez sur le DGT CRIT." };
@@ -272,7 +271,6 @@ function getSetRecommendation(activeSets, config) {
     return { type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.` };
 }
 
-// Ratio Rolls
 function calculateRollDistribution(persoObj, config) {
     if (!config || !config.weights) return { useful: 0, dead: 0, total: 0 };
     let useful = 0;
@@ -288,7 +286,6 @@ function calculateRollDistribution(persoObj, config) {
     return { useful, dead, total: useful + dead };
 }
 
-// Détail des stats mortes
 function calculateDeadRolls(persoObj, config) {
     if (!config || !config.weights) return { count: 0, details: [] };
     let deadRolls = 0;
@@ -311,7 +308,6 @@ function calculateDeadRolls(persoObj, config) {
     return { count: deadRolls, details: details };
 }
 
-// Top 3 Priorités
 function getPriorities(persoObj) {
     if (!persoObj.artefacts || persoObj.artefacts.length === 0) return [];
     const sorted = [...persoObj.artefacts].sort((a, b) => a.score - b.score);
@@ -321,7 +317,6 @@ function getPriorities(persoObj) {
     });
 }
 
-// Qualité des Rolls (RNG)
 function calculateRNGQuality(persoObj, config) {
     if (!config || !config.weights || !window.MAX_ROLLS) return 0;
     let totalPct = 0;
@@ -346,7 +341,6 @@ function calculateRNGQuality(persoObj, config) {
     return count > 0 ? (totalPct / count) * 100 : 0;
 }
 
-// SIMULATION STATS MORTES (MULTI)
 function simulateDeadStatReplacements(persoObj, config) {
     if (!config || !config.weights) return [];
 
@@ -721,7 +715,6 @@ function renderShowcase(index) {
                 </div>`;
         });
         const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
-
         html += `
             <div class="card">
                 <div class="item-header">
@@ -782,10 +775,10 @@ function renderShowcase(index) {
 
     html += `</div></div>`; // Fin equipment-area et top-row
 
-    // --- 3. COACHING SECTION (Bas - Full Width) ---
+    // --- 3. COACHING SECTION (Bas - Full Width - Structuré par Familles) ---
     html += `
         <div class="coaching-row" style="margin-top:20px; width:100%;">
-            ${generateScoreBar(ev.totalRolls)} ${(() => {
+            ${(() => {
         const potential = calculatePotentialScore(p, config);
         const efficiency = (potential.score > 0) ? ((ev.score / potential.score) * 100).toFixed(1) : 0;
         let effColor = '#ff4d4d';
@@ -804,96 +797,112 @@ function renderShowcase(index) {
 
         return `
                 <div style="background:rgba(30, 35, 45, 0.95); border:1px solid #444; border-radius:8px; padding:20px;">
-                    <h4 style="color:#fff; margin-bottom:20px; font-size:1.1rem; text-transform:uppercase; border-bottom:1px solid #444; padding-bottom:10px; display:flex; align-items:center; gap:10px;">
-                        <i class="fa-solid fa-chart-line" style="color:var(--accent-gold)"></i> Analyse & Potentiel
-                    </h4>
+                    <h2 style="color:#fff; margin-bottom:25px; font-size:1.4rem; text-transform:uppercase; border-bottom:2px solid var(--accent-gold); padding-bottom:10px; display:flex; align-items:center; gap:10px;">
+                        <i class="fa-solid fa-chart-line" style="color:var(--accent-gold)"></i> ANALYSE & CONSEILS
+                    </h2>
                     
-                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+                    <div style="display:flex; flex-direction:column; gap:30px;">
                         
-                        <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
-                            <div style="text-align:center; margin-bottom:15px;">
-                                <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase;">Efficacité du Build</div>
-                                <div style="font-size:2.5rem; font-weight:800; color:${effColor}; line-height:1;">${efficiency}%</div>
-                                <div style="font-size:0.7rem; color:#888;">du potentiel max de vos artéfacts</div>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; font-size:0.8rem;">
-                                <span style="color:#ccc;">Score Potentiel</span>
-                                <span style="font-weight:bold; color:var(--accent-gold);">${potential.score} <span style="color:#22c55e; font-size:0.7rem;">(+${gain})</span></span>
-                            </div>
-                            <div style="width:100%; background:#333; height:8px; border-radius:4px; margin-bottom:15px; position:relative;">
-                                <div style="height:100%; background:#fff; width:${Math.min((ev.score / potential.score)*100, 100)}%; border-radius:4px; position:absolute;"></div>
-                                <div style="height:100%; background:var(--accent-gold); width:100%; opacity:0.3; border-radius:4px;"></div>
-                            </div>
-                            
-                            <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
-                                <span style="font-size:0.75rem; color:#aaa;">Facteur Chance (RNG)</span>
-                                <span style="font-weight:bold; color:${rngQuality > 85 ? '#22c55e' : (rngQuality > 75 ? '#eab308' : '#ff4d4d')}">${rngQuality}%</span>
-                            </div>
-                        </div>
-
-                        <div style="display:flex; flex-direction:column; gap:10px;">
-                            <div style="background:rgba(0,0,0,0.2); padding:12px; border-radius:8px; border-left:3px solid ${critAdvice.color};">
-                                <div style="font-size:0.75rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Équilibrage Critique</div>
-                                <div style="font-size:0.9rem; color:#fff;">${critAdvice.msg}</div>
-                            </div>
-                            ${setAdvice ? `
-                            <div style="background:rgba(0,0,0,0.2); padding:12px; border-radius:8px; border-left:3px solid ${setAdvice.type === 'success' ? '#22c55e' : '#eab308'};">
-                                <div style="font-size:0.75rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Set d'Artéfacts</div>
-                                <div style="font-size:0.9rem; color:#fff;">${setAdvice.msg}</div>
-                            </div>` : ''}
-                            ${p.weapon.level < 90 ? `
-                            <div style="background:rgba(255, 77, 77, 0.15); padding:12px; border-radius:8px; border-left:3px solid #ff4d4d;">
-                                <div style="font-size:0.75rem; color:#ff9999; text-transform:uppercase; margin-bottom:5px;">Gain Facile</div>
-                                <div style="font-size:0.9rem; color:#fff;">Montez votre arme niveau 90 !</div>
-                            </div>` : ''}
-                        </div>
-
-                        <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
-                            <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:10px; text-align:center;">Répartition des Rolls</div>
-                            <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:5px;">
-                                <span style="color:var(--accent-gold)">${rollStats.useful} Utiles</span>
-                                <span style="color:#ff4d4d">${rollStats.dead} Morts</span>
-                            </div>
-                            <div style="display:flex; width:100%; height:10px; background:#333; border-radius:5px; overflow:hidden; margin-bottom:15px;">
-                                <div style="width:${(rollStats.useful/rollStats.total)*100}%; background:var(--accent-gold);"></div>
-                                <div style="width:${(rollStats.dead/rollStats.total)*100}%; background:#ff4d4d;"></div>
-                            </div>
-                            <div style="text-align:center;">
-                                <div style="font-size:2rem; font-weight:bold; color:#ff4d4d; line-height:1;">${deadRolls.count}</div>
-                                <div style="font-size:0.8rem; color:#aaa;">Rolls Perdus Total</div>
-                                <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:5px; margin-top:10px;">
-                                    ${deadRolls.details.slice(0,4).map(d =>
-            `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.7rem; padding:2px 6px; border-radius:4px;">${d.label}: ${d.count}</span>`
-        ).join('')}
+                        <div>
+                            <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">1. Vue d'ensemble</h3>
+                            <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
+                                ${generateScoreBar(ev.totalRolls)}
+                                
+                                <div style="display:flex; justify-content:space-around; align-items:center; margin-top:20px; flex-wrap:wrap; gap:20px;">
+                                    <div style="text-align:center;">
+                                        <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase;">Efficacité du Build</div>
+                                        <div style="font-size:2.5rem; font-weight:800; color:${effColor}; line-height:1;">${efficiency}%</div>
+                                    </div>
+                                    <div style="text-align:center;">
+                                        <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase;">Facteur Chance (RNG)</div>
+                                        <div style="font-size:2.5rem; font-weight:800; color:${rngQuality > 85 ? '#22c55e' : (rngQuality > 75 ? '#eab308' : '#ff4d4d')}; line-height:1;">${rngQuality}%</div>
+                                    </div>
+                                    <div style="flex:1; min-width:200px;">
+                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; font-size:0.8rem;">
+                                            <span style="color:#ccc;">Score Potentiel Max</span>
+                                            <span style="font-weight:bold; color:var(--accent-gold);">${potential.score} <span style="color:#22c55e; font-size:0.7rem;">(+${gain})</span></span>
+                                        </div>
+                                        <div style="width:100%; background:#333; height:10px; border-radius:5px; position:relative;">
+                                            <div style="height:100%; background:#fff; width:${Math.min((ev.score / potential.score)*100, 100)}%; border-radius:5px; position:absolute;"></div>
+                                            <div style="height:100%; background:var(--accent-gold); width:100%; opacity:0.3; border-radius:5px;"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div style="display:flex; flex-direction:column; gap:10px;">
-                            <div style="background:rgba(0,0,0,0.2); padding:12px; border-radius:8px;">
-                                <div style="font-size:0.75rem; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Top 3 Priorités (À remplacer)</div>
-                                ${priorities.length > 0 ? priorities.map((p, i) => `
-                                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; margin-bottom:4px;">
-                                        <span style="color:#ddd;">${i+1}. ${p.piece}</span>
-                                        <span style="color:${p.color}; font-weight:bold;">${p.score} (${p.grade})</span>
+                        <div>
+                            <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">2. Analyse Stratégique</h3>
+                            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${critAdvice.color};">
+                                    <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Conseil Critique</div>
+                                    <div style="font-size:1rem; font-weight:500; color:#fff;">${critAdvice.msg}</div>
+                                </div>
+                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
+                                    <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:10px; display:flex; justify-content:space-between;">
+                                        <span>Répartition des Rolls</span>
+                                        <span style="font-weight:bold; color:#ff4d4d;">${deadRolls.count} Morts</span>
                                     </div>
-                                `).join('') : '<div style="font-size:0.8rem; color:#888;">Rien à signaler</div>'}
+                                    <div style="display:flex; width:100%; height:12px; background:#333; border-radius:6px; overflow:hidden; margin-bottom:10px;">
+                                        <div style="width:${(rollStats.useful/rollStats.total)*100}%; background:var(--accent-gold);"></div>
+                                        <div style="width:${(rollStats.dead/rollStats.total)*100}%; background:#ff4d4d;"></div>
+                                    </div>
+                                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                                        ${deadRolls.details.map(d =>
+            `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.75rem; padding:2px 8px; border-radius:4px;">${d.label}: ${d.count}</span>`
+        ).join('')}
+                                        ${deadRolls.count === 0 ? '<span style="color:#22c55e; font-size:0.8rem;">Aucune stat morte !</span>' : ''}
+                                    </div>
+                                </div>
                             </div>
+                        </div>
 
-                            ${deadSims.length > 0 ? `
-                            <div style="background:rgba(59, 130, 246, 0.1); border:1px solid rgba(59, 130, 246, 0.3); padding:12px; border-radius:8px; flex:1;">
-                                <div style="font-size:0.75rem; color:#93c5fd; text-transform:uppercase; margin-bottom:8px;">Simulation : Potentiel Caché</div>
-                                <div style="max-height:150px; overflow-y:auto; font-size:0.8rem;">
+                        <div>
+                            <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">3. Plan d'Action</h3>
+                            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
+                                    <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:10px;">Top 3 Priorités (Artéfacts à changer)</div>
+                                    ${priorities.length > 0 ? priorities.map((p, i) => `
+                                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9rem; margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
+                                            <span style="color:#ddd;">${i+1}. ${p.piece}</span>
+                                            <span style="color:${p.color}; font-weight:bold;">${p.score} (${p.grade})</span>
+                                        </div>
+                                    `).join('') : '<div style="font-size:0.9rem; color:#888;">Rien à signaler, excellent travail.</div>'}
+                                </div>
+                                <div style="display:flex; flex-direction:column; gap:10px;">
+                                    ${p.weapon.level < 90 ? `
+                                    <div style="background:rgba(255, 77, 77, 0.15); padding:15px; border-radius:8px; border-left:3px solid #ff4d4d; display:flex; align-items:center; gap:10px;">
+                                        <i class="fa-solid fa-arrow-up" style="color:#ff9999; font-size:1.5rem;"></i>
+                                        <div>
+                                            <div style="font-size:0.8rem; color:#ff9999; text-transform:uppercase;">Gain Facile</div>
+                                            <div style="font-size:1rem; color:#fff; font-weight:bold;">Montez votre arme niveau 90 !</div>
+                                        </div>
+                                    </div>` : ''}
+                                    ${setAdvice ? `
+                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${setAdvice.type === 'success' ? '#22c55e' : '#eab308'};">
+                                        <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Set d'Artéfacts</div>
+                                        <div style="font-size:0.95rem; color:#fff;">${setAdvice.msg}</div>
+                                    </div>` : ''}
+                                </div>
+                            </div>
+                        </div>
+
+                        ${deadSims.length > 0 ? `
+                        <div>
+                            <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">4. Simulation : Potentiel Caché</h3>
+                            <div style="background:rgba(59, 130, 246, 0.1); border:1px solid rgba(59, 130, 246, 0.3); padding:20px; border-radius:8px;">
+                                <div style="font-size:0.9rem; color:#93c5fd; margin-bottom:15px;">Voici ce que vous gagneriez en remplaçant vos stats mortes par des stats utiles :</div>
+                                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
                                 ${deadSims.map(sim => `
-                                    <div style="margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
-                                        <div style="color:#fff; font-weight:bold;">${sim.pieceName}</div>
-                                        <div style="color:#ccc; font-size:0.75rem;">${sim.text}</div>
-                                        <div style="color:var(--accent-gold); font-weight:bold; margin-top:2px;">${sim.gainHtml}</div>
+                                    <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border-left:3px solid #3b82f6;">
+                                        <div style="font-size:0.9rem; color:#fff; font-weight:bold; margin-bottom:5px;">${sim.pieceName}</div>
+                                        <div style="font-size:0.8rem; color:#ccc; line-height:1.4;">${sim.text}</div>
+                                        <div style="font-size:1rem; color:var(--accent-gold); font-weight:bold; margin-top:5px;">${sim.gainHtml}</div>
                                     </div>
                                 `).join('')}
                                 </div>
-                            </div>` : ''}
-                        </div>
+                            </div>
+                        </div>` : ''}
 
                     </div>
                 </div>
