@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Buffs Descriptifs)
+   SCRIPT PRINCIPAL (Correction : DGT Elem Dynamique & Icônes)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -33,7 +33,17 @@ function getRollCount(key, value) {
     return Math.round(value / avgRoll);
 }
 
-// 2. MAPPINGS
+// 2. MAPPINGS & DATA
+const ELEMENT_DATA = {
+    "Fire": { id: 40, key: "pyro_dmg_" },
+    "Water": { id: 42, key: "hydro_dmg_" },
+    "Wind": { id: 44, key: "anemo_dmg_" },
+    "Electric": { id: 41, key: "electro_dmg_" },
+    "Grass": { id: 43, key: "dendro_dmg_" },
+    "Ice": { id: 46, key: "cryo_dmg_" },
+    "Rock": { id: 45, key: "geo_dmg_" }
+};
+
 const STAT_MAPPING = {
     "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_",
     "FIGHT_PROP_ATTACK": "atk", "FIGHT_PROP_ATTACK_PERCENT": "atk_",
@@ -50,7 +60,7 @@ const STAT_MAPPING = {
 const STAT_LABELS = {
     "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %",
     "eleMas": "Maîtrise Élem.", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT",
-    "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "DGT Pyro",
+    "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "Bonus de DGT Pyro",
     "hydro_dmg_": "DGT Hydro", "cryo_dmg_": "DGT Cryo", "electro_dmg_": "DGT Électro",
     "anemo_dmg_": "DGT Anémo", "geo_dmg_": "DGT Géo", "dendro_dmg_": "DGT Dendro",
     "physical_dmg_": "DGT Phys."
@@ -130,15 +140,28 @@ function formatValueDisplay(key, val) {
 }
 
 function formatStat(propId, value) {
-    const key = STAT_MAPPING[propId];
+    // 1. Essai de mapping standard (si c'est un code API)
+    let key = STAT_MAPPING[propId];
+
+    // 2. Si non trouvé, on vérifie si propId est déjà une clé connue (ex: "pyro_dmg_")
+    // C'est ça qui corrigeait ton problème de label/icône
+    if (!key && (STAT_LABELS[propId] || propId === 'dmgBonus')) {
+        key = propId;
+    }
+
     if (!key) return { key: "unknown", value: value, label: propId, icon: "" };
+
     let val = value;
     let isPercent = false;
+
     if (key.endsWith('_') || ['critRate_', 'critDMG_', 'enerRech_', 'heal_'].includes(key)) {
         isPercent = true;
         if (val < 2.0) val = val * 100;
     }
+
     const label = STAT_LABELS[key] || key;
+
+    // --- GESTION SVG LOCAUX ---
     let svgContent = "";
     if (key === 'hp') svgContent = createSvg('heart', false);
     else if (key === 'hp_') svgContent = createSvg('heart', true);
@@ -160,19 +183,18 @@ function formatStat(propId, value) {
     else if (key === 'dendro_dmg_') svgContent = createSvg('leaf');
     else if (key === 'physical_dmg_') svgContent = createSvg('sword');
     else svgContent = createSvg('star');
+
     return { key, value: val, label, icon: svgContent, isPercent };
 }
 
-// --- LOGIQUE CALCUL BONUS DYNAMIQUE (2 PASSES) ---
+// --- LOGIQUE CALCUL BONUS DYNAMIQUE ---
 function calculateBuffedStats(baseStats, currentStats, buffsList) {
     let buffed = { ...currentStats };
 
-    // PASSE 1 : Bonus Simples
     buffsList.forEach(buff => {
         if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, false);
     });
 
-    // PASSE 2 : Conversions (Scaling)
     buffsList.forEach(buff => {
         if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, true);
     });
@@ -199,11 +221,16 @@ function applyBonus(buffed, baseStats, bonuses, processScaling) {
             if (statKey === "atk_") buffed.atk += baseStats.atk * val;
             else if (statKey === "hp_") buffed.hp += baseStats.hp * val;
             else if (statKey === "def_") buffed.def += baseStats.def * val;
-            else if (statKey === "critRate_" || statKey === "critDMG_" || statKey === "enerRech_" || statKey.includes("_dmg_")) {
+            else if (statKey === "critRate_" || statKey === "critDMG_" || statKey === "enerRech_") {
                 let shortKey = getShortKey(statKey);
                 if(shortKey) buffed[shortKey] += val * 100;
             } else if (statKey === "eleMas") {
                 buffed.em += val;
+            }
+                // GESTION DGT ÉLÉMENTAIRE
+            // Si le bonus est générique (elemental_dmg_) OU correspond à l'élément du perso (dmgBonusKey)
+            else if (statKey === buffed.dmgBonusKey || statKey === 'elemental_dmg_') {
+                buffed.dmgBonus += val * 100;
             }
         }
     }
@@ -213,7 +240,6 @@ function getShortKey(longKey) {
     if (longKey === "critRate_") return "cr";
     if (longKey === "critDMG_") return "cd";
     if (longKey === "enerRech_") return "er";
-    if (longKey.includes("_dmg_")) return "elemBonus";
     return null;
 }
 
@@ -223,6 +249,7 @@ function mapTargetKey(keyPart) {
     if (keyPart === 'def') return 'def';
     if (keyPart === 'eleMas') return 'em';
     if (keyPart === 'enerRech') return 'er';
+    if (keyPart === 'elemental_dmg') return 'dmgBonus';
     return null;
 }
 
@@ -240,7 +267,6 @@ function processData(data) {
     if (!data.avatarInfoList) return;
     globalPersoData = [];
 
-    // Récupération Globale via Window
     const G_CHAR_CONFIG = window.CHARACTER_CONFIG || {};
     const G_WEAPON_PASSIVES = window.WEAPON_PASSIVES || {};
     const G_SET_PASSIVES = window.SET_PASSIVES || {};
@@ -253,6 +279,9 @@ function processData(data) {
         const rarity = info.QualityType === "QUALITY_ORANGE" ? 5 : 4;
         const level = perso.propMap['4001'] ? parseInt(perso.propMap['4001'].val) : 0;
         const constellations = perso.talentIdList ? perso.talentIdList.length : 0;
+
+        // IDENTIFICATION ÉLÉMENT & STAT BONUS
+        const elemInfo = ELEMENT_DATA[info.Element] || { id: 30, key: "physical_dmg_" };
 
         const talents = [];
         if (info.SkillOrder) {
@@ -277,7 +306,9 @@ function processData(data) {
         const combatStats = {
             hp: fp[2000], atk: fp[2001], def: fp[2002], em: fp[28],
             cr: fp[20] * 100, cd: fp[22] * 100, er: fp[23] * 100,
-            elemBonus: Math.max(fp[30], fp[40], fp[41], fp[42], fp[43], fp[44], fp[45], fp[46]) * 100
+            // On stocke le bonus spécifique à l'élément du perso
+            dmgBonus: (fp[elemInfo.id] || 0) * 100,
+            dmgBonusKey: elemInfo.key
         };
 
         const artefacts = [];
@@ -319,16 +350,10 @@ function processData(data) {
 
         // CONSTRUCTION BUFFS
         let buffs = [];
-
-        // Fonction helper pour ajouter les buffs
         const addBuffs = (sourceName, category, configData) => {
-            // Cas 1 : Tableau d'objets (Nouveau format avec Labels)
             if (Array.isArray(configData)) {
                 configData.forEach((item, idx) => {
-                    // On construit le nom : soit le label custom, soit un générique
                     let name = item.label || `Buff ${idx + 1}`;
-
-                    // Si pas de label mais stats simples, on peut générer (ex: "ATK +20%")
                     if (!item.label && !Array.isArray(item.stats)) {
                         const statsStr = Object.entries(item.stats)
                             .map(([k, v]) => {
@@ -338,17 +363,9 @@ function processData(data) {
                             }).join(", ");
                         name = statsStr;
                     }
-
-                    buffs.push({
-                        id: `${category}_${idx}`,
-                        category: category,
-                        name: name,
-                        bonuses: item.stats, // On attend "stats" dans le tableau
-                        active: true
-                    });
+                    buffs.push({ id: `${category}_${idx}`, category, name, bonuses: item.stats, active: true });
                 });
             }
-            // Cas 2 : Objet Simple (Ancien format compatible)
             else {
                 for (const [statKey, val] of Object.entries(configData)) {
                     if (typeof val === 'object' && statKey.endsWith('_scaling')) {
@@ -357,45 +374,36 @@ function processData(data) {
                         const targetLabel = STAT_LABELS[targetStat] || targetStat;
                         const sourceLabel = STAT_LABELS[sourceStat] || sourceStat;
                         const percentDisplay = (val.percent * 100).toFixed(2) + "%";
-
                         buffs.push({
-                            id: `${category}_${statKey}`,
-                            category: category,
+                            id: `${category}_${statKey}`, category,
                             name: `${targetLabel} (+${percentDisplay} ${sourceLabel})`,
-                            bonuses: { [statKey]: val },
-                            active: true
+                            bonuses: { [statKey]: val }, active: true
                         });
                         continue;
                     }
                     if (typeof val !== 'object') {
                         const statLabel = STAT_LABELS[statKey] || statKey;
                         const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
-
                         buffs.push({
-                            id: `${category}_${statKey}`,
-                            category: category,
+                            id: `${category}_${statKey}`, category,
                             name: `${statLabel} (+${valDisplay})`,
-                            bonuses: { [statKey]: val },
-                            active: true
+                            bonuses: { [statKey]: val }, active: true
                         });
                     }
                 }
             }
         };
 
-        // 1. Arme
         if (weapon && G_WEAPON_PASSIVES[weapon.name]) {
             addBuffs(weapon.name, `${weapon.name} (Arme)`, G_WEAPON_PASSIVES[weapon.name]);
         }
 
-        // 2. Sets
         if (G_SET_PASSIVES) {
             for (const [setKey, count] of Object.entries(setsCounter)) {
                 if (G_SET_PASSIVES[setKey]) {
                     const setBonuses = G_SET_PASSIVES[setKey];
                     const setName = artefacts.find(a => a.setKey === setKey)?.setName || setKey;
                     const setCategory = `${setName} (Set)`;
-
                     if (count >= 2 && setBonuses[2]) addBuffs(setName, setCategory, setBonuses[2]);
                     if (count >= 4 && setBonuses[4]) addBuffs(setName, setCategory, setBonuses[4]);
                 }
@@ -412,7 +420,6 @@ function processData(data) {
             evaluation: null, weights: null
         };
 
-        // Injection Config
         const configKey = persoObj.nom.replace(/\s+/g, '') || "Default";
         const config = G_CHAR_CONFIG[configKey] || G_CHAR_CONFIG[persoObj.nom] || G_DEFAULT_CONFIG;
 
@@ -426,7 +433,7 @@ function processData(data) {
     if(globalPersoData.length > 0) renderShowcase(0);
 }
 
-// ... (RENDER FUNCTIONS inchangées) ...
+// ... (RENDER FUNCTIONS) ...
 function renderSidebar() {
     const list = document.getElementById('sidebar-list');
     if(!list) return;
@@ -477,6 +484,11 @@ function renderShowcase(index) {
             <span class="stat-val" style="${isHighlight ? 'color:var(--accent-gold)' : ''}">${val}</span>
         </div>`;
 
+    // Génération dynamique de l'affichage DGT Elem (CORRIGÉE : Utilise formatStat avec la clé)
+    // On passe b.dmgBonusKey (ex: "pyro_dmg_") à formatStat
+    // formatStat va trouver l'icône et le label corrects
+    const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
+
     let combatStatsHtml = `
         <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; margin-top:15px; border:1px solid #333;">
             <h3 style="font-size:0.9rem; color:var(--accent-gold); text-transform:uppercase; margin-bottom:10px; font-weight:bold;">Stats de Combat (Passifs Inclus)</h3>
@@ -487,9 +499,13 @@ function renderShowcase(index) {
             ${statLine(createSvg('target'), "Taux CRIT", b.cr.toFixed(1)+'%', b.cr > s.cr)}
             ${statLine(createSvg('impact'), "DGT CRIT", b.cd.toFixed(1)+'%', b.cd > s.cd)}
             ${statLine(createSvg('flash'), "ER", b.er.toFixed(1)+'%', b.er > s.er)}
-            ${statLine(createSvg('fire'), "Bonus Elem.", b.elemBonus.toFixed(1)+'%', b.elemBonus > s.elemBonus)}
+            
+            ${statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', b.dmgBonus > s.dmgBonus)}
         </div>
     `;
+
+    // Pour les stats menu, on utilise aussi la stat spécifique
+    const menuDmgStat = formatStat(s.dmgBonusKey, s.dmgBonus / 100);
 
     let html = `
         <div class="showcase-area">
@@ -511,7 +527,8 @@ function renderShowcase(index) {
                 ${statLine(createSvg('target'), "Taux CRIT", s.cr.toFixed(1)+'%')}
                 ${statLine(createSvg('impact'), "DGT CRIT", s.cd.toFixed(1)+'%')}
                 ${statLine(createSvg('flash'), "ER", s.er.toFixed(1)+'%', true)}
-                ${statLine(createSvg('fire'), "Bonus Elem.", s.elemBonus.toFixed(1)+'%')}
+                
+                ${statLine(menuDmgStat.icon, menuDmgStat.label, s.dmgBonus.toFixed(1)+'%')}
 
                 ${talentsHtml}
                 ${combatStatsHtml}
