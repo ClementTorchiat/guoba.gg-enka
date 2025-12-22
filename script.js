@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Buffs Only)
+   SCRIPT PRINCIPAL (Version Finale : Buffs Descriptifs)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -240,7 +240,7 @@ function processData(data) {
     if (!data.avatarInfoList) return;
     globalPersoData = [];
 
-    // Récupération Globale via Window (Fix Références)
+    // Récupération Globale via Window
     const G_CHAR_CONFIG = window.CHARACTER_CONFIG || {};
     const G_WEAPON_PASSIVES = window.WEAPON_PASSIVES || {};
     const G_SET_PASSIVES = window.SET_PASSIVES || {};
@@ -320,62 +320,84 @@ function processData(data) {
         // CONSTRUCTION BUFFS
         let buffs = [];
 
-        if (weapon && G_WEAPON_PASSIVES[weapon.name]) {
-            const bonuses = G_WEAPON_PASSIVES[weapon.name];
-            const weaponCategory = `${weapon.name} (Arme)`;
-            for (const [statKey, val] of Object.entries(bonuses)) {
-                if (typeof val === 'object' && statKey.endsWith('_scaling')) {
-                    const targetStat = statKey.replace('_bonus_scaling', '');
-                    const sourceStat = val.source;
-                    const targetLabel = STAT_LABELS[targetStat] || targetStat;
-                    const sourceLabel = STAT_LABELS[sourceStat] || sourceStat;
-                    const percentDisplay = (val.percent * 100).toFixed(2) + "%";
+        // Fonction helper pour ajouter les buffs
+        const addBuffs = (sourceName, category, configData) => {
+            // Cas 1 : Tableau d'objets (Nouveau format avec Labels)
+            if (Array.isArray(configData)) {
+                configData.forEach((item, idx) => {
+                    // On construit le nom : soit le label custom, soit un générique
+                    let name = item.label || `Buff ${idx + 1}`;
+
+                    // Si pas de label mais stats simples, on peut générer (ex: "ATK +20%")
+                    if (!item.label && !Array.isArray(item.stats)) {
+                        const statsStr = Object.entries(item.stats)
+                            .map(([k, v]) => {
+                                const l = STAT_LABELS[k] || k;
+                                const val = (typeof v === 'number' && v < 2) ? Math.round(v*100)+'%' : v;
+                                return `${l} +${val}`;
+                            }).join(", ");
+                        name = statsStr;
+                    }
+
                     buffs.push({
-                        id: `weapon_${statKey}`,
-                        category: weaponCategory,
-                        name: `${targetLabel} (+${percentDisplay} ${sourceLabel})`,
-                        bonuses: { [statKey]: val },
+                        id: `${category}_${idx}`,
+                        category: category,
+                        name: name,
+                        bonuses: item.stats, // On attend "stats" dans le tableau
                         active: true
                     });
-                    continue;
-                }
-                if (typeof val !== 'object') {
-                    const statLabel = STAT_LABELS[statKey] || statKey;
-                    const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
-                    buffs.push({
-                        id: `weapon_${statKey}`,
-                        category: weaponCategory,
-                        name: `${statLabel} (+${valDisplay})`,
-                        bonuses: { [statKey]: val },
-                        active: true
-                    });
+                });
+            }
+            // Cas 2 : Objet Simple (Ancien format compatible)
+            else {
+                for (const [statKey, val] of Object.entries(configData)) {
+                    if (typeof val === 'object' && statKey.endsWith('_scaling')) {
+                        const targetStat = statKey.replace('_bonus_scaling', '');
+                        const sourceStat = val.source;
+                        const targetLabel = STAT_LABELS[targetStat] || targetStat;
+                        const sourceLabel = STAT_LABELS[sourceStat] || sourceStat;
+                        const percentDisplay = (val.percent * 100).toFixed(2) + "%";
+
+                        buffs.push({
+                            id: `${category}_${statKey}`,
+                            category: category,
+                            name: `${targetLabel} (+${percentDisplay} ${sourceLabel})`,
+                            bonuses: { [statKey]: val },
+                            active: true
+                        });
+                        continue;
+                    }
+                    if (typeof val !== 'object') {
+                        const statLabel = STAT_LABELS[statKey] || statKey;
+                        const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
+
+                        buffs.push({
+                            id: `${category}_${statKey}`,
+                            category: category,
+                            name: `${statLabel} (+${valDisplay})`,
+                            bonuses: { [statKey]: val },
+                            active: true
+                        });
+                    }
                 }
             }
+        };
+
+        // 1. Arme
+        if (weapon && G_WEAPON_PASSIVES[weapon.name]) {
+            addBuffs(weapon.name, `${weapon.name} (Arme)`, G_WEAPON_PASSIVES[weapon.name]);
         }
 
+        // 2. Sets
         if (G_SET_PASSIVES) {
             for (const [setKey, count] of Object.entries(setsCounter)) {
                 if (G_SET_PASSIVES[setKey]) {
                     const setBonuses = G_SET_PASSIVES[setKey];
                     const setName = artefacts.find(a => a.setKey === setKey)?.setName || setKey;
                     const setCategory = `${setName} (Set)`;
-                    const addSetBuffs = (bonusObj, prefix) => {
-                        for (const [statKey, val] of Object.entries(bonusObj)) {
-                            if (typeof val !== 'object') {
-                                const statLabel = STAT_LABELS[statKey] || statKey;
-                                const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
-                                buffs.push({
-                                    id: `${setKey}:${prefix}:${statKey}`,
-                                    category: setCategory,
-                                    name: `${prefix} : ${statLabel} (+${valDisplay})`,
-                                    bonuses: { [statKey]: val },
-                                    active: true
-                                });
-                            }
-                        }
-                    };
-                    if (count >= 2 && setBonuses[2]) addSetBuffs(setBonuses[2], "2p");
-                    if (count >= 4 && setBonuses[4]) addSetBuffs(setBonuses[4], "4p");
+
+                    if (count >= 2 && setBonuses[2]) addBuffs(setName, setCategory, setBonuses[2]);
+                    if (count >= 4 && setBonuses[4]) addBuffs(setName, setCategory, setBonuses[4]);
                 }
             }
         }
@@ -390,7 +412,7 @@ function processData(data) {
             evaluation: null, weights: null
         };
 
-        // INJECTION CONFIG (FIX REFERENCE ERROR)
+        // Injection Config
         const configKey = persoObj.nom.replace(/\s+/g, '') || "Default";
         const config = G_CHAR_CONFIG[configKey] || G_CHAR_CONFIG[persoObj.nom] || G_DEFAULT_CONFIG;
 
@@ -404,7 +426,7 @@ function processData(data) {
     if(globalPersoData.length > 0) renderShowcase(0);
 }
 
-// ... (RENDER FUNCTIONS) ...
+// ... (RENDER FUNCTIONS inchangées) ...
 function renderSidebar() {
     const list = document.getElementById('sidebar-list');
     if(!list) return;
