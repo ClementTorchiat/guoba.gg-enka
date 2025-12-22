@@ -1,8 +1,40 @@
 /* =========================================
-   SCRIPT PRINCIPAL - PROJET 2 (CORRIGÉ)
+   SCRIPT PRINCIPAL (Version SVG Local)
    ========================================= */
 
-// 1. Dictionnaire de traduction STATS
+// --- 1. CONFIGURATION DES SVG (VECTEURS LOCAUX) ---
+const SVG_PATHS = {
+    // Formes de base
+    "heart": "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z",
+    "sword": "M14.5 17.5L12 15l-2.5 2.5L12 20l2.5-2.5zm5.7-9.3l-2.4-2.4c-.4-.4-1-.4-1.4 0l-9.5 9.5 2.4 2.4 9.5-9.5c.4-.4.4-1 0-1.4zM5.1 14.9L2.7 17.3c-.4.4-.4 1 0 1.4l2.4 2.4c.4.4 1 .4 1.4 0l2.4-2.4-3.8-3.8z",
+    "shield": "M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z",
+    "star": "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z",
+    "flash": "M7 2v11h3v9l7-12h-4l4-8z",
+    "target": "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z",
+    "impact": "M12 2L1 21h22L12 2zm0 3.5L18.5 19H5.5L12 5.5z",
+    "cross": "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8.5 12h-2v-3h-3v-2h3v-3h2v3h3v2h-3v3z",
+    // Elements (Simplifiés)
+    "fire": "M19.48 13.03c-.52-1.29-2.17-3.23-2.17-3.23s.27-1.74-.95-3.41c-1.22-1.67-3.14-1.92-3.14-1.92s.32 1.94-.49 3.01c-.81 1.07-2.73 1.19-2.73 1.19s1.39-2.77.29-4.88C9.52 2.15 7.42 2 7.42 2s.67 2.37-.53 4.04c-1.2 1.67-1.12 3.86-1.12 3.86s-1.87 1.12-1.72 4.18c.15 3.06 2.5 5.92 7.95 5.92 5.45 0 7.85-2.6 8-5.69.02-1.09-.52-1.28-.52-1.28z",
+    "water": "M12 2.6L8.5 7.5c-1.8 2.5-1.4 5.2.9 6.9 2.3 1.7 5.3 1.1 6.6-1.5.5-1 1-3.1-4-10.3z",
+    "wind": "M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z",
+    "rock": "M12 2L2 22h20L12 2zm0 4l6.5 13h-13L12 6z",
+    "ice": "M22 11h-5V6h-2v5H10V6H8v5H3v2h5v5h2v-5h5v5h2v-5h5z",
+    "leaf": "M17 8C8 10 5.9 16.17 3.82 21.34 5.71 20.35 8.32 19 12 18c6.9 3 9-3 9-3s-2.07-3.95-4-7z",
+    // Petit symbole % pour différencier
+    "percent_badge": "M18.5 5.5l-9 13M10.5 6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm7 10a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"
+};
+
+// Fonction helper pour construire le SVG complet
+function createSvg(pathKey, isPercent = false) {
+    let content = `<path d="${SVG_PATHS[pathKey]}" />`;
+    // Si c'est un pourcentage, on ajoute le symbole % à côté en petit
+    if (isPercent) {
+        content += `<g transform="scale(0.6) translate(14, 14)"><path d="${SVG_PATHS['percent_badge']}" fill="var(--accent-gold)" stroke="black" stroke-width="1"/></g>`;
+    }
+    return `<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px; height:16px; display:inline-block; vertical-align:middle;">${content}</svg>`;
+}
+
+// 2. MAPPINGS
 const STAT_MAPPING = {
     "FIGHT_PROP_HP": "hp",
     "FIGHT_PROP_HP_PERCENT": "hp_",
@@ -25,7 +57,6 @@ const STAT_MAPPING = {
     "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_"
 };
 
-// 1.b Labels
 const STAT_LABELS = {
     "hp": "PV", "hp_": "PV %",
     "atk": "ATQ", "atk_": "ATQ %",
@@ -45,30 +76,6 @@ const STAT_LABELS = {
     "physical_dmg_": "DGT Phys."
 };
 
-// 1.c ICONES ENKA OFFICIELLES
-const STAT_ICONS = {
-    "hp": "UI_Icon_Attribute_Health",
-    "hp_": "UI_Icon_Attribute_Health",
-    "atk": "UI_Icon_Attribute_Attack",
-    "atk_": "UI_Icon_Attribute_Attack",
-    "def": "UI_Icon_Attribute_Defense",
-    "def_": "UI_Icon_Attribute_Defense",
-    "eleMas": "UI_Icon_Attribute_Element",
-    "enerRech_": "UI_Icon_Attribute_EnergyCharge",
-    "critRate_": "UI_Icon_Attribute_Critical",
-    "critDMG_": "UI_Icon_Attribute_CriticalDamage",
-    "heal_": "UI_Icon_Attribute_Heal",
-    "pyro_dmg_": "UI_Icon_Element_Fire",
-    "hydro_dmg_": "UI_Icon_Element_Water",
-    "cryo_dmg_": "UI_Icon_Element_Ice",
-    "electro_dmg_": "UI_Icon_Element_Electric",
-    "anemo_dmg_": "UI_Icon_Element_Wind",
-    "geo_dmg_": "UI_Icon_Element_Rock",
-    "dendro_dmg_": "UI_Icon_Element_Grass",
-    "physical_dmg_": "UI_Icon_Attribute_Physical"
-};
-
-// 2. Dictionnaire SETS
 const SET_NAME_MAPPING = {
     "Sorcière des flammes ardentes": "CrimsonWitchOfFlames",
     "Emblème du destin brisé": "EmblemOfSeveredFate",
@@ -173,11 +180,42 @@ function formatStat(propId, value) {
     }
 
     const label = STAT_LABELS[key] || key;
-    // URL Icone Enka
-    const iconKey = STAT_ICONS[key] || "UI_Icon_Attribute_Attack"; // Fallback
-    const icon = `https://enka.network/ui/${iconKey}.png`;
 
-    return { key, value: val, label, icon, isPercent };
+    // --- GESTION SVG LOCAUX ---
+    let svgContent = "";
+
+    // 1. PV (Flat vs %)
+    if (key === 'hp') svgContent = createSvg('heart', false);
+    else if (key === 'hp_') svgContent = createSvg('heart', true);
+
+    // 2. ATK (Flat vs %)
+    else if (key === 'atk') svgContent = createSvg('sword', false);
+    else if (key === 'atk_') svgContent = createSvg('sword', true);
+
+    // 3. DEF (Flat vs %)
+    else if (key === 'def') svgContent = createSvg('shield', false);
+    else if (key === 'def_') svgContent = createSvg('shield', true);
+
+    // 4. Autres Stats
+    else if (key === 'eleMas') svgContent = createSvg('star');
+    else if (key === 'enerRech_') svgContent = createSvg('flash');
+    else if (key === 'critRate_') svgContent = createSvg('target');
+    else if (key === 'critDMG_') svgContent = createSvg('impact');
+    else if (key === 'heal_') svgContent = createSvg('cross');
+
+    // 5. Éléments
+    else if (key === 'pyro_dmg_') svgContent = createSvg('fire');
+    else if (key === 'hydro_dmg_') svgContent = createSvg('water');
+    else if (key === 'cryo_dmg_') svgContent = createSvg('ice');
+    else if (key === 'electro_dmg_') svgContent = createSvg('flash'); // Réuse Flash ou ajouter icone electro
+    else if (key === 'anemo_dmg_') svgContent = createSvg('wind');
+    else if (key === 'geo_dmg_') svgContent = createSvg('rock');
+    else if (key === 'dendro_dmg_') svgContent = createSvg('leaf');
+    else if (key === 'physical_dmg_') svgContent = createSvg('sword'); // Réuse Sword
+
+    else svgContent = createSvg('star'); // Fallback
+
+    return { key, value: val, label, icon: svgContent, isPercent };
 }
 
 // --- PROCESS ---
@@ -219,7 +257,7 @@ function processData(data) {
             elemBonus: Math.max(fp[30], fp[40], fp[41], fp[42], fp[43], fp[44], fp[45], fp[46]) * 100
         };
 
-        const artefacts = []; // CORRECTION: Variable locale "artefacts" (orthographe FR/EN)
+        const artefacts = [];
         let weapon = null;
 
         perso.equipList.forEach(item => {
@@ -265,16 +303,15 @@ function processData(data) {
             }
         });
 
-        // CONSTRUCTION DE L'OBJET FINAL
         const persoObj = {
             id: id, nom, rarity, level, cons: constellations, talents,
             image: sideIcon, splashArt: splashUrl,
             combatStats, weapon,
-            artefacts: artefacts, // CORRECTION CRUCIALE ICI: 'artefacts' avec 'e' pour matcher scoring.js
+            artefacts: artefacts,
             evaluation: null, weights: null
         };
 
-        // Calcul du score (scoring.js utilise perso.artefacts)
+        // Calcul du score
         persoObj.evaluation = calculateCharacterScore(persoObj);
 
         const configKey = persoObj.nom.replace(/\s+/g, '') || "Default";
@@ -334,15 +371,20 @@ function renderShowcase(index) {
     });
     talentsHtml += `</div>`;
 
-    // Helper pour générer une ligne de stat avec icône
-    const statLine = (icon, label, val, isHighlight=false) => `
+    // Helper pour générer une ligne de stat avec icône SVG injectée
+    // Note: 'icon' contient maintenant directement le string SVG, donc pas de balise <img>
+    const statLine = (svg, label, val, isHighlight=false) => `
         <div class="stat-row">
             <span class="text-muted" style="display:flex; align-items:center; gap:8px;">
-                <img src="https://enka.network/ui/${icon}.png" style="width:18px; filter: brightness(0.8);"> ${label}
+                ${svg} ${label}
             </span> 
             <div class="dotted-line"></div> 
             <span class="stat-val" style="${isHighlight ? 'color:var(--accent-gold)' : ''}">${val}</span>
         </div>`;
+
+    // SVG pour les stats de combat globales
+    // Attention: ici on n'a pas la clé exacte (hp ou hp_), on génère pour l'affichage global
+    // On utilise les versions "Flat" pour l'affichage principal des stats totales
 
     let html = `
         <div class="showcase-area">
@@ -356,14 +398,14 @@ function renderShowcase(index) {
                     </div>
                 </div>
                 
-                ${statLine(STAT_ICONS['hp'], "PV Max", Math.round(s.hp))}
-                ${statLine(STAT_ICONS['atk'], "ATQ", Math.round(s.atk))}
-                ${statLine(STAT_ICONS['def'], "DÉF", Math.round(s.def))}
-                ${statLine(STAT_ICONS['eleMas'], "Maîtrise", Math.round(s.em))}
-                ${statLine(STAT_ICONS['critRate_'], "Taux CRIT", s.cr.toFixed(1)+'%')}
-                ${statLine(STAT_ICONS['critDMG_'], "DGT CRIT", s.cd.toFixed(1)+'%')}
-                ${statLine(STAT_ICONS['enerRech_'], "ER", s.er.toFixed(1)+'%', true)}
-                ${statLine("UI_Icon_Element_Fire", "Bonus Elem.", s.elemBonus.toFixed(1)+'%')}
+                ${statLine(createSvg('heart'), "PV Max", Math.round(s.hp))}
+                ${statLine(createSvg('sword'), "ATQ", Math.round(s.atk))}
+                ${statLine(createSvg('shield'), "DÉF", Math.round(s.def))}
+                ${statLine(createSvg('star'), "Maîtrise", Math.round(s.em))}
+                ${statLine(createSvg('target'), "Taux CRIT", s.cr.toFixed(1)+'%')}
+                ${statLine(createSvg('impact'), "DGT CRIT", s.cd.toFixed(1)+'%')}
+                ${statLine(createSvg('flash'), "ER", s.er.toFixed(1)+'%', true)}
+                ${statLine(createSvg('fire'), "Bonus Elem.", s.elemBonus.toFixed(1)+'%')}
 
                 <div class="global-score-card">
                     <div>
@@ -381,7 +423,7 @@ function renderShowcase(index) {
         <div class="equipment-area">
     `;
 
-    // WEAPON CARD (Améliorée)
+    // WEAPON CARD
     if (p.weapon) {
         html += `
             <div class="card weapon-card">
@@ -408,7 +450,7 @@ function renderShowcase(index) {
         `;
     }
 
-    // ARTIFACTS - NOTE: Utilisation de p.artefacts (avec 'e')
+    // ARTIFACTS GRID
     p.artefacts.forEach(art => {
         let subsHtml = "";
         art.subStats.forEach(sub => {
@@ -417,10 +459,11 @@ function renderShowcase(index) {
             if (w === undefined) w = 0;
             const isDead = w === 0;
 
+            // Note: sub.icon contient maintenant le SVG String
             subsHtml += `
                 <div class="substat-row ${isDead ? 'dead' : ''}">
                     <span style="display:flex; align-items:center; gap:5px;">
-                        <img src="${sub.icon}" style="width:14px; opacity:0.7;"> ${sub.label}
+                        <span style="color:#aaa; display:inline-flex;">${sub.icon}</span> ${sub.label}
                     </span>
                     <span>${formatValueDisplay(sub.key, sub.value)}</span>
                 </div>`;
@@ -438,7 +481,7 @@ function renderShowcase(index) {
                 <div class="main-stat-display">
                     <span>${formatValueDisplay(art.mainStat.key, art.mainStat.value)}</span>
                     <span style="display:flex; align-items:center; gap:5px; font-size:0.7rem; color:#aaa; font-weight:normal; align-self:center;">
-                        <img src="${art.mainStat.icon}" style="width:16px;"> ${art.mainStat.label}
+                        <span style="color:#fff; display:inline-flex;">${art.mainStat.icon}</span> ${art.mainStat.label}
                     </span>
                 </div>
                 <div style="margin-top:10px;">${subsHtml}</div>
