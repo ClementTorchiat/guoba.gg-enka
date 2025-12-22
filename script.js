@@ -1,412 +1,277 @@
+/* =========================================
+   SCRIPT PRINCIPAL (Fetch Enka & Traduction)
+   ========================================= */
+
+// 1. Dictionnaire de traduction STATS (Enka -> Projet 1)
 const STAT_MAPPING = {
     "FIGHT_PROP_HP": "hp",
-    "FIGHT_PROP_HP_PERCENT": "hp_", // Le _ signifie %
+    "FIGHT_PROP_HP_PERCENT": "hp_",
     "FIGHT_PROP_ATTACK": "atk",
     "FIGHT_PROP_ATTACK_PERCENT": "atk_",
     "FIGHT_PROP_DEFENSE": "def",
     "FIGHT_PROP_DEFENSE_PERCENT": "def_",
-    "FIGHT_PROP_CRITICAL": "cr",
-    "FIGHT_PROP_CRITICAL_HURT": "cd",
-    "FIGHT_PROP_CHARGE_EFFICIENCY": "er",
-    "FIGHT_PROP_ELEMENT_MASTERY": "em",
-    // Dégâts élémentaires (Exemples courants)
-    "FIGHT_PROP_WATER_ADD_HURT": "hydro_dmg",
-    "FIGHT_PROP_FIRE_ADD_HURT": "pyro_dmg",
-    // ... on pourra en ajouter d'autres
+    "FIGHT_PROP_CRITICAL": "critRate_",
+    "FIGHT_PROP_CRITICAL_HURT": "critDMG_",
+    "FIGHT_PROP_CHARGE_EFFICIENCY": "enerRech_",
+    "FIGHT_PROP_ELEMENT_MASTERY": "eleMas",
+    "FIGHT_PROP_HEAL_ADD": "heal_",
+    "FIGHT_PROP_PHYSICAL_ADD_HURT": "physical_dmg_",
+    "FIGHT_PROP_FIRE_ADD_HURT": "pyro_dmg_",
+    "FIGHT_PROP_ELEC_ADD_HURT": "electro_dmg_",
+    "FIGHT_PROP_WATER_ADD_HURT": "hydro_dmg_",
+    "FIGHT_PROP_GRASS_ADD_HURT": "dendro_dmg_",
+    "FIGHT_PROP_WIND_ADD_HURT": "anemo_dmg_",
+    "FIGHT_PROP_ROCK_ADD_HURT": "geo_dmg_",
+    "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_"
 };
 
-// Variable pour stocker le dictionnaire officiel une fois téléchargé
+// 2. Dictionnaire de traduction SETS (Français Enka -> Clé Config Projet 1)
+// Ajoutez ici les sets manquants si besoin
+const SET_NAME_MAPPING = {
+    "Sorcière des flammes ardentes": "CrimsonWitchOfFlames",
+    "Emblème du destin brisé": "EmblemOfSeveredFate",
+    "Maréchaussée": "MarechausseeHunter",
+    "Troupe dorée": "GoldenTroupe",
+    "Rêve doré": "GildedDreams",
+    "Souvenir de la forêt": "DeepwoodMemories",
+    "Codex d'obsidienne": "ObsidianCodex",
+    "Ombre de la Verte Chasseuse": "ViridescentVenerer",
+    "Ancien Rituel Royal": "NoblesseOblige",
+    "Ténacité du Millelithe": "TenacityOfTheMillelith",
+    "Coquille des rêves opulents": "HuskOfOpulentDreams",
+    "Palourde aux teintes océaniques": "OceanHuedClam",
+    "Rideau du Gladiateur": "GladiatorsFinale",
+    "Bande Vagabonde": "WanderersTroupe",
+    "Chevalerie ensanglantée": "BloodstainedChivalry",
+    "Colère de tonnerre": "ThunderingFury",
+    "Dompteur de tonnerre": "Thundersoother",
+    "Amour chéri": "MaidenBeloved",
+    "Roche ancienne": "ArchaicPetra",
+    "Météore inversé": "RetracingBolide",
+    "Briseur de glace": "BlizzardStrayer",
+    "Âme des profondeurs": "HeartOfDepth",
+    "Flamme blême": "PaleFlame",
+    "Réminiscence nostalgique": "ShimenawasReminiscence",
+    "Au-delà cinabrin": "VermillionHereafter",
+    "Échos d'une offrande": "EchoesOfAnOffering",
+    "Chronique du Pavillon du désert": "DesertPavilionChronicle",
+    "Fleur du paradis perdu": "FlowerOfParadiseLost",
+    "Rêve de la nymphe": "NymphsDream",
+    "Lueur du vourukasha": "VourukashasGlow",
+    "Murmure nocturne en forêt d'échos": "NighttimeWhispersInTheEchoingWoods",
+    "Chanson des jours d'antan": "SongOfDaysPast",
+    "Fragment d'harmonie fantasque": "FragmentOfHarmonicWhimsy",
+    "Rêverie inachevée": "UnfinishedReverie",
+    "Parchemins du héros de la cité": "ScrollOfTheHeroOfCinderCity"
+};
+
+// Variables globales
+let globalPersoData = [];
 let charData = {};
-let locData = {};    // Nouveau !
+let locData = {};
 
-function formatStat(propId, value) {
-    const statName = STAT_MAPPING[propId];
-
-    // Si on ne connait pas la stat, on renvoie l'original pour debug
-    if (!statName) return { name: propId, value: value };
-
-    // Si c'est un pourcentage (contient _ ou est cr/cd/er), on multiplie par 100 ?
-    // Enka envoie généralement les substats déjà correctes, mais les mainstats en float (0.466)
-    // C'est un peu piégeux, pour l'instant traitons les substats :
-
-    // Règle simple pour l'affichage : Si le nom finit par _ ou est cr/cd/er, on ajoute %
-    let displayValue = value;
-    let isPercent = false;
-
-    if (statName.endsWith('_') || ['cr', 'cd', 'er', 'hydro_dmg', 'pyro_dmg'].includes(statName)) {
-        isPercent = true;
-        // Petit hack : parfois c'est 0.46 (main stat) parfois 46 (substat)
-        // On réglera ça plus finement après, pour l'instant on regarde juste le type.
-    }
-
-    return {
-        key: statName, // ex: "hp_"
-        label: statName.toUpperCase().replace('_', '%'), // ex: "HP%"
-        value: displayValue,
-        isPercent: isPercent
-    };
-}
-
-// Fonction pour charger le dictionnaire officiel d'Enka
+// --- CHARGEMENT ---
 async function loadGameData() {
-    const statusDiv = document.getElementById('output');
-    statusDiv.innerText = "Chargement des données (Patience, le fichier de langue est gros)...";
-
+    document.getElementById('output').innerText = "Chargement des données...";
     try {
-        // On charge seulement les personnages et les traductions
         const [chars, locs] = await Promise.all([
             fetch('https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/characters.json').then(r => r.json()),
             fetch('https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/loc.json').then(r => r.json())
         ]);
-
         charData = chars;
         locData = locs;
-
-        console.log("Données chargées !");
-        console.log("Structure de locData :", Object.keys(locData));
-// Ça devrait afficher : ['en', 'ru', 'vi', 'th', 'pt', 'ko', 'ja', 'id', 'fr', 'es', 'de', 'chs', 'cht']
-        statusDiv.innerText = "Système prêt. Entrez un UID.";
-    } catch (error) {
-        console.error("Erreur chargement data:", error);
-        statusDiv.innerText = "Erreur : Impossible de charger les fichiers JSON (Vérifiez votre connexion).";
+        document.getElementById('output').innerText = "Prêt. Entrez un UID.";
+    } catch (e) {
+        console.error(e);
+        document.getElementById('output').innerText = "Erreur chargement JSON.";
     }
 }
 
-// Fonction utilitaire pour récupérer le texte en français
+async function fetchUserData() {
+    const uid = document.getElementById('uidInput').value;
+    if (!uid) return alert("UID manquant");
+
+    // Proxy pour contourner CORS
+    const proxy = `https://corsproxy.io/?${encodeURIComponent(`https://enka.network/api/uid/${uid}`)}`;
+
+    try {
+        document.getElementById('output').innerText = "Téléchargement profil...";
+        const res = await fetch(proxy);
+        if(!res.ok) throw new Error("Erreur Enka");
+        const data = await res.json();
+        processData(data);
+    } catch (e) {
+        console.error(e);
+        document.getElementById('output').innerText = "Erreur: UID introuvable ou vitrine cachée.";
+    }
+}
+
+// --- UTILS : FORMATAGE ---
+
 function getText(hash) {
-    // 1. Vérifier si locData est bien chargé et s'il contient le français
-    if (!locData || !locData.fr) {
-        return "Chargement...";
-    }
-
-    // 2. Chercher le hash dans la section 'fr'
-    if (locData.fr[hash]) {
-        return locData.fr[hash];
-    }
-
-    // 3. Fallback : Si pas de FR, on tente l'anglais ('en'), sinon on renvoie le hash
-    if (locData.en && locData.en[hash]) {
-        return locData.en[hash] + " (EN)";
-    }
-
-    return "Inconnu (" + hash + ")";
+    // Force la récupération en Français pour matcher notre SET_NAME_MAPPING
+    if (locData && locData.fr && locData.fr[hash]) return locData.fr[hash];
+    return "Inconnu";
 }
 
-// Lancer le chargement dès que la page s'ouvre
-loadGameData();
+function formatStat(propId, value) {
+    const key = STAT_MAPPING[propId];
+    if (!key) return { key: "unknown", value: value, label: propId };
 
-// On crée une variable globale pour stocker nos personnages "propres"
-let globalPersoData = [];
+    let val = value;
+    let isPercent = false;
+
+    // Détection pourcentage : si la clé finit par _ ou est critique/recharge
+    // Attention : Enka renvoie parfois 0.466 (Main) et parfois 5.8 (Sub)
+    // On standardise tout en "Valeur affichée" (46.6 et 5.8)
+
+    if (key.endsWith('_') || ['critRate_', 'critDMG_', 'enerRech_', 'heal_'].includes(key)) {
+        isPercent = true;
+        // Heuristique simple : si c'est < 2 (ex 0.466), c'est probablement un ratio brute -> x100
+        // Si c'est > 2 (ex 5.8), c'est déjà bon.
+        // Exception : Mainstat EM/HP/ATK flat sont > 2. Mais ici on est dans le bloc "isPercent".
+        if (val < 2.0) val = val * 100;
+    }
+
+    return {
+        key: key,       // Clé pour config.js (ex: critRate_)
+        value: val,     // Valeur (ex: 3.9)
+        label: key.replace('_', '%').toUpperCase(), // Label joli
+        isPercent: isPercent
+    };
+}
+
+// --- TRAITEMENT PRINCIPAL ---
 
 function processData(data) {
-    const characters = data.avatarInfoList;
-    const playerInfo = data.playerInfo;
+    if (!data.avatarInfoList) return;
 
-    if (!characters) {
-        console.log("Aucun personnage en vitrine.");
-        return;
-    }
-
-    console.log(`Trouvé ${characters.length} personnages pour ${playerInfo.nickname}`);
-
-    // On vide la liste précédente si on refait une recherche
     globalPersoData = [];
 
-    // LA BOUCLE : On traite chaque personnage un par un
-    // LA BOUCLE MODIFIÉE
-    characters.forEach(perso => {
-        const statsCombat = perso.fightPropMap;
+    data.avatarInfoList.forEach(perso => {
         const id = perso.avatarId;
-        const artefactsList = [];
-        let armeData = null;
+        const info = charData[id] || {};
+        const nom = getText(info.NameTextMapHash) || "Inconnu";
+        const icon = `https://enka.network/ui/${info.SideIconName?.replace("Side_Match", "Side")}.png`;
 
-        // On cherche les infos dans le Grand Livre (charData)
-        // Si l'ID existe dans charData, on prend ses infos, sinon on met des valeurs par défaut
-        const infoPerso = charData[id] || {};
-
-        // 1. Trouver le nom de fichier de l'image (ex: "UI_AvatarIcon_Side_Furina")
-        let iconName = infoPerso.SideIconName || "UI_AvatarIcon_Side_Paimon";
-
-        // 2. Construire l'URL de l'image
-        // Les images sont stockées sur le serveur d'Enka
-        // On remplace "Side_Match" par "" car parfois le nom de fichier a une variante
-        const iconUrl = `https://enka.network/ui/${iconName.replace("Side_Match", "Side")}.png`;
-
-        // 3. Essayer de deviner le nom (Pour la vraie traduction FR, c'est une étape de plus,
-        // pour l'instant on prend le nom interne qui est souvent en anglais ex: "Furina")
-        // On nettoie le string "UI_AvatarIcon_Side_" pour garder juste le nom
-        let nomEstime = iconName.replace("UI_AvatarIcon_Side_", "").replace("UI_AvatarIcon_", "");
+        // Conversion des artéfacts
+        const artefacts = [];
 
         perso.equipList.forEach(item => {
             const flat = item.flat;
+            if (flat.itemType === "ITEM_RELIQUARY") {
+                const nomSetFR = getText(flat.setNameTextMapHash);
 
-            // ... (Début de la boucle persos) ...
+                // --- LE PONT MAGIQUE ---
+                // On transforme le nom FR d'Enka en Clé Config du Projet 1
+                const setKey = SET_NAME_MAPPING[nomSetFR] || "UnknownSet";
 
-            // CAS 1 : C'est une ARME
-            if (flat.itemType === "ITEM_WEAPON") {
-                // On utilise la nouvelle fonction getText corrigée
-                const nomArme = getText(flat.nameTextMapHash);
+                // Main Stat
+                const mainFmt = formatStat(flat.reliquaryMainstat.mainPropId, flat.reliquaryMainstat.statValue);
 
-                const iconUrl = `https://enka.network/ui/${flat.icon}.png`;
-
-                armeData = {
-                    id: item.itemId,
-                    nom: nomArme, // Devrait afficher "Lumière du verdict" (ou autre)
-                    image: iconUrl,
-                    level: item.weapon.level,
-                    // Le raffinement est dans affixMap. Attention : pour une arme R1, affixMap peut être vide ou null
-                    refinement: (item.weapon.affixMap && Object.values(item.weapon.affixMap)[0] + 1) || 1
-                };
-            }
-
-            // CAS 2 : C'est un ARTÉFACT
-            else if (flat.itemType === "ITEM_RELIQUARY") {
-
-                const nomSet = getText(flat.setNameTextMapHash);
-
-                // --- AJOUTER CECI ---
-                const iconUrl = `https://enka.network/ui/${flat.icon}.png`;
-                // --------------------
-
-                // ... (Code des stats inchangé) ...
-                const mainStatId = flat.reliquaryMainstat.mainPropId;
-                const mainStatValue = flat.reliquaryMainstat.statValue;
-                const formattedMain = formatStat(mainStatId, mainStatValue);
-
-                const subStatsList = [];
+                // Sub Stats
+                const subs = [];
                 if (flat.reliquarySubstats) {
-                    flat.reliquarySubstats.forEach(sub => {
-                        const formattedSub = formatStat(sub.appendPropId, sub.statValue);
-                        subStatsList.push(formattedSub);
+                    flat.reliquarySubstats.forEach(s => {
+                        subs.push(formatStat(s.appendPropId, s.statValue));
                     });
                 }
 
-                artefactsList.push({
-                    type: flat.equipType,
-                    setName: nomSet,
-                    image: iconUrl, // <--- AJOUTER ICI
-                    mainStat: formattedMain,
-                    subStats: subStatsList,
+                artefacts.push({
+                    type: flat.equipType, // EQUIP_BRACER, etc.
+                    setKey: setKey,       // Clé anglaise pour le scoring
+                    setName: nomSetFR,    // Nom affiché
+                    icon: `https://enka.network/ui/${flat.icon}.png`,
+                    mainStat: mainFmt,
+                    subStats: subs,
                     level: item.reliquary.level - 1
                 });
             }
         });
 
-        const persoPropre = {
+        // Construction objet final
+        const persoObj = {
             id: id,
-            nom: nomEstime,
-            image: iconUrl,
-            niveau: perso.propMap['4001'].val,
-            stats: {
-                hp: Math.round(statsCombat['2000']),
-                atk: Math.round(statsCombat['2001']),
-                def: Math.round(statsCombat['2002']),
-                cr: (statsCombat['20'] * 100).toFixed(1),
-                cd: (statsCombat['22'] * 100).toFixed(1)
-            },
-            arme: armeData,        // On ajoute l'arme
-            artefacts: artefactsList // On ajoute la liste complète !
+            nom: nom,
+            image: icon,
+            artefacts: artefacts,
+            evaluation: null // Sera rempli par scoring.js
         };
 
-        globalPersoData.push(persoPropre);
+        // --- APPEL AU SCORING (Projet 1 Logic) ---
+        // C'est ici qu'on utilise la fonction de scoring.js
+        persoObj.evaluation = calculateCharacterScore(persoObj);
+
+        globalPersoData.push(persoObj);
     });
 
-    // Une fois la boucle finie, on affiche les boutons
-    afficherBoutonsPersonnages();
+    displayResults();
 }
 
-async function fetchUserData() {
-    const uid = document.getElementById('uidInput').value;
-    if (!uid) return alert("Mettez un UID !");
+// --- AFFICHAGE ---
 
-    const output = document.getElementById('output');
-    output.innerText = "Chargement...";
-
-    // URL de l'API Enka
-    const apiUrl = `https://enka.network/api/uid/${uid}`;
-
-    // ASTUCE : On passe par un proxy pour éviter l'erreur CORS (juste pour le dev)
-    // "corsproxy.io" est un service gratuit qui permet de contourner la sécurité du navigateur
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
-
-    try {
-        const response = await fetch(proxyUrl);
-
-        if (!response.ok) {
-            throw new Error(`Erreur serveur : ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // Si on est là, on a les données !
-        console.log("Données reçues :", data);
-
-        // Affichons juste le pseudo pour prouver que ça marche
-        const pseudo = data.playerInfo.nickname;
-        output.innerText = `Succès ! Joueur trouvé : ${pseudo}\n\nOuvrez la console (F12) pour voir tout le détail.`;
-
-        // C'est ici qu'on va appeler notre fonction de traitement (Étape 3)
-        processData(data);
-
-    } catch (error) {
-        console.error(error);
-        output.innerText = "Erreur : Impossible de récupérer les données (Vérifiez l'UID ou si la vitrine est publique).";
-    }
-}
-
-function afficherBoutonsPersonnages() {
+function displayResults() {
     const container = document.getElementById('resultats');
-    let btnContainer = document.getElementById('perso-buttons');
+    container.innerHTML = "";
 
-    if (!btnContainer) {
-        btnContainer = document.createElement('div');
-        btnContainer.id = 'perso-buttons';
-        // Un peu de CSS pour aligner les boutons
-        btnContainer.style.display = "flex";
-        btnContainer.style.gap = "10px";
-        btnContainer.style.flexWrap = "wrap";
-        btnContainer.style.marginBottom = "20px";
-        container.insertBefore(btnContainer, container.firstChild);
-    }
+    globalPersoData.forEach(p => {
+        const eval = p.evaluation;
 
-    btnContainer.innerHTML = ''; // Vider
-
-    globalPersoData.forEach((perso) => {
-        // On crée un conteneur qui ressemble à une carte
+        // Carte Personnage
         const card = document.createElement('div');
-        card.style.border = "1px solid #ccc";
-        card.style.borderRadius = "8px";
-        card.style.padding = "10px";
-        card.style.textAlign = "center";
-        card.style.cursor = "pointer";
-        card.style.background = "#f9f9f9";
-        card.style.width = "100px";
+        card.style = "background:#2b2b33; color:white; padding:15px; margin-bottom:20px; border-radius:10px;";
 
-        // L'image
-        const img = document.createElement('img');
-        img.src = perso.image;
-        img.style.width = "100%"; // Prend toute la largeur de la carte
-        img.style.borderRadius = "50%"; // Rond
-        img.alt = perso.nom;
-
-        // Le nom
-        const txt = document.createElement('div');
-        txt.innerText = perso.nom;
-        txt.style.fontWeight = "bold";
-        txt.style.marginTop = "5px";
-
-        // Assemblage
-        card.appendChild(img);
-        card.appendChild(txt);
-
-        // Clic
-        card.onclick = () => {
-            console.log("Stats complètes :", perso);
-            showCharacterDetails(perso);
-            // On récupère le nom du set du premier artéfact pour l'exemple
-            const setExemple = perso.artefacts.length > 0 ? perso.artefacts[0].setName : "Aucun";
-            const armeNom = perso.arme ? perso.arme.nom : "Aucune";
-
-            document.getElementById('output').innerText =
-                `Perso : ${perso.nom}\n` +
-                `Arme : ${armeNom} (R${perso.arme ? perso.arme.refinement : 0})\n` +
-                `Set (ex) : ${setExemple}\n` +
-                `HP : ${perso.stats.hp} | ATK : ${perso.stats.atk}\n` +
-                `CRIT : ${perso.stats.cr}% / ${perso.stats.cd}%`;
-        };
-
-        btnContainer.appendChild(card);
-    });
-}
-
-function showCharacterDetails(perso) {
-    const view = document.getElementById('detailed-view') || document.createElement('div');
-    view.id = 'detailed-view';
-    view.style.display = 'block';
-
-    // Si le conteneur n'est pas encore dans la page, on l'ajoute après les boutons
-    const resultDiv = document.getElementById('resultats');
-    if (!document.getElementById('detailed-view')) {
-        resultDiv.appendChild(view);
-    }
-
-    // --- 1. GÉNÉRATION DES ARTÉFACTS (HTML) ---
-    let artifactsHTML = '<div class="artifacts-grid">';
-
-    // Ordre d'affichage classique : Fleur -> Plume -> Sablier -> Coupe -> Couronne
-    // Les types dans l'API sont : EQUIP_BRACER, EQUIP_NECKLACE, EQUIP_SHOES, EQUIP_RING, EQUIP_DRESS
-    const order = ["EQUIP_BRACER", "EQUIP_NECKLACE", "EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
-
-    // On trie les artéfacts pour qu'ils s'affichent dans le bon ordre
-    const sortedArtifacts = perso.artefacts.sort((a, b) => {
-        return order.indexOf(a.type) - order.indexOf(b.type);
-    });
-
-    sortedArtifacts.forEach(art => {
-        // Génération des substats
-        let subsHTML = '<div class="sub-stats">';
-        art.subStats.forEach(sub => {
-            subsHTML += `
-                <div class="sub-stat-row">
-                    <span>${sub.label}</span>
-                    <span>+${sub.value}${sub.isPercent ? '%' : ''}</span>
-                </div>`;
-        });
-        subsHTML += '</div>';
-
-        artifactsHTML += `
-            <div class="artifact-card">
-                <div class="art-header">
-                    <img src="${art.image}" class="art-icon" alt="Icon">
-                    <div>
-                        <div style="font-weight:bold; font-size:0.8em">${art.type.replace('EQUIP_', '')} (+${art.level})</div>
+        // Header
+        card.innerHTML = `
+            <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #444; padding-bottom:10px;">
+                <img src="${p.image}" style="width:60px; height:60px; border-radius:50%; border:2px solid ${eval.grade.color}">
+                <div>
+                    <h2 style="margin:0">${p.nom}</h2>
+                    <div style="font-weight:bold; color:${eval.grade.color}; font-size:1.2em">
+                        Note: ${eval.grade.letter} (${eval.score})
+                    </div>
+                    <div style="font-size:0.8em; color:#aaa">
+                        Set Bonus: ${eval.setBonus.length ? eval.setBonus.join(', ') : "Aucun"} (x${eval.setMultiplier})
                     </div>
                 </div>
-                <div class="main-stat">
-                    ${art.mainStat.value}${art.mainStat.isPercent ? '%' : ''}
-                    <div style="font-size:0.5em; color:#aaa">${art.mainStat.label}</div>
-                </div>
-                ${subsHTML}
-                <div class="set-name">${art.setName}</div>
             </div>
         `;
+
+        // Grille Artéfacts
+        const grid = document.createElement('div');
+        grid.style = "display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:10px;";
+
+        p.artefacts.forEach(art => {
+            let subsHtml = "";
+            art.subStats.forEach(s => {
+                subsHtml += `<div style="display:flex; justify-content:space-between; font-size:0.85em; color:#ccc;">
+                    <span>${s.label}</span>
+                    <span>+${Number.isInteger(s.value) ? s.value : s.value.toFixed(1)}${s.isPercent?'%':''}</span>
+                </div>`;
+            });
+
+            grid.innerHTML += `
+                <div style="background:#363640; padding:10px; border-radius:5px; border-top:3px solid ${art.grade.color};">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:5px;">
+                        <img src="${art.icon}" style="width:35px; height:35px;">
+                        <div>
+                            <div style="font-weight:bold; color:${art.grade.color}">${art.score}</div>
+                            <div style="font-size:0.7em; color:#888;">${art.type.split('_')[1]}</div>
+                        </div>
+                    </div>
+                    <div style="font-weight:bold; font-size:1.1em; margin-bottom:5px;">
+                        ${art.mainStat.value}${art.mainStat.isPercent?'%':''} 
+                        <span style="font-size:0.6em; color:#aaa">${art.mainStat.label}</span>
+                    </div>
+                    <div>${subsHtml}</div>
+                </div>
+            `;
+        });
+
+        card.appendChild(grid);
+        container.appendChild(card);
     });
-    artifactsHTML += '</div>';
-
-    // --- 2. CONSTRUCTION GLOBALE ---
-    const arme = perso.arme;
-    const stats = perso.stats;
-
-    view.innerHTML = `
-        <h2 style="border-bottom:1px solid #555; padding-bottom:10px;">
-            ${perso.nom} <small style="color:#aaa; font-size:0.6em">(Niv. ${perso.niveau})</small>
-        </h2>
-        
-        <div class="top-section">
-            <div class="char-info">
-                <img src="${perso.image}" alt="${perso.nom}">
-                <div class="stats-list">
-                    <div><strong>PV Max :</strong> ${stats.hp}</div>
-                    <div><strong>ATK :</strong> ${stats.atk}</div>
-                    <div><strong>DEF :</strong> ${stats.def}</div>
-                    <div><strong>Taux Crit :</strong> ${stats.cr}%</div>
-                    <div><strong>Dégâts Crit :</strong> ${stats.cd}%</div>
-                    </div>
-            </div>
-
-            <div class="weapon-info">
-                ${arme ? `
-                    <img src="${arme.image}" alt="${arme.nom}">
-                    <div>
-                        <div style="font-weight:bold; color:#daccb0">${arme.nom}</div>
-                        <div>Niv. ${arme.level} <span style="background:#555; padding:2px 5px; border-radius:4px; font-size:0.8em">R${arme.refinement}</span></div>
-                        <div style="color:#aaa; font-size:0.9em">ATK Base : ${arme.baseAtk}</div>
-                    </div>
-                ` : '<div>Pas d\'arme équipée</div>'}
-            </div>
-        </div>
-
-        <h3 style="margin-top:0">Artéfacts</h3>
-        ${artifactsHTML}
-    `;
 }
+
+// Lancement
+loadGameData();
