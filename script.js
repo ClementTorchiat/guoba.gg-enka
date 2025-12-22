@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Fix window + Combat Stats)
+   SCRIPT PRINCIPAL (Version Finale : Buffs Groupés UX)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -163,37 +163,16 @@ function formatStat(propId, value) {
     return { key, value: val, label, icon: svgContent, isPercent };
 }
 
-// --- LOGIQUE CALCUL BONUS (CORRIGÉE : Pas de window.) ---
-function calculateBuffedStats(baseStats, currentStats, weaponName, setsCounter) {
+// --- LOGIQUE CALCUL BONUS DYNAMIQUE ---
+function calculateBuffedStats(baseStats, currentStats, buffsList) {
     let buffed = { ...currentStats };
 
-    // 1. Appliquer passif Arme
-    // On vérifie si la constante globale WEAPON_PASSIVES existe
-    if (typeof WEAPON_PASSIVES !== 'undefined' && WEAPON_PASSIVES[weaponName]) {
-        const bonuses = WEAPON_PASSIVES[weaponName];
-        for (const [statKey, value] of Object.entries(bonuses)) {
-            if (statKey === "atk_") buffed.atk += baseStats.atk * value;
-            else if (statKey === "hp_") buffed.hp += baseStats.hp * value;
-            else if (statKey === "def_") buffed.def += baseStats.def * value;
-            else if (statKey === "critRate_" || statKey === "critDMG_" || statKey === "enerRech_" || statKey.includes("_dmg_")) {
-                let shortKey = getShortKey(statKey);
-                if(shortKey) buffed[shortKey] += value * 100;
-            } else if (statKey === "eleMas") {
-                buffed.em += value;
-            }
+    buffsList.forEach(buff => {
+        if (buff.active) {
+            applyBonus(buffed, baseStats, buff.bonuses);
         }
-    }
+    });
 
-    // 2. Appliquer passif Sets
-    if (typeof SET_PASSIVES !== 'undefined') {
-        for (const [setKey, count] of Object.entries(setsCounter)) {
-            if (SET_PASSIVES[setKey]) {
-                const setBonuses = SET_PASSIVES[setKey];
-                if (count >= 2 && setBonuses[2]) applyBonus(buffed, baseStats, setBonuses[2]);
-                if (count >= 4 && setBonuses[4]) applyBonus(buffed, baseStats, setBonuses[4]);
-            }
-        }
-    }
     return buffed;
 }
 
@@ -217,6 +196,21 @@ function getShortKey(longKey) {
     if (longKey === "enerRech_") return "er";
     if (longKey.includes("_dmg_")) return "elemBonus";
     return null;
+}
+
+// --- INTERACTION ---
+function toggleBuff(charIndex, buffIndex) {
+    const p = globalPersoData[charIndex];
+    if (!p) return;
+
+    // Toggle état
+    p.buffs[buffIndex].active = !p.buffs[buffIndex].active;
+
+    // Recalcul
+    p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
+
+    // Render
+    renderShowcase(charIndex);
 }
 
 // --- PROCESS ---
@@ -295,14 +289,68 @@ function processData(data) {
             }
         });
 
-        // CALCUL DES STATS BUFFÉES
-        const buffedStats = calculateBuffedStats(baseStats, combatStats, weapon ? weapon.name : "", setsCounter);
+        // CONSTRUCTION DE LA LISTE DES BUFFS (GRANULAIRE + GROUPÉ PAR SOURCE)
+        let buffs = [];
+
+        // 1. Arme (Séparation des stats)
+        if (weapon && typeof WEAPON_PASSIVES !== 'undefined' && WEAPON_PASSIVES[weapon.name]) {
+            const bonuses = WEAPON_PASSIVES[weapon.name];
+            // On crée un titre de catégorie "Nom de l'arme (Arme)"
+            const weaponCategory = `${weapon.name} (Arme)`;
+
+            for (const [statKey, val] of Object.entries(bonuses)) {
+                if (typeof val === 'object') continue;
+
+                const statLabel = STAT_LABELS[statKey] || statKey;
+                const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
+
+                buffs.push({
+                    id: `weapon_${statKey}`,
+                    category: weaponCategory, // Pour le groupement
+                    name: `${statLabel} (+${valDisplay})`, // Label propre
+                    bonuses: { [statKey]: val },
+                    active: true
+                });
+            }
+        }
+
+        // 2. Sets (Séparation des stats aussi)
+        if (typeof SET_PASSIVES !== 'undefined') {
+            for (const [setKey, count] of Object.entries(setsCounter)) {
+                if (SET_PASSIVES[setKey]) {
+                    const setBonuses = SET_PASSIVES[setKey];
+                    const setName = artefacts.find(a => a.setKey === setKey)?.setName || setKey;
+                    const setCategory = `${setName} (Set d'artéfacts)`;
+
+                    const addSetBuffs = (bonusObj, prefix) => {
+                        for (const [statKey, val] of Object.entries(bonusObj)) {
+                            if (typeof val === 'object') continue;
+                            const statLabel = STAT_LABELS[statKey] || statKey;
+                            const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
+                            buffs.push({
+                                id: `${setKey}:${prefix}:${statKey}`,
+                                category: setCategory, // Pour le groupement
+                                name: `${prefix} : ${statLabel} (+${valDisplay})`, // Label propre
+                                bonuses: { [statKey]: val },
+                                active: true
+                            });
+                        }
+                    };
+
+                    if (count >= 2 && setBonuses[2]) addSetBuffs(setBonuses[2], "2p");
+                    if (count >= 4 && setBonuses[4]) addSetBuffs(setBonuses[4], "4p");
+                }
+            }
+        }
+
+        // CALCUL INITIAL
+        const buffedStats = calculateBuffedStats(baseStats, combatStats, buffs);
 
         const persoObj = {
             id: id, nom, rarity, level, cons: constellations, talents,
             image: sideIcon, splashArt: splashUrl,
-            combatStats, buffedStats,
-            weapon, artefacts, setsCounter,
+            combatStats, buffedStats, baseStats,
+            weapon, artefacts, setsCounter, buffs,
             evaluation: null, weights: null
         };
 
@@ -491,6 +539,48 @@ function renderShowcase(index) {
                 </div>
             </div>`;
     });
+
+    // --- CARTE DE BUFFS (6ème Carte - Groupée avec Headers) ---
+    if (p.buffs && p.buffs.length > 0) {
+        let buffListHtml = "";
+        let lastCategory = "";
+
+        p.buffs.forEach((buff, bIndex) => {
+            // Insertion du header de catégorie
+            if (buff.category !== lastCategory) {
+                buffListHtml += `
+                    <div style="font-size:0.8rem; color:var(--accent-gold); font-weight:bold; margin-top:10px; margin-bottom:5px; border-bottom:1px dashed #444; padding-bottom:2px;">
+                        ${buff.category}
+                    </div>`;
+                lastCategory = buff.category;
+            }
+
+            buffListHtml += `
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:6px 8px; background:rgba(0,0,0,0.2); margin-bottom:4px; border-radius:4px;">
+                    <span style="font-size:0.8rem; color:#ddd;">${buff.name}</span>
+                    <label class="switch" style="position:relative; display:inline-block; width:30px; height:16px;">
+                        <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${index}, ${bIndex})" style="opacity:0; width:0; height:0;">
+                        <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#333; transition:.4s; border-radius:34px;"></span>
+                        <span style="position:absolute; content:''; height:12px; width:12px; left:2px; bottom:2px; background-color:white; transition:.4s; border-radius:50%; ${buff.active ? 'transform:translateX(14px); background-color:var(--accent-gold);' : ''}"></span>
+                    </label>
+                </div>
+            `;
+        });
+
+        html += `
+            <div class="card" style="border-color:var(--accent-gold); background:rgba(255, 177, 59, 0.05);">
+                <div style="font-weight:bold; color:var(--accent-gold); text-transform:uppercase; font-size:0.9rem; margin-bottom:10px; border-bottom:1px solid #444; padding-bottom:5px;">
+                    <i class="fa-solid fa-bolt"></i> Buffs Actifs
+                </div>
+                <div style="flex:1;">
+                    ${buffListHtml}
+                </div>
+                <div style="font-size:0.75rem; color:#888; text-align:center; margin-top:10px;">
+                    Cochez pour appliquer les passifs
+                </div>
+            </div>
+        `;
+    }
 
     html += `</div>`;
     container.innerHTML = html;
