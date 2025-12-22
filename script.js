@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Coaching & Potentiel)
+   SCRIPT PRINCIPAL (Version Finale : Coaching Détaillé)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -241,7 +241,7 @@ function toggleBuff(charIndex, buffIndex) {
     renderShowcase(charIndex);
 }
 
-// --- FONCTIONS COACHING & SCORE BAR ---
+// --- FONCTIONS COACHING ---
 
 function generateScoreBar(totalRolls) {
     const maxScale = 45;
@@ -269,6 +269,7 @@ function generateScoreBar(totalRolls) {
 }
 
 function calculatePotentialScore(persoObj, config) {
+    if (!config || !config.weights) return { score: 0 };
     let fakeArtefacts = persoObj.artefacts.map(art => {
         let newSubs = art.subStats.map(sub => {
             const rolls = getRollCount(sub.key, sub.value);
@@ -283,28 +284,64 @@ function calculatePotentialScore(persoObj, config) {
 }
 
 function getSetRecommendation(activeSets, config) {
-    // AJOUT DE LA SÉCURITÉ : on vérifie que la liste n'est pas vide (.length > 0)
     if (!config || !config.bestSets || config.bestSets.length === 0) return null;
-
-    // Vérifie si on a déjà un Best Set
     const hasBest = activeSets.some(s => config.bestSets.includes(s));
     if (hasBest) return { type: 'success', msg: "Vous utilisez le meilleur set recommandé !" };
 
-    // Vérifie si on a un Good Set
     const hasGood = config.goodSets && activeSets.some(s => config.goodSets.includes(s));
-
-    // On prend le premier Best Set de la liste pour le conseiller
-    // Maintenant c'est sûr, bestSets[0] existe grâce au if du début
     const recommended = config.bestSets[0].split(':')[0];
-
-    // Mapping inverse (Clé -> Nom FR)
-    // On cherche dans SET_NAME_MAPPING quel nom FR correspond à la clé "recommended"
-    // (Note: C'est une recherche approximative car le mapping est Nom FR -> Clé EN)
     const recName = Object.keys(SET_NAME_MAPPING).find(key => SET_NAME_MAPPING[key] === recommended) || recommended;
 
     if (hasGood) return { type: 'info', msg: `Set correct, mais <b>${recName} (4p)</b> serait optimal.` };
-
     return { type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.` };
+}
+
+// MODIF: Détail des stats mortes
+function calculateDeadRolls(persoObj, config) {
+    if (!config || !config.weights) return { count: 0, details: [] };
+    let deadRolls = 0;
+    let deadStatsCounts = {};
+
+    persoObj.artefacts.forEach(art => {
+        art.subStats.forEach(sub => {
+            let w = config.weights[sub.key];
+            if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
+
+            // Si le poids est 0 ou inexistant, c'est une stat morte
+            if (!w || w === 0) {
+                const rolls = getRollCount(sub.key, sub.value);
+                deadRolls += rolls;
+                deadStatsCounts[sub.key] = (deadStatsCounts[sub.key] || 0) + rolls;
+            }
+        });
+    });
+
+    // Transformation en tableau détaillé trié
+    const details = Object.entries(deadStatsCounts)
+        .filter(([_, count]) => count > 0)
+        .map(([key, count]) => ({ label: STAT_LABELS[key] || key, count: count }))
+        .sort((a, b) => b.count - a.count); // Tri par nombre de rolls décroissant
+
+    return { count: deadRolls, details: details };
+}
+
+// MODIF: Top 3 Priorités
+function getPriorities(persoObj) {
+    if (!persoObj.artefacts || persoObj.artefacts.length === 0) return [];
+
+    // On trie les artéfacts par score croissant (du pire au meilleur)
+    const sorted = [...persoObj.artefacts].sort((a, b) => a.score - b.score);
+
+    // On prend les 3 premiers (les pires)
+    return sorted.slice(0, 3).map(art => {
+        const typeName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+        return {
+            piece: typeName,
+            score: art.score,
+            grade: art.grade.letter,
+            color: art.grade.color
+        };
+    });
 }
 
 // --- PROCESS ---
@@ -454,7 +491,7 @@ function processData(data) {
     if(globalPersoData.length > 0) renderShowcase(0);
 }
 
-// --- RENDER ---
+// ... (RENDER SIDEBAR Identique) ...
 function renderSidebar() {
     const list = document.getElementById('sidebar-list');
     if(!list) return;
@@ -484,7 +521,6 @@ function renderShowcase(index) {
     const container = document.getElementById('main-container');
     if(!container) return;
 
-    // --- FIX: RECUPERATION CONFIG (POUR COACHING) ---
     const configKey = p.nom.replace(/\s+/g, '') || "Default";
     const config = window.CHARACTER_CONFIG[configKey] || window.CHARACTER_CONFIG[p.nom] || window.DEFAULT_CONFIG;
 
@@ -537,7 +573,6 @@ function renderShowcase(index) {
                         <div style="font-size:0.9rem; color:var(--accent-gold); font-weight:bold;">C${p.cons}</div>
                     </div>
                 </div>
-                
                 <h3 style="font-size:0.8rem; color:#888; text-transform:uppercase; margin-bottom:5px;">Stats Menu</h3>
                 ${statLine(createSvg('heart'), "PV Max", Math.round(s.hp))}
                 ${statLine(createSvg('sword'), "ATQ", Math.round(s.atk))}
@@ -568,14 +603,16 @@ function renderShowcase(index) {
         const potential = calculatePotentialScore(p, config);
         const gain = (potential.score - ev.score).toFixed(1);
         const setAdvice = getSetRecommendation(ev.setBonus, config);
+        const deadRolls = calculateDeadRolls(p, config);
+        const priorities = getPriorities(p);
 
         return `
                     <div style="background:rgba(255, 255, 255, 0.05); border:1px solid #444; border-radius:8px; padding:15px; margin-top:20px;">
-                        <h4 style="color:#fff; margin-bottom:10px; font-size:0.9rem; text-transform:uppercase; border-bottom:1px solid #444; padding-bottom:5px;">
+                        <h4 style="color:#fff; margin-bottom:15px; font-size:0.9rem; text-transform:uppercase; border-bottom:1px solid #444; padding-bottom:5px;">
                             <i class="fa-solid fa-chart-line" style="color:var(--accent-gold)"></i> Analyse & Potentiel
                         </h4>
                         
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
                             <span style="font-size:0.8rem; color:#ccc;">Potentiel Max (Rolls parfaits)</span>
                             <div style="text-align:right;">
                                 <span style="font-weight:bold; color:var(--accent-gold);">${potential.score}</span>
@@ -587,15 +624,36 @@ function renderShowcase(index) {
                             <div style="height:100%; background:var(--accent-gold); width:100%; opacity:0.3; border-radius:3px;"></div>
                         </div>
 
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:15px;">
+                            <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:6px; text-align:center;">
+                                <div style="font-size:0.7rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Stats Mortes</div>
+                                <div style="font-size:1.4rem; font-weight:bold; color:#ff4d4d;">${deadRolls.count}</div>
+                                <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:3px; margin-top:5px;">
+                                    ${deadRolls.details.map(d =>
+            `<span style="background:rgba(255, 77, 77, 0.2); color:#ff9999; font-size:0.6rem; padding:1px 4px; border-radius:3px;">${d.label}: ${d.count}</span>`
+        ).join('')}
+                                    ${deadRolls.count === 0 ? '<span style="color:#22c55e; font-size:0.7rem;">Aucune !</span>' : ''}
+                                </div>
+                            </div>
+                            
+                            <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:6px;">
+                                <div style="font-size:0.7rem; color:#aaa; text-transform:uppercase; text-align:center; margin-bottom:5px;">Top Priorités</div>
+                                <div style="display:flex; flex-direction:column; gap:4px;">
+                                    ${priorities.length > 0 ? priorities.map((p, i) => `
+                                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem;">
+                                            <span style="color:#ddd;">${i+1}. ${p.piece}</span>
+                                            <span style="color:${p.color}; font-weight:bold;">${p.score} (${p.grade})</span>
+                                        </div>
+                                    `).join('') : '<div style="text-align:center; font-size:0.7rem;">Aucun artéfact</div>'}
+                                </div>
+                            </div>
+                        </div>
+
                         ${setAdvice ? `
                         <div style="font-size:0.8rem; background:rgba(0,0,0,0.2); padding:8px; border-radius:4px; border-left:3px solid ${setAdvice.type === 'success' ? '#22c55e' : (setAdvice.type === 'warning' ? '#eab308' : '#3b82f6')}; color:#ddd;">
                             ${setAdvice.msg}
                         </div>
                         ` : ''}
-                        
-                        <div style="margin-top:10px; font-size:0.75rem; color:#888; font-style:italic;">
-                            * Simulation avec stats max (ex: 3.9% TC).
-                        </div>
                     </div>
                     `;
     })()}
