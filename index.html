@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Projet 2 - Import Enka</title>
+</head>
+<body>
+<h1>Importateur Genshin</h1>
+<input type="text" id="uidInput" placeholder="Entrez UID (ex: 700000000)">
+<button onclick="fetchUserData()">Importer</button>
+
+<div id="resultats">
+    <pre id="output"></pre>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+<style>
+    body { font-family: sans-serif; background-color: #1c1c22; color: #fff; }
+
+    /* Conteneur principal de la fiche */
+    #detailed-view {
+        margin-top: 20px;
+        background-color: #2b2b33;
+        padding: 20px;
+        border-radius: 10px;
+        display: none; /* Caché par défaut */
+    }
+
+    /* En-tête : Image Perso + Stats + Arme */
+    .top-section {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+
+    .char-info, .weapon-info {
+        background: #363640;
+        padding: 15px;
+        border-radius: 8px;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .char-info img, .weapon-info img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 2px solid #daccb0;
+        background: #9d8961; /* Fond style 5 étoiles */
+    }
+
+    .stats-list { font-size: 0.9em; line-height: 1.6; }
+
+    /* Grille des Artéfacts */
+    .artifacts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+    }
+
+    .artifact-card {
+        background: #3d3d47;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #555;
+        font-size: 0.85em;
+    }
+
+    .art-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #555;
+        padding-bottom: 5px;
+    }
+
+    .art-icon {
+        width: 40px;
+        height: 40px;
+        background: #555; /* Fond gris pour l'icône */
+        border-radius: 50%;
+    }
+
+    .main-stat {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #daccb0;
+        margin: 5px 0;
+    }
+
+    .sub-stats { color: #ccc; }
+    .sub-stat-row { display: flex; justify-content: space-between; }
+    .set-name { color: #82a86d; font-style: italic; font-size: 0.9em; margin-top: 5px;}
+</style>
