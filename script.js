@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Ratio Rolls)
+   SCRIPT PRINCIPAL (Version Finale : Coaching & RNG)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -305,23 +305,19 @@ function getSetRecommendation(activeSets, config) {
     return { type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.` };
 }
 
-// NOUVEAU : Répartition des Rolls (Ratio Utile / Mort)
+// Ratio Rolls
 function calculateRollDistribution(persoObj, config) {
     if (!config || !config.weights) return { useful: 0, dead: 0, total: 0 };
     let useful = 0;
     let dead = 0;
-
     persoObj.artefacts.forEach(art => {
         art.subStats.forEach(sub => {
             let w = config.weights[sub.key];
             if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
-
             const rolls = getRollCount(sub.key, sub.value);
-            if (w && w > 0) useful += rolls;
-            else dead += rolls;
+            if (w && w > 0) useful += rolls; else dead += rolls;
         });
     });
-
     return { useful, dead, total: useful + dead };
 }
 
@@ -330,12 +326,10 @@ function calculateDeadRolls(persoObj, config) {
     if (!config || !config.weights) return { count: 0, details: [] };
     let deadRolls = 0;
     let deadStatsCounts = {};
-
     persoObj.artefacts.forEach(art => {
         art.subStats.forEach(sub => {
             let w = config.weights[sub.key];
             if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
-
             if (!w || w === 0) {
                 const rolls = getRollCount(sub.key, sub.value);
                 deadRolls += rolls;
@@ -343,12 +337,10 @@ function calculateDeadRolls(persoObj, config) {
             }
         });
     });
-
     const details = Object.entries(deadStatsCounts)
         .filter(([_, count]) => count > 0)
         .map(([key, count]) => ({ label: STAT_LABELS[key] || key, count: count }))
         .sort((a, b) => b.count - a.count);
-
     return { count: deadRolls, details: details };
 }
 
@@ -358,13 +350,40 @@ function getPriorities(persoObj) {
     const sorted = [...persoObj.artefacts].sort((a, b) => a.score - b.score);
     return sorted.slice(0, 3).map(art => {
         const typeName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
-        return {
-            piece: typeName,
-            score: art.score,
-            grade: art.grade.letter,
-            color: art.grade.color
-        };
+        return { piece: typeName, score: art.score, grade: art.grade.letter, color: art.grade.color };
     });
+}
+
+// NOUVEAU : Qualité des Rolls (RNG)
+function calculateRNGQuality(persoObj, config) {
+    if (!config || !config.weights || !window.MAX_ROLLS) return 0;
+    let totalPct = 0;
+    let count = 0;
+
+    persoObj.artefacts.forEach(art => {
+        art.subStats.forEach(sub => {
+            let w = config.weights[sub.key];
+            if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
+
+            // On ne juge que les stats utiles
+            if (w && w > 0) {
+                const maxVal = window.MAX_ROLLS[sub.key];
+                if (maxVal) {
+                    const rolls = getRollCount(sub.key, sub.value);
+                    if (rolls > 0) {
+                        // Ratio : Valeur Réelle / Valeur Théorique Max pour ce nombre de rolls
+                        // Ex: J'ai 3.9% TC (1 roll). Max roll = 3.9%. Ratio = 1.0 (100%)
+                        // Ex: J'ai 2.7% TC (1 roll). Ratio = 0.69 (69%)
+                        const theoreticalMax = rolls * maxVal;
+                        totalPct += (sub.value / theoreticalMax);
+                        count++;
+                    }
+                }
+            }
+        });
+    });
+
+    return count > 0 ? (totalPct / count) * 100 : 0;
 }
 
 // --- PROCESS ---
@@ -636,6 +655,7 @@ function renderShowcase(index) {
         const priorities = getPriorities(p);
         const critAdvice = getCritAdvice(b.cr, b.cd);
         const rollStats = calculateRollDistribution(p, config);
+        const rngQuality = calculateRNGQuality(p, config).toFixed(1);
 
         return `
                     <div style="background:rgba(255, 255, 255, 0.05); border:1px solid #444; border-radius:8px; padding:15px; margin-top:20px;">
@@ -671,6 +691,17 @@ function renderShowcase(index) {
                                 <div style="width:${(rollStats.dead/rollStats.total)*100}%; background:#ff4d4d;"></div>
                             </div>
                         </div>
+
+                        <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.75rem; color:#aaa;">Facteur Chance (Qualité des Rolls)</span>
+                            <span style="font-weight:bold; color:${rngQuality > 85 ? '#22c55e' : (rngQuality > 75 ? '#eab308' : '#ff4d4d')}">${rngQuality}%</span>
+                        </div>
+
+                        ${p.weapon.level < 90 ? `
+                        <div style="background:rgba(255, 77, 77, 0.15); border-left:3px solid #ff4d4d; color:#ff9999; padding:8px; border-radius:4px; font-size:0.75rem; margin-bottom:10px;">
+                            <i class="fa-solid fa-arrow-up"></i> <b>Gain Facile :</b> Montez votre arme niveau 90 !
+                        </div>
+                        ` : ''}
 
                         <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:6px; margin-bottom:10px; border-left:3px solid ${critAdvice.color};">
                             <div style="font-size:0.7rem; color:#aaa; text-transform:uppercase;">Équilibrage Critique</div>
