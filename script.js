@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Coaching & RNG)
+   SCRIPT PRINCIPAL (Version Finale : Crit Fix & Coaching Complet)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -33,7 +33,7 @@ function getRollCount(key, value) {
     return Math.round(value / avgRoll);
 }
 
-// 2. MAPPINGS
+// 2. MAPPINGS & DATA
 const ELEMENT_DATA = {
     "Fire": { id: 40, key: "pyro_dmg_" },
     "Water": { id: 42, key: "hydro_dmg_" },
@@ -44,51 +44,20 @@ const ELEMENT_DATA = {
     "Rock": { id: 45, key: "geo_dmg_" }
 };
 
-const STAT_MAPPING = {
-    "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_",
-    "FIGHT_PROP_ATTACK": "atk", "FIGHT_PROP_ATTACK_PERCENT": "atk_",
-    "FIGHT_PROP_DEFENSE": "def", "FIGHT_PROP_DEFENSE_PERCENT": "def_",
-    "FIGHT_PROP_CRITICAL": "critRate_", "FIGHT_PROP_CRITICAL_HURT": "critDMG_",
-    "FIGHT_PROP_CHARGE_EFFICIENCY": "enerRech_", "FIGHT_PROP_ELEMENT_MASTERY": "eleMas",
-    "FIGHT_PROP_HEAL_ADD": "heal_",
-    "FIGHT_PROP_PHYSICAL_ADD_HURT": "physical_dmg_", "FIGHT_PROP_FIRE_ADD_HURT": "pyro_dmg_",
-    "FIGHT_PROP_ELEC_ADD_HURT": "electro_dmg_", "FIGHT_PROP_WATER_ADD_HURT": "hydro_dmg_",
-    "FIGHT_PROP_GRASS_ADD_HURT": "dendro_dmg_", "FIGHT_PROP_WIND_ADD_HURT": "anemo_dmg_",
-    "FIGHT_PROP_ROCK_ADD_HURT": "geo_dmg_", "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_"
+const SUBSTAT_RANGES = {
+    "critRate_": { min: 2.7, max: 3.9 }, "critDMG_": { min: 5.4, max: 7.8 },
+    "atk_": { min: 4.1, max: 5.8 }, "hp_": { min: 4.1, max: 5.8 }, "def_": { min: 5.1, max: 7.3 },
+    "eleMas": { min: 16, max: 23 }, "enerRech_": { min: 4.5, max: 6.5 },
+    "atk": { min: 14, max: 19 }, "hp": { min: 209, max: 299 }, "def": { min: 16, max: 23 }
 };
 
-const STAT_LABELS = {
-    "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %",
-    "eleMas": "Maîtrise Élem.", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT",
-    "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "DGT Pyro",
-    "hydro_dmg_": "DGT Hydro", "cryo_dmg_": "DGT Cryo", "electro_dmg_": "DGT Électro",
-    "anemo_dmg_": "DGT Anémo", "geo_dmg_": "DGT Géo", "dendro_dmg_": "DGT Dendro",
-    "physical_dmg_": "DGT Phys."
-};
+const STAT_MAPPING = { "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_", "FIGHT_PROP_ATTACK": "atk", "FIGHT_PROP_ATTACK_PERCENT": "atk_", "FIGHT_PROP_DEFENSE": "def", "FIGHT_PROP_DEFENSE_PERCENT": "def_", "FIGHT_PROP_CRITICAL": "critRate_", "FIGHT_PROP_CRITICAL_HURT": "critDMG_", "FIGHT_PROP_CHARGE_EFFICIENCY": "enerRech_", "FIGHT_PROP_ELEMENT_MASTERY": "eleMas", "FIGHT_PROP_HEAL_ADD": "heal_", "FIGHT_PROP_PHYSICAL_ADD_HURT": "physical_dmg_", "FIGHT_PROP_FIRE_ADD_HURT": "pyro_dmg_", "FIGHT_PROP_ELEC_ADD_HURT": "electro_dmg_", "FIGHT_PROP_WATER_ADD_HURT": "hydro_dmg_", "FIGHT_PROP_GRASS_ADD_HURT": "dendro_dmg_", "FIGHT_PROP_WIND_ADD_HURT": "anemo_dmg_", "FIGHT_PROP_ROCK_ADD_HURT": "geo_dmg_", "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_" };
 
-const SET_NAME_MAPPING = {
-    "Sorcière des flammes ardentes": "CrimsonWitchOfFlames", "Emblème du destin brisé": "EmblemOfSeveredFate",
-    "Maréchaussée": "MarechausseeHunter", "Troupe dorée": "GoldenTroupe", "Rêve doré": "GildedDreams",
-    "Souvenir de la forêt": "DeepwoodMemories", "Codex d'obsidienne": "ObsidianCodex",
-    "Ombre de la Verte Chasseuse": "ViridescentVenerer", "Ancien Rituel Royal": "NoblesseOblige",
-    "Ténacité du Millelithe": "TenacityOfTheMillelith", "Coquille des rêves opulents": "HuskOfOpulentDreams",
-    "Palourde aux teintes océaniques": "OceanHuedClam", "Rideau du Gladiateur": "GladiatorsFinale",
-    "Bande Vagabonde": "WanderersTroupe", "Chevalerie ensanglantée": "BloodstainedChivalry",
-    "Colère de tonnerre": "ThunderingFury", "Dompteur de tonnerre": "Thundersoother",
-    "Amour chéri": "MaidenBeloved", "Roche ancienne": "ArchaicPetra", "Météore inversé": "RetracingBolide",
-    "Briseur de glace": "BlizzardStrayer", "Âme des profondeurs": "HeartOfDepth", "Flamme blême": "PaleFlame",
-    "Réminiscence nostalgique": "ShimenawasReminiscence", "Au-delà cinabrin": "VermillionHereafter",
-    "Échos d'une offrande": "EchoesOfAnOffering", "Chronique du Pavillon du désert": "DesertPavilionChronicle",
-    "Fleur du paradis perdu": "FlowerOfParadiseLost", "Rêve de la nymphe": "NymphsDream",
-    "Lueur du vourukasha": "VourukashasGlow", "Murmure nocturne en forêt d'échos": "NighttimeWhispersInTheEchoingWoods",
-    "Chanson des jours d'antan": "SongOfDaysPast", "Fragment d'harmonie fantasque": "FragmentOfHarmonicWhimsy",
-    "Rêverie inachevée": "UnfinishedReverie", "Parchemins du héros de la cité": "ScrollOfTheHeroOfCinderCity"
-};
+const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %", "eleMas": "Maîtrise Élem.", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT", "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "DGT Pyro", "hydro_dmg_": "DGT Hydro", "cryo_dmg_": "DGT Cryo", "electro_dmg_": "DGT Électro", "anemo_dmg_": "DGT Anémo", "geo_dmg_": "DGT Géo", "dendro_dmg_": "DGT Dendro", "physical_dmg_": "DGT Phys." };
 
-const ARTIFACT_TYPE_MAPPING = {
-    "EQUIP_BRACER": "Fleur de la vie", "EQUIP_NECKLACE": "Plume de la mort",
-    "EQUIP_SHOES": "Sables du temps", "EQUIP_RING": "Coupe d'éonothème", "EQUIP_DRESS": "Diadème de Logos"
-};
+const SET_NAME_MAPPING = { "Sorcière des flammes ardentes": "CrimsonWitchOfFlames", "Emblème du destin brisé": "EmblemOfSeveredFate", "Maréchaussée": "MarechausseeHunter", "Troupe dorée": "GoldenTroupe", "Rêve doré": "GildedDreams", "Souvenir de la forêt": "DeepwoodMemories", "Codex d'obsidienne": "ObsidianCodex", "Ombre de la Verte Chasseuse": "ViridescentVenerer", "Ancien Rituel Royal": "NoblesseOblige", "Ténacité du Millelithe": "TenacityOfTheMillelith", "Coquille des rêves opulents": "HuskOfOpulentDreams", "Palourde aux teintes océaniques": "OceanHuedClam", "Rideau du Gladiateur": "GladiatorsFinale", "Bande Vagabonde": "WanderersTroupe", "Chevalerie ensanglantée": "BloodstainedChivalry", "Colère de tonnerre": "ThunderingFury", "Dompteur de tonnerre": "Thundersoother", "Amour chéri": "MaidenBeloved", "Roche ancienne": "ArchaicPetra", "Météore inversé": "RetracingBolide", "Briseur de glace": "BlizzardStrayer", "Âme des profondeurs": "HeartOfDepth", "Flamme blême": "PaleFlame", "Réminiscence nostalgique": "ShimenawasReminiscence", "Au-delà cinabrin": "VermillionHereafter", "Échos d'une offrande": "EchoesOfAnOffering", "Chronique du Pavillon du désert": "DesertPavilionChronicle", "Fleur du paradis perdu": "FlowerOfParadiseLost", "Rêve de la nymphe": "NymphsDream", "Lueur du vourukasha": "VourukashasGlow", "Murmure nocturne en forêt d'échos": "NighttimeWhispersInTheEchoingWoods", "Chanson des jours d'antan": "SongOfDaysPast", "Fragment d'harmonie fantasque": "FragmentOfHarmonicWhimsy", "Rêverie inachevée": "UnfinishedReverie", "Parchemins du héros de la cité": "ScrollOfTheHeroOfCinderCity" };
+
+const ARTIFACT_TYPE_MAPPING = { "EQUIP_BRACER": "Fleur de la vie", "EQUIP_NECKLACE": "Plume de la mort", "EQUIP_SHOES": "Sables du temps", "EQUIP_RING": "Coupe d'éonothème", "EQUIP_DRESS": "Diadème de Logos" };
 
 let globalPersoData = [];
 let charData = {};
@@ -141,9 +110,7 @@ function formatValueDisplay(key, val) {
 
 function formatStat(propId, value) {
     let key = STAT_MAPPING[propId];
-    if (!key && (STAT_LABELS[propId] || propId === 'dmgBonus')) {
-        key = propId;
-    }
+    if (!key && (STAT_LABELS[propId] || propId === 'dmgBonus')) key = propId;
     if (!key) return { key: "unknown", value: value, label: propId, icon: "" };
 
     let val = value;
@@ -283,14 +250,18 @@ function calculatePotentialScore(persoObj, config) {
     return calculateCharacterScore(fakePerso, config);
 }
 
-// CONSEIL CRITIQUE
+// CONSEIL CRITIQUE (CORRIGÉ 85%)
 function getCritAdvice(cr, cd) {
-    if (cr > 100) return { color: '#ff4d4d', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%).` };
-    if (cr >= 90) return { color: '#22c55e', msg: "Taux CRIT excellent. Investissez tout dans le DGT CRIT." };
+    if (cr > 100) return { color: '#ff4d4d', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Inutile de dépasser 100%.` };
+
+    // Au-dessus de 85%, on relâche la règle du 1:2
+    if (cr >= 85) return { color: '#22c55e', msg: "Taux CRIT excellent (>85%). Ne vous souciez plus du ratio, foncez sur le DGT CRIT." };
+
     const diff = (cr * 2) - cd;
-    if (Math.abs(diff) < 25) return { color: '#22c55e', msg: "Ratio 1:2 Équilibré." };
-    if (diff > 25) return { color: '#3b82f6', msg: "Ratio déséquilibré : Trop de Taux CRIT." };
-    if (diff < -25) return { color: '#eab308', msg: "Ratio déséquilibré : Manque de Taux CRIT." };
+    if (Math.abs(diff) < 25) return { color: '#22c55e', msg: "Ratio 1:2 Équilibré (Excellent)." };
+    if (diff > 25) return { color: '#3b82f6', msg: "Ratio déséquilibré : Trop de Taux CRIT par rapport aux DGT." };
+    if (diff < -25) return { color: '#eab308', msg: "Ratio déséquilibré : Manque de Taux CRIT pour être stable." };
+
     return { color: '#888', msg: "Analyse impossible" };
 }
 
@@ -354,26 +325,20 @@ function getPriorities(persoObj) {
     });
 }
 
-// NOUVEAU : Qualité des Rolls (RNG)
+// Qualité des Rolls (RNG)
 function calculateRNGQuality(persoObj, config) {
     if (!config || !config.weights || !window.MAX_ROLLS) return 0;
     let totalPct = 0;
     let count = 0;
-
     persoObj.artefacts.forEach(art => {
         art.subStats.forEach(sub => {
             let w = config.weights[sub.key];
             if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
-
-            // On ne juge que les stats utiles
             if (w && w > 0) {
                 const maxVal = window.MAX_ROLLS[sub.key];
                 if (maxVal) {
                     const rolls = getRollCount(sub.key, sub.value);
                     if (rolls > 0) {
-                        // Ratio : Valeur Réelle / Valeur Théorique Max pour ce nombre de rolls
-                        // Ex: J'ai 3.9% TC (1 roll). Max roll = 3.9%. Ratio = 1.0 (100%)
-                        // Ex: J'ai 2.7% TC (1 roll). Ratio = 0.69 (69%)
                         const theoreticalMax = rolls * maxVal;
                         totalPct += (sub.value / theoreticalMax);
                         count++;
@@ -382,8 +347,93 @@ function calculateRNGQuality(persoObj, config) {
             }
         });
     });
-
     return count > 0 ? (totalPct / count) * 100 : 0;
+}
+
+// NOUVEAU : Simulation Potentiel Caché (Tous Artéfacts, Multi-Stats)
+function simulateDeadStatReplacements(persoObj, config) {
+    if (!config || !config.weights) return [];
+
+    let suggestions = [];
+
+    // On parcourt chaque artéfact
+    persoObj.artefacts.forEach(art => {
+        let deadStats = []; // Liste {key, rolls, label}
+        let presentStats = new Set();
+
+        // 1. Analyse des stats
+        art.subStats.forEach(sub => {
+            presentStats.add(sub.key);
+            let w = config.weights[sub.key];
+            if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
+
+            // Si stat morte
+            if (!w || w === 0) {
+                const rolls = getRollCount(sub.key, sub.value);
+                if (rolls > 0) {
+                    deadStats.push({ key: sub.key, rolls: rolls, label: STAT_LABELS[sub.key] || sub.key });
+                }
+            }
+        });
+
+        // S'il n'y a pas de stats mortes, on passe
+        if (deadStats.length === 0) return;
+
+        // 2. Trouver les stats utiles manquantes (Triées par poids)
+        const desiredStats = Object.entries(config.weights)
+            .filter(([key, w]) => w > 0.5) // On veut une stat importante
+            .sort((a, b) => b[1] - a[1]) // Tri décroissant par poids
+            .map(([key]) => key);
+
+        // 3. Mapping (Remplacer Dead -> Target)
+        // On trie les stats mortes par nombre de rolls (les plus grosses d'abord)
+        deadStats.sort((a, b) => b.rolls - a.rolls);
+
+        let replacements = [];
+        let usedTargets = new Set(presentStats); // Pour ne pas proposer une stat déjà là
+
+        deadStats.forEach(dead => {
+            // Trouver la meilleure stat cible disponible pour ce slot
+            let targetKey = desiredStats.find(k => !usedTargets.has(k) && !k.includes("_dmg_") && k !== art.mainStat.key);
+
+            if (targetKey && SUBSTAT_RANGES[targetKey]) {
+                usedTargets.add(targetKey); // On marque cette stat comme utilisée pour cet artéfact
+
+                const range = SUBSTAT_RANGES[targetKey];
+                const minVal = (range.min * dead.rolls).toFixed(1);
+                const maxVal = (range.max * dead.rolls).toFixed(1);
+                const suffix = (targetKey.endsWith('_') || targetKey === "enerRech_" || targetKey === "critRate_" || targetKey === "critDMG_") ? "%" : "";
+                const targetLabel = STAT_LABELS[targetKey] || targetKey;
+
+                replacements.push({
+                    dead: `${dead.label} (${dead.rolls})`,
+                    target: `${targetLabel} (${dead.rolls})`,
+                    gain: `+${minVal} à ${maxVal}${suffix} ${targetLabel}`
+                });
+            }
+        });
+
+        if (replacements.length > 0) {
+            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+
+            // Construction du texte HTML pour cet artéfact
+            const deadText = replacements.map(r => `<span style="color:#ff6b6b">${r.dead}</span>`).join(' et ');
+            const targetText = replacements.map(r => `<span style="color:var(--accent-gold)">${r.target}</span>`).join(' et ');
+            const gainText = replacements.map(r => `<div style="font-weight:bold; color:var(--accent-gold); margin-top:2px;">${r.gain}</div>`).join('');
+
+            suggestions.push({
+                pieceName: pieceName,
+                text: `Remplacer ${deadText} par ${targetText} :`,
+                gainHtml: gainText,
+                totalDeadRolls: deadStats.reduce((acc, curr) => acc + curr.rolls, 0) // Pour trier l'affichage
+            });
+        }
+    });
+
+    // On trie les suggestions pour afficher celles qui ont le plus de rolls à changer en premier
+    suggestions.sort((a, b) => b.totalDeadRolls - a.totalDeadRolls);
+
+    return suggestions;
 }
 
 // --- PROCESS ---
@@ -657,6 +707,9 @@ function renderShowcase(index) {
         const rollStats = calculateRollDistribution(p, config);
         const rngQuality = calculateRNGQuality(p, config).toFixed(1);
 
+        // SIMULATION STATS MORTES (MULTI)
+        const deadSims = simulateDeadStatReplacements(p, config);
+
         return `
                     <div style="background:rgba(255, 255, 255, 0.05); border:1px solid #444; border-radius:8px; padding:15px; margin-top:20px;">
                         <h4 style="color:#fff; margin-bottom:15px; font-size:0.9rem; text-transform:uppercase; border-bottom:1px solid #444; padding-bottom:5px;">
@@ -700,6 +753,21 @@ function renderShowcase(index) {
                         ${p.weapon.level < 90 ? `
                         <div style="background:rgba(255, 77, 77, 0.15); border-left:3px solid #ff4d4d; color:#ff9999; padding:8px; border-radius:4px; font-size:0.75rem; margin-bottom:10px;">
                             <i class="fa-solid fa-arrow-up"></i> <b>Gain Facile :</b> Montez votre arme niveau 90 !
+                        </div>
+                        ` : ''}
+
+                        ${deadSims.length > 0 ? `
+                        <div style="background:rgba(59, 130, 246, 0.15); border-left:3px solid #3b82f6; padding:10px; border-radius:4px; margin-bottom:15px;">
+                            <div style="font-size:0.7rem; color:#93c5fd; text-transform:uppercase; margin-bottom:8px;">Simulation : Potentiel Caché</div>
+                            ${deadSims.map(sim => `
+                                <div style="margin-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1); padding-bottom:8px;">
+                                    <div style="font-size:0.8rem; color:#fff; font-weight:bold;">${sim.pieceName}</div>
+                                    <div style="font-size:0.75rem; color:#ccc; line-height:1.4;">
+                                        ${sim.text}<br>
+                                        ${sim.gainHtml}
+                                    </div>
+                                </div>
+                            `).join('')}
                         </div>
                         ` : ''}
 
@@ -790,6 +858,7 @@ function renderShowcase(index) {
                 </div>`;
         });
         const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+
         html += `
             <div class="card">
                 <div class="item-header">
