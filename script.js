@@ -1,10 +1,9 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Rolls + Mappings + Rareté/Niveau)
+   SCRIPT PRINCIPAL (Version Finale : Fix window + Combat Stats)
    ========================================= */
 
-// --- 1. CONFIGURATION DES SVG (VECTEURS LOCAUX) ---
+// --- 1. CONFIGURATION DES SVG ---
 const SVG_PATHS = {
-    // Formes de base
     "heart": "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z",
     "sword": "M14.5 17.5L12 15l-2.5 2.5L12 20l2.5-2.5zm5.7-9.3l-2.4-2.4c-.4-.4-1-.4-1.4 0l-9.5 9.5 2.4 2.4 9.5-9.5c.4-.4.4-1 0-1.4zM5.1 14.9L2.7 17.3c-.4.4-.4 1 0 1.4l2.4 2.4c.4.4 1 .4 1.4 0l2.4-2.4-3.8-3.8z",
     "shield": "M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z",
@@ -13,29 +12,21 @@ const SVG_PATHS = {
     "target": "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z",
     "impact": "M12 2L1 21h22L12 2zm0 3.5L18.5 19H5.5L12 5.5z",
     "cross": "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8.5 12h-2v-3h-3v-2h3v-3h2v3h3v2h-3v3z",
-
-    // Elements
     "fire": "M19.48 13.03c-.52-1.29-2.17-3.23-2.17-3.23s.27-1.74-.95-3.41c-1.22-1.67-3.14-1.92-3.14-1.92s.32 1.94-.49 3.01c-.81 1.07-2.73 1.19-2.73 1.19s1.39-2.77.29-4.88C9.52 2.15 7.42 2 7.42 2s.67 2.37-.53 4.04c-1.2 1.67-1.12 3.86-1.12 3.86s-1.87 1.12-1.72 4.18c.15 3.06 2.5 5.92 7.95 5.92 5.45 0 7.85-2.6 8-5.69.02-1.09-.52-1.28-.52-1.28z",
     "water": "M12 2.6L8.5 7.5c-1.8 2.5-1.4 5.2.9 6.9 2.3 1.7 5.3 1.1 6.6-1.5.5-1 1-3.1-4-10.3z",
     "wind": "M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z",
     "rock": "M12 2L2 22h20L12 2zm0 4l6.5 13h-13L12 6z",
     "ice": "M22 11h-5V6h-2v5H10V6H8v5H3v2h5v5h2v-5h5v5h2v-5h5z",
     "leaf": "M17 8C8 10 5.9 16.17 3.82 21.34 5.71 20.35 8.32 19 12 18c6.9 3 9-3 9-3s-2.07-3.95-4-7z",
-
-    // Badge % (Petit symbole pourcentage dessiné)
     "percent_badge": "M18.5 5.5l-9 13M10.5 6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm7 10a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"
 };
 
-// Fonction helper pour construire le SVG complet
 function createSvg(pathKey, isPercent = false) {
     let content = `<path d="${SVG_PATHS[pathKey]}" />`;
-    if (isPercent) {
-        content += `<g transform="scale(0.6) translate(14, 14)"><path d="${SVG_PATHS['percent_badge']}" fill="var(--accent-gold)" stroke="black" stroke-width="1"/></g>`;
-    }
+    if (isPercent) content += `<g transform="scale(0.6) translate(14, 14)"><path d="${SVG_PATHS['percent_badge']}" fill="var(--accent-gold)" stroke="black" stroke-width="1"/></g>`;
     return `<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px; height:16px; display:inline-block; vertical-align:middle;">${content}</svg>`;
 }
 
-// Fonction helper pour estimer le nombre de rolls
 function getRollCount(key, value) {
     if (!window.MAX_ROLLS || !window.MAX_ROLLS[key]) return 0;
     const avgRoll = window.MAX_ROLLS[key] * 0.85;
@@ -44,97 +35,55 @@ function getRollCount(key, value) {
 
 // 2. MAPPINGS
 const STAT_MAPPING = {
-    "FIGHT_PROP_HP": "hp",
-    "FIGHT_PROP_HP_PERCENT": "hp_",
-    "FIGHT_PROP_ATTACK": "atk",
-    "FIGHT_PROP_ATTACK_PERCENT": "atk_",
-    "FIGHT_PROP_DEFENSE": "def",
-    "FIGHT_PROP_DEFENSE_PERCENT": "def_",
-    "FIGHT_PROP_CRITICAL": "critRate_",
-    "FIGHT_PROP_CRITICAL_HURT": "critDMG_",
-    "FIGHT_PROP_CHARGE_EFFICIENCY": "enerRech_",
-    "FIGHT_PROP_ELEMENT_MASTERY": "eleMas",
+    "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_",
+    "FIGHT_PROP_ATTACK": "atk", "FIGHT_PROP_ATTACK_PERCENT": "atk_",
+    "FIGHT_PROP_DEFENSE": "def", "FIGHT_PROP_DEFENSE_PERCENT": "def_",
+    "FIGHT_PROP_CRITICAL": "critRate_", "FIGHT_PROP_CRITICAL_HURT": "critDMG_",
+    "FIGHT_PROP_CHARGE_EFFICIENCY": "enerRech_", "FIGHT_PROP_ELEMENT_MASTERY": "eleMas",
     "FIGHT_PROP_HEAL_ADD": "heal_",
-    "FIGHT_PROP_PHYSICAL_ADD_HURT": "physical_dmg_",
-    "FIGHT_PROP_FIRE_ADD_HURT": "pyro_dmg_",
-    "FIGHT_PROP_ELEC_ADD_HURT": "electro_dmg_",
-    "FIGHT_PROP_WATER_ADD_HURT": "hydro_dmg_",
-    "FIGHT_PROP_GRASS_ADD_HURT": "dendro_dmg_",
-    "FIGHT_PROP_WIND_ADD_HURT": "anemo_dmg_",
-    "FIGHT_PROP_ROCK_ADD_HURT": "geo_dmg_",
-    "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_"
+    "FIGHT_PROP_PHYSICAL_ADD_HURT": "physical_dmg_", "FIGHT_PROP_FIRE_ADD_HURT": "pyro_dmg_",
+    "FIGHT_PROP_ELEC_ADD_HURT": "electro_dmg_", "FIGHT_PROP_WATER_ADD_HURT": "hydro_dmg_",
+    "FIGHT_PROP_GRASS_ADD_HURT": "dendro_dmg_", "FIGHT_PROP_WIND_ADD_HURT": "anemo_dmg_",
+    "FIGHT_PROP_ROCK_ADD_HURT": "geo_dmg_", "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_"
 };
 
 const STAT_LABELS = {
-    "hp": "PV", "hp_": "PV %",
-    "atk": "ATQ", "atk_": "ATQ %",
-    "def": "DÉF", "def_": "DÉF %",
-    "eleMas": "Maîtrise Élem.",
-    "enerRech_": "Recharge d'énergie",
-    "critRate_": "Taux CRIT",
-    "critDMG_": "DGT CRIT",
-    "heal_": "Bonus de Soins",
-    "pyro_dmg_": "DGT Pyro",
-    "hydro_dmg_": "DGT Hydro",
-    "cryo_dmg_": "DGT Cryo",
-    "electro_dmg_": "DGT Électro",
-    "anemo_dmg_": "DGT Anémo",
-    "geo_dmg_": "DGT Géo",
-    "dendro_dmg_": "DGT Dendro",
+    "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %",
+    "eleMas": "Maîtrise Élem.", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT",
+    "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "DGT Pyro",
+    "hydro_dmg_": "DGT Hydro", "cryo_dmg_": "DGT Cryo", "electro_dmg_": "DGT Électro",
+    "anemo_dmg_": "DGT Anémo", "geo_dmg_": "DGT Géo", "dendro_dmg_": "DGT Dendro",
     "physical_dmg_": "DGT Phys."
 };
 
 const SET_NAME_MAPPING = {
-    "Sorcière des flammes ardentes": "CrimsonWitchOfFlames",
-    "Emblème du destin brisé": "EmblemOfSeveredFate",
-    "Maréchaussée": "MarechausseeHunter",
-    "Troupe dorée": "GoldenTroupe",
-    "Rêve doré": "GildedDreams",
-    "Souvenir de la forêt": "DeepwoodMemories",
-    "Codex d'obsidienne": "ObsidianCodex",
-    "Ombre de la Verte Chasseuse": "ViridescentVenerer",
-    "Ancien Rituel Royal": "NoblesseOblige",
-    "Ténacité du Millelithe": "TenacityOfTheMillelith",
-    "Coquille des rêves opulents": "HuskOfOpulentDreams",
-    "Palourde aux teintes océaniques": "OceanHuedClam",
-    "Rideau du Gladiateur": "GladiatorsFinale",
-    "Bande Vagabonde": "WanderersTroupe",
-    "Chevalerie ensanglantée": "BloodstainedChivalry",
-    "Colère de tonnerre": "ThunderingFury",
-    "Dompteur de tonnerre": "Thundersoother",
-    "Amour chéri": "MaidenBeloved",
-    "Roche ancienne": "ArchaicPetra",
-    "Météore inversé": "RetracingBolide",
-    "Briseur de glace": "BlizzardStrayer",
-    "Âme des profondeurs": "HeartOfDepth",
-    "Flamme blême": "PaleFlame",
-    "Réminiscence nostalgique": "ShimenawasReminiscence",
-    "Au-delà cinabrin": "VermillionHereafter",
-    "Échos d'une offrande": "EchoesOfAnOffering",
-    "Chronique du Pavillon du désert": "DesertPavilionChronicle",
-    "Fleur du paradis perdu": "FlowerOfParadiseLost",
-    "Rêve de la nymphe": "NymphsDream",
-    "Lueur du vourukasha": "VourukashasGlow",
-    "Murmure nocturne en forêt d'échos": "NighttimeWhispersInTheEchoingWoods",
-    "Chanson des jours d'antan": "SongOfDaysPast",
-    "Fragment d'harmonie fantasque": "FragmentOfHarmonicWhimsy",
-    "Rêverie inachevée": "UnfinishedReverie",
-    "Parchemins du héros de la cité": "ScrollOfTheHeroOfCinderCity"
+    "Sorcière des flammes ardentes": "CrimsonWitchOfFlames", "Emblème du destin brisé": "EmblemOfSeveredFate",
+    "Maréchaussée": "MarechausseeHunter", "Troupe dorée": "GoldenTroupe", "Rêve doré": "GildedDreams",
+    "Souvenir de la forêt": "DeepwoodMemories", "Codex d'obsidienne": "ObsidianCodex",
+    "Ombre de la Verte Chasseuse": "ViridescentVenerer", "Ancien Rituel Royal": "NoblesseOblige",
+    "Ténacité du Millelithe": "TenacityOfTheMillelith", "Coquille des rêves opulents": "HuskOfOpulentDreams",
+    "Palourde aux teintes océaniques": "OceanHuedClam", "Rideau du Gladiateur": "GladiatorsFinale",
+    "Bande Vagabonde": "WanderersTroupe", "Chevalerie ensanglantée": "BloodstainedChivalry",
+    "Colère de tonnerre": "ThunderingFury", "Dompteur de tonnerre": "Thundersoother",
+    "Amour chéri": "MaidenBeloved", "Roche ancienne": "ArchaicPetra", "Météore inversé": "RetracingBolide",
+    "Briseur de glace": "BlizzardStrayer", "Âme des profondeurs": "HeartOfDepth", "Flamme blême": "PaleFlame",
+    "Réminiscence nostalgique": "ShimenawasReminiscence", "Au-delà cinabrin": "VermillionHereafter",
+    "Échos d'une offrande": "EchoesOfAnOffering", "Chronique du Pavillon du désert": "DesertPavilionChronicle",
+    "Fleur du paradis perdu": "FlowerOfParadiseLost", "Rêve de la nymphe": "NymphsDream",
+    "Lueur du vourukasha": "VourukashasGlow", "Murmure nocturne en forêt d'échos": "NighttimeWhispersInTheEchoingWoods",
+    "Chanson des jours d'antan": "SongOfDaysPast", "Fragment d'harmonie fantasque": "FragmentOfHarmonicWhimsy",
+    "Rêverie inachevée": "UnfinishedReverie", "Parchemins du héros de la cité": "ScrollOfTheHeroOfCinderCity"
 };
 
 const ARTIFACT_TYPE_MAPPING = {
-    "EQUIP_BRACER": "Fleur de la vie",
-    "EQUIP_NECKLACE": "Plume de la mort",
-    "EQUIP_SHOES": "Sables du temps",
-    "EQUIP_RING": "Coupe d'éonothème",
-    "EQUIP_DRESS": "Diadème de Logos"
+    "EQUIP_BRACER": "Fleur de la vie", "EQUIP_NECKLACE": "Plume de la mort",
+    "EQUIP_SHOES": "Sables du temps", "EQUIP_RING": "Coupe d'éonothème", "EQUIP_DRESS": "Diadème de Logos"
 };
 
 let globalPersoData = [];
 let charData = {};
 let locData = {};
 
-// --- CHARGEMENT ---
 async function loadGameData() {
     const loader = document.getElementById('loading-msg');
     if(loader) loader.innerText = "Chargement API...";
@@ -157,9 +106,7 @@ async function fetchUserData() {
     if (!uid) return alert("UID manquant");
     const loader = document.getElementById('loading-msg');
     if(loader) loader.innerText = "Récupération...";
-
     const proxy = `https://corsproxy.io/?${encodeURIComponent(`https://enka.network/api/uid/${uid}`)}`;
-
     try {
         const res = await fetch(proxy);
         if(!res.ok) throw new Error("Erreur Enka");
@@ -172,7 +119,6 @@ async function fetchUserData() {
     }
 }
 
-// --- UTILS ---
 function getText(hash) {
     if (locData && locData.fr && locData.fr[hash]) return locData.fr[hash];
     return "Inconnu";
@@ -186,17 +132,13 @@ function formatValueDisplay(key, val) {
 function formatStat(propId, value) {
     const key = STAT_MAPPING[propId];
     if (!key) return { key: "unknown", value: value, label: propId, icon: "" };
-
     let val = value;
     let isPercent = false;
-
     if (key.endsWith('_') || ['critRate_', 'critDMG_', 'enerRech_', 'heal_'].includes(key)) {
         isPercent = true;
         if (val < 2.0) val = val * 100;
     }
-
     const label = STAT_LABELS[key] || key;
-
     let svgContent = "";
     if (key === 'hp') svgContent = createSvg('heart', false);
     else if (key === 'hp_') svgContent = createSvg('heart', true);
@@ -218,8 +160,63 @@ function formatStat(propId, value) {
     else if (key === 'dendro_dmg_') svgContent = createSvg('leaf');
     else if (key === 'physical_dmg_') svgContent = createSvg('sword');
     else svgContent = createSvg('star');
-
     return { key, value: val, label, icon: svgContent, isPercent };
+}
+
+// --- LOGIQUE CALCUL BONUS (CORRIGÉE : Pas de window.) ---
+function calculateBuffedStats(baseStats, currentStats, weaponName, setsCounter) {
+    let buffed = { ...currentStats };
+
+    // 1. Appliquer passif Arme
+    // On vérifie si la constante globale WEAPON_PASSIVES existe
+    if (typeof WEAPON_PASSIVES !== 'undefined' && WEAPON_PASSIVES[weaponName]) {
+        const bonuses = WEAPON_PASSIVES[weaponName];
+        for (const [statKey, value] of Object.entries(bonuses)) {
+            if (statKey === "atk_") buffed.atk += baseStats.atk * value;
+            else if (statKey === "hp_") buffed.hp += baseStats.hp * value;
+            else if (statKey === "def_") buffed.def += baseStats.def * value;
+            else if (statKey === "critRate_" || statKey === "critDMG_" || statKey === "enerRech_" || statKey.includes("_dmg_")) {
+                let shortKey = getShortKey(statKey);
+                if(shortKey) buffed[shortKey] += value * 100;
+            } else if (statKey === "eleMas") {
+                buffed.em += value;
+            }
+        }
+    }
+
+    // 2. Appliquer passif Sets
+    if (typeof SET_PASSIVES !== 'undefined') {
+        for (const [setKey, count] of Object.entries(setsCounter)) {
+            if (SET_PASSIVES[setKey]) {
+                const setBonuses = SET_PASSIVES[setKey];
+                if (count >= 2 && setBonuses[2]) applyBonus(buffed, baseStats, setBonuses[2]);
+                if (count >= 4 && setBonuses[4]) applyBonus(buffed, baseStats, setBonuses[4]);
+            }
+        }
+    }
+    return buffed;
+}
+
+function applyBonus(buffed, baseStats, bonuses) {
+    for (const [statKey, value] of Object.entries(bonuses)) {
+        if (statKey === "atk_") buffed.atk += baseStats.atk * value;
+        else if (statKey === "hp_") buffed.hp += baseStats.hp * value;
+        else if (statKey === "def_") buffed.def += baseStats.def * value;
+        else if (statKey === "critRate_" || statKey === "critDMG_" || statKey === "enerRech_" || statKey.includes("_dmg_")) {
+            let shortKey = getShortKey(statKey);
+            if(shortKey) buffed[shortKey] += value * 100;
+        } else if (statKey === "eleMas") {
+            buffed.em += value;
+        }
+    }
+}
+
+function getShortKey(longKey) {
+    if (longKey === "critRate_") return "cr";
+    if (longKey === "critDMG_") return "cd";
+    if (longKey === "enerRech_") return "er";
+    if (longKey.includes("_dmg_")) return "elemBonus";
+    return null;
 }
 
 // --- PROCESS ---
@@ -249,6 +246,12 @@ function processData(data) {
         const sideIcon = `https://enka.network/ui/${info.SideIconName?.replace("Side_Match", "Side")}.png`;
 
         const fp = perso.fightPropMap;
+        const baseStats = {
+            hp: fp[1] || 0,
+            atk: fp[4] || 0,
+            def: fp[7] || 0
+        };
+
         const combatStats = {
             hp: fp[2000], atk: fp[2001], def: fp[2002], em: fp[28],
             cr: fp[20] * 100, cd: fp[22] * 100, er: fp[23] * 100,
@@ -257,14 +260,13 @@ function processData(data) {
 
         const artefacts = [];
         let weapon = null;
+        let setsCounter = {};
 
         perso.equipList.forEach(item => {
             const flat = item.flat;
-
             if (item.weapon) {
                 const main = flat.weaponStats && flat.weaponStats[0] ? formatStat(flat.weaponStats[0].appendPropId, flat.weaponStats[0].statValue) : null;
                 const sub = flat.weaponStats && flat.weaponStats[1] ? formatStat(flat.weaponStats[1].appendPropId, flat.weaponStats[1].statValue) : null;
-
                 weapon = {
                     name: getText(flat.nameTextMapHash),
                     level: item.weapon.level,
@@ -273,33 +275,34 @@ function processData(data) {
                     baseAtk: main, subStat: sub, stars: flat.rankLevel
                 };
             }
-
             if (flat.itemType === "ITEM_RELIQUARY") {
                 const nomSetFR = getText(flat.setNameTextMapHash);
                 const setKey = SET_NAME_MAPPING[nomSetFR] || "UnknownSet";
+                setsCounter[setKey] = (setsCounter[setKey] || 0) + 1;
+
                 const subs = [];
                 if (flat.reliquarySubstats) {
                     flat.reliquarySubstats.forEach(s => {
                         subs.push(formatStat(s.appendPropId, s.statValue));
                     });
                 }
-
                 artefacts.push({
-                    type: flat.equipType,
-                    setKey: setKey,
-                    setName: nomSetFR,
+                    type: flat.equipType, setKey: setKey, setName: nomSetFR,
                     icon: `https://enka.network/ui/${flat.icon}.png`,
                     mainStat: formatStat(flat.reliquaryMainstat.mainPropId, flat.reliquaryMainstat.statValue),
-                    subStats: subs,
-                    level: item.reliquary.level - 1,
-                    stars: flat.rankLevel // Récupération rareté
+                    subStats: subs, level: item.reliquary.level - 1, stars: flat.rankLevel
                 });
             }
         });
 
+        // CALCUL DES STATS BUFFÉES
+        const buffedStats = calculateBuffedStats(baseStats, combatStats, weapon ? weapon.name : "", setsCounter);
+
         const persoObj = {
             id: id, nom, rarity, level, cons: constellations, talents,
-            image: sideIcon, splashArt: splashUrl, combatStats, weapon, artefacts,
+            image: sideIcon, splashArt: splashUrl,
+            combatStats, buffedStats,
+            weapon, artefacts, setsCounter,
             evaluation: null, weights: null
         };
 
@@ -320,7 +323,6 @@ function renderSidebar() {
     const list = document.getElementById('sidebar-list');
     if(!list) return;
     list.innerHTML = "";
-
     globalPersoData.forEach((p, index) => {
         const div = document.createElement('div');
         div.className = `char-card ${index === 0 ? 'active' : ''}`;
@@ -336,8 +338,7 @@ function renderSidebar() {
                 <div style="font-size:0.85rem; color:#aaa">Score: ${p.evaluation.score} 
                     <span style="color:${p.evaluation.grade.color}; float:right; font-weight:bold;">${p.evaluation.grade.letter}</span>
                 </div>
-            </div>
-        `;
+            </div>`;
         list.appendChild(div);
     });
 }
@@ -348,6 +349,7 @@ function renderShowcase(index) {
     if(!container) return;
 
     const s = p.combatStats;
+    const b = p.buffedStats;
     const ev = p.evaluation;
 
     let talentsHtml = `<div style="display:flex; justify-content:center; gap:20px; margin-top:20px;">`;
@@ -367,6 +369,20 @@ function renderShowcase(index) {
             <span class="stat-val" style="${isHighlight ? 'color:var(--accent-gold)' : ''}">${val}</span>
         </div>`;
 
+    let combatStatsHtml = `
+        <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; margin-top:15px; border:1px solid #333;">
+            <h3 style="font-size:0.9rem; color:var(--accent-gold); text-transform:uppercase; margin-bottom:10px; font-weight:bold;">Stats de Combat (Passifs Inclus)</h3>
+            ${statLine(createSvg('heart'), "PV Max", Math.round(b.hp), b.hp > s.hp)}
+            ${statLine(createSvg('sword'), "ATQ", Math.round(b.atk), b.atk > s.atk)}
+            ${statLine(createSvg('shield'), "DÉF", Math.round(b.def), b.def > s.def)}
+            ${statLine(createSvg('star'), "Maîtrise", Math.round(b.em), b.em > s.em)}
+            ${statLine(createSvg('target'), "Taux CRIT", b.cr.toFixed(1)+'%', b.cr > s.cr)}
+            ${statLine(createSvg('impact'), "DGT CRIT", b.cd.toFixed(1)+'%', b.cd > s.cd)}
+            ${statLine(createSvg('flash'), "ER", b.er.toFixed(1)+'%', b.er > s.er)}
+            ${statLine(createSvg('fire'), "Bonus Elem.", b.elemBonus.toFixed(1)+'%', b.elemBonus > s.elemBonus)}
+        </div>
+    `;
+
     let html = `
         <div class="showcase-area">
             <div class="splash-art-container" style="background-image: url('${p.splashArt}');"></div>
@@ -378,6 +394,8 @@ function renderShowcase(index) {
                         <div style="font-size:0.9rem; color:var(--accent-gold); font-weight:bold;">C${p.cons}</div>
                     </div>
                 </div>
+                
+                <h3 style="font-size:0.8rem; color:#888; text-transform:uppercase; margin-bottom:5px;">Stats Menu</h3>
                 ${statLine(createSvg('heart'), "PV Max", Math.round(s.hp))}
                 ${statLine(createSvg('sword'), "ATQ", Math.round(s.atk))}
                 ${statLine(createSvg('shield'), "DÉF", Math.round(s.def))}
@@ -386,6 +404,10 @@ function renderShowcase(index) {
                 ${statLine(createSvg('impact'), "DGT CRIT", s.cd.toFixed(1)+'%')}
                 ${statLine(createSvg('flash'), "ER", s.er.toFixed(1)+'%', true)}
                 ${statLine(createSvg('fire'), "Bonus Elem.", s.elemBonus.toFixed(1)+'%')}
+
+                ${talentsHtml}
+                ${combatStatsHtml}
+
                 <div class="global-score-card">
                     <div>
                         <div style="color:var(--accent-gold); font-size:0.8rem; text-transform:uppercase; font-weight:bold;">Score Global</div>
@@ -396,7 +418,6 @@ function renderShowcase(index) {
                         <span style="color:${ev.grade.color}; font-weight:bold; font-size:1.2rem;">${ev.grade.letter}</span>
                     </div>
                 </div>
-                ${talentsHtml}
             </div>
         </div>
         <div class="equipment-area">
@@ -433,7 +454,6 @@ function renderShowcase(index) {
             if (w === undefined) w = 0;
             const isDead = w === 0;
             const rolls = getRollCount(sub.key, sub.value);
-
             subsHtml += `
                 <div class="substat-row ${isDead ? 'dead' : ''}">
                     <span style="display:flex; align-items:center; gap:5px;">
@@ -444,9 +464,7 @@ function renderShowcase(index) {
                     <span>${formatValueDisplay(sub.key, sub.value)}</span>
                 </div>`;
         });
-
         const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
-
         html += `
             <div class="card">
                 <div class="item-header">

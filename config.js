@@ -92,3 +92,34 @@ const CHARACTER_CONFIG = {
         goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2"]
     },
 };
+
+/* =========================================
+   PASSIFS (Armes & Sets) - Ajout Manuel
+   ========================================= */
+
+// Nom exact de l'arme (Français) -> Bonus à ajouter
+const WEAPON_PASSIVES = {
+    "Bâton d'Homa": {
+        "hp_": 0.20, // +20% PV
+        "atk_bonus_scaling": { "source": "hp", "percent": 0.008 } // Cas complexe: 0.8% des PV Max en ATQ (optionnel pour l'instant, restons simple)
+    },
+    "Mille soleils brûlants": { "atk_": 0.49, "critDMG_": 0.35 }, // Exemple fictif: +40% TC
+    "Lumière du faucheur": { "enerRech_": 0.30, "electro_dmg_": 0.12 }, // Exemple (approximatif pour le test)
+    "Clé de Khaj-Nisut": { "hp_": 0.20 }
+};
+
+// Nom du set (Clé Anglaise utilisée dans le code) -> Bonus
+const SET_PASSIVES = {
+    "MarechausseeHunter": {
+        4: { "critRate_": 0.36 } // 3 stacks de 12% = 36%
+    },
+    "CrimsonWitchOfFlames": {
+        4: { "pyro_dmg_": 0.15 } // Bonus réaction + petit bonus DGT (simplifié)
+    },
+    "BlizzardStrayer": {
+        4: { "critRate_": 0.40 } // Contre ennemis gelés
+    },
+    "ObsidianCodex": {
+        4: { "critRate_": 0.40 }
+    }
+};
