@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Buffs Groupés UX)
+   SCRIPT PRINCIPAL (Version Finale : Buffs Only)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -163,29 +163,48 @@ function formatStat(propId, value) {
     return { key, value: val, label, icon: svgContent, isPercent };
 }
 
-// --- LOGIQUE CALCUL BONUS DYNAMIQUE ---
+// --- LOGIQUE CALCUL BONUS DYNAMIQUE (2 PASSES) ---
 function calculateBuffedStats(baseStats, currentStats, buffsList) {
     let buffed = { ...currentStats };
 
+    // PASSE 1 : Bonus Simples
     buffsList.forEach(buff => {
-        if (buff.active) {
-            applyBonus(buffed, baseStats, buff.bonuses);
-        }
+        if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, false);
+    });
+
+    // PASSE 2 : Conversions (Scaling)
+    buffsList.forEach(buff => {
+        if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, true);
     });
 
     return buffed;
 }
 
-function applyBonus(buffed, baseStats, bonuses) {
-    for (const [statKey, value] of Object.entries(bonuses)) {
-        if (statKey === "atk_") buffed.atk += baseStats.atk * value;
-        else if (statKey === "hp_") buffed.hp += baseStats.hp * value;
-        else if (statKey === "def_") buffed.def += baseStats.def * value;
-        else if (statKey === "critRate_" || statKey === "critDMG_" || statKey === "enerRech_" || statKey.includes("_dmg_")) {
-            let shortKey = getShortKey(statKey);
-            if(shortKey) buffed[shortKey] += value * 100;
-        } else if (statKey === "eleMas") {
-            buffed.em += value;
+function applyBonus(buffed, baseStats, bonuses, processScaling) {
+    for (const [statKey, val] of Object.entries(bonuses)) {
+        if (typeof val === 'object') {
+            if (!processScaling) continue;
+            if (statKey.endsWith('_scaling')) {
+                const targetStat = mapTargetKey(statKey.replace('_bonus_scaling', ''));
+                const sourceStat = mapTargetKey(val.source);
+                if (targetStat && sourceStat) {
+                    const sourceValue = buffed[sourceStat] || 0;
+                    const bonusValue = sourceValue * val.percent;
+                    buffed[targetStat] = (buffed[targetStat] || 0) + bonusValue;
+                }
+            }
+        }
+        else {
+            if (processScaling) continue;
+            if (statKey === "atk_") buffed.atk += baseStats.atk * val;
+            else if (statKey === "hp_") buffed.hp += baseStats.hp * val;
+            else if (statKey === "def_") buffed.def += baseStats.def * val;
+            else if (statKey === "critRate_" || statKey === "critDMG_" || statKey === "enerRech_" || statKey.includes("_dmg_")) {
+                let shortKey = getShortKey(statKey);
+                if(shortKey) buffed[shortKey] += val * 100;
+            } else if (statKey === "eleMas") {
+                buffed.em += val;
+            }
         }
     }
 }
@@ -198,18 +217,21 @@ function getShortKey(longKey) {
     return null;
 }
 
+function mapTargetKey(keyPart) {
+    if (keyPart === 'atk') return 'atk';
+    if (keyPart === 'hp') return 'hp';
+    if (keyPart === 'def') return 'def';
+    if (keyPart === 'eleMas') return 'em';
+    if (keyPart === 'enerRech') return 'er';
+    return null;
+}
+
 // --- INTERACTION ---
 function toggleBuff(charIndex, buffIndex) {
     const p = globalPersoData[charIndex];
     if (!p) return;
-
-    // Toggle état
     p.buffs[buffIndex].active = !p.buffs[buffIndex].active;
-
-    // Recalcul
     p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
-
-    // Render
     renderShowcase(charIndex);
 }
 
@@ -217,6 +239,12 @@ function toggleBuff(charIndex, buffIndex) {
 function processData(data) {
     if (!data.avatarInfoList) return;
     globalPersoData = [];
+
+    // Récupération Globale via Window (Fix Références)
+    const G_CHAR_CONFIG = window.CHARACTER_CONFIG || {};
+    const G_WEAPON_PASSIVES = window.WEAPON_PASSIVES || {};
+    const G_SET_PASSIVES = window.SET_PASSIVES || {};
+    const G_DEFAULT_CONFIG = window.DEFAULT_CONFIG || { weights: {}, bestSets: [], goodSets: [] };
 
     data.avatarInfoList.forEach(perso => {
         const id = perso.avatarId;
@@ -289,61 +317,69 @@ function processData(data) {
             }
         });
 
-        // CONSTRUCTION DE LA LISTE DES BUFFS (GRANULAIRE + GROUPÉ PAR SOURCE)
+        // CONSTRUCTION BUFFS
         let buffs = [];
 
-        // 1. Arme (Séparation des stats)
-        if (weapon && typeof WEAPON_PASSIVES !== 'undefined' && WEAPON_PASSIVES[weapon.name]) {
-            const bonuses = WEAPON_PASSIVES[weapon.name];
-            // On crée un titre de catégorie "Nom de l'arme (Arme)"
+        if (weapon && G_WEAPON_PASSIVES[weapon.name]) {
+            const bonuses = G_WEAPON_PASSIVES[weapon.name];
             const weaponCategory = `${weapon.name} (Arme)`;
-
             for (const [statKey, val] of Object.entries(bonuses)) {
-                if (typeof val === 'object') continue;
-
-                const statLabel = STAT_LABELS[statKey] || statKey;
-                const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
-
-                buffs.push({
-                    id: `weapon_${statKey}`,
-                    category: weaponCategory, // Pour le groupement
-                    name: `${statLabel} (+${valDisplay})`, // Label propre
-                    bonuses: { [statKey]: val },
-                    active: true
-                });
+                if (typeof val === 'object' && statKey.endsWith('_scaling')) {
+                    const targetStat = statKey.replace('_bonus_scaling', '');
+                    const sourceStat = val.source;
+                    const targetLabel = STAT_LABELS[targetStat] || targetStat;
+                    const sourceLabel = STAT_LABELS[sourceStat] || sourceStat;
+                    const percentDisplay = (val.percent * 100).toFixed(2) + "%";
+                    buffs.push({
+                        id: `weapon_${statKey}`,
+                        category: weaponCategory,
+                        name: `${targetLabel} (+${percentDisplay} ${sourceLabel})`,
+                        bonuses: { [statKey]: val },
+                        active: true
+                    });
+                    continue;
+                }
+                if (typeof val !== 'object') {
+                    const statLabel = STAT_LABELS[statKey] || statKey;
+                    const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
+                    buffs.push({
+                        id: `weapon_${statKey}`,
+                        category: weaponCategory,
+                        name: `${statLabel} (+${valDisplay})`,
+                        bonuses: { [statKey]: val },
+                        active: true
+                    });
+                }
             }
         }
 
-        // 2. Sets (Séparation des stats aussi)
-        if (typeof SET_PASSIVES !== 'undefined') {
+        if (G_SET_PASSIVES) {
             for (const [setKey, count] of Object.entries(setsCounter)) {
-                if (SET_PASSIVES[setKey]) {
-                    const setBonuses = SET_PASSIVES[setKey];
+                if (G_SET_PASSIVES[setKey]) {
+                    const setBonuses = G_SET_PASSIVES[setKey];
                     const setName = artefacts.find(a => a.setKey === setKey)?.setName || setKey;
-                    const setCategory = `${setName} (Set d'artéfacts)`;
-
+                    const setCategory = `${setName} (Set)`;
                     const addSetBuffs = (bonusObj, prefix) => {
                         for (const [statKey, val] of Object.entries(bonusObj)) {
-                            if (typeof val === 'object') continue;
-                            const statLabel = STAT_LABELS[statKey] || statKey;
-                            const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
-                            buffs.push({
-                                id: `${setKey}:${prefix}:${statKey}`,
-                                category: setCategory, // Pour le groupement
-                                name: `${prefix} : ${statLabel} (+${valDisplay})`, // Label propre
-                                bonuses: { [statKey]: val },
-                                active: true
-                            });
+                            if (typeof val !== 'object') {
+                                const statLabel = STAT_LABELS[statKey] || statKey;
+                                const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
+                                buffs.push({
+                                    id: `${setKey}:${prefix}:${statKey}`,
+                                    category: setCategory,
+                                    name: `${prefix} : ${statLabel} (+${valDisplay})`,
+                                    bonuses: { [statKey]: val },
+                                    active: true
+                                });
+                            }
                         }
                     };
-
                     if (count >= 2 && setBonuses[2]) addSetBuffs(setBonuses[2], "2p");
                     if (count >= 4 && setBonuses[4]) addSetBuffs(setBonuses[4], "4p");
                 }
             }
         }
 
-        // CALCUL INITIAL
         const buffedStats = calculateBuffedStats(baseStats, combatStats, buffs);
 
         const persoObj = {
@@ -354,9 +390,11 @@ function processData(data) {
             evaluation: null, weights: null
         };
 
-        persoObj.evaluation = calculateCharacterScore(persoObj);
+        // INJECTION CONFIG (FIX REFERENCE ERROR)
         const configKey = persoObj.nom.replace(/\s+/g, '') || "Default";
-        const config = CHARACTER_CONFIG[configKey] || CHARACTER_CONFIG[persoObj.nom] || DEFAULT_CONFIG;
+        const config = G_CHAR_CONFIG[configKey] || G_CHAR_CONFIG[persoObj.nom] || G_DEFAULT_CONFIG;
+
+        persoObj.evaluation = calculateCharacterScore(persoObj, config);
         persoObj.weights = config.weights;
 
         globalPersoData.push(persoObj);
@@ -366,7 +404,7 @@ function processData(data) {
     if(globalPersoData.length > 0) renderShowcase(0);
 }
 
-// --- RENDER ---
+// ... (RENDER FUNCTIONS) ...
 function renderSidebar() {
     const list = document.getElementById('sidebar-list');
     if(!list) return;
@@ -540,13 +578,12 @@ function renderShowcase(index) {
             </div>`;
     });
 
-    // --- CARTE DE BUFFS (6ème Carte - Groupée avec Headers) ---
+    // --- CARTE DE BUFFS (GROUPÉE PAR SOURCE) ---
     if (p.buffs && p.buffs.length > 0) {
         let buffListHtml = "";
         let lastCategory = "";
 
         p.buffs.forEach((buff, bIndex) => {
-            // Insertion du header de catégorie
             if (buff.category !== lastCategory) {
                 buffListHtml += `
                     <div style="font-size:0.8rem; color:var(--accent-gold); font-weight:bold; margin-top:10px; margin-bottom:5px; border-bottom:1px dashed #444; padding-bottom:2px;">

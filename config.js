@@ -1,40 +1,24 @@
 /* =========================================
-   CONFIGURATION (Cerveau du Projet 1)
+   CONFIGURATION (Cerveau du Projet)
    ========================================= */
 
 const DEFAULT_CONFIG = {
     weights: { "critRate_": 1, "critDMG_": 1, "atk_": 0.5, "enerRech_": 0.5 },
     bestSets: [],
-    goodSets: []
+    goodSets: [],
+    bestWeapons: [],
+    goodWeapons: []
 };
 
 const CHARACTER_CONFIG = {
     "Mavuika": {
         weights: {
-            "critRate_": 1,
-            "critDMG_": 1,
-
-            "atk_": 0.75,
-            "atk": 0.075,
-
-            "hp_": 0,
-            "hp": 0,
-
-            "def_": 0,
-            "def": 0,
-
-            "eleMas": 1,
-            "enerRech_": 0,
-
-            "pyro_dmg_": 1,
-            "hydro_dmg_": 0,
-            "cryo_dmg_": 0,
-            "geo_dmg_": 0,
-            "anemo_dmg_": 0,
-            "electro_dmg_": 0,
-            "dendro_dmg_": 0,
-            "physical_dmg_": 0,
-
+            "critRate_": 1, "critDMG_": 1,
+            "atk_": 0.75, "atk": 0.075,
+            "hp_": 0, "hp": 0,
+            "def_": 0, "def": 0,
+            "eleMas": 1, "enerRech_": 0,
+            "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
             "heal_": 0
         },
         bestSets: ["ObsidianCodex:4", "CrimsonWitchOfFlames:4"],
@@ -62,30 +46,12 @@ const CHARACTER_CONFIG = {
     },
     "Arlecchino": {
         weights: {
-            "critRate_": 1,
-            "critDMG_": 1,
-
-            "atk_": 0.75,
-            "atk": 0.075,
-
-            "hp_": 0,
-            "hp": 0,
-
-            "def_": 0,
-            "def": 0,
-
-            "eleMas": 0.75,
-            "enerRech_": 0.3,
-
-            "pyro_dmg_": 1,
-            "hydro_dmg_": 0,
-            "cryo_dmg_": 0,
-            "geo_dmg_": 0,
-            "anemo_dmg_": 0,
-            "electro_dmg_": 0,
-            "dendro_dmg_": 0,
-            "physical_dmg_": 0,
-
+            "critRate_": 1, "critDMG_": 1,
+            "atk_": 0.75, "atk": 0.075,
+            "hp_": 0, "hp": 0,
+            "def_": 0, "def": 0,
+            "eleMas": 0.75, "enerRech_": 0.3,
+            "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
             "heal_": 0
         },
         bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
@@ -97,29 +63,36 @@ const CHARACTER_CONFIG = {
    PASSIFS (Armes & Sets) - Ajout Manuel
    ========================================= */
 
-// Nom exact de l'arme (Français) -> Bonus à ajouter
 const WEAPON_PASSIVES = {
-    "Bâton d'Homa": {
-        "hp_": 0.20, // +20% PV
-        "atk_bonus_scaling": { "source": "hp", "percent": 0.008 } // Cas complexe: 0.8% des PV Max en ATQ (optionnel pour l'instant, restons simple)
+    "Bâton de Homa": {
+        "hp_": 0.20,
+        "atk_bonus_scaling": { "source": "hp", "percent": 0.008 }
     },
-    "Mille soleils brûlants": { "atk_": 0.49, "critDMG_": 0.35 }, // Exemple fictif: +40% TC
-    "Lumière du faucheur": { "enerRech_": 0.30, "electro_dmg_": 0.12 }, // Exemple (approximatif pour le test)
-    "Clé de Khaj-Nisut": { "hp_": 0.20 }
-};
-
-// Nom du set (Clé Anglaise utilisée dans le code) -> Bonus
-const SET_PASSIVES = {
-    "MarechausseeHunter": {
-        4: { "critRate_": 0.36 } // 3 stacks de 12% = 36%
+    "Clé de Khaj-Nisut": {
+        "hp_": 0.20,
+        "eleMas_bonus_scaling": { "source": "hp", "percent": 0.0012 }
     },
-    "CrimsonWitchOfFlames": {
-        4: { "pyro_dmg_": 0.15 } // Bonus réaction + petit bonus DGT (simplifié)
-    },
-    "BlizzardStrayer": {
-        4: { "critRate_": 0.40 } // Contre ennemis gelés
-    },
-    "ObsidianCodex": {
-        4: { "critRate_": 0.40 }
+    "Mille soleils brûlants": { "atk_": 0.49, "critDMG_": 0.35 },
+    "Lumière du faucheur": { "enerRech_": 0.30, "electro_dmg_": 0.12 },
+    "Coupeur de jade primordial": {
+        "hp_": 0.20,
+        "atk_bonus_scaling": { "source": "hp", "percent": 0.012 }
     }
 };
+
+const SET_PASSIVES = {
+    "MarechausseeHunter": { 4: { "critRate_": 0.36 } },
+    "CrimsonWitchOfFlames": { 4: { "pyro_dmg_": 0.15 } },
+    "BlizzardStrayer": { 4: { "critRate_": 0.40 } },
+    "ObsidianCodex": { 4: { "critRate_": 0.40 } },
+    "EmblemOfSeveredFate": {
+        // Simulation ER -> Burst DMG (Max 75%)
+        4: { "elemental_dmg_scaling": { "source": "er", "percent": 0.25, "max": 75 } }
+    }
+};
+
+// --- EXPORT GLOBAL (CRUCIAL POUR EVITER LES ERREURS) ---
+window.DEFAULT_CONFIG = DEFAULT_CONFIG;
+window.CHARACTER_CONFIG = CHARACTER_CONFIG;
+window.WEAPON_PASSIVES = WEAPON_PASSIVES;
+window.SET_PASSIVES = SET_PASSIVES;

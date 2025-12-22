@@ -11,29 +11,28 @@ const SCORING_NORMS = {
     "pyro_dmg_": 1.33, "hydro_dmg_": 1.33, "cryo_dmg_": 1.33, "geo_dmg_": 1.33, "anemo_dmg_": 1.33, "electro_dmg_": 1.33, "dendro_dmg_": 1.33, "physical_dmg_": 1.06, "heal_": 1.33
 };
 
-// Valeur de référence pour une Mainstat parfaite (équivalent Max DGT CRIT)
 const MAINSTAT_BASE_VALUE = 62.2;
+const VARIABLE_PIECES = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
 
-// Pièces variables qui donnent un bonus de score si la mainstat est bonne
-const VARIABLE_PIECES = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"]; // Sablier, Coupe, Casque
+// MODIFICATION : On prend 'config' en argument pour éviter les erreurs de scope
+function calculateCharacterScore(perso, config) {
 
-function calculateCharacterScore(perso) {
-    // 1. Config
-    const configKey = perso.nom.replace(/\s+/g, '') || "Default";
-    const config = CHARACTER_CONFIG[configKey] || CHARACTER_CONFIG[perso.nom] || DEFAULT_CONFIG;
+    // Sécurité si la config est vide
+    if (!config || !config.weights) {
+        return { score: 0, grade: { letter: "?", color: "#888" }, totalRolls: 0 };
+    }
 
-    let totalScore = 0; // Score Puissance (inclura le bonus mainstat)
-    let totalRolls = 0; // Note Qualité (pour le grade SSS)
+    let totalScore = 0;
+    let totalRolls = 0;
     const setsCounter = {};
 
     // 2. Parcourir les artéfacts
     perso.artefacts.forEach(art => {
-        // A. Score Individuel de l'artéfact (ANCIEN SYSTÈME 5.1)
-        // Ce score s'affiche sur la carte et note la qualité intrinsèque de la pièce (Substats + petit bonus mainstat)
+        // A. Score Artefact
         const powerResult = scoreArtifact(art, config.weights);
         art.score = powerResult.score;
 
-        // B. Note Qualité (Rolls) pour le Grade (S, SS, SSS...)
+        // B. Note Qualité (Rolls)
         const qualityPoints = calculateArtifactRollQuality(art, config.weights);
         const gradeLetter = getGradeFromPoints(qualityPoints);
 
@@ -43,12 +42,10 @@ function calculateCharacterScore(perso) {
             points: qualityPoints
         };
 
-        // Ajout aux totaux
-        totalScore += art.score; // On ajoute le score de base de l'artéfact
+        totalScore += art.score;
         totalRolls += qualityPoints;
 
-        // C. BONUS MAINSTAT (Système Fribbels - Standardisé)
-        // Ajouté UNIQUEMENT au score total du personnage
+        // C. BONUS MAINSTAT (Fribbels)
         if (VARIABLE_PIECES.includes(art.type)) {
             const mainStatBonus = calculateMainStatBonus(art, config.weights);
             totalScore += mainStatBonus;
@@ -59,7 +56,7 @@ function calculateCharacterScore(perso) {
         }
     });
 
-    // 3. Bonus de Set (Multiplicateur final)
+    // 3. Bonus de Set (Multiplicateur)
     let setMultiplier = 0.5;
     let activeBonuses = [];
     for (const [setKey, count] of Object.entries(setsCounter)) {
@@ -85,54 +82,31 @@ function calculateCharacterScore(perso) {
     };
 }
 
-/** * Calcul du Bonus Mainstat (Standardisé 62.2)
- * Si la stat a un poids > 0, on ajoute 62.2 * poids.
- * Indépendant de la valeur réelle de la stat (EM vs ATK vs CRIT).
- */
+// --- FONCTIONS CALCULS ---
+
 function calculateMainStatBonus(artifact, weights) {
     let key = artifact.mainStat.key;
     let w = weights[key];
-
-    // Gestion du fallback pour les dégâts élémentaires
-    if (w === undefined && key.includes("_dmg_")) {
-        w = weights["elemental_dmg_"];
-    }
-    // Si toujours undefined (stat inutile), ça vaut 0
+    if (w === undefined && key.includes("_dmg_")) { w = weights["elemental_dmg_"]; }
     w = w || 0;
-
-    if (w > 0) {
-        // Formule simplifiée : Base Fixe * Poids
-        // Ex: Weight 1.0 -> Bonus +62.2
-        // Ex: Weight 0.75 -> Bonus +46.65
-        return MAINSTAT_BASE_VALUE * w;
-    }
+    if (w > 0) return MAINSTAT_BASE_VALUE * w;
     return 0;
 }
 
-/** * ANCIEN SYSTÈME (5.1) pour le score individuel de la carte
- * (Note intrinsèque de l'artéfact)
- */
 function scoreArtifact(artifact, weights) {
     let score = 0;
     let mainWeight = weights[artifact.mainStat.key];
-
-    if (mainWeight === undefined && artifact.mainStat.key.includes("_dmg_")) {
-        mainWeight = weights["elemental_dmg_"];
-    }
+    if (mainWeight === undefined && artifact.mainStat.key.includes("_dmg_")) { mainWeight = weights["elemental_dmg_"]; }
     mainWeight = mainWeight || 0;
 
-    // Le petit bonus "juste pour avoir la bonne stat" (Old System 5.1)
-    // On le garde pour que la note de la carte ne soit pas uniquement basée sur les substats
     if (mainWeight > 0) {
         score += 5.1 * (SCORING_NORMS[artifact.mainStat.key] || 1) * mainWeight;
     }
 
-    // Score des Substats
     artifact.subStats.forEach(sub => {
         let w = weights[sub.key];
         if (w === undefined && sub.key.includes("_dmg_")) w = weights["elemental_dmg_"];
         w = w || 0;
-
         if (w > 0) {
             score += sub.value * w * (SCORING_NORMS[sub.key] || 0);
         }
@@ -140,15 +114,12 @@ function scoreArtifact(artifact, weights) {
     return { score: parseFloat(score.toFixed(1)) };
 }
 
-/** * QUALITÉ (Roll Value %) - Inchangé
- */
 function calculateArtifactRollQuality(artifact, weights) {
     let points = 0;
     artifact.subStats.forEach(sub => {
         let w = weights[sub.key];
         if (w === undefined && sub.key.includes("_dmg_")) w = weights["elemental_dmg_"];
         w = w || 0;
-
         if (w > 0) {
             const maxRoll = (window.MAX_ROLLS && window.MAX_ROLLS[sub.key]) || 9999;
             points += (sub.value / maxRoll) * w;
@@ -157,8 +128,7 @@ function calculateArtifactRollQuality(artifact, weights) {
     return parseFloat(points.toFixed(1));
 }
 
-// --- ÉCHELLES DE NOTATION ---
-
+// --- ECHELLES ---
 function getGradeFromPoints(pts) {
     if (pts >= 9.0) return "ARCHON";
     if (pts >= 8.5) return "WTF+";
@@ -201,11 +171,7 @@ function getGlobalGrade(totalRolls) {
     else if (totalRolls >= 4)  grade = "D+";
     else if (totalRolls >= 2)  grade = "D";
     else if (totalRolls >= 1)  grade = "F+";
-
-    return {
-        letter: grade,
-        color: getGradeColor(grade)
-    };
+    return { letter: grade, color: getGradeColor(grade) };
 }
 
 function getGradeColor(grade) {
