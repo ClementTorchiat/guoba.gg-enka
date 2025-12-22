@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Fetch Enka & Traduction)
+   SCRIPT PRINCIPAL - PROJET 2 (DYNAMIQUE)
    ========================================= */
 
 // 1. Dictionnaire de traduction STATS (Enka -> Projet 1)
@@ -25,8 +25,30 @@ const STAT_MAPPING = {
     "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_"
 };
 
+// 1.b Dictionnaire de LABELS (Traduction Propre)
+const STAT_LABELS = {
+    "hp": "PV",
+    "hp_": "PV %",
+    "atk": "ATQ",
+    "atk_": "ATQ %",
+    "def": "DÉF",
+    "def_": "DÉF %",
+    "eleMas": "Maîtrise élémentaire",
+    "enerRech_": "Recharge d'énergie",
+    "critRate_": "Taux CRIT",
+    "critDMG_": "DGT CRIT",
+    "heal_": "Bonus de Soins",
+    "pyro_dmg_": "DGT Pyro",
+    "hydro_dmg_": "DGT Hydro",
+    "cryo_dmg_": "DGT Cryo",
+    "electro_dmg_": "DGT Électro",
+    "anemo_dmg_": "DGT Anémo",
+    "geo_dmg_": "DGT Géo",
+    "dendro_dmg_": "DGT Dendro",
+    "physical_dmg_": "DGT Phys."
+};
+
 // 2. Dictionnaire de traduction SETS (Français Enka -> Clé Config Projet 1)
-// Ajoutez ici les sets manquants si besoin
 const SET_NAME_MAPPING = {
     "Sorcière des flammes ardentes": "CrimsonWitchOfFlames",
     "Emblème du destin brisé": "EmblemOfSeveredFate",
@@ -72,7 +94,8 @@ let locData = {};
 
 // --- CHARGEMENT ---
 async function loadGameData() {
-    document.getElementById('output').innerText = "Chargement des données...";
+    const loader = document.getElementById('loading-msg');
+    if(loader) loader.innerText = "Chargement API...";
     try {
         const [chars, locs] = await Promise.all([
             fetch('https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/characters.json').then(r => r.json()),
@@ -80,10 +103,10 @@ async function loadGameData() {
         ]);
         charData = chars;
         locData = locs;
-        document.getElementById('output').innerText = "Prêt. Entrez un UID.";
+        if(loader) loader.innerText = "";
     } catch (e) {
         console.error(e);
-        document.getElementById('output').innerText = "Erreur chargement JSON.";
+        if(loader) loader.innerText = "Erreur JSON.";
     }
 }
 
@@ -91,27 +114,35 @@ async function fetchUserData() {
     const uid = document.getElementById('uidInput').value;
     if (!uid) return alert("UID manquant");
 
-    // Proxy pour contourner CORS
+    const loader = document.getElementById('loading-msg');
+    if(loader) loader.innerText = "Récupération...";
+
+    // Proxy (CORS)
     const proxy = `https://corsproxy.io/?${encodeURIComponent(`https://enka.network/api/uid/${uid}`)}`;
 
     try {
-        document.getElementById('output').innerText = "Téléchargement profil...";
         const res = await fetch(proxy);
         if(!res.ok) throw new Error("Erreur Enka");
         const data = await res.json();
         processData(data);
+        if(loader) loader.innerText = "Succès.";
     } catch (e) {
         console.error(e);
-        document.getElementById('output').innerText = "Erreur: UID introuvable ou vitrine cachée.";
+        if(loader) loader.innerText = "Erreur UID/Vitrine.";
     }
 }
 
-// --- UTILS : FORMATAGE ---
-
+// --- UTILS ---
 function getText(hash) {
-    // Force la récupération en Français pour matcher notre SET_NAME_MAPPING
+    // On force le français pour matcher SET_NAME_MAPPING
     if (locData && locData.fr && locData.fr[hash]) return locData.fr[hash];
     return "Inconnu";
+}
+
+// Formatteur simple pour l'affichage
+function formatValueDisplay(key, val) {
+    if(['hp', 'atk', 'def', 'eleMas'].includes(key)) return Math.round(val).toLocaleString();
+    return val.toFixed(1) + '%';
 }
 
 function formatStat(propId, value) {
@@ -121,55 +152,72 @@ function formatStat(propId, value) {
     let val = value;
     let isPercent = false;
 
-    // Détection pourcentage : si la clé finit par _ ou est critique/recharge
-    // Attention : Enka renvoie parfois 0.466 (Main) et parfois 5.8 (Sub)
-    // On standardise tout en "Valeur affichée" (46.6 et 5.8)
-
+    // Détection pourcentage
     if (key.endsWith('_') || ['critRate_', 'critDMG_', 'enerRech_', 'heal_'].includes(key)) {
         isPercent = true;
-        // Heuristique simple : si c'est < 2 (ex 0.466), c'est probablement un ratio brute -> x100
-        // Si c'est > 2 (ex 5.8), c'est déjà bon.
-        // Exception : Mainstat EM/HP/ATK flat sont > 2. Mais ici on est dans le bloc "isPercent".
+        // Si la valeur est brute (ex: 0.466) on la met en % (46.6)
         if (val < 2.0) val = val * 100;
     }
 
-    return {
-        key: key,       // Clé pour config.js (ex: critRate_)
-        value: val,     // Valeur (ex: 3.9)
-        label: key.replace('_', '%').toUpperCase(), // Label joli
-        isPercent: isPercent
-    };
+    // --- CORRECTION ICI ---
+    // Au lieu de construire un label moche, on pioche dans le dico
+    const label = STAT_LABELS[key] || key;
+
+    return { key, value: val, label, isPercent };
 }
 
-// --- TRAITEMENT PRINCIPAL ---
-
+// --- TRAITEMENT DES DONNÉES ---
 function processData(data) {
     if (!data.avatarInfoList) return;
-
     globalPersoData = [];
 
     data.avatarInfoList.forEach(perso => {
         const id = perso.avatarId;
         const info = charData[id] || {};
         const nom = getText(info.NameTextMapHash) || "Inconnu";
-        const icon = `https://enka.network/ui/${info.SideIconName?.replace("Side_Match", "Side")}.png`;
 
-        // Conversion des artéfacts
-        const artefacts = [];
+        // Image: Essayer d'avoir le Splash Art (Gacha) sinon SideIcon
+        let splashImage = `https://enka.network/ui/${info.SideIconName?.replace("Side_Match", "Side")}.png`;
+        // Enka ne donne pas l'URL directe du Gacha Splash facilement sans mapping complexe,
+        // mais on peut deviner l'URL de l'image de la UI.
+        // Souvent: UI_Gacha_AvatarImg_[Name].png
+
+        // Stats de combat (PV Max, Atk Total...) stockées dans fightPropMap
+        const fp = perso.fightPropMap;
+        const combatStats = {
+            hp: fp[2000], // PV Max
+            atk: fp[2001], // Atk Max
+            def: fp[2002], // Def Max
+            em: fp[28],
+            cr: fp[20] * 100,
+            cd: fp[22] * 100,
+            er: fp[23] * 100,
+            // Bonus Dgt Elem (Max de tous les éléments)
+            elemBonus: Math.max(fp[30], fp[40], fp[41], fp[42], fp[43], fp[44], fp[45], fp[46]) * 100
+        };
+
+        const artifacts = [];
+        let weapon = null;
 
         perso.equipList.forEach(item => {
             const flat = item.flat;
+
+            // WEAPON
+            if (item.weapon) {
+                weapon = {
+                    name: getText(flat.nameTextMapHash),
+                    level: item.weapon.level,
+                    rank: (item.weapon.affixMap ? Object.values(item.weapon.affixMap)[0] : 0) + 1,
+                    icon: `https://enka.network/ui/${flat.icon}.png`,
+                    mainStat: flat.weaponStats && flat.weaponStats[1] ? formatStat(flat.weaponStats[1].appendPropId, flat.weaponStats[1].statValue) : null
+                };
+            }
+
+            // ARTIFACTS
             if (flat.itemType === "ITEM_RELIQUARY") {
                 const nomSetFR = getText(flat.setNameTextMapHash);
-
-                // --- LE PONT MAGIQUE ---
-                // On transforme le nom FR d'Enka en Clé Config du Projet 1
                 const setKey = SET_NAME_MAPPING[nomSetFR] || "UnknownSet";
 
-                // Main Stat
-                const mainFmt = formatStat(flat.reliquaryMainstat.mainPropId, flat.reliquaryMainstat.statValue);
-
-                // Sub Stats
                 const subs = [];
                 if (flat.reliquarySubstats) {
                     flat.reliquarySubstats.forEach(s => {
@@ -177,105 +225,187 @@ function processData(data) {
                     });
                 }
 
-                artefacts.push({
-                    type: flat.equipType, // EQUIP_BRACER, etc.
-                    setKey: setKey,       // Clé anglaise pour le scoring
-                    setName: nomSetFR,    // Nom affiché
+                artifacts.push({
+                    type: flat.equipType,
+                    setKey: setKey,
+                    setName: nomSetFR,
                     icon: `https://enka.network/ui/${flat.icon}.png`,
-                    mainStat: mainFmt,
+                    mainStat: formatStat(flat.reliquaryMainstat.mainPropId, flat.reliquaryMainstat.statValue),
                     subStats: subs,
                     level: item.reliquary.level - 1
                 });
             }
         });
 
-        // Construction objet final
+        // Tentative d'URL Splash Art plus précise
+        const namePart = info.SideIconName ? info.SideIconName.split('_').pop() : "Nilou";
+        const splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${namePart}.png`;
+
         const persoObj = {
             id: id,
             nom: nom,
-            image: icon,
-            artefacts: artefacts,
-            evaluation: null // Sera rempli par scoring.js
+            image: splashImage, // Icone ronde
+            splashArt: splashUrl, // Grand art
+            combatStats: combatStats,
+            weapon: weapon,
+            artefacts: artifacts,
+            evaluation: null,
+            weights: null // Sera rempli par scoring
         };
 
-        // --- APPEL AU SCORING (Projet 1 Logic) ---
-        // C'est ici qu'on utilise la fonction de scoring.js
+        // Calcul Score
+        // Note: calculateCharacterScore vient de scoring.js
         persoObj.evaluation = calculateCharacterScore(persoObj);
+
+        // On récupère les weights utilisés pour savoir quoi griser
+        // On nettoie le nom pour la clé (ex: "Hu Tao" -> "HuTao")
+        const configKey = persoObj.nom.replace(/\s+/g, '') || "Default";
+        const config = CHARACTER_CONFIG[configKey] || CHARACTER_CONFIG[persoObj.nom] || DEFAULT_CONFIG;
+        persoObj.weights = config.weights;
 
         globalPersoData.push(persoObj);
     });
 
-    displayResults();
+    renderSidebar();
+    if(globalPersoData.length > 0) renderShowcase(0); // Affiche le premier par défaut
 }
 
-// --- AFFICHAGE ---
+// --- RENDU DOM ---
 
-function displayResults() {
-    const container = document.getElementById('resultats');
-    container.innerHTML = "";
+function renderSidebar() {
+    const list = document.getElementById('sidebar-list');
+    if(!list) return;
+    list.innerHTML = "";
 
-    globalPersoData.forEach(p => {
-        const eval = p.evaluation;
+    globalPersoData.forEach((p, index) => {
+        const div = document.createElement('div');
+        div.className = `char-card ${index === 0 ? 'active' : ''}`;
+        div.onclick = () => {
+            document.querySelectorAll('.char-card').forEach(c => c.classList.remove('active'));
+            div.classList.add('active');
+            renderShowcase(index);
+        };
 
-        // Carte Personnage
-        const card = document.createElement('div');
-        card.style = "background:#2b2b33; color:white; padding:15px; margin-bottom:20px; border-radius:10px;";
-
-        // Header
-        card.innerHTML = `
-            <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #444; padding-bottom:10px;">
-                <img src="${p.image}" style="width:60px; height:60px; border-radius:50%; border:2px solid ${eval.grade.color}">
-                <div>
-                    <h2 style="margin:0">${p.nom}</h2>
-                    <div style="font-weight:bold; color:${eval.grade.color}; font-size:1.2em">
-                        Note: ${eval.grade.letter} (${eval.score})
-                    </div>
-                    <div style="font-size:0.8em; color:#aaa">
-                        Set Bonus: ${eval.setBonus.length ? eval.setBonus.join(', ') : "Aucun"} (x${eval.setMultiplier})
-                    </div>
+        div.innerHTML = `
+            <img src="${p.image}" class="char-avatar-small">
+            <div style="flex:1">
+                <div style="font-weight:600">${p.nom}</div>
+                <div style="font-size:0.85rem; color:#aaa">Score: ${p.evaluation.score} 
+                    <span style="color:${p.evaluation.grade.color}; float:right; font-weight:bold;">${p.evaluation.grade.letter}</span>
                 </div>
             </div>
         `;
+        list.appendChild(div);
+    });
+}
 
-        // Grille Artéfacts
-        const grid = document.createElement('div');
-        grid.style = "display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:10px;";
+function renderShowcase(index) {
+    const p = globalPersoData[index];
+    const container = document.getElementById('main-container');
+    if(!container) return;
 
-        p.artefacts.forEach(art => {
-            let subsHtml = "";
-            art.subStats.forEach(s => {
-                subsHtml += `<div style="display:flex; justify-content:space-between; font-size:0.85em; color:#ccc;">
-                    <span>${s.label}</span>
-                    <span>+${Number.isInteger(s.value) ? s.value : s.value.toFixed(1)}${s.isPercent?'%':''}</span>
-                </div>`;
-            });
+    const stats = p.combatStats;
+    const ev = p.evaluation;
 
-            grid.innerHTML += `
-                <div style="background:#363640; padding:10px; border-radius:5px; border-top:3px solid ${art.grade.color};">
-                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:5px;">
-                        <img src="${art.icon}" style="width:35px; height:35px;">
-                        <div style="font-weight:bold; color:${art.grade.color}">
-                            <span style="font-size:1.2em">${art.grade.letter}</span> 
-                            <span style="font-size:0.8em; opacity:0.8">(${art.score})</span>
-                        </div>
-                        <div>
-                            <div style="font-weight:bold; color:${art.grade.color}">${art.score}</div>
-                            <div style="font-size:0.7em; color:#888;">${art.type.split('_')[1]}</div>
-                        </div>
+    let html = `
+        <div class="showcase-area">
+            <div class="splash-art-container" style="background-image: url('${p.splashArt}');">
+                 </div>
+            
+            <div>
+                <h1 style="font-size:2rem; font-weight:800; margin-bottom:10px;">${p.nom}</h1>
+                
+                <div class="stat-row"><span class="text-muted"><i class="fa-solid fa-heart"></i> PV Max</span> <div class="dotted-line"></div> <span class="stat-val">${Math.round(stats.hp)}</span></div>
+                <div class="stat-row"><span class="text-muted"><i class="fa-solid fa-gavel"></i> ATQ</span> <div class="dotted-line"></div> <span class="stat-val">${Math.round(stats.atk)}</span></div>
+                <div class="stat-row"><span class="text-muted"><i class="fa-solid fa-shield"></i> DÉF</span> <div class="dotted-line"></div> <span class="stat-val">${Math.round(stats.def)}</span></div>
+                <div class="stat-row"><span class="text-muted"><i class="fa-solid fa-wand-magic-sparkles"></i> Maîtrise</span> <div class="dotted-line"></div> <span class="stat-val">${Math.round(stats.em)}</span></div>
+                <div class="stat-row"><span class="text-muted"><i class="fa-solid fa-chart-simple"></i> Taux CRIT</span> <div class="dotted-line"></div> <span class="stat-val">${stats.cr.toFixed(1)}%</span></div>
+                <div class="stat-row"><span class="text-muted"><i class="fa-solid fa-skull"></i> DGT CRIT</span> <div class="dotted-line"></div> <span class="stat-val">${stats.cd.toFixed(1)}%</span></div>
+                <div class="stat-row"><span class="text-muted"><i class="fa-solid fa-bolt"></i> ER</span> <div class="dotted-line"></div> <span class="stat-val" style="color:var(--accent-gold)">${stats.er.toFixed(1)}%</span></div>
+                <div class="stat-row"><span class="text-muted"><i class="fa-solid fa-flask"></i> Bonus Elem.</span> <div class="dotted-line"></div> <span class="stat-val">${stats.elemBonus.toFixed(1)}%</span></div>
+
+                <div class="global-score-card">
+                    <div>
+                        <div style="color:var(--accent-gold); font-size:0.8rem; text-transform:uppercase; font-weight:bold;">Score Global</div>
+                        <div style="font-size:0.8rem; color:#888;">Rolls: ${ev.totalRolls}</div>
                     </div>
-                    <div style="font-weight:bold; font-size:1.1em; margin-bottom:5px;">
-                        ${art.mainStat.value}${art.mainStat.isPercent?'%':''} 
-                        <span style="font-size:0.6em; color:#aaa">${art.mainStat.label}</span>
+                    <div style="text-align:right;">
+                        <span style="font-size:1.8rem; font-weight:800; line-height:1;">${ev.score}</span>
+                        <span style="color:${ev.grade.color}; font-weight:bold; font-size:1.2rem;">${ev.grade.letter}</span>
                     </div>
-                    <div>${subsHtml}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="equipment-area">
+    `;
+
+    // WEAPON CARD
+    if (p.weapon) {
+        html += `
+            <div class="card weapon-card">
+                <img src="${p.weapon.icon}" class="item-img" style="width:70px; height:70px;">
+                <div style="flex:1">
+                    <div style="font-weight:700; font-size:1.1rem;">${p.weapon.name}</div>
+                    <div style="color:var(--accent-gold); font-size:0.85rem;">Niv. ${p.weapon.level} • R${p.weapon.rank}</div>
+                    ${p.weapon.mainStat ? `
+                        <div style="margin-top:5px; font-weight:bold; color:#ddd;">
+                            ${p.weapon.mainStat.label} <span style="color:#fff; float:right;">${p.weapon.mainStat.value}</span>
+                        </div>` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    // ARTIFACTS GRID
+    p.artefacts.forEach(art => {
+        // Rendu Substats
+        let subsHtml = "";
+        art.subStats.forEach(sub => {
+            // Vérifier si c'est une dead stat (weight = 0 ou undefined)
+            let w = p.weights[sub.key];
+            if (w === undefined && sub.key.includes("dmg_")) w = p.weights["elemental_dmg_"] || 0;
+            if (w === undefined) w = 0;
+
+            const isDead = w === 0;
+
+            subsHtml += `
+                <div class="substat-row ${isDead ? 'dead' : ''}">
+                    <span>${sub.label}</span>
+                    <span>
+                        ${formatValueDisplay(sub.key, sub.value)}
+                    </span>
                 </div>
             `;
         });
 
-        card.appendChild(grid);
-        container.appendChild(card);
+        html += `
+            <div class="card">
+                <div class="item-header">
+                    <img src="${art.icon}" class="item-img">
+                    <div style="overflow:hidden;">
+                        <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600; font-size:0.9rem;">${art.type.split('_')[1]}</div>
+                        <div style="font-size:0.75rem; color:var(--accent-gold); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${art.setName}</div>
+                    </div>
+                </div>
+                <div class="main-stat-display">
+                    <span>${formatValueDisplay(art.mainStat.key, art.mainStat.value)}</span>
+                    <span style="font-size:0.7rem; color:#aaa; font-weight:normal; align-self:center;">${art.mainStat.label}</span>
+                </div>
+                <div style="margin-top:10px;">
+                    ${subsHtml}
+                </div>
+                <div class="art-score-footer">
+                    <span>Score</span>
+                    <strong style="color:${art.grade.color}">${art.score} (${art.grade.letter})</strong>
+                </div>
+            </div>
+        `;
     });
+
+    html += `</div>`; // Fin Equipment Area
+    container.innerHTML = html;
 }
 
-// Lancement
+// Initialisation
 loadGameData();
