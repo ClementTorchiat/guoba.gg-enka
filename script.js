@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Coaching Détaillé)
+   SCRIPT PRINCIPAL (Version Finale : Ratio Rolls)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -283,20 +283,49 @@ function calculatePotentialScore(persoObj, config) {
     return calculateCharacterScore(fakePerso, config);
 }
 
+// CONSEIL CRITIQUE
+function getCritAdvice(cr, cd) {
+    if (cr > 100) return { color: '#ff4d4d', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%).` };
+    if (cr >= 90) return { color: '#22c55e', msg: "Taux CRIT excellent. Investissez tout dans le DGT CRIT." };
+    const diff = (cr * 2) - cd;
+    if (Math.abs(diff) < 25) return { color: '#22c55e', msg: "Ratio 1:2 Équilibré." };
+    if (diff > 25) return { color: '#3b82f6', msg: "Ratio déséquilibré : Trop de Taux CRIT." };
+    if (diff < -25) return { color: '#eab308', msg: "Ratio déséquilibré : Manque de Taux CRIT." };
+    return { color: '#888', msg: "Analyse impossible" };
+}
+
 function getSetRecommendation(activeSets, config) {
     if (!config || !config.bestSets || config.bestSets.length === 0) return null;
     const hasBest = activeSets.some(s => config.bestSets.includes(s));
     if (hasBest) return { type: 'success', msg: "Vous utilisez le meilleur set recommandé !" };
-
     const hasGood = config.goodSets && activeSets.some(s => config.goodSets.includes(s));
     const recommended = config.bestSets[0].split(':')[0];
     const recName = Object.keys(SET_NAME_MAPPING).find(key => SET_NAME_MAPPING[key] === recommended) || recommended;
-
     if (hasGood) return { type: 'info', msg: `Set correct, mais <b>${recName} (4p)</b> serait optimal.` };
     return { type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.` };
 }
 
-// MODIF: Détail des stats mortes
+// NOUVEAU : Répartition des Rolls (Ratio Utile / Mort)
+function calculateRollDistribution(persoObj, config) {
+    if (!config || !config.weights) return { useful: 0, dead: 0, total: 0 };
+    let useful = 0;
+    let dead = 0;
+
+    persoObj.artefacts.forEach(art => {
+        art.subStats.forEach(sub => {
+            let w = config.weights[sub.key];
+            if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
+
+            const rolls = getRollCount(sub.key, sub.value);
+            if (w && w > 0) useful += rolls;
+            else dead += rolls;
+        });
+    });
+
+    return { useful, dead, total: useful + dead };
+}
+
+// Détail des stats mortes
 function calculateDeadRolls(persoObj, config) {
     if (!config || !config.weights) return { count: 0, details: [] };
     let deadRolls = 0;
@@ -307,7 +336,6 @@ function calculateDeadRolls(persoObj, config) {
             let w = config.weights[sub.key];
             if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
 
-            // Si le poids est 0 ou inexistant, c'est une stat morte
             if (!w || w === 0) {
                 const rolls = getRollCount(sub.key, sub.value);
                 deadRolls += rolls;
@@ -316,23 +344,18 @@ function calculateDeadRolls(persoObj, config) {
         });
     });
 
-    // Transformation en tableau détaillé trié
     const details = Object.entries(deadStatsCounts)
         .filter(([_, count]) => count > 0)
         .map(([key, count]) => ({ label: STAT_LABELS[key] || key, count: count }))
-        .sort((a, b) => b.count - a.count); // Tri par nombre de rolls décroissant
+        .sort((a, b) => b.count - a.count);
 
     return { count: deadRolls, details: details };
 }
 
-// MODIF: Top 3 Priorités
+// Top 3 Priorités
 function getPriorities(persoObj) {
     if (!persoObj.artefacts || persoObj.artefacts.length === 0) return [];
-
-    // On trie les artéfacts par score croissant (du pire au meilleur)
     const sorted = [...persoObj.artefacts].sort((a, b) => a.score - b.score);
-
-    // On prend les 3 premiers (les pires)
     return sorted.slice(0, 3).map(art => {
         const typeName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
         return {
@@ -601,10 +624,18 @@ function renderShowcase(index) {
 
                 ${(() => {
         const potential = calculatePotentialScore(p, config);
+        const efficiency = (potential.score > 0) ? ((ev.score / potential.score) * 100).toFixed(1) : 0;
+        let effColor = '#ff4d4d'; // Rouge
+        if (efficiency > 70) effColor = '#eab308'; // Jaune
+        if (efficiency > 85) effColor = '#22c55e'; // Vert
+        if (efficiency > 95) effColor = '#a855f7'; // Violet
+
         const gain = (potential.score - ev.score).toFixed(1);
         const setAdvice = getSetRecommendation(ev.setBonus, config);
         const deadRolls = calculateDeadRolls(p, config);
         const priorities = getPriorities(p);
+        const critAdvice = getCritAdvice(b.cr, b.cd);
+        const rollStats = calculateRollDistribution(p, config);
 
         return `
                     <div style="background:rgba(255, 255, 255, 0.05); border:1px solid #444; border-radius:8px; padding:15px; margin-top:20px;">
@@ -612,8 +643,14 @@ function renderShowcase(index) {
                             <i class="fa-solid fa-chart-line" style="color:var(--accent-gold)"></i> Analyse & Potentiel
                         </h4>
                         
+                        <div style="text-align:center; margin-bottom:15px;">
+                            <div style="font-size:0.75rem; color:#aaa; text-transform:uppercase;">Efficacité du Build</div>
+                            <div style="font-size:2rem; font-weight:800; color:${effColor}; line-height:1;">${efficiency}%</div>
+                            <div style="font-size:0.7rem; color:#888;">du potentiel max de vos artéfacts</div>
+                        </div>
+
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-                            <span style="font-size:0.8rem; color:#ccc;">Potentiel Max (Rolls parfaits)</span>
+                            <span style="font-size:0.8rem; color:#ccc;">Score Potentiel</span>
                             <div style="text-align:right;">
                                 <span style="font-weight:bold; color:var(--accent-gold);">${potential.score}</span>
                                 <span style="font-size:0.75rem; color:#22c55e;">(+${gain})</span>
@@ -624,14 +661,31 @@ function renderShowcase(index) {
                             <div style="height:100%; background:var(--accent-gold); width:100%; opacity:0.3; border-radius:3px;"></div>
                         </div>
 
+                        <div style="margin-bottom: 15px;">
+                            <div style="display:flex; justify-content:space-between; font-size:0.7rem; margin-bottom:3px;">
+                                <span style="color:var(--accent-gold)">${rollStats.useful} Rolls Utiles</span>
+                                <span style="color:#ff4d4d">${rollStats.dead} Rolls Morts</span>
+                            </div>
+                            <div style="display:flex; width:100%; height:8px; background:#333; border-radius:4px; overflow:hidden;">
+                                <div style="width:${(rollStats.useful/rollStats.total)*100}%; background:var(--accent-gold);"></div>
+                                <div style="width:${(rollStats.dead/rollStats.total)*100}%; background:#ff4d4d;"></div>
+                            </div>
+                        </div>
+
+                        <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:6px; margin-bottom:10px; border-left:3px solid ${critAdvice.color};">
+                            <div style="font-size:0.7rem; color:#aaa; text-transform:uppercase;">Équilibrage Critique</div>
+                            <div style="font-size:0.85rem; color:#eee;">${critAdvice.msg}</div>
+                        </div>
+
                         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:15px;">
                             <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:6px; text-align:center;">
                                 <div style="font-size:0.7rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Stats Mortes</div>
                                 <div style="font-size:1.4rem; font-weight:bold; color:#ff4d4d;">${deadRolls.count}</div>
                                 <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:3px; margin-top:5px;">
-                                    ${deadRolls.details.map(d =>
+                                    ${deadRolls.details.slice(0,3).map(d =>
             `<span style="background:rgba(255, 77, 77, 0.2); color:#ff9999; font-size:0.6rem; padding:1px 4px; border-radius:3px;">${d.label}: ${d.count}</span>`
         ).join('')}
+                                    ${deadRolls.details.length > 3 ? '<span style="font-size:0.6rem; color:#888;">...</span>' : ''}
                                     ${deadRolls.count === 0 ? '<span style="color:#22c55e; font-size:0.7rem;">Aucune !</span>' : ''}
                                 </div>
                             </div>
