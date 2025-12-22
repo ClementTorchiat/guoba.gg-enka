@@ -254,6 +254,10 @@ function displayResults() {
                 <div style="background:#363640; padding:10px; border-radius:5px; border-top:3px solid ${art.grade.color};">
                     <div style="display:flex; align-items:center; gap:10px; margin-bottom:5px;">
                         <img src="${art.icon}" style="width:35px; height:35px;">
+                        <div style="font-weight:bold; color:${art.grade.color}">
+                            <span style="font-size:1.2em">${art.grade.letter}</span> 
+                            <span style="font-size:0.8em; opacity:0.8">(${art.score})</span>
+                        </div>
                         <div>
                             <div style="font-weight:bold; color:${art.grade.color}">${art.score}</div>
                             <div style="font-size:0.7em; color:#888;">${art.type.split('_')[1]}</div>

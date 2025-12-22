@@ -10,7 +10,33 @@ const DEFAULT_CONFIG = {
 
 const CHARACTER_CONFIG = {
     "Mavuika": {
-        weights: { "critRate_": 1, "critDMG_": 1, "atk_": 0.75, "atk": 0.075, "hp_": 0, "hp": 0, "eleMas": 1, "enerRech_": 0, "elemental_dmg_": 1 },
+        weights: {
+            "critRate_": 1,
+            "critDMG_": 1,
+
+            "atk_": 0.75,
+            "atk": 0.075,
+
+            "hp_": 0,
+            "hp": 0,
+
+            "def_": 0,
+            "def": 0,
+
+            "eleMas": 1,
+            "enerRech_": 0,
+
+            "pyro_dmg_": 1,
+            "hydro_dmg_": 0,
+            "cryo_dmg_": 0,
+            "geo_dmg_": 0,
+            "anemo_dmg_": 0,
+            "electro_dmg_": 0,
+            "dendro_dmg_": 0,
+            "physical_dmg_": 0,
+
+            "heal_": 0
+        },
         bestSets: ["ObsidianCodex:4", "CrimsonWitchOfFlames:4"],
         goodSets: ["ObsidianCodex:2", "CrimsonWitchOfFlames:2", "GildedDreams:4"]
     },
@@ -33,5 +59,36 @@ const CHARACTER_CONFIG = {
         weights: { "critRate_": 1, "critDMG_": 1, "hp_": 1, "hp": 0.1, "enerRech_": 0.8, "elemental_dmg_": 1 },
         bestSets: ["GoldenTroupe:4"],
         goodSets: ["GoldenTroupe:2", "TenacityOfTheMillelith:2"]
-    }
+    },
+    "Arlecchino": {
+        weights: {
+            "critRate_": 1,
+            "critDMG_": 1,
+
+            "atk_": 0.75,
+            "atk": 0.075,
+
+            "hp_": 0,
+            "hp": 0,
+
+            "def_": 0,
+            "def": 0,
+
+            "eleMas": 0.75,
+            "enerRech_": 0.3,
+
+            "pyro_dmg_": 1,
+            "hydro_dmg_": 0,
+            "cryo_dmg_": 0,
+            "geo_dmg_": 0,
+            "anemo_dmg_": 0,
+            "electro_dmg_": 0,
+            "dendro_dmg_": 0,
+            "physical_dmg_": 0,
+
+            "heal_": 0
+        },
+        bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
+        goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2"]
+    },
 };
