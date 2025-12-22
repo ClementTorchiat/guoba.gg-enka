@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version SVG Local)
+   SCRIPT PRINCIPAL (Version Finale : Rolls + Mappings + Rareté/Niveau)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG (VECTEURS LOCAUX) ---
@@ -13,25 +13,33 @@ const SVG_PATHS = {
     "target": "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z",
     "impact": "M12 2L1 21h22L12 2zm0 3.5L18.5 19H5.5L12 5.5z",
     "cross": "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8.5 12h-2v-3h-3v-2h3v-3h2v3h3v2h-3v3z",
-    // Elements (Simplifiés)
+
+    // Elements
     "fire": "M19.48 13.03c-.52-1.29-2.17-3.23-2.17-3.23s.27-1.74-.95-3.41c-1.22-1.67-3.14-1.92-3.14-1.92s.32 1.94-.49 3.01c-.81 1.07-2.73 1.19-2.73 1.19s1.39-2.77.29-4.88C9.52 2.15 7.42 2 7.42 2s.67 2.37-.53 4.04c-1.2 1.67-1.12 3.86-1.12 3.86s-1.87 1.12-1.72 4.18c.15 3.06 2.5 5.92 7.95 5.92 5.45 0 7.85-2.6 8-5.69.02-1.09-.52-1.28-.52-1.28z",
     "water": "M12 2.6L8.5 7.5c-1.8 2.5-1.4 5.2.9 6.9 2.3 1.7 5.3 1.1 6.6-1.5.5-1 1-3.1-4-10.3z",
     "wind": "M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z",
     "rock": "M12 2L2 22h20L12 2zm0 4l6.5 13h-13L12 6z",
     "ice": "M22 11h-5V6h-2v5H10V6H8v5H3v2h5v5h2v-5h5v5h2v-5h5z",
     "leaf": "M17 8C8 10 5.9 16.17 3.82 21.34 5.71 20.35 8.32 19 12 18c6.9 3 9-3 9-3s-2.07-3.95-4-7z",
-    // Petit symbole % pour différencier
+
+    // Badge % (Petit symbole pourcentage dessiné)
     "percent_badge": "M18.5 5.5l-9 13M10.5 6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm7 10a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"
 };
 
 // Fonction helper pour construire le SVG complet
 function createSvg(pathKey, isPercent = false) {
     let content = `<path d="${SVG_PATHS[pathKey]}" />`;
-    // Si c'est un pourcentage, on ajoute le symbole % à côté en petit
     if (isPercent) {
         content += `<g transform="scale(0.6) translate(14, 14)"><path d="${SVG_PATHS['percent_badge']}" fill="var(--accent-gold)" stroke="black" stroke-width="1"/></g>`;
     }
     return `<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px; height:16px; display:inline-block; vertical-align:middle;">${content}</svg>`;
+}
+
+// Fonction helper pour estimer le nombre de rolls
+function getRollCount(key, value) {
+    if (!window.MAX_ROLLS || !window.MAX_ROLLS[key]) return 0;
+    const avgRoll = window.MAX_ROLLS[key] * 0.85;
+    return Math.round(value / avgRoll);
 }
 
 // 2. MAPPINGS
@@ -114,6 +122,14 @@ const SET_NAME_MAPPING = {
     "Parchemins du héros de la cité": "ScrollOfTheHeroOfCinderCity"
 };
 
+const ARTIFACT_TYPE_MAPPING = {
+    "EQUIP_BRACER": "Fleur de la vie",
+    "EQUIP_NECKLACE": "Plume de la mort",
+    "EQUIP_SHOES": "Sables du temps",
+    "EQUIP_RING": "Coupe d'éonothème",
+    "EQUIP_DRESS": "Diadème de Logos"
+};
+
 let globalPersoData = [];
 let charData = {};
 let locData = {};
@@ -181,39 +197,27 @@ function formatStat(propId, value) {
 
     const label = STAT_LABELS[key] || key;
 
-    // --- GESTION SVG LOCAUX ---
     let svgContent = "";
-
-    // 1. PV (Flat vs %)
     if (key === 'hp') svgContent = createSvg('heart', false);
     else if (key === 'hp_') svgContent = createSvg('heart', true);
-
-    // 2. ATK (Flat vs %)
     else if (key === 'atk') svgContent = createSvg('sword', false);
     else if (key === 'atk_') svgContent = createSvg('sword', true);
-
-    // 3. DEF (Flat vs %)
     else if (key === 'def') svgContent = createSvg('shield', false);
     else if (key === 'def_') svgContent = createSvg('shield', true);
-
-    // 4. Autres Stats
     else if (key === 'eleMas') svgContent = createSvg('star');
     else if (key === 'enerRech_') svgContent = createSvg('flash');
     else if (key === 'critRate_') svgContent = createSvg('target');
     else if (key === 'critDMG_') svgContent = createSvg('impact');
     else if (key === 'heal_') svgContent = createSvg('cross');
-
-    // 5. Éléments
     else if (key === 'pyro_dmg_') svgContent = createSvg('fire');
     else if (key === 'hydro_dmg_') svgContent = createSvg('water');
     else if (key === 'cryo_dmg_') svgContent = createSvg('ice');
-    else if (key === 'electro_dmg_') svgContent = createSvg('flash'); // Réuse Flash ou ajouter icone electro
+    else if (key === 'electro_dmg_') svgContent = createSvg('flash');
     else if (key === 'anemo_dmg_') svgContent = createSvg('wind');
     else if (key === 'geo_dmg_') svgContent = createSvg('rock');
     else if (key === 'dendro_dmg_') svgContent = createSvg('leaf');
-    else if (key === 'physical_dmg_') svgContent = createSvg('sword'); // Réuse Sword
-
-    else svgContent = createSvg('star'); // Fallback
+    else if (key === 'physical_dmg_') svgContent = createSvg('sword');
+    else svgContent = createSvg('star');
 
     return { key, value: val, label, icon: svgContent, isPercent };
 }
@@ -231,7 +235,6 @@ function processData(data) {
         const level = perso.propMap['4001'] ? parseInt(perso.propMap['4001'].val) : 0;
         const constellations = perso.talentIdList ? perso.talentIdList.length : 0;
 
-        // Talents
         const talents = [];
         if (info.SkillOrder) {
             info.SkillOrder.forEach(skillId => {
@@ -247,13 +250,8 @@ function processData(data) {
 
         const fp = perso.fightPropMap;
         const combatStats = {
-            hp: fp[2000],
-            atk: fp[2001],
-            def: fp[2002],
-            em: fp[28],
-            cr: fp[20] * 100,
-            cd: fp[22] * 100,
-            er: fp[23] * 100,
+            hp: fp[2000], atk: fp[2001], def: fp[2002], em: fp[28],
+            cr: fp[20] * 100, cd: fp[22] * 100, er: fp[23] * 100,
             elemBonus: Math.max(fp[30], fp[40], fp[41], fp[42], fp[43], fp[44], fp[45], fp[46]) * 100
         };
 
@@ -263,7 +261,6 @@ function processData(data) {
         perso.equipList.forEach(item => {
             const flat = item.flat;
 
-            // WEAPON
             if (item.weapon) {
                 const main = flat.weaponStats && flat.weaponStats[0] ? formatStat(flat.weaponStats[0].appendPropId, flat.weaponStats[0].statValue) : null;
                 const sub = flat.weaponStats && flat.weaponStats[1] ? formatStat(flat.weaponStats[1].appendPropId, flat.weaponStats[1].statValue) : null;
@@ -273,17 +270,13 @@ function processData(data) {
                     level: item.weapon.level,
                     rank: (item.weapon.affixMap ? Object.values(item.weapon.affixMap)[0] : 0) + 1,
                     icon: `https://enka.network/ui/${flat.icon}.png`,
-                    baseAtk: main,
-                    subStat: sub,
-                    stars: flat.rankLevel
+                    baseAtk: main, subStat: sub, stars: flat.rankLevel
                 };
             }
 
-            // ARTIFACTS
             if (flat.itemType === "ITEM_RELIQUARY") {
                 const nomSetFR = getText(flat.setNameTextMapHash);
                 const setKey = SET_NAME_MAPPING[nomSetFR] || "UnknownSet";
-
                 const subs = [];
                 if (flat.reliquarySubstats) {
                     flat.reliquarySubstats.forEach(s => {
@@ -298,22 +291,19 @@ function processData(data) {
                     icon: `https://enka.network/ui/${flat.icon}.png`,
                     mainStat: formatStat(flat.reliquaryMainstat.mainPropId, flat.reliquaryMainstat.statValue),
                     subStats: subs,
-                    level: item.reliquary.level - 1
+                    level: item.reliquary.level - 1,
+                    stars: flat.rankLevel // Récupération rareté
                 });
             }
         });
 
         const persoObj = {
             id: id, nom, rarity, level, cons: constellations, talents,
-            image: sideIcon, splashArt: splashUrl,
-            combatStats, weapon,
-            artefacts: artefacts,
+            image: sideIcon, splashArt: splashUrl, combatStats, weapon, artefacts,
             evaluation: null, weights: null
         };
 
-        // Calcul du score
         persoObj.evaluation = calculateCharacterScore(persoObj);
-
         const configKey = persoObj.nom.replace(/\s+/g, '') || "Default";
         const config = CHARACTER_CONFIG[configKey] || CHARACTER_CONFIG[persoObj.nom] || DEFAULT_CONFIG;
         persoObj.weights = config.weights;
@@ -360,7 +350,6 @@ function renderShowcase(index) {
     const s = p.combatStats;
     const ev = p.evaluation;
 
-    // Talents HTML
     let talentsHtml = `<div style="display:flex; justify-content:center; gap:20px; margin-top:20px;">`;
     p.talents.forEach(t => {
         talentsHtml += `
@@ -371,20 +360,12 @@ function renderShowcase(index) {
     });
     talentsHtml += `</div>`;
 
-    // Helper pour générer une ligne de stat avec icône SVG injectée
-    // Note: 'icon' contient maintenant directement le string SVG, donc pas de balise <img>
     const statLine = (svg, label, val, isHighlight=false) => `
         <div class="stat-row">
-            <span class="text-muted" style="display:flex; align-items:center; gap:8px;">
-                ${svg} ${label}
-            </span> 
+            <span class="text-muted" style="display:flex; align-items:center; gap:8px;">${svg} ${label}</span> 
             <div class="dotted-line"></div> 
             <span class="stat-val" style="${isHighlight ? 'color:var(--accent-gold)' : ''}">${val}</span>
         </div>`;
-
-    // SVG pour les stats de combat globales
-    // Attention: ici on n'a pas la clé exacte (hp ou hp_), on génère pour l'affichage global
-    // On utilise les versions "Flat" pour l'affichage principal des stats totales
 
     let html = `
         <div class="showcase-area">
@@ -397,7 +378,6 @@ function renderShowcase(index) {
                         <div style="font-size:0.9rem; color:var(--accent-gold); font-weight:bold;">C${p.cons}</div>
                     </div>
                 </div>
-                
                 ${statLine(createSvg('heart'), "PV Max", Math.round(s.hp))}
                 ${statLine(createSvg('sword'), "ATQ", Math.round(s.atk))}
                 ${statLine(createSvg('shield'), "DÉF", Math.round(s.def))}
@@ -406,7 +386,6 @@ function renderShowcase(index) {
                 ${statLine(createSvg('impact'), "DGT CRIT", s.cd.toFixed(1)+'%')}
                 ${statLine(createSvg('flash'), "ER", s.er.toFixed(1)+'%', true)}
                 ${statLine(createSvg('fire'), "Bonus Elem.", s.elemBonus.toFixed(1)+'%')}
-
                 <div class="global-score-card">
                     <div>
                         <div style="color:var(--accent-gold); font-size:0.8rem; text-transform:uppercase; font-weight:bold;">Score Global</div>
@@ -423,7 +402,6 @@ function renderShowcase(index) {
         <div class="equipment-area">
     `;
 
-    // WEAPON CARD
     if (p.weapon) {
         html += `
             <div class="card weapon-card">
@@ -431,14 +409,12 @@ function renderShowcase(index) {
                 <div style="flex:1">
                     <div style="font-weight:700; font-size:1.1rem; color:${p.weapon.stars === 5 ? '#eab308' : '#fff'}">${p.weapon.name}</div>
                     <div style="color:var(--accent-gold); font-size:0.9rem; margin-bottom:5px;">Niv. ${p.weapon.level} • R${p.weapon.rank}</div>
-                    
                     <div style="display:flex; gap:15px; margin-top:5px; background:rgba(0,0,0,0.2); padding:5px; border-radius:4px;">
                         ${p.weapon.baseAtk ? `
                         <div style="text-align:center;">
                             <div style="font-size:0.7rem; color:#aaa;">ATQ Base</div>
                             <div style="font-weight:bold; font-size:1.1rem;">${p.weapon.baseAtk.value}</div>
                         </div>` : ''}
-                        
                         ${p.weapon.subStat ? `
                         <div style="text-align:center; border-left:1px solid #444; padding-left:15px;">
                             <div style="font-size:0.7rem; color:#aaa;">${p.weapon.subStat.label}</div>
@@ -446,11 +422,9 @@ function renderShowcase(index) {
                         </div>` : ''}
                     </div>
                 </div>
-            </div>
-        `;
+            </div>`;
     }
 
-    // ARTIFACTS GRID
     p.artefacts.forEach(art => {
         let subsHtml = "";
         art.subStats.forEach(sub => {
@@ -458,24 +432,32 @@ function renderShowcase(index) {
             if (w === undefined && sub.key.includes("dmg_")) w = p.weights["elemental_dmg_"] || 0;
             if (w === undefined) w = 0;
             const isDead = w === 0;
+            const rolls = getRollCount(sub.key, sub.value);
 
-            // Note: sub.icon contient maintenant le SVG String
             subsHtml += `
                 <div class="substat-row ${isDead ? 'dead' : ''}">
                     <span style="display:flex; align-items:center; gap:5px;">
-                        <span style="color:#aaa; display:inline-flex;">${sub.icon}</span> ${sub.label}
+                        <span style="color:#aaa; display:inline-flex;">${sub.icon}</span> 
+                        ${sub.label}
+                        ${rolls > 0 ? `<span style="background:rgba(255, 177, 59, 0.15); color:#FFB13B; font-size:0.7rem; padding:1px 5px; border-radius:4px; font-weight:bold;">[${rolls}]</span>` : ''}
                     </span>
                     <span>${formatValueDisplay(sub.key, sub.value)}</span>
                 </div>`;
         });
 
+        const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+
         html += `
             <div class="card">
                 <div class="item-header">
-                    <img src="${art.icon}" class="item-img">
-                    <div style="overflow:hidden;">
-                        <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600; font-size:0.9rem;">${art.type.split('_')[1]}</div>
+                    <div style="position:relative; display:inline-block;">
+                        <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : '#a855f7'};">
+                        <div style="position:absolute; bottom:0; right:0; background:rgba(0,0,0,0.8); color:white; font-size:0.65rem; padding:1px 4px; border-top-left-radius:4px;">+${art.level}</div>
+                    </div>
+                    <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center; margin-left: 10px;">
+                        <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600; font-size:0.9rem;">${pieceName}</div>
                         <div style="font-size:0.75rem; color:var(--accent-gold); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${art.setName}</div>
+                        <div style="font-size:0.7rem; color:#aaa;">${art.stars}★</div>
                     </div>
                 </div>
                 <div class="main-stat-display">

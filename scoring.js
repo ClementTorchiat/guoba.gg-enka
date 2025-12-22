@@ -1,5 +1,5 @@
 /* =========================================
-   MOTEUR DE NOTATION (Double Système : Score + Grade)
+   MOTEUR DE NOTATION (Système Hybride : Fribbels Mainstat + Old Substats)
    ========================================= */
 
 const SCORING_NORMS = {
@@ -11,25 +11,30 @@ const SCORING_NORMS = {
     "pyro_dmg_": 1.33, "hydro_dmg_": 1.33, "cryo_dmg_": 1.33, "geo_dmg_": 1.33, "anemo_dmg_": 1.33, "electro_dmg_": 1.33, "dendro_dmg_": 1.33, "physical_dmg_": 1.06, "heal_": 1.33
 };
 
+// Valeur de référence pour une Mainstat parfaite (équivalent Max DGT CRIT)
+const MAINSTAT_BASE_VALUE = 62.2;
+
+// Pièces variables qui donnent un bonus de score si la mainstat est bonne
+const VARIABLE_PIECES = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"]; // Sablier, Coupe, Casque
+
 function calculateCharacterScore(perso) {
     // 1. Config
     const configKey = perso.nom.replace(/\s+/g, '') || "Default";
     const config = CHARACTER_CONFIG[configKey] || CHARACTER_CONFIG[perso.nom] || DEFAULT_CONFIG;
 
-    let totalScore = 0; // Score Puissance
-    let totalRolls = 0; // Note Qualité (Projet 1)
+    let totalScore = 0; // Score Puissance (inclura le bonus mainstat)
+    let totalRolls = 0; // Note Qualité (pour le grade SSS)
     const setsCounter = {};
 
     // 2. Parcourir les artéfacts
     perso.artefacts.forEach(art => {
-        // A. CALCUL PUISSANCE (Ton Score actuel)
+        // A. Score Individuel de l'artéfact (ANCIEN SYSTÈME 5.1)
+        // Ce score s'affiche sur la carte et note la qualité intrinsèque de la pièce (Substats + petit bonus mainstat)
         const powerResult = scoreArtifact(art, config.weights);
-        art.score = powerResult.score; // ex: 45.2
+        art.score = powerResult.score;
 
-        // B. CALCUL QUALITÉ (Ton Notation Projet 1)
+        // B. Note Qualité (Rolls) pour le Grade (S, SS, SSS...)
         const qualityPoints = calculateArtifactRollQuality(art, config.weights);
-
-        // Note individuelle de l'artéfact
         const gradeLetter = getGradeFromPoints(qualityPoints);
 
         art.grade = {
@@ -38,15 +43,23 @@ function calculateCharacterScore(perso) {
             points: qualityPoints
         };
 
-        totalScore += art.score;
-        totalRolls += qualityPoints; // On additionne les points de notation (0.7, 1.0...)
+        // Ajout aux totaux
+        totalScore += art.score; // On ajoute le score de base de l'artéfact
+        totalRolls += qualityPoints;
+
+        // C. BONUS MAINSTAT (Système Fribbels - Standardisé)
+        // Ajouté UNIQUEMENT au score total du personnage
+        if (VARIABLE_PIECES.includes(art.type)) {
+            const mainStatBonus = calculateMainStatBonus(art, config.weights);
+            totalScore += mainStatBonus;
+        }
 
         if (art.setKey) {
             setsCounter[art.setKey] = (setsCounter[art.setKey] || 0) + 1;
         }
     });
 
-    // 3. Bonus de Set (Impacte seulement le Score Puissance)
+    // 3. Bonus de Set (Multiplicateur final)
     let setMultiplier = 0.5;
     let activeBonuses = [];
     for (const [setKey, count] of Object.entries(setsCounter)) {
@@ -64,27 +77,62 @@ function calculateCharacterScore(perso) {
     const finalScore = parseFloat((totalScore * setMultiplier).toFixed(1));
 
     return {
-        score: finalScore, // Le score chiffré (ex: 210.5)
-        grade: getGlobalGrade(totalRolls), // La note (ex: SSS) basée sur la somme des rolls
+        score: finalScore,
+        grade: getGlobalGrade(totalRolls),
         setBonus: activeBonuses,
         setMultiplier: setMultiplier,
-        totalRolls: totalRolls.toFixed(1) // Pour debug si besoin
+        totalRolls: totalRolls.toFixed(1)
     };
 }
 
-/** * SYSTÈME 1 : PUISSANCE (Multiplication)
+/** * Calcul du Bonus Mainstat (Standardisé 62.2)
+ * Si la stat a un poids > 0, on ajoute 62.2 * poids.
+ * Indépendant de la valeur réelle de la stat (EM vs ATK vs CRIT).
+ */
+function calculateMainStatBonus(artifact, weights) {
+    let key = artifact.mainStat.key;
+    let w = weights[key];
+
+    // Gestion du fallback pour les dégâts élémentaires
+    if (w === undefined && key.includes("_dmg_")) {
+        w = weights["elemental_dmg_"];
+    }
+    // Si toujours undefined (stat inutile), ça vaut 0
+    w = w || 0;
+
+    if (w > 0) {
+        // Formule simplifiée : Base Fixe * Poids
+        // Ex: Weight 1.0 -> Bonus +62.2
+        // Ex: Weight 0.75 -> Bonus +46.65
+        return MAINSTAT_BASE_VALUE * w;
+    }
+    return 0;
+}
+
+/** * ANCIEN SYSTÈME (5.1) pour le score individuel de la carte
+ * (Note intrinsèque de l'artéfact)
  */
 function scoreArtifact(artifact, weights) {
     let score = 0;
-    let mainWeight = weights[artifact.mainStat.key] || 0;
-    if (mainWeight === 0 && artifact.mainStat.key.includes("_dmg_")) mainWeight = weights["elemental_dmg_"] || 0;
+    let mainWeight = weights[artifact.mainStat.key];
 
+    if (mainWeight === undefined && artifact.mainStat.key.includes("_dmg_")) {
+        mainWeight = weights["elemental_dmg_"];
+    }
+    mainWeight = mainWeight || 0;
+
+    // Le petit bonus "juste pour avoir la bonne stat" (Old System 5.1)
+    // On le garde pour que la note de la carte ne soit pas uniquement basée sur les substats
     if (mainWeight > 0) {
         score += 5.1 * (SCORING_NORMS[artifact.mainStat.key] || 1) * mainWeight;
     }
+
+    // Score des Substats
     artifact.subStats.forEach(sub => {
-        let w = weights[sub.key] || 0;
-        if (w === 0 && sub.key.includes("_dmg_")) w = weights["elemental_dmg_"] || 0;
+        let w = weights[sub.key];
+        if (w === undefined && sub.key.includes("_dmg_")) w = weights["elemental_dmg_"];
+        w = w || 0;
+
         if (w > 0) {
             score += sub.value * w * (SCORING_NORMS[sub.key] || 0);
         }
@@ -92,13 +140,14 @@ function scoreArtifact(artifact, weights) {
     return { score: parseFloat(score.toFixed(1)) };
 }
 
-/** * SYSTÈME 2 : QUALITÉ (Division par Max Roll)
+/** * QUALITÉ (Roll Value %) - Inchangé
  */
 function calculateArtifactRollQuality(artifact, weights) {
     let points = 0;
     artifact.subStats.forEach(sub => {
-        let w = weights[sub.key] || 0;
-        if (w === 0 && sub.key.includes("_dmg_")) w = weights["elemental_dmg_"] || 0;
+        let w = weights[sub.key];
+        if (w === undefined && sub.key.includes("_dmg_")) w = weights["elemental_dmg_"];
+        w = w || 0;
 
         if (w > 0) {
             const maxRoll = (window.MAX_ROLLS && window.MAX_ROLLS[sub.key]) || 9999;
@@ -108,7 +157,7 @@ function calculateArtifactRollQuality(artifact, weights) {
     return parseFloat(points.toFixed(1));
 }
 
-// --- ÉCHELLES DE NOTATION (PROJET 1) ---
+// --- ÉCHELLES DE NOTATION ---
 
 function getGradeFromPoints(pts) {
     if (pts >= 9.0) return "ARCHON";
@@ -127,47 +176,31 @@ function getGradeFromPoints(pts) {
     if (pts >= 2.5) return "C+";
     if (pts >= 2.0) return "C";
     if (pts >= 1.5) return "D+";
-    if (pts >= 1.0) return "D"; // Anciennement F+
-
-    // Le bas du panier (remplace les Bro...)
+    if (pts >= 1.0) return "D";
     if (pts >= 0.5) return "F+";
     return "F";
 }
 
-// Nouvelle échelle globale basée sur la somme des Rolls (Projet 1)
 function getGlobalGrade(totalRolls) {
     let grade = "F";
-
-    // ZONE DIVINE (Moyenne par artéfact > 8)
-    // Max théorique 45. Il faut être un monstre pour dépasser 42.
-    if (totalRolls >= 43) grade = "ARCHON"; // 43, 44, 45 (Quasi impossible)
-    else if (totalRolls >= 40) grade = "WTF+"; // 40, 41, 42 (God Tier absolu)
-    else if (totalRolls >= 38) grade = "WTF";  // 38, 39 (Excellentissime)
-
-    // ZONE ELITE (Moyenne par artéfact ~7 à 7.5)
-    else if (totalRolls >= 36) grade = "SSS+"; // Paliers de 2 points
+    if (totalRolls >= 43) grade = "ARCHON";
+    else if (totalRolls >= 40) grade = "WTF+";
+    else if (totalRolls >= 38) grade = "WTF";
+    else if (totalRolls >= 36) grade = "SSS+";
     else if (totalRolls >= 34) grade = "SSS";
     else if (totalRolls >= 32) grade = "SS+";
-    else if (totalRolls >= 30) grade = "SS";   // 30 est un beau chiffre rond pour le "Double S"
-
-    // ZONE TRES BONNE (Moyenne par artéfact ~5 à 6)
-    else if (totalRolls >= 27) grade = "S+";   // Paliers de 3 points
+    else if (totalRolls >= 30) grade = "SS";
+    else if (totalRolls >= 27) grade = "S+";
     else if (totalRolls >= 24) grade = "S";
     else if (totalRolls >= 21) grade = "A+";
     else if (totalRolls >= 18) grade = "A";
-
-    // ZONE MOYENNE (Moyenne par artéfact ~3 à 4)
     else if (totalRolls >= 15) grade = "B+";
     else if (totalRolls >= 12) grade = "B";
     else if (totalRolls >= 9)  grade = "C+";
     else if (totalRolls >= 6)  grade = "C";
-
-    // ZONE DEBUTANT / POUBELLE
     else if (totalRolls >= 4)  grade = "D+";
     else if (totalRolls >= 2)  grade = "D";
     else if (totalRolls >= 1)  grade = "F+";
-
-    // < 1 reste F
 
     return {
         letter: grade,
@@ -182,6 +215,5 @@ function getGradeColor(grade) {
     if (grade.includes("S")) return "#ffd700";
     if (grade.includes("A")) return "#c66eff";
     if (grade.includes("B")) return "#4d94ff";
-    // Les grades inférieurs (C, D, F, Bro...) auront la couleur par défaut
     return "#aaa";
 }
