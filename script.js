@@ -1,8 +1,8 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Correction : DGT Elem Dynamique & Icônes)
+   SCRIPT PRINCIPAL (Version Finale : Score Bar)
    ========================================= */
 
-// --- 1. CONFIGURATION DES SVG ---
+// ... (SVG_PATHS, createSvg, getRollCount, MAPPINGS inchangés) ...
 const SVG_PATHS = {
     "heart": "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z",
     "sword": "M14.5 17.5L12 15l-2.5 2.5L12 20l2.5-2.5zm5.7-9.3l-2.4-2.4c-.4-.4-1-.4-1.4 0l-9.5 9.5 2.4 2.4 9.5-9.5c.4-.4.4-1 0-1.4zM5.1 14.9L2.7 17.3c-.4.4-.4 1 0 1.4l2.4 2.4c.4.4 1 .4 1.4 0l2.4-2.4-3.8-3.8z",
@@ -33,7 +33,7 @@ function getRollCount(key, value) {
     return Math.round(value / avgRoll);
 }
 
-// 2. MAPPINGS & DATA
+// 2. MAPPINGS
 const ELEMENT_DATA = {
     "Fire": { id: 40, key: "pyro_dmg_" },
     "Water": { id: 42, key: "hydro_dmg_" },
@@ -60,7 +60,7 @@ const STAT_MAPPING = {
 const STAT_LABELS = {
     "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %",
     "eleMas": "Maîtrise Élem.", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT",
-    "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "Bonus de DGT Pyro",
+    "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "DGT Pyro",
     "hydro_dmg_": "DGT Hydro", "cryo_dmg_": "DGT Cryo", "electro_dmg_": "DGT Électro",
     "anemo_dmg_": "DGT Anémo", "geo_dmg_": "DGT Géo", "dendro_dmg_": "DGT Dendro",
     "physical_dmg_": "DGT Phys."
@@ -140,28 +140,20 @@ function formatValueDisplay(key, val) {
 }
 
 function formatStat(propId, value) {
-    // 1. Essai de mapping standard (si c'est un code API)
     let key = STAT_MAPPING[propId];
-
-    // 2. Si non trouvé, on vérifie si propId est déjà une clé connue (ex: "pyro_dmg_")
-    // C'est ça qui corrigeait ton problème de label/icône
+    // Fix: Si la clé est déjà au format "pyro_dmg_" ou "dmgBonus", on la garde
     if (!key && (STAT_LABELS[propId] || propId === 'dmgBonus')) {
         key = propId;
     }
-
     if (!key) return { key: "unknown", value: value, label: propId, icon: "" };
 
     let val = value;
     let isPercent = false;
-
     if (key.endsWith('_') || ['critRate_', 'critDMG_', 'enerRech_', 'heal_'].includes(key)) {
         isPercent = true;
         if (val < 2.0) val = val * 100;
     }
-
     const label = STAT_LABELS[key] || key;
-
-    // --- GESTION SVG LOCAUX ---
     let svgContent = "";
     if (key === 'hp') svgContent = createSvg('heart', false);
     else if (key === 'hp_') svgContent = createSvg('heart', true);
@@ -183,22 +175,14 @@ function formatStat(propId, value) {
     else if (key === 'dendro_dmg_') svgContent = createSvg('leaf');
     else if (key === 'physical_dmg_') svgContent = createSvg('sword');
     else svgContent = createSvg('star');
-
     return { key, value: val, label, icon: svgContent, isPercent };
 }
 
-// --- LOGIQUE CALCUL BONUS DYNAMIQUE ---
+// --- LOGIQUE CALCUL BONUS ---
 function calculateBuffedStats(baseStats, currentStats, buffsList) {
     let buffed = { ...currentStats };
-
-    buffsList.forEach(buff => {
-        if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, false);
-    });
-
-    buffsList.forEach(buff => {
-        if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, true);
-    });
-
+    buffsList.forEach(buff => { if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, false); });
+    buffsList.forEach(buff => { if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, true); });
     return buffed;
 }
 
@@ -215,8 +199,7 @@ function applyBonus(buffed, baseStats, bonuses, processScaling) {
                     buffed[targetStat] = (buffed[targetStat] || 0) + bonusValue;
                 }
             }
-        }
-        else {
+        } else {
             if (processScaling) continue;
             if (statKey === "atk_") buffed.atk += baseStats.atk * val;
             else if (statKey === "hp_") buffed.hp += baseStats.hp * val;
@@ -227,8 +210,6 @@ function applyBonus(buffed, baseStats, bonuses, processScaling) {
             } else if (statKey === "eleMas") {
                 buffed.em += val;
             }
-                // GESTION DGT ÉLÉMENTAIRE
-            // Si le bonus est générique (elemental_dmg_) OU correspond à l'élément du perso (dmgBonusKey)
             else if (statKey === buffed.dmgBonusKey || statKey === 'elemental_dmg_') {
                 buffed.dmgBonus += val * 100;
             }
@@ -253,13 +234,48 @@ function mapTargetKey(keyPart) {
     return null;
 }
 
-// --- INTERACTION ---
 function toggleBuff(charIndex, buffIndex) {
     const p = globalPersoData[charIndex];
     if (!p) return;
     p.buffs[buffIndex].active = !p.buffs[buffIndex].active;
     p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
     renderShowcase(charIndex);
+}
+
+// --- GENERATION BARRE DE SCORE ---
+function generateScoreBar(totalRolls) {
+    const maxScale = 45; // Valeur max de l'échelle (ARCHON est à ~43)
+
+    // Position du curseur (limité à 100%)
+    const percent = Math.min((totalRolls / maxScale) * 100, 100);
+
+    // Définition des breakpoints à afficher sur la barre
+    const markers = [
+        { val: 12, label: "B" },
+        { val: 18, label: "A" },
+        { val: 24, label: "S" },
+        { val: 30, label: "SS" },
+        { val: 34, label: "SSS" },
+        { val: 38, label: "WTF" },
+        { val: 43, label: "ARCHON" }
+    ];
+
+    let markersHtml = "";
+    markers.forEach(m => {
+        const left = (m.val / maxScale) * 100;
+        markersHtml += `<div class="score-marker" style="left: ${left}%;">${m.label}</div>`;
+    });
+
+    return `
+        <div class="score-bar-container">
+            <div class="score-bar-track">
+                ${markersHtml}
+                <div class="score-cursor" style="left: ${percent}%;">
+                    <div class="score-cursor-label">${totalRolls} Rolls</div>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 // --- PROCESS ---
@@ -280,7 +296,6 @@ function processData(data) {
         const level = perso.propMap['4001'] ? parseInt(perso.propMap['4001'].val) : 0;
         const constellations = perso.talentIdList ? perso.talentIdList.length : 0;
 
-        // IDENTIFICATION ÉLÉMENT & STAT BONUS
         const elemInfo = ELEMENT_DATA[info.Element] || { id: 30, key: "physical_dmg_" };
 
         const talents = [];
@@ -297,16 +312,10 @@ function processData(data) {
         const sideIcon = `https://enka.network/ui/${info.SideIconName?.replace("Side_Match", "Side")}.png`;
 
         const fp = perso.fightPropMap;
-        const baseStats = {
-            hp: fp[1] || 0,
-            atk: fp[4] || 0,
-            def: fp[7] || 0
-        };
-
+        const baseStats = { hp: fp[1] || 0, atk: fp[4] || 0, def: fp[7] || 0 };
         const combatStats = {
             hp: fp[2000], atk: fp[2001], def: fp[2002], em: fp[28],
             cr: fp[20] * 100, cd: fp[22] * 100, er: fp[23] * 100,
-            // On stocke le bonus spécifique à l'élément du perso
             dmgBonus: (fp[elemInfo.id] || 0) * 100,
             dmgBonusKey: elemInfo.key
         };
@@ -321,23 +330,18 @@ function processData(data) {
                 const main = flat.weaponStats && flat.weaponStats[0] ? formatStat(flat.weaponStats[0].appendPropId, flat.weaponStats[0].statValue) : null;
                 const sub = flat.weaponStats && flat.weaponStats[1] ? formatStat(flat.weaponStats[1].appendPropId, flat.weaponStats[1].statValue) : null;
                 weapon = {
-                    name: getText(flat.nameTextMapHash),
-                    level: item.weapon.level,
+                    name: getText(flat.nameTextMapHash), level: item.weapon.level,
                     rank: (item.weapon.affixMap ? Object.values(item.weapon.affixMap)[0] : 0) + 1,
-                    icon: `https://enka.network/ui/${flat.icon}.png`,
-                    baseAtk: main, subStat: sub, stars: flat.rankLevel
+                    icon: `https://enka.network/ui/${flat.icon}.png`, baseAtk: main, subStat: sub, stars: flat.rankLevel
                 };
             }
             if (flat.itemType === "ITEM_RELIQUARY") {
                 const nomSetFR = getText(flat.setNameTextMapHash);
                 const setKey = SET_NAME_MAPPING[nomSetFR] || "UnknownSet";
                 setsCounter[setKey] = (setsCounter[setKey] || 0) + 1;
-
                 const subs = [];
                 if (flat.reliquarySubstats) {
-                    flat.reliquarySubstats.forEach(s => {
-                        subs.push(formatStat(s.appendPropId, s.statValue));
-                    });
+                    flat.reliquarySubstats.forEach(s => { subs.push(formatStat(s.appendPropId, s.statValue)); });
                 }
                 artefacts.push({
                     type: flat.equipType, setKey: setKey, setName: nomSetFR,
@@ -348,19 +352,17 @@ function processData(data) {
             }
         });
 
-        // CONSTRUCTION BUFFS
         let buffs = [];
         const addBuffs = (sourceName, category, configData) => {
             if (Array.isArray(configData)) {
                 configData.forEach((item, idx) => {
                     let name = item.label || `Buff ${idx + 1}`;
                     if (!item.label && !Array.isArray(item.stats)) {
-                        const statsStr = Object.entries(item.stats)
-                            .map(([k, v]) => {
-                                const l = STAT_LABELS[k] || k;
-                                const val = (typeof v === 'number' && v < 2) ? Math.round(v*100)+'%' : v;
-                                return `${l} +${val}`;
-                            }).join(", ");
+                        const statsStr = Object.entries(item.stats).map(([k, v]) => {
+                            const l = STAT_LABELS[k] || k;
+                            const val = (typeof v === 'number' && v < 2) ? Math.round(v*100)+'%' : v;
+                            return `${l} +${val}`;
+                        }).join(", ");
                         name = statsStr;
                     }
                     buffs.push({ id: `${category}_${idx}`, category, name, bonuses: item.stats, active: true });
@@ -375,8 +377,7 @@ function processData(data) {
                         const sourceLabel = STAT_LABELS[sourceStat] || sourceStat;
                         const percentDisplay = (val.percent * 100).toFixed(2) + "%";
                         buffs.push({
-                            id: `${category}_${statKey}`, category,
-                            name: `${targetLabel} (+${percentDisplay} ${sourceLabel})`,
+                            id: `${category}_${statKey}`, category, name: `${targetLabel} (+${percentDisplay} ${sourceLabel})`,
                             bonuses: { [statKey]: val }, active: true
                         });
                         continue;
@@ -385,8 +386,7 @@ function processData(data) {
                         const statLabel = STAT_LABELS[statKey] || statKey;
                         const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
                         buffs.push({
-                            id: `${category}_${statKey}`, category,
-                            name: `${statLabel} (+${valDisplay})`,
+                            id: `${category}_${statKey}`, category, name: `${statLabel} (+${valDisplay})`,
                             bonuses: { [statKey]: val }, active: true
                         });
                     }
@@ -394,10 +394,7 @@ function processData(data) {
             }
         };
 
-        if (weapon && G_WEAPON_PASSIVES[weapon.name]) {
-            addBuffs(weapon.name, `${weapon.name} (Arme)`, G_WEAPON_PASSIVES[weapon.name]);
-        }
-
+        if (weapon && G_WEAPON_PASSIVES[weapon.name]) addBuffs(weapon.name, `${weapon.name} (Arme)`, G_WEAPON_PASSIVES[weapon.name]);
         if (G_SET_PASSIVES) {
             for (const [setKey, count] of Object.entries(setsCounter)) {
                 if (G_SET_PASSIVES[setKey]) {
@@ -411,21 +408,16 @@ function processData(data) {
         }
 
         const buffedStats = calculateBuffedStats(baseStats, combatStats, buffs);
-
         const persoObj = {
             id: id, nom, rarity, level, cons: constellations, talents,
-            image: sideIcon, splashArt: splashUrl,
-            combatStats, buffedStats, baseStats,
-            weapon, artefacts, setsCounter, buffs,
-            evaluation: null, weights: null
+            image: sideIcon, splashArt: splashUrl, combatStats, buffedStats, baseStats,
+            weapon, artefacts, setsCounter, buffs, evaluation: null, weights: null
         };
 
         const configKey = persoObj.nom.replace(/\s+/g, '') || "Default";
         const config = G_CHAR_CONFIG[configKey] || G_CHAR_CONFIG[persoObj.nom] || G_DEFAULT_CONFIG;
-
         persoObj.evaluation = calculateCharacterScore(persoObj, config);
         persoObj.weights = config.weights;
-
         globalPersoData.push(persoObj);
     });
 
@@ -433,7 +425,7 @@ function processData(data) {
     if(globalPersoData.length > 0) renderShowcase(0);
 }
 
-// ... (RENDER FUNCTIONS) ...
+// ... (RENDER SIDEBAR Identique) ...
 function renderSidebar() {
     const list = document.getElementById('sidebar-list');
     if(!list) return;
@@ -484,11 +476,7 @@ function renderShowcase(index) {
             <span class="stat-val" style="${isHighlight ? 'color:var(--accent-gold)' : ''}">${val}</span>
         </div>`;
 
-    // Génération dynamique de l'affichage DGT Elem (CORRIGÉE : Utilise formatStat avec la clé)
-    // On passe b.dmgBonusKey (ex: "pyro_dmg_") à formatStat
-    // formatStat va trouver l'icône et le label corrects
     const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
-
     let combatStatsHtml = `
         <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; margin-top:15px; border:1px solid #333;">
             <h3 style="font-size:0.9rem; color:var(--accent-gold); text-transform:uppercase; margin-bottom:10px; font-weight:bold;">Stats de Combat (Passifs Inclus)</h3>
@@ -499,12 +487,10 @@ function renderShowcase(index) {
             ${statLine(createSvg('target'), "Taux CRIT", b.cr.toFixed(1)+'%', b.cr > s.cr)}
             ${statLine(createSvg('impact'), "DGT CRIT", b.cd.toFixed(1)+'%', b.cd > s.cd)}
             ${statLine(createSvg('flash'), "ER", b.er.toFixed(1)+'%', b.er > s.er)}
-            
             ${statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', b.dmgBonus > s.dmgBonus)}
         </div>
     `;
 
-    // Pour les stats menu, on utilise aussi la stat spécifique
     const menuDmgStat = formatStat(s.dmgBonusKey, s.dmgBonus / 100);
 
     let html = `
@@ -518,7 +504,6 @@ function renderShowcase(index) {
                         <div style="font-size:0.9rem; color:var(--accent-gold); font-weight:bold;">C${p.cons}</div>
                     </div>
                 </div>
-                
                 <h3 style="font-size:0.8rem; color:#888; text-transform:uppercase; margin-bottom:5px;">Stats Menu</h3>
                 ${statLine(createSvg('heart'), "PV Max", Math.round(s.hp))}
                 ${statLine(createSvg('sword'), "ATQ", Math.round(s.atk))}
@@ -527,7 +512,6 @@ function renderShowcase(index) {
                 ${statLine(createSvg('target'), "Taux CRIT", s.cr.toFixed(1)+'%')}
                 ${statLine(createSvg('impact'), "DGT CRIT", s.cd.toFixed(1)+'%')}
                 ${statLine(createSvg('flash'), "ER", s.er.toFixed(1)+'%', true)}
-                
                 ${statLine(menuDmgStat.icon, menuDmgStat.label, s.dmgBonus.toFixed(1)+'%')}
 
                 ${talentsHtml}
@@ -543,6 +527,9 @@ function renderShowcase(index) {
                         <span style="color:${ev.grade.color}; font-weight:bold; font-size:1.2rem;">${ev.grade.letter}</span>
                     </div>
                 </div>
+                
+                ${generateScoreBar(ev.totalRolls)}
+
             </div>
         </div>
         <div class="equipment-area">
@@ -617,11 +604,9 @@ function renderShowcase(index) {
             </div>`;
     });
 
-    // --- CARTE DE BUFFS (GROUPÉE PAR SOURCE) ---
     if (p.buffs && p.buffs.length > 0) {
         let buffListHtml = "";
         let lastCategory = "";
-
         p.buffs.forEach((buff, bIndex) => {
             if (buff.category !== lastCategory) {
                 buffListHtml += `
@@ -630,7 +615,6 @@ function renderShowcase(index) {
                     </div>`;
                 lastCategory = buff.category;
             }
-
             buffListHtml += `
                 <div style="display:flex; align-items:center; justify-content:space-between; padding:6px 8px; background:rgba(0,0,0,0.2); margin-bottom:4px; border-radius:4px;">
                     <span style="font-size:0.8rem; color:#ddd;">${buff.name}</span>
@@ -639,23 +623,16 @@ function renderShowcase(index) {
                         <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#333; transition:.4s; border-radius:34px;"></span>
                         <span style="position:absolute; content:''; height:12px; width:12px; left:2px; bottom:2px; background-color:white; transition:.4s; border-radius:50%; ${buff.active ? 'transform:translateX(14px); background-color:var(--accent-gold);' : ''}"></span>
                     </label>
-                </div>
-            `;
+                </div>`;
         });
-
         html += `
             <div class="card" style="border-color:var(--accent-gold); background:rgba(255, 177, 59, 0.05);">
                 <div style="font-weight:bold; color:var(--accent-gold); text-transform:uppercase; font-size:0.9rem; margin-bottom:10px; border-bottom:1px solid #444; padding-bottom:5px;">
                     <i class="fa-solid fa-bolt"></i> Buffs Actifs
                 </div>
-                <div style="flex:1;">
-                    ${buffListHtml}
-                </div>
-                <div style="font-size:0.75rem; color:#888; text-align:center; margin-top:10px;">
-                    Cochez pour appliquer les passifs
-                </div>
-            </div>
-        `;
+                <div style="flex:1;">${buffListHtml}</div>
+                <div style="font-size:0.75rem; color:#888; text-align:center; margin-top:10px;">Cochez pour appliquer les passifs</div>
+            </div>`;
     }
 
     html += `</div>`;

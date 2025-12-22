@@ -76,6 +76,85 @@
         .roll-badge:empty { display: none; }
 
         .art-score-footer { margin-top: auto; padding-top: 10px; border-top: 1px solid #333; font-size: 0.8rem; display: flex; justify-content: space-between; }
+
+        .score-bar-container {
+            margin-top: 20px;
+            padding-top: 10px;
+            position: relative;
+            width: 100%;
+        }
+
+        .score-bar-track {
+            height: 12px;
+            width: 100%;
+            background: linear-gradient(90deg,
+            #ff4d4d 0%,   /* F - Rouge */
+            #ffb13b 25%,  /* B - Orange/Or */
+            #eab308 50%,  /* S - Jaune */
+            #22c55e 75%,  /* SS - Vert */
+            #a855f7 90%,  /* WTF - Violet */
+            #3b82f6 100%  /* ARCHON - Bleu/Cyan */
+            );
+            border-radius: 6px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .score-marker {
+            position: absolute;
+            top: 14px; /* Juste sous la barre */
+            transform: translateX(-50%);
+            font-size: 0.65rem;
+            color: #6b7280;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .score-marker::before {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            margin-bottom: 2px;
+            position: absolute;
+            top: -10px; /* Monte dans la barre */
+        }
+
+        .score-cursor {
+            position: absolute;
+            top: -4px; /* Dépasse un peu en haut */
+            bottom: -4px; /* Dépasse un peu en bas */
+            width: 2px;
+            background: #fff;
+            box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.8);
+            z-index: 10;
+            transition: left 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .score-cursor-label {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .score-cursor-label::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -4px;
+            border-width: 4px;
+            border-style: solid;
+            border-color: #fff transparent transparent transparent;
+        }
     </style>
 </head>
 <body>
