@@ -614,50 +614,91 @@ function calculateRNGQuality(persoObj, config) {
     return count > 0 ? (totalPct / count) * 100 : 0;
 }
 
+// --- FONCTION CORRIGÉE : SIMULATION POTENTIEL CACHÉ ---
 function simulateDeadStatReplacements(persoObj, config) {
     if (!config || !config.weights) return [];
     let suggestions = [];
+
     persoObj.artefacts.forEach(art => {
         let deadStats = [];
         let presentStats = new Set();
+
+        // 1. Identifier les stats mortes et les stats présentes
         art.subStats.forEach(sub => {
             presentStats.add(sub.key);
             let w = config.weights[sub.key];
             if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
+
+            // Si le poids est 0 ou indéfini, c'est une stat morte
             if (!w || w === 0) {
                 const rolls = getRollCount(sub.key, sub.value);
-                if (rolls > 0) deadStats.push({ key: sub.key, rolls: rolls, label: STAT_LABELS[sub.key] || sub.key });
+                // On ne simule que s'il y a eu au moins un roll dedans (sinon c'est juste une stat de base)
+                if (rolls > 0) {
+                    deadStats.push({
+                        key: sub.key,
+                        rolls: rolls,
+                        label: STAT_LABELS[sub.key] || sub.key
+                    });
+                }
             }
         });
+
         if (deadStats.length === 0) return;
-        const desiredStats = Object.entries(config.weights).filter(([key, w]) => w > 0.5).sort((a, b) => b[1] - a[1]).map(([key]) => key);
-        deadStats.sort((a, b) => b.rolls - a.rolls);
+
+        // 2. Identifier les stats cibles (CORRECTION ICI : On prend tout ce qui est utile > 0)
+        const desiredStats = Object.entries(config.weights)
+            .filter(([key, w]) => w > 0) // Avant c'était w > 0.5, maintenant c'est n'importe quel gain positif
+            .sort((a, b) => b[1] - a[1]) // On trie par importance (Poids le plus haut en premier)
+            .map(([key]) => key);
+
+        deadStats.sort((a, b) => b.rolls - a.rolls); // On traite les plus gros gâchis en premier
+
         let replacements = [];
         let usedTargets = new Set(presentStats);
+
         deadStats.forEach(dead => {
-            let targetKey = desiredStats.find(k => !usedTargets.has(k) && !k.includes("_dmg_") && k !== art.mainStat.key);
+            // Trouver la meilleure stat utile qui n'est pas déjà sur l'artéfact
+            let targetKey = desiredStats.find(k =>
+                !usedTargets.has(k) &&
+                !k.includes("_dmg_") && // Pas de bonus dégâts en substat
+                k !== art.mainStat.key // Pas la même que la mainstat
+            );
+
             if (targetKey && SUBSTAT_RANGES[targetKey]) {
-                usedTargets.add(targetKey);
+                usedTargets.add(targetKey); // On marque cette stat comme "virtuellement ajoutée" pour ne pas la proposer 2 fois
+
                 const range = SUBSTAT_RANGES[targetKey];
                 const minVal = (range.min * dead.rolls).toFixed(1);
                 const maxVal = (range.max * dead.rolls).toFixed(1);
                 const suffix = (targetKey.endsWith('_') || targetKey === "enerRech_" || targetKey === "critRate_" || targetKey === "critDMG_") ? "%" : "";
                 const targetLabel = STAT_LABELS[targetKey] || targetKey;
-                replacements.push({ dead: `${dead.label} (${dead.rolls})`, target: `${targetLabel} (${dead.rolls})`, gain: `+${minVal} à ${maxVal}${suffix} ${targetLabel}` });
+
+                replacements.push({
+                    dead: `${dead.label} (${dead.rolls})`,
+                    target: `${targetLabel} (${dead.rolls})`,
+                    gain: `+${minVal} à ${maxVal}${suffix} ${targetLabel}`
+                });
             }
         });
+
         if (replacements.length > 0) {
             const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
             const deadText = replacements.map(r => `<span style="color:#ff6b6b">${r.dead}</span>`).join(' et ');
             const targetText = replacements.map(r => `<span style="color:var(--accent-gold)">${r.target}</span>`).join(' et ');
             const gainText = replacements.map(r => `<div style="font-weight:bold; color:var(--accent-gold); margin-top:2px;">${r.gain}</div>`).join('');
-            suggestions.push({ pieceName: pieceName, text: `Remplacer ${deadText} par ${targetText} :`, gainHtml: gainText, totalDeadRolls: deadStats.reduce((acc, curr) => acc + curr.rolls, 0) });
+
+            suggestions.push({
+                pieceName: pieceName,
+                text: `Remplacer ${deadText} par ${targetText} :`,
+                gainHtml: gainText,
+                totalDeadRolls: deadStats.reduce((acc, curr) => acc + curr.rolls, 0)
+            });
         }
     });
+
     suggestions.sort((a, b) => b.totalDeadRolls - a.totalDeadRolls);
     return suggestions;
 }
-
 // CALCULATEUR REROLL (VERSION FINALE : BADGES VARIÉS)
 function calculateRerollMetrics(artifact, config) {
     if (!config || !config.weights || !window.MAX_ROLLS) return null;
