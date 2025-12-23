@@ -445,8 +445,13 @@ function getTalentAdvice(persoObj, config) {
 }
 
 // NOUVEAU : Détection Forçage de Set
-function getSetForcingAdvice(persoObj) {
+// 4. FORÇAGE DE SET (Mis à jour : Détection "Aime le 2p/2p")
+function getSetForcingAdvice(persoObj, config) { // <-- Ajout de config ici
     let active4pSet = null;
+
+    // Vérifie si le perso a un build 2p/2p dans ses "bestSets" (contient ":2")
+    const charLikes2p2p = config.bestSets && config.bestSets.some(setStr => setStr.includes(":2"));
+
     for (const [setKey, count] of Object.entries(persoObj.setsCounter)) {
         if (count >= 4) {
             active4pSet = setKey;
@@ -454,8 +459,15 @@ function getSetForcingAdvice(persoObj) {
         }
     }
 
-    // Cas 1 : Pas de set 4p (Rainbow ou 2p/2p)
+    // Cas 1 : Pas de set 4p (Le joueur est en 2p/2p ou Rainbow)
     if (!active4pSet) {
+        if (charLikes2p2p) {
+            return {
+                type: "success",
+                title: "Stratégie 2p / 2p",
+                msg: "Excellent choix. Ce personnage performe très bien avec un mélange de 2 pièces, ce qui vous permet de maximiser vos statistiques."
+            };
+        }
         return {
             type: "success",
             title: "Gestion des Sets",
@@ -469,10 +481,18 @@ function getSetForcingAdvice(persoObj) {
     const avgScore = totalScore / setPieces.length;
 
     if (avgScore < 25) {
+        let warningMsg = `Vous forcez le bonus 4 pièces avec des artéfacts faibles (Score moyen : <b>${avgScore.toFixed(1)}</b>).`;
+
+        if (charLikes2p2p) {
+            warningMsg += ` Ce personnage fonctionne pourtant très bien en <b>2 pièces / 2 pièces</b> : n'hésitez pas à casser ce set pour de meilleures stats !`;
+        } else {
+            warningMsg += ` Essayez de casser le set pour de meilleures stats.`;
+        }
+
         return {
             type: "warning",
             title: "Problème de Set",
-            msg: `Vous forcez le bonus 4 pièces avec des artéfacts faibles (Score moyen : <b>${avgScore.toFixed(1)}</b>). Essayez de casser le set pour de meilleures stats.`
+            msg: warningMsg
         };
     } else {
         return {
@@ -481,8 +501,7 @@ function getSetForcingAdvice(persoObj) {
             msg: `Set complet actif et de bonne qualité (Score moyen : <b>${avgScore.toFixed(1)}</b>).`
         };
     }
-}
-function getWeaponAdvice(persoObj) {
+}function getWeaponAdvice(persoObj) {
     if (!persoObj.weapon) return null;
 
     if (persoObj.weapon.level < 90) {
@@ -1143,7 +1162,7 @@ function renderShowcase(index) {
         // APPELS NOUVELLES FONCTIONS
         const offPieceAdvice = getOffPieceAdvice(p);
         const talentAdvices = getTalentAdvice(p, config);
-        const setForcingAdvice = getSetForcingAdvice(p);
+        const setForcingAdvice = getSetForcingAdvice(p, config);
         const levelAdvice = getLevelAdvice(p);
 
         return `
@@ -1248,8 +1267,9 @@ function renderShowcase(index) {
         })()}
 
                                 ${(() => {
-            const adv = getSetForcingAdvice(p);
-            const color = adv.type === 'success' ? '#22c55e' : '#eab308'; // Vert ou Jaune
+            const adv = getSetForcingAdvice(p, config);
+
+            const color = adv.type === 'success' ? '#22c55e' : '#eab308';
             const icon = adv.type === 'success' ? 'check' : 'triangle-exclamation';
             return `
                                     <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
