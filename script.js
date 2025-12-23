@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Farming Difficulty)
+   SCRIPT PRINCIPAL (Version Finale : Off-Piece & Talents)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -51,20 +51,11 @@ const SUBSTAT_RANGES = {
     "atk": { min: 14, max: 19 }, "hp": { min: 209, max: 299 }, "def": { min: 16, max: 23 }
 };
 
-// NOUVEAU : TAUX DE DROP MAINSTATS (Wiki Genshin)
+// TAUX DE DROP MAINSTATS (Wiki Genshin)
 const MAINSTAT_DROP_RATES = {
-    "EQUIP_SHOES": { // SABLIER
-        "hp_": 26.68, "atk_": 26.66, "def_": 26.66, "enerRech_": 10.0, "eleMas": 10.0
-    },
-    "EQUIP_RING": { // COUPE
-        "hp_": 19.25, "atk_": 19.25, "def_": 19.0, "eleMas": 2.5,
-        "physical_dmg_": 5.0, "pyro_dmg_": 5.0, "electro_dmg_": 5.0, "cryo_dmg_": 5.0,
-        "hydro_dmg_": 5.0, "anemo_dmg_": 5.0, "geo_dmg_": 5.0, "dendro_dmg_": 5.0
-    },
-    "EQUIP_DRESS": { // DIADÈME
-        "hp_": 22.0, "atk_": 22.0, "def_": 22.0,
-        "critRate_": 10.0, "critDMG_": 10.0, "heal_": 10.0, "eleMas": 4.0
-    }
+    "EQUIP_SHOES": { "hp_": 26.68, "atk_": 26.66, "def_": 26.66, "enerRech_": 10.0, "eleMas": 10.0 },
+    "EQUIP_RING": { "hp_": 19.25, "atk_": 19.25, "def_": 19.0, "eleMas": 2.5, "physical_dmg_": 5.0, "pyro_dmg_": 5.0, "electro_dmg_": 5.0, "cryo_dmg_": 5.0, "hydro_dmg_": 5.0, "anemo_dmg_": 5.0, "geo_dmg_": 5.0, "dendro_dmg_": 5.0 },
+    "EQUIP_DRESS": { "hp_": 22.0, "atk_": 22.0, "def_": 22.0, "critRate_": 10.0, "critDMG_": 10.0, "heal_": 10.0, "eleMas": 4.0 }
 };
 
 const STAT_MAPPING = { "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_", "FIGHT_PROP_ATTACK": "atk", "FIGHT_PROP_ATTACK_PERCENT": "atk_", "FIGHT_PROP_DEFENSE": "def", "FIGHT_PROP_DEFENSE_PERCENT": "def_", "FIGHT_PROP_CRITICAL": "critRate_", "FIGHT_PROP_CRITICAL_HURT": "critDMG_", "FIGHT_PROP_CHARGE_EFFICIENCY": "enerRech_", "FIGHT_PROP_ELEMENT_MASTERY": "eleMas", "FIGHT_PROP_HEAL_ADD": "heal_", "FIGHT_PROP_PHYSICAL_ADD_HURT": "physical_dmg_", "FIGHT_PROP_FIRE_ADD_HURT": "pyro_dmg_", "FIGHT_PROP_ELEC_ADD_HURT": "electro_dmg_", "FIGHT_PROP_WATER_ADD_HURT": "hydro_dmg_", "FIGHT_PROP_GRASS_ADD_HURT": "dendro_dmg_", "FIGHT_PROP_WIND_ADD_HURT": "anemo_dmg_", "FIGHT_PROP_ROCK_ADD_HURT": "geo_dmg_", "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_" };
@@ -314,7 +305,7 @@ function getSetRecommendation(activeSets, config) {
     return { type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.` };
 }
 
-// CONSEIL MAINSTAT
+// NOUVEAU : CONSEIL MAINSTAT
 function getMainStatAdvice(persoObj, config) {
     const slotsToCheck = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
     let advices = [];
@@ -381,6 +372,87 @@ function getFarmDifficulty(pieceType, mainStatKey) {
     return { label: "Très difficile", color: "#ef4444" }; // Rouge (<5%)
 }
 
+// NOUVEAU : ANALYSE OFF-PIECE
+function getOffPieceAdvice(persoObj) {
+    let offPiece = null;
+    let setPiecesScores = [];
+
+    // 1. Identifier les sets actifs (ceux qui ont >= 2 pièces)
+    const activeSetKeys = Object.keys(persoObj.setsCounter).filter(key => persoObj.setsCounter[key] >= 2);
+
+    // 2. Parcourir les artéfacts pour trouver l'intrus
+    persoObj.artefacts.forEach(art => {
+        if (activeSetKeys.includes(art.setKey)) {
+            setPiecesScores.push(art.score);
+        } else {
+            offPiece = art;
+        }
+    });
+
+    // Si on a un 4p+1off ou 2p+2p+1off, on a une off-piece.
+    // Si full set 5p ou rainbow, logique différente (ignorée ici pour simplifier)
+    if (!offPiece || setPiecesScores.length === 0) return null;
+
+    const avgSetScore = setPiecesScores.reduce((a, b) => a + b, 0) / setPiecesScores.length;
+    const isHardMainStat = offPiece.mainStat.key.includes("dmg_") || offPiece.mainStat.key.includes("crit");
+
+    // CAS 2 : JOKER DE LUXE (Simplifié : Juste > Moyenne)
+    if (offPiece.score > avgSetScore) {
+        return { type: "success", msg: "Excellent usage du Joker. Cette pièce porte votre build vers le haut." };
+    }
+    // CAS 3 : INDULGENCE (Score moyen mais Mainstat rare)
+    else if (isHardMainStat && offPiece.score > (avgSetScore * 0.8)) {
+        return { type: "warning", msg: "Correct pour l'instant. Vu la rareté de la stat principale, on pardonne ce score moyen." };
+    }
+    // CAS 1 : MAILLON FAIBLE
+    else {
+        return { type: "error", msg: "Votre pièce hors-set est moins bonne que le reste. C'est anormal pour un emplacement libre. Fouillez votre inventaire !" };
+    }
+}
+
+// NOUVEAU : CONSEIL TALENTS
+function getTalentAdvice(persoObj, config) {
+    if (!config.talents) return null;
+    const target = config.talents;
+    const current = { auto: 0, skill: 0, burst: 0 };
+
+    // Mapping basé sur l'ordre (suppose [Auto, Skill, Burst])
+    if (persoObj.talents.length >= 3) {
+        current.auto = persoObj.talents[0].level;
+        current.skill = persoObj.talents[1].level;
+        current.burst = persoObj.talents[2].level;
+    }
+
+    let advices = [];
+    let isPerfect = true; // Flag pour validation
+
+    const check = (type, label) => {
+        const lvl = current[type];
+        const goal = target[type];
+        if (goal <= 1) return; // Pas besoin de check si cible est 1
+
+        const diff = goal - lvl;
+        if (diff >= 2) {
+            isPerfect = false;
+            advices.push({ type: "critical", msg: `Urgence : Montez votre <b>${label}</b> (Niv ${lvl} -> ${goal}). Gain de dégâts garanti.` });
+        } else if (diff >= 1) {
+            isPerfect = false;
+            advices.push({ type: "info", msg: `Optimisation : Pensez à monter votre <b>${label}</b> au niveau ${goal}.` });
+        }
+    };
+
+    check('auto', 'Attaque Normale');
+    check('skill', 'Compétence');
+    check('burst', 'Déchaînement');
+
+    if (isPerfect && advices.length === 0) {
+        return [{ type: "success", msg: "Vos aptitudes sont parfaitement optimisées. Excellent travail !" }];
+    }
+
+    return advices;
+}
+
+
 function calculateRollDistribution(persoObj, config) {
     if (!config || !config.weights) return { useful: 0, dead: 0, total: 0 };
     let useful = 0;
@@ -423,7 +495,6 @@ function getPriorities(persoObj) {
     const sorted = [...persoObj.artefacts].sort((a, b) => a.score - b.score);
     return sorted.slice(0, 3).map(art => {
         const typeName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
-        // Ajout MainStat Key pour le calcul de difficulté
         return {
             piece: typeName,
             score: art.score,
@@ -1002,9 +1073,11 @@ function renderShowcase(index) {
         const rollStats = calculateRollDistribution(p, config);
         const rngQuality = calculateRNGQuality(p, config).toFixed(1);
         const deadSims = simulateDeadStatReplacements(p, config);
-
-        // APPEL NOUVELLE FONCTION
         const mainStatAdvices = getMainStatAdvice(p, config);
+
+        // APPELS NOUVELLES FONCTIONS
+        const offPieceAdvice = getOffPieceAdvice(p);
+        const talentAdvices = getTalentAdvice(p, config);
 
         return `
                 <div style="background:rgba(30, 35, 45, 0.95); border:1px solid #444; border-radius:8px; padding:20px;">
@@ -1065,6 +1138,12 @@ function renderShowcase(index) {
                                         ${deadRolls.count === 0 ? '<span style="color:#22c55e; font-size:0.8rem;">Aucune stat morte !</span>' : ''}
                                     </div>
                                 </div>
+                                
+                                ${offPieceAdvice ? `
+                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${offPieceAdvice.type === 'success' ? '#22c55e' : (offPieceAdvice.type === 'warning' ? '#eab308' : '#ef4444')}; grid-column: 1 / -1;">
+                                    <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Analyse Pièce Hors-Set (Joker)</div>
+                                    <div style="font-size:0.95rem; color:#fff;">${offPieceAdvice.msg}</div>
+                                </div>` : ''}
                             </div>
                         </div>
 
@@ -1072,6 +1151,19 @@ function renderShowcase(index) {
                             <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">3. Plan d'Action</h3>
                             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
                                 
+                                ${talentAdvices && talentAdvices.length > 0 ? `
+                                <div style="background:rgba(59, 130, 246, 0.1); border:1px solid rgba(59, 130, 246, 0.3); padding:15px; border-radius:8px; grid-column: 1 / -1;">
+                                    <div style="font-size:0.8rem; color:#60a5fa; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
+                                        <i class="fa-solid fa-book-open"></i> Priorité des Aptitudes
+                                    </div>
+                                    ${talentAdvices.map(adv => `
+                                        <div style="margin-bottom:5px; font-size:0.9rem; color:#fff;">
+                                            <i class="fa-solid fa-circle-${adv.type === 'critical' ? 'exclamation' : (adv.type === 'success' ? 'check' : 'info')}" style="color:${adv.type === 'critical' ? '#ef4444' : (adv.type === 'success' ? '#22c55e' : '#3b82f6')}"></i> 
+                                            ${adv.msg}
+                                        </div>
+                                    `).join('')}
+                                </div>` : ''}
+
                                 ${mainStatAdvices.length > 0 ? `
                                 <div style="background:rgba(255, 77, 77, 0.15); padding:15px; border-radius:8px; border-left:3px solid #ff4d4d; grid-column: 1 / -1;">
                                     <div style="font-size:0.8rem; color:#ff9999; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
@@ -1088,7 +1180,6 @@ function renderShowcase(index) {
                                 <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
                                     <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:10px;">Top 3 Priorités (Artéfacts à changer)</div>
                                     ${priorities.length > 0 ? priorities.map((p, i) => {
-            // Ajout badge difficulté Farming
             const difficulty = getFarmDifficulty(p.type, p.mainKey);
             return `
                                         <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9rem; margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
