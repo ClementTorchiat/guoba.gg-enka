@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Off-Piece & Talents)
+   SCRIPT PRINCIPAL (Version Finale : Set Trap & Level 90)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -305,20 +305,19 @@ function getSetRecommendation(activeSets, config) {
     return { type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.` };
 }
 
-// NOUVEAU : CONSEIL MAINSTAT
+// CONSEIL MAINSTAT
 function getMainStatAdvice(persoObj, config) {
     const slotsToCheck = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
-    let advices = [];
+    let warnings = [];
 
     persoObj.artefacts.forEach(art => {
         if (!slotsToCheck.includes(art.type)) return;
 
         const currentKey = art.mainStat.key;
         let weight = config.weights[currentKey];
-        if (weight === undefined && currentKey.includes("_dmg_")) {
-            weight = config.weights["elemental_dmg_"];
-        }
+        if (weight === undefined && currentKey.includes("_dmg_")) weight = config.weights["elemental_dmg_"];
 
+        // Si Mainstat suboptimale
         if (!weight || weight < 1) {
             const possibleStats = SLOT_POSSIBLE_MAIN_STATS[art.type];
             if (!possibleStats) return;
@@ -326,35 +325,36 @@ function getMainStatAdvice(persoObj, config) {
             const idealStats = Object.entries(config.weights)
                 .filter(([statKey, statWeight]) => {
                     if (statWeight !== 1) return false;
-                    if (statKey.includes("_dmg_") && statKey !== "elemental_dmg_") {
-                        return possibleStats.includes(statKey) || possibleStats.includes("pyro_dmg_");
-                    }
-                    if (statKey === "elemental_dmg_") {
-                        return art.type === "EQUIP_RING";
-                    }
+                    if (statKey.includes("_dmg_") && statKey !== "elemental_dmg_") return possibleStats.includes(statKey) || possibleStats.includes("pyro_dmg_");
+                    if (statKey === "elemental_dmg_") return art.type === "EQUIP_RING";
                     return possibleStats.includes(statKey);
                 })
-                .map(([statKey]) => {
-                    if (statKey === "elemental_dmg_") return "Dégâts Élémentaires";
-                    return STAT_LABELS[statKey] || statKey;
-                });
+                .map(([statKey]) => (statKey === "elemental_dmg_") ? "Dégâts Élem." : (STAT_LABELS[statKey] || statKey));
 
             if (idealStats.length > 0) {
                 const pieceName = ARTIFACT_TYPE_MAPPING[art.type];
                 const cleanList = [...new Set(idealStats)].join(" / ");
-                advices.push({
-                    piece: pieceName,
-                    current: art.mainStat.label,
-                    better: cleanList
-                });
+                warnings.push({ piece: pieceName, current: art.mainStat.label, better: cleanList });
             }
         }
     });
 
-    return advices;
+    // RETOUR
+    if (warnings.length > 0) {
+        return {
+            type: "critical",
+            title: "Problème Statistique Principale",
+            details: warnings
+        };
+    } else {
+        return {
+            type: "success",
+            title: "Statistiques Principales",
+            msg: "Vos 3 pièces principales (Sablier, Coupe, Diadème) ont toutes les stats optimales."
+        };
+    }
 }
-
-// NOUVEAU : Calcul Difficulté Farming
+// Calcul Difficulté Farming
 function getFarmDifficulty(pieceType, mainStatKey) {
     // Si c'est Fleur ou Plume -> Facile (Stat fixe)
     if (pieceType === "EQUIP_BRACER" || pieceType === "EQUIP_NECKLACE") {
@@ -372,15 +372,13 @@ function getFarmDifficulty(pieceType, mainStatKey) {
     return { label: "Très difficile", color: "#ef4444" }; // Rouge (<5%)
 }
 
-// NOUVEAU : ANALYSE OFF-PIECE
+// ANALYSE OFF-PIECE
 function getOffPieceAdvice(persoObj) {
     let offPiece = null;
     let setPiecesScores = [];
 
-    // 1. Identifier les sets actifs (ceux qui ont >= 2 pièces)
     const activeSetKeys = Object.keys(persoObj.setsCounter).filter(key => persoObj.setsCounter[key] >= 2);
 
-    // 2. Parcourir les artéfacts pour trouver l'intrus
     persoObj.artefacts.forEach(art => {
         if (activeSetKeys.includes(art.setKey)) {
             setPiecesScores.push(art.score);
@@ -389,34 +387,28 @@ function getOffPieceAdvice(persoObj) {
         }
     });
 
-    // Si on a un 4p+1off ou 2p+2p+1off, on a une off-piece.
-    // Si full set 5p ou rainbow, logique différente (ignorée ici pour simplifier)
     if (!offPiece || setPiecesScores.length === 0) return null;
 
     const avgSetScore = setPiecesScores.reduce((a, b) => a + b, 0) / setPiecesScores.length;
     const isHardMainStat = offPiece.mainStat.key.includes("dmg_") || offPiece.mainStat.key.includes("crit");
 
-    // CAS 2 : JOKER DE LUXE (Simplifié : Juste > Moyenne)
     if (offPiece.score > avgSetScore) {
         return { type: "success", msg: "Excellent usage du Joker. Cette pièce porte votre build vers le haut." };
     }
-    // CAS 3 : INDULGENCE (Score moyen mais Mainstat rare)
     else if (isHardMainStat && offPiece.score > (avgSetScore * 0.8)) {
         return { type: "warning", msg: "Correct pour l'instant. Vu la rareté de la stat principale, on pardonne ce score moyen." };
     }
-    // CAS 1 : MAILLON FAIBLE
     else {
         return { type: "error", msg: "Votre pièce hors-set est moins bonne que le reste. C'est anormal pour un emplacement libre. Fouillez votre inventaire !" };
     }
 }
 
-// NOUVEAU : CONSEIL TALENTS
+// CONSEIL TALENTS
 function getTalentAdvice(persoObj, config) {
     if (!config.talents) return null;
     const target = config.talents;
     const current = { auto: 0, skill: 0, burst: 0 };
 
-    // Mapping basé sur l'ordre (suppose [Auto, Skill, Burst])
     if (persoObj.talents.length >= 3) {
         current.auto = persoObj.talents[0].level;
         current.skill = persoObj.talents[1].level;
@@ -424,12 +416,12 @@ function getTalentAdvice(persoObj, config) {
     }
 
     let advices = [];
-    let isPerfect = true; // Flag pour validation
+    let isPerfect = true;
 
     const check = (type, label) => {
         const lvl = current[type];
         const goal = target[type];
-        if (goal <= 1) return; // Pas besoin de check si cible est 1
+        if (goal <= 1) return;
 
         const diff = goal - lvl;
         if (diff >= 2) {
@@ -450,6 +442,79 @@ function getTalentAdvice(persoObj, config) {
     }
 
     return advices;
+}
+
+// NOUVEAU : Détection Forçage de Set
+function getSetForcingAdvice(persoObj) {
+    let active4pSet = null;
+    for (const [setKey, count] of Object.entries(persoObj.setsCounter)) {
+        if (count >= 4) {
+            active4pSet = setKey;
+            break;
+        }
+    }
+
+    // Cas 1 : Pas de set 4p (Rainbow ou 2p/2p)
+    if (!active4pSet) {
+        return {
+            type: "success",
+            title: "Gestion des Sets",
+            msg: "Aucun forçage détecté. Vous privilégiez les stats ou les combos 2 pièces, c'est une bonne stratégie."
+        };
+    }
+
+    // Cas 2 : Set 4p actif -> On vérifie la qualité
+    const setPieces = persoObj.artefacts.filter(a => a.setKey === active4pSet);
+    const totalScore = setPieces.reduce((sum, art) => sum + art.score, 0);
+    const avgScore = totalScore / setPieces.length;
+
+    if (avgScore < 25) {
+        return {
+            type: "warning",
+            title: "Problème de Set",
+            msg: `Vous forcez le bonus 4 pièces avec des artéfacts faibles (Score moyen : <b>${avgScore.toFixed(1)}</b>). Essayez de casser le set pour de meilleures stats.`
+        };
+    } else {
+        return {
+            type: "success",
+            title: "Gestion des Sets",
+            msg: `Set complet actif et de bonne qualité (Score moyen : <b>${avgScore.toFixed(1)}</b>).`
+        };
+    }
+}
+function getWeaponAdvice(persoObj) {
+    if (!persoObj.weapon) return null;
+
+    if (persoObj.weapon.level < 90) {
+        return {
+            type: "warning", // Orange/Rouge
+            title: "Niveau d'Arme",
+            msg: `Gain Facile : Montez votre arme niveau 90 pour maximiser l'ATQ de base.`
+        };
+    } else {
+        return {
+            type: "success", // Vert
+            title: "Niveau d'Arme",
+            msg: `Parfait. Votre arme est au niveau maximum (90).`
+        };
+    }
+}
+
+// NOUVEAU : Conseil Niveau 90
+function getLevelAdvice(persoObj) {
+    if (persoObj.level < 90) {
+        return {
+            type: "info", // Bleu/Info
+            title: "Niveau du Personnage",
+            msg: `Gain Facile : Montez votre personnage niveau 90 pour un gain de stats garanti.`
+        };
+    } else {
+        return {
+            type: "success", // Vert
+            title: "Niveau du Personnage",
+            msg: `Excellent. Votre personnage est niveau 90.`
+        };
+    }
 }
 
 
@@ -1078,6 +1143,8 @@ function renderShowcase(index) {
         // APPELS NOUVELLES FONCTIONS
         const offPieceAdvice = getOffPieceAdvice(p);
         const talentAdvices = getTalentAdvice(p, config);
+        const setForcingAdvice = getSetForcingAdvice(p);
+        const levelAdvice = getLevelAdvice(p);
 
         return `
                 <div style="background:rgba(30, 35, 45, 0.95); border:1px solid #444; border-radius:8px; padding:20px;">
@@ -1152,32 +1219,74 @@ function renderShowcase(index) {
                             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
                                 
                                 ${talentAdvices && talentAdvices.length > 0 ? `
-                                <div style="background:rgba(59, 130, 246, 0.1); border:1px solid rgba(59, 130, 246, 0.3); padding:15px; border-radius:8px; grid-column: 1 / -1;">
-                                    <div style="font-size:0.8rem; color:#60a5fa; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
+                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${talentAdvices[0].type === 'success' ? '#22c55e' : (talentAdvices.some(a => a.type === 'critical') ? '#ef4444' : '#3b82f6')}; grid-column: 1 / -1;">
+                                    <div style="font-size:0.8rem; color:${talentAdvices[0].type === 'success' ? '#22c55e' : '#aaa'}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
                                         <i class="fa-solid fa-book-open"></i> Priorité des Aptitudes
                                     </div>
                                     ${talentAdvices.map(adv => `
                                         <div style="margin-bottom:5px; font-size:0.9rem; color:#fff;">
-                                            <i class="fa-solid fa-circle-${adv.type === 'critical' ? 'exclamation' : (adv.type === 'success' ? 'check' : 'info')}" style="color:${adv.type === 'critical' ? '#ef4444' : (adv.type === 'success' ? '#22c55e' : '#3b82f6')}"></i> 
+                                            ${adv.type !== 'success' ? `<i class="fa-solid fa-circle-${adv.type === 'critical' ? 'exclamation' : 'info'}" style="color:${adv.type === 'critical' ? '#ef4444' : '#3b82f6'}"></i>` : '<i class="fa-solid fa-check" style="color:#22c55e"></i>'} 
                                             ${adv.msg}
                                         </div>
                                     `).join('')}
                                 </div>` : ''}
 
-                                ${mainStatAdvices.length > 0 ? `
-                                <div style="background:rgba(255, 77, 77, 0.15); padding:15px; border-radius:8px; border-left:3px solid #ff4d4d; grid-column: 1 / -1;">
-                                    <div style="font-size:0.8rem; color:#ff9999; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
-                                        <i class="fa-solid fa-triangle-exclamation"></i> Problème Statistique Principale
-                                    </div>
-                                    ${mainStatAdvices.map(adv => `
-                                        <div style="margin-bottom:5px; font-size:0.9rem; color:#fff;">
-                                            Sur votre <b>${adv.piece}</b>, vous avez <span style="color:#ff9999">${adv.current}</span>.
-                                            Visez plutôt : <span style="color:var(--accent-gold); font-weight:bold;">${adv.better}</span>.
+                                ${(() => {
+            const adv = getMainStatAdvice(p, config);
+            const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+            const icon = adv.type === 'success' ? 'check' : 'triangle-exclamation';
+            return `
+                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                        <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
+                                            <i class="fa-solid fa-${icon}"></i> ${adv.title}
                                         </div>
-                                    `).join('')}
-                                </div>` : ''}
+                                        ${adv.type === 'success'
+                ? `<div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>`
+                : adv.details.map(d => `<div style="margin-bottom:5px; font-size:0.9rem; color:#fff;">Sur <b>${d.piece}</b>, visez <span style="color:var(--accent-gold); font-weight:bold;">${d.better}</span> (Actuel: ${d.current}).</div>`).join('')
+            }
+                                    </div>`;
+        })()}
 
-                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
+                                ${(() => {
+            const adv = getSetForcingAdvice(p);
+            const color = adv.type === 'success' ? '#22c55e' : '#eab308'; // Vert ou Jaune
+            const icon = adv.type === 'success' ? 'check' : 'triangle-exclamation';
+            return `
+                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                        <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
+                                            <i class="fa-solid fa-${icon}"></i> ${adv.title}
+                                        </div>
+                                        <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
+                                    </div>`;
+        })()}
+
+                                ${(() => {
+            const adv = getWeaponAdvice(p);
+            const color = adv.type === 'success' ? '#22c55e' : '#eab308';
+            const icon = adv.type === 'success' ? 'check' : 'arrow-up';
+            return `
+                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                        <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
+                                            <i class="fa-solid fa-${icon}"></i> ${adv.title}
+                                        </div>
+                                        <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
+                                    </div>`;
+        })()}
+
+                                ${(() => {
+            const adv = getLevelAdvice(p);
+            const color = adv.type === 'success' ? '#22c55e' : '#3b82f6'; // Vert ou Bleu
+            const icon = adv.type === 'success' ? 'check' : 'arrow-up';
+            return `
+                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                        <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
+                                            <i class="fa-solid fa-${icon}"></i> ${adv.title}
+                                        </div>
+                                        <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
+                                    </div>`;
+        })()}
+
+                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; grid-column: 1 / -1;">
                                     <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:10px;">Top 3 Priorités (Artéfacts à changer)</div>
                                     ${priorities.length > 0 ? priorities.map((p, i) => {
             const difficulty = getFarmDifficulty(p.type, p.mainKey);
@@ -1189,23 +1298,9 @@ function renderShowcase(index) {
                                             </div>
                                             <span style="color:${p.color}; font-weight:bold;">${p.score} (${p.grade})</span>
                                         </div>
-                                    `}).join('') : '<div style="font-size:0.9rem; color:#888;">Rien à signaler, excellent travail.</div>'}
+                                    `}).join('') : '<div style="color:#22c55e; font-weight:bold;"><i class="fa-solid fa-check"></i> Rien à signaler, excellent travail.</div>'}
                                 </div>
-                                <div style="display:flex; flex-direction:column; gap:10px;">
-                                    ${p.weapon.level < 90 ? `
-                                    <div style="background:rgba(255, 77, 77, 0.15); padding:15px; border-radius:8px; border-left:3px solid #ff4d4d; display:flex; align-items:center; gap:10px;">
-                                        <i class="fa-solid fa-arrow-up" style="color:#ff9999; font-size:1.5rem;"></i>
-                                        <div>
-                                            <div style="font-size:0.8rem; color:#ff9999; text-transform:uppercase;">Gain Facile</div>
-                                            <div style="font-size:1rem; color:#fff; font-weight:bold;">Montez votre arme niveau 90 !</div>
-                                        </div>
-                                    </div>` : ''}
-                                    ${setAdvice ? `
-                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${setAdvice.type === 'success' ? '#22c55e' : '#eab308'};">
-                                        <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Set d'Artéfacts</div>
-                                        <div style="font-size:0.95rem; color:#fff;">${setAdvice.msg}</div>
-                                    </div>` : ''}
-                                </div>
+
                             </div>
                         </div>
 
