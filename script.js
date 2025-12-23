@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Score Bar Minimaliste)
+   SCRIPT PRINCIPAL (Version Finale : Mainstat Advice)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -58,6 +58,13 @@ const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", 
 const SET_NAME_MAPPING = { "Sorcière des flammes ardentes": "CrimsonWitchOfFlames", "Emblème du destin brisé": "EmblemOfSeveredFate", "Maréchaussée": "MarechausseeHunter", "Troupe dorée": "GoldenTroupe", "Rêve doré": "GildedDreams", "Souvenir de la forêt": "DeepwoodMemories", "Codex d'obsidienne": "ObsidianCodex", "Ombre de la Verte Chasseuse": "ViridescentVenerer", "Ancien Rituel Royal": "NoblesseOblige", "Ténacité du Millelithe": "TenacityOfTheMillelith", "Coquille des rêves opulents": "HuskOfOpulentDreams", "Palourde aux teintes océaniques": "OceanHuedClam", "Rideau du Gladiateur": "GladiatorsFinale", "Bande Vagabonde": "WanderersTroupe", "Chevalerie ensanglantée": "BloodstainedChivalry", "Colère de tonnerre": "ThunderingFury", "Dompteur de tonnerre": "Thundersoother", "Amour chéri": "MaidenBeloved", "Roche ancienne": "ArchaicPetra", "Météore inversé": "RetracingBolide", "Briseur de glace": "BlizzardStrayer", "Âme des profondeurs": "HeartOfDepth", "Flamme blême": "PaleFlame", "Réminiscence nostalgique": "ShimenawasReminiscence", "Au-delà cinabrin": "VermillionHereafter", "Échos d'une offrande": "EchoesOfAnOffering", "Chronique du Pavillon du désert": "DesertPavilionChronicle", "Fleur du paradis perdu": "FlowerOfParadiseLost", "Rêve de la nymphe": "NymphsDream", "Lueur du vourukasha": "VourukashasGlow", "Murmure nocturne en forêt d'échos": "NighttimeWhispersInTheEchoingWoods", "Chanson des jours d'antan": "SongOfDaysPast", "Fragment d'harmonie fantasque": "FragmentOfHarmonicWhimsy", "Rêverie inachevée": "UnfinishedReverie", "Parchemins du héros de la cité": "ScrollOfTheHeroOfCinderCity" };
 
 const ARTIFACT_TYPE_MAPPING = { "EQUIP_BRACER": "Fleur de la vie", "EQUIP_NECKLACE": "Plume de la mort", "EQUIP_SHOES": "Sables du temps", "EQUIP_RING": "Coupe d'éonothème", "EQUIP_DRESS": "Diadème de Logos" };
+
+// NOUVEAU : Définition des Mainstats possibles par slot
+const SLOT_POSSIBLE_MAIN_STATS = {
+    "EQUIP_SHOES": ["hp_", "atk_", "def_", "enerRech_", "eleMas"], // Sablier
+    "EQUIP_RING": ["hp_", "atk_", "def_", "eleMas", "physical_dmg_", "pyro_dmg_", "hydro_dmg_", "cryo_dmg_", "electro_dmg_", "anemo_dmg_", "geo_dmg_", "dendro_dmg_"], // Coupe
+    "EQUIP_DRESS": ["hp_", "atk_", "def_", "eleMas", "critRate_", "critDMG_", "heal_"] // Diadème
+};
 
 let globalPersoData = [];
 let charData = {};
@@ -210,7 +217,6 @@ function toggleBuff(charIndex, buffIndex) {
 
 // --- FONCTIONS COACHING ---
 
-// NOUVELLE FONCTION SCORE BAR MINIMALISTE
 function generateScoreBar(totalRolls, currentGrade) {
     const maxScale = 45;
     const percent = Math.min((totalRolls / maxScale) * 100, 100);
@@ -291,6 +297,65 @@ function getSetRecommendation(activeSets, config) {
     const recName = Object.keys(SET_NAME_MAPPING).find(key => SET_NAME_MAPPING[key] === recommended) || recommended;
     if (hasGood) return { type: 'info', msg: `Set correct, mais <b>${recName} (4p)</b> serait optimal.` };
     return { type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.` };
+}
+
+// NOUVEAU : CONSEIL MAINSTAT
+function getMainStatAdvice(persoObj, config) {
+    // On ne vérifie que Sablier, Coupe, Diadème
+    const slotsToCheck = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
+    let advices = [];
+
+    persoObj.artefacts.forEach(art => {
+        if (!slotsToCheck.includes(art.type)) return;
+
+        const currentKey = art.mainStat.key;
+        let weight = config.weights[currentKey];
+        if (weight === undefined && currentKey.includes("_dmg_")) {
+            weight = config.weights["elemental_dmg_"];
+        }
+
+        // Si le poids n'est pas défini, on considère 0.
+        // Si le poids < 1, c'est suboptimal (car on vise les stats avec poids = 1)
+        if (!weight || weight < 1) {
+            // Trouver les meilleures stats possibles pour ce slot
+            const possibleStats = SLOT_POSSIBLE_MAIN_STATS[art.type];
+            if (!possibleStats) return;
+
+            // Filtrer les stats de la config qui ont poids 1 ET qui sont possibles sur ce slot
+            const idealStats = Object.entries(config.weights)
+                .filter(([statKey, statWeight]) => {
+                    if (statWeight !== 1) return false; // On ne veut que le top
+
+                    // Cas spécial dégâts élémentaires
+                    if (statKey.includes("_dmg_") && statKey !== "elemental_dmg_") {
+                        return possibleStats.includes(statKey) || possibleStats.includes("pyro_dmg_"); // Si pyro est possible, tous les elems le sont en théorie sur la coupe
+                    }
+                    if (statKey === "elemental_dmg_") {
+                        // Si la config demande elemental_dmg_, on doit suggérer l'élément du perso (ex: Pyro)
+                        // Ici on simplifie en laissant passer, l'affichage gérera
+                        return art.type === "EQUIP_RING";
+                    }
+
+                    return possibleStats.includes(statKey);
+                })
+                .map(([statKey]) => {
+                    if (statKey === "elemental_dmg_") return "Dégâts Élémentaires"; // Simplification
+                    return STAT_LABELS[statKey] || statKey;
+                });
+
+            if (idealStats.length > 0) {
+                const pieceName = ARTIFACT_TYPE_MAPPING[art.type];
+                const cleanList = [...new Set(idealStats)].join(" / "); // Dedup
+                advices.push({
+                    piece: pieceName,
+                    current: art.mainStat.label,
+                    better: cleanList
+                });
+            }
+        }
+    });
+
+    return advices;
 }
 
 function calculateRollDistribution(persoObj, config) {
@@ -907,6 +972,9 @@ function renderShowcase(index) {
         const rngQuality = calculateRNGQuality(p, config).toFixed(1);
         const deadSims = simulateDeadStatReplacements(p, config);
 
+        // APPEL NOUVELLE FONCTION
+        const mainStatAdvices = getMainStatAdvice(p, config);
+
         return `
                 <div style="background:rgba(30, 35, 45, 0.95); border:1px solid #444; border-radius:8px; padding:20px;">
                     <h2 style="color:#fff; margin-bottom:25px; font-size:1.4rem; text-transform:uppercase; border-bottom:2px solid var(--accent-gold); padding-bottom:10px; display:flex; align-items:center; gap:10px;">
@@ -972,6 +1040,20 @@ function renderShowcase(index) {
                         <div>
                             <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">3. Plan d'Action</h3>
                             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+                                
+                                ${mainStatAdvices.length > 0 ? `
+                                <div style="background:rgba(255, 77, 77, 0.15); padding:15px; border-radius:8px; border-left:3px solid #ff4d4d; grid-column: 1 / -1;">
+                                    <div style="font-size:0.8rem; color:#ff9999; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
+                                        <i class="fa-solid fa-triangle-exclamation"></i> Problème Statistique Principale
+                                    </div>
+                                    ${mainStatAdvices.map(adv => `
+                                        <div style="margin-bottom:5px; font-size:0.9rem; color:#fff;">
+                                            Sur votre <b>${adv.piece}</b>, vous avez <span style="color:#ff9999">${adv.current}</span>.
+                                            Visez plutôt : <span style="color:var(--accent-gold); font-weight:bold;">${adv.better}</span>.
+                                        </div>
+                                    `).join('')}
+                                </div>` : ''}
+
                                 <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
                                     <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:10px;">Top 3 Priorités (Artéfacts à changer)</div>
                                     ${priorities.length > 0 ? priorities.map((p, i) => `
