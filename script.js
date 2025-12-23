@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Mainstat Advice)
+   SCRIPT PRINCIPAL (Version Finale : Farming Difficulty)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -51,6 +51,22 @@ const SUBSTAT_RANGES = {
     "atk": { min: 14, max: 19 }, "hp": { min: 209, max: 299 }, "def": { min: 16, max: 23 }
 };
 
+// NOUVEAU : TAUX DE DROP MAINSTATS (Wiki Genshin)
+const MAINSTAT_DROP_RATES = {
+    "EQUIP_SHOES": { // SABLIER
+        "hp_": 26.68, "atk_": 26.66, "def_": 26.66, "enerRech_": 10.0, "eleMas": 10.0
+    },
+    "EQUIP_RING": { // COUPE
+        "hp_": 19.25, "atk_": 19.25, "def_": 19.0, "eleMas": 2.5,
+        "physical_dmg_": 5.0, "pyro_dmg_": 5.0, "electro_dmg_": 5.0, "cryo_dmg_": 5.0,
+        "hydro_dmg_": 5.0, "anemo_dmg_": 5.0, "geo_dmg_": 5.0, "dendro_dmg_": 5.0
+    },
+    "EQUIP_DRESS": { // DIADÈME
+        "hp_": 22.0, "atk_": 22.0, "def_": 22.0,
+        "critRate_": 10.0, "critDMG_": 10.0, "heal_": 10.0, "eleMas": 4.0
+    }
+};
+
 const STAT_MAPPING = { "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_", "FIGHT_PROP_ATTACK": "atk", "FIGHT_PROP_ATTACK_PERCENT": "atk_", "FIGHT_PROP_DEFENSE": "def", "FIGHT_PROP_DEFENSE_PERCENT": "def_", "FIGHT_PROP_CRITICAL": "critRate_", "FIGHT_PROP_CRITICAL_HURT": "critDMG_", "FIGHT_PROP_CHARGE_EFFICIENCY": "enerRech_", "FIGHT_PROP_ELEMENT_MASTERY": "eleMas", "FIGHT_PROP_HEAL_ADD": "heal_", "FIGHT_PROP_PHYSICAL_ADD_HURT": "physical_dmg_", "FIGHT_PROP_FIRE_ADD_HURT": "pyro_dmg_", "FIGHT_PROP_ELEC_ADD_HURT": "electro_dmg_", "FIGHT_PROP_WATER_ADD_HURT": "hydro_dmg_", "FIGHT_PROP_GRASS_ADD_HURT": "dendro_dmg_", "FIGHT_PROP_WIND_ADD_HURT": "anemo_dmg_", "FIGHT_PROP_ROCK_ADD_HURT": "geo_dmg_", "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_" };
 
 const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %", "eleMas": "Maîtrise Élem.", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT", "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "DGT Pyro", "hydro_dmg_": "DGT Hydro", "cryo_dmg_": "DGT Cryo", "electro_dmg_": "DGT Électro", "anemo_dmg_": "DGT Anémo", "geo_dmg_": "DGT Géo", "dendro_dmg_": "DGT Dendro", "physical_dmg_": "DGT Phys." };
@@ -59,11 +75,10 @@ const SET_NAME_MAPPING = { "Sorcière des flammes ardentes": "CrimsonWitchOfFlam
 
 const ARTIFACT_TYPE_MAPPING = { "EQUIP_BRACER": "Fleur de la vie", "EQUIP_NECKLACE": "Plume de la mort", "EQUIP_SHOES": "Sables du temps", "EQUIP_RING": "Coupe d'éonothème", "EQUIP_DRESS": "Diadème de Logos" };
 
-// NOUVEAU : Définition des Mainstats possibles par slot
 const SLOT_POSSIBLE_MAIN_STATS = {
-    "EQUIP_SHOES": ["hp_", "atk_", "def_", "enerRech_", "eleMas"], // Sablier
-    "EQUIP_RING": ["hp_", "atk_", "def_", "eleMas", "physical_dmg_", "pyro_dmg_", "hydro_dmg_", "cryo_dmg_", "electro_dmg_", "anemo_dmg_", "geo_dmg_", "dendro_dmg_"], // Coupe
-    "EQUIP_DRESS": ["hp_", "atk_", "def_", "eleMas", "critRate_", "critDMG_", "heal_"] // Diadème
+    "EQUIP_SHOES": ["hp_", "atk_", "def_", "enerRech_", "eleMas"],
+    "EQUIP_RING": ["hp_", "atk_", "def_", "eleMas", "physical_dmg_", "pyro_dmg_", "hydro_dmg_", "cryo_dmg_", "electro_dmg_", "anemo_dmg_", "geo_dmg_", "dendro_dmg_"],
+    "EQUIP_DRESS": ["hp_", "atk_", "def_", "eleMas", "critRate_", "critDMG_", "heal_"]
 };
 
 let globalPersoData = [];
@@ -299,9 +314,8 @@ function getSetRecommendation(activeSets, config) {
     return { type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.` };
 }
 
-// NOUVEAU : CONSEIL MAINSTAT
+// CONSEIL MAINSTAT
 function getMainStatAdvice(persoObj, config) {
-    // On ne vérifie que Sablier, Coupe, Diadème
     const slotsToCheck = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
     let advices = [];
 
@@ -314,38 +328,29 @@ function getMainStatAdvice(persoObj, config) {
             weight = config.weights["elemental_dmg_"];
         }
 
-        // Si le poids n'est pas défini, on considère 0.
-        // Si le poids < 1, c'est suboptimal (car on vise les stats avec poids = 1)
         if (!weight || weight < 1) {
-            // Trouver les meilleures stats possibles pour ce slot
             const possibleStats = SLOT_POSSIBLE_MAIN_STATS[art.type];
             if (!possibleStats) return;
 
-            // Filtrer les stats de la config qui ont poids 1 ET qui sont possibles sur ce slot
             const idealStats = Object.entries(config.weights)
                 .filter(([statKey, statWeight]) => {
-                    if (statWeight !== 1) return false; // On ne veut que le top
-
-                    // Cas spécial dégâts élémentaires
+                    if (statWeight !== 1) return false;
                     if (statKey.includes("_dmg_") && statKey !== "elemental_dmg_") {
-                        return possibleStats.includes(statKey) || possibleStats.includes("pyro_dmg_"); // Si pyro est possible, tous les elems le sont en théorie sur la coupe
+                        return possibleStats.includes(statKey) || possibleStats.includes("pyro_dmg_");
                     }
                     if (statKey === "elemental_dmg_") {
-                        // Si la config demande elemental_dmg_, on doit suggérer l'élément du perso (ex: Pyro)
-                        // Ici on simplifie en laissant passer, l'affichage gérera
                         return art.type === "EQUIP_RING";
                     }
-
                     return possibleStats.includes(statKey);
                 })
                 .map(([statKey]) => {
-                    if (statKey === "elemental_dmg_") return "Dégâts Élémentaires"; // Simplification
+                    if (statKey === "elemental_dmg_") return "Dégâts Élémentaires";
                     return STAT_LABELS[statKey] || statKey;
                 });
 
             if (idealStats.length > 0) {
                 const pieceName = ARTIFACT_TYPE_MAPPING[art.type];
-                const cleanList = [...new Set(idealStats)].join(" / "); // Dedup
+                const cleanList = [...new Set(idealStats)].join(" / ");
                 advices.push({
                     piece: pieceName,
                     current: art.mainStat.label,
@@ -356,6 +361,24 @@ function getMainStatAdvice(persoObj, config) {
     });
 
     return advices;
+}
+
+// NOUVEAU : Calcul Difficulté Farming
+function getFarmDifficulty(pieceType, mainStatKey) {
+    // Si c'est Fleur ou Plume -> Facile (Stat fixe)
+    if (pieceType === "EQUIP_BRACER" || pieceType === "EQUIP_NECKLACE") {
+        return { label: "Facile", color: "#22c55e" }; // Vert
+    }
+
+    const rates = MAINSTAT_DROP_RATES[pieceType];
+    if (!rates || !rates[mainStatKey]) return { label: "Moyen", color: "#eab308" }; // Default
+
+    const probability = rates[mainStatKey];
+
+    if (probability >= 19) return { label: "Facile", color: "#22c55e" }; // Vert (>20%)
+    if (probability >= 10) return { label: "Moyennement difficile", color: "#eab308" }; // Jaune (10-20%)
+    if (probability >= 5) return { label: "Difficile", color: "#f97316" }; // Orange (5-10%)
+    return { label: "Très difficile", color: "#ef4444" }; // Rouge (<5%)
 }
 
 function calculateRollDistribution(persoObj, config) {
@@ -400,7 +423,15 @@ function getPriorities(persoObj) {
     const sorted = [...persoObj.artefacts].sort((a, b) => a.score - b.score);
     return sorted.slice(0, 3).map(art => {
         const typeName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
-        return { piece: typeName, score: art.score, grade: art.grade.letter, color: art.grade.color };
+        // Ajout MainStat Key pour le calcul de difficulté
+        return {
+            piece: typeName,
+            score: art.score,
+            grade: art.grade.letter,
+            color: art.grade.color,
+            type: art.type,
+            mainKey: art.mainStat.key
+        };
     });
 }
 
@@ -1056,12 +1087,18 @@ function renderShowcase(index) {
 
                                 <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
                                     <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:10px;">Top 3 Priorités (Artéfacts à changer)</div>
-                                    ${priorities.length > 0 ? priorities.map((p, i) => `
+                                    ${priorities.length > 0 ? priorities.map((p, i) => {
+            // Ajout badge difficulté Farming
+            const difficulty = getFarmDifficulty(p.type, p.mainKey);
+            return `
                                         <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9rem; margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
-                                            <span style="color:#ddd;">${i+1}. ${p.piece}</span>
+                                            <div style="display:flex; flex-direction:column;">
+                                                <span style="color:#ddd;">${i+1}. ${p.piece}</span>
+                                                <span style="font-size:0.7rem; color:${difficulty.color}; opacity:0.8;">${difficulty.label} à améliorer</span>
+                                            </div>
                                             <span style="color:${p.color}; font-weight:bold;">${p.score} (${p.grade})</span>
                                         </div>
-                                    `).join('') : '<div style="font-size:0.9rem; color:#888;">Rien à signaler, excellent travail.</div>'}
+                                    `}).join('') : '<div style="font-size:0.9rem; color:#888;">Rien à signaler, excellent travail.</div>'}
                                 </div>
                                 <div style="display:flex; flex-direction:column; gap:10px;">
                                     ${p.weapon.level < 90 ? `
