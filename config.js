@@ -22,7 +22,8 @@ const CHARACTER_CONFIG = {
         },
         bestSets: ["ObsidianCodex:4", "CrimsonWitchOfFlames:4"],
         goodSets: ["ObsidianCodex:2", "CrimsonWitchOfFlames:2", "GildedDreams:4"],
-        talents: { auto: 1, skill: 10, burst: 10 }
+        talents: { auto: 1, skill: 10, burst: 10 },
+        color : "#ff6600"
     },
     "Nilou": {
         weights: {
@@ -36,7 +37,22 @@ const CHARACTER_CONFIG = {
         },
         bestSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2"],
         goodSets: ["FlowerOfParadiseLost:4", "GildedDreams:2", "WanderersTroupe:2", "NightOfTheSkysUnveiling:2"],
-        talents: { auto: 1, skill: 8, burst: 8 }
+        talents: { auto: 1, skill: 8, burst: 8 },
+        color : "#1B4278"
+    },
+    "Skirk": {
+        weights: {
+            "critRate_": 1, "critDMG_": 1,
+            "atk_": 1, "atk": 0.1,
+            "hp_": 0, "hp": 0,
+            "def_": 0, "def": 0,
+            "eleMas": 0, "enerRech_": 0,
+            "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
+            "heal_": 0
+        },
+        bestSets: ["FinaleOfTheDeepGalleries:4", "MarechausseeHunter:4"],
+        goodSets: ["GladiatorsFinale:4", "BlizzardStrayer:4", "GladiatorsFinale:2", "BlizzardStrayer:2"],
+        talents: { auto: 1, skill: 10, burst: 8 }
     },
     "Neuvillette": {
         weights: { "critRate_": 1, "critDMG_": 1, "hp_": 1, "hp": 0.1, "atk_": 0, "enerRech_": 0.5, "elemental_dmg_": 1 },
@@ -119,7 +135,18 @@ const WEAPON_PASSIVES = {
     "Coupeur de jade primordial": {
         "hp_": 0.20,
         "atk_bonus_scaling": { "source": "hp", "percent": 0.012 }
-    }
+    },
+
+    "Éclazur": [
+        {
+            label: "Après compétence (ATQ)",
+            stats: { "atk_": 0.24 }
+        },
+        {
+            label: "0 Énergie (ATQ & DGT Critique)",
+            stats: { "atk_": 0.24, "critDMG_": 0.40 }
+        }
+    ],
 };
 
 const SET_PASSIVES = {

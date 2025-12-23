@@ -62,7 +62,44 @@ const STAT_MAPPING = { "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_", "F
 
 const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %", "eleMas": "Maîtrise Élem.", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT", "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "DGT Pyro", "hydro_dmg_": "DGT Hydro", "cryo_dmg_": "DGT Cryo", "electro_dmg_": "DGT Électro", "anemo_dmg_": "DGT Anémo", "geo_dmg_": "DGT Géo", "dendro_dmg_": "DGT Dendro", "physical_dmg_": "DGT Phys." };
 
-const SET_NAME_MAPPING = { "Sorcière des flammes ardentes": "CrimsonWitchOfFlames", "Emblème du destin brisé": "EmblemOfSeveredFate", "Maréchaussée": "MarechausseeHunter", "Troupe dorée": "GoldenTroupe", "Rêve doré": "GildedDreams", "Souvenir de la forêt": "DeepwoodMemories", "Codex d'obsidienne": "ObsidianCodex", "Ombre de la Verte Chasseuse": "ViridescentVenerer", "Ancien Rituel Royal": "NoblesseOblige", "Ténacité du Millelithe": "TenacityOfTheMillelith", "Coquille des rêves opulents": "HuskOfOpulentDreams", "Palourde aux teintes océaniques": "OceanHuedClam", "Rideau du Gladiateur": "GladiatorsFinale", "Bande Vagabonde": "WanderersTroupe", "Chevalerie ensanglantée": "BloodstainedChivalry", "Colère de tonnerre": "ThunderingFury", "Dompteur de tonnerre": "Thundersoother", "Amour chéri": "MaidenBeloved", "Roche ancienne": "ArchaicPetra", "Météore inversé": "RetracingBolide", "Briseur de glace": "BlizzardStrayer", "Âme des profondeurs": "HeartOfDepth", "Flamme blême": "PaleFlame", "Réminiscence nostalgique": "ShimenawasReminiscence", "Au-delà cinabrin": "VermillionHereafter", "Échos d'une offrande": "EchoesOfAnOffering", "Chronique du Pavillon du désert": "DesertPavilionChronicle", "Fleur du paradis perdu": "FlowerOfParadiseLost", "Rêve de la nymphe": "NymphsDream", "Lueur du vourukasha": "VourukashasGlow", "Murmure nocturne en forêt d'échos": "NighttimeWhispersInTheEchoingWoods", "Chanson des jours d'antan": "SongOfDaysPast", "Fragment d'harmonie fantasque": "FragmentOfHarmonicWhimsy", "Rêverie inachevée": "UnfinishedReverie", "Parchemins du héros de la cité": "ScrollOfTheHeroOfCinderCity" };
+const SET_NAME_MAPPING = {
+    "Sorcière des flammes ardentes": "CrimsonWitchOfFlames",
+    "Emblème du destin brisé": "EmblemOfSeveredFate",
+    "Maréchaussée": "MarechausseeHunter",
+    "Troupe dorée": "GoldenTroupe",
+    "Rêve doré": "GildedDreams",
+    "Souvenir de la forêt": "DeepwoodMemories",
+    "Codex d'obsidienne": "ObsidianCodex",
+    "Ombre de la Verte Chasseuse": "ViridescentVenerer",
+    "Ancien Rituel Royal": "NoblesseOblige",
+    "Ténacité du Millelithe": "TenacityOfTheMillelith",
+    "Coquille des rêves opulents": "HuskOfOpulentDreams",
+    "Palourde aux teintes océaniques": "OceanHuedClam",
+    "Rideau du Gladiateur": "GladiatorsFinale",
+    "Bande Vagabonde": "WanderersTroupe",
+    "Chevalerie ensanglantée": "BloodstainedChivalry",
+    "Colère de tonnerre": "ThunderingFury",
+    "Dompteur de tonnerre": "Thundersoother",
+    "Amour chéri": "MaidenBeloved",
+    "Roche ancienne": "ArchaicPetra",
+    "Météore inversé": "RetracingBolide",
+    "Briseur de glace": "BlizzardStrayer",
+    "Âme des profondeurs": "HeartOfDepth",
+    "Flamme blême": "PaleFlame",
+    "Réminiscence nostalgique": "ShimenawasReminiscence",
+    "Au-delà cinabrin": "VermillionHereafter",
+    "Échos d'une offrande": "EchoesOfAnOffering",
+    "Chronique du Pavillon du désert": "DesertPavilionChronicle",
+    "Fleur du paradis perdu": "FlowerOfParadiseLost",
+    "Rêve de la nymphe": "NymphsDream",
+    "Lueur du vourukasha": "VourukashasGlow",
+    "Murmure nocturne en forêt d'échos": "NighttimeWhispersInTheEchoingWoods",
+    "Chanson des jours d'antan": "SongOfDaysPast",
+    "Fragment d'harmonie fantasque": "FragmentOfHarmonicWhimsy",
+    "Rêverie inachevée": "UnfinishedReverie",
+    "Parchemins du héros de la cité": "ScrollOfTheHeroOfCinderCity",
+    "Finale des galeries profondes": "FinaleOfTheDeepGalleries"
+};
 
 const ARTIFACT_TYPE_MAPPING = { "EQUIP_BRACER": "Fleur de la vie", "EQUIP_NECKLACE": "Plume de la mort", "EQUIP_SHOES": "Sables du temps", "EQUIP_RING": "Coupe d'éonothème", "EQUIP_DRESS": "Diadème de Logos" };
 
@@ -358,15 +395,15 @@ function getMainStatAdvice(persoObj, config) {
 function getFarmDifficulty(pieceType, mainStatKey) {
     // Si c'est Fleur ou Plume -> Facile (Stat fixe)
     if (pieceType === "EQUIP_BRACER" || pieceType === "EQUIP_NECKLACE") {
-        return { label: "Facile", color: "#22c55e" }; // Vert
+        return { label: "Facile", color: "#3b82f6" }; // Vert
     }
 
     const rates = MAINSTAT_DROP_RATES[pieceType];
-    if (!rates || !rates[mainStatKey]) return { label: "Moyen", color: "#eab308" }; // Default
+    if (!rates || !rates[mainStatKey]) return { label: "Moyennement difficile", color: "#eab308" }; // Default
 
     const probability = rates[mainStatKey];
 
-    if (probability >= 19) return { label: "Facile", color: "#22c55e" }; // Vert (>20%)
+    if (probability >= 19) return { label: "Moyennement facile", color: "#22c55e" }; // Vert (>20%)
     if (probability >= 10) return { label: "Moyennement difficile", color: "#eab308" }; // Jaune (10-20%)
     if (probability >= 5) return { label: "Difficile", color: "#f97316" }; // Orange (5-10%)
     return { label: "Très difficile", color: "#ef4444" }; // Rouge (<5%)
@@ -1002,6 +1039,9 @@ function renderShowcase(index) {
     const b = p.buffedStats;
     const ev = p.evaluation;
 
+    const charColor = config.color || "#4b5563";
+    container.style.setProperty('--char-hex', charColor);
+
     let talentsHtml = `<div style="display:flex; justify-content:center; gap:20px; margin-top:20px;">`;
     p.talents.forEach(t => {
         talentsHtml += `
@@ -1355,7 +1395,7 @@ function renderShowcase(index) {
                                         <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9rem; margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
                                             <div style="display:flex; flex-direction:column;">
                                                 <span style="color:#ddd;">${i+1}. ${p.piece}</span>
-                                                <span style="font-size:0.7rem; color:${difficulty.color}; opacity:0.8;">${difficulty.label} à améliorer</span>
+                                                <span style="font-size:0.7rem; color:${difficulty.color}; opacity:0.8;">${difficulty.label} à farmer</span>
                                             </div>
                                             <span style="color:${p.color}; font-weight:bold;">${p.score} (${p.grade})</span>
                                         </div>
