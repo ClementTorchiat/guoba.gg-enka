@@ -1,5 +1,5 @@
 /* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Layout Structuré par Familles)
+   SCRIPT PRINCIPAL (Version Finale : Score Bar Minimaliste)
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
@@ -210,25 +210,47 @@ function toggleBuff(charIndex, buffIndex) {
 
 // --- FONCTIONS COACHING ---
 
-function generateScoreBar(totalRolls) {
+// NOUVELLE FONCTION SCORE BAR MINIMALISTE
+function generateScoreBar(totalRolls, currentGrade) {
     const maxScale = 45;
     const percent = Math.min((totalRolls / maxScale) * 100, 100);
     const markers = [
-        { val: 12, label: "B" }, { val: 18, label: "A" }, { val: 24, label: "S" },
-        { val: 30, label: "SS" }, { val: 34, label: "SSS" }, { val: 38, label: "WTF" },
+        { val: 0, label: "F" },
+        { val: 1, label: "F+" },
+        { val: 2, label: "D" },
+        { val: 4, label: "D+" },
+        { val: 6, label: "C" },
+        { val: 9, label: "C+" },
+        { val: 12, label: "B" },
+        { val: 15, label: "B+" },
+        { val: 18, label: "A" },
+        { val: 21, label: "A+" },
+        { val: 24, label: "S" },
+        { val: 27, label: "S+" },
+        { val: 30, label: "SS" },
+        { val: 32, label: "SS+" },
+        { val: 34, label: "SSS" },
+        { val: 36, label: "SSS+" },
+        { val: 38, label: "WTF" },
+        { val: 40, label: "WTF+" },
         { val: 43, label: "ARCHON" }
     ];
+
     let markersHtml = "";
     markers.forEach(m => {
         const left = (m.val / maxScale) * 100;
         markersHtml += `<div class="score-marker" style="left: ${left}%;">${m.label}</div>`;
     });
+
     return `
         <div class="score-bar-container">
             <div class="score-bar-track">
                 ${markersHtml}
                 <div class="score-cursor" style="left: ${percent}%;">
-                    <div class="score-cursor-label">${totalRolls} Rolls</div>
+                    <div class="score-cursor-label" style="background:none; padding:0; border:none; box-shadow:none; display:flex; align-items:baseline; gap:6px; white-space:nowrap; transform: translateX(-50%); bottom: 25px;">
+                        <span style="font-size:1.2rem; font-weight:800; color:var(--accent-gold); line-height:1;">${currentGrade}</span>
+                        <span style="font-size:0.85rem; color:#ddd;">(${totalRolls} Rolls)</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -343,75 +365,165 @@ function calculateRNGQuality(persoObj, config) {
 
 function simulateDeadStatReplacements(persoObj, config) {
     if (!config || !config.weights) return [];
-
     let suggestions = [];
-
     persoObj.artefacts.forEach(art => {
         let deadStats = [];
         let presentStats = new Set();
-
         art.subStats.forEach(sub => {
             presentStats.add(sub.key);
             let w = config.weights[sub.key];
             if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
-
             if (!w || w === 0) {
                 const rolls = getRollCount(sub.key, sub.value);
-                if (rolls > 0) {
-                    deadStats.push({ key: sub.key, rolls: rolls, label: STAT_LABELS[sub.key] || sub.key });
-                }
+                if (rolls > 0) deadStats.push({ key: sub.key, rolls: rolls, label: STAT_LABELS[sub.key] || sub.key });
             }
         });
-
         if (deadStats.length === 0) return;
-
-        const desiredStats = Object.entries(config.weights)
-            .filter(([key, w]) => w > 0.5)
-            .sort((a, b) => b[1] - a[1])
-            .map(([key]) => key);
-
+        const desiredStats = Object.entries(config.weights).filter(([key, w]) => w > 0.5).sort((a, b) => b[1] - a[1]).map(([key]) => key);
         deadStats.sort((a, b) => b.rolls - a.rolls);
-
         let replacements = [];
         let usedTargets = new Set(presentStats);
-
         deadStats.forEach(dead => {
             let targetKey = desiredStats.find(k => !usedTargets.has(k) && !k.includes("_dmg_") && k !== art.mainStat.key);
-
             if (targetKey && SUBSTAT_RANGES[targetKey]) {
                 usedTargets.add(targetKey);
-
                 const range = SUBSTAT_RANGES[targetKey];
                 const minVal = (range.min * dead.rolls).toFixed(1);
                 const maxVal = (range.max * dead.rolls).toFixed(1);
                 const suffix = (targetKey.endsWith('_') || targetKey === "enerRech_" || targetKey === "critRate_" || targetKey === "critDMG_") ? "%" : "";
                 const targetLabel = STAT_LABELS[targetKey] || targetKey;
-
-                replacements.push({
-                    dead: `${dead.label} (${dead.rolls})`,
-                    target: `${targetLabel} (${dead.rolls})`,
-                    gain: `+${minVal} à ${maxVal}${suffix} ${targetLabel}`
-                });
+                replacements.push({ dead: `${dead.label} (${dead.rolls})`, target: `${targetLabel} (${dead.rolls})`, gain: `+${minVal} à ${maxVal}${suffix} ${targetLabel}` });
             }
         });
-
         if (replacements.length > 0) {
             const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
             const deadText = replacements.map(r => `<span style="color:#ff6b6b">${r.dead}</span>`).join(' et ');
             const targetText = replacements.map(r => `<span style="color:var(--accent-gold)">${r.target}</span>`).join(' et ');
             const gainText = replacements.map(r => `<div style="font-weight:bold; color:var(--accent-gold); margin-top:2px;">${r.gain}</div>`).join('');
-
-            suggestions.push({
-                pieceName: pieceName,
-                text: `Remplacer ${deadText} par ${targetText} :`,
-                gainHtml: gainText,
-                totalDeadRolls: deadStats.reduce((acc, curr) => acc + curr.rolls, 0)
-            });
+            suggestions.push({ pieceName: pieceName, text: `Remplacer ${deadText} par ${targetText} :`, gainHtml: gainText, totalDeadRolls: deadStats.reduce((acc, curr) => acc + curr.rolls, 0) });
         }
     });
-
     suggestions.sort((a, b) => b.totalDeadRolls - a.totalDeadRolls);
     return suggestions;
+}
+
+// CALCULATEUR REROLL (VERSION FINALE : BADGES VARIÉS)
+function calculateRerollMetrics(artifact, config) {
+    if (!config || !config.weights || !window.MAX_ROLLS) return null;
+
+    let totalRolls = 0;
+
+    // Variables pour le calcul précis
+    let currentWeightedScore = 0; // Le score actuel de l'artéfact
+    let presentWeights = []; // Les poids des 4 stats présentes
+    let usefulSubstatsCount = 0;
+
+    // 1. ANALYSE DE L'EXISTANT
+    artifact.subStats.forEach(sub => {
+        const rolls = getRollCount(sub.key, sub.value);
+        totalRolls += rolls;
+
+        let w = config.weights[sub.key];
+        if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
+
+        // Si pas de poids défini, on considère 0
+        const weight = (w && w > 0) ? w : 0;
+
+        if (weight > 0) usefulSubstatsCount++;
+
+        presentWeights.push(weight);
+
+        // Score Actuel = Somme des (Rolls * Poids)
+        // Note : On pourrait intégrer la qualité ici (low roll vs high roll),
+        // mais pour la distribution pure, on compte les rolls.
+        // Pour être très précis sur le potentiel "gain", on pourrait inclure la rollValue.
+        // Restons sur la "Distribution" comme demandé.
+        currentWeightedScore += (rolls * weight);
+    });
+
+    // Clamp (Sécurité)
+    if (totalRolls < 8) totalRolls = 8;
+    if (totalRolls > 9) totalRolls = 9;
+
+    // 2. CALCUL DU PLAFOND THÉORIQUE (MAX SCORE)
+    // Contrainte : 1 roll minimum par stat présente (Base) + le reste en upgrades
+
+    // A. Score des 4 lignes de base (Immuable)
+    // On suppose que l'artéfact a 4 lignes maintenant.
+    // Si il en avait 3 au début, la 4ème est apparue au lvl 4. Elle est aussi "immuable" une fois là.
+    const baseScore = presentWeights.reduce((a, b) => a + b, 0); // Somme des poids des 4 stats
+
+    // B. Score des Upgrades (Ce qu'on peut reroll)
+    const upgradeRollsAvailable = totalRolls - 4; // 8-4=4 ou 9-4=5
+    const maxWeightAvailable = Math.max(...presentWeights); // La meilleure stat présente
+    const maxUpgradeScore = upgradeRollsAvailable * maxWeightAvailable; // Tout dans la meilleure stat
+
+    const theoreticalMaxScore = baseScore + maxUpgradeScore;
+
+    // 3. INDICATEUR DE PERFECTION (0.0 à 1.0)
+    // À quel point sommes-nous proches du max mathématique ?
+    // Dans ton exemple : Actuel = 8.05, Max = 8.05 -> Ratio = 1.0
+    const perfectionRatio = (theoreticalMaxScore > 0) ? (currentWeightedScore / theoreticalMaxScore) : 0;
+
+
+    // --- CALCULS FINAUX ---
+
+    // A. POTENTIEL DE GAIN
+    // C'est l'écart par rapport à la perfection...
+    // ...Pondéré par la qualité de l'artéfact (Ceiling).
+    // Si l'artéfact a 2 stats utiles, le TheoreticalMaxScore est faible.
+    // Donc même si on a un gros écart, ça ne vaut pas le coup.
+
+    const gapToPerfection = 1 - perfectionRatio; // 0% dans ton exemple
+
+    // Facteur limitant : Nombre de lignes utiles (Quadratique)
+    // 4 lignes = 100% du potentiel exprimable
+    // 2 lignes = 17% du potentiel exprimable
+    const ceilingFactor = Math.pow((usefulSubstatsCount / 4), 2.5);
+
+    // Bonus Structure (9 rolls > 8 rolls)
+    const structureBonus = (totalRolls === 9) ? 1.05 : 1.0;
+
+    // Potentiel Final
+    let potential = gapToPerfection * ceilingFactor * structureBonus * 100;
+
+    // Petit boost si on a des low rolls (qualité), mais mineur
+    // (Non implémenté ici pour rester focus sur la distribution, comme demandé)
+
+
+    // B. RISQUE DE PERTE
+    // Le risque est directement lié à la perfection actuelle.
+    // Plus on est proche du max, plus le risque est exponentiel.
+    let risk = Math.pow(perfectionRatio, 2.5) * 100;
+
+
+    // --- BADGES ---
+    let badge = { text: "Neutre", color: "#9ca3af" };
+
+    if (potential < 20 && usefulSubstatsCount < 3) {
+        badge = { text: "Avenir Limité", color: "#4b5563" }; // Gris
+    }
+    else if (risk > 85 && potential < 15) {
+        badge = { text: "Reroll déconseillé", color: "#ef4444" }; // Violet
+    }
+    else if (risk > 65) {
+        badge = { text: "Garder (Solide)", color: "#ef4444" }; // Rouge
+    }
+    else if (potential > 60 && risk < 40) {
+        badge = { text: "Reroll envisageable", color: "#22c55e" }; // Vert
+    }
+    else if (potential > 50) {
+        badge = { text: "Casino (Double ou Rien)", color: "#f97316" }; // Orange
+    }
+    else if (potential > 30) {
+        badge = { text: "Optimisable", color: "#3b82f6" }; // Bleu
+    }
+
+    return {
+        potential: Math.round(potential),
+        risk: Math.round(risk),
+        badge: badge
+    };
 }
 
 // --- PROCESS ---
@@ -806,7 +918,7 @@ function renderShowcase(index) {
                         <div>
                             <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">1. Vue d'ensemble</h3>
                             <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
-                                ${generateScoreBar(ev.totalRolls)}
+                                ${generateScoreBar(ev.totalRolls, ev.grade.letter)}
                                 
                                 <div style="display:flex; justify-content:space-around; align-items:center; margin-top:20px; flex-wrap:wrap; gap:20px;">
                                     <div style="text-align:center;">
@@ -903,6 +1015,49 @@ function renderShowcase(index) {
                                 </div>
                             </div>
                         </div>` : ''}
+
+                        <div>
+                            <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">5. Simulateur de Reroll (Expérimental)</h3>
+                            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:15px;">
+                                ${p.artefacts.map(art => {
+            const metrics = calculateRerollMetrics(art, config);
+            if(!metrics) return '';
+            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+            return `
+                                    <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; border:1px solid #444;">
+                                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+                                            <img src="${art.icon}" style="width:30px; height:30px;">
+                                            <div style="font-size:0.8rem; font-weight:bold; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${pieceName}</div>
+                                        </div>
+                                        
+                                        <div style="margin-bottom:8px;">
+                                            <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:#aaa;">
+                                                <span>Potentiel Gain</span>
+                                                <span style="color:${metrics.potential > 60 ? '#22c55e' : '#ccc'}">${metrics.potential}%</span>
+                                            </div>
+                                            <div style="width:100%; height:4px; background:#333; border-radius:2px;">
+                                                <div style="width:${metrics.potential}%; height:100%; background:linear-gradient(90deg, #3b82f6, #22c55e); border-radius:2px;"></div>
+                                            </div>
+                                        </div>
+
+                                        <div style="margin-bottom:10px;">
+                                            <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:#aaa;">
+                                                <span>Risque Perte</span>
+                                                <span style="color:${metrics.risk > 60 ? '#ff4d4d' : '#ccc'}">${metrics.risk}%</span>
+                                            </div>
+                                            <div style="width:100%; height:4px; background:#333; border-radius:2px;">
+                                                <div style="width:${metrics.risk}%; height:100%; background:linear-gradient(90deg, #f59e0b, #ff4d4d); border-radius:2px;"></div>
+                                            </div>
+                                        </div>
+
+                                        <div style="text-align:center; background:${metrics.badge.color}20; color:${metrics.badge.color}; padding:4px; border-radius:4px; font-size:0.75rem; font-weight:bold; border:1px solid ${metrics.badge.color}40;">
+                                            ${metrics.badge.text}
+                                        </div>
+                                    </div>
+                                    `;
+        }).join('')}
+                            </div>
+                        </div>
 
                     </div>
                 </div>
