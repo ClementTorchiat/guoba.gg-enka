@@ -541,17 +541,21 @@ function getSetForcingAdvice(persoObj, config) { // <-- Ajout de config ici
 }
 
 // 5. CONSEIL MÉTA SET (Best in Slot)
+// 5. CONSEIL MÉTA SET (Best vs Good vs Bad)
 function getMetaSetAdvice(persoObj, config) {
     if (!config.bestSets || config.bestSets.length === 0) return null;
 
-    // 1. Vérifier si le joueur a DÉJÀ un des best sets activé
-    // On parse "SetKey:Count" (ex: "MarechausseeHunter:4")
-    const match = config.bestSets.find(setStr => {
-        const [key, count] = setStr.split(":");
-        return (persoObj.setsCounter[key] || 0) >= parseInt(count);
-    });
+    // Helper pour vérifier si un set de la liste est équipé
+    const isSetEquipped = (setList) => {
+        if (!setList) return false;
+        return setList.some(setStr => {
+            const [key, count] = setStr.split(":");
+            return (persoObj.setsCounter[key] || 0) >= parseInt(count);
+        });
+    };
 
-    if (match) {
+    // 1. CAS : BEST SET (Le joueur a un des meilleurs sets)
+    if (isSetEquipped(config.bestSets)) {
         return {
             type: "success",
             title: "Choix du Set",
@@ -559,19 +563,27 @@ function getMetaSetAdvice(persoObj, config) {
         };
     }
 
-    // 2. Si aucun match, on conseille le PREMIER de la liste (le Top 1)
+    // Préparation du nom du set recommandé (Le Top 1 des bestSets)
     const [recKey, recCount] = config.bestSets[0].split(":");
-
-    // Petite astuce pour retrouver le nom français depuis la clé (Reverse lookup)
     const recNameFR = Object.keys(SET_NAME_MAPPING).find(k => SET_NAME_MAPPING[k] === recKey) || recKey;
+    const recommendationStr = `<b>${recNameFR} (${recCount} pièces)</b>`;
 
+    // 2. CAS : GOOD SET (Le joueur a un set alternatif viable)
+    if (isSetEquipped(config.goodSets)) {
+        return {
+            type: "info", // Bleu
+            title: "Optimisation du Set",
+            msg: `Votre set actuel est correct, mais pour maximiser les dégâts, le set recommandé est : ${recommendationStr}.`
+        };
+    }
+
+    // 3. CAS : MAUVAIS SET (Ni Best, Ni Good)
     return {
-        type: "info",
-        title: "Optimisation du Set",
-        msg: `Votre set actuel est correct, mais pour maximiser les dégâts, le set recommandé est : <b>${recNameFR} (${recCount} pièces)</b>.`
+        type: "warning", // Jaune/Orange
+        title: "Problème de Set",
+        msg: `Votre set actuel ne correspond pas aux standards du personnage. Vous devriez opter pour le set ${recommendationStr}.`
     };
 }
-
 function getWeaponAdvice(persoObj) {
     if (!persoObj.weapon) return null;
 
@@ -1394,12 +1406,23 @@ function renderShowcase(index) {
                                         <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
                                     </div>`;
         })()}
-                                ${(() => {
+                               ${(() => {
             const adv = getMetaSetAdvice(p, config);
-            if (!adv) return ''; // Sécurité si pas de config
+            if (!adv) return '';
 
-            const color = adv.type === 'success' ? '#22c55e' : '#3b82f6'; // Vert ou Bleu
-            const icon = adv.type === 'success' ? 'check' : 'shirt'; // Icone t-shirt pour l'équipement
+            // GESTION DES 3 COULEURS ICI :
+            let color, icon;
+
+            if (adv.type === 'success') {
+                color = '#22c55e'; // Vert
+                icon = 'check';
+            } else if (adv.type === 'warning') {
+                color = '#ef4444'; // Orange (Alerte)
+                icon = 'triangle-exclamation';
+            } else {
+                color = '#f97316'; // Bleu (Info/Good Set)
+                icon = 'shirt';    // Icone T-shirt
+            }
 
             return `
                                     <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
