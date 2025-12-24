@@ -538,7 +538,41 @@ function getSetForcingAdvice(persoObj, config) { // <-- Ajout de config ici
             msg: `Set complet actif et de bonne qualité (Score moyen : <b>${avgScore.toFixed(1)}</b>).`
         };
     }
-}function getWeaponAdvice(persoObj) {
+}
+
+// 5. CONSEIL MÉTA SET (Best in Slot)
+function getMetaSetAdvice(persoObj, config) {
+    if (!config.bestSets || config.bestSets.length === 0) return null;
+
+    // 1. Vérifier si le joueur a DÉJÀ un des best sets activé
+    // On parse "SetKey:Count" (ex: "MarechausseeHunter:4")
+    const match = config.bestSets.find(setStr => {
+        const [key, count] = setStr.split(":");
+        return (persoObj.setsCounter[key] || 0) >= parseInt(count);
+    });
+
+    if (match) {
+        return {
+            type: "success",
+            title: "Choix du Set",
+            msg: "Excellent. Vous utilisez un des meilleurs sets recommandés pour ce personnage."
+        };
+    }
+
+    // 2. Si aucun match, on conseille le PREMIER de la liste (le Top 1)
+    const [recKey, recCount] = config.bestSets[0].split(":");
+
+    // Petite astuce pour retrouver le nom français depuis la clé (Reverse lookup)
+    const recNameFR = Object.keys(SET_NAME_MAPPING).find(k => SET_NAME_MAPPING[k] === recKey) || recKey;
+
+    return {
+        type: "info",
+        title: "Optimisation du Set",
+        msg: `Votre set actuel est correct, mais pour maximiser les dégâts, le set recommandé est : <b>${recNameFR} (${recCount} pièces)</b>.`
+    };
+}
+
+function getWeaponAdvice(persoObj) {
     if (!persoObj.weapon) return null;
 
     if (persoObj.weapon.level < 90) {
@@ -1352,6 +1386,21 @@ function renderShowcase(index) {
 
             const color = adv.type === 'success' ? '#22c55e' : '#eab308';
             const icon = adv.type === 'success' ? 'check' : 'triangle-exclamation';
+            return `
+                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                        <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
+                                            <i class="fa-solid fa-${icon}"></i> ${adv.title}
+                                        </div>
+                                        <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
+                                    </div>`;
+        })()}
+                                ${(() => {
+            const adv = getMetaSetAdvice(p, config);
+            if (!adv) return ''; // Sécurité si pas de config
+
+            const color = adv.type === 'success' ? '#22c55e' : '#3b82f6'; // Vert ou Bleu
+            const icon = adv.type === 'success' ? 'check' : 'shirt'; // Icone t-shirt pour l'équipement
+
             return `
                                     <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
                                         <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
