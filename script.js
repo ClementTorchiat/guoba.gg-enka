@@ -32,6 +32,9 @@ const ICON_MAP = {
     "dendro_dmg_": "icon_dendro.png",
     "physical_dmg_": "icon_physical.png",
 
+    // Score
+    "score": "icon_score.png",
+
     // Fallback (image par défaut si inconnu)
     "unknown": "icon_unknown.png"
 };
@@ -74,7 +77,7 @@ const MAINSTAT_DROP_RATES = {
 
 const STAT_MAPPING = { "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_", "FIGHT_PROP_ATTACK": "atk", "FIGHT_PROP_ATTACK_PERCENT": "atk_", "FIGHT_PROP_DEFENSE": "def", "FIGHT_PROP_DEFENSE_PERCENT": "def_", "FIGHT_PROP_CRITICAL": "critRate_", "FIGHT_PROP_CRITICAL_HURT": "critDMG_", "FIGHT_PROP_CHARGE_EFFICIENCY": "enerRech_", "FIGHT_PROP_ELEMENT_MASTERY": "eleMas", "FIGHT_PROP_HEAL_ADD": "heal_", "FIGHT_PROP_PHYSICAL_ADD_HURT": "physical_dmg_", "FIGHT_PROP_FIRE_ADD_HURT": "pyro_dmg_", "FIGHT_PROP_ELEC_ADD_HURT": "electro_dmg_", "FIGHT_PROP_WATER_ADD_HURT": "hydro_dmg_", "FIGHT_PROP_GRASS_ADD_HURT": "dendro_dmg_", "FIGHT_PROP_WIND_ADD_HURT": "anemo_dmg_", "FIGHT_PROP_ROCK_ADD_HURT": "geo_dmg_", "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_" };
 
-const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %", "eleMas": "Maîtrise Élem.", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT", "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "DGT Pyro", "hydro_dmg_": "DGT Hydro", "cryo_dmg_": "DGT Cryo", "electro_dmg_": "DGT Électro", "anemo_dmg_": "DGT Anémo", "geo_dmg_": "DGT Géo", "dendro_dmg_": "DGT Dendro", "physical_dmg_": "DGT Phys." };
+const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %", "eleMas": "Maîtrise élémentaire", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT", "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "Bonus de DGT Pyro", "hydro_dmg_": "Bonus de DGT Hydro", "cryo_dmg_": "Bonus de DGT Cryo", "electro_dmg_": "Bonus de DGT Électro", "anemo_dmg_": "Bonus de DGT Anémo", "geo_dmg_": "Bonus de DGT Géo", "dendro_dmg_": "Bonus de DGT Dendro", "physical_dmg_": "Bonus de DGT Physiques" };
 
 const SET_NAME_MAPPING = {
     "Sorcière des flammes ardentes": "CrimsonWitchOfFlames",
@@ -945,6 +948,7 @@ function processData(data) {
         const combatStats = {
             hp: fp[2000], atk: fp[2001], def: fp[2002], em: fp[28],
             cr: fp[20] * 100, cd: fp[22] * 100, er: fp[23] * 100,
+            hb: (fp[26] || 0) * 100,
             dmgBonus: (fp[elemInfo.id] || 0) * 100,
             dmgBonusKey: elemInfo.key
         };
@@ -1130,33 +1134,65 @@ function renderShowcase(index) {
                 </div>
                 
                 <h3 style="font-size:0.8rem; color:#888; text-transform:uppercase; margin-bottom:5px;">Stats Menu</h3>
-                ${statLine(createIcon('hp'), "PV Max", Math.round(s.hp))}
+                ${statLine(createIcon('hp'), "PV max", Math.round(s.hp))}
                 ${statLine(createIcon('atk'), "ATQ", Math.round(s.atk))}
                 ${statLine(createIcon('def'), "DÉF", Math.round(s.def))}
-                ${statLine(createIcon('eleMas'), "Maîtrise", Math.round(s.em))}
+                ${statLine(createIcon('eleMas'), "Maîtrise élémentaire", Math.round(s.em))}
                 ${statLine(createIcon('critRate_'), "Taux CRIT", s.cr.toFixed(1)+'%')}
                 ${statLine(createIcon('critDMG_'), "DGT CRIT", s.cd.toFixed(1)+'%')}
-                ${statLine(createIcon('enerRech_'), "ER", s.er.toFixed(1)+'%', true)}
+                ${statLine(createIcon('enerRech_'), "Recharge d'énergie", s.er.toFixed(1)+'%')}
+                ${statLine(createIcon('heal_'), "Bonus de soins", (s.hb || 0).toFixed(1)+'%')}
                 ${statLine(formatStat(s.dmgBonusKey, s.dmgBonus / 100).icon, formatStat(s.dmgBonusKey, s.dmgBonus / 100).label, s.dmgBonus.toFixed(1)+'%')}
 
                 ${talentsHtml}
                 
                 <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; margin-top:15px; border:1px solid #333;">
                     <h3 style="font-size:0.9rem; color:var(--accent-gold); text-transform:uppercase; margin-bottom:10px; font-weight:bold;">Stats de Combat</h3>
-                    ${statLine(createIcon('hp'), "PV Max", Math.round(b.hp), b.hp > s.hp)}
-                    ${statLine(createIcon('atk'), "ATQ", Math.round(b.atk), b.atk > s.atk)}
-                    ${statLine(createIcon('def'), "DÉF", Math.round(b.def), b.def > s.def)}
-                    ${statLine(createIcon('eleMas'), "Maîtrise", Math.round(b.em), b.em > s.em)}
-                    ${statLine(createIcon('critRate_'), "Taux CRIT", b.cr.toFixed(1)+'%', b.cr > s.cr)}
-                    ${statLine(createIcon('critDMG_'), "DGT CRIT", b.cd.toFixed(1)+'%', b.cd > s.cd)}
-                    ${statLine(createIcon('enerRech_'), "ER", b.er.toFixed(1)+'%', b.er > s.er)}
-                    ${statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', b.dmgBonus > s.dmgBonus)}
+                    
+                    ${(() => {
+                        let html = "";
+                
+                        // 1. Stats conditionnelles (Uniquement si Poids > 0)
+                        const statDefs = [
+                            { wKey: 'hp',        sKey: 'hp',  icon: 'hp',        label: 'PV max',      isPct: false },
+                            { wKey: 'atk',       sKey: 'atk', icon: 'atk',       label: 'ATQ',         isPct: false },
+                            { wKey: 'def',       sKey: 'def', icon: 'def',       label: 'DÉF',         isPct: false },
+                            { wKey: 'eleMas',    sKey: 'em',  icon: 'eleMas',    label: 'Maîtrise élémentaire',    isPct: false },
+                            { wKey: 'critRate_', sKey: 'cr',  icon: 'critRate_', label: 'Taux CRIT',   isPct: true },
+                            { wKey: 'critDMG_',  sKey: 'cd',  icon: 'critDMG_',  label: 'DGT CRIT',    isPct: true },
+                            { wKey: 'enerRech_', sKey: 'er',  icon: 'enerRech_', label: "Recharge d'énergie",          isPct: true }
+                        ];
+                
+                        statDefs.forEach(def => {
+                            if (p.weights && p.weights[def.wKey] > 0) {
+                                const val = b[def.sKey];
+                                const oldVal = s[def.sKey];
+                                const displayVal = def.isPct ? val.toFixed(1) + '%' : Math.round(val);
+                                const isBuffed = val > oldVal;
+                                html += statLine(createIcon(def.icon), def.label, displayVal, isBuffed);
+                            }
+                        });
+                
+                        // 2. AJOUT : Bonus de Soins (Toujours affiché pour combler l'espace)
+                        // On utilise s.hb (stat de base) car b.hb n'est pas encore calculé dans les buffs, mais ça suffit pour l'affichage.
+                        const healVal = s.hb || 0;
+                        html += statLine(createIcon('heal_'), "Bonus de soins", healVal.toFixed(1)+'%', false);
+                
+                        // 3. Bonus de Dégâts Élémentaire (Toujours affiché)
+                        const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
+                        const isDmgBuffed = b.dmgBonus > s.dmgBonus;
+                        html += statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', isDmgBuffed);
+                
+                        return html;
+                    })()}
                 </div>
 
                 <div class="global-score-card">
                     <div>
-                        <div style="color:var(--accent-gold); font-size:0.8rem; text-transform:uppercase; font-weight:bold;">Score Global</div>
-                        <div style="font-size:0.8rem; color:#888;">Rolls: ${ev.totalRolls}</div>
+                        <div style="color:var(--accent-gold); font-size:0.8rem; text-transform:uppercase; font-weight:bold; display:flex; align-items:center;">
+                            ${createIcon('score')} Score Global
+                        </div>
+                        <div style="font-size:0.8rem; color:#888; margin-top:2px;">Rolls: ${ev.totalRolls}</div>
                     </div>
                     <div style="text-align:right;">
                         <span style="font-size:1.8rem; font-weight:800; line-height:1;">${ev.score}</span>
@@ -1180,7 +1216,7 @@ function renderShowcase(index) {
                     <div style="display:flex; gap:15px; margin-top:5px; background:rgba(0,0,0,0.2); padding:5px; border-radius:4px;">
                         ${p.weapon.baseAtk ? `
                         <div style="text-align:center;">
-                            <div style="font-size:0.7rem; color:#aaa;">ATQ Base</div>
+                            <div style="font-size:0.7rem; color:#aaa;">ATQ de base</div>
                             <div style="font-weight:bold; font-size:1.1rem;">${p.weapon.baseAtk.value}</div>
                         </div>` : ''}
                         ${p.weapon.subStat ? `
@@ -1233,7 +1269,7 @@ function renderShowcase(index) {
                 </div>
                 <div style="margin-top:10px;">${subsHtml}</div>
                 <div class="art-score-footer">
-                    <span>Score</span>
+                    <span style="display:flex; align-items:center;">${createIcon('score')} Score</span>
                     <strong style="color:${art.grade.color}">${art.score} (${art.grade.letter})</strong>
                 </div>
             </div>`;
