@@ -3,28 +3,42 @@
    ========================================= */
 
 // --- 1. CONFIGURATION DES SVG ---
-const SVG_PATHS = {
-    "heart": "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z",
-    "sword": "M14.5 17.5L12 15l-2.5 2.5L12 20l2.5-2.5zm5.7-9.3l-2.4-2.4c-.4-.4-1-.4-1.4 0l-9.5 9.5 2.4 2.4 9.5-9.5c.4-.4.4-1 0-1.4zM5.1 14.9L2.7 17.3c-.4.4-.4 1 0 1.4l2.4 2.4c.4.4 1 .4 1.4 0l2.4-2.4-3.8-3.8z",
-    "shield": "M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z",
-    "star": "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z",
-    "flash": "M7 2v11h3v9l7-12h-4l4-8z",
-    "target": "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z",
-    "impact": "M12 2L1 21h22L12 2zm0 3.5L18.5 19H5.5L12 5.5z",
-    "cross": "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8.5 12h-2v-3h-3v-2h3v-3h2v3h3v2h-3v3z",
-    "fire": "M19.48 13.03c-.52-1.29-2.17-3.23-2.17-3.23s.27-1.74-.95-3.41c-1.22-1.67-3.14-1.92-3.14-1.92s.32 1.94-.49 3.01c-.81 1.07-2.73 1.19-2.73 1.19s1.39-2.77.29-4.88C9.52 2.15 7.42 2 7.42 2s.67 2.37-.53 4.04c-1.2 1.67-1.12 3.86-1.12 3.86s-1.87 1.12-1.72 4.18c.15 3.06 2.5 5.92 7.95 5.92 5.45 0 7.85-2.6 8-5.69.02-1.09-.52-1.28-.52-1.28z",
-    "water": "M12 2.6L8.5 7.5c-1.8 2.5-1.4 5.2.9 6.9 2.3 1.7 5.3 1.1 6.6-1.5.5-1 1-3.1-4-10.3z",
-    "wind": "M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z",
-    "rock": "M12 2L2 22h20L12 2zm0 4l6.5 13h-13L12 6z",
-    "ice": "M22 11h-5V6h-2v5H10V6H8v5H3v2h5v5h2v-5h5v5h2v-5h5z",
-    "leaf": "M17 8C8 10 5.9 16.17 3.82 21.34 5.71 20.35 8.32 19 12 18c6.9 3 9-3 9-3s-2.07-3.95-4-7z",
-    "percent_badge": "M18.5 5.5l-9 13M10.5 6.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm7 10a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"
+const ICON_BASE_PATH = "./assets/simulator/icons/";
+
+// Associe la clé interne (ex: "hp_") au nom de ton fichier PNG
+const ICON_MAP = {
+    // Stats de base
+    "hp": "icon_hp.png",
+    "hp_": "icon_hp_percent.png",
+    "atk": "icon_atk.png",
+    "atk_": "icon_atk_percent.png",
+    "def": "icon_def.png",
+    "def_": "icon_def_percent.png",
+
+    // Stats avancées
+    "eleMas": "icon_em.png",
+    "enerRech_": "icon_er.png",
+    "critRate_": "icon_crit_rate.png",
+    "critDMG_": "icon_crit_dmg.png",
+    "heal_": "icon_heal_bonus.png",
+
+    // Éléments
+    "pyro_dmg_": "icon_pyro.png",
+    "hydro_dmg_": "icon_hydro.png",
+    "cryo_dmg_": "icon_cryo.png",
+    "electro_dmg_": "icon_electro.png",
+    "anemo_dmg_": "icon_anemo.png",
+    "geo_dmg_": "icon_geo.png",
+    "dendro_dmg_": "icon_dendro.png",
+    "physical_dmg_": "icon_physical.png",
+
+    // Fallback (image par défaut si inconnu)
+    "unknown": "icon_unknown.png"
 };
 
-function createSvg(pathKey, isPercent = false) {
-    let content = `<path d="${SVG_PATHS[pathKey]}" />`;
-    if (isPercent) content += `<g transform="scale(0.6) translate(14, 14)"><path d="${SVG_PATHS['percent_badge']}" fill="var(--accent-gold)" stroke="black" stroke-width="1"/></g>`;
-    return `<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px; height:16px; display:inline-block; vertical-align:middle;">${content}</svg>`;
+function createIcon(key) {
+    const filename = ICON_MAP[key] || ICON_MAP["unknown"];
+    return `<img src="${ICON_BASE_PATH}${filename}" class="stat-icon" alt="${key}">`;
 }
 
 function getRollCount(key, value) {
@@ -159,39 +173,31 @@ function formatValueDisplay(key, val) {
 }
 
 function formatStat(propId, value) {
+    // 1. Mapping de la clé (inchangé)
     let key = STAT_MAPPING[propId];
     if (!key && (STAT_LABELS[propId] || propId === 'dmgBonus')) key = propId;
-    if (!key) return { key: "unknown", value: value, label: propId, icon: "" };
+    if (!key) return { key: "unknown", value: value, label: propId, icon: createIcon("unknown") };
 
+    // 2. Gestion des pourcentages (inchangé)
     let val = value;
     let isPercent = false;
     if (key.endsWith('_') || ['critRate_', 'critDMG_', 'enerRech_', 'heal_'].includes(key)) {
         isPercent = true;
-        if (val < 2.0) val = val * 100;
+        if (val < 2.0) val = val * 100; // Conversion 0.5 -> 50
     }
+
+    // 3. Génération de l'image (NOUVEAU)
+    const iconHtml = createIcon(key);
+
     const label = STAT_LABELS[key] || key;
-    let svgContent = "";
-    if (key === 'hp') svgContent = createSvg('heart', false);
-    else if (key === 'hp_') svgContent = createSvg('heart', true);
-    else if (key === 'atk') svgContent = createSvg('sword', false);
-    else if (key === 'atk_') svgContent = createSvg('sword', true);
-    else if (key === 'def') svgContent = createSvg('shield', false);
-    else if (key === 'def_') svgContent = createSvg('shield', true);
-    else if (key === 'eleMas') svgContent = createSvg('star');
-    else if (key === 'enerRech_') svgContent = createSvg('flash');
-    else if (key === 'critRate_') svgContent = createSvg('target');
-    else if (key === 'critDMG_') svgContent = createSvg('impact');
-    else if (key === 'heal_') svgContent = createSvg('cross');
-    else if (key === 'pyro_dmg_') svgContent = createSvg('fire');
-    else if (key === 'hydro_dmg_') svgContent = createSvg('water');
-    else if (key === 'cryo_dmg_') svgContent = createSvg('ice');
-    else if (key === 'electro_dmg_') svgContent = createSvg('flash');
-    else if (key === 'anemo_dmg_') svgContent = createSvg('wind');
-    else if (key === 'geo_dmg_') svgContent = createSvg('rock');
-    else if (key === 'dendro_dmg_') svgContent = createSvg('leaf');
-    else if (key === 'physical_dmg_') svgContent = createSvg('sword');
-    else svgContent = createSvg('star');
-    return { key, value: val, label, icon: svgContent, isPercent };
+
+    return {
+        key,
+        value: val,
+        label,
+        icon: iconHtml, // Contient maintenant la balise <img>
+        isPercent
+    };
 }
 
 // --- LOGIQUE CALCUL BONUS ---
@@ -1122,27 +1128,28 @@ function renderShowcase(index) {
                         <div style="font-size:0.9rem; color:var(--accent-gold); font-weight:bold;">C${p.cons}</div>
                     </div>
                 </div>
+                
                 <h3 style="font-size:0.8rem; color:#888; text-transform:uppercase; margin-bottom:5px;">Stats Menu</h3>
-                ${statLine(createSvg('heart'), "PV Max", Math.round(s.hp))}
-                ${statLine(createSvg('sword'), "ATQ", Math.round(s.atk))}
-                ${statLine(createSvg('shield'), "DÉF", Math.round(s.def))}
-                ${statLine(createSvg('star'), "Maîtrise", Math.round(s.em))}
-                ${statLine(createSvg('target'), "Taux CRIT", s.cr.toFixed(1)+'%')}
-                ${statLine(createSvg('impact'), "DGT CRIT", s.cd.toFixed(1)+'%')}
-                ${statLine(createSvg('flash'), "ER", s.er.toFixed(1)+'%', true)}
+                ${statLine(createIcon('hp'), "PV Max", Math.round(s.hp))}
+                ${statLine(createIcon('atk'), "ATQ", Math.round(s.atk))}
+                ${statLine(createIcon('def'), "DÉF", Math.round(s.def))}
+                ${statLine(createIcon('eleMas'), "Maîtrise", Math.round(s.em))}
+                ${statLine(createIcon('critRate_'), "Taux CRIT", s.cr.toFixed(1)+'%')}
+                ${statLine(createIcon('critDMG_'), "DGT CRIT", s.cd.toFixed(1)+'%')}
+                ${statLine(createIcon('enerRech_'), "ER", s.er.toFixed(1)+'%', true)}
                 ${statLine(formatStat(s.dmgBonusKey, s.dmgBonus / 100).icon, formatStat(s.dmgBonusKey, s.dmgBonus / 100).label, s.dmgBonus.toFixed(1)+'%')}
 
                 ${talentsHtml}
                 
                 <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; margin-top:15px; border:1px solid #333;">
                     <h3 style="font-size:0.9rem; color:var(--accent-gold); text-transform:uppercase; margin-bottom:10px; font-weight:bold;">Stats de Combat</h3>
-                    ${statLine(createSvg('heart'), "PV Max", Math.round(b.hp), b.hp > s.hp)}
-                    ${statLine(createSvg('sword'), "ATQ", Math.round(b.atk), b.atk > s.atk)}
-                    ${statLine(createSvg('shield'), "DÉF", Math.round(b.def), b.def > s.def)}
-                    ${statLine(createSvg('star'), "Maîtrise", Math.round(b.em), b.em > s.em)}
-                    ${statLine(createSvg('target'), "Taux CRIT", b.cr.toFixed(1)+'%', b.cr > s.cr)}
-                    ${statLine(createSvg('impact'), "DGT CRIT", b.cd.toFixed(1)+'%', b.cd > s.cd)}
-                    ${statLine(createSvg('flash'), "ER", b.er.toFixed(1)+'%', b.er > s.er)}
+                    ${statLine(createIcon('hp'), "PV Max", Math.round(b.hp), b.hp > s.hp)}
+                    ${statLine(createIcon('atk'), "ATQ", Math.round(b.atk), b.atk > s.atk)}
+                    ${statLine(createIcon('def'), "DÉF", Math.round(b.def), b.def > s.def)}
+                    ${statLine(createIcon('eleMas'), "Maîtrise", Math.round(b.em), b.em > s.em)}
+                    ${statLine(createIcon('critRate_'), "Taux CRIT", b.cr.toFixed(1)+'%', b.cr > s.cr)}
+                    ${statLine(createIcon('critDMG_'), "DGT CRIT", b.cd.toFixed(1)+'%', b.cd > s.cd)}
+                    ${statLine(createIcon('enerRech_'), "ER", b.er.toFixed(1)+'%', b.er > s.er)}
                     ${statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', b.dmgBonus > s.dmgBonus)}
                 </div>
 

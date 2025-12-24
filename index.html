@@ -169,6 +169,16 @@
             /* Optionnel : Une bordure subtile avec la couleur pure */
             border-color: var(--char-hex);
         }
+
+        .stat-icon {
+            width: 20px;       /* Taille de l'icône */
+            height: 20px;
+            object-fit: contain; /* Empêche l'image d'être déformée */
+            vertical-align: middle; /* Aligne l'icône verticalement avec le texte */
+            margin-right: 5px;  /* Petit espace entre l'icône et le texte */
+            display: inline-block;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5)); /* Optionnel : ajoute une petite ombre pour la lisibilité */
+        }
     </style>
 </head>
 <body>
