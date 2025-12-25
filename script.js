@@ -1072,11 +1072,12 @@ function renderSidebar() {
             renderShowcase(index);
         };
         div.innerHTML = `
-            <img src="${p.image}" class="char-avatar-small" style="border-color:${p.rarity === 5 ? '#eab308' : '#a855f7'}">
-            <div style="flex:1">
-                <div style="font-weight:600">${p.nom}</div>
-                <div style="font-size:0.85rem; color:#aaa">Score: ${p.evaluation.score} 
-                    <span style="color:${p.evaluation.grade.color}; float:right; font-weight:bold;">${p.evaluation.grade.letter}</span>
+            <img alt="" src="${p.image}" class="char-card-avatar">
+            <div class="char-card-container">
+                <p class="char-card-name">${p.nom}</p>
+                <div class="char-card-info">
+                    <p style="color:${p.evaluation.grade.color};">${p.evaluation.score} </p>
+                    <p style="color:${p.evaluation.grade.color};">(${p.evaluation.grade.letter})</p>
                 </div>
             </div>`;
         list.appendChild(div);

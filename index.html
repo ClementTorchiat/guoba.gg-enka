@@ -207,6 +207,9 @@
             overflow-y: auto;
             padding: 5px;
             margin-top: 5px;
+            gap: 5px;
+            display: flex;
+            flex-direction: column;
         }
 
         .char-list::-webkit-scrollbar {
@@ -224,29 +227,48 @@
         .char-card {
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding: 2px 8px 2px 2px;
             border-radius: 8px;
             cursor: pointer;
-            margin-bottom: 4px;
             transition: 0.2s;
-            border-left: 3px solid transparent;
+            flex-direction: row;
+            gap: 12px;
         }
 
         .char-card:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgb(61, 62, 67);
         }
 
         .char-card.active {
-            background: rgba(255, 177, 59, 0.1);
-            border-left-color: var(--accent-gold);
+            background: rgb(52, 53, 58);
         }
 
-        .char-avatar-small {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            margin-right: 12px;
-            border: 2px solid #333;
+        .char-card-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .char-card-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+        }
+
+        .char-card-name {
+            font-size: 16px;
+        }
+
+        .char-card-info {
+            display: flex;
+            gap: 4px;
+        }
+
+        .char-card-info p {
+            font-size: 14px;
         }
 
         /* SHOWCASE AREA */
