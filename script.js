@@ -1590,4 +1590,7 @@ function renderShowcase(index) {
     container.innerHTML = html;
 }
 
-loadGameData();
+loadGameData().then(() => {
+    document.getElementById('uidInput').value = "704449686";
+    fetchUserData();
+});
