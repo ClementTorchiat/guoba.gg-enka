@@ -32,6 +32,13 @@ const ICON_MAP = {
     "dendro_dmg_": "icon_dendro.png",
     "physical_dmg_": "icon_physical.png",
 
+    // Types d'armes
+    "sword": "icon_sword.png",       // Épée à une main
+    "claymore": "icon_claymore.png", // Épée à deux mains
+    "pole": "icon_polearm.png",      // Arme d'hast
+    "bow": "icon_bow.png",           // Arc
+    "catalyst": "icon_catalyst.png", // Catalyseur
+
     // Score
     "score": "icon_score.png",
 
@@ -923,12 +930,36 @@ function processData(data) {
     data.avatarInfoList.forEach(perso => {
         const id = perso.avatarId;
         const info = charData[id] || {};
-        const nom = getText(info.NameTextMapHash) || "Inconnu";
+        let nom = getText(info.NameTextMapHash);
+
+        if (!nom || nom === "Inconnu") {
+            // Si pas de traduction, on prend le nom du fichier image (ex: "UI_AvatarIcon_Side_Hutao")
+            if (info.SideIconName) {
+                // On garde juste la partie après le dernier "_" (ex: "Hutao")
+                nom = info.SideIconName.split('_').pop();
+
+                // Petit fix pour le Voyageur qui s'appelle souvent "PlayerBoy"/"PlayerGirl"
+                if (nom.includes("Player")) nom = "Voyageur";
+            } else {
+                nom = "Inconnu";
+            }
+        }
         const rarity = info.QualityType === "QUALITY_ORANGE" ? 5 : 4;
         const level = perso.propMap['4001'] ? parseInt(perso.propMap['4001'].val) : 0;
         const constellations = perso.talentIdList ? perso.talentIdList.length : 0;
 
         const elemInfo = ELEMENT_DATA[info.Element] || { id: 30, key: "physical_dmg_" };
+
+        // --- AJOUTER CE BLOC ---
+        const WEAPON_TYPE_MAP = {
+            "WEAPON_SWORD_ONE_HAND": "sword",
+            "WEAPON_CLAYMORE": "claymore",
+            "WEAPON_POLE": "pole",
+            "WEAPON_BOW": "bow",
+            "WEAPON_CATALYST": "catalyst"
+        };
+        // On récupère le type d'arme (ex: "bow") depuis les données fixes du perso
+        const charWeaponKey = WEAPON_TYPE_MAP[info.WeaponType] || "unknown";
 
         const talents = [];
         if (info.SkillOrder) {
@@ -1044,7 +1075,8 @@ function processData(data) {
         const persoObj = {
             id: id, nom, rarity, level, cons: constellations, talents,
             image: sideIcon, splashArt: splashUrl, combatStats, buffedStats, baseStats,
-            weapon, artefacts, setsCounter, buffs, evaluation: null, weights: null
+            weapon, artefacts, setsCounter, buffs, evaluation: null, weights: null,
+            charWeapon: charWeaponKey
         };
 
         const configKey = persoObj.nom.replace(/\s+/g, '') || "Default";
@@ -1099,137 +1131,198 @@ function renderShowcase(index) {
     const charColor = config.color || "#4b5563";
     container.style.setProperty('--char-hex', charColor);
 
-    let talentsHtml = `<div style="display:flex; justify-content:center; gap:20px; margin-top:20px;">`;
+
+    // Template des aptitudes
+    let talentsHtml = `<div style="display:flex; justify-content:space-between; margin-left: 3px; margin-right: 3px;">`;
     p.talents.forEach(t => {
         talentsHtml += `
-            <div style="width:50px; height:50px; background:#2d3342; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; border:2px solid #555;">
-                <img src="${t.icon}" style="width:30px; height:30px;">
-                <div style="position:absolute; bottom:-10px; background:#111; padding:2px 6px; border-radius:10px; font-size:0.7rem; border:1px solid #333; font-weight:bold;">${t.level}</div>
+            <div style="width:64px; height:64px; background-color: rgba(0, 0, 0, 0.2); border-radius:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; border:1px solid rgba(255, 255, 255, 0.4); margin-bottom: 11px;">
+                <img src="${t.icon}" style="width:60px; height:60px;" alt="Aptitude">
+                <div style="position:absolute; bottom:-10px; background-color: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5)); padding:2px 6px; border-radius:100%; font-size:10px;">${t.level}</div>
             </div>`;
     });
     talentsHtml += `</div>`;
 
+
+    // Template de ligne de stat
     const statLine = (svg, label, val, isHighlight=false) => `
-        <div class="stat-row">
-            <span class="text-muted" style="display:flex; align-items:center; gap:8px;">${svg} ${label}</span> 
+        <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
+            ${svg}
+            <p>${label}</p>
             <div class="dotted-line"></div> 
-            <span class="stat-val" style="${isHighlight ? 'color:var(--accent-gold)' : ''}">${val}</span>
+            <p class="stat-val" style="${isHighlight ? 'color:var(--accent-gold)' : ''}">${val}</p>
         </div>`;
 
     const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
 
-    // --- PARTIE HAUTE (STATS + EQUIPMENT) ---
-    let html = `<div class="top-row" style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;">`;
 
-    // 1. Showcase Area (Gauche)
+
+
+
+    // 1. PARTIE HAUTE (STATS + EQUIPMENT)
+    let html = `<div class="top-row">`;
+
+    // 1.1 Image de background
     html += `
-        <div class="showcase-area" style="flex: 0 0 350px;">
-            <div class="splash-art-container" style="background-image: url('${p.splashArt}');"></div>
-            <div>
-                <div style="display:flex; justify-content:space-between; align-items:end; margin-bottom:10px;">
-                    <h1 style="font-size:2rem; font-weight:800; line-height:1;">${p.nom}</h1>
-                    <div style="text-align:right;">
-                        <div style="font-size:0.9rem; color:#aaa;">Niv. ${p.level}</div>
-                        <div style="font-size:0.9rem; color:var(--accent-gold); font-weight:bold;">C${p.cons}</div>
+        <div class="background-splash-art" style="background-image: url('${p.splashArt}'); background-position: center center;background-repeat: no-repeat;background-size: 300%; position: absolute;inset: 0px;z-index: 0;filter: blur(20px) brightness(0.7) saturate(0.8);"></div>
+    `;
+
+    // 1.2 Section gauche (splash art + arme)
+    // 1.2.1 Splash art
+    html += `
+        <div class="character-portrait-weapon" style="gap: 8px; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box;">
+            <div class="character-portrait-container" style="width: 350px; height: 720px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: rgb(0, 0, 0) 1px 1px 6px; box-sizing: border-box;">
+                <img class="character-portrait" src="${p.splashArt}" alt="${p.nom}" style="filter: none; position: absolute; transform: translateX(-35%); height: 720px; transition: filter 0.35s cubic-bezier(0.41, 0.65, 0.39, 0.99); box-sizing: border-box;">
+            </div>
+    `;
+
+    // 1.2.2 Arme
+    html += `
+        <div class="weapon-container">
+    `;
+
+    if (p.weapon) {
+        html += `
+            <div class="card weapon-card" style="width: 350px; height: 128px; position: relative; overflow: hidden; z-index: 20; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: rgb(0, 0, 0) 1px 1px 6px; box-sizing: border-box; transition: box-shadow .25s, border-color .25s !important; display: flex; padding: 10px;">
+                <img src="${p.weapon.icon}" class="item-img" style="width: auto; height:100%; border-radius: 8px; border:2px solid ${p.weapon.stars === 5 ? '#eab308' : '#9C74B6'}" alt="${p.weapon.name}">
+                <div style="flex:1; display: flex; flex-direction: column; overflow: hidden;">
+                    <div style="font-size:16px; color: #FFFFFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.weapon.name}</div>
+                    <div style="color: #FFFFFF; font-size:14px; margin-bottom:5px;">Niv. ${p.weapon.level} • R${p.weapon.rank}</div>
+                    <div style="display:flex; gap:12px; margin-top:5px; background:rgba(0,0,0,0.2); padding:5px; border-radius:4px; overflow: hidden;">
+                        ${p.weapon.baseAtk ? `
+                        <div style="overflow: hidden; padding-left: 2px;">
+                            <p style="font-size:12px; color: rgba(255, 255, 255, 0.4); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ATQ de base</p>
+                            <p style="font-size:16px; text-align: left; margin-top: 2px;">${p.weapon.baseAtk.value}</p>
+                        </div>` : ''}
+                        ${p.weapon.subStat ? `
+                        <div style="border-left:1px solid rgba(255, 255, 255, 0.4); padding-left:12px; overflow: hidden;">
+                            <p style="font-size:12px; color: rgba(255, 255, 255, 0.4); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.weapon.subStat.label}</p>
+                            <p style="font-size:16px; text-align: left; margin-top: 2px;">${formatValueDisplay(p.weapon.subStat.key, p.weapon.subStat.value)}</p>
+                        </div>` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    html += `</div></div>`;
+
+    // 1.3 Section milieu (stats + note + aptitudes + stats en combat)
+    html += `
+        <div class="showcase-area" style="gap: 8px; justify-content: space-between; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box;">
+            <div class="showcase-area-container" style="width: 299px; height: 100%; border-radius: 8px; z-index: 10; flex: 1 1 0%; justify-content: space-between; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box;">
+                
+                <!-- 1.3.1 Informations personnage + statistiques de base -->
+                <div class="showcase-area-base-stats" style="border-radius: 8px; transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 1px solid rgba(255, 255, 255, 0.4); box-sizing: border-box;">
+                    <div style="align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box; margin-bottom: 6px;">
+                        <div style="height: 40px; margin-top: 8px; margin-bottom: 5px; display: flex; flex-direction: row; justify-content: space-between; margin-left: 10px; margin-right: 10px;">
+                            <div class="showcase-element-weapon" style="display: flex; flex-direction: row;">
+                                <img src="${ICON_BASE_PATH}${ICON_MAP[s.dmgBonusKey]}" style="width: 25px; height: 25px; margin-top: 2px;" alt="Element">
+                                <img src="${ICON_BASE_PATH}${ICON_MAP[p.charWeapon]}" style="width: 29px; height: 29px;" alt="Type Arme">
+                            </div>
+                            <div class="showcase-level-const" style="display: flex; flex-direction: column; text-align: right;">
+                                <p style="font-size: 14px;">Niv. ${p.level}</p>
+                                <p style="font-size: 14px;">C${p.cons}</p>
+                            </div>
+                        </div>
+                        <div style="margin-left: 10px; margin-right: 10px;">
+                            <h2 style="font-size: 24px;">${p.nom}</h2>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="margin-left: 10px; margin-right: 10px; margin-bottom: 9px; font-size: 14px;">Statistiques de base</p>
+                        <div class="showcase-base-stats-container" style="display: flex; flex-direction: column; gap: 9px; margin-left: 7px; margin-right: 10px; margin-bottom: 9px;">
+                            ${statLine(createIcon('hp'), "PV max", Math.round(s.hp))}
+                            ${statLine(createIcon('atk'), "ATQ", Math.round(s.atk))}
+                            ${statLine(createIcon('def'), "DÉF", Math.round(s.def))}
+                            ${statLine(createIcon('eleMas'), "Maîtrise élémentaire", Math.round(s.em))}
+                            ${statLine(createIcon('critRate_'), "Taux CRIT", s.cr.toFixed(1) + '%')}
+                            ${statLine(createIcon('critDMG_'), "DGT CRIT", s.cd.toFixed(1) + '%')}
+                            ${statLine(createIcon('enerRech_'), "Recharge d'énergie", s.er.toFixed(1) + '%')}
+                            ${statLine(createIcon('heal_'), "Bonus de soins", (s.hb || 0).toFixed(1) + '%')}
+                            ${statLine(formatStat(s.dmgBonusKey, s.dmgBonus / 100).icon, formatStat(s.dmgBonusKey, s.dmgBonus / 100).label, s.dmgBonus.toFixed(1) + '%')}
+                        </div>
                     </div>
                 </div>
                 
-                <h3 style="font-size:0.8rem; color:#888; text-transform:uppercase; margin-bottom:5px;">Stats Menu</h3>
-                ${statLine(createIcon('hp'), "PV max", Math.round(s.hp))}
-                ${statLine(createIcon('atk'), "ATQ", Math.round(s.atk))}
-                ${statLine(createIcon('def'), "DÉF", Math.round(s.def))}
-                ${statLine(createIcon('eleMas'), "Maîtrise élémentaire", Math.round(s.em))}
-                ${statLine(createIcon('critRate_'), "Taux CRIT", s.cr.toFixed(1)+'%')}
-                ${statLine(createIcon('critDMG_'), "DGT CRIT", s.cd.toFixed(1)+'%')}
-                ${statLine(createIcon('enerRech_'), "Recharge d'énergie", s.er.toFixed(1)+'%')}
-                ${statLine(createIcon('heal_'), "Bonus de soins", (s.hb || 0).toFixed(1)+'%')}
-                ${statLine(formatStat(s.dmgBonusKey, s.dmgBonus / 100).icon, formatStat(s.dmgBonusKey, s.dmgBonus / 100).label, s.dmgBonus.toFixed(1)+'%')}
-
-                ${talentsHtml}
+                <!-- 1.3.2 Score et note personnage -->
+                <div class="showcase-area-score" style="display: flex; flex-direction: column; gap: 6px; border-radius: 8px; transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; padding: 10px 10px 8px 7px;box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 2px solid ${ev.grade.color}; box-sizing: border-box;">
+                    <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
+                        <img src="assets/simulator/icons/icon_score_white.png" alt="Score" style="width: 19px; height: 19px; margin-bottom: 2px; margin-right: 5px;">
+                        <p>Score</p>
+                        <div class="dotted-line-invisible"></div> 
+                        <div style="display: flex; flex-direction: row; gap: 4px;">
+                            <p style="color: ${ev.grade.color};">${ev.score}</p>
+                            <p>(${ev.grade.letter})</p>
+                        </div>
+                    </div>
+                    <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
+                        <p style="margin-left: 24px;">Rolls totaux</p>
+                        <div class="dotted-line-invisible"></div> 
+                        <p>${ev.totalRolls}</p>
+                    </div>
+                </div>
                 
-                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; margin-top:15px; border:1px solid #333;">
-                    <h3 style="font-size:0.9rem; color:var(--accent-gold); text-transform:uppercase; margin-bottom:10px; font-weight:bold;">Stats de Combat</h3>
+                <!-- 1.3.3 Aptitudes -->
+                <div class="showcase-area-skills" style="border-radius: 8px; transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; padding: 10px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 1px solid rgba(255, 255, 255, 0.4); box-sizing: border-box;">
+                    <p style="margin-bottom: 9px; font-size: 14px;">Aptitudes</p>
+                    ${talentsHtml}
+                </div>
+                
+                <!-- 1.3.4 Statistiques de combat -->
+                <div class="showcase-area-combat-stats" style="border-radius: 8px; transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; padding-left: 2px; padding-right: 2px; padding-bottom: 3px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 1px solid rgba(255, 255, 255, 0.4); box-sizing: border-box;">
+                    <p style="margin-left: 10px; margin-right: 10px; margin-bottom: 9px; margin-top: 10px; font-size: 14px;">Statistiques de combat</p>
+                    <div style="display: flex; flex-direction: column; gap: 9px; margin-left: 7px; margin-right: 10px; margin-bottom: 4px;">
+                        ${(() => {
+                            let html = "";
+                            const dynamicDefs = [
+                                { wKey: 'hp',  sKey: 'hp',  icon: 'hp',  label: 'PV max', isPct: false },
+                                { wKey: 'atk', sKey: 'atk', icon: 'atk', label: 'ATQ',    isPct: false },
+                                { wKey: 'def', sKey: 'def', icon: 'def', label: 'DÉF',    isPct: false }
+                            ];
+                            
+                            dynamicDefs.forEach(def => {
+                                if (p.weights && p.weights[def.wKey] > 0) {
+                                    const val = b[def.sKey];
+                                    const oldVal = s[def.sKey];
+                                    const displayVal = def.isPct ? val.toFixed(1) + '%' : Math.round(val);
+                                    const isBuffed = val > oldVal;
+                                    html += statLine(createIcon(def.icon), def.label, displayVal, isBuffed);
+                                }
+                            });
                     
-                    ${(() => {
-                        let html = "";
-                
-                        // 1. Stats conditionnelles (Uniquement si Poids > 0)
-                        const statDefs = [
-                            { wKey: 'hp',        sKey: 'hp',  icon: 'hp',        label: 'PV max',      isPct: false },
-                            { wKey: 'atk',       sKey: 'atk', icon: 'atk',       label: 'ATQ',         isPct: false },
-                            { wKey: 'def',       sKey: 'def', icon: 'def',       label: 'DÉF',         isPct: false },
-                            { wKey: 'eleMas',    sKey: 'em',  icon: 'eleMas',    label: 'Maîtrise élémentaire',    isPct: false },
-                            { wKey: 'critRate_', sKey: 'cr',  icon: 'critRate_', label: 'Taux CRIT',   isPct: true },
-                            { wKey: 'critDMG_',  sKey: 'cd',  icon: 'critDMG_',  label: 'DGT CRIT',    isPct: true },
-                            { wKey: 'enerRech_', sKey: 'er',  icon: 'enerRech_', label: "Recharge d'énergie",          isPct: true }
-                        ];
-                
-                        statDefs.forEach(def => {
-                            if (p.weights && p.weights[def.wKey] > 0) {
+                            const fixedDefs = [
+                                { sKey: 'em',  icon: 'eleMas',    label: 'Maîtrise élémentaire', isPct: false },
+                                { sKey: 'cr',  icon: 'critRate_', label: 'Taux CRIT',   isPct: true },
+                                { sKey: 'cd',  icon: 'critDMG_',  label: 'DGT CRIT',    isPct: true },
+                                { sKey: 'er',  icon: 'enerRech_', label: "Recharge d'énergie", isPct: true }
+                            ];
+                    
+                            fixedDefs.forEach(def => {
                                 const val = b[def.sKey];
                                 const oldVal = s[def.sKey];
                                 const displayVal = def.isPct ? val.toFixed(1) + '%' : Math.round(val);
                                 const isBuffed = val > oldVal;
                                 html += statLine(createIcon(def.icon), def.label, displayVal, isBuffed);
-                            }
-                        });
-                
-                        // 2. AJOUT : Bonus de Soins (Toujours affiché pour combler l'espace)
-                        // On utilise s.hb (stat de base) car b.hb n'est pas encore calculé dans les buffs, mais ça suffit pour l'affichage.
-                        const healVal = s.hb || 0;
-                        html += statLine(createIcon('heal_'), "Bonus de soins", healVal.toFixed(1)+'%', false);
-                
-                        // 3. Bonus de Dégâts Élémentaire (Toujours affiché)
-                        const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
-                        const isDmgBuffed = b.dmgBonus > s.dmgBonus;
-                        html += statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', isDmgBuffed);
-                
-                        return html;
-                    })()}
-                </div>
-
-                <div class="global-score-card">
-                    <div>
-                        <div style="color:var(--accent-gold); font-size:0.8rem; text-transform:uppercase; font-weight:bold; display:flex; align-items:center;">
-                            ${createIcon('score')} Score Global
-                        </div>
-                        <div style="font-size:0.8rem; color:#888; margin-top:2px;">Rolls: ${ev.totalRolls}</div>
-                    </div>
-                    <div style="text-align:right;">
-                        <span style="font-size:1.8rem; font-weight:800; line-height:1;">${ev.score}</span>
-                        <span style="color:${ev.grade.color}; font-weight:bold; font-size:1.2rem;">${ev.grade.letter}</span>
+                            });
+                    
+                            const healVal = s.hb || 0;
+                            html += statLine(createIcon('heal_'), "Bonus de soins", healVal.toFixed(1)+'%', false);
+                    
+                            const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
+                            const isDmgBuffed = b.dmgBonus > s.dmgBonus;
+                            html += statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', isDmgBuffed);
+                    
+                            return html;
+                        })()}
                     </div>
                 </div>
             </div>
         </div>
     `;
 
-    // 2. Equipment Area (Droite)
-    html += `<div class="equipment-area" style="flex: 1;">`;
-
-    if (p.weapon) {
-        html += `
-            <div class="card weapon-card">
-                <img src="${p.weapon.icon}" class="item-img" style="width:80px; height:80px; border:2px solid ${p.weapon.stars === 5 ? '#eab308' : '#d1d5db'}">
-                <div style="flex:1">
-                    <div style="font-weight:700; font-size:1.1rem; color:${p.weapon.stars === 5 ? '#eab308' : '#fff'}">${p.weapon.name}</div>
-                    <div style="color:var(--accent-gold); font-size:0.9rem; margin-bottom:5px;">Niv. ${p.weapon.level} • R${p.weapon.rank}</div>
-                    <div style="display:flex; gap:15px; margin-top:5px; background:rgba(0,0,0,0.2); padding:5px; border-radius:4px;">
-                        ${p.weapon.baseAtk ? `
-                        <div style="text-align:center;">
-                            <div style="font-size:0.7rem; color:#aaa;">ATQ de base</div>
-                            <div style="font-weight:bold; font-size:1.1rem;">${p.weapon.baseAtk.value}</div>
-                        </div>` : ''}
-                        ${p.weapon.subStat ? `
-                        <div style="text-align:center; border-left:1px solid #444; padding-left:15px;">
-                            <div style="font-size:0.7rem; color:#aaa;">${p.weapon.subStat.label}</div>
-                            <div style="font-weight:bold; font-size:1.1rem; color:#ddd;">${formatValueDisplay(p.weapon.subStat.key, p.weapon.subStat.value)}</div>
-                        </div>` : ''}
-                    </div>
-                </div>
-            </div>`;
-    }
-
+    // 1.4 Section droite (artéfacts + configuration)
+    html += `<div class="equipment-area">`;
     p.artefacts.forEach(art => {
         let subsHtml = "";
         art.subStats.forEach(sub => {
@@ -1246,34 +1339,39 @@ function renderShowcase(index) {
                         ${rolls > 0 ? `<span style="background:rgba(255, 177, 59, 0.15); color:#FFB13B; font-size:0.7rem; padding:1px 5px; border-radius:4px; font-weight:bold;">[${rolls}]</span>` : ''}
                     </span>
                     <span>${formatValueDisplay(sub.key, sub.value)}</span>
-                </div>`;
+                </div>
+            `;
         });
+
         const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
         html += `
-            <div class="card">
-                <div class="item-header">
-                    <div style="position:relative; display:inline-block;">
-                        <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : '#a855f7'};">
-                        <div style="position:absolute; bottom:0; right:0; background:rgba(0,0,0,0.8); color:white; font-size:0.65rem; padding:1px 4px; border-top-left-radius:4px;">+${art.level}</div>
+            <div class="card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid rgba(255, 255, 255, 0.4); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset;">
+                <div class="card-container" style="padding-top: 14px; padding-left: 12px; padding-right: 12px; padding-bottom: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; align-items: stretch;">
+                    <div class="item-header">
+                        <div style="position:relative; display:inline-block;">
+                            <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : '#a855f7'};">
+                            <div style="position:absolute; bottom:0; right:0; background:rgba(0,0,0,0.8); color:white; font-size:0.65rem; padding:1px 4px; border-top-left-radius:4px;">+${art.level}</div>
+                        </div>
+                        <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center; margin-left: 10px;">
+                            <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600; font-size:0.9rem;">${pieceName}</div>
+                            <div style="font-size:0.75rem; color:var(--accent-gold); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${art.setName}</div>
+                            <div style="font-size:0.7rem; color:#aaa;">${art.stars}★</div>
+                        </div>
                     </div>
-                    <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center; margin-left: 10px;">
-                        <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600; font-size:0.9rem;">${pieceName}</div>
-                        <div style="font-size:0.75rem; color:var(--accent-gold); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${art.setName}</div>
-                        <div style="font-size:0.7rem; color:#aaa;">${art.stars}★</div>
+                    <div class="main-stat-display">
+                        <span>${formatValueDisplay(art.mainStat.key, art.mainStat.value)}</span>
+                        <span style="display:flex; align-items:center; gap:5px; font-size:0.7rem; color:#aaa; font-weight:normal; align-self:center;">
+                            <span style="color:#fff; display:inline-flex;">${art.mainStat.icon}</span> ${art.mainStat.label}
+                        </span>
+                    </div>
+                    <div style="margin-top:10px;">${subsHtml}</div>
+                    <div class="art-score-footer">
+                        <span style="display:flex; align-items:center;">${createIcon('score')} Score</span>
+                        <strong style="color:${art.grade.color}">${art.score} (${art.grade.letter})</strong>
                     </div>
                 </div>
-                <div class="main-stat-display">
-                    <span>${formatValueDisplay(art.mainStat.key, art.mainStat.value)}</span>
-                    <span style="display:flex; align-items:center; gap:5px; font-size:0.7rem; color:#aaa; font-weight:normal; align-self:center;">
-                        <span style="color:#fff; display:inline-flex;">${art.mainStat.icon}</span> ${art.mainStat.label}
-                    </span>
-                </div>
-                <div style="margin-top:10px;">${subsHtml}</div>
-                <div class="art-score-footer">
-                    <span style="display:flex; align-items:center;">${createIcon('score')} Score</span>
-                    <strong style="color:${art.grade.color}">${art.score} (${art.grade.letter})</strong>
-                </div>
-            </div>`;
+            </div>
+        `;
     });
 
     if (p.buffs && p.buffs.length > 0) {
@@ -1297,6 +1395,7 @@ function renderShowcase(index) {
                     </label>
                 </div>`;
         });
+
         html += `
             <div class="card" style="border-color:var(--accent-gold); background:rgba(255, 177, 59, 0.05);">
                 <div style="font-weight:bold; color:var(--accent-gold); text-transform:uppercase; font-size:0.9rem; margin-bottom:10px; border-bottom:1px solid #444; padding-bottom:5px;">
@@ -1308,6 +1407,13 @@ function renderShowcase(index) {
     }
 
     html += `</div></div>`; // Fin equipment-area et top-row
+
+
+
+
+
+
+
 
     // --- 3. COACHING SECTION (Bas - Full Width - Structuré par Familles) ---
     html += `

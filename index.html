@@ -247,7 +247,7 @@
             width: 52px;
             height: 52px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            background-color: rgba(0, 0, 0, 0.1);
         }
 
         .char-card-container {
@@ -273,13 +273,24 @@
 
         /* SHOWCASE AREA */
         .main-content {
-            flex: 1;
             display: flex;
-            padding: 20px;
-            gap: 20px;
+            gap: 8px;
             overflow-y: auto;
             position: relative;
             flex-direction: column;
+            width: 100%;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 2px;
+            padding-top: 5px;
+        }
+        .main-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+        }
+        .main-content::-webkit-scrollbar-track {
+            background: #2C2D32;
         }
 
         #placeholder-msg {
@@ -289,50 +300,92 @@
             transform: translate(-50%, -50%);
             color: var(--text-muted);
             font-size: 1.2rem;
+            z-index: 999999;
         }
 
-        .showcase-area {
-            flex: 0 0 450px;
-            display: flex;
+        .main-content-menu {
+
+        }
+
+        .main-content-menu-container {
+            margin-top: 46px;
+        }
+
+        .main-content-menu-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+            margin-left: 4px;
+        }
+
+        .main-content-menu-fake {
+            background: #2C2D32;
+            border: none;
+            border-radius: 8px;
+            font-family: ShinShin, Inter, sans-serif;
+            font-size: 14px;
+            padding-left: 15px;
+            padding-top: 17px;
+            padding-bottom: 14px;
+            color: #ffffff;
+        }
+
+        .main-content-showcase {
+            width: 100%;
+            box-sizing: border-box;
+            align-items: stretch;
             flex-direction: column;
-            gap: 20px;
+            display: flex;
         }
 
-        /* SPLASH ART DYNAMIQUE */
-        .splash-art-container {
-            height: 500px;
-            background-size: cover;
-            background-position: center top;
-            background-repeat: no-repeat;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
+        .top-row {
             position: relative;
             display: flex;
-            align-items: flex-end;
-            padding: 20px;
-            /* Overlay gradient pour lisibilité texte bas */
-            background-image: linear-gradient(180deg, rgba(11, 15, 25, 0) 60%, rgba(11, 15, 25, 1) 100%);
+            height: 856px;
+            background: #323338;
+            background-blend-mode: screen;
+            overflow: hidden;
+            border-radius: 7px;
+            transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s;
+            gap: 8px;
+        }
+
+        .character-portrait-container {
+            background-color: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765);
+        }
+
+        .showcase-area-base-stats, .showcase-area-score, .showcase-area-skills, .showcase-area-combat-stats {
+            background-color: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765);
         }
 
         /* STATS PANEL */
         .stat-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+            font-size: 14px;
         }
 
         .dotted-line {
+            margin: auto 10px;
             flex-grow: 1;
-            border-bottom: 2px dotted #4b5563;
-            margin: 0 8px;
-            opacity: 0.3;
+            width: unset;
+            min-width: unset;
+            background: none;
+            border-color: rgba(255, 255, 255, 0.25);
+            border-style: dashed;
+            border-width: 1px 0 0;
+            display: flex;
+            clear: both;
         }
 
-        .stat-val {
-            font-family: monospace;
-            font-weight: 600;
+        .dotted-line-invisible {
+            margin: auto 10px;
+            flex-grow: 1;
+            width: unset;
+            min-width: unset;
+            background: none;
+            border-color: rgba(255, 255, 255, 0);
+            border-style: dashed;
+            border-width: 1px 0 0;
+            display: flex;
+            clear: both;
         }
 
         /* GLOBAL SCORE CARD */
@@ -349,21 +402,13 @@
 
         /* EQUIPMENT GRID */
         .equipment-area {
-            flex: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 15px;
+            grid-template-columns: 240px 240px;
+            gap: 8px;
             align-content: start;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border-radius: 8px;
-            padding: 15px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            box-sizing: border-box;
+            align-items: stretch;
+            z-index: 10;
         }
 
         .weapon-card {
@@ -371,7 +416,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            gap: 20px;
+            gap: 12px;
         }
 
         .item-header {
@@ -384,7 +429,7 @@
             width: 48px;
             height: 48px;
             border-radius: 6px;
-            background: #333;
+            background-color: rgba(0, 0, 0, 0.2);
             border: 1px solid #555;
         }
 
@@ -519,21 +564,18 @@
                     calc(r / 3.5)
                     calc(g / 3.5)
                     calc(b / 3.5)
-        / 0.765
+                    / 0.765
             );
-
-            /* Optionnel : Une bordure subtile avec la couleur pure */
-            border-color: var(--char-hex);
         }
 
         .stat-icon {
-            width: 20px;       /* Taille de l'icône */
-            height: 20px;
+            width: 19px;       /* Taille de l'icône */
+            height: 19px;
             object-fit: contain; /* Empêche l'image d'être déformée */
             vertical-align: middle; /* Aligne l'icône verticalement avec le texte */
             margin-right: 5px;  /* Petit espace entre l'icône et le texte */
             display: inline-block;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5)); /* Optionnel : ajoute une petite ombre pour la lisibilité */
+            margin-bottom: 2px;
         }
     </style>
 </head>
@@ -571,8 +613,19 @@
                         </div>
                     </div>
                 </aside>
-                <div class="main-content" id="main-container">
-                    <div id="placeholder-msg">Entrez un UID et sélectionnez un personnage.</div>
+                <div class="main-content">
+                    <!-- <div id="placeholder-msg">Entrez un UID et sélectionnez un personnage.</div> -->
+                    <div class="main-content-menu">
+                        <div class="main-content-menu-container">
+                            <p class="main-content-menu-title">Équipe :</p>
+                            <div>
+                                <p class="main-content-menu-fake">Fonctionnalité en développement.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-content-showcase" id="main-container">
+
+                    </div>
                 </div>
             </div>
         </div>

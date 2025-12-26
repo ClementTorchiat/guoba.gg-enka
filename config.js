@@ -23,7 +23,7 @@ const CHARACTER_CONFIG = {
         bestSets: ["ObsidianCodex:4", "CrimsonWitchOfFlames:4"],
         goodSets: ["ObsidianCodex:2", "CrimsonWitchOfFlames:2", "GildedDreams:4"],
         talents: { auto: 1, skill: 10, burst: 10 },
-        color : "#ff6600"
+        color : "#C74644"
     },
     "Nilou": {
         weights: {
@@ -38,7 +38,7 @@ const CHARACTER_CONFIG = {
         bestSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2"],
         goodSets: ["FlowerOfParadiseLost:4", "GildedDreams:2", "WanderersTroupe:2", "NightOfTheSkysUnveiling:2"],
         talents: { auto: 1, skill: 8, burst: 8 },
-        color : "#1B4278"
+        color : "#80B7E2"
     },
     "Skirk": {
         weights: {
@@ -52,7 +52,8 @@ const CHARACTER_CONFIG = {
         },
         bestSets: ["FinaleOfTheDeepGalleries:4", "MarechausseeHunter:4"],
         goodSets: ["GladiatorsFinale:4", "BlizzardStrayer:4", "GladiatorsFinale:2", "BlizzardStrayer:2"],
-        talents: { auto: 1, skill: 10, burst: 8 }
+        talents: { auto: 1, skill: 10, burst: 8 },
+        color : "#0525F4"
     },
     "Neuvillette": {
         weights: { "critRate_": 1, "critDMG_": 1, "hp_": 1, "hp": 0.1, "atk_": 0, "enerRech_": 0.5, "elemental_dmg_": 1 },
@@ -90,7 +91,8 @@ const CHARACTER_CONFIG = {
         },
         bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
         goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2"],
-        talents: { auto: 10, skill: 8, burst: 8 }
+        talents: { auto: 10, skill: 8, burst: 8 },
+        color : "#AB3D2D"
     },
 };
 
