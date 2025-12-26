@@ -31,6 +31,8 @@
             font-family: 'ShinShin', 'Inter', sans-serif;
             background: var(--bg-body);
             color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             height: 100vh;
             display: flex;
             overflow: hidden;
@@ -282,7 +284,7 @@
         }
 
         .main-content::-webkit-scrollbar {
-            width: 2px;
+            width: 0;
             padding-top: 5px;
         }
         .main-content::-webkit-scrollbar-thumb {
@@ -441,19 +443,27 @@
             justify-content: space-between;
         }
 
-        /* SUBSTATS & BADGES */
-        .substat-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            color: #ddd;
-            margin-bottom: 4px;
-        }
+
 
         .substat-row.dead {
-            color: var(--text-dead);
-            opacity: 0.7;
+            opacity: 0.4;
         }
+
+
+        .card-buff-list-container::-webkit-scrollbar {
+            width: 0px;
+            padding-top: 5px;
+        }
+        .card-buff-list-containert::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-radius: 50px;
+        }
+        .card-buff-list-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+
+
 
         .roll-badge {
             background: rgba(255, 177, 59, 0.15);
@@ -470,9 +480,6 @@
         }
 
         .art-score-footer {
-            margin-top: auto;
-            padding-top: 10px;
-            border-top: 1px solid #333;
             font-size: 0.8rem;
             display: flex;
             justify-content: space-between;

@@ -1164,7 +1164,7 @@ function renderShowcase(index) {
 
     // 1.1 Image de background
     html += `
-        <div class="background-splash-art" style="background-image: url('${p.splashArt}'); background-position: center center;background-repeat: no-repeat;background-size: 300%; position: absolute;inset: 0px;z-index: 0;filter: blur(20px) brightness(0.7) saturate(0.8);"></div>
+        <div class="background-splash-art" style="background-image: url('${p.splashArt}'); background-position: center center;background-repeat: no-repeat;background-size: 300%; position: absolute;inset: 0px;z-index: 0;filter: blur(10px) brightness(0.7) saturate(0.8);"></div>
     `;
 
     // 1.2 Section gauche (splash art + arme)
@@ -1332,13 +1332,25 @@ function renderShowcase(index) {
             const isDead = w === 0;
             const rolls = getRollCount(sub.key, sub.value);
             subsHtml += `
-                <div class="substat-row ${isDead ? 'dead' : ''}">
-                    <span style="display:flex; align-items:center; gap:5px;">
-                        <span style="color:#aaa; display:inline-flex;">${sub.icon}</span> 
-                        ${sub.label}
-                        ${rolls > 0 ? `<span style="background:rgba(255, 177, 59, 0.15); color:#FFB13B; font-size:0.7rem; padding:1px 5px; border-radius:4px; font-weight:bold;">[${rolls}]</span>` : ''}
-                    </span>
-                    <span>${formatValueDisplay(sub.key, sub.value)}</span>
+                <div style="color: #FFFFFF; display: flex; justify-content: space-between; align-items: center;" class="substat-row ${isDead ? 'dead' : ''}">
+                    <div style="display:flex; flex-direction: row; align-items:center; gap:5px;">
+                        <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width: 17px; height: 17px;" alt="${sub.key}">
+                        <p style="font-size: 12px;">${sub.label}</p>
+                        
+                        ${rolls > 0 ? `
+                            <div style="display: flex; gap: 3px; align-items: center;">
+                                ${Array(rolls).fill('').map(() => `
+                                    <div style="
+                                        width: 2px; 
+                                        height: 2px; 
+                                        border-radius: 100%; 
+                                        background-color: rgba(255, 255, 255, 0.6); 
+                                    "></div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        </div>
+                    <p style="font-size: 12px;">${formatValueDisplay(sub.key, sub.value)}</p>
                 </div>
             `;
         });
@@ -1346,28 +1358,47 @@ function renderShowcase(index) {
         const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
         html += `
             <div class="card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid rgba(255, 255, 255, 0.4); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset;">
-                <div class="card-container" style="padding-top: 14px; padding-left: 12px; padding-right: 12px; padding-bottom: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; align-items: stretch;">
-                    <div class="item-header">
+                <div class="card-container" style="padding-top: 12px; padding-left: 12px; padding-right: 12px; padding-bottom: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; align-items: stretch;">
+                    
+                    <div class="item-header" style="height: 50px; display: flex; flex-direction: row; align-items: center; gap: 12px;">
                         <div style="position:relative; display:inline-block;">
                             <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : '#a855f7'};">
-                            <div style="position:absolute; bottom:0; right:0; background:rgba(0,0,0,0.8); color:white; font-size:0.65rem; padding:1px 4px; border-top-left-radius:4px;">+${art.level}</div>
+                            <p style="position:absolute; bottom:7px; right:1px; background:rgba(0, 0, 0, 0.4); color:rgba(255, 255, 255, 0.8); font-size:11px;padding: 1px 5px 1px 4px; border-radius:8px;">+${art.level}</p>
                         </div>
-                        <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center; margin-left: 10px;">
-                            <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600; font-size:0.9rem;">${pieceName}</div>
-                            <div style="font-size:0.75rem; color:var(--accent-gold); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${art.setName}</div>
-                            <div style="font-size:0.7rem; color:#aaa;">${art.stars}★</div>
+                        <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center;">
+                            <p style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:14px;">${pieceName}</p>
+                            <p style="font-size:12px; color:var(--accent-gold); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${art.setName}</p>
+                            <div style="font-size:11px; color: rgba(255, 255, 255, 0.4); display: flex; flex-direction: row; align-items: center; gap: 4px;">
+                                <p>${art.stars}★</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="main-stat-display">
-                        <span>${formatValueDisplay(art.mainStat.key, art.mainStat.value)}</span>
-                        <span style="display:flex; align-items:center; gap:5px; font-size:0.7rem; color:#aaa; font-weight:normal; align-self:center;">
-                            <span style="color:#fff; display:inline-flex;">${art.mainStat.icon}</span> ${art.mainStat.label}
-                        </span>
+                    
+                    <div class="card-divider" style="margin: 12px 0px; display: flex; clear: both; width: 100%; min-width: 100%; box-sizing: border-box; color: rgba(255, 255, 255, 0.25); border-width: 1px 0 0; border-color: rgba(255, 255, 255, 0.25); border-block-start: 1px solid rgba(255, 255, 255, 0.25);"></div>
+                    
+                    <div class="main-stat-display" style="display: flex; flex-direction: row; align-items: center;">
+                        <div style="display:flex; align-items:center; gap:5px; font-size:0.7rem; color:#aaa; font-weight:normal; align-self:center;">
+                            <img src="${ICON_BASE_PATH}${ICON_MAP[art.mainStat.key] || ICON_MAP['unknown']}" style="width: 17px; height: 17px; margin-bottom: 1px;" alt="${art.mainStat.key}">
+                            <p style="font-size: 12px; color: #FFFFFF;">${art.mainStat.label}</p>
+                        </div>
+                        <p style="font-size: 12px; color: #FFFFFF;">${formatValueDisplay(art.mainStat.key, art.mainStat.value)}</p>
                     </div>
-                    <div style="margin-top:10px;">${subsHtml}</div>
-                    <div class="art-score-footer">
-                        <span style="display:flex; align-items:center;">${createIcon('score')} Score</span>
-                        <strong style="color:${art.grade.color}">${art.score} (${art.grade.letter})</strong>
+                    
+                    <div class="card-divider" style="margin: 14px 0px; display: flex; clear: both; width: 100%; min-width: 100%; box-sizing: border-box; color: rgba(255, 255, 255, 0.25); border-width: 1px 0 0; border-color: rgba(255, 255, 255, 0.25); border-block-start: 1px solid rgba(255, 255, 255, 0.25);"></div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 5px;">${subsHtml}</div>
+                    
+                    <div class="card-divider" style="margin: 14px 0px; display: flex; clear: both; width: 100%; min-width: 100%; box-sizing: border-box; color: rgba(255, 255, 255, 0.25); border-width: 1px 0 0; border-color: rgba(255, 255, 255, 0.25); border-block-start: 1px solid rgba(255, 255, 255, 0.25);"></div>
+                    
+                    <div style="font-size: 12px; align-items: center;" class="art-score-footer">
+                        <div style="display:flex; align-items:center; gap: 5px;">
+                            <img src="/assets/simulator/icons/icon_score_white.png" style="width: 19px; height: 19px; margin-bottom: 2px;" alt="Score">
+                            <p>Score</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row; gap: 4px;">
+                            <p>${art.score}</p>
+                            <p>(${art.grade.letter})</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1376,34 +1407,65 @@ function renderShowcase(index) {
 
     if (p.buffs && p.buffs.length > 0) {
         let buffListHtml = "";
-        let lastCategory = "";
+
+        // 1. ÉTAPE DE GROUPAGE : On range les buffs par catégorie
+        // On stocke aussi l'index original (bIndex) pour que le bouton switch fonctionne
+        const groupedBuffs = {};
         p.buffs.forEach((buff, bIndex) => {
-            if (buff.category !== lastCategory) {
-                buffListHtml += `
-                    <div style="font-size:0.8rem; color:var(--accent-gold); font-weight:bold; margin-top:10px; margin-bottom:5px; border-bottom:1px dashed #444; padding-bottom:2px;">
-                        ${buff.category}
-                    </div>`;
-                lastCategory = buff.category;
+            if (!groupedBuffs[buff.category]) {
+                groupedBuffs[buff.category] = [];
             }
+            groupedBuffs[buff.category].push({ buff: buff, originalIndex: bIndex });
+        });
+
+        // 2. GÉNÉRATION HTML : On crée une DIV par groupe
+        Object.keys(groupedBuffs).forEach(category => {
+            // Début du conteneur pour CE groupe (Arme ou Set)
+            buffListHtml += `<div style="margin-bottom: 12px;">`;
+
+            // Titre de la catégorie
             buffListHtml += `
+            <div style="font-size:12px; margin-bottom:5px; color:#FFFFFF;">
+                ${category}
+            </div>`;
+
+            // Boucle sur les buffs de ce groupe
+            groupedBuffs[category].forEach(item => {
+                const buff = item.buff;
+                const bIndex = item.originalIndex; // Important pour le toggleBuff
+
+                buffListHtml += `
                 <div style="display:flex; align-items:center; justify-content:space-between; padding:6px 8px; background:rgba(0,0,0,0.2); margin-bottom:4px; border-radius:4px;">
-                    <span style="font-size:0.8rem; color:#ddd;">${buff.name}</span>
+                    <span style="font-size:12px; color:rgba(255,255,255,0.4);">${buff.name}</span>
                     <label class="switch" style="position:relative; display:inline-block; width:30px; height:16px;">
                         <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${index}, ${bIndex})" style="opacity:0; width:0; height:0;">
-                        <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#333; transition:.4s; border-radius:34px;"></span>
-                        <span style="position:absolute; content:''; height:12px; width:12px; left:2px; bottom:2px; background-color:white; transition:.4s; border-radius:50%; ${buff.active ? 'transform:translateX(14px); background-color:var(--accent-gold);' : ''}"></span>
+                        <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:rgba(255,255,255,0.4); transition:.4s; border-radius:34px;"></span>
+                        <span style="position:absolute; content:''; height:12px; width:12px; left:2px; bottom:2px; background-color:white; transition:.4s; border-radius:50%; ${buff.active ? 'transform:translateX(14px); background-color:rgba(255,255,255,0.6);' : ''}"></span>
                     </label>
                 </div>`;
+            });
+
+            // Fin du conteneur
+            buffListHtml += `</div>`;
         });
 
         html += `
-            <div class="card" style="border-color:var(--accent-gold); background:rgba(255, 177, 59, 0.05);">
-                <div style="font-weight:bold; color:var(--accent-gold); text-transform:uppercase; font-size:0.9rem; margin-bottom:10px; border-bottom:1px solid #444; padding-bottom:5px;">
-                    <i class="fa-solid fa-bolt"></i> Buffs Actifs
+        <div class="card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid rgba(255, 255, 255, 0.4); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset;">
+            <div class="card-container" style="height: 100%; padding: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;">
+                
+                <div style="font-size:14px; flex-shrink: 0;">
+                    <p style="margin-bottom: 2px;">Buffs actifs</p>
+                    <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4);">Cochez pour appliquer les passifs et buffs (scroll pour tout voir).</p>
                 </div>
-                <div style="flex:1;">${buffListHtml}</div>
-                <div style="font-size:0.75rem; color:#888; text-align:center; margin-top:10px;">Cochez pour appliquer les passifs</div>
-            </div>`;
+                
+                <div class="card-divider" style="flex-shrink: 0; margin: 9px 0px; display: flex; clear: both; width: 100%; min-width: 100%; box-sizing: border-box; color: rgba(255, 255, 255, 0.25); border-width: 1px 0 0; border-color: rgba(255, 255, 255, 0.25); border-block-start: 1px solid rgba(255, 255, 255, 0.25);"></div>
+                
+                <div class="card-buff-list-container" style="overflow-y: auto; position: relative; flex: 1; min-height: 0;">
+                    ${buffListHtml}
+                </div>
+            </div>
+        </div>
+    `;
     }
 
     html += `</div></div>`; // Fin equipment-area et top-row
