@@ -269,9 +269,29 @@ function mapTargetKey(keyPart) {
 function toggleBuff(charIndex, buffIndex) {
     const p = globalPersoData[charIndex];
     if (!p) return;
+
+    // 1. SAUVEGARDE : On chope la position actuelle du scroll
+    let currentScroll = 0;
+    const scrollContainer = document.querySelector('.card-buff-list-container');
+    if (scrollContainer) {
+        currentScroll = scrollContainer.scrollTop;
+    }
+
+    // 2. LOGIQUE : On change l'état et on recalcule
     p.buffs[buffIndex].active = !p.buffs[buffIndex].active;
     p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
+
+    // 3. RENDU : On redessine tout (ce qui reset le scroll à 0 par défaut)
     renderShowcase(charIndex);
+
+    // 4. RESTAURATION : On remet le scroll où il était
+    // On utilise setTimeout pour attendre que le DOM soit bien mis à jour
+    setTimeout(() => {
+        const newContainer = document.querySelector('.card-buff-list-container');
+        if (newContainer) {
+            newContainer.scrollTop = currentScroll;
+        }
+    }, 0);
 }
 
 // --- FONCTIONS COACHING ---
@@ -1188,7 +1208,7 @@ function renderShowcase(index) {
                 <div style="flex:1; display: flex; flex-direction: column; overflow: hidden;">
                     <div style="font-size:16px; color: #FFFFFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.weapon.name}</div>
                     <div style="color: #FFFFFF; font-size:14px; margin-bottom:5px;">Niv. ${p.weapon.level} • R${p.weapon.rank}</div>
-                    <div style="display:flex; gap:12px; margin-top:5px; background:rgba(0,0,0,0.2); padding:5px; border-radius:4px; overflow: hidden;">
+                    <div style="display:flex; gap:12px; margin-top:5px; background:rgba(0,0,0,0.2); padding:5px; border-radius:8px; overflow: hidden;">
                         ${p.weapon.baseAtk ? `
                         <div style="overflow: hidden; padding-left: 2px;">
                             <p style="font-size:12px; color: rgba(255, 255, 255, 0.4); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ATQ de base</p>
@@ -1420,52 +1440,68 @@ function renderShowcase(index) {
 
         // 2. GÉNÉRATION HTML : On crée une DIV par groupe
         Object.keys(groupedBuffs).forEach(category => {
-            // Début du conteneur pour CE groupe (Arme ou Set)
-            buffListHtml += `<div style="margin-bottom: 12px;">`;
+            // Début du conteneur GLOBAL pour la catégorie
+            buffListHtml += `<div>`; // Correction de la coquille ici
 
             // Titre de la catégorie
             buffListHtml += `
-            <div style="font-size:12px; margin-bottom:5px; color:#FFFFFF;">
-                ${category}
-            </div>`;
+                <div style="font-size:12px; margin-bottom:6px; color:#FFFFFF;">
+                    ${category}
+                </div>`;
+
+            // --- NOUVEAU : On ouvre un conteneur pour la LISTE des buffs ---
+            // C'est ici qu'on gère l'espacement (gap: 4px) entre les pilules
+            buffListHtml += `<div style="display: flex; flex-direction: column; gap: 6px;">`;
 
             // Boucle sur les buffs de ce groupe
             groupedBuffs[category].forEach(item => {
                 const buff = item.buff;
-                const bIndex = item.originalIndex; // Important pour le toggleBuff
+                const bIndex = item.originalIndex;
 
+                const textColor = buff.active ? '#FFFFFF' : 'rgba(255,255,255,0.6)';
+                const trackColor = buff.active ? 'rgb(from var(--char-hex) r g b / 0.6)' : 'rgba(255,255,255,0.2)';
+                const knobColor = buff.active ? '#FFFFFF' : 'rgba(255, 255, 255, 0.6)';
+                const knobTransform = buff.active ? 'transform:translateX(14px);' : '';
+
+                // Note : J'ai ajouté des propriétés critiques sur le <p> et le <label>
                 buffListHtml += `
-                <div style="display:flex; align-items:center; justify-content:space-between; padding:6px 8px; background:rgba(0,0,0,0.2); margin-bottom:4px; border-radius:4px;">
-                    <span style="font-size:12px; color:rgba(255,255,255,0.4);">${buff.name}</span>
-                    <label class="switch" style="position:relative; display:inline-block; width:30px; height:16px;">
-                        <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${index}, ${bIndex})" style="opacity:0; width:0; height:0;">
-                        <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:rgba(255,255,255,0.4); transition:.4s; border-radius:34px;"></span>
-                        <span style="position:absolute; content:''; height:12px; width:12px; left:2px; bottom:2px; background-color:white; transition:.4s; border-radius:50%; ${buff.active ? 'transform:translateX(14px); background-color:rgba(255,255,255,0.6);' : ''}"></span>
-                    </label>
-                </div>`;
+                    <div style="display:flex; flex-direction: row; gap: 8px; align-items:center; justify-content:space-between; padding:6px 8px; background:rgba(0,0,0,0.2); border-radius:8px; box-sizing: border-box;">
+                        
+                        <p style="font-size:12px; color:${textColor}; transition: color 0.3s; margin: 0; flex: 1; min-width: 0; word-break: break-word;">${buff.name}</p>
+                        
+                        <label class="switch" style="position:relative; display:inline-block; width:30px; min-width: 30px; height:16px; box-sizing: border-box; flex-shrink: 0;">
+                            <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${index}, ${bIndex})" style="opacity:0; width:0; height:0;">
+                            <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:${trackColor}; transition:.4s; border-radius:34px; width: 100%;"></span>
+                            <span style="position:absolute; content:''; height:12px; width:12px; left:2px; bottom:2px; background-color:${knobColor}; transition:.4s; border-radius:50%; ${knobTransform} box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></span>
+                        </label>
+                    </div>
+                `;
             });
 
-            // Fin du conteneur
+            // --- Fin du conteneur de liste ---
+            buffListHtml += `</div>`;
+
+            // Fin du conteneur global
             buffListHtml += `</div>`;
         });
 
         html += `
-        <div class="card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid rgba(255, 255, 255, 0.4); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset;">
-            <div class="card-container" style="height: 100%; padding: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;">
-                
-                <div style="font-size:14px; flex-shrink: 0;">
-                    <p style="margin-bottom: 2px;">Buffs actifs</p>
-                    <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4);">Cochez pour appliquer les passifs et buffs (scroll pour tout voir).</p>
-                </div>
-                
-                <div class="card-divider" style="flex-shrink: 0; margin: 9px 0px; display: flex; clear: both; width: 100%; min-width: 100%; box-sizing: border-box; color: rgba(255, 255, 255, 0.25); border-width: 1px 0 0; border-color: rgba(255, 255, 255, 0.25); border-block-start: 1px solid rgba(255, 255, 255, 0.25);"></div>
-                
-                <div class="card-buff-list-container" style="overflow-y: auto; position: relative; flex: 1; min-height: 0;">
-                    ${buffListHtml}
+            <div class="card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid rgba(255, 255, 255, 0.4); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset;">
+                <div class="card-container" style="height: 100%; padding: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;">
+                    
+                    <div style="font-size:14px; flex-shrink: 0;">
+                        <p style="margin-bottom: 2px;">Buffs actifs</p>
+                        <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4);">Cochez pour appliquer les passifs et buffs (scroll pour tout voir).</p>
+                    </div>
+                    
+                    <div class="card-divider" style="flex-shrink: 0; margin: 9px 0px; display: flex; clear: both; width: 100%; min-width: 100%; box-sizing: border-box; color: rgba(255, 255, 255, 0.25); border-width: 1px 0 0; border-color: rgba(255, 255, 255, 0.25); border-block-start: 1px solid rgba(255, 255, 255, 0.25);"></div>
+                    
+                    <div class="card-buff-list-container" style="overflow-y: auto; position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 9px;">
+                        ${buffListHtml}
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
+        `;
     }
 
     html += `</div></div>`; // Fin equipment-area et top-row
