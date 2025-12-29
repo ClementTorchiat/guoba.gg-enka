@@ -153,24 +153,24 @@ function getGradeFromPoints(pts) {
 
 function getGlobalGrade(totalRolls) {
     let grade = "F";
-    if (totalRolls >= 43) grade = "ARCHON";
-    else if (totalRolls >= 40) grade = "WTF+";
-    else if (totalRolls >= 38) grade = "WTF";
-    else if (totalRolls >= 36) grade = "SSS+";
-    else if (totalRolls >= 34) grade = "SSS";
-    else if (totalRolls >= 32) grade = "SS+";
-    else if (totalRolls >= 30) grade = "SS";
-    else if (totalRolls >= 27) grade = "S+";
-    else if (totalRolls >= 24) grade = "S";
-    else if (totalRolls >= 21) grade = "A+";
-    else if (totalRolls >= 18) grade = "A";
-    else if (totalRolls >= 15) grade = "B+";
-    else if (totalRolls >= 12) grade = "B";
-    else if (totalRolls >= 9)  grade = "C+";
-    else if (totalRolls >= 6)  grade = "C";
-    else if (totalRolls >= 4)  grade = "D+";
-    else if (totalRolls >= 2)  grade = "D";
-    else if (totalRolls >= 1)  grade = "F+";
+    if (totalRolls >= 45)      grade = "ARCHON";
+    else if (totalRolls >= 42.5) grade = "WTF+";
+    else if (totalRolls >= 40)   grade = "WTF";
+    else if (totalRolls >= 37.5) grade = "SSS+";
+    else if (totalRolls >= 35)   grade = "SSS";
+    else if (totalRolls >= 32.5) grade = "SS+";
+    else if (totalRolls >= 30)   grade = "SS";
+    else if (totalRolls >= 27.5) grade = "S+";
+    else if (totalRolls >= 25)   grade = "S";
+    else if (totalRolls >= 22.5) grade = "A+";
+    else if (totalRolls >= 20)   grade = "A";
+    else if (totalRolls >= 17.5) grade = "B+";
+    else if (totalRolls >= 15)   grade = "B";
+    else if (totalRolls >= 12.5) grade = "C+";
+    else if (totalRolls >= 10)   grade = "C";
+    else if (totalRolls >= 7.5)  grade = "D+";
+    else if (totalRolls >= 5)    grade = "D";
+    else if (totalRolls >= 2.5)  grade = "F+";
     return { letter: grade, color: getGradeColor(grade) };
 }
 

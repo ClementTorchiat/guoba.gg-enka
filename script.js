@@ -301,24 +301,24 @@ function generateScoreBar(totalRolls, currentGrade) {
     const percent = Math.min((totalRolls / maxScale) * 100, 100);
     const markers = [
         { val: 0, label: "F" },
-        { val: 1, label: "F+" },
-        { val: 2, label: "D" },
-        { val: 4, label: "D+" },
-        { val: 6, label: "C" },
-        { val: 9, label: "C+" },
-        { val: 12, label: "B" },
-        { val: 15, label: "B+" },
-        { val: 18, label: "A" },
-        { val: 21, label: "A+" },
-        { val: 24, label: "S" },
-        { val: 27, label: "S+" },
+        { val: 2.5, label: "F+" },
+        { val: 5, label: "D" },
+        { val: 7.5, label: "D+" },
+        { val: 10, label: "C" },
+        { val: 12.5, label: "C+" },
+        { val: 15, label: "B" },
+        { val: 17.5, label: "B+" },
+        { val: 20, label: "A" },
+        { val: 22.5, label: "A+" },
+        { val: 25, label: "S" },
+        { val: 27.5, label: "S+" },
         { val: 30, label: "SS" },
-        { val: 32, label: "SS+" },
-        { val: 34, label: "SSS" },
-        { val: 36, label: "SSS+" },
-        { val: 38, label: "WTF" },
-        { val: 40, label: "WTF+" },
-        { val: 43, label: "ARCHON" }
+        { val: 32.5, label: "SS+" },
+        { val: 35, label: "SSS" },
+        { val: 37.5, label: "SSS+" },
+        { val: 40, label: "WTF" },
+        { val: 42.5, label: "WTF+" },
+        { val: 45, label: "ARCHON" }
     ];
 
     let markersHtml = "";
@@ -357,13 +357,26 @@ function calculatePotentialScore(persoObj, config) {
     return calculateCharacterScore(fakePerso, config);
 }
 
-function getCritAdvice(cr, cd) {
-    if (cr > 100) return { color: '#ff4d4d', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Inutile de dépasser 100%.` };
-    if (cr >= 85) return { color: '#22c55e', msg: "Taux CRIT excellent (>85%). Ne vous souciez plus du ratio, foncez sur le DGT CRIT." };
-    const diff = (cr * 2) - cd;
-    if (Math.abs(diff) < 25) return { color: '#22c55e', msg: "Ratio 1:2 Équilibré (Excellent)." };
-    if (diff > 25) return { color: '#3b82f6', msg: "Ratio déséquilibré : Trop de Taux CRIT par rapport aux DGT." };
-    if (diff < -25) return { color: '#eab308', msg: "Ratio déséquilibré : Manque de Taux CRIT pour être stable." };
+function getCritAdvice(cr, cd, config) {
+    // 1. Vérification de l'importance du Crit
+    // On regarde si le poids du Taux Crit est défini et s'il est significatif (>= 1)
+    const crWeight = (config && config.weights && config.weights['critRate_']) || 0;
+
+    if (crWeight < 1) {
+        return {
+            color: '#888',
+            msg: "Ce personnage ne dépend pas des statistiques critiques."
+        };
+    }
+
+    // 2. Logique habituelle pour les persos Crit
+    if (cr > 100) return { color: '#ff4d4d', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Dépasser 100% est inutile.` };
+    if (cr >= 95) return { color: '#3b82f6', msg: "Taux CRIT excellent (plus de 95%). Orientez-vous sur l'obtention d'un maximum de DGT CRIT." };
+    if (cr >= 90) return { color: '#22c55e', msg: "Taux CRIT largement suffisant (plus de 90%). Orientez-vous sur l'obtention d'un maximum de DGT CRIT." };
+    if (cr >= 80) return { color: '#22c55e', msg: "Taux CRIT suffisant (plus de 80%). En obtenir plus est utile, mais vous pouvez vous orienter sur l'obtention de DGT CRIT." };
+    if (cr >= 70) return { color: '#eab308', msg: "Taux CRIT passable (plus de 70%). Vous devriez essayer d'en obtenir plus." };
+    if (cr >= 60) return { color: '#ffb13b', msg: "Taux CRIT insuffisant (plus de 60%). Il est conseillé d'en obtenir plus." };
+    if (cr <= 50) return { color: '#ff4d4d', msg: "Taux CRIT largement insuffisant (50% ou moins). Obtenez en plus avant d'aller chercher du DGT CRIT." };
     return { color: '#888', msg: "Analyse impossible" };
 }
 
@@ -423,7 +436,7 @@ function getMainStatAdvice(persoObj, config) {
         return {
             type: "success",
             title: "Statistiques Principales",
-            msg: "Vos 3 pièces principales (Sablier, Coupe, Diadème) ont toutes les stats optimales."
+            msg: "Votre sablier, votre coupe et votre diadème ont tous les trois une statistique principale optimale."
         };
     }
 }
@@ -435,17 +448,17 @@ function getFarmDifficulty(pieceType, mainStatKey) {
     }
 
     const rates = MAINSTAT_DROP_RATES[pieceType];
-    if (!rates || !rates[mainStatKey]) return { label: "Moyennement difficile", color: "#eab308" }; // Default
+    if (!rates || !rates[mainStatKey]) return { label: "Relativement difficile", color: "#eab308" }; // Default
 
     const probability = rates[mainStatKey];
 
-    if (probability >= 19) return { label: "Moyennement facile", color: "#22c55e" }; // Vert (>20%)
-    if (probability >= 10) return { label: "Moyennement difficile", color: "#eab308" }; // Jaune (10-20%)
+    if (probability >= 19) return { label: "Relativement facile", color: "#22c55e" }; // Vert (>20%)
+    if (probability >= 10) return { label: "Relativement difficile", color: "#eab308" }; // Jaune (10-20%)
     if (probability >= 5) return { label: "Difficile", color: "#f97316" }; // Orange (5-10%)
     return { label: "Très difficile", color: "#ef4444" }; // Rouge (<5%)
 }
 
-// ANALYSE OFF-PIECE
+// ANALYSE OFF-PIECE (Avec nom de la pièce)
 function getOffPieceAdvice(persoObj) {
     let offPiece = null;
     let setPiecesScores = [];
@@ -462,17 +475,31 @@ function getOffPieceAdvice(persoObj) {
 
     if (!offPiece || setPiecesScores.length === 0) return null;
 
+    // 1. Récupération du nom de la pièce (ex: "Sables du temps" ou "Coupe d'éonothème")
+    // On nettoie un peu le nom pour qu'il soit plus court si besoin, ou on garde le mapping standard
+    const rawName = ARTIFACT_TYPE_MAPPING[offPiece.type] || "Pièce";
+    // Petite astuce : Pour "Sables du temps", on peut garder le nom complet, c'est joli.
+
     const avgSetScore = setPiecesScores.reduce((a, b) => a + b, 0) / setPiecesScores.length;
     const isHardMainStat = offPiece.mainStat.key.includes("dmg_") || offPiece.mainStat.key.includes("crit");
 
     if (offPiece.score > avgSetScore) {
-        return { type: "success", msg: "Excellent usage du Joker. Cette pièce porte votre build vers le haut." };
+        return {
+            type: "success",
+            msg: `Excellente pièce hors-set <b style="color: #aaa;">(${rawName})</b>. Cette dernière porte votre build vers le haut.`
+        };
     }
     else if (isHardMainStat && offPiece.score > (avgSetScore * 0.8)) {
-        return { type: "warning", msg: "Correct pour l'instant. Vu la rareté de la stat principale, on pardonne ce score moyen." };
+        return {
+            type: "warning",
+            msg: `Votre pièce hors-set <b style="color: #aaa;">(${rawName})</b> suffit pour l'instant en vue de la rareté de sa stat principale.`
+        };
     }
     else {
-        return { type: "error", msg: "Votre pièce hors-set est moins bonne que le reste. C'est anormal pour un emplacement libre. Fouillez votre inventaire !" };
+        return {
+            type: "error",
+            msg: `Votre pièce hors-set <b style="color: #aaa;">(${rawName})</b> est moins bonne que le reste. Vous devriez en chercher une autre dans votre inventaire ou permettre à une autre pièce d'être hors-set.`
+        };
     }
 }
 
@@ -499,10 +526,10 @@ function getTalentAdvice(persoObj, config) {
         const diff = goal - lvl;
         if (diff >= 2) {
             isPerfect = false;
-            advices.push({ type: "critical", msg: `Urgence : Montez votre <b>${label}</b> (Niv ${lvl} -> ${goal}). Gain de dégâts garanti.` });
+            advices.push({ type: "critical", msg: `Améliorer votre <b style="color: #aaa;">${label}</b> au niv ${goal} est important pour ce personnage.` });
         } else if (diff >= 1) {
             isPerfect = false;
-            advices.push({ type: "info", msg: `Optimisation : Pensez à monter votre <b>${label}</b> au niveau ${goal}.` });
+            advices.push({ type: "info", msg: `Améliorer votre <b style="color: #aaa;">${label}</b> au niveau ${goal} est recommandé pour ce personnage.` });
         }
     };
 
@@ -511,7 +538,7 @@ function getTalentAdvice(persoObj, config) {
     check('burst', 'Déchaînement');
 
     if (isPerfect && advices.length === 0) {
-        return [{ type: "success", msg: "Vos aptitudes sont parfaitement optimisées. Excellent travail !" }];
+        return [{ type: "success", msg: "Vos aptitudes sont au niveau recommandé." }];
     }
 
     return advices;
@@ -537,14 +564,14 @@ function getSetForcingAdvice(persoObj, config) { // <-- Ajout de config ici
         if (charLikes2p2p) {
             return {
                 type: "success",
-                title: "Stratégie 2p / 2p",
-                msg: "Excellent choix. Ce personnage performe très bien avec un mélange de 2 pièces, ce qui vous permet de maximiser vos statistiques."
+                title: "Pas de forçage de set d'artéfacts",
+                msg: "Set d'artéfacts 2 pièces / 2 pièces optimal et de bonne qualité."
             };
         }
         return {
             type: "success",
-            title: "Gestion des Sets",
-            msg: "Aucun forçage détecté. Vous privilégiez les stats ou les combos 2 pièces, c'est une bonne stratégie."
+            title: "Pas de forçage de set d'artéfacts",
+            msg: "Vous utilisez un build arc-en-ciel."
         };
     }
 
@@ -553,25 +580,25 @@ function getSetForcingAdvice(persoObj, config) { // <-- Ajout de config ici
     const totalScore = setPieces.reduce((sum, art) => sum + art.score, 0);
     const avgScore = totalScore / setPieces.length;
 
-    if (avgScore < 25) {
-        let warningMsg = `Vous forcez le bonus 4 pièces avec des artéfacts faibles (Score moyen : <b>${avgScore.toFixed(1)}</b>).`;
+    if (avgScore < 20) {
+        let warningMsg = `Vous forcez un set d'artéfacts de 4 pièces avec des artéfacts faibles. Vous devriez essayer une alternative.`;
 
         if (charLikes2p2p) {
-            warningMsg += ` Ce personnage fonctionne pourtant très bien en <b>2 pièces / 2 pièces</b> : n'hésitez pas à casser ce set pour de meilleures stats !`;
+            warningMsg += `Ce personnage fonctionne très bien en set d'artéfacts 2 pièces / 2 pièces, n'hésitez pas à casser votre set d'artéfacts actuel pour de meilleures stats.`;
         } else {
-            warningMsg += ` Essayez de casser le set pour de meilleures stats.`;
+            warningMsg += `Vous forcez un set d'artéfacts de 4 pièces avec des artéfacts faibles. Vous devriez essayer une alternative.`;
         }
 
         return {
             type: "warning",
-            title: "Problème de Set",
+            title: "Forçage de set d'artéfacts",
             msg: warningMsg
         };
     } else {
         return {
             type: "success",
-            title: "Gestion des Sets",
-            msg: `Set complet actif et de bonne qualité (Score moyen : <b>${avgScore.toFixed(1)}</b>).`
+            title: "Pas de forçage de set d'artéfacts",
+            msg: `Set d'artéfacts optimal et de bonne qualité.`
         };
     }
 }
@@ -594,8 +621,8 @@ function getMetaSetAdvice(persoObj, config) {
     if (isSetEquipped(config.bestSets)) {
         return {
             type: "success",
-            title: "Choix du Set",
-            msg: "Excellent. Vous utilisez un des meilleurs sets recommandés pour ce personnage."
+            title: "Choix du set d'artéfacts",
+            msg: "Vous utilisez l'un des meilleurs sets d'artéfacts recommandés pour ce personnage."
         };
     }
 
@@ -608,16 +635,16 @@ function getMetaSetAdvice(persoObj, config) {
     if (isSetEquipped(config.goodSets)) {
         return {
             type: "info", // Bleu
-            title: "Optimisation du Set",
-            msg: `Votre set actuel est correct, mais pour maximiser les dégâts, le set recommandé est : ${recommendationStr}.`
+            title: "Optimisation du set d'artéfacts",
+            msg: `Votre set actuel est correct, mais pour maximiser le build, le set d'artéfacts recommandé est : ${recommendationStr}.`
         };
     }
 
     // 3. CAS : MAUVAIS SET (Ni Best, Ni Good)
     return {
         type: "warning", // Jaune/Orange
-        title: "Problème de Set",
-        msg: `Votre set actuel ne correspond pas aux standards du personnage. Vous devriez opter pour le set ${recommendationStr}.`
+        title: "Problème de set d'artéfacts",
+        msg: `Votre set d'artéfacts actuel ne correspond pas aux standards du personnage. Vous devriez opter pour le set d'artéfacts ${recommendationStr}.`
     };
 }
 function getWeaponAdvice(persoObj) {
@@ -626,14 +653,14 @@ function getWeaponAdvice(persoObj) {
     if (persoObj.weapon.level < 90) {
         return {
             type: "warning", // Orange/Rouge
-            title: "Niveau d'Arme",
-            msg: `Gain Facile : Montez votre arme niveau 90 pour maximiser l'ATQ de base.`
+            title: "Niveau de l'arme",
+            msg: `Améliorez votre arme au niveau 90 pour maximiser son ATQ de base et sa statistique additionnelle.`
         };
     } else {
         return {
             type: "success", // Vert
-            title: "Niveau d'Arme",
-            msg: `Parfait. Votre arme est au niveau maximum (90).`
+            title: "Niveau de l'arme",
+            msg: `Votre arme est au niveau maximum.`
         };
     }
 }
@@ -644,13 +671,13 @@ function getLevelAdvice(persoObj) {
         return {
             type: "info", // Bleu/Info
             title: "Niveau du Personnage",
-            msg: `Gain Facile : Montez votre personnage niveau 90 pour un gain de stats garanti.`
+            msg: `Améliorez votre personnage au niveau 90 pour maximiser ses statistiques.`
         };
     } else {
         return {
             type: "success", // Vert
             title: "Niveau du Personnage",
-            msg: `Excellent. Votre personnage est niveau 90.`
+            msg: `Votre personnage est au niveau maximum.`
         };
     }
 }
@@ -695,16 +722,28 @@ function calculateDeadRolls(persoObj, config) {
 
 function getPriorities(persoObj) {
     if (!persoObj.artefacts || persoObj.artefacts.length === 0) return [];
+
+    // 1. On identifie les Sets Actifs (ceux qui ont au moins 2 pièces équipées)
+    const activeSets = Object.keys(persoObj.setsCounter || {}).filter(key => persoObj.setsCounter[key] >= 2);
+
     const sorted = [...persoObj.artefacts].sort((a, b) => a.score - b.score);
+
     return sorted.slice(0, 3).map(art => {
         const typeName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+
+        // 2. Si le set de l'artéfact n'est pas dans les sets actifs, c'est un Off-Set
+        const isOffPiece = !activeSets.includes(art.setKey);
+
         return {
             piece: typeName,
             score: art.score,
             grade: art.grade.letter,
             color: art.grade.color,
             type: art.type,
-            mainKey: art.mainStat.key
+            mainKey: art.mainStat.key,
+            setName: art.setName,
+            mainLabel: art.mainStat.label,
+            isOffPiece: isOffPiece // <--- On ajoute l'info ici
         };
     });
 }
@@ -784,7 +823,7 @@ function simulateDeadStatReplacements(persoObj, config) {
             );
 
             if (targetKey && SUBSTAT_RANGES[targetKey]) {
-                usedTargets.add(targetKey); // On marque cette stat comme "virtuellement ajoutée" pour ne pas la proposer 2 fois
+                usedTargets.add(targetKey);
 
                 const range = SUBSTAT_RANGES[targetKey];
                 const minVal = (range.min * dead.rolls).toFixed(1);
@@ -795,7 +834,7 @@ function simulateDeadStatReplacements(persoObj, config) {
                 replacements.push({
                     dead: `${dead.label} (${dead.rolls})`,
                     target: `${targetLabel} (${dead.rolls})`,
-                    gain: `+${minVal} à ${maxVal}${suffix} ${targetLabel}`
+                    gain: `+${minVal} <span style="color:#fff; opacity:0.8; padding:0 2px;">à</span> ${maxVal}${suffix} ${targetLabel}`
                 });
             }
         });
@@ -804,7 +843,12 @@ function simulateDeadStatReplacements(persoObj, config) {
             const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
             const deadText = replacements.map(r => `<span style="color:#ff6b6b">${r.dead}</span>`).join(' et ');
             const targetText = replacements.map(r => `<span style="color:var(--accent-gold)">${r.target}</span>`).join(' et ');
-            const gainText = replacements.map(r => `<div style="font-weight:bold; color:var(--accent-gold); margin-top:2px;">${r.gain}</div>`).join('');
+            const gainText = replacements.map(r => `
+                <div style="display: flex; flex-direction: row; align-items: center; color: var(--accent-gold); ">
+                    <p style=" color: #ffffff; margin-right: 6px;">•</p>
+                    <p>${r.gain}</p>
+                </div>
+            `).join('');
 
             suggestions.push({
                 pieceName: pieceName,
@@ -924,7 +968,7 @@ function calculateRerollMetrics(artifact, config) {
         badge = { text: "Reroll envisageable", color: "#22c55e" }; // Vert
     }
     else if (potential > 50) {
-        badge = { text: "Casino (Double ou Rien)", color: "#f97316" }; // Orange
+        badge = { text: "Pile ou face", color: "#f97316" }; // Orange
     }
     else if (potential > 30) {
         badge = { text: "Optimisable", color: "#3b82f6" }; // Bleu
@@ -1143,6 +1187,7 @@ function renderShowcase(index) {
 
     const configKey = p.nom.replace(/\s+/g, '') || "Default";
     const config = window.CHARACTER_CONFIG[configKey] || window.CHARACTER_CONFIG[p.nom] || window.DEFAULT_CONFIG;
+    const portraitX = (config.portraitOffset !== undefined) ? config.portraitOffset : -35;
 
     const s = p.combatStats;
     const b = p.buffedStats;
@@ -1192,7 +1237,7 @@ function renderShowcase(index) {
     html += `
         <div class="character-portrait-weapon" style="gap: 8px; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box;">
             <div class="character-portrait-container" style="width: 350px; height: 720px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: rgb(0, 0, 0) 1px 1px 6px; box-sizing: border-box;">
-                <img class="character-portrait" src="${p.splashArt}" alt="${p.nom}" style="filter: none; position: absolute; transform: translateX(-35%); height: 720px; transition: filter 0.35s cubic-bezier(0.41, 0.65, 0.39, 0.99); box-sizing: border-box;">
+                <img class="character-portrait" src="${p.splashArt}" alt="${p.nom}" style="filter: none; position: absolute; transform: translateX(${portraitX}%); height: 720px; transition: filter 0.35s cubic-bezier(0.41, 0.65, 0.39, 0.99); box-sizing: border-box;">
             </div>
     `;
 
@@ -1515,7 +1560,7 @@ function renderShowcase(index) {
 
     // --- 3. COACHING SECTION (Bas - Full Width - Structuré par Familles) ---
     html += `
-        <div class="coaching-row" style="margin-top:20px; width:100%;">
+        <div class="coaching-row" style="margin-top:64px; width:100%;">
             ${(() => {
         const potential = calculatePotentialScore(p, config);
         const efficiency = (potential.score > 0) ? ((ev.score / potential.score) * 100).toFixed(1) : 0;
@@ -1528,7 +1573,7 @@ function renderShowcase(index) {
         const setAdvice = getSetRecommendation(ev.setBonus, config);
         const deadRolls = calculateDeadRolls(p, config);
         const priorities = getPriorities(p);
-        const critAdvice = getCritAdvice(b.cr, b.cd);
+        const critAdvice = getCritAdvice(b.cr, b.cd, config);        
         const rollStats = calculateRollDistribution(p, config);
         const rngQuality = calculateRNGQuality(p, config).toFixed(1);
         const deadSims = simulateDeadStatReplacements(p, config);
@@ -1541,52 +1586,57 @@ function renderShowcase(index) {
         const levelAdvice = getLevelAdvice(p);
 
         return `
-                <div style="background:rgba(30, 35, 45, 0.95); border:1px solid #444; border-radius:8px; padding:20px;">
-                    <h2 style="color:#fff; margin-bottom:25px; font-size:1.4rem; text-transform:uppercase; border-bottom:2px solid var(--accent-gold); padding-bottom:10px; display:flex; align-items:center; gap:10px;">
-                        <i class="fa-solid fa-chart-line" style="color:var(--accent-gold)"></i> ANALYSE & CONSEILS
-                    </h2>
+                <div style="padding:20px;">
+                    <h2 style="color:#fff; margin-bottom:25px; font-size:32px; border-bottom:2px solid #FFFFFF; padding-bottom:10px; display:flex; align-items:center; gap:10px;">${p.nom} - Analyse & conseils</h2>
                     
-                    <div style="display:flex; flex-direction:column; gap:30px;">
+                    <div style="display:flex; flex-direction:column; gap:64px;">
                         
-                        <div>
-                            <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">1. Vue d'ensemble</h3>
-                            <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
-                                ${generateScoreBar(ev.totalRolls, ev.grade.letter)}
-                                
-                                <div style="display:flex; justify-content:space-around; align-items:center; margin-top:20px; flex-wrap:wrap; gap:20px;">
-                                    <div style="text-align:center;">
-                                        <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase;">Efficacité du Build</div>
-                                        <div style="font-size:2.5rem; font-weight:800; color:${effColor}; line-height:1;">${efficiency}%</div>
+                        <div style="">
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">1. Vue d'ensemble</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Évaluez la qualité de vos sous-stats et ayez un aperçu réel du potentiel de vos artéfacts actuels.</p>
+                            ${generateScoreBar(ev.totalRolls, ev.grade.letter)}
+                            
+                            <div style="background:#2C2D32; padding:16px; border-radius:8px;">   
+                                <div style="display:flex; justify-content:space-around; align-items:center; flex-wrap:wrap; gap:32px;">
+                                    <div style="text-align:left;">
+                                        <p style="font-size:12px; text-transform: uppercase; color:#aaa; margin-bottom: 8px;">Efficacité du Build</p>
+                                        <p style="font-size:40px; line-height: 1; color:${effColor};">${efficiency}%</p>
                                     </div>
-                                    <div style="text-align:center;">
-                                        <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase;">Facteur Chance (RNG)</div>
-                                        <div style="font-size:2.5rem; font-weight:800; color:${rngQuality > 85 ? '#22c55e' : (rngQuality > 75 ? '#eab308' : '#ff4d4d')}; line-height:1;">${rngQuality}%</div>
+                                    <div style="text-align:left;">
+                                        <p style="font-size:12px; text-transform: uppercase; color:#aaa; margin-bottom: 8px;">Facteur Chance (RNG)</p>
+                                        <p style="font-size:40px; line-height: 1; color:${rngQuality > 85 ? '#22c55e' : (rngQuality > 75 ? '#eab308' : '#ff4d4d')}">${rngQuality}%</p>
                                     </div>
                                     <div style="flex:1; min-width:200px;">
-                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; font-size:0.8rem;">
-                                            <span style="color:#ccc;">Score Potentiel Max</span>
+                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.8rem;">
+                                            <span style="color:#aaa; font-size: 12px; text-transform: uppercase;">Score Potentiel Max</span>
                                             <span style="font-weight:bold; color:var(--accent-gold);">${potential.score} <span style="color:#22c55e; font-size:0.7rem;">(+${gain})</span></span>
                                         </div>
-                                        <div style="width:100%; background:#333; height:10px; border-radius:5px; position:relative;">
-                                            <div style="height:100%; background:#fff; width:${Math.min((ev.score / potential.score)*100, 100)}%; border-radius:5px; position:absolute;"></div>
-                                            <div style="height:100%; background:var(--accent-gold); width:100%; opacity:0.3; border-radius:5px;"></div>
+                                        <div style="width:100%; background:#333; height:40px; border-radius:8px; position:relative;">
+                                            <div style="height:100%; background:#fff; width:${Math.min((ev.score / potential.score)*100, 100)}%; border-radius:8px; position:absolute;"></div>
+                                            <div style="height:100%; background:var(--accent-gold); width:100%; opacity:0.3; border-radius:8px;"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        
+                       <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
+                                
                         <div>
-                            <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">2. Analyse Stratégique</h3>
-                            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
-                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${critAdvice.color};">
-                                    <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Conseil Critique</div>
-                                    <div style="font-size:1rem; font-weight:500; color:#fff;">${critAdvice.msg}</div>
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">2. Analyse stratégique</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Identifiez les déséquilibres majeurs de votre build et assurez-vous que votre pièce hors-set apporte un vrai bonus.</p>
+                            
+                            <div style="display:flex; gap:20px; align-items:stretch;">
+                                
+                                <div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${critAdvice.color};">
+                                    <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Analyse de taux critique</p>
+                                    <p style="font-size:16px; color:#fff;">${critAdvice.msg}</p>
                                 </div>
-                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
-                                    <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:10px; display:flex; justify-content:space-between;">
-                                        <span>Répartition des Rolls</span>
-                                        <span style="font-weight:bold; color:#ff4d4d;">${deadRolls.count} Morts</span>
+                                
+                                <div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px;">
+                                    <div style="color:#aaa; text-transform:uppercase; margin-bottom:10px; display:flex; justify-content:space-between;">
+                                        <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Analyse des stats inutiles</p>
+                                        <span style="font-size:12px; color:#ff4d4d;">${deadRolls.count} Inutiles</span>
                                     </div>
                                     <div style="display:flex; width:100%; height:12px; background:#333; border-radius:6px; overflow:hidden; margin-bottom:10px;">
                                         <div style="width:${(rollStats.useful/rollStats.total)*100}%; background:var(--accent-gold);"></div>
@@ -1594,194 +1644,207 @@ function renderShowcase(index) {
                                     </div>
                                     <div style="display:flex; flex-wrap:wrap; gap:5px;">
                                         ${deadRolls.details.map(d =>
-            `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.75rem; padding:2px 8px; border-radius:4px;">${d.label}: ${d.count}</span>`
-        ).join('')}
-                                        ${deadRolls.count === 0 ? '<span style="color:#22c55e; font-size:0.8rem;">Aucune stat morte !</span>' : ''}
+                                            `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.75rem; padding:2px 8px; border-radius:4px;">${d.label}: ${d.count}</span>`
+                                        ).join('')}
+                                        ${deadRolls.count === 0 ? '<span style="color:#22c55e; font-size:16px;">Aucune stat morte !</span>' : ''}
                                     </div>
                                 </div>
                                 
                                 ${offPieceAdvice ? `
-                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${offPieceAdvice.type === 'success' ? '#22c55e' : (offPieceAdvice.type === 'warning' ? '#eab308' : '#ef4444')}; grid-column: 1 / -1;">
-                                    <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Analyse Pièce Hors-Set (Joker)</div>
-                                    <div style="font-size:0.95rem; color:#fff;">${offPieceAdvice.msg}</div>
+                                <div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px; border: 1px solid rgba(255, 255, 255, 0.05); border-left:3px solid ${offPieceAdvice.type === 'success' ? '#22c55e' : (offPieceAdvice.type === 'warning' ? '#eab308' : '#ef4444')};">
+                                    <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Analyse Pièce Hors-Set</p>
+                                    <p style="font-size:16px; color:#fff;">${offPieceAdvice.msg}</p>
                                 </div>` : ''}
+                                
                             </div>
                         </div>
+
+                       <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
                         <div>
-                            <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">3. Plan d'Action</h3>
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">3. Plan d'action</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Votre feuille de route prioritaire avec les corrections urgentes à appliquer et les artéfacts à remplacer.</p>
+                            
                             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
-                                
+                        
+                                ${(() => {
+                                    const adv = getLevelAdvice(p);
+                                    const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+                                    return `
+                                    <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                        <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
+                                        <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
+                                    </div>`;
+                                })()}
+                        
+                                ${(() => {
+                                    const adv = getWeaponAdvice(p);
+                                    const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+                                    return `
+                                    <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                        <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
+                                        <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
+                                    </div>`;
+                                })()}
+                        
                                 ${talentAdvices && talentAdvices.length > 0 ? `
-                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${talentAdvices[0].type === 'success' ? '#22c55e' : (talentAdvices.some(a => a.type === 'critical') ? '#ef4444' : '#3b82f6')}; grid-column: 1 / -1;">
-                                    <div style="font-size:0.8rem; color:${talentAdvices[0].type === 'success' ? '#22c55e' : '#aaa'}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
-                                        <i class="fa-solid fa-book-open"></i> Priorité des Aptitudes
-                                    </div>
-                                    ${talentAdvices.map(adv => `
-                                        <div style="margin-bottom:5px; font-size:0.9rem; color:#fff;">
-                                            ${adv.type !== 'success' ? `<i class="fa-solid fa-circle-${adv.type === 'critical' ? 'exclamation' : 'info'}" style="color:${adv.type === 'critical' ? '#ef4444' : '#3b82f6'}"></i>` : '<i class="fa-solid fa-check" style="color:#22c55e"></i>'} 
-                                            ${adv.msg}
-                                        </div>
-                                    `).join('')}
-                                </div>` : ''}
-
+                                    <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${talentAdvices[0].type === 'success' ? '#22c55e' : (talentAdvices.some(a => a.type === 'critical') ? '#ef4444' : '#ef4444')};">
+                                        <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">Priorité des Aptitudes</p>
+                                        ${talentAdvices.map(adv => `
+                                            <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
+                                        `).join('')}
+                                    </div>`
+                                : ''}
+                        
                                 ${(() => {
-            const adv = getMainStatAdvice(p, config);
-            const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
-            const icon = adv.type === 'success' ? 'check' : 'triangle-exclamation';
-            return `
-                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
-                                        <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
-                                            <i class="fa-solid fa-${icon}"></i> ${adv.title}
-                                        </div>
+                                    const adv = getMainStatAdvice(p, config);
+                                    const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+                                    return `
+                                    <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                        <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
                                         ${adv.type === 'success'
-                ? `<div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>`
-                : adv.details.map(d => `<div style="margin-bottom:5px; font-size:0.9rem; color:#fff;">Sur <b>${d.piece}</b>, visez <span style="color:var(--accent-gold); font-weight:bold;">${d.better}</span> (Actuel: ${d.current}).</div>`).join('')
-            }
+                                        ? `<p style="font-size:16px; color:#fff;">${adv.msg}</p>`
+                                        : adv.details.map(d => `
+                                            <p style="font-size:16px; color:#fff;">
+                                                Sur <b style="color: #aaa;">${d.piece}</b>, visez <span style="color:var(--accent-gold); font-weight:bold;">${d.better}</span> (Actuellement : <span style="color:var(--accent-gold);">${d.current}</span>).
+                                            </p>
+                                        `).join('') }
                                     </div>`;
-        })()}
-
+                                })()}
+                        
                                 ${(() => {
-            const adv = getSetForcingAdvice(p, config);
-
-            const color = adv.type === 'success' ? '#22c55e' : '#eab308';
-            const icon = adv.type === 'success' ? 'check' : 'triangle-exclamation';
-            return `
-                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
-                                        <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
-                                            <i class="fa-solid fa-${icon}"></i> ${adv.title}
-                                        </div>
-                                        <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
+                                    const adv = getMetaSetAdvice(p, config);
+                                    if (!adv) return '';
+                        
+                                    let color;
+                                    if (adv.type === 'success') {
+                                        color = '#22c55e';
+                                    } else if (adv.type === 'warning') {
+                                        color = '#ef4444';
+                                    } else {
+                                        color = '#f97316';
+                                    }
+                        
+                                    return `
+                                    <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                        <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
+                                        <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
                                     </div>`;
-        })()}
-                               ${(() => {
-            const adv = getMetaSetAdvice(p, config);
-            if (!adv) return '';
-
-            // GESTION DES 3 COULEURS ICI :
-            let color, icon;
-
-            if (adv.type === 'success') {
-                color = '#22c55e'; // Vert
-                icon = 'check';
-            } else if (adv.type === 'warning') {
-                color = '#ef4444'; // Orange (Alerte)
-                icon = 'triangle-exclamation';
-            } else {
-                color = '#f97316'; // Bleu (Info/Good Set)
-                icon = 'shirt';    // Icone T-shirt
-            }
-
-            return `
-                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
-                                        <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
-                                            <i class="fa-solid fa-${icon}"></i> ${adv.title}
-                                        </div>
-                                        <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
-                                    </div>`;
-        })()}
-
+                                })()}
+                        
                                 ${(() => {
-            const adv = getWeaponAdvice(p);
-            const color = adv.type === 'success' ? '#22c55e' : '#eab308';
-            const icon = adv.type === 'success' ? 'check' : 'arrow-up';
-            return `
-                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
-                                        <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
-                                            <i class="fa-solid fa-${icon}"></i> ${adv.title}
-                                        </div>
-                                        <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
+                                    const adv = getSetForcingAdvice(p, config);
+                                    const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+                                    return `
+                                    <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                        <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
+                                        <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
                                     </div>`;
-        })()}
-
-                                ${(() => {
-            const adv = getLevelAdvice(p);
-            const color = adv.type === 'success' ? '#22c55e' : '#3b82f6'; // Vert ou Bleu
-            const icon = adv.type === 'success' ? 'check' : 'arrow-up';
-            return `
-                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
-                                        <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
-                                            <i class="fa-solid fa-${icon}"></i> ${adv.title}
-                                        </div>
-                                        <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
-                                    </div>`;
-        })()}
-
-                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; grid-column: 1 / -1;">
-                                    <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:10px;">Top 3 Priorités (Artéfacts à changer)</div>
+                                })()}
+                        
+                                <div style="background:#2C2D32; padding:15px; border-radius:8px; grid-column: 1 / -1;">
+                                    <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Top 3 des artéfacts à changer par ordre de priorité</p>
                                     ${priorities.length > 0 ? priorities.map((p, i) => {
-            const difficulty = getFarmDifficulty(p.type, p.mainKey);
-            return `
-                                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9rem; margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
+                                        const difficulty = getFarmDifficulty(p.type, p.mainKey);
+                                        return `
+                                        <div style="display:flex; justify-content:space-between; align-items:center; font-size:16px; margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
                                             <div style="display:flex; flex-direction:column;">
-                                                <span style="color:#ddd;">${i+1}. ${p.piece}</span>
-                                                <span style="font-size:0.7rem; color:${difficulty.color}; opacity:0.8;">${difficulty.label} à farmer</span>
+                                                <div style="display:flex; align-items:center; gap:6px;">
+                                                    <p style="font-size: 16px; color:#ddd;">${i+1}. ${p.piece}</p>
+                                                    ${p.isOffPiece ? '<p style="font-size:0.7rem; color:rgba(34, 198, 94, 1); background:rgba(34, 198, 94, 0.15); padding:1px 4px; border-radius:4px;">Off-Set</p>' : ''}
+                                                </div>
+                                                
+                                                <p style="font-size:12px; color:#9ca3af; margin-left: 16px; margin-top:1px;">${p.setName} • <span style="color:#fff;">${p.mainLabel}</span></p>
+                                                
+                                                <p style="font-size:12px; color:${difficulty.color}; margin-left: 16px; margin-top:2px;">${difficulty.label} à farmer</p>
                                             </div>
-                                            <span style="color:${p.color}; font-weight:bold;">${p.score} (${p.grade})</span>
+                                            
+                                            <div style="text-align:right; display: flex; flex-direction: row; gap: 4px;">
+                                                <p style="color:${p.color}; font-size:16px;">${p.score}</p>
+                                                <p style="color:${p.color}; font-size:16px;">(${p.grade})</p>
+                                            </div>
                                         </div>
-                                    `}).join('') : '<div style="color:#22c55e; font-weight:bold;"><i class="fa-solid fa-check"></i> Rien à signaler, excellent travail.</div>'}
+                                    `}).join('') : '<p style="color:#22c55e;">Rien à signaler, excellent travail.</p>'}
                                 </div>
-
                             </div>
                         </div>
+                        
+                        <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
                         ${deadSims.length > 0 ? `
                         <div>
-                            <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">4. Simulation : Potentiel Caché</h3>
-                            <div style="background:rgba(59, 130, 246, 0.1); border:1px solid rgba(59, 130, 246, 0.3); padding:20px; border-radius:8px;">
-                                <div style="font-size:0.9rem; color:#93c5fd; margin-bottom:15px;">Voici ce que vous gagneriez en remplaçant vos stats mortes par des stats utiles :</div>
-                                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
-                                ${deadSims.map(sim => `
-                                    <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border-left:3px solid #3b82f6;">
-                                        <div style="font-size:0.9rem; color:#fff; font-weight:bold; margin-bottom:5px;">${sim.pieceName}</div>
-                                        <div style="font-size:0.8rem; color:#ccc; line-height:1.4;">${sim.text}</div>
-                                        <div style="font-size:1rem; color:var(--accent-gold); font-weight:bold; margin-top:5px;">${sim.gainHtml}</div>
-                                    </div>
-                                `).join('')}
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">4. Projection idéale</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Visualisez les statistiques que vous pourriez obtenir si vos statistiques inutiles étaient converties en statistiques optimales.</p>
+                            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+                            ${deadSims.map(sim => `
+                                <div style="background:#2C2D32; padding:12px; border-radius:6px; border-left:3px solid #FFB13B;">
+                                    <p style="font-size:12px; text-transform: uppercase; color:#aaa; margin-bottom:8px;">${sim.pieceName}</p>
+                                    <p style="font-size:14px; color:#ffffff; margin-bottom: 12px;">${sim.text}</p>
+                                    <div style="font-size:16px; color:var(--accent-gold); display: flex; flex-direction: column; gap: 4px;">${sim.gainHtml}</div>
                                 </div>
+                            `).join('')}
                             </div>
                         </div>` : ''}
+                        
+                        <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
                         <div>
-                            <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">5. Simulateur de Reroll (Expérimental)</h3>
-                            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:15px;">
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">5. Simulateur de reroll</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Évaluez s'il est rentable de redistribuer les valeurs des statistiques de vos artéfacts vers de meilleures valeurs.</p>
+                        
+                            <div style="display:flex; flex-direction: row; justify-content: space-between; gap:15px;">
                                 ${p.artefacts.map(art => {
-            const metrics = calculateRerollMetrics(art, config);
-            if(!metrics) return '';
-            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
-            return `
-                                    <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; border:1px solid #444;">
-                                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
-                                            <img src="${art.icon}" style="width:30px; height:30px;">
-                                            <div style="font-size:0.8rem; font-weight:bold; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${pieceName}</div>
+                                    // --- Logique JavaScript ---
+                                    const metrics = calculateRerollMetrics(art, config);
+                        
+                                    // Si pas de métriques, on n'affiche rien
+                                    if (!metrics) return '';
+                        
+                                    const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+                        
+                                    // --- Template HTML ---
+                                    return `
+                                    <div style="width: 100%; background:#2C2D32; padding:12px; border-radius:8px; border-left: 3px solid ${metrics.badge.color}">
+                                        
+                                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+                                            <img src="${art.icon}" style="width:42px; height:42px; border-radius:8px; background-color: rgba(0,0,0,0.1)" alt="">
+                                            <div style="display:flex; flex-direction:column; justify-content:center; gap: 3px;">
+                                                <p style="font-size:12px; color:#fff; font-weight:bold; overflow:hidden; text-overflow:ellipsis;">
+                                                    ${pieceName}
+                                                </p>
+                                                <p style="font-size:12px; color:${art.grade.color}; opacity:0.9;">
+                                                    ${art.score} (${art.grade.letter})
+                                                </p>
+                                            </div>
                                         </div>
                                         
                                         <div style="margin-bottom:8px;">
-                                            <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:#aaa;">
-                                                <span>Potentiel Gain</span>
-                                                <span style="color:${metrics.potential > 60 ? '#22c55e' : '#ccc'}">${metrics.potential}%</span>
+                                            <div style="display:flex; justify-content:space-between; font-size:12px; color:#aaa; margin-bottom: 4px;">
+                                                <p>Potentiel de gain</p>
+                                                <p style="color:${metrics.potential > 60 ? '#22c55e' : '#ccc'}">${metrics.potential}%</p>
                                             </div>
                                             <div style="width:100%; height:4px; background:#333; border-radius:2px;">
                                                 <div style="width:${metrics.potential}%; height:100%; background:linear-gradient(90deg, #3b82f6, #22c55e); border-radius:2px;"></div>
                                             </div>
                                         </div>
-
-                                        <div style="margin-bottom:10px;">
-                                            <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:#aaa;">
-                                                <span>Risque Perte</span>
-                                                <span style="color:${metrics.risk > 60 ? '#ff4d4d' : '#ccc'}">${metrics.risk}%</span>
+                        
+                                        <div style="margin-bottom:12px;">
+                                            <div style="display:flex; justify-content:space-between; font-size:12px; color:#aaa; margin-bottom: 4px;">
+                                                <p>Risque de perte</p>
+                                                <p style="color:${metrics.risk > 60 ? '#ff4d4d' : '#ccc'}">${metrics.risk}%</p>
                                             </div>
                                             <div style="width:100%; height:4px; background:#333; border-radius:2px;">
                                                 <div style="width:${metrics.risk}%; height:100%; background:linear-gradient(90deg, #f59e0b, #ff4d4d); border-radius:2px;"></div>
                                             </div>
                                         </div>
-
-                                        <div style="text-align:center; background:${metrics.badge.color}20; color:${metrics.badge.color}; padding:4px; border-radius:4px; font-size:0.75rem; font-weight:bold; border:1px solid ${metrics.badge.color}40;">
+                        
+                                        <p style="text-align:center; background:${metrics.badge.color}20; color:${metrics.badge.color}; padding:4px; border-radius:4px; font-size:12px; border:1px solid ${metrics.badge.color}40;">
                                             ${metrics.badge.text}
-                                        </div>
+                                        </p>
+                        
                                     </div>
                                     `;
-        }).join('')}
+                                }).join('')}
                             </div>
                         </div>
 
@@ -1799,3 +1862,93 @@ loadGameData().then(() => {
     document.getElementById('uidInput').value = "704449686";
     fetchUserData();
 });
+
+
+
+/* =========================================
+   EXPORT IMAGE (dom-to-image) - VERSION WSRV + UID
+   ========================================= */
+window.exportBuildAsImage = async function() {
+    const element = document.querySelector('.top-row');
+    if (!element) return alert("Aucun build affiché !");
+
+    const btn = document.querySelector('button[onclick="exportBuildAsImage()"]');
+    const originalContent = btn ? btn.innerHTML : 'Exporter';
+    if(btn) btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Traitement...';
+
+    // On sauvegarde le style original
+    const bgDiv = element.querySelector('.background-splash-art');
+    let originalBgImage = "";
+
+    // --- ÉTAPE 1 : RÉCUPÉRATION DU FOND VIA WSRV.NL ---
+    if (bgDiv) {
+        try {
+            const computedStyle = window.getComputedStyle(bgDiv);
+            const bgUrlMatch = computedStyle.backgroundImage.match(/url\(["']?([^"']*)["']?\)/);
+
+            if (bgUrlMatch && bgUrlMatch[1]) {
+                const imgUrl = bgUrlMatch[1];
+                originalBgImage = bgDiv.style.backgroundImage;
+
+                // Utilisation de wsrv.nl (Ultra robuste pour les images + CORS)
+                const proxyUrl = 'https://wsrv.nl/?url=' + encodeURIComponent(imgUrl) + '&output=png';
+
+                const res = await fetch(proxyUrl);
+                if (!res.ok) throw new Error("Erreur wsrv : " + res.status);
+
+                const blob = await res.blob();
+                const reader = new FileReader();
+
+                await new Promise((resolve, reject) => {
+                    reader.onloadend = resolve;
+                    reader.onerror = reject;
+                    reader.readAsDataURL(blob);
+                });
+
+                if (reader.result) {
+                    bgDiv.style.backgroundImage = `url('${reader.result}')`;
+                }
+            }
+        } catch (e) {
+            console.warn("Le fond n'a pas pu être chargé (export continu sans fond) :", e);
+        }
+    }
+
+    // --- ÉTAPE 2 : GÉNÉRATION ---
+    await new Promise(r => setTimeout(r, 50));
+
+    domtoimage.toPng(element, {
+        bgcolor: null,
+        scale: 2,
+        filter: (node) => true
+    })
+        .then(function (dataUrl) {
+            // 1. Récupération du Nom
+            const nameEl = document.querySelector('.showcase-area-base-stats h2');
+            const charName = nameEl ? nameEl.innerText.trim() : 'Genshin_Build';
+
+            // 2. Récupération de l'UID (NOUVEAU)
+            const uidInput = document.getElementById('uidInput');
+            const uid = uidInput ? uidInput.value.trim() : '';
+
+            // 3. Construction du nom de fichier
+            // Exemple : Build_Nilou_704449686.png
+            const fileName = uid ? `Build_${charName}_${uid}.png` : `Build_${charName}.png`;
+
+            const link = document.createElement('a');
+            link.download = fileName;
+            link.href = dataUrl;
+            link.click();
+        })
+        .catch(function (error) {
+            console.error('Erreur export dom-to-image :', error);
+            alert('Erreur lors de la création de l\'image.');
+        })
+        .finally(function() {
+            // --- NETTOYAGE ---
+            if (bgDiv && originalBgImage) {
+                bgDiv.style.backgroundImage = originalBgImage;
+            }
+            if(btn) btn.innerHTML = originalContent;
+        });
+};

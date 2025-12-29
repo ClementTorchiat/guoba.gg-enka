@@ -23,7 +23,8 @@ const CHARACTER_CONFIG = {
         bestSets: ["ObsidianCodex:4", "CrimsonWitchOfFlames:4"],
         goodSets: ["ObsidianCodex:2", "CrimsonWitchOfFlames:2", "GildedDreams:4"],
         talents: { auto: 1, skill: 10, burst: 10 },
-        color : "#C74644"
+        color : "#C74644",
+        portraitOffset: -35
     },
     "Nilou": {
         weights: {
@@ -53,7 +54,8 @@ const CHARACTER_CONFIG = {
         bestSets: ["FinaleOfTheDeepGalleries:4", "MarechausseeHunter:4"],
         goodSets: ["GladiatorsFinale:4", "BlizzardStrayer:4", "GladiatorsFinale:2", "BlizzardStrayer:2"],
         talents: { auto: 1, skill: 10, burst: 8 },
-        color : "#0525F4"
+        color : "#0525F4",
+        portraitOffset: -37
     },
     "Neuvillette": {
         weights: { "critRate_": 1, "critDMG_": 1, "hp_": 1, "hp": 0.1, "atk_": 0, "enerRech_": 0.5, "elemental_dmg_": 1 },
@@ -92,13 +94,10 @@ const CHARACTER_CONFIG = {
         bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
         goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2"],
         talents: { auto: 10, skill: 8, burst: 8 },
-        color : "#AB3D2D"
+        color : "#AB3D2D",
+        portraitOffset: -38
     },
 };
-
-/* =========================================
-   PASSIFS (Armes & Sets) - Ajout Manuel
-   ========================================= */
 
 /* =========================================
    PASSIFS (Armes & Sets) - Mode Avancé

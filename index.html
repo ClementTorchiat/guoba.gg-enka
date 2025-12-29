@@ -5,6 +5,10 @@
     <title>Genshin Simulator - Enka Import</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image-more/2.9.5/dom-to-image-more.min.js"></script>
 
     <style>
         @font-face {
@@ -325,9 +329,7 @@
             border-radius: 8px;
             font-family: ShinShin, Inter, sans-serif;
             font-size: 14px;
-            padding-left: 15px;
-            padding-top: 17px;
-            padding-bottom: 14px;
+            padding: 17px 15px 14px;
             color: #ffffff;
         }
 
@@ -486,10 +488,13 @@
         }
 
         .score-bar-container {
-            margin-top: 20px;
+            margin-top: 60px;
             padding-top: 10px;
+            margin-left: 40px;
+            margin-right: 40px;
+            margin-bottom: 60px;
             position: relative;
-            width: 100%;
+            width: auto;
         }
 
         .score-bar-track {
@@ -622,12 +627,19 @@
                 </aside>
                 <div class="main-content">
                     <!-- <div id="placeholder-msg">Entrez un UID et sélectionnez un personnage.</div> -->
-                    <div class="main-content-menu">
+                    <div class="main-content-menu" style="display: flex; justify-content: space-between; align-items: flex-end;">
                         <div class="main-content-menu-container">
                             <p class="main-content-menu-title">Équipe :</p>
                             <div>
                                 <p class="main-content-menu-fake">Fonctionnalité en développement.</p>
                             </div>
+                        </div>
+
+                        <div style="">
+                            <button onclick="exportBuildAsImage()" class="main-content-menu-fake" style="cursor: pointer; display: flex; align-items: center; gap: 8px; background: #2C2D32; color: #fff; transition: 0.2s;">
+                                <i class="fa-solid fa-camera"></i>
+                                <span>Exporter en image</span>
+                            </button>
                         </div>
                     </div>
                     <div class="main-content-showcase" id="main-container">
