@@ -1858,11 +1858,21 @@ function renderShowcase(index) {
     container.innerHTML = html;
 }
 
-loadGameData().then(() => {
-    document.getElementById('uidInput').value = "704449686";
-    fetchUserData();
-});
+/* =========================================
+   INITIALISATION & ÉVÉNEMENTS
+   ========================================= */
+loadGameData(); // On charge les données du jeu (personnages, noms...)
 
+// Gestion de la touche "Entrée" dans le champ de texte
+const uidInput = document.getElementById('uidInput');
+if (uidInput) {
+    uidInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Empêche le rechargement de page indésirable
+            fetchUserData();        // Lance la recherche
+        }
+    });
+}
 
 
 /* =========================================
