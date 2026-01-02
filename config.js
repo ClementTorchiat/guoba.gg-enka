@@ -200,29 +200,31 @@ const SET_PASSIVES = {
         ]
     },
     "BlizzardStrayer": {
+        selectMode: "cumulative",
         4: [
             {
                 label: "Si l'ennemi est affecté par Cryo (20% Taux CRIT)",
                 stats: { "critRate_": 0.20 }
             },
             {
-                label: "Si l'ennemi est gelé (20% Taux CRIT)",
+                label: "Si l'ennemi est gelé (40% Taux CRIT)",
                 stats: { "critRate_": 0.20 }
             }
         ]
     },
     "CrimsonWitchOfFlames": {
+        selectMode: "cumulative",
         4: [
             {
                 label: "Si une 1ère compétence élémentaire est utilisée (7.5% Bonus de DGT Pyro)",
                 stats: { "pyro_dmg_": 0.075 }
             },
             {
-                label: "Si une 2ème compétence élémentaire est utilisée (7.5% Bonus de DGT Pyro)",
+                label: "Si une 2ème compétence élémentaire est utilisée (15% Bonus de DGT Pyro)",
                 stats: { "pyro_dmg_": 0.075 }
             },
             {
-                label: "Si une 3ème compétence élémentaire est utilisée (7.5% Bonus de DGT Pyro)",
+                label: "Si une 3ème compétence élémentaire est utilisée (22.5% Bonus de DGT Pyro)",
                 stats: { "pyro_dmg_": 0.075 }
             }
         ]
@@ -236,11 +238,12 @@ const SET_PASSIVES = {
         ]
     },
     "ArchaicPetra": {
+        selectMode: "exclusive",
         4: [
-            { label: "Cristal Pyro ramassé (+35% Bonus de Dgt Pyro)", stats: { "pyro_dmg_": 0.35 } },
-            { label: "Cristal Hydro ramassé (+35% Bonus de Dgt Hydro)", stats: { "hydro_dmg_": 0.35 } },
-            { label: "Cristal Cryo ramassé (+35% Bonus de Dgt Cryo)", stats: { "cryo_dmg_": 0.35 } },
-            { label: "Cristal Électro ramassé (+35% Bonus de Dgt Électro)", stats: { "electro_dmg_": 0.35 } }
+            { label: "Cristal Pyro ramassé (35% Bonus de Dgt Pyro)", stats: { "pyro_dmg_": 0.35 } },
+            { label: "Cristal Hydro ramassé (35% Bonus de Dgt Hydro)", stats: { "hydro_dmg_": 0.35 } },
+            { label: "Cristal Cryo ramassé (35% Bonus de Dgt Cryo)", stats: { "cryo_dmg_": 0.35 } },
+            { label: "Cristal Électro ramassé (35% Bonus de Dgt Électro)", stats: { "electro_dmg_": 0.35 } }
         ]
     },
     "TenacityOfTheMillelith": {
@@ -252,38 +255,41 @@ const SET_PASSIVES = {
         ]
     },
     "PaleFlame": {
+        selectMode: "cumulative",
         4: [
             {
                 label: "Si une 1ère compétence élémentaire touche un ennemi (9% ATK)",
                 stats: { "atk_": 0.09 }
             },
             {
-                label: "Si une 2ème compétence élémentaire touche un ennemi (9% ATK et 25% Bonus de DGT Physique)",
+                label: "Si une 2ème compétence élémentaire touche un ennemi (18% ATK et 25% Bonus de DGT Physique)",
                 stats: { "atk_": 0.09, "physical_dmg_": 0.25 }
             }
         ]
     },
     "HuskOfOpulentDreams": {
+        selectMode: "cumulative",
         4: [
             {
                 label: "Quand une 1ère attaque Géo touche ou qu'1s est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
                 stats: { "def_": 0.06, "geo_dmg_": 0.06 }
             },
             {
-                label: "Quand une 2ème attaque Géo touche ou qu'1s de plus est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+                label: "Quand une 2ème attaque Géo touche ou qu'1s de plus est passée non-déployé (12% DÉF et 12% Bonus de DGT Géo)",
                 stats: { "def_": 0.06, "geo_dmg_": 0.06 }
             },
             {
-                label: "Quand une 3ème attaque Géo touche ou qu'1s de plus est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+                label: "Quand une 3ème attaque Géo touche ou qu'1s de plus est passée non-déployé (18% DÉF et 18% Bonus de DGT Géo)",
                 stats: { "def_": 0.06, "geo_dmg_": 0.06 }
             },
             {
-                label: "Quand une 4ème attaque Géo touche ou qu'1s de plus est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+                label: "Quand une 4ème attaque Géo touche ou qu'1s de plus est passée non-déployé (24% DÉF et 24% Bonus de DGT Géo)",
                 stats: { "def_": 0.06, "geo_dmg_": 0.06 }
             }
         ]
     },
     "VermillionHereafter": {
+        selectMode: "cumulative",
         4: [
             {
                 label: "Si un déchaînement élémentaire est utilisé (8% ATQ)",
@@ -294,15 +300,15 @@ const SET_PASSIVES = {
                 stats: { "atk_": 0.10 }
             },
             {
-                label: "Si des PV sont perdus une 2ème fois (10% ATQ)",
+                label: "Si des PV sont perdus une 2ème fois (20% ATQ)",
                 stats: { "atk_": 0.10 }
             },
             {
-                label: "Si des PV sont perdus une 3ème fois (10% ATQ)",
+                label: "Si des PV sont perdus une 3ème fois (30% ATQ)",
                 stats: { "atk_": 0.10 }
             },
             {
-                label: "Si des PV sont perdus une 4ème fois (10% ATQ)",
+                label: "Si des PV sont perdus une 4ème fois (40% ATQ)",
                 stats: { "atk_": 0.10 }
             }
         ]
@@ -319,33 +325,35 @@ const SET_PASSIVES = {
         ]
     },
     "NymphsDream": {
+        selectMode: "cumulative",
         4: [
             {
                 label: "Si une 1ère attaque de tout type touche (7% ATQ et 4% Bonus de DGT Hydro)",
                 stats: { "atk_": 0.07, "hydro_dmg_": 0.04 }
             },
             {
-                label: "Si une 2ème attaque de tout type touche (9% ATQ et 5% Bonus de DGT Hydro)",
+                label: "Si une 2ème attaque de tout type touche (16% ATQ et 9% Bonus de DGT Hydro)",
                 stats: { "atk_": 0.09, "hydro_dmg_": 0.05 }
             },
             {
-                label: "Si une 3ème attaque de tout type touche (9% ATQ et 6% Bonus de DGT Hydro)",
+                label: "Si une 3ème attaque de tout type touche (25% ATQ et 15% Bonus de DGT Hydro)",
                 stats: { "atk_": 0.09, "hydro_dmg_": 0.06 }
             }
         ]
     },
     "MarechausseeHunter": {
+        selectMode: "cumulative",
         4: [
             {
                 label: "Si les PV diminuent une 1ère fois (12% Taux CRIT)",
                 stats: { "critRate_": 0.12 }
             },
             {
-                label: "Si les PV diminuent une 2ème fois (12% Taux CRIT)",
+                label: "Si les PV diminuent une 2ème fois (24% Taux CRIT)",
                 stats: { "critRate_": 0.12 }
             },
             {
-                label: "Si les PV diminuent une 3ème fois (12% Taux CRIT)",
+                label: "Si les PV diminuent une 3ème fois (36% Taux CRIT)",
                 stats: { "critRate_": 0.12 }
             }
         ]
@@ -357,12 +365,13 @@ const SET_PASSIVES = {
                 stats: { "geo_dmg_": 0.20 }
             },
             {
-                label: "Si le personnage est sous un bouclier de Cristallisation (30% Bonus de DGT Géo)",
+                label: "Si le personnage est sous un bouclier de Cristallisation (50% Bonus de DGT Géo)",
                 stats: { "geo_dmg_": 0.30 }
             }
         ]
     },
     "ScrollOfTheHeroOfCinderCity": {
+        selectMode: "cumulative",
         4: [
             {
                 label: "Si une réaction élémentaire est déclenchée (12% Bonus de DGT Élémentaire)",
@@ -372,7 +381,7 @@ const SET_PASSIVES = {
                 }
             },
             {
-                label: "Si le personnage est sous une Bénédiction noctâme (28% Bonus Dgt Élémentaire)",
+                label: "Si le personnage est sous une Bénédiction noctâme (40% Bonus de DGT Élémentaire)",
                 stats: {
                     "pyro_dmg_": 0.28, "hydro_dmg_": 0.28, "cryo_dmg_": 0.28,
                     "electro_dmg_": 0.28, "dendro_dmg_": 0.28, "anemo_dmg_": 0.28, "geo_dmg_": 0.28
@@ -389,6 +398,7 @@ const SET_PASSIVES = {
         ]
     },
     "NightOfTheSkysUnveiling": {
+        selectMode: "exclusive",
         4: [
             {
                 label: "Si une réaction Sélène est déclenchée et que l'équipe est sous le signe Lueur Naissante (15% Taux CRIT)",
@@ -400,6 +410,19 @@ const SET_PASSIVES = {
             }
         ]
     },
+    "SilkenMoonsSerenade": {
+        selectMode: "exclusive",
+        4: [
+            {
+                label: "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Naissante (60 Maîtrise élémentaire)",
+                stats: { "eleMas": 60 }
+            },
+            {
+                label: "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Ascendante (120 Maîtrise élémentaire)",
+                stats: { "eleMas": 120 }
+            }
+        ]
+    }
 };
 
 // --- EXPORT GLOBAL ---

@@ -304,27 +304,62 @@ function toggleBuff(charIndex, buffIndex) {
     const p = globalPersoData[charIndex];
     if (!p) return;
 
-    // 1. SAUVEGARDE : On chope la position actuelle du scroll
+    // 1. Sauvegarde du scroll (inchangé)
     let currentScroll = 0;
     const scrollContainer = document.querySelector('.card-buff-list-container');
-    if (scrollContainer) {
-        currentScroll = scrollContainer.scrollTop;
+    if (scrollContainer) currentScroll = scrollContainer.scrollTop;
+
+    // --- NOUVELLE LOGIQUE ---
+    const targetBuff = p.buffs[buffIndex];
+    const mode = targetBuff.selectMode || 'standard';
+
+    // On calcule le futur état désiré (si c'était un simple toggle)
+    const willBeActive = !targetBuff.active;
+
+    if (mode === 'exclusive') {
+        // Mode EXCLUSIF (Radio) : Si on active, on désactive les autres du même groupe
+        if (willBeActive) {
+            p.buffs.forEach(b => {
+                if (b.category === targetBuff.category) b.active = false;
+            });
+            targetBuff.active = true;
+        } else {
+            // Optionnel : permettre de tout décocher (toggle) ou forcer un choix (radio pur).
+            // Ici je laisse la possibilité de décocher (toggle).
+            targetBuff.active = false;
+        }
     }
+    else if (mode === 'cumulative') {
+        // Mode CUMULATIF (Escalier)
+        // On récupère tous les buffs de ce set pour trouver l'ordre
+        const groupBuffs = p.buffs.filter(b => b.category === targetBuff.category);
+        const targetIndexInGroup = groupBuffs.indexOf(targetBuff);
 
-    // 2. LOGIQUE : On change l'état et on recalcule
-    p.buffs[buffIndex].active = !p.buffs[buffIndex].active;
+        if (willBeActive) {
+            // Si j'active le niveau 3, je force l'activation du 1 et 2
+            groupBuffs.forEach((b, idx) => {
+                if (idx <= targetIndexInGroup) b.active = true;
+            });
+        } else {
+            // Si je désactive le niveau 1, je force la désactivation du 2 et 3
+            groupBuffs.forEach((b, idx) => {
+                if (idx >= targetIndexInGroup) b.active = false;
+            });
+        }
+    }
+    else {
+        // Mode STANDARD (Comportement actuel)
+        targetBuff.active = willBeActive;
+    }
+    // -------------------------
+
     p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
-
-    // 3. RENDU : On redessine tout (ce qui reset le scroll à 0 par défaut)
     renderShowcase(charIndex);
 
-    // 4. RESTAURATION : On remet le scroll où il était
-    // On utilise setTimeout pour attendre que le DOM soit bien mis à jour
+    // Restauration du scroll (inchangé)
     setTimeout(() => {
         const newContainer = document.querySelector('.card-buff-list-container');
-        if (newContainer) {
-            newContainer.scrollTop = currentScroll;
-        }
+        if (newContainer) newContainer.scrollTop = currentScroll;
     }, 0);
 }
 
@@ -1115,9 +1150,10 @@ function processData(data) {
         });
 
         let buffs = [];
-        const addBuffs = (sourceName, category, configData) => {
+        const addBuffs = (sourceName, category, configData, selectMode = 'standard') => {
             if (Array.isArray(configData)) {
                 configData.forEach((item, idx) => {
+                    // Création du nom (inchangé)
                     let name = item.label || `Buff ${idx + 1}`;
                     if (!item.label && !Array.isArray(item.stats)) {
                         const statsStr = Object.entries(item.stats).map(([k, v]) => {
@@ -1127,10 +1163,29 @@ function processData(data) {
                         }).join(", ");
                         name = statsStr;
                     }
-                    buffs.push({ id: `${category}_${idx}`, category, name, bonuses: item.stats, active: true });
+
+                    // --- LOGIQUE D'ACTIVATION PAR DÉFAUT ---
+                    let isActive = true; // Par défaut (Standard et Cumulative), on active tout
+
+                    if (selectMode === 'exclusive') {
+                        // En mode Exclusif, on active UNIQUEMENT le dernier de la liste
+                        // (On part du principe que le dernier est l'effet max/souhaité)
+                        isActive = (idx === configData.length - 1);
+                    }
+                    // ---------------------------------------
+
+                    buffs.push({
+                        id: `${category}_${idx}`,
+                        category,
+                        name,
+                        bonuses: item.stats,
+                        active: isActive, // On utilise notre variable calculée
+                        selectMode: selectMode
+                    });
                 });
             }
             else {
+                // Pour les objets simples (pas de tableau), c'est toujours actif par défaut
                 for (const [statKey, val] of Object.entries(configData)) {
                     if (typeof val === 'object' && statKey.endsWith('_scaling')) {
                         const targetStat = statKey.replace('_bonus_scaling', '');
@@ -1140,7 +1195,7 @@ function processData(data) {
                         const percentDisplay = (val.percent * 100).toFixed(2) + "%";
                         buffs.push({
                             id: `${category}_${statKey}`, category, name: `${targetLabel} (+${percentDisplay} ${sourceLabel})`,
-                            bonuses: { [statKey]: val }, active: true
+                            bonuses: { [statKey]: val }, active: true, selectMode: selectMode
                         });
                         continue;
                     }
@@ -1149,22 +1204,32 @@ function processData(data) {
                         const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
                         buffs.push({
                             id: `${category}_${statKey}`, category, name: `${statLabel} (+${valDisplay})`,
-                            bonuses: { [statKey]: val }, active: true
+                            bonuses: { [statKey]: val }, active: true, selectMode: selectMode
                         });
                     }
                 }
             }
         };
 
-        if (weapon && G_WEAPON_PASSIVES[weapon.name]) addBuffs(weapon.name, `${weapon.name} (Arme)`, G_WEAPON_PASSIVES[weapon.name]);
+        if (weapon && G_WEAPON_PASSIVES[weapon.name]) {
+            const wConfig = G_WEAPON_PASSIVES[weapon.name];
+            const isAdvanced = wConfig.buffs && Array.isArray(wConfig.buffs);
+
+            const wMode = isAdvanced ? (wConfig.selectMode || 'standard') : 'standard';
+            const wData = isAdvanced ? wConfig.buffs : wConfig;
+
+            addBuffs(weapon.name, `${weapon.name} (Arme)`, wData, wMode);
+        }
+
         if (G_SET_PASSIVES) {
             for (const [setKey, count] of Object.entries(setsCounter)) {
                 if (G_SET_PASSIVES[setKey]) {
                     const setBonuses = G_SET_PASSIVES[setKey];
                     const setName = artefacts.find(a => a.setKey === setKey)?.setName || setKey;
                     const setCategory = `${setName} (Set)`;
-                    if (count >= 2 && setBonuses[2]) addBuffs(setName, setCategory, setBonuses[2]);
-                    if (count >= 4 && setBonuses[4]) addBuffs(setName, setCategory, setBonuses[4]);
+                    const mode = setBonuses.selectMode || 'standard';
+                    if (count >= 2 && setBonuses[2]) addBuffs(setName, setCategory, setBonuses[2], mode);
+                    if (count >= 4 && setBonuses[4]) addBuffs(setName, setCategory, setBonuses[4], mode);
                 }
             }
         }
@@ -1570,7 +1635,7 @@ function renderShowcase(index) {
                     
                     <div style="font-size:14px; flex-shrink: 0;">
                         <p style="margin-bottom: 2px;">Buffs actifs</p>
-                        <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4);">Cochez pour appliquer les passifs et buffs (scroll pour tout voir).</p>
+                        <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4);">Cochez pour appliquer les passifs et buffs (scroll pour tout voir). Dans les meilleurs scénarios, tous les buffs sont actifs.</p>
                     </div>
                     
                     <div class="card-divider" style="flex-shrink: 0; margin: 9px 0px; display: flex; clear: both; width: 100%; min-width: 100%; box-sizing: border-box; color: rgba(255, 255, 255, 0.25); border-width: 1px 0 0; border-color: rgba(255, 255, 255, 0.25); border-block-start: 1px solid rgba(255, 255, 255, 0.25);"></div>
