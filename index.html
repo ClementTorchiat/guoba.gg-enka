@@ -589,6 +589,70 @@
             display: inline-block;
             margin-bottom: 2px;
         }
+
+
+
+
+
+        /* --- STYLE DU POPUP (MODAL) --- */
+        .modal-overlay {
+            display: none; /* Caché par défaut */
+            position: fixed;
+            z-index: 1000; /* Au-dessus de tout */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Fond sombre */
+            backdrop-filter: blur(5px); /* Petit flou sympa */
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: #1e2024;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh; /* Max 85% de la hauteur de l'écran */
+            overflow-y: auto; /* Scroll si trop long */
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            animation: slideUp 0.3s ease;
+        }
+
+        /* Scrollbar personnalisée pour le popup */
+        .modal-content::-webkit-scrollbar { width: 8px; }
+        .modal-content::-webkit-scrollbar-track { background: #111; }
+        .modal-content::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+        .modal-content::-webkit-scrollbar-thumb:hover { background: var(--accent-gold); }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .close-btn:hover { color: #fff; transform: scale(1.1); }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Styles du contenu (H2, H3...) pour qu'ils ressemblent à l'interface */
+        .notice-section { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .notice-section:last-child { border-bottom: none; }
+        .notice-h2 { color: var(--accent-gold); font-size: 20px; margin-top: 0; display:flex; align-items:center; gap:10px; }
+        .notice-h3 { color: #fff; font-size: 16px; margin-top: 20px; border-left: 3px solid var(--accent-gold); padding-left: 10px; }
+        .notice-p, .notice-li { color: #ccc; font-size: 14px; line-height: 1.6; }
+        .notice-badge { padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; border: 1px solid; }
     </style>
 </head>
 <body>
@@ -634,6 +698,22 @@
                                 <p class="main-content-menu-fake">Fonctionnalité en développement.</p>
                             </div>
                         </div>
+                        <button onclick="openNotice()" title="Mode d'emploi" style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 44px;
+                            height: 44px;
+                            background-color: rgba(255, 255, 255, 0.1);
+                            border: 1px solid rgba(255, 255, 255, 0.2);
+                            border-radius: 12px;
+                            color: #fff;
+                            cursor: pointer;
+                            transition: 0.3s;
+                            margin-left: 10px;
+                        " onmouseover="this.style.background='var(--accent-gold)'; this.style.borderColor='var(--accent-gold)'; this.style.color='#000';" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'; this.style.color='#fff';">
+                                                    <i class="fa-solid fa-question" style="font-size: 18px;"></i>
+                        </button>
 
                         <div style="">
                             <button onclick="exportBuildAsImage()" class="main-content-menu-fake" style="cursor: pointer; display: flex; align-items: center; gap: 8px; background: #2C2D32; color: #fff; transition: 0.2s;">
@@ -649,6 +729,75 @@
             </div>
         </div>
     </main>
+    <div id="noticeModal" class="modal-overlay" onclick="if(event.target === this) closeNotice()">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeNotice()">&times;</span>
+
+            <div style="text-align:center; margin-bottom:30px;">
+                <h1 style="font-family:'OTBrut-Regular'; font-size:28px; color:#fff; margin:0;">Notice d'utilisation</h1>
+                <p style="color:#888; margin-top:5px;">Comprendre le simulateur et optimiser vos personnages</p>
+            </div>
+
+            <div class="notice-section">
+                <h2 class="notice-h2"><i class="fa-solid fa-cloud-arrow-down"></i> 1. Importation</h2>
+                <p class="notice-p">Le simulateur utilise l'API <b>Enka.Network</b> pour récupérer vos données en temps réel.</p>
+                <h3 class="notice-h3">Prérequis en jeu</h3>
+                <ul style="padding-left:20px;">
+                    <li class="notice-li">Menu Paimon > Modifier le profil.</li>
+                    <li class="notice-li">Activez <b>"Afficher les détails des personnages"</b>.</li>
+                    <li class="notice-li">Placez les personnages dans votre <b>Vitrine</b>.</li>
+                    <li class="notice-li">Attendez 2-5 min après la déconnexion pour la mise à jour serveur.</li>
+                </ul>
+            </div>
+
+            <div class="notice-section">
+                <h2 class="notice-h2"><i class="fa-solid fa-chart-bar"></i> 2. Comprendre le Score</h2>
+                <h3 class="notice-h3">La note (SSS, S, A...)</h3>
+                <p class="notice-p">Calculée selon le nombre de <b>Rolls Utiles</b> (améliorations tombées sur des stats pertinentes pour ce personnage précis).</p>
+                <h3 class="notice-h3">Efficacité & RNG</h3>
+                <p class="notice-p"><b>Efficacité :</b> Votre puissance actuelle vs votre potentiel théorique max.</p>
+                <p class="notice-p"><b>RNG :</b> Votre chance. Un score élevé signifie que vous obtenez souvent des valeurs hautes lors des améliorations.</p>
+            </div>
+
+            <div class="notice-section">
+                <h2 class="notice-h2"><i class="fa-solid fa-magnifying-glass-chart"></i> 3. Analyse & Conseils</h2>
+                <p class="notice-p"><b>Stats Mortes :</b> Points perdus dans des stats inutiles (ex: DÉF sur un DPS).</p>
+                <p class="notice-p"><b>Pièce Joker (Off-Set) :</b> Le simulateur vérifie si votre 5ème pièce (hors-set) est assez puissante pour justifier sa place. Elle doit être bien meilleure que vos pièces de set.</p>
+            </div>
+
+            <div class="notice-section">
+                <h2 class="notice-h2"><i class="fa-solid fa-dice"></i> 4. Simulateur de Reroll</h2>
+                <p class="notice-p">Estime la rentabilité d'utiliser l'Offrande Mystique (Strongbox) sur un artéfact.</p>
+                <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+                    <span class="notice-badge" style="color:#ef4444; background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3);">Risque Élevé</span>
+                    <span class="notice-badge" style="color:#22c55e; background:rgba(34,197,94,0.1); border-color:rgba(34,197,94,0.3);">Potentiel Élevé</span>
+                </div>
+                <p class="notice-p" style="margin-top:10px; font-style:italic; font-size:12px; color:#888;">Conseil : Ne recyclez jamais une pièce "Solide" ou "Déconseillée".</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function openNotice() {
+            document.getElementById('noticeModal').style.display = 'flex';
+            // Empêche le scroll de la page derrière
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNotice() {
+            document.getElementById('noticeModal').style.display = 'none';
+            // Réactive le scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fermeture avec la touche Échap
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeNotice();
+            }
+        });
+    </script>
 
 <script src="data.js"></script>
 <script src="config.js"></script>

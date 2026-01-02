@@ -87,42 +87,66 @@ const STAT_MAPPING = { "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_", "F
 const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %", "eleMas": "Maîtrise élémentaire", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT", "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "Bonus de DGT Pyro", "hydro_dmg_": "Bonus de DGT Hydro", "cryo_dmg_": "Bonus de DGT Cryo", "electro_dmg_": "Bonus de DGT Électro", "anemo_dmg_": "Bonus de DGT Anémo", "geo_dmg_": "Bonus de DGT Géo", "dendro_dmg_": "Bonus de DGT Dendro", "physical_dmg_": "Bonus de DGT Physiques" };
 
 const SET_NAME_MAPPING = {
-    "Sorcière des flammes ardentes": "CrimsonWitchOfFlames",
-    "Emblème du destin brisé": "EmblemOfSeveredFate",
-    "Maréchaussée": "MarechausseeHunter",
-    "Troupe dorée": "GoldenTroupe",
-    "Rêve doré": "GildedDreams",
-    "Souvenir de la forêt": "DeepwoodMemories",
-    "Codex d'obsidienne": "ObsidianCodex",
-    "Ombre de la Verte Chasseuse": "ViridescentVenerer",
-    "Ancien Rituel Royal": "NoblesseOblige",
-    "Ténacité du Millelithe": "TenacityOfTheMillelith",
-    "Coquille des rêves opulents": "HuskOfOpulentDreams",
-    "Palourde aux teintes océaniques": "OceanHuedClam",
-    "Rideau du Gladiateur": "GladiatorsFinale",
-    "Bande Vagabonde": "WanderersTroupe",
-    "Chevalerie ensanglantée": "BloodstainedChivalry",
-    "Colère de tonnerre": "ThunderingFury",
-    "Dompteur de tonnerre": "Thundersoother",
+    "Aventurier": "Adventurer",
+    "Chanceux": "LuckyDog",
+    "Médecin itinérant": "TravelingDoctor",
+
+    "Sacrifieur Pyro": "PrayersForIllumination",
+    "Sacrifieur Hydro": "PrayersForDestiny",
+    "Sacrifieur Électro": "PrayersForWisdom",
+    "Sacrifieur Cryo": "PrayersToSpringtime",
+
+    "Cœur du Voyageur": "ResolutionOfSojourner",
+    "Cœur du Brave": "BraveHeart",
+    "Cœur du Gardien": "DefendersWill",
+    "Miracle": "TinyMiracle",
+    "Berserker": "Berserker",
+    "Artiste martial": "MartialArtist",
+    "Instructeur": "Instructor",
+    "Parieur": "Gambler",
+    "Exilé": "TheExile",
+    "Érudit": "Scholar",
+
+    "Briseur de glace": "BlizzardStrayer",
+    "Dompteur de foudre": "Thundersoother",
+    "Marcheur du feu": "Lavawalker",
     "Amour chéri": "MaidenBeloved",
+    "Rideau du Gladiateur": "GladiatorsFinale",
+    "Ombre de la Verte Chasseuse": "ViridescentVenerer",
+    "Bande vagabonde": "WanderersTroupe",
+    "Colère de tonnerre": "ThunderingFury",
+    "Sorcière des flammes ardentes": "CrimsonWitchOfFlames",
+    "Ancien rituel royal": "NoblesseOblige",
+    "Chevalerie ensanglantée": "BloodstainedChivalry",
     "Roche ancienne": "ArchaicPetra",
     "Météore inversé": "RetracingBolide",
-    "Briseur de glace": "BlizzardStrayer",
     "Âme des profondeurs": "HeartOfDepth",
+    "Ténacité du Millelithe": "TenacityOfTheMillelith",
     "Flamme blême": "PaleFlame",
     "Réminiscence nostalgique": "ShimenawasReminiscence",
+    "Emblème du destin brisé": "EmblemOfSeveredFate",
+    "Coquille des rêves opulents": "HuskOfOpulentDreams",
+    "Palourde aux teintes océaniques": "OceanHuedClam",
     "Au-delà cinabrin": "VermillionHereafter",
     "Échos d'une offrande": "EchoesOfAnOffering",
+    "Souvenir de forêt": "DeepwoodMemories",
+    "Rêve doré": "GildedDreams",
     "Chronique du Pavillon du désert": "DesertPavilionChronicle",
     "Fleur du paradis perdu": "FlowerOfParadiseLost",
     "Rêve de la nymphe": "NymphsDream",
     "Lueur du vourukasha": "VourukashasGlow",
-    "Murmure nocturne en forêt d'échos": "NighttimeWhispersInTheEchoingWoods",
+    "Chasseur de la Maréchaussée": "MarechausseeHunter",
+    "Troupe dorée": "GoldenTroupe",
     "Chanson des jours d'antan": "SongOfDaysPast",
-    "Fragment d'harmonie fantasque": "FragmentOfHarmonicWhimsy",
-    "Rêverie inachevée": "UnfinishedReverie",
-    "Parchemins du héros de la cité": "ScrollOfTheHeroOfCinderCity",
-    "Finale des galeries profondes": "FinaleOfTheDeepGalleries"
+    "Murmure nocturne en forêt d'échos": "NighttimeWhispersInTheEchoingWoods",
+    "Fragment d'harmonie divergente": "FragmentOfHarmonicWhimsy",
+    "Rêverie incomplète": "UnfinishedReverie",
+    "Codex d'obsidienne": "ObsidianCodex",
+    "Parchemin du héros de la Cité de braise": "ScrollOfTheHeroOfCinderCity",
+    "Serment de la longue nuit": "LongNightsOath",
+    "Finale des galeries profondes": "FinaleOfTheDeepGalleries",
+    "Nuit de la révélation céleste": "NightOfTheSkysUnveiling",
+    "Sérénade de la lune soyeuse": "SilkenMoonsSerenade"
 };
 
 const ARTIFACT_TYPE_MAPPING = { "EQUIP_BRACER": "Fleur de la vie", "EQUIP_NECKLACE": "Plume de la mort", "EQUIP_SHOES": "Sables du temps", "EQUIP_RING": "Coupe d'éonothème", "EQUIP_DRESS": "Diadème de Logos" };
@@ -157,18 +181,28 @@ async function loadGameData() {
 async function fetchUserData() {
     const uid = document.getElementById('uidInput').value;
     if (!uid) return alert("UID manquant");
+
     const loader = document.getElementById('loading-msg');
     if(loader) loader.innerText = "Récupération...";
-    const proxy = `https://corsproxy.io/?${encodeURIComponent(`https://enka.network/api/uid/${uid}`)}`;
+
+    // 1. On ajoute le timestamp (?t=...) pour forcer le navigateur/proxy à recharger
+    const urlCible = `https://enka.network/api/uid/${uid}?t=${Date.now()}`;
+
+    // 2. On encode le tout pour le proxy
+    const proxy = `https://corsproxy.io/?${encodeURIComponent(urlCible)}`;
+
     try {
         const res = await fetch(proxy);
         if(!res.ok) throw new Error("Erreur Enka");
+
         const data = await res.json();
         processData(data);
-        if(loader) loader.innerText = "Succès.";
+
+        if(loader) loader.innerText = ""; // On efface le message si c'est bon
     } catch (e) {
         console.error(e);
         if(loader) loader.innerText = "Erreur UID/Vitrine.";
+        alert("Impossible de récupérer les données. Vérifiez l'UID et assurez-vous que la vitrine est visible dans le jeu.");
     }
 }
 

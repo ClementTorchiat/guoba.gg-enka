@@ -10,6 +10,38 @@ const DEFAULT_CONFIG = {
 };
 
 const CHARACTER_CONFIG = {
+    "NOM_DU_PERSO": {
+        weights: {
+            "critRate_": 0, "critDMG_": 0,
+            "atk_": 0, "atk": 0,
+            "hp_": 0, "hp": 0,
+            "def_": 0, "def": 0,
+            "eleMas": 0, "enerRech_": 0,
+            "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
+            "heal_": 0
+        },
+        bestSets: [],
+        goodSets: [],
+        talents: { auto: 1, skill: 1, burst: 1 },
+        color : "#888888",
+        portraitOffset: 0
+    },
+    "Amber": {
+        weights: {
+            "critRate_": 1, "critDMG_": 1,
+            "atk_": 0.75, "atk": 0.075,
+            "hp_": 0, "hp": 0,
+            "def_": 0, "def": 0,
+            "eleMas": 0.5, "enerRech_": 1,
+            "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
+            "heal_": 0
+        },
+        bestSets: ["NoblesseOblige:4", "ShimenawasReminiscence:4", "WanderersTroupe:4", "EmblemOfSeveredFate:4", "CrimsonWitchOfFlames:4"],
+        goodSets: ["NoblesseOblige:2", "EmblemOfSeveredFate:2", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2"],
+        talents: { auto: 1, skill: 1, burst: 1 },
+        color : "#888888",
+        portraitOffset: 0
+    },
     "Mavuika": {
         weights: {
             "critRate_": 1, "critDMG_": 1,
@@ -151,27 +183,223 @@ const WEAPON_PASSIVES = {
 };
 
 const SET_PASSIVES = {
-    "MarechausseeHunter": {
-        4: { "critRate_": 0.36 }
+    "Berserker": {
+        4: [
+            {
+                label: "Si les PV sont inférieurs à 70% (24% Taux CRIT)",
+                stats: { "critRate_": 0.24 }
+            }
+        ]
     },
-    "CrimsonWitchOfFlames": {
-        4: { "pyro_dmg_": 0.15 }
+    "Instructor": {
+        4: [
+            {
+                label: "Si une réaction élémentaire est déclenchée (120 Maîtrise élémentaire)",
+                stats: { "eleMas": 120 }
+            }
+        ]
     },
     "BlizzardStrayer": {
-        // Exemple de set avec condition
         4: [
-            { label: "Ennemi Cryo", stats: { "critRate_": 0.20 } },
-            { label: "Ennemi Gelé", stats: { "critRate_": 0.20 } }
+            {
+                label: "Si l'ennemi est affecté par Cryo (20% Taux CRIT)",
+                stats: { "critRate_": 0.20 }
+            },
+            {
+                label: "Si l'ennemi est gelé (20% Taux CRIT)",
+                stats: { "critRate_": 0.20 }
+            }
+        ]
+    },
+    "CrimsonWitchOfFlames": {
+        4: [
+            {
+                label: "Si une 1ère compétence élémentaire est utilisée (7.5% Bonus de DGT Pyro)",
+                stats: { "pyro_dmg_": 0.075 }
+            },
+            {
+                label: "Si une 2ème compétence élémentaire est utilisée (7.5% Bonus de DGT Pyro)",
+                stats: { "pyro_dmg_": 0.075 }
+            },
+            {
+                label: "Si une 3ème compétence élémentaire est utilisée (7.5% Bonus de DGT Pyro)",
+                stats: { "pyro_dmg_": 0.075 }
+            }
+        ]
+    },
+    "NoblesseOblige": {
+        4: [
+            {
+                label: "Si un déchaînement élémentaire est utilisé (20% ATK)",
+                stats: { "atk_": 0.20 }
+            }
+        ]
+    },
+    "ArchaicPetra": {
+        4: [
+            { label: "Cristal Pyro ramassé (+35% Bonus de Dgt Pyro)", stats: { "pyro_dmg_": 0.35 } },
+            { label: "Cristal Hydro ramassé (+35% Bonus de Dgt Hydro)", stats: { "hydro_dmg_": 0.35 } },
+            { label: "Cristal Cryo ramassé (+35% Bonus de Dgt Cryo)", stats: { "cryo_dmg_": 0.35 } },
+            { label: "Cristal Électro ramassé (+35% Bonus de Dgt Électro)", stats: { "electro_dmg_": 0.35 } }
+        ]
+    },
+    "TenacityOfTheMillelith": {
+        4: [
+            {
+                label: "Si une compétence élémentaire touche un ennemi (20% ATK)",
+                stats: { "atk_": 0.20 }
+            }
+        ]
+    },
+    "PaleFlame": {
+        4: [
+            {
+                label: "Si une 1ère compétence élémentaire touche un ennemi (9% ATK)",
+                stats: { "atk_": 0.09 }
+            },
+            {
+                label: "Si une 2ème compétence élémentaire touche un ennemi (9% ATK et 25% Bonus de DGT Physique)",
+                stats: { "atk_": 0.09, "physical_dmg_": 0.25 }
+            }
+        ]
+    },
+    "HuskOfOpulentDreams": {
+        4: [
+            {
+                label: "Quand une 1ère attaque Géo touche ou qu'1s est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+                stats: { "def_": 0.06, "geo_dmg_": 0.06 }
+            },
+            {
+                label: "Quand une 2ème attaque Géo touche ou qu'1s de plus est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+                stats: { "def_": 0.06, "geo_dmg_": 0.06 }
+            },
+            {
+                label: "Quand une 3ème attaque Géo touche ou qu'1s de plus est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+                stats: { "def_": 0.06, "geo_dmg_": 0.06 }
+            },
+            {
+                label: "Quand une 4ème attaque Géo touche ou qu'1s de plus est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+                stats: { "def_": 0.06, "geo_dmg_": 0.06 }
+            }
+        ]
+    },
+    "VermillionHereafter": {
+        4: [
+            {
+                label: "Si un déchaînement élémentaire est utilisé (8% ATQ)",
+                stats: { "atk_": 0.08 }
+            },
+            {
+                label: "Si des PV sont perdus une 1ère fois (10% ATQ)",
+                stats: { "atk_": 0.10 }
+            },
+            {
+                label: "Si des PV sont perdus une 2ème fois (10% ATQ)",
+                stats: { "atk_": 0.10 }
+            },
+            {
+                label: "Si des PV sont perdus une 3ème fois (10% ATQ)",
+                stats: { "atk_": 0.10 }
+            },
+            {
+                label: "Si des PV sont perdus une 4ème fois (10% ATQ)",
+                stats: { "atk_": 0.10 }
+            }
+        ]
+    },
+    "GildedDreams": {
+        4: [
+            { label: "Si un 1er allié est du même élément (14% ATQ)", stats: { "atk_": 0.14 } },
+            { label: "Si un 2ème allié est du même élément (14% ATQ)", stats: { "atk_": 0.14 } },
+            { label: "Si un 3ème allié est du même élément (14% ATQ)", stats: { "atk_": 0.14 } },
+
+            { label: "Si un 1er allié est d'un élément différent (50 EM)", stats: { "eleMas": 50 } },
+            { label: "Si un 2ème allié est d'un élément différent (50 EM)", stats: { "eleMas": 50 } },
+            { label: "Si un 3ème allié est d'un élément différent (50 EM)", stats: { "eleMas": 50 } },
+        ]
+    },
+    "NymphsDream": {
+        4: [
+            {
+                label: "Si une 1ère attaque de tout type touche (7% ATQ et 4% Bonus de DGT Hydro)",
+                stats: { "atk_": 0.07, "hydro_dmg_": 0.04 }
+            },
+            {
+                label: "Si une 2ème attaque de tout type touche (9% ATQ et 5% Bonus de DGT Hydro)",
+                stats: { "atk_": 0.09, "hydro_dmg_": 0.05 }
+            },
+            {
+                label: "Si une 3ème attaque de tout type touche (9% ATQ et 6% Bonus de DGT Hydro)",
+                stats: { "atk_": 0.09, "hydro_dmg_": 0.06 }
+            }
+        ]
+    },
+    "MarechausseeHunter": {
+        4: [
+            {
+                label: "Si les PV diminuent une 1ère fois (12% Taux CRIT)",
+                stats: { "critRate_": 0.12 }
+            },
+            {
+                label: "Si les PV diminuent une 2ème fois (12% Taux CRIT)",
+                stats: { "critRate_": 0.12 }
+            },
+            {
+                label: "Si les PV diminuent une 3ème fois (12% Taux CRIT)",
+                stats: { "critRate_": 0.12 }
+            }
+        ]
+    },
+    "NighttimeWhispersInTheEchoingWoods": {
+        4: [
+            {
+                label: "Si une compétence élémentaire est utilisée (20% Bonus de DGT Géo)",
+                stats: { "geo_dmg_": 0.20 }
+            },
+            {
+                label: "Si le personnage est sous un bouclier de Cristallisation (30% Bonus de DGT Géo)",
+                stats: { "geo_dmg_": 0.30 }
+            }
+        ]
+    },
+    "ScrollOfTheHeroOfCinderCity": {
+        4: [
+            {
+                label: "Si une réaction élémentaire est déclenchée (12% Bonus de DGT Élémentaire)",
+                stats: {
+                    "pyro_dmg_": 0.12, "hydro_dmg_": 0.12, "cryo_dmg_": 0.12,
+                    "electro_dmg_": 0.12, "dendro_dmg_": 0.12, "anemo_dmg_": 0.12, "geo_dmg_": 0.12
+                }
+            },
+            {
+                label: "Si le personnage est sous une Bénédiction noctâme (28% Bonus Dgt Élémentaire)",
+                stats: {
+                    "pyro_dmg_": 0.28, "hydro_dmg_": 0.28, "cryo_dmg_": 0.28,
+                    "electro_dmg_": 0.28, "dendro_dmg_": 0.28, "anemo_dmg_": 0.28, "geo_dmg_": 0.28
+                }
+            }
         ]
     },
     "ObsidianCodex": {
         4: [
-            { label: "Si points noctâme consommés", stats: { "critRate_": 0.40 } }
+            {
+                label: "Si le personnage consomme des points Noctâme (40% Taux CRIT)",
+                stats: { "critRate_": 0.40 }
+            }
         ]
     },
-    "EmblemOfSeveredFate": {
-        4: { "elemental_dmg_scaling": { "source": "er", "percent": 0.25, "max": 75 } }
-    }
+    "NightOfTheSkysUnveiling": {
+        4: [
+            {
+                label: "Si une réaction Sélène est déclenchée et que l'équipe est sous le signe Lueur Naissante (15% Taux CRIT)",
+                stats: { "critRate_": 0.15 }
+            },
+            {
+                label: "Si une réaction Sélène est déclenchée et que l'équipe est sous le signe Lueur Ascendante (30% Taux CRIT)",
+                stats: { "critRate_": 0.30 }
+            }
+        ]
+    },
 };
 
 // --- EXPORT GLOBAL ---

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Notice d'utilisation - Genshin Simulator</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- STYLE GLOBAL (Repris de ton index.html) --- */
+        @font-face {
+            font-family: 'OTBrut-Regular';
+            src: url("./assets/global/typo/ShinShin.ttf"); /* Vérifie que le chemin est bon depuis ce fichier */
+        }
+
+        :root {
+            --bg-body: #0b0f19;
+            --bg-card: #1e2024;
+            --text-main: #ffffff;
+            --text-muted: #9ca3af;
+            --accent-gold: #FFB13B;
+            --border-color: #2d3342;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* --- LAYOUT NOTICE --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'OTBrut-Regular', sans-serif;
+            font-size: 32px;
+            margin: 0;
+            color: #fff;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        .btn-back:hover {
+            background: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+        }
+
+        /* Sections */
+        .section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            font-size: 22px;
+            color: var(--accent-gold);
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h3 {
+            font-size: 18px;
+            color: #fff;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--accent-gold);
+            padding-left: 10px;
+        }
+
+        p {
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            color: #ccc;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Badges pour l'exemple */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .b-gold { color: var(--accent-gold); background: rgba(255, 177, 59, 0.15); border: 1px solid rgba(255, 177, 59, 0.3); }
+        .b-green { color: #22c55e; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); }
+        .b-red { color: #ef4444; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div style="display:flex; align-items:center; gap:15px;">
+            <i class="fa-solid fa-book-open" style="font-size:32px; color:var(--accent-gold);"></i>
+            <div>
+                <h1>Notice d'utilisation</h1>
+                <p style="margin:0; font-size:14px; color:#888;">Comprendre le simulateur et optimiser vos personnages</p>
+            </div>
+        </div>
+        <a href="index.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i> Retour au simulateur
+        </a>
+    </div>
+
+    <div class="section">
+        <h2><i class="fa-solid fa-cloud-arrow-down"></i> 1. Importation du personnage</h2>
+        <p>Le simulateur utilise l'API <b>Enka.Network</b> pour récupérer les données de votre jeu en temps réel.</p>
+
+        <h3>Prérequis en jeu</h3>
+        <ul>
+            <li>Ouvrez Genshin Impact et allez dans le <b>Menu Paimon > Modifier le profil</b>.</li>
+            <li>Activez l'option <b>"Afficher les détails des personnages"</b>.</li>
+            <li>Placez les personnages que vous voulez analyser dans votre <b>Vitrine</b>.</li>
+            <li>Attendez environ 2 à 5 minutes après avoir quitté le menu pour que les serveurs se mettent à jour.</li>
+        </ul>
+
+        <h3>Dans le simulateur</h3>
+        <p>Entrez simplement votre <b>UID</b> (le numéro en bas à droite de votre écran de jeu) dans la barre de recherche et validez.</p>
+    </div>
+
+    <div class="section">
+        <h2><i class="fa-solid fa-chart-bar"></i> 2. Comprendre le Score</h2>
+        <p>Le système de notation n'évalue pas seulement la force brute, mais l'optimisation de vos artéfacts.</p>
+
+        <h3>La note (SSS, S, A, B...)</h3>
+        <p>Elle est calculée en fonction du nombre de <b>Rolls Utiles</b> sur vos artéfacts.</p>
+        <ul>
+            <li>Une stat "utile" dépend du personnage (ex: PV% est utile pour Nilou, mais inutile pour Diluc).</li>
+            <li>Plus vous avez d'améliorations (rolls) dans les stats utiles, meilleure est la note.</li>
+        </ul>
+
+        <h3>Efficacité du Build (%)</h3>
+        <p>C'est un ratio entre votre puissance actuelle et votre puissance théorique maximale.</p>
+        <ul>
+            <li><b>100% :</b> Vos artéfacts sont parfaits (valeurs maximales à chaque amélioration).</li>
+            <li><b>80% :</b> Vous avez les bonnes stats, mais les valeurs obtenues sont moyennes (malchance).</li>
+        </ul>
+
+        <h3>Facteur Chance (RNG)</h3>
+        <p>Indique si le jeu a été généreux avec vous. Un score RNG élevé signifie que vous obtenez souvent des valeurs hautes (High Rolls) lors des améliorations.</p>
+    </div>
+
+    <div class="section">
+        <h2><i class="fa-solid fa-magnifying-glass-chart"></i> 3. Analyse & Conseils</h2>
+        <p>Cette section vous aide à prendre des décisions concrètes pour améliorer votre personnage.</p>
+
+        <h3>Stats Mortes (Inutiles)</h3>
+        <p>Ce sont les améliorations tombées sur des stats qui n'apportent rien au personnage (ex: DÉF sur un DPS). Le simulateur vous montre combien de points vous avez "perdu" dans ces stats.</p>
+
+        <h3>La Pièce Joker (Off-Set)</h3>
+        <p>Dans Genshin, vous n'avez besoin que de 4 pièces pour activer un bonus de set. La 5ème pièce peut être n'importe laquelle (c'est le "Joker").</p>
+        <p>Le simulateur vérifie si votre pièce Joker est vraiment puissante. Si elle est moins bonne que vos pièces de set, c'est une anomalie : vous devriez avoir mieux dans votre inventaire !</p>
+    </div>
+
+    <div class="section">
+        <h2><i class="fa-solid fa-dice"></i> 4. Simulateur de Reroll</h2>
+        <p>Cet outil mathématique vous aide à gérer vos ressources (Poussières d'Illumination / Offrande Mystique).</p>
+
+        <p>Pour chaque artéfact, il calcule :</p>
+        <ul>
+            <li><b>Potentiel de gain :</b> La probabilité d'obtenir mieux en recyclant cet artéfact.</li>
+            <li><b>Risque de perte :</b> Le risque d'obtenir pire ou équivalent.</li>
+        </ul>
+
+        <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; margin-top:15px;">
+            <p style="margin:0; font-size:14px;"><i class="fa-solid fa-circle-info" style="color:#3b82f6;"></i> <b>Conseil :</b> Ne rerollez jamais une pièce marquée <span class="badge b-red">Reroll déconseillé</span> ou <span class="badge b-red">Garder (Solide)</span>, sauf si vous cherchez la perfection absolue.</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
