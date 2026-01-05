@@ -1050,6 +1050,16 @@ function calculateRerollMetrics(artifact, config) {
     };
 }
 
+// Fonction pour calculer la valeur selon le rang (R1 à R5)
+// Si val est un nombre (0.2), on le garde.
+// Si val est un tableau [0.2, 0.05], on calcule : Base + (Rang-1)*Step
+function getRefinedValue(val, rank) {
+    if (Array.isArray(val) && val.length === 2 && typeof val[0] === 'number') {
+        return val[0] + (rank - 1) * val[1];
+    }
+    return val;
+}
+
 // --- PROCESS ---
 function processData(data) {
     if (!data.avatarInfoList) return;
@@ -1150,60 +1160,80 @@ function processData(data) {
         });
 
         let buffs = [];
-        const addBuffs = (sourceName, category, configData, selectMode = 'standard') => {
+        // AJOUT du paramètre weaponRank (par défaut 1)
+        const addBuffs = (sourceName, category, configData, selectMode = 'standard', weaponRank = 1) => {
+
+            // Sous-fonction pour nettoyer les stats (gère les tableaux [Base, Incrément])
+            const resolveStats = (statsObj) => {
+                const resolved = {};
+                for (const [k, v] of Object.entries(statsObj)) {
+                    // Cas spécial : Scaling (ex: Homa qui convertit PV en ATQ)
+                    if (typeof v === 'object' && v.percent) {
+                        resolved[k] = { ...v, percent: getRefinedValue(v.percent, weaponRank) };
+                    }
+                    // Cas standard
+                    else {
+                        resolved[k] = getRefinedValue(v, weaponRank);
+                    }
+                }
+                return resolved;
+            };
+
             if (Array.isArray(configData)) {
                 configData.forEach((item, idx) => {
-                    // Création du nom (inchangé)
+                    // 1. On calcule les stats réelles (R1, R5...)
+                    const finalStats = resolveStats(item.stats);
+
+                    // 2. Création du nom (Utilise finalStats pour afficher le bon chiffre)
                     let name = item.label || `Buff ${idx + 1}`;
-                    if (!item.label && !Array.isArray(item.stats)) {
-                        const statsStr = Object.entries(item.stats).map(([k, v]) => {
+                    if (!item.label) {
+                        // Si pas de label, on génère un texte dynamique basé sur les valeurs calculées
+                        name = Object.entries(finalStats).map(([k, v]) => {
+                            if(typeof v === 'object' && v.percent) return `${STAT_LABELS[k]||k} (Scaling)`;
                             const l = STAT_LABELS[k] || k;
                             const val = (typeof v === 'number' && v < 2) ? Math.round(v*100)+'%' : v;
                             return `${l} +${val}`;
                         }).join(", ");
-                        name = statsStr;
                     }
 
-                    // --- LOGIQUE D'ACTIVATION PAR DÉFAUT ---
-                    let isActive = true; // Par défaut (Standard et Cumulative), on active tout
-
+                    // 3. LOGIQUE D'ACTIVATION (Ta version)
+                    let isActive = true;
                     if (selectMode === 'exclusive') {
-                        // En mode Exclusif, on active UNIQUEMENT le dernier de la liste
-                        // (On part du principe que le dernier est l'effet max/souhaité)
                         isActive = (idx === configData.length - 1);
                     }
-                    // ---------------------------------------
 
                     buffs.push({
                         id: `${category}_${idx}`,
                         category,
                         name,
-                        bonuses: item.stats,
-                        active: isActive, // On utilise notre variable calculée
+                        bonuses: finalStats, // On pousse les stats calculées
+                        active: isActive,
                         selectMode: selectMode
                     });
                 });
             }
             else {
-                // Pour les objets simples (pas de tableau), c'est toujours actif par défaut
-                for (const [statKey, val] of Object.entries(configData)) {
+                // Pour les objets simples (pas de tableau)
+                const finalStats = resolveStats(configData);
+
+                for (const [statKey, val] of Object.entries(finalStats)) {
+                    // Scaling
                     if (typeof val === 'object' && statKey.endsWith('_scaling')) {
                         const targetStat = statKey.replace('_bonus_scaling', '');
-                        const sourceStat = val.source;
-                        const targetLabel = STAT_LABELS[targetStat] || targetStat;
-                        const sourceLabel = STAT_LABELS[sourceStat] || sourceStat;
                         const percentDisplay = (val.percent * 100).toFixed(2) + "%";
                         buffs.push({
-                            id: `${category}_${statKey}`, category, name: `${targetLabel} (+${percentDisplay} ${sourceLabel})`,
+                            id: `${category}_${statKey}`, category,
+                            name: `${STAT_LABELS[targetStat]} (+${percentDisplay} ${val.source})`,
                             bonuses: { [statKey]: val }, active: true, selectMode: selectMode
                         });
                         continue;
                     }
+                    // Stat standard
                     if (typeof val !== 'object') {
-                        const statLabel = STAT_LABELS[statKey] || statKey;
                         const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
                         buffs.push({
-                            id: `${category}_${statKey}`, category, name: `${statLabel} (+${valDisplay})`,
+                            id: `${category}_${statKey}`, category,
+                            name: `${STAT_LABELS[statKey]} (+${valDisplay})`,
                             bonuses: { [statKey]: val }, active: true, selectMode: selectMode
                         });
                     }
@@ -1211,14 +1241,15 @@ function processData(data) {
             }
         };
 
+        // --- GESTION DES ARMES ---
         if (weapon && G_WEAPON_PASSIVES[weapon.name]) {
             const wConfig = G_WEAPON_PASSIVES[weapon.name];
             const isAdvanced = wConfig.buffs && Array.isArray(wConfig.buffs);
-
             const wMode = isAdvanced ? (wConfig.selectMode || 'standard') : 'standard';
             const wData = isAdvanced ? wConfig.buffs : wConfig;
 
-            addBuffs(weapon.name, `${weapon.name} (Arme)`, wData, wMode);
+            // AJOUT DE "weapon.rank" à la fin vvv
+            addBuffs(weapon.name, `${weapon.name} (Arme)`, wData, wMode, weapon.rank);
         }
 
         if (G_SET_PASSIVES) {

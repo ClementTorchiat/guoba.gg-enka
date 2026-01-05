@@ -143,20 +143,26 @@ const WEAPON_PASSIVES = {
     },
 
     // CAS COMPLEXE (Ta demande) : Liste d'effets avec Labels
-    "Mille soleils brûlants": [
-        {
-            label: "Attaque (Base)",
-            stats: { "atk_": 0.28 }
-        },
-        {
-            label: "DGT CRIT (Base)",
-            stats: { "critDMG_": 0.20 }
-        },
-        {
-            label: "Sous Bénédiction noctâme",
-            stats: { "atk_": 0.21, "critDMG_": 0.15 } // Active 2 stats d'un coup !
-        }
-    ],
+    "Mille soleils brûlants": {
+        selectMode: "cumulative",
+        buffs: [
+            {
+                label: "Effet Brillance (ATQ & DGT CRIT de base)",
+                stats: {
+                    "atk_": [0.28, 0.07],
+                    "critDMG_": [0.20, 0.05]
+                }
+            },
+            {
+                label: "Sous Bénédiction noctâme (+75% d'efficacité)",
+                stats: {
+                    // Calcul : On multiplie la base ET l'incrément par 0.75
+                    "atk_": [0.21, 0.0525],      // 21% en R1 -> 42% en R5
+                    "critDMG_": [0.15, 0.0375]   // 15% en R1 -> 30% en R5
+                }
+            }
+        ]
+    },
 
     "Lumière du faucheur": { "enerRech_": 0.30, "electro_dmg_": 0.12 }, // Format simple
 
