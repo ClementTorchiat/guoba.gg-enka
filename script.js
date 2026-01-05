@@ -87,7 +87,81 @@ const STAT_MAPPING = { "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_", "F
 const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %", "eleMas": "Maîtrise élémentaire", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT", "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "Bonus de DGT Pyro", "hydro_dmg_": "Bonus de DGT Hydro", "cryo_dmg_": "Bonus de DGT Cryo", "electro_dmg_": "Bonus de DGT Électro", "anemo_dmg_": "Bonus de DGT Anémo", "geo_dmg_": "Bonus de DGT Géo", "dendro_dmg_": "Bonus de DGT Dendro", "physical_dmg_": "Bonus de DGT Physiques" };
 
 const WEAPON_NAME_MAPPING = {
-    // Épées
+    // 1 étoile
+    "Épée émoussée": "DullBlade",
+    "Épée d'entraînement": "WasterGreatsword",
+    "Lance du débutant": "BeginnersProtector",
+    "Notes de l'apprenti": "ApprenticesNotes",
+    "Arc de chasse": "HuntersBow",
+
+    // 2 étoiles
+    "Épée en argent": "SilverSword",
+    "Lame du mercenaire": "OldMercsPal",
+    "Pointe de fer": "IronPoint",
+    "Grimoire de poche": "PocketGrimoire",
+    "Arc de chasse aguerri": "SeasonedHuntersBow",
+
+    // 3 étoiles
+    "Lame froide": "CoolSteel",
+    "Messager de l'Aube": "HarbingerOfDawn",
+    "Épée du voyageur": "TravelersHandySword",
+    "Épée en fer noir": "DarkIronSword",
+    "Couteau à filets": "FilletBlade",
+    "Épée céleste": "SkyriderSword",
+    "Ombre ferreuse": "FerrousShadow",
+    "Épée sanglante": "BloodstainedGreatsword",
+    "Grande épée en fer blanc": "WhiteIronGreatsword",
+    "Épée de la raison": "DebateClub",
+    "Grande épée céleste": "SkyriderGreatsword",
+    "Pampille blanche": "WhiteTassel",
+    "Hallebarde": "Halberd",
+    "Pampille noire": "BlackTassel",
+    "Guide de magie": "MagicGuide",
+    "Histoire des chasseurs de dragon": "ThrillingTalesOfDragonSlayers",
+    "Conte d'un autre monde": "OtherworldlyStory",
+    "Orbe jadien": "EmeraldOrb",
+    "Néphrite jumelle": "TwinNephrite",
+    "Arc du corbeau": "RavenBow",
+    "Serment de l'archer": "SharpshootersOath",
+    "Arc courbé": "RecurveBow",
+    "Lance-pierres": "Slingshot",
+    "Messager": "Messenger",
+
+    // 4 étoiles - épées à une main
+    "Épée de Favonius": "FavoniusSword",
+    "Flûte": "TheFlute",
+    "Épée rituelle": "SacrificialSword",
+    "Épée longue royale": "RoyalLongsword",
+    "Rugissement du Lion": "LionsRoar",
+    "Tailleur de pierre (prototype)": "PrototypeRancour",
+    "Piqûre de fer": "IronSting",
+    "Épée longue de Rochenoire": "BlackcliffLongsword",
+    "Épée noire": "TheBlackSword",
+    "Éclair des impasses": "TheAlleyFlash",
+    "Épée de la descente": "SwordOfDescension",
+    "Croc suppurant": "FesteringDesire",
+    "Lame kageuchi d'Amenoma": "AmenomaKageuchi",
+    "Fuseau de cinabre": "CinnabarSpindle",
+    "Kagotsurube Isshin": "KagotsurubeIsshin",
+    "Lame d'aubier": "SapwoodBlade",
+    "Clair de lune de Xiphos": "XiphosMoonlight",
+    "Pluie florale": "ToukabouShigure",
+    "Croc de loup": "WolfFang",
+    "Final des profondeurs": "FinaleOfTheDeep",
+    "Passeur du Fleuve cendré": "FleuveCendreFerryman",
+    "L'assistant du docker": "TheDockhandsAssistant",
+    "Lame du Narzissenkreuz": "SwordOfNarzissenkreuz",
+    "Os robuste": "SturdyBone",
+    "Flûte d'ezpitzal": "FluteOfEzpitzal",
+    "La calamité d'Eshu": "CalamityOfEshu",
+    "Appel de sérénité": "SerenitysCall",
+    "Aube du tisse-lune": "MoonweaversDawn",
+
+    // 4 étoiles - épées à deux mains
+
+
+
+
     "Reflet de tranche-brume": "MistsplitterReforged",
     "Coupeur de jade primordial": "PrimordialJadeCutter",
     "Lumière du faucheur": "EngulfingLightning",

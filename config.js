@@ -136,6 +136,234 @@ const CHARACTER_CONFIG = {
    ========================================= */
 
 const WEAPON_PASSIVES = {
+    // 3 étoiles
+    "HarbingerOfDawn": {
+        buffs: [
+            {
+                label: "Si les PV sont supérieurs à 90% (Taux CRIT)",
+                stats: {
+                    "critRate_": [0.14, 0.035],
+                }
+            },
+        ]
+    },
+    "DarkIronSword": {
+        buffs: [
+            {
+                label: "Si une réaction liée à l'élément Électro a lieu (ATQ%)",
+                stats: {
+                    "atk_": [0.2, 0.05],
+                }
+            }
+        ]
+    },
+    "SkyriderSword": {
+        buffs: [
+            {
+                label: "Si un déchaînement élémentaire est utilisé (ATQ%)",
+                stats: {
+                    "atk_": [0.12, 0.03],
+                }
+            }
+        ]
+    },
+    "SkyriderGreatsword": {
+        selectMode: "cumulative",
+        buffs: [
+            { label: "Si une 1ère attaque normale ou chargée touche un ennemi (ATQ%)", stats: { "atk_": [0.06, 0.01] } },
+            { label: "Si une 2ème attaque normale ou chargée touche un ennemi (ATQ%)", stats: { "atk_": [0.06, 0.01] } },
+            { label: "Si une 3ème attaque normale ou chargée touche un ennemi (ATQ%)", stats: { "atk_": [0.06, 0.01] } },
+            { label: "Si une 4ème attaque normale ou chargée touche un ennemi (ATQ%)", stats: { "atk_": [0.06, 0.01] } }
+        ]
+    },
+    "EmeraldOrb": {
+        buffs: [
+            {
+                label: "Si une réaction liée à l'élément Hydro a lieu (ATQ%)",
+                stats: {
+                    "atk_": [0.2, 0.05],
+                }
+            }
+        ]
+    },
+    "TwinNephrite": {
+        buffs: [
+            {
+                label: "Si un ennemi a été vaincu (ATQ%)",
+                stats: {
+                    "atk_": [0.12, 0.02],
+                }
+            }
+        ]
+    },
+
+    // 4 étoiles - épées à une main
+    "RoyalLongsword": {
+        selectMode: "cumulative",
+        buffs: [
+            { label: "Si des dégâts sont infligés une 1ère fois (Taux CRIT)", stats: { "critRate_": [0.08, 0.02] } },
+            { label: "Si des dégâts sont infligés une 2ème fois (Taux CRIT)", stats: { "critRate_": [0.08, 0.02] } },
+            { label: "Si des dégâts sont infligés une 3ème fois (Taux CRIT)", stats: { "critRate_": [0.08, 0.02] } },
+            { label: "Si des dégâts sont infligés une 4ème fois (Taux CRIT)", stats: { "critRate_": [0.08, 0.02] } },
+            { label: "Si des dégâts sont infligés une 5ème fois (Taux CRIT)", stats: { "critRate_": [0.08, 0.02] } }
+        ]
+    },
+    "PrototypeRancour": {
+        buffs: [
+            { label: "Si une attaque normale ou chargée touche un ennemi une 1ère fois (ATQ% et DÉF)", stats: { "atk_": [0.04, 0.01], "def_": [0.04, 0.01] } },
+            { label: "Si une attaque normale ou chargée touche un ennemi une 2ème fois (ATQ% et DÉF)", stats: { "atk_": [0.04, 0.01], "def_": [0.04, 0.01] } },
+            { label: "Si une attaque normale ou chargée touche un ennemi une 3ème fois (ATQ% et DÉF)", stats: { "atk_": [0.04, 0.01], "def_": [0.04, 0.01] } },
+            { label: "Si une attaque normale ou chargée touche un ennemi une 4ème fois (ATQ% et DÉF)", stats: { "atk_": [0.04, 0.01], "def_": [0.04, 0.01] } },
+            { label: "Si une attaque normale ou chargée touche un ennemi une 5ème fois (ATQ% et DÉF)", stats: { "atk_": [0.04, 0.01], "def_": [0.04, 0.01] } },
+        ]
+    },
+    "BlackcliffLongsword": {
+        selectMode: "cumulative",
+        buffs: [
+            { label: "Si un 1er ennemi a été vaincu (ATQ%)", stats: { "atk_": [0.12, 0.03] } },
+            { label: "Si un 2ème ennemi a été vaincu (ATQ%)", stats: { "atk_": [0.12, 0.03] } },
+            { label: "Si un 3ème ennemi a été vaincu (ATQ%)", stats: { "atk_": [0.12, 0.03] } },
+        ]
+    },
+    "FesteringDesire": {
+        buffs: [
+            {
+                label: "Amélioration de Taux CRIT sur la compétence seulement",
+                stats: {
+                    "critRate_": [0.06, 0.015],
+                }
+            }
+        ]
+    },
+    "KagotsurubeIsshin": {
+        buffs: [
+            {
+                label: "Si une attaque normale, chargée ou plongeante touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.15, 0],
+                }
+            }
+        ]
+    },
+    "SapwoodBlade": {
+        buffs: [
+            {
+                label: "Si une réaction liée à l'élément Dendro est déclenchée (Maîtrise élémentaire)",
+                stats: {
+                    "eleMas": [0.60, 0.15],
+                }
+            }
+        ]
+    },
+    "XiphosMoonlight": {
+        buffs: [
+            {
+                label: "Bonus selon la Maîtrise élémentaire (Recharge d'énergie)",
+                stats: {
+                    "enerRech_bonus_scaling": {
+                        source: "eleMas",
+                        percent: [0.00036, 0.00009]
+                    }
+                }
+            }
+        ]
+    },
+    "WolfFang": {
+        selectMode: "cumulative",
+        buffs: [
+            { label: "1 stack de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)", stats: { "critRate_": [0.08, 0.02] } },
+            { label: "2 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)", stats: { "critRate_": [0.08, 0.02] } },
+            { label: "3 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)", stats: { "critRate_": [0.08, 0.02] } },
+            { label: "4 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)", stats: { "critRate_": [0.08, 0.02] } },
+        ]
+    },
+    "FinaleOfTheDeep": {
+        selectMode: "cumulative",
+        buffs: [
+            {
+                label: "Si une compétence élémentaire est utilisée (ATQ%)",
+                stats: {
+                    "atk_": [0.12, 0.03]
+                }
+            },
+            {
+                label: "Si l'Engagement Vital est dissipé (ATQ)",
+                stats: {
+                    "atk": [150, 37.5]
+                }
+            }
+        ]
+    },
+    "FleuveCendreFerryman": {
+        selectMode: "cumulative",
+        buffs: [
+            {
+                label: "Buff passif de Taux CRIT (ne concerne que la compétence élémentaire)",
+                stats: {
+                    "critRate_": [0.08, 0.02]
+                }
+            },
+            {
+                label: "Si une compétence élémentaire est utilisée (Recharge d'énergie)",
+                stats: {
+                    "enerRech_": [0.16, 0.04] // 16% -> 32%
+                }
+            }
+        ]
+    },
+    "TheDockhandsAssistant": {
+        selectMode: "cumulative",
+        buffs: [
+            { label: "Si des soins sont reçus ou envoyés une 1ère fois (Maîtrise élémentaire)", stats: { "eleMas": [0.40, 0.1] } },
+            { label: "Si des soins sont reçus ou envoyés une 2ème fois (Maîtrise élémentaire)", stats: { "eleMas": [0.40, 0.1] } },
+            { label: "Si des soins sont reçus ou envoyés une 3ème fois (Maîtrise élémentaire)", stats: { "eleMas": [0.40, 0.1] } },
+        ]
+    },
+    "FluteOfEzpitzal": {
+        buffs: [
+            {
+                label: "Si une compétence élémentaire est utilisée (DÉF)",
+                stats: {
+                    "def_": [0.16, 0.04]
+                }
+            },
+        ]
+    },
+    "CalamityOfEshu": {
+        buffs: [
+            {
+                label: "Buff de Taux CRIT si le personnage est protégé par un bouclier (ne concerne que les attaques normales et chargées)",
+                stats: {
+                    "critRate_": [0.08, 0.02]
+                }
+            },
+        ]
+    },
+    "SerenitysCall": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (PV%)",
+                stats: {
+                    "hp_": [0.16, 0.04]
+                }
+            },
+            {
+                label: "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (PV%)",
+                stats: {
+                    "hp_": [0.32, 0.08]
+                }
+            }
+        ]
+    },
+
+    // 4 étoiles - épées à deux mains
+
+
+
+
+
+
     // Cas simple : Bâton d'Homa (On garde le format simple objet, le script gérera les deux)
     "StaffOfHoma": {
         "hp_": 0.20,
