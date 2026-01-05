@@ -137,13 +137,13 @@ const CHARACTER_CONFIG = {
 
 const WEAPON_PASSIVES = {
     // Cas simple : Bâton d'Homa (On garde le format simple objet, le script gérera les deux)
-    "Bâton de Homa": {
+    "StaffOfHoma": {
         "hp_": 0.20,
         "atk_bonus_scaling": { "source": "hp", "percent": 0.008 }
     },
 
     // CAS COMPLEXE (Ta demande) : Liste d'effets avec Labels
-    "Mille soleils brûlants": {
+    "AThousandBlazingSuns": {
         selectMode: "cumulative",
         buffs: [
             {
@@ -166,7 +166,7 @@ const WEAPON_PASSIVES = {
 
     "Lumière du faucheur": { "enerRech_": 0.30, "electro_dmg_": 0.12 }, // Format simple
 
-    "Clé de Khaj-Nisut": {
+    "KeyOfKhajNisut": {
         "hp_": 0.20,
         "eleMas_bonus_scaling": { "source": "hp", "percent": 0.0012 }
     },
@@ -176,7 +176,7 @@ const WEAPON_PASSIVES = {
         "atk_bonus_scaling": { "source": "hp", "percent": 0.012 }
     },
 
-    "Éclazur": [
+    "Azurelight": [
         {
             label: "Après compétence (ATQ)",
             stats: { "atk_": 0.24 }

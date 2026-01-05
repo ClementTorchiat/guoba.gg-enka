@@ -86,6 +86,30 @@ const STAT_MAPPING = { "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_", "F
 
 const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %", "eleMas": "Maîtrise élémentaire", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT", "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "Bonus de DGT Pyro", "hydro_dmg_": "Bonus de DGT Hydro", "cryo_dmg_": "Bonus de DGT Cryo", "electro_dmg_": "Bonus de DGT Électro", "anemo_dmg_": "Bonus de DGT Anémo", "geo_dmg_": "Bonus de DGT Géo", "dendro_dmg_": "Bonus de DGT Dendro", "physical_dmg_": "Bonus de DGT Physiques" };
 
+const WEAPON_NAME_MAPPING = {
+    // Épées
+    "Reflet de tranche-brume": "MistsplitterReforged",
+    "Coupeur de jade primordial": "PrimordialJadeCutter",
+    "Lumière du faucheur": "EngulfingLightning",
+
+    // Hast
+    "Bâton de Homa": "StaffOfHoma",
+    "Lance de jade ailée": "PrimordialJadeWingedSpear",
+    "Bâton des sables écarlates": "StaffOfTheScarletSands",
+
+    // Arcs
+    "Mille soleils brûlants": "AThousandBlazingSuns",
+    "La première grande magie": "TheFirstGreatMagic",
+    "Pulsation du tonnerre": "ThunderingPulse",
+    "Éclazur": "Azurelight",
+    "Clé de Khaj-Nisut": "KeyOfKhajNisut",
+
+    // Catalyseurs
+    "Chaînes de la mort": "CashflowSupervision",
+
+    // etc... tu complèteras au fur et à mesure
+};
+
 const SET_NAME_MAPPING = {
     "Aventurier": "Adventurer",
     "Chanceux": "LuckyDog",
@@ -1136,10 +1160,22 @@ function processData(data) {
             if (item.weapon) {
                 const main = flat.weaponStats && flat.weaponStats[0] ? formatStat(flat.weaponStats[0].appendPropId, flat.weaponStats[0].statValue) : null;
                 const sub = flat.weaponStats && flat.weaponStats[1] ? formatStat(flat.weaponStats[1].appendPropId, flat.weaponStats[1].statValue) : null;
+
+                // --- NOUVEAU : GESTION DU MAPPING ---
+                const weaponNameFR = getText(flat.nameTextMapHash); // Le nom d'affichage (Français)
+                // On cherche la clé anglaise, sinon on garde le nom FR par sécurité (ou "UnknownWeapon")
+                const weaponKey = WEAPON_NAME_MAPPING[weaponNameFR] || weaponNameFR;
+                // ------------------------------------
+
                 weapon = {
-                    name: getText(flat.nameTextMapHash), level: item.weapon.level,
+                    name: weaponNameFR, // On garde le nom FR pour l'affichage à l'écran
+                    key: weaponKey,     // On ajoute la clé EN pour la logique interne (base de données)
+                    level: item.weapon.level,
                     rank: (item.weapon.affixMap ? Object.values(item.weapon.affixMap)[0] : 0) + 1,
-                    icon: `https://enka.network/ui/${flat.icon}.png`, baseAtk: main, subStat: sub, stars: flat.rankLevel
+                    icon: `https://enka.network/ui/${flat.icon}.png`,
+                    baseAtk: main,
+                    subStat: sub,
+                    stars: flat.rankLevel
                 };
             }
             if (flat.itemType === "ITEM_RELIQUARY") {
@@ -1242,15 +1278,18 @@ function processData(data) {
         };
 
         // --- GESTION DES ARMES ---
-        if (weapon && G_WEAPON_PASSIVES[weapon.name]) {
-            const wConfig = G_WEAPON_PASSIVES[weapon.name];
+        // --- GESTION DES ARMES (Mapping + Toggle + Raffinement) ---
+        // On utilise weapon.key pour chercher dans la base de données
+        if (weapon && G_WEAPON_PASSIVES[weapon.key]) {
+            const wConfig = G_WEAPON_PASSIVES[weapon.key]; // Utilise la clé EN
+
             const isAdvanced = wConfig.buffs && Array.isArray(wConfig.buffs);
             const wMode = isAdvanced ? (wConfig.selectMode || 'standard') : 'standard';
             const wData = isAdvanced ? wConfig.buffs : wConfig;
 
-            // AJOUT DE "weapon.rank" à la fin vvv
-            addBuffs(weapon.name, `${weapon.name} (Arme)`, wData, wMode, weapon.rank);
-        }
+            // Param 1 (ID unique) : weapon.key (StaffOfHoma) pour être sûr que c'est unique
+            // Param 2 (Affichage) : weapon.name (Bâton de Homa) pour que l'user voie du français
+            addBuffs(weapon.key, `${weapon.name} (Arme)`, wData, wMode, weapon.rank);        }
 
         if (G_SET_PASSIVES) {
             for (const [setKey, count] of Object.entries(setsCounter)) {
