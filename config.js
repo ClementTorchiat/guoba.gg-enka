@@ -251,7 +251,7 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si une réaction liée à l'élément Dendro est déclenchée (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [0.60, 0.15],
+                    "eleMas": [60, 15],
                 }
             }
         ]
@@ -313,9 +313,9 @@ const WEAPON_PASSIVES = {
     "TheDockhandsAssistant": {
         selectMode: "cumulative",
         buffs: [
-            { label: "Si des soins sont reçus ou envoyés une 1ère fois (Maîtrise élémentaire)", stats: { "eleMas": [0.40, 0.1] } },
-            { label: "Si des soins sont reçus ou envoyés une 2ème fois (Maîtrise élémentaire)", stats: { "eleMas": [0.40, 0.1] } },
-            { label: "Si des soins sont reçus ou envoyés une 3ème fois (Maîtrise élémentaire)", stats: { "eleMas": [0.40, 0.1] } },
+            { label: "Si des soins sont reçus ou envoyés une 1ère fois (Maîtrise élémentaire)", stats: { "eleMas": [40, 10] } },
+            { label: "Si des soins sont reçus ou envoyés une 2ème fois (Maîtrise élémentaire)", stats: { "eleMas": [40, 10] } },
+            { label: "Si des soins sont reçus ou envoyés une 3ème fois (Maîtrise élémentaire)", stats: { "eleMas": [40, 10] } },
         ]
     },
     "FluteOfEzpitzal": {
@@ -400,7 +400,7 @@ const WEAPON_PASSIVES = {
                 stats: {
                     "atk_bonus_scaling": {
                         "source": "eleMas",
-                        "percent": [0.24, 0.06]
+                        "percent": [24, 6]
                     }
                 }
             }
@@ -411,7 +411,7 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si une réaction liée à l'élément Dendro est déclenchée (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [0.60, 0.15],
+                    "eleMas": [60, 15],
                 }
             }
         ]
@@ -498,7 +498,7 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si une réaction Sélène est déclenchée (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [0.60, 0.15],
+                    "eleMas": [60, 15],
                 }
             }
         ]
@@ -509,13 +509,13 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [0.60, 0.15]
+                    "eleMas": [60, 15]
                 }
             },
             {
                 label: "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [1.20, 0.30]
+                    "eleMas": [120, 30]
                 }
             }
         ]
@@ -574,7 +574,7 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si une compétence élémentaire ou un déchaînement élémentaire est utilisé (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [0.60, 0.20],
+                    "eleMas": [60, 20],
                 }
             }
         ]
@@ -582,15 +582,15 @@ const WEAPON_PASSIVES = {
     "IbisPiercer": {
         selectMode: "cumulative",
         buffs: [
-            { label: "Si une 1ère attaque chargée touche un ennemi (Maîtrise élémentaire)", stats: { "eleMas": [0.40, 0.10] } },
-            { label: "Si une 2ème attaque chargée touche un ennemi (Maîtrise élémentaire)", stats: { "eleMas": [0.40, 0.10] } },
+            { label: "Si une 1ère attaque chargée touche un ennemi (Maîtrise élémentaire)", stats: { "eleMas": [40, 10] } },
+            { label: "Si une 2ème attaque chargée touche un ennemi (Maîtrise élémentaire)", stats: { "eleMas": [40, 10] } },
         ]
     },
     "Cloudforged": {
         selectMode: "cumulative",
         buffs: [
-            { label: "Si l'énergie du porteur diminue une 1ère fois (Maîtrise élémentaire)", stats: { "eleMas": [0.40, 0.10] } },
-            { label: "Si l'énergie du porteur diminue une 2ème fois (Maîtrise élémentaire)", stats: { "eleMas": [0.40, 0.10] } },
+            { label: "Si l'énergie du porteur diminue une 1ère fois (Maîtrise élémentaire)", stats: { "eleMas": [40, 10] } },
+            { label: "Si l'énergie du porteur diminue une 2ème fois (Maîtrise élémentaire)", stats: { "eleMas": [40, 10] } },
         ]
     },
     "RangeGauge": {
@@ -674,13 +674,13 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [0.60, 0.15]
+                    "eleMas": [60, 15]
                 }
             },
             {
                 label: "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [1.20, 0.30]
+                    "eleMas": [120, 30]
                 }
             }
         ]
@@ -766,7 +766,7 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si une réaction élémentaire est déclenchée (ATK% et Maîtrise élémentaire)",
                 stats: {
-                    "atk_": [0.12, 0.03], "eleMas": [0.48, 0.12]
+                    "atk_": [0.12, 0.03], "eleMas": [48, 12]
                 }
             }
         ]
@@ -776,7 +776,7 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si l'équipe est composée de 3 éléments différents (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [1.20, 0.30]
+                    "eleMas": [120, 30]
                 }
             }
         ]
@@ -871,7 +871,7 @@ const WEAPON_PASSIVES = {
                     "dendro_dmg_": [0.48, 0.12]
                 },
             },
-            {label: "Interlude (Maîtrise élémentaire)", stats: {"eleMas": [2.40, 0.60]}},
+            {label: "Interlude (Maîtrise élémentaire)", stats: {"eleMas": [240, 60]}},
         ]
     },
     "RoyalGrimoire": {
@@ -970,7 +970,7 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si une réaction élémentaire est déclenchée (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [0.24, 0.03],
+                    "eleMas": [24, 3],
                 }
             }
         ]
@@ -980,7 +980,7 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si le porteur est hors du terrain pendant 5s (PV% et Maîtrise élémentaire)",
                 stats: {
-                    "hp_": [0.32, 0.08], "eleMas": [0.40, 0.10]
+                    "hp_": [0.32, 0.08], "eleMas": [40, 10]
                 }
             }
         ]
@@ -1042,7 +1042,7 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [1.00, 0.25]
+                    "eleMas": [100, 25]
                 }
             }
         ]
@@ -1052,13 +1052,13 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si une attaque chargée touche un ennemi (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [0.72, 0.18]
+                    "eleMas": [72, 18]
                 }
             },
             {
                 label: "Si une compétence élémentaire touche un ennemi (Maîtrise élémentaire)",
                 stats: {
-                    "eleMas": [0.48, 0.12]
+                    "eleMas": [48, 12]
                 }
             }
         ]
