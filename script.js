@@ -267,31 +267,82 @@ const WEAPON_NAME_MAPPING = {
     "Frimas d’aube": "DawningFrost",
 
     // 5 étoiles - épées à une main
-
-
-
-
-
-    "Reflet de tranche-brume": "MistsplitterReforged",
+    "Épée du faucon": "AquilaFavonia",
+    "Lame de la Voûte d'Azur": "SkywardBlade",
+    "Serment de la liberté": "FreedomSworn",
+    "Tranche-sommets": "SummitShaper",
     "Coupeur de jade primordial": "PrimordialJadeCutter",
-    "Lumière du faucheur": "EngulfingLightning",
-
-    // Hast
-    "Bâton de Homa": "StaffOfHoma",
-    "Lance de jade ailée": "PrimordialJadeWingedSpear",
-    "Bâton des sables écarlates": "StaffOfTheScarletSands",
-
-    // Arcs
-    "Mille soleils brûlants": "AThousandBlazingSuns",
-    "La première grande magie": "TheFirstGreatMagic",
-    "Pulsation du tonnerre": "ThunderingPulse",
-    "Éclazur": "Azurelight",
+    "Reflet de tranche-brume": "MistsplitterReforged",
+    "Lune ondulante de Futsu": "HaranGeppakuFutsu",
     "Clé de Khaj-Nisut": "KeyOfKhajNisut",
+    "Lumière d’incision foliaire": "LightOfFoliarIncision",
+    "Splendeur des eaux calmes": "SplendorOfTranquilWaters",
+    "Uraku Misugiri": "UrakuMisugiri",
+    "Absolution": "Absolution",
+    "Chanson de patrouille de sommet": "PeakPatrolSong",
+    "Éclazur": "Azurelight",
+    "Athame Artis": "AthameArtis",
+    // 6.3
+    "Éclat lunaire luminescent": "LightbearingMoonshard",
 
-    // Catalyseurs
-    "Chaînes de la mort": "CashflowSupervision",
+    // 5 étoiles - épées à deux mains
+    "Fierté de la Voûte d'Azur": "SkywardPride",
+    "Mort-du-loup": "WolfsGravestone",
+    "Ode au chant du vent": "SongOfBrokenPines",
+    "Lame brute": "TheUnforged",
+    "Brise-pierre de corne rouge": "RedhornStonethresher",
+    "Balise de la mer de roseaux": "BeaconOfTheReedSea",
+    "Condamneur": "Verdict",
+    "Croc du roi de la montagne": "FangOfTheMountainKing",
+    "Mille soleils brûlants": "AThousandBlazingSuns",
 
-    // etc... tu complèteras au fur et à mesure
+    // 5 étoiles - arcs
+    "Ailes de la Voûte d'Azur": "SkywardHarp",
+    "Arc d'Amos": "AmosBow",
+    "Ultime soupir": "ElegyForTheEnd",
+    "Étoile polaire": "PolarStar",
+    "Simulacre d'eau": "AquaSimulacra",
+    "Pulsation du tonnerre": "Thundering Pulse",
+    "La voie du chasseur": "HuntersPath",
+    "La première grande magie": "TheFirstGreatMagic",
+    "Corde de pluie blanche": "SilvershowerHeartstrings",
+    "Plumage cramoisi du vautour astral": "AstralVulturesCrimsonPlumage",
+    "Les chroniques de l’aube": "TheDaybreakChronicles",
+
+    // 5 étoiles - armes d'hast
+    "Bâton de Homa": "StaffOfHoma",
+    "Berge de la Voûte d'Azur": "SkywardSpine",
+    "Perceur prismatique": "VortexVanquisher",
+    "Lance de jade ailée": "PrimordialJadeWingedSpear",
+    "Étouffeur de calamités": "CalamityQueller",
+    "Lumière du faucheur": "EngulfingLightning",
+    "Bâton des sables écarlates": "StaffOfTheScarletSands",
+    "Semblance de la lune écarlate": "CrimsonMoonsSemblance",
+    "Élégie de Lumidouce": "LumidouceElegy",
+    "Symphoniste des senteurs": "SymphonistOfScents",
+    "Halo fracturé": "FracturedHalo",
+    "Ruines sanglantes": "BloodsoakedRuins",
+
+    // 5 étoiles - catalyseurs
+    "Atlas de la Voûte d'Azur": "SkywardAtlas",
+    "L'origine des Quatre Vents": "LostPrayerToTheSacredWinds",
+    "Chaînes mortelles": "MemoryOfDust",
+    "Splendeur de l'azur": "JadefallsSplendor",
+    "Lueur de la lune éternelle": "EverlastingMoonglow",
+    "Vérité de Kagura": "KagurasVerity",
+    "Mille rêves flottants": "AThousandFloatingDreams",
+    "Mémoire de Tulaytullah": "TulaytullahsRemembrance",
+    "Supervision de trésorerie": "CashflowSupervision",
+    "Tome du flux éternel": "TomeOfTheEternalFlow",
+    "Écho de la grue": "CranesEchoingCall",
+    "Instant surfant": "SurfsUp",
+    "Veillée d'appel d'étoiles": "StarcallersWatch",
+    "Matinée flânée sous le soleil": "SunnyMorningSleepIn",
+    "Notions colorées": "VividNotions",
+    "Miroir du tisse-nuit": "NightweaversLookingGlass",
+    "Reliquaire de la vérité": "ReliquaryOfTruth",
+    // 6.3
+    "Rappel de la nocturne": "NocturnesCurtainCall",
 };
 
 const SET_NAME_MAPPING = {

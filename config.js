@@ -387,16 +387,16 @@ const WEAPON_PASSIVES = {
     "LithicBlade": {
         selectMode: "exclusive",
         buffs: [
-            {label: "Si 1 personnage de Liyue est dans l'équipe (ATK% et Taux CRIT)", stats: {"atk_": [0.07, 0.01], "critRate_": [0.03, 0.01]}},
-            {label: "Si 2 personnages de Liyue sont dans l'équipe (ATK% et Taux CRIT)", stats: {"atk_": [0.14, 0.02], "critRate_": [0.06, 0.02]}},
-            {label: "Si 3 personnages de Liyue sont dans l'équipe (ATK% et Taux CRIT)", stats: {"atk_": [0.21, 0.03], "critRate_": [0.09, 0.03]}},
-            {label: "Si 4 personnages de Liyue sont dans l'équipe (ATK% et Taux CRIT)", stats: {"atk_": [0.28, 0.04], "critRate_": [0.12, 0.04]}}
+            {label: "Si 1 personnage de Liyue est dans l'équipe (ATQ% et Taux CRIT)", stats: {"atk_": [0.07, 0.01], "critRate_": [0.03, 0.01]}},
+            {label: "Si 2 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)", stats: {"atk_": [0.14, 0.02], "critRate_": [0.06, 0.02]}},
+            {label: "Si 3 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)", stats: {"atk_": [0.21, 0.03], "critRate_": [0.09, 0.03]}},
+            {label: "Si 4 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)", stats: {"atk_": [0.28, 0.04], "critRate_": [0.12, 0.04]}}
         ]
     },
     "MakhairaAquamarine": {
         buffs: [
             {
-                label: "Bonus selon la Maîtrise élémentaire (ATK%)",
+                label: "Bonus selon la Maîtrise élémentaire (ATQ%)",
                 stats: {
                     "atk_bonus_scaling": {
                         "source": "eleMas",
@@ -419,7 +419,7 @@ const WEAPON_PASSIVES = {
     "MailedFlower": {
         buffs: [
             {
-                label: "Si une compétence élémentaire touche un ennemi ou qu'une réaction élémentaire est déclenchée (ATK% et Maîtrise élémentaire)",
+                label: "Si une compétence élémentaire touche un ennemi ou qu'une réaction élémentaire est déclenchée (ATQ% et Maîtrise élémentaire)",
                 stats: {
                     "atk_": [0.12, 0.03],
                     "eleMas": [48, 12]
@@ -453,7 +453,7 @@ const WEAPON_PASSIVES = {
     "TidalShadow": {
         buffs: [
             {
-                label: "Si le porteur reçoit des soins (ATK%)",
+                label: "Si le porteur reçoit des soins (ATQ%)",
                 stats: {
                     "atk_": [0.24, 0.06],
                 }
@@ -535,7 +535,7 @@ const WEAPON_PASSIVES = {
     "PrototypeCrescent": {
         buffs: [
             {
-                label: "Si un point faible est touché en mode visée (ATK%)",
+                label: "Si un point faible est touché en mode visée (ATQ%)",
                 stats: {
                     "atk_": [0.36, 0.09],
                 }
@@ -545,10 +545,10 @@ const WEAPON_PASSIVES = {
     "CompoundBow": {
         selectMode: "cumulative",
         buffs: [
-            { label: "1 cumul (ATK%)", stats: { "atk_": [0.04, 0.01] } },
-            { label: "2 cumuls (ATK%)", stats: { "atk_": [0.04, 0.01] } },
-            { label: "3 cumuls (ATK%)", stats: { "atk_": [0.04, 0.01] } },
-            { label: "4 cumuls (ATK%)", stats: { "atk_": [0.04, 0.01] } },
+            { label: "1 cumul (ATQ%)", stats: { "atk_": [0.04, 0.01] } },
+            { label: "2 cumuls (ATQ%)", stats: { "atk_": [0.04, 0.01] } },
+            { label: "3 cumuls (ATQ%)", stats: { "atk_": [0.04, 0.01] } },
+            { label: "4 cumuls (ATQ%)", stats: { "atk_": [0.04, 0.01] } },
         ]
     },
     "BlackcliffWarbow": {
@@ -562,7 +562,7 @@ const WEAPON_PASSIVES = {
     "WindblumeOde": {
         buffs: [
             {
-                label: "Si une compétence élémentaire est utilisée (ATK%)",
+                label: "Si une compétence élémentaire est utilisée (ATQ%)",
                 stats: {
                     "atk_": [0.16, 0.04],
                 }
@@ -597,7 +597,7 @@ const WEAPON_PASSIVES = {
         selectMode: "exclusive",
         buffs: [
             {
-                label: "Si le personnage soigne ou reçoit de soins une 1ère fois (ATK% et DGTs Élémentaires)",
+                label: "Si le personnage soigne ou reçoit de soins une 1ère fois (ATQ% et DGTs Élémentaires)",
                 stats: {
                     "atk_": [0.03, 0.01],
                     "pyro_dmg_": [0.07, 0.015],
@@ -610,7 +610,7 @@ const WEAPON_PASSIVES = {
                 }
             },
             {
-                label: "Si le personnage soigne ou reçoit de soins une 2ème fois (ATK% et DGTs Élémentaires)",
+                label: "Si le personnage soigne ou reçoit de soins une 2ème fois (ATQ% et DGTs Élémentaires)",
                 stats: {
                     "atk_": [0.06, 0.02],
                     "pyro_dmg_": [0.14, 0.03],
@@ -623,7 +623,7 @@ const WEAPON_PASSIVES = {
                 }
             },
             {
-                label: "Si le personnage soigne ou reçoit de soins une 3ème fois (ATK% et DGTs Élémentaires)",
+                label: "Si le personnage soigne ou reçoit de soins une 3ème fois (ATQ% et DGTs Élémentaires)",
                 stats: {
                     "atk_": [0.09, 0.03],
                     "pyro_dmg_": [0.21, 0.045],
@@ -641,26 +641,26 @@ const WEAPON_PASSIVES = {
         selectMode: "ChainBreaker",
         buffs: [
             {
-                label: "Si l'équipe est composée d'1 personnage de Natlan ou d'un élément différent du porteur (ATK%)",
+                label: "Si l'équipe est composée d'1 personnage de Natlan ou d'un élément différent du porteur (ATQ%)",
                 stats: {
                     "atk_": [0.048, 0.012] // 1x
                 }
             },
             {
-                label: "Si l'équipe est composée de 2 personnages de Natlan ou d'un élément différent du porteur (ATK%)",
+                label: "Si l'équipe est composée de 2 personnages de Natlan ou d'un élément différent du porteur (ATQ%)",
                 stats: {
                     "atk_": [0.096, 0.024] // 2x
                 }
             },
             {
-                label: "Si l'équipe est composée de 3 personnages de Natlan ou d'un élément différent du porteur (ATK% et Maîtrise élémentaire)",
+                label: "Si l'équipe est composée de 3 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
                 stats: {
                     "atk_": [0.144, 0.036], // 3x
                     "eleMas": [24, 6]       // Se déclenche ici
                 }
             },
             {
-                label: "Si l'équipe est composée de 4 personnages de Natlan ou d'un élément différent du porteur (ATK% et Maîtrise élémentaire)",
+                label: "Si l'équipe est composée de 4 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
                 stats: {
                     "atk_": [0.192, 0.048], // 4x
                     "eleMas": [24, 6]       // Toujours le même bonus ME
@@ -688,7 +688,7 @@ const WEAPON_PASSIVES = {
     "RainbowSerpentsRainBow": {
         buffs: [
             {
-                label: "Si une attaque touche un ennemi et que le porteur est hors du terrain (ATK%)",
+                label: "Si une attaque touche un ennemi et que le porteur est hors du terrain (ATQ%)",
                 stats: {
                     "atk_": [0.28, 0.07],
                 }
@@ -709,13 +709,13 @@ const WEAPON_PASSIVES = {
         selectMode: "exclusive",
         buffs: [
             {
-                label: "S'il y a deux ennemis ou plus aux alentours (ATK% et DÉF%)",
+                label: "S'il y a deux ennemis ou plus aux alentours (ATQ% et DÉF%)",
                 stats: {
                     "atk_": [0.16, 0.04], "def_": [0.16, 0.04]
                 }
             },
             {
-                label: "S'il y a plus de deux ennemis aux alentours (ATK%)",
+                label: "S'il y a plus de deux ennemis aux alentours (ATQ%)",
                 stats: {
                     "atk_": [0.24, 0.04]
                 }
@@ -725,10 +725,10 @@ const WEAPON_PASSIVES = {
     "LithicSpear": {
         selectMode: "exclusive",
         buffs: [
-            {label: "Si 1 personnage de Liyue est dans l'équipe (ATK% et Taux CRIT)", stats: {"atk_": [0.07, 0.01], "critRate_": [0.03, 0.01]}},
-            {label: "Si 2 personnages de Liyue sont dans l'équipe (ATK% et Taux CRIT)", stats: {"atk_": [0.14, 0.02], "critRate_": [0.06, 0.02]}},
-            {label: "Si 3 personnages de Liyue sont dans l'équipe (ATK% et Taux CRIT)", stats: {"atk_": [0.21, 0.03], "critRate_": [0.09, 0.03]}},
-            {label: "Si 4 personnages de Liyue sont dans l'équipe (ATK% et Taux CRIT)", stats: {"atk_": [0.28, 0.04], "critRate_": [0.12, 0.04]}}
+            {label: "Si 1 personnage de Liyue est dans l'équipe (ATQ% et Taux CRIT)", stats: {"atk_": [0.07, 0.01], "critRate_": [0.03, 0.01]}},
+            {label: "Si 2 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)", stats: {"atk_": [0.14, 0.02], "critRate_": [0.06, 0.02]}},
+            {label: "Si 3 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)", stats: {"atk_": [0.21, 0.03], "critRate_": [0.09, 0.03]}},
+            {label: "Si 4 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)", stats: {"atk_": [0.28, 0.04], "critRate_": [0.12, 0.04]}}
         ]
     },
     "RoyalSpear": {
@@ -754,7 +754,7 @@ const WEAPON_PASSIVES = {
     "Moonpiercer": {
         buffs: [
             {
-                label: "Si une réaction en lien avec l'élément Dendro est déclenchée (ATK%)",
+                label: "Si une réaction en lien avec l'élément Dendro est déclenchée (ATQ%)",
                 stats: {
                     "atk_": [0.16, 0.04],
                 }
@@ -764,7 +764,7 @@ const WEAPON_PASSIVES = {
     "MissiveWindspear": {
         buffs: [
             {
-                label: "Si une réaction élémentaire est déclenchée (ATK% et Maîtrise élémentaire)",
+                label: "Si une réaction élémentaire est déclenchée (ATQ% et Maîtrise élémentaire)",
                 stats: {
                     "atk_": [0.12, 0.03], "eleMas": [48, 12]
                 }
@@ -785,7 +785,7 @@ const WEAPON_PASSIVES = {
         selectMode: "exclusive",
         buffs: [
             {
-                label: "Si le personnage soigne ou reçoit de soins une 1ère fois (ATK% et DGTs Élémentaires)",
+                label: "Si le personnage soigne ou reçoit de soins une 1ère fois (ATQ% et DGTs Élémentaires)",
                 stats: {
                     "atk_": [0.03, 0.01],
                     "pyro_dmg_": [0.07, 0.015],
@@ -798,7 +798,7 @@ const WEAPON_PASSIVES = {
                 }
             },
             {
-                label: "Si le personnage soigne ou reçoit de soins une 2ème fois (ATK% et DGTs Élémentaires)",
+                label: "Si le personnage soigne ou reçoit de soins une 2ème fois (ATQ% et DGTs Élémentaires)",
                 stats: {
                     "atk_": [0.06, 0.02],
                     "pyro_dmg_": [0.14, 0.03],
@@ -811,7 +811,7 @@ const WEAPON_PASSIVES = {
                 }
             },
             {
-                label: "Si le personnage soigne ou reçoit de soins une 3ème fois (ATK% et DGTs Élémentaires)",
+                label: "Si le personnage soigne ou reçoit de soins une 3ème fois (ATQ% et DGTs Élémentaires)",
                 stats: {
                     "atk_": [0.09, 0.03],
                     "pyro_dmg_": [0.21, 0.045],
@@ -838,7 +838,7 @@ const WEAPON_PASSIVES = {
     "TamayurateiNoOhanashi": {
         buffs: [
             {
-                label: "Si une compétence élémentaire est utilisée (ATK%)",
+                label: "Si une compétence élémentaire est utilisée (ATQ%)",
                 stats: {
                     "atk_": [0.20, 0.05]
                 }
@@ -848,9 +848,9 @@ const WEAPON_PASSIVES = {
     "SacrificersStaff": {
         selectMode: "cumulative",
         buffs: [
-            { label: "Si une compétence élémentaire touche un ennemi une 1ère fois (ATK% et Recharge d'énergie)", stats: { "atk_": [0.08, 0.02], "enerRech_": [0.06, 0.015] } },
-            { label: "Si une compétence élémentaire touche un ennemi une 2ème fois (ATK% et Recharge d'énergie)", stats: { "atk_": [0.08, 0.02], "enerRech_": [0.06, 0.015] } },
-            { label: "Si une compétence élémentaire touche un ennemi une 3ème fois (ATK% et Recharge d'énergie)", stats: { "atk_": [0.08, 0.02], "enerRech_": [0.06, 0.015] } },
+            { label: "Si une compétence élémentaire touche un ennemi une 1ère fois (ATQ% et Recharge d'énergie)", stats: { "atk_": [0.08, 0.02], "enerRech_": [0.06, 0.015] } },
+            { label: "Si une compétence élémentaire touche un ennemi une 2ème fois (ATQ% et Recharge d'énergie)", stats: { "atk_": [0.08, 0.02], "enerRech_": [0.06, 0.015] } },
+            { label: "Si une compétence élémentaire touche un ennemi une 3ème fois (ATQ% et Recharge d'énergie)", stats: { "atk_": [0.08, 0.02], "enerRech_": [0.06, 0.015] } },
         ]
     },
 
@@ -858,7 +858,7 @@ const WEAPON_PASSIVES = {
     "TheWidsith": {
         selectMode: "exclusive",
         buffs: [
-            {label: "Récital (ATK%)", stats: {"atk_": [0.60, 0.15]}},
+            {label: "Récital (ATQ%)", stats: {"atk_": [0.60, 0.15]}},
             {
                 label: "Aria (DGTs Élémentaires)",
                 stats: {
@@ -924,7 +924,7 @@ const WEAPON_PASSIVES = {
     "WineAndSong": {
         buffs: [
             {
-                label: "Si le personnage sprint après avoir utilisé une compétence élémentaire (ATK%)",
+                label: "Si le personnage sprint après avoir utilisé une compétence élémentaire (ATQ%)",
                 stats: {
                     "atk_": [0.20, 0.05]
                 }
@@ -934,14 +934,29 @@ const WEAPON_PASSIVES = {
     "DodocoTales": {
         buffs: [
             {
-                label: "Si une attaque chargée touche un ennemi (ATK%)",
+                label: "Si une attaque chargée touche un ennemi (ATQ%)",
                 stats: {
                     "atk_": [0.08, 0.02]
                 }
             }
         ]
     },
-    //HakushinRing peut-être
+    "HakushinRing": {
+        buffs: [
+            {
+                label: "Si une réaction élémentaire en lien avec Électro est déclenchée (DGTs Élémentaires)",
+                stats: {
+                    "pyro_dmg_": [0.10, 0.025],
+                    "hydro_dmg_": [0.10, 0.025],
+                    "cryo_dmg_": [0.10, 0.025],
+                    "electro_dmg_": [0.10, 0.025],
+                    "anemo_dmg_": [0.10, 0.025],
+                    "geo_dmg_": [0.10, 0.025],
+                    "dendro_dmg_": [0.10, 0.025]
+                }
+            }
+        ]
+    },
     "OathswornEye": {
         buffs: [
             {
@@ -955,7 +970,7 @@ const WEAPON_PASSIVES = {
     "WanderingEvenstar": {
         buffs: [
             {
-                label: "Bonus selon la Maîtrise élémentaire (ATK%)",
+                label: "Bonus selon la Maîtrise élémentaire (ATQ%)",
                 stats: {
                     "atk_bonus_scaling": {
                         "source": "eleMas",
@@ -1065,62 +1080,844 @@ const WEAPON_PASSIVES = {
     },
 
     // 5 étoiles - épées à une main
-
-
-
-
-
-
-    // Cas simple : Bâton d'Homa (On garde le format simple objet, le script gérera les deux)
-    "StaffOfHoma": {
-        "hp_": 0.20,
-        "atk_bonus_scaling": { "source": "hp", "percent": 0.008 }
+    "FreedomSworn": {
+        buffs: [
+            {
+                label: "Si 2 réactions élémentaires sont déclenchées (ATQ%)",
+                stats: {
+                    "atk_": [0.20, 0.05]
+                }
+            }
+        ]
+    },
+    "SummitShaper": {
+        selectMode: "cumulative",
+        buffs: [
+            {
+                label: "Si une 1ère attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 2ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 3ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 4ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 5ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            }
+        ]
+    },
+    "MistsplitterReforged": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "1 Emblème (DGTs Élémentaires)",
+                stats: {
+                    "pyro_dmg_": [0.08, 0.02],
+                    "hydro_dmg_": [0.08, 0.02],
+                    "cryo_dmg_": [0.08, 0.02],
+                    "electro_dmg_": [0.08, 0.02],
+                    "anemo_dmg_": [0.08, 0.02],
+                    "geo_dmg_": [0.08, 0.02],
+                    "dendro_dmg_": [0.08, 0.02]
+                }
+            },
+            {
+                label: "2 Emblèmes (DGTs Élémentaires)",
+                stats: {
+                    "pyro_dmg_": [0.16, 0.04],
+                    "hydro_dmg_": [0.16, 0.04],
+                    "cryo_dmg_": [0.16, 0.04],
+                    "electro_dmg_": [0.16, 0.04],
+                    "anemo_dmg_": [0.16, 0.04],
+                    "geo_dmg_": [0.16, 0.04],
+                    "dendro_dmg_": [0.16, 0.04]
+                }
+            },
+            {
+                label: "3 Emblèmes (DGTs Élémentaires)",
+                stats: {
+                    "pyro_dmg_": [0.28, 0.07],
+                    "hydro_dmg_": [0.28, 0.07],
+                    "cryo_dmg_": [0.28, 0.07],
+                    "electro_dmg_": [0.28, 0.07],
+                    "anemo_dmg_": [0.28, 0.07],
+                    "geo_dmg_": [0.28, 0.07],
+                    "dendro_dmg_": [0.28, 0.07]
+                }
+            }
+        ]
+    },
+    "KeyOfKhajNisut": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "1 Stack (PV% en Maîtrise élémentaire)",
+                stats: {
+                    "eleMas_bonus_scaling": {
+                        source: "hp", // Basé sur les PV Max
+                        percent: [0.0012, 0.0003] // 0.12%
+                    }
+                }
+            },
+            {
+                label: "2 Stacks (PV% en Maîtrise élémentaire)",
+                stats: {
+                    "eleMas_bonus_scaling": {
+                        source: "hp",
+                        percent: [0.0024, 0.0006] // 0.24%
+                    }
+                }
+            },
+            {
+                label: "3 Stacks (PV% en Maîtrise élémentaire)",
+                stats: {
+                    "eleMas_bonus_scaling": {
+                        source: "hp",
+                        // 0.36% (Perso) + 0.20% (Team) = 0.56% Total
+                        percent: [0.0056, 0.0014]
+                    }
+                }
+            }
+        ]
+    },
+    "SplendorOfTranquilWaters": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "Si des alliés subissent une modification de PV une 1ère fois (PV%)",
+                stats: {
+                    "hp_": [0.14, 0.035]
+                }
+            },
+            {
+                label: "Si des alliés subissent une modification de PV une 2ème fois (PV%)",
+                stats: {
+                    "hp_": [0.28, 0.07]
+                }
+            }
+        ]
+    },
+    "UrakuMisugiri": {
+        buffs: [
+            {
+                label: "Si le personnage actif inflige des dégâts Géo (DÉF%)",
+                stats: {
+                    "def_": [0.20, 0.05]
+                }
+            }
+        ]
+    },
+    "PeakPatrolSong": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "Si une attaque normale ou plongée touche un ennemi une 1ère fois (DÉF% et DGTs Élémentaires)",
+                stats: {
+                    "def_": [0.08, 0.02],
+                    "pyro_dmg_": [0.10, 0.025],
+                    "hydro_dmg_": [0.10, 0.025],
+                    "cryo_dmg_": [0.10, 0.025],
+                    "electro_dmg_": [0.10, 0.025],
+                    "anemo_dmg_": [0.10, 0.025],
+                    "geo_dmg_": [0.10, 0.025],
+                    "dendro_dmg_": [0.10, 0.025]
+                }
+            },
+            {
+                label: "Si une attaque normale ou plongée touche un ennemi une 2ème fois (DÉF% et DGTs Élémentaires)",
+                stats: {
+                    "def_": [0.16, 0.04],
+                    "elemental_dmg_": [0.20, 0.05],
+                    "pyro_dmg_bonus_scaling": { source: "def", percent: [0.008, 0.002] },
+                    "hydro_dmg_bonus_scaling": { source: "def", percent: [0.008, 0.002] },
+                    "cryo_dmg_bonus_scaling": { source: "def", percent: [0.008, 0.002] },
+                    "electro_dmg_bonus_scaling": { source: "def", percent: [0.008, 0.002] },
+                    "anemo_dmg_bonus_scaling": { source: "def", percent: [0.008, 0.002] },
+                    "geo_dmg_bonus_scaling": { source: "def", percent: [0.008, 0.002] },
+                    "dendro_dmg_bonus_scaling": { source: "def", percent: [0.008, 0.002] }
+                }
+            }
+        ]
+    },
+    "Azurelight": {
+        buffs: [
+            {
+                label: "Si une compétence élémentaire est utilisée (ATQ%)",
+                stats: { "atk_": 0.24 }
+            },
+            {
+                label: "Si le porteur a 0 énergie (ATQ% et DGT CRIT)",
+                stats: { "atk_": 0.24, "critDMG_": 0.40 }
+            }
+        ]
+    },
+    "AthameArtis": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "Si un déchaînement élémentaire touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.20, 0.05]
+                }
+            },
+            {
+                label: "Si l'équipe est composée de deux membre de l'Hexerei (ATQ%)",
+                stats: {
+                    "atk_": [0.35, 0.0875]
+                }
+            }
+        ]
     },
 
-    // CAS COMPLEXE (Ta demande) : Liste d'effets avec Labels
+    // 5 étoiles - épées à une main
+    "WolfsGravestone": {
+        buffs: [
+            {
+                label: "Si une attaque touche un ennemi ayant moins de 30% de ses PV (ATQ%)",
+                stats: {
+                    "atk_": [0.40, 0.10]
+                }
+            }
+        ]
+    },
+    "SongOfBrokenPines": {
+        buffs: [
+            {
+                label: "Si 4 attaques normales ou chargées touchent un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.20, 0.05]
+                }
+            }
+        ]
+    },
+    "TheUnforged": {
+        selectMode: "cumulative",
+        buffs: [
+            {
+                label: "Si une 1ère attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 2ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 3ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 4ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 5ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            }
+        ]
+    },
+    "BeaconOfTheReedSea": {
+        buffs: [
+            {
+                label: "Si une compétence élémentaire touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.20, 0.05]
+                }
+            },
+            {
+                label: "Si le personnage subit des dégâts (ATQ%)",
+                stats: {
+                    "atk_": [0.20, 0.05]
+                }
+            },
+            {
+                label: "Si le personnage n'est pas protégé par un bouclier (PV%)",
+                stats: {
+                    "hp_": [0.32, 0.08]
+                }
+            }
+        ]
+    },
     "AThousandBlazingSuns": {
         selectMode: "cumulative",
         buffs: [
             {
-                label: "Effet Brillance (ATQ & DGT CRIT de base)",
+                label: "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ% et DGT CRIT)",
                 stats: {
                     "atk_": [0.28, 0.07],
                     "critDMG_": [0.20, 0.05]
                 }
             },
             {
-                label: "Sous Bénédiction noctâme (+75% d'efficacité)",
+                label: "Si le personnage est sous une Bénédiction noctâme (+75% d'efficacité)",
                 stats: {
-                    // Calcul : On multiplie la base ET l'incrément par 0.75
-                    "atk_": [0.21, 0.0525],      // 21% en R1 -> 42% en R5
-                    "critDMG_": [0.15, 0.0375]   // 15% en R1 -> 30% en R5
+                    "atk_": [0.21, 0.0525],
+                    "critDMG_": [0.15, 0.0375]
                 }
             }
         ]
     },
 
-    "Lumière du faucheur": { "enerRech_": 0.30, "electro_dmg_": 0.12 }, // Format simple
-
-    "KeyOfKhajNisut": {
-        "hp_": 0.20,
-        "eleMas_bonus_scaling": { "source": "hp", "percent": 0.0012 }
+    // 5 étoiles - arcs
+    "ElegyForTheEnd": {
+        buffs: [
+            {
+                label: "Si 4 compétences ou déchaînements élémentaires ont touché un ennemi (Maîtrise élémentaire et ATQ%)",
+                stats: {
+                    "atk_": [0.20, 0.05],
+                    "eleMas": [100, 25]
+                }
+            }
+        ]
+    },
+    "PolarStar": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "1 Stack (ATQ%)",
+                stats: {
+                    "atk_": [0.10, 0.025]
+                }
+            },
+            {
+                label: "2 Stacks (ATQ%)",
+                stats: {
+                    "atk_": [0.20, 0.05]
+                }
+            },
+            {
+                label: "3 Stacks (ATQ%)",
+                stats: {
+                    "atk_": [0.30, 0.075]
+                }
+            },
+            {
+                label: "4 Stacks (ATQ%)",
+                stats: {
+                    "atk_": [0.48, 0.12]
+                }
+            }
+        ]
+    },
+    "TheFirstGreatMagic": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "1 Allié du même élément que le porteur (ATQ%)",
+                stats: {
+                    "atk_": [0.16, 0.04]
+                }
+            },
+            {
+                label: "2 Alliés du même élément que le porteur (ATQ%)",
+                stats: {
+                    "atk_": [0.32, 0.08]
+                }
+            },
+            {
+                label: "3 Alliés du même élément que le porteur (ATQ%)",
+                stats: {
+                    "atk_": [0.48, 0.12]
+                }
+            }
+        ]
+    },
+    "SilvershowerHeartstrings": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "1 Stack (PV%)",
+                stats: {
+                    "hp_": [0.12, 0.03]
+                }
+            },
+            {
+                label: "2 Stacks (PV%)",
+                stats: {
+                    "atk_": [0.24, 0.06]
+                }
+            },
+            {
+                label: "3 Stacks (PV% et Taux CRIT uniquement pour le déchaînement élémentaire)",
+                stats: {
+                    "atk_": [0.40, 0.10],
+                    "critRate_": [0.28, 0.07]
+                }
+            }
+        ]
+    },
+    "AstralVulturesCrimsonPlumage": {
+        buffs: [
+            {
+                label: "Si une réaction élémentaire Dispersion est déclenchée (ATQ%)",
+                stats: {
+                    "atk_": [0.24, 0.06]
+                }
+            }
+        ]
     },
 
-    "Coupeur de jade primordial": {
-        "hp_": 0.20,
-        "atk_bonus_scaling": { "source": "hp", "percent": 0.012 }
+    // 5 étoiles - armes d'hast
+    "StaffOfHoma": {
+        buffs: [
+            {
+                label: "Si les PV sont inférieurs à 50% (ATQ% en fonction des PV%)",
+                stats: {
+                    "atk_bonus_scaling": {
+                        source: "hp",
+                        percent: [0.01, 0.002]
+                    }
+                }
+            }
+        ]
+    },
+    "VortexVanquisher": {
+        selectMode: "cumulative",
+        buffs: [
+            {
+                label: "Si une 1ère attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 2ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 3ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 4ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 5ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            }
+        ]
+    },
+    "PrimordialJadeWingedSpear": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "1 Stack (ATQ%)",
+                stats: {
+                    "atk_": [0.032, 0.007]
+                }
+            },
+            {
+                label: "2 Stacks (ATQ%)",
+                stats: {
+                    "atk_": [0.064, 0.014]
+                }
+            },
+            {
+                label: "3 Stacks (ATQ%)",
+                stats: {
+                    "atk_": [0.096, 0.021]
+                }
+            },
+            {
+                label: "4 Stacks (ATQ%)",
+                stats: {
+                    "atk_": [0.128, 0.028]
+                }
+            },
+            {
+                label: "5 Stacks (ATQ%)",
+                stats: {
+                    "atk_": [0.160, 0.035]
+                }
+            },
+            {
+                label: "6 Stacks (ATQ%)",
+                stats: {
+                    "atk_": [0.192, 0.042]
+                }
+            },
+            {
+                label: "7 Stacks (ATQ%)",
+                stats: {
+                    "atk_": [0.224, 0.049]
+                }
+            }
+        ]
+    },
+    "CalamityQueller": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "Max Stacks sur le terrain (ATQ%)",
+                stats: {
+                    "atk_": [0.192, 0.048]
+                }
+            },
+            {
+                label: "Max Stacks hors du terrain (ATQ%)",
+                stats: {
+                    "atk_": [0.384, 0.096]
+                }
+            }
+        ]
+    },
+    "EngulfingLightning": {
+        buffs: [
+            {
+                label: "Si un déchaînement élémentaire est utilisé (Recharge d'énergie)",
+                stats: {
+                    "enerRech_": [0.30, 0.05]
+                }
+            }
+        ]
+    },
+    "StaffOfTheScarletSands": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "1 Stack (ATQ% en fonction de la Maîtrise élémentaire)",
+                stats: {
+                    "atk_bonus_scaling": {
+                        source: "eleMas",
+                        percent: [0.28, 0.07]
+                    }
+                }
+            },
+            {
+                label: "2 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
+                stats: {
+                    "atk_bonus_scaling": {
+                        source: "eleMas",
+                        percent: [0.56, 0.14]
+                    }
+                }
+            },
+            {
+                label: "3 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
+                stats: {
+                    "atk_bonus_scaling": {
+                        source: "eleMas",
+                        percent: [0.84, 0.21]
+                    }
+                }
+            }
+        ]
+    },
+    "SymphonistOfScents": {
+        buffs: [
+            {
+                label: "Si le porteur est hors du terrain (ATQ%)",
+                stats: {
+                    "atk_": [0.12, 0.03]
+                }
+            },
+            {
+                label: "Si le porteur soigne un allié (ATQ%)",
+                stats: {
+                    "atk_": [0.32, 0.08]
+                }
+            }
+        ]
+    },
+    "FracturedHalo": {
+        buffs: [
+            {
+                label: "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ%)",
+                stats: {
+                    "atk_": [0.24, 0.06]
+                }
+            }
+        ]
+    },
+    "BloodsoakedRuins": {
+        buffs: [
+            {
+                label: "Si une réaction Sélène est déclenchée (DGT CRIT)",
+                stats: {
+                    "critDMG_": [0.28, 0.07]
+                }
+            }
+        ]
     },
 
-    "Azurelight": [
-        {
-            label: "Après compétence (ATQ)",
-            stats: { "atk_": 0.24 }
-        },
-        {
-            label: "0 Énergie (ATQ & DGT Critique)",
-            stats: { "atk_": 0.24, "critDMG_": 0.40 }
-        }
-    ],
+    // 5 étoiles - catalyseurs
+    "LostPrayerToTheSacredWinds": {
+        selectMode: "cumulative",
+        buffs: [
+            {
+                label: "1 Stack (DGTs Élémentaires)",
+                stats: {
+                    "pyro_dmg_": [0.08, 0.02],
+                    "hydro_dmg_": [0.08, 0.02],
+                    "cryo_dmg_": [0.08, 0.02],
+                    "electro_dmg_": [0.08, 0.02],
+                    "anemo_dmg_": [0.08, 0.02],
+                    "geo_dmg_": [0.08, 0.02],
+                    "dendro_dmg_": [0.08, 0.02]
+                }
+            },
+            {
+                label: "2 Stacks (DGTs Élémentaires)",
+                stats: {
+                    "pyro_dmg_": [0.08, 0.02],
+                    "hydro_dmg_": [0.08, 0.02],
+                    "cryo_dmg_": [0.08, 0.02],
+                    "electro_dmg_": [0.08, 0.02],
+                    "anemo_dmg_": [0.08, 0.02],
+                    "geo_dmg_": [0.08, 0.02],
+                    "dendro_dmg_": [0.08, 0.02]
+                }
+            },
+            {
+                label: "3 Stacks (DGTs Élémentaires)",
+                stats: {
+                    "pyro_dmg_": [0.08, 0.02],
+                    "hydro_dmg_": [0.08, 0.02],
+                    "cryo_dmg_": [0.08, 0.02],
+                    "electro_dmg_": [0.08, 0.02],
+                    "anemo_dmg_": [0.08, 0.02],
+                    "geo_dmg_": [0.08, 0.02],
+                    "dendro_dmg_": [0.08, 0.02]
+                }
+            },
+            {
+                label: "4 Stacks (DGTs Élémentaires)",
+                stats: {
+                    "pyro_dmg_": [0.08, 0.02],
+                    "hydro_dmg_": [0.08, 0.02],
+                    "cryo_dmg_": [0.08, 0.02],
+                    "electro_dmg_": [0.08, 0.02],
+                    "anemo_dmg_": [0.08, 0.02],
+                    "geo_dmg_": [0.08, 0.02],
+                    "dendro_dmg_": [0.08, 0.02]
+                }
+            }
+        ]
+    },
+    "MemoryOfDust": {
+        selectMode: "cumulative",
+        buffs: [
+            {
+                label: "Si une 1ère attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 2ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 3ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 4ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            },
+            {
+                label: "Si une 5ème attaque touche un ennemi (ATQ%)",
+                stats: {
+                    "atk_": [0.04, 0.01]
+                }
+            }
+        ]
+    },
+    "JadefallsSplendor": {
+        buffs: [
+            {
+                label: "Si un déchaînement élémentaire est utilisé ou qu'un bouclier est créé (DGTs Élémentaires en fonction des PV)",
+                stats: {
+                    "pyro_dmg_bonus_scaling": { source: "hp", percent: [0.0003, 0.0002] },
+                    "hydro_dmg_bonus_scaling": { source: "hp", percent: [0.0003, 0.0002] },
+                    "cryo_dmg_bonus_scaling": { source: "hp", percent: [0.0003, 0.0002] },
+                    "electro_dmg_bonus_scaling": { source: "hp", percent: [0.0003, 0.0002] },
+                    "anemo_dmg_bonus_scaling": { source: "hp", percent: [0.0003, 0.0002] },
+                    "geo_dmg_bonus_scaling": { source: "hp", percent: [0.0003, 0.0002] },
+                    "dendro_dmg_bonus_scaling": { source: "hp", percent: [0.0003, 0.0002] }
+                }
+            }
+        ]
+    },
+    "KagurasVerity": {
+        buffs: [
+            {
+                label: "Si 3 compétences élémentaires sont utilisées (DGTs Élémentaires)",
+                stats: {
+                    "pyro_dmg_": [0.12, 0.03],
+                    "hydro_dmg_": [0.12, 0.03],
+                    "cryo_dmg_": [0.12, 0.03],
+                    "electro_dmg_": [0.12, 0.03],
+                    "anemo_dmg_": [0.12, 0.03],
+                    "geo_dmg_": [0.12, 0.03],
+                    "dendro_dmg_": [0.12, 0.03]
+                }
+            }
+        ]
+    },
+    "AThousandFloatingDreams": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "3 Alliés du même élément que le porteur (Maîtrise élémentaire)",
+                stats: {
+                    "eleMas": [96, 24]
+                }
+            },
+            {
+                label: "2 Alliés du même élément que le porteur et 1 Différent (Maîtrise élémentaire et DGTs Élémentaires)",
+                stats: {
+                    "eleMas": [64, 16],
+                    "elemental_dmg_": [0.10, 0.04]
+                }
+            },
+            {
+                label: "1 Alliés du même élément que le porteur et 2 Différents (Maîtrise élémentaire et DGTs Élémentaires)",
+                stats: {
+                    "eleMas": [32, 8],
+                    "elemental_dmg_": [0.20, 0.08]
+                }
+            },
+            {
+                label: "3 Alliés d'un élément différent de celui du porteur (DGTs Élémentaires)",
+                stats: {
+                    "elemental_dmg_": [0.30, 0.12]
+                }
+            }
+        ]
+    },
+    "SunnyMorningSleepIn": {
+        buffs: [
+            {
+                label: "Si une réaction de Dispersion est déclenchée (Maîtrise élémentaire)",
+                stats: {
+                    "eleMas": [120, 30]
+                }
+            },
+            {
+                label: "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+                stats: {
+                    "eleMas": [96, 24]
+                }
+            },
+            {
+                label: "Si un déchaînement élémentaire est utilisé (Maîtrise élémentaire)",
+                stats: {
+                    "eleMas": [32, 8]
+                }
+            }
+        ]
+    },
+    "VividNotions": {
+        buffs: [
+            {
+                label: "Si une attaque plongée est utilisée (DGT CRIT uniquement pour les attaques plongées)",
+                stats: {
+                    "critDMG_": [0.28, 0.07]
+                }
+            },
+            {
+                label: "Si une compétence ou un déchaînement élémentaire est utilisé (DGT CRIT uniquement pour les attaques plongées)",
+                stats: {
+                    "critDMG_": [0.40, 0.10]
+                }
+            }
+        ]
+    },
+    "NightweaversLookingGlass": {
+        buffs: [
+            {
+                label: "Si une compétence élémentaire inflige des DGT Hydro ou Dendro (Maîtrise élémentaire)",
+                stats: {
+                    "eleMas": [60, 15]
+                }
+            },
+            {
+                label: "Si une réaction de Sélénofleurissement est déclenchée (Maîtrise élémentaire)",
+                stats: {
+                    "eleMas": [60, 15]
+                }
+            }
+        ]
+    },
+    "ReliquaryOfTruth": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+                stats: {
+                    "eleMas": [80, 20]
+                }
+            },
+            {
+                label: "Si des dégâts de Sélénofleurissment sont infligés (DGT CRIT)",
+                stats: {
+                    "critDMG_": [0.24, 0.06]
+                }
+            },
+            {
+                label: "Si les deux effets précédents sont actifs en même temps (Maîtrise élémentaire et DGT CRIT)",
+                stats: {
+                    "eleMas": [120, 30],
+                    "critDMG_": [0.36, 0.09]
+                }
+            }
+        ]
+    },
+    "NocturnesCurtainCall": {
+        buffs: [
+            {
+                label: "Si une réaction Sélène est déclenchée ou inflige des dégâts (PV% et DGT CRIT uniquement pour les réactions Sélène)",
+                stats: {
+                    "hp_": [0.14, 0.02],
+                    "critDMG_": [0.60, 0.20],
+                }
+            }
+        ]
+    },
 };
 
 const SET_PASSIVES = {
