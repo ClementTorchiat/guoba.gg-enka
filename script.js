@@ -1012,18 +1012,53 @@ function getLevelAdvice(persoObj) {
 
 
 function calculateRollDistribution(persoObj, config) {
-    if (!config || !config.weights) return { useful: 0, dead: 0, total: 0 };
-    let useful = 0;
-    let dead = 0;
+    if (!config || !config.weights) return { usefulCount: 0, deadCount: 0, total: 0, usefulDetails: [], deadDetails: [] };
+
+    let usefulCount = 0;
+    let deadCount = 0;
+
+    // Objets pour compter chaque type de stat individuellement
+    let usefulMap = {};
+    let deadMap = {};
+
     persoObj.artefacts.forEach(art => {
         art.subStats.forEach(sub => {
             let w = config.weights[sub.key];
             if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
+
             const rolls = getRollCount(sub.key, sub.value);
-            if (w && w > 0) useful += rolls; else dead += rolls;
+
+            // On ignore les stats qui n'ont aucun roll (ce qui ne devrait pas arriver avec getRollCount mais sécurité)
+            if (rolls > 0) {
+                if (w && w > 0) {
+                    usefulCount += rolls;
+                    usefulMap[sub.key] = (usefulMap[sub.key] || 0) + rolls;
+                } else {
+                    deadCount += rolls;
+                    deadMap[sub.key] = (deadMap[sub.key] || 0) + rolls;
+                }
+            }
         });
     });
-    return { useful, dead, total: useful + dead };
+
+    // Helper pour transformer la Map en Tableau trié par nombre de rolls décroissant
+    const toSortedArray = (map) => {
+        return Object.entries(map)
+            .map(([key, count]) => ({
+                label: STAT_LABELS[key] || key,
+                count: count,
+                key: key
+            }))
+            .sort((a, b) => b.count - a.count);
+    };
+
+    return {
+        usefulCount,
+        deadCount,
+        total: usefulCount + deadCount,
+        usefulDetails: toSortedArray(usefulMap),
+        deadDetails: toSortedArray(deadMap)
+    };
 }
 
 function calculateDeadRolls(persoObj, config) {
@@ -2061,22 +2096,48 @@ function renderShowcase(index) {
                                     <p style="font-size:16px; color:#fff;">${critAdvice.msg}</p>
                                 </div>
                                 
-                                <div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px;">
-                                    <div style="color:#aaa; text-transform:uppercase; margin-bottom:10px; display:flex; justify-content:space-between;">
-                                        <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Analyse des stats inutiles</p>
-                                        <span style="font-size:12px; color:#ff4d4d;">${deadRolls.count} Inutiles</span>
-                                    </div>
-                                    <div style="display:flex; width:100%; height:12px; background:#333; border-radius:6px; overflow:hidden; margin-bottom:10px;">
-                                        <div style="width:${(rollStats.useful/rollStats.total)*100}%; background:var(--accent-gold);"></div>
-                                        <div style="width:${(rollStats.dead/rollStats.total)*100}%; background:#ff4d4d;"></div>
-                                    </div>
-                                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
-                                        ${deadRolls.details.map(d =>
-                                            `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.75rem; padding:2px 8px; border-radius:4px;">${d.label}: ${d.count}</span>`
-                                        ).join('')}
-                                        ${deadRolls.count === 0 ? '<span style="color:#22c55e; font-size:16px;">Aucune stat morte !</span>' : ''}
-                                    </div>
-                                </div>
+                                
+
+<div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px; display:flex; flex-direction:column; justify-content:space-between;">
+    
+    <div style="margin-bottom:12px;">
+        <div style="color:#aaa; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:flex-end;">
+            <p style="font-size:12px;">Répartition des Rolls</p>
+            <div style="font-size:11px;">
+                <span style="color:#22c55e;">${rollStats.usefulCount} Utiles</span> / 
+                <span style="color:#ff4d4d;">${rollStats.deadCount} Morts</span>
+            </div>
+        </div>
+        
+        <div style="display:flex; width:100%; height:8px; background:#333; border-radius:4px; overflow:hidden;">
+            <div style="width:${(rollStats.usefulCount / rollStats.total) * 100}%; background:#22c55e;"></div>
+            <div style="width:${(rollStats.deadCount / rollStats.total) * 100}%; background:#ff4d4d;"></div>
+        </div>
+    </div>
+
+    <div style="margin-bottom:10px;">
+        <p style="font-size:11px; color:#aaa; margin-bottom:4px;">Stats Utiles</p>
+        <div style="display:flex; flex-wrap:wrap; gap:5px;">
+            ${rollStats.usefulDetails.map(d =>
+            `<span style="background:rgba(34, 197, 94, 0.15); color:#86efac; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(34, 197, 94, 0.2);">
+                    ${d.label} (${d.count})
+                </span>`
+        ).join('')}
+        </div>
+    </div>
+
+    <div>
+        <p style="font-size:11px; color:#aaa; margin-bottom:4px;">Stats Inutiles</p>
+        <div style="display:flex; flex-wrap:wrap; gap:5px;">
+            ${rollStats.deadDetails.length > 0 ? rollStats.deadDetails.map(d =>
+            `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(255, 77, 77, 0.2);">
+                    ${d.label} (${d.count})
+                </span>`
+        ).join('') : '<span style="color:#22c55e; font-size:0.75rem;">Aucune !</span>'}
+        </div>
+    </div>
+
+</div>
                                 
                                 ${offPieceAdvice ? `
                                 <div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px; border: 1px solid rgba(255, 255, 255, 0.05); border-left:3px solid ${offPieceAdvice.type === 'success' ? '#22c55e' : (offPieceAdvice.type === 'warning' ? '#eab308' : '#ef4444')};">
