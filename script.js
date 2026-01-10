@@ -1196,119 +1196,143 @@ function calculateRerollMetrics(artifact, config) {
 
     let totalRolls = 0;
 
-    // Variables pour le calcul précis
-    let currentWeightedScore = 0; // Le score actuel de l'artéfact
-    let presentWeights = []; // Les poids des 4 stats présentes
-    let usefulSubstatsCount = 0;
+    // --- VARIABLES D'ANALYSE ---
+    let terrainWeights = [];    // Les poids des 4 lignes de base (Le Socle)
+    let upgradeTokens = [];     // Les poids des rolls supplémentaires (Les 5 Jetons)
+    let maxWeightOnArtifact = 0; // La meilleure stat présente (ex: 1.0 pour CRIT)
 
-    // 1. ANALYSE DE L'EXISTANT
+    // 1. EXTRACTION DES DONNÉES
     artifact.subStats.forEach(sub => {
         const rolls = getRollCount(sub.key, sub.value);
         totalRolls += rolls;
 
+        // Récupération du poids
         let w = config.weights[sub.key];
         if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
-
-        // Si pas de poids défini, on considère 0
         const weight = (w && w > 0) ? w : 0;
 
-        if (weight > 0) usefulSubstatsCount++;
+        // Analyse du Socle (1er roll) vs Upgrades (rolls suivants)
+        // Le socle est immuable, on ne peut pas le reroll.
+        terrainWeights.push(weight);
+        if (weight > maxWeightOnArtifact) maxWeightOnArtifact = weight;
 
-        presentWeights.push(weight);
-
-        // Score Actuel = Somme des (Rolls * Poids)
-        // Note : On pourrait intégrer la qualité ici (low roll vs high roll),
-        // mais pour la distribution pure, on compte les rolls.
-        // Pour être très précis sur le potentiel "gain", on pourrait inclure la rollValue.
-        // Restons sur la "Distribution" comme demandé.
-        currentWeightedScore += (rolls * weight);
+        // Si on a plus d'1 roll, les suivants sont des "Jetons" qu'on a dépensés
+        if (rolls > 1) {
+            for (let i = 0; i < rolls - 1; i++) {
+                upgradeTokens.push(weight);
+            }
+        }
     });
 
-    // Clamp (Sécurité)
-    if (totalRolls < 8) totalRolls = 8;
-    if (totalRolls > 9) totalRolls = 9;
-
-    // 2. CALCUL DU PLAFOND THÉORIQUE (MAX SCORE)
-    // Contrainte : 1 roll minimum par stat présente (Base) + le reste en upgrades
-
-    // A. Score des 4 lignes de base (Immuable)
-    // On suppose que l'artéfact a 4 lignes maintenant.
-    // Si il en avait 3 au début, la 4ème est apparue au lvl 4. Elle est aussi "immuable" une fois là.
-    const baseScore = presentWeights.reduce((a, b) => a + b, 0); // Somme des poids des 4 stats
-
-    // B. Score des Upgrades (Ce qu'on peut reroll)
-    const upgradeRollsAvailable = totalRolls - 4; // 8-4=4 ou 9-4=5
-    const maxWeightAvailable = Math.max(...presentWeights); // La meilleure stat présente
-    const maxUpgradeScore = upgradeRollsAvailable * maxWeightAvailable; // Tout dans la meilleure stat
-
-    const theoreticalMaxScore = baseScore + maxUpgradeScore;
-
-    // 3. INDICATEUR DE PERFECTION (0.0 à 1.0)
-    // À quel point sommes-nous proches du max mathématique ?
-    // Dans ton exemple : Actuel = 8.05, Max = 8.05 -> Ratio = 1.0
-    const perfectionRatio = (theoreticalMaxScore > 0) ? (currentWeightedScore / theoreticalMaxScore) : 0;
+    // Sécurité : Clamp (Si jamais l'user a rentré des valeurs bizarres)
+    // Un artéfact +20 a techniquement 8 ou 9 rolls totaux.
+    // Donc 4 Base + 4 ou 5 Upgrades.
+    const totalTokensAvailable = Math.max(4, totalRolls - 4);
 
 
-    // --- CALCULS FINAUX ---
-
-    // A. POTENTIEL DE GAIN
-    // C'est l'écart par rapport à la perfection...
-    // ...Pondéré par la qualité de l'artéfact (Ceiling).
-    // Si l'artéfact a 2 stats utiles, le TheoreticalMaxScore est faible.
-    // Donc même si on a un gros écart, ça ne vaut pas le coup.
-
-    const gapToPerfection = 1 - perfectionRatio; // 0% dans ton exemple
-
-    // Facteur limitant : Nombre de lignes utiles (Quadratique)
-    // 4 lignes = 100% du potentiel exprimable
-    // 2 lignes = 17% du potentiel exprimable
-    const ceilingFactor = Math.pow((usefulSubstatsCount / 4), 2.5);
-
-    // Bonus Structure (9 rolls > 8 rolls)
-    const structureBonus = (totalRolls === 9) ? 1.05 : 1.0;
-
-    // Potentiel Final
-    let potential = gapToPerfection * ceilingFactor * structureBonus * 100;
-
-    // Petit boost si on a des low rolls (qualité), mais mineur
-    // (Non implémenté ici pour rester focus sur la distribution, comme demandé)
+    // --- 2. ANALYSE DU TERRAIN (DENSITÉ) ---
+    // Quelle est la probabilité qu'un jeton tombe sur une bonne case ?
+    // Ex: CR(1) + CD(1) + ATQ(0.75) + PV(0) = 2.75 / 4 = 0.6875
+    const density = terrainWeights.reduce((a, b) => a + b, 0) / 4;
 
 
-    // B. RISQUE DE PERTE
-    // Le risque est directement lié à la perfection actuelle.
-    // Plus on est proche du max, plus le risque est exponentiel.
-    let risk = Math.pow(perfectionRatio, 2.5) * 100;
+    // --- 3. CALCUL DU POTENTIEL (GAIN) ---
+    // Logique : "Combien de valeur puis-je créer en replaçant mes jetons ?"
+
+    let potentialValueGain = 0;
+
+    upgradeTokens.forEach(tokenWeight => {
+        if (tokenWeight === 0) {
+            // A. RECYCLAGE (Cas Navia)
+            // Le jeton est actuellement à la poubelle.
+            // Si je le relance, j'espère obtenir la moyenne du terrain (Density).
+            potentialValueGain += density;
+        } else {
+            // B. OPTIMISATION (Cas Atk vs Crit)
+            // Le jeton est utile (ex: 0.75), mais peut-on faire mieux ?
+            // Gain marginal = Différence avec la meilleure stat présente.
+            // On pondère par 0.8 pour ne pas surestimer l'optimisation vs le recyclage pur.
+            const margin = Math.max(0, maxWeightOnArtifact - tokenWeight);
+            potentialValueGain += (margin * 0.8);
+        }
+    });
+
+    // Normalisation sur 100
+    // Le gain max théorique serait de transformer tous les jetons en la meilleure stat.
+    const maxTheoreticalGain = totalTokensAvailable * maxWeightOnArtifact;
+
+    let potential = 0;
+    if (maxTheoreticalGain > 0) {
+        potential = (potentialValueGain / maxTheoreticalGain) * 100;
+    }
+
+    // Bonus psychologique : Si l'artéfact a beaucoup de stats mortes (density basse),
+    // le potentiel mathématique est là, mais le risque de frustration est haut.
+    // On réduit légèrement le potentiel affiché pour les terrains "pourris".
+    if (density < 0.3) potential *= 0.5;
 
 
-    // --- BADGES ---
+    // --- 4. CALCUL DU RISQUE (SATURATION) ---
+    // Logique : "À quel point mes jetons actuels sont-ils proches de la perfection ?"
+
+    let currentUpgradeValue = upgradeTokens.reduce((a, b) => a + b, 0);
+
+    // Saturation : 0.0 (Tout raté) à 1.0 (Arlecchino God Roll)
+    let saturation = (maxTheoreticalGain > 0) ? (currentUpgradeValue / maxTheoreticalGain) : 0;
+
+    // Courbe de risque Exponentielle
+    // Si Saturation = 0.5 (Moyen) -> Risque faible (~8%)
+    // Si Saturation = 0.8 (Très bon) -> Risque élevé (~45%)
+    // Si Saturation = 1.0 (Parfait) -> Risque total (100%)
+    let risk = Math.pow(saturation, 3.5) * 100;
+
+    // Ajustement "Rareté"
+    // Si les points viennent de stats à poids 1.0 (Crit), c'est plus précieux que l'ATQ (0.75).
+    // On augmente le risque si l'artéfact est porté par des Top Stats.
+    const highValueTokens = upgradeTokens.filter(t => t === 1).length;
+    if (highValueTokens > 2) risk += 10;
+
+    // Clamp final
+    if (risk > 99) risk = 99;
+    if (risk < 1) risk = 1;
+
+
+    // --- 5. BADGES ---
     let badge = { text: "Neutre", color: "#9ca3af" };
 
-    if (potential < 20 && usefulSubstatsCount < 3) {
-        badge = { text: "Avenir Limité", color: "#4b5563" }; // Gris
+    // Cas Spécial : Terrain inconstructible
+    if (density < 0.25) {
+        badge = { text: "Poubelle", color: "#4b5563" };
     }
-    else if (risk > 85 && potential < 15) {
-        badge = { text: "Reroll déconseillé", color: "#ef4444" }; // Violet
+    // Cas Spécial : God Roll (Arlecchino)
+    else if (risk > 85) {
+        badge = { text: "Garder", color: "#ef4444" }; // Rouge
     }
-    else if (risk > 65) {
-        badge = { text: "Garder (Solide)", color: "#ef4444" }; // Rouge
+    // Cas Spécial : Très fort (Risqué)
+    else if (risk > 60) {
+        badge = { text: "Solide", color: "#f97316" }; // Orange
     }
+        // Cas Spécial : Reroll évident (Navia)
+    // Haut potentiel + Risque modéré/faible
     else if (potential > 60 && risk < 40) {
-        badge = { text: "Reroll envisageable", color: "#22c55e" }; // Vert
+        badge = { text: "Reroll Recommandé", color: "#22c55e" }; // Vert
     }
-    else if (potential > 50) {
-        badge = { text: "Pile ou face", color: "#f97316" }; // Orange
-    }
-    else if (potential > 30) {
+    // Cas Spécial : Optimisation possible
+    else if (potential > 40) {
         badge = { text: "Optimisable", color: "#3b82f6" }; // Bleu
+    }
+    else {
+        badge = { text: "Incertain", color: "#9ca3af" };
     }
 
     return {
         potential: Math.round(potential),
         risk: Math.round(risk),
-        badge: badge
+        badge: badge,
+        // Debug pour vérifier la logique dans la console si besoin
+        _debug: { density, upgrades: upgradeTokens, sat: saturation }
     };
 }
-
 // Fonction pour calculer la valeur selon le rang (R1 à R5)
 // Si val est un nombre (0.2), on le garde.
 // Si val est un tableau [0.2, 0.05], on calcule : Base + (Rang-1)*Step

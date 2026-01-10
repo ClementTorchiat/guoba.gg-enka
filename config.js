@@ -1,7 +1,3 @@
-/* =========================================
-   CONFIGURATION (Cerveau du Projet)
-   ========================================= */
-
 const DEFAULT_CONFIG = {
     weights: { "critRate_": 1, "critDMG_": 1, "atk_": 0.5, "enerRech_": 0.5 },
     bestSets: [],
@@ -23,6 +19,22 @@ const CHARACTER_CONFIG = {
         bestSets: [],
         goodSets: [],
         talents: { auto: 1, skill: 1, burst: 1 },
+        color : "#888888",
+        portraitOffset: 0
+    },
+    "Navia": {
+        weights: {
+            "critRate_": 1, "critDMG_": 1,
+            "atk_": 1, "atk": 0.1,
+            "hp_": 0, "hp": 0,
+            "def_": 0, "def": 0,
+            "eleMas": 0, "enerRech_": 0.3,
+            "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
+            "heal_": 0
+        },
+        bestSets: ["NighttimeWhispersInTheEchoingWoods:4", "GoldenTroupe:4"],
+        goodSets: [],
+        talents: { auto: 8, skill: 10, burst: 8 },
         color : "#888888",
         portraitOffset: 0
     },
@@ -116,7 +128,7 @@ const CHARACTER_CONFIG = {
     "Arlecchino": {
         weights: {
             "critRate_": 1, "critDMG_": 1,
-            "atk_": 0.75, "atk": 0.075,
+            "atk_": 1, "atk": 0.1,
             "hp_": 0, "hp": 0,
             "def_": 0, "def": 0,
             "eleMas": 0.75, "enerRech_": 0.3,
@@ -130,10 +142,6 @@ const CHARACTER_CONFIG = {
         portraitOffset: -38
     },
 };
-
-/* =========================================
-   PASSIFS (Armes & Sets) - Mode Avancé
-   ========================================= */
 
 const WEAPON_PASSIVES = {
     // 3 étoiles
