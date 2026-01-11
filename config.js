@@ -141,6 +141,127 @@ const CHARACTER_CONFIG = {
         color : "#AB3D2D",
         portraitOffset: -38
     },
+    "Arlecchino": {
+        color: "#AB3D2D",
+        portraitOffset: -38,
+        talents: {
+            auto: 10,
+            skill: 8,
+            burst: 6
+        },
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Masque Rouge (En combat)",
+                        description: "Accorde un Bonus de DGT Pyro de 40%.",
+                        stats: {
+                            pyro_dmg_: 0.40
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                selectMode: "cumulative",
+                buffs: [
+                    {
+                        label: "C1 : Masque de la Mort Rouge",
+                        cons: 1,
+                        description: "Augmente la valeur du Masque de 100%. (Simulation : Ajout d'un équivalent DGT bonus approximatif pour le scoring).",
+                        stats: {
+                        }
+                    },
+                    {
+                        label: "C2 : Ordre Royal",
+                        cons: 2,
+                        description: "Accorde 20% de RES Pyro/Hydro/etc.",
+                        stats: {
+                        }
+                    }
+                ]
+            }
+        ],
+        builds: {
+            "vape": {
+                name: "Vaporisation (Classique)",
+                description: "Arlecchino joue avec un applicateur Hydro pour vaporiser ses coups.",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.75, "enerRech_": 0,
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
+                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
+                    { role: "Sustain", name: "Bennett", element: "pyro" },
+                    { role: "Flex", element: ["hydro", "cryo"] },
+                ]
+            },
+
+            "overload": {
+                name: "Surcharge (Chevreuse)",
+                description: "Team limitant aux éléments Pyro et Électro pour activer le passif de Chevreuse.",
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0,
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
+                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Support", name: "Chevreuse", element: "pyro" },
+                    { role: "Sub-DPS", element: "electro" },
+                    { role: "Flex", element: "electro" }
+                ]
+            },
+
+            "mono_pyro": {
+                name: "Mono Pyro",
+                description: "Force brute Pyro pure sans réaction.",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0,
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
+                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Sustain", name: "Bennett", element: "pyro" },
+                    { role: "Sub-DPS", name: "Xiangling", element: "pyro" },
+                    { role: "Support", name: "Kazuha", element: "anemo" }
+                ]
+            }
+        }
+    },
 };
 
 const WEAPON_PASSIVES = {

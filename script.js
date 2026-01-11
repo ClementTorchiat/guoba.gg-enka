@@ -86,6 +86,16 @@ const STAT_MAPPING = { "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_", "F
 
 const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %", "eleMas": "Maîtrise élémentaire", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT", "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "Bonus de DGT Pyro", "hydro_dmg_": "Bonus de DGT Hydro", "cryo_dmg_": "Bonus de DGT Cryo", "electro_dmg_": "Bonus de DGT Électro", "anemo_dmg_": "Bonus de DGT Anémo", "geo_dmg_": "Bonus de DGT Géo", "dendro_dmg_": "Bonus de DGT Dendro", "physical_dmg_": "Bonus de DGT Physiques" };
 
+const RESONANCE_DATA = {
+    "pyro": { name: "Flammes de la ferveur (Pyro)", stats: { atk_: 0.25 } },
+    "hydro": { name: "Eau médicinale (Hydro)", stats: { hp_: 0.25 } },
+    "dendro": { name: "Liane de la sagesse (Dendro)", stats: { eleMas: 50 } }, // Simplifié (normalement +30 +20)
+    "electro": { name: "Tonnerre puissant (Électro)", stats: {} }, // Juste particules (pas de stats)
+    "cryo": { name: "Glace brisée (Cryo)", stats: { critRate_: 0.15 } }, // Contre ennemis gelés/cryo
+    "geo": { name: "Roc inamovible (Géo)", stats: { dmgBonus: 0.15 } }, // +15% DGT sous bouclier
+    "anemo": { name: "Vents de la célérité (Anémo)", stats: {} } // Vitesse dep/CD
+};
+
 const WEAPON_NAME_MAPPING = {
     // 1 étoile
     "Épée émoussée": "DullBlade",
@@ -993,6 +1003,35 @@ function getWeaponAdvice(persoObj) {
     }
 }
 
+function getERAdvice(currentER, targetER) {
+    // On tolère un écart de +/- 10% comme étant "Parfait"
+    const diff = currentER - targetER;
+
+    if (diff >= -10 && diff <= 15) {
+        return {
+            type: "success",
+            title: "Recharge d'Énergie",
+            msg: `Votre ER (${currentER.toFixed(0)}%) est idéale pour cet archétype (Cible : ${targetER}%).`
+        };
+    }
+
+    if (diff < -10) {
+        return {
+            type: "warning", // Ou 'critical' si diff < -30
+            title: "Manque de Recharge d'Énergie",
+            msg: `Vous avez ${currentER.toFixed(0)}% d'ER, mais cet archétype demande environ <b>${targetER}%</b>. Vos rotations risquent de bloquer.`
+        };
+    }
+
+    if (diff > 15) {
+        return {
+            type: "info",
+            title: "Excès de Recharge d'Énergie",
+            msg: `Vous avez ${currentER.toFixed(0)}% d'ER, ce qui est bien au-dessus du nécessaire (${targetER}%). Essayez de troquer de l'ER contre des stats offensives.`
+        };
+    }
+}
+
 // NOUVEAU : Conseil Niveau 90
 function getLevelAdvice(persoObj) {
     if (persoObj.level < 90) {
@@ -1379,6 +1418,7 @@ function getRefinedValue(val, rank) {
 }
 
 // --- PROCESS ---
+// --- PROCESS ---
 function processData(data) {
     if (!data.avatarInfoList) return;
     globalPersoData = [];
@@ -1394,12 +1434,8 @@ function processData(data) {
         let nom = getText(info.NameTextMapHash);
 
         if (!nom || nom === "Inconnu") {
-            // Si pas de traduction, on prend le nom du fichier image (ex: "UI_AvatarIcon_Side_Hutao")
             if (info.SideIconName) {
-                // On garde juste la partie après le dernier "_" (ex: "Hutao")
                 nom = info.SideIconName.split('_').pop();
-
-                // Petit fix pour le Voyageur qui s'appelle souvent "PlayerBoy"/"PlayerGirl"
                 if (nom.includes("Player")) nom = "Voyageur";
             } else {
                 nom = "Inconnu";
@@ -1411,7 +1447,6 @@ function processData(data) {
 
         const elemInfo = ELEMENT_DATA[info.Element] || { id: 30, key: "physical_dmg_" };
 
-        // --- AJOUTER CE BLOC ---
         const WEAPON_TYPE_MAP = {
             "WEAPON_SWORD_ONE_HAND": "sword",
             "WEAPON_CLAYMORE": "claymore",
@@ -1419,7 +1454,6 @@ function processData(data) {
             "WEAPON_BOW": "bow",
             "WEAPON_CATALYST": "catalyst"
         };
-        // On récupère le type d'arme (ex: "bow") depuis les données fixes du perso
         const charWeaponKey = WEAPON_TYPE_MAP[info.WeaponType] || "unknown";
 
         const talents = [];
@@ -1454,16 +1488,12 @@ function processData(data) {
             if (item.weapon) {
                 const main = flat.weaponStats && flat.weaponStats[0] ? formatStat(flat.weaponStats[0].appendPropId, flat.weaponStats[0].statValue) : null;
                 const sub = flat.weaponStats && flat.weaponStats[1] ? formatStat(flat.weaponStats[1].appendPropId, flat.weaponStats[1].statValue) : null;
-
-                // --- NOUVEAU : GESTION DU MAPPING ---
-                const weaponNameFR = getText(flat.nameTextMapHash); // Le nom d'affichage (Français)
-                // On cherche la clé anglaise, sinon on garde le nom FR par sécurité (ou "UnknownWeapon")
+                const weaponNameFR = getText(flat.nameTextMapHash);
                 const weaponKey = WEAPON_NAME_MAPPING[weaponNameFR] || weaponNameFR;
-                // ------------------------------------
 
                 weapon = {
-                    name: weaponNameFR, // On garde le nom FR pour l'affichage à l'écran
-                    key: weaponKey,     // On ajoute la clé EN pour la logique interne (base de données)
+                    name: weaponNameFR,
+                    key: weaponKey,
                     level: item.weapon.level,
                     rank: (item.weapon.affixMap ? Object.values(item.weapon.affixMap)[0] : 0) + 1,
                     icon: `https://enka.network/ui/${flat.icon}.png`,
@@ -1490,19 +1520,15 @@ function processData(data) {
         });
 
         let buffs = [];
-        // AJOUT du paramètre weaponRank (par défaut 1)
-        const addBuffs = (sourceName, category, configData, selectMode = 'standard', weaponRank = 1) => {
 
-            // Sous-fonction pour nettoyer les stats (gère les tableaux [Base, Incrément])
+        // Fonction interne pour ajouter des buffs
+        const addBuffs = (sourceName, category, configData, selectMode = 'standard', weaponRank = 1) => {
             const resolveStats = (statsObj) => {
                 const resolved = {};
                 for (const [k, v] of Object.entries(statsObj)) {
-                    // Cas spécial : Scaling (ex: Homa qui convertit PV en ATQ)
                     if (typeof v === 'object' && v.percent) {
                         resolved[k] = { ...v, percent: getRefinedValue(v.percent, weaponRank) };
-                    }
-                    // Cas standard
-                    else {
+                    } else {
                         resolved[k] = getRefinedValue(v, weaponRank);
                     }
                 }
@@ -1511,13 +1537,9 @@ function processData(data) {
 
             if (Array.isArray(configData)) {
                 configData.forEach((item, idx) => {
-                    // 1. On calcule les stats réelles (R1, R5...)
                     const finalStats = resolveStats(item.stats);
-
-                    // 2. Création du nom (Utilise finalStats pour afficher le bon chiffre)
                     let name = item.label || `Buff ${idx + 1}`;
                     if (!item.label) {
-                        // Si pas de label, on génère un texte dynamique basé sur les valeurs calculées
                         name = Object.entries(finalStats).map(([k, v]) => {
                             if(typeof v === 'object' && v.percent) return `${STAT_LABELS[k]||k} (Scaling)`;
                             const l = STAT_LABELS[k] || k;
@@ -1525,29 +1547,22 @@ function processData(data) {
                             return `${l} +${val}`;
                         }).join(", ");
                     }
-
-                    // 3. LOGIQUE D'ACTIVATION (Ta version)
                     let isActive = true;
                     if (selectMode === 'exclusive') {
                         isActive = (idx === configData.length - 1);
                     }
-
                     buffs.push({
                         id: `${category}_${idx}`,
                         category,
                         name,
-                        bonuses: finalStats, // On pousse les stats calculées
+                        bonuses: finalStats,
                         active: isActive,
                         selectMode: selectMode
                     });
                 });
-            }
-            else {
-                // Pour les objets simples (pas de tableau)
+            } else {
                 const finalStats = resolveStats(configData);
-
                 for (const [statKey, val] of Object.entries(finalStats)) {
-                    // Scaling
                     if (typeof val === 'object' && statKey.endsWith('_scaling')) {
                         const targetStat = statKey.replace('_bonus_scaling', '');
                         const percentDisplay = (val.percent * 100).toFixed(2) + "%";
@@ -1558,7 +1573,6 @@ function processData(data) {
                         });
                         continue;
                     }
-                    // Stat standard
                     if (typeof val !== 'object') {
                         const valDisplay = (val < 2) ? Math.round(val * 100) + "%" : val;
                         buffs.push({
@@ -1571,20 +1585,62 @@ function processData(data) {
             }
         };
 
-        // --- GESTION DES ARMES ---
-        // --- GESTION DES ARMES (Mapping + Toggle + Raffinement) ---
-        // On utilise weapon.key pour chercher dans la base de données
-        if (weapon && G_WEAPON_PASSIVES[weapon.key]) {
-            const wConfig = G_WEAPON_PASSIVES[weapon.key]; // Utilise la clé EN
+        // --- 1. CHARGEMENT DE LA CONFIGURATION (INTELLIGENT) ---
+        const configKey = nom.replace(/\s+/g, '') || "Default";
+        // On récupère la config brute du fichier config.js
+        const rawConfig = G_CHAR_CONFIG[configKey] || G_CHAR_CONFIG[nom] || G_DEFAULT_CONFIG;
 
+        let activeBuild = null;
+        let scoringConfig = { ...rawConfig }; // Copie de base
+
+        // DÉTECTION DES BUILDS MULTIPLES
+        // DÉTECTION DES BUILDS MULTIPLES (AUTO-SELECT BEST)
+        if (rawConfig.builds) {
+            let bestBuildKey = null;
+            let maxScore = -1;
+
+            // 1. On teste chaque build disponible
+            Object.entries(rawConfig.builds).forEach(([key, build]) => {
+                // On crée une config temporaire combinée pour ce test
+                const tempConfig = { ...rawConfig, ...build };
+
+                // On lance un calcul de score simulé sur les artéfacts du perso
+                // (On passe juste {artefacts} car c'est tout ce dont le calculateur a besoin)
+                const simulation = calculateCharacterScore({ artefacts: artefacts }, tempConfig);
+
+                // On garde le meilleur score
+                if (simulation.score > maxScore) {
+                    maxScore = simulation.score;
+                    bestBuildKey = key;
+                }
+            });
+
+            // Sécurité : Si jamais le calcul échoue, on prend le premier par défaut
+            if (!bestBuildKey) bestBuildKey = Object.keys(rawConfig.builds)[0];
+
+            // 2. On applique le build gagnant
+            activeBuild = rawConfig.builds[bestBuildKey];
+            activeBuild.key = bestBuildKey;
+
+            // 3. Fusion finale pour la suite du script
+            scoringConfig = {
+                ...rawConfig,
+                ...activeBuild
+            };
+        }
+
+        // --- 2. GESTION DES BUFFS ---
+
+        // A. Arme
+        if (weapon && G_WEAPON_PASSIVES[weapon.key]) {
+            const wConfig = G_WEAPON_PASSIVES[weapon.key];
             const isAdvanced = wConfig.buffs && Array.isArray(wConfig.buffs);
             const wMode = isAdvanced ? (wConfig.selectMode || 'standard') : 'standard';
             const wData = isAdvanced ? wConfig.buffs : wConfig;
+            addBuffs(weapon.key, `${weapon.name} (Arme)`, wData, wMode, weapon.rank);
+        }
 
-            // Param 1 (ID unique) : weapon.key (StaffOfHoma) pour être sûr que c'est unique
-            // Param 2 (Affichage) : weapon.name (Bâton de Homa) pour que l'user voie du français
-            addBuffs(weapon.key, `${weapon.name} (Arme)`, wData, wMode, weapon.rank);        }
-
+        // B. Sets
         if (G_SET_PASSIVES) {
             for (const [setKey, count] of Object.entries(setsCounter)) {
                 if (G_SET_PASSIVES[setKey]) {
@@ -1598,18 +1654,42 @@ function processData(data) {
             }
         }
 
+        // C. Personnage (Passifs & Constellations)
+        if (scoringConfig.buffs) {
+            scoringConfig.buffs.forEach(group => {
+                // FILTRAGE INTELLIGENT
+                // On filtre les buffs qui demandent une constellation supérieure à celle du perso
+                const filteredBuffs = group.buffs.filter(b => {
+                    // Si le buff n'a pas de propriété 'cons', on le garde (c'est un passif standard)
+                    if (b.cons === undefined) return true;
+                    // Sinon, on compare avec le niveau de constellation du perso (persoObj.cons)
+                    return constellations >= b.cons;
+                });
+
+                // On n'ajoute le groupe que s'il reste des buffs dedans après filtrage
+                if (filteredBuffs.length > 0) {
+                    addBuffs(nom, group.category, filteredBuffs, group.selectMode);
+                }
+            });
+        }
+
+        // --- 3. FINALISATION ---
         const buffedStats = calculateBuffedStats(baseStats, combatStats, buffs);
+
         const persoObj = {
             id: id, nom, rarity, level, cons: constellations, talents,
             image: sideIcon, splashArt: splashUrl, combatStats, buffedStats, baseStats,
             weapon, artefacts, setsCounter, buffs, evaluation: null, weights: null,
-            charWeapon: charWeaponKey
+            charWeapon: charWeaponKey,
+            // On stocke la config active pour que l'UI puisse s'en servir plus tard
+            charConfig: rawConfig,
+            activeBuild: activeBuild
         };
 
-        const configKey = persoObj.nom.replace(/\s+/g, '') || "Default";
-        const config = G_CHAR_CONFIG[configKey] || G_CHAR_CONFIG[persoObj.nom] || G_DEFAULT_CONFIG;
-        persoObj.evaluation = calculateCharacterScore(persoObj, config);
-        persoObj.weights = config.weights;
+        // Calcul du score avec la config fusionnée (Build actif)
+        persoObj.evaluation = calculateCharacterScore(persoObj, scoringConfig);
+        persoObj.weights = scoringConfig.weights; // Important pour l'affichage des stats oranges
+
         globalPersoData.push(persoObj);
     });
 
@@ -1618,13 +1698,14 @@ function processData(data) {
 }
 
 // ... (RENDER SIDEBAR Identique) ...
-function renderSidebar() {
+function renderSidebar(activeIndex = 0) {
     const list = document.getElementById('sidebar-list');
     if(!list) return;
     list.innerHTML = "";
+    const targetIndex = parseInt(activeIndex, 10);
     globalPersoData.forEach((p, index) => {
         const div = document.createElement('div');
-        div.className = `char-card ${index === 0 ? 'active' : ''}`;
+        div.className = `char-card ${index === targetIndex ? 'active' : ''}`;
         div.onclick = () => {
             document.querySelectorAll('.char-card').forEach(c => c.classList.remove('active'));
             div.classList.add('active');
@@ -1643,13 +1724,216 @@ function renderSidebar() {
     });
 }
 
+// --- FONCTION PRINCIPALE DE LA TOOLBAR ---
+function renderToolbar(index) {
+    const p = globalPersoData[index];
+    const container = document.getElementById('toolbar-controls');
+    if (!container) return;
+
+    // Si le perso n'a pas de builds configurés, on vide la toolbar
+    if (!p.charConfig.builds) {
+        container.innerHTML = '<span style="color:#aaa; font-size:12px;">Aucun archétype disponible</span>';
+        return;
+    }
+
+    const currentBuildKey = p.activeBuild ? p.activeBuild.key : Object.keys(p.charConfig.builds)[0];
+    const builds = p.charConfig.builds;
+
+    // 1. DROPDOWN ARCHÉTYPE
+    let buildOptions = Object.entries(builds).map(([key, build]) =>
+        `<option value="${key}" ${key === currentBuildKey ? 'selected' : ''}>${build.name}</option>`
+    ).join('');
+
+    // 2. ÉQUIPE (ICÔNES AVEC GESTION DUAL-SLOT)
+    let teamHtml = '';
+    if (p.activeBuild && p.activeBuild.team) {
+        const charIcon = `<img src="${p.image}" style="width:32px; height:32px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 5px rgba(0,0,0,0.5); object-fit:cover;" title="${p.nom}">`;
+
+        const matesHtml = p.activeBuild.team.map(mate => {
+            // Fonction helper pour obtenir l'URL d'un mate (Nom ou Élément)
+            const getIconUrl = (name, elem) => {
+                if (name) return `https://enka.network/ui/UI_AvatarIcon_Side_${name}.png`;
+                return `${ICON_BASE_PATH}icon_${elem}.png`;
+            };
+
+            // DÉTECTION DU DUAL SLOT
+            const isDual = Array.isArray(mate.element) || Array.isArray(mate.name);
+
+            // Préparation des données (Tableaux normalisés)
+            const names = Array.isArray(mate.name) ? mate.name : (mate.name ? [mate.name] : [null]);
+            const elems = Array.isArray(mate.element) ? mate.element : [mate.element];
+
+            // Si Dual, on force 2 entrées, sinon 1
+            const count = isDual ? 2 : 1;
+
+            let innerHtml = '';
+
+            if (!isDual) {
+                // CAS CLASSIQUE (1 image)
+                const url = getIconUrl(names[0], elems[0]);
+                const fallback = `${ICON_BASE_PATH}icon_${elems[0]}.png`;
+
+                innerHtml = `
+                    <img src="${url}" 
+                         style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+                         onerror="this.src='${fallback}'" 
+                         title="${mate.role}: ${names[0] || elems[0]}">
+                    ${elems[0] ? `<img src="${ICON_BASE_PATH}icon_${elems[0]}.png" style="position:absolute; bottom:-2px; right:-2px; width:12px; height:12px; border-radius:50%; border:1px solid #222;">` : ''}
+                `;
+            } else {
+                // CAS DUAL SLOT (Split Diagonal)
+                // On génère 2 images coupées en triangle
+                // Image 1 (Haut Gauche)
+                const url1 = getIconUrl(names[0], elems[0] || elems[0]); // Fallback si name array mais pas elem array
+                const fb1 = `${ICON_BASE_PATH}icon_${elems[0]}.png`;
+
+                // Image 2 (Bas Droite)
+                const url2 = getIconUrl(names[1] || names[0], elems[1] || elems[0]);
+                const fb2 = `${ICON_BASE_PATH}icon_${elems[1] || elems[0]}.png`;
+
+                innerHtml = `
+                    <div style="position:absolute; inset:0; clip-path: polygon(0 0, 100% 0, 0 100%); z-index:2;">
+                        <img src="${url1}" onerror="this.src='${fb1}'" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    
+                    <div style="position:absolute; inset:0; clip-path: polygon(100% 0, 100% 100%, 0 100%); z-index:1;">
+                        <img src="${url2}" onerror="this.src='${fb2}'" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    
+                    <div style="position:absolute; inset:0; background:linear-gradient(to bottom right, transparent 48%, #fff 48%, #fff 52%, transparent 52%); z-index:3; pointer-events:none;"></div>
+                `;
+            }
+
+            return `
+                <div style="position:relative; width:32px; height:32px; border-radius:50%; border:1px solid rgba(255,255,255,0.5); background:#000; overflow:hidden;" title="${mate.role}">
+                    ${innerHtml}
+                </div>
+            `;
+        }).join('');
+
+        teamHtml = `<div style="display:flex; margin-left:10px; align-items:center; gap: 8px;">${charIcon}${matesHtml}</div>`;
+    }
+
+    // 3. DROPDOWN ER TARGET
+    const currentERReq = p.activeBuild.er_req || 100;
+    // On génère les options de 100 à 300 par pas de 10
+    let erOptions = '';
+    for (let i = 100; i <= 300; i += 10) {
+        erOptions += `<option value="${i}" ${i === currentERReq ? 'selected' : ''}>${i}% ER</option>`;
+    }
+
+    // --- INJECTION HTML ---
+    container.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:2px;">
+            <label style="font-size:10px; color:#aaa; text-transform:uppercase;">Archétype</label>
+            <select onchange="switchBuild(${index}, this.value)" style="background:#333; color:#fff; border:1px solid #555; padding:4px 8px; border-radius:4px; font-size:12px;">
+                ${buildOptions}
+            </select>
+        </div>
+
+        ${teamHtml}
+
+        <div style="display:flex; flex-direction:column; gap:2px;">
+            <label style="font-size:10px; color:#aaa; text-transform:uppercase;">Objectif ER</label>
+            <select id="er-selector-${index}" onchange="updateERTarget(${index}, this.value)" style="background:#333; color:#fff; border:1px solid #555; padding:4px 8px; border-radius:4px; font-size:12px;">
+                ${erOptions}
+            </select>
+        </div>
+    `;
+}
+
+// --- LOGIQUE DE CHANGEMENT DE BUILD ---
+function switchBuild(charIndex, buildKey) {
+    // SÉCURITÉ : On convertit l'index reçu (qui peut venir du HTML en string) en nombre
+    const idx = parseInt(charIndex, 10);
+
+    const p = globalPersoData[idx];
+    if (!p) return; // Protection supplémentaire
+
+    const newBuild = p.charConfig.builds[buildKey];
+    if (!newBuild) return;
+
+    // 1. Mise à jour du Build
+    p.activeBuild = newBuild;
+    p.activeBuild.key = buildKey;
+
+    // 2. Fusion Config
+    const newScoringConfig = { ...p.charConfig, ...newBuild };
+    p.weights = newScoringConfig.weights;
+
+    // 3. Résonances
+    updateResonanceBuffs(p, newBuild.team);
+
+    // 4. Recalcul Score
+    p.evaluation = calculateCharacterScore(p, newScoringConfig);
+
+    // 5. Rafraîchissement UI
+    renderSidebar(idx); // On passe l'index nettoyé
+    renderShowcase(idx);
+}
+
+// --- LOGIQUE DE RÉSONANCE AUTOMATIQUE ---
+function updateResonanceBuffs(p, teamData) {
+    if (!teamData) return;
+
+    // 1. On compte les éléments
+    // On commence par l'élément du perso actif (ex: Arlecchino = pyro)
+    // Note: p.charConfig.color donne une idée, mais mieux vaut mapper l'élément réel si dispo.
+    // Pour simplifier, on suppose que l'utilisateur a défini 'element' dans la team.
+
+    // On récupère l'élément du perso via son DMG Bonus Key (pyro_dmg_ -> pyro)
+    const charElement = p.combatStats.dmgBonusKey.replace('_dmg_', '');
+    const counts = { [charElement]: 1 };
+
+    teamData.forEach(mate => {
+        if (mate.element) {
+            counts[mate.element] = (counts[mate.element] || 0) + 1;
+        }
+    });
+
+    // 2. On nettoie les anciennes résonances (pour éviter les doublons)
+    p.buffs = p.buffs.filter(b => b.category !== "Résonance");
+
+    // 3. On ajoute les nouvelles
+    for (const [elem, count] of Object.entries(counts)) {
+        if (count >= 2 && RESONANCE_DATA[elem]) {
+            const resData = RESONANCE_DATA[elem];
+
+            // On ajoute le buff coché par défaut
+            p.buffs.push({
+                id: `res_${elem}`,
+                category: "Résonance",
+                name: resData.name,
+                bonuses: resData.stats,
+                active: true, // Activé par défaut
+                selectMode: 'standard'
+            });
+        }
+    }
+
+    // 4. Recalcul des stats buffées
+    p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
+}
+
+function updateERTarget(index, val) {
+    // Juste pour stocker la valeur si on veut l'utiliser plus tard dans l'analyse
+    const p = globalPersoData[index];
+    if(p.activeBuild) {
+        p.activeBuild.er_req = parseInt(val);
+        renderShowcase(index); // Pour mettre à jour l'analyse ER (future étape)
+    }
+}
+
 function renderShowcase(index) {
     const p = globalPersoData[index];
     const container = document.getElementById('main-container');
     if(!container) return;
 
     const configKey = p.nom.replace(/\s+/g, '') || "Default";
-    const config = window.CHARACTER_CONFIG[configKey] || window.CHARACTER_CONFIG[p.nom] || window.DEFAULT_CONFIG;
+    let config = window.CHARACTER_CONFIG[configKey] || window.CHARACTER_CONFIG[p.nom] || window.DEFAULT_CONFIG;
+    if (p.activeBuild) {
+        config = { ...config, ...p.activeBuild };
+    }
     const portraitX = (config.portraitOffset !== undefined) ? config.portraitOffset : -35;
 
     const s = p.combatStats;
@@ -2095,49 +2379,61 @@ function renderShowcase(index) {
                                     <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Analyse de taux critique</p>
                                     <p style="font-size:16px; color:#fff;">${critAdvice.msg}</p>
                                 </div>
+                                ${(() => {
+                                            // On récupère la cible définie dans le build actif (ou 100 par défaut)
+                                            const targetER = (p.activeBuild && p.activeBuild.er_req) ? p.activeBuild.er_req : 100;
+                                            const currentER = b.er; // b = buffedStats
                                 
+                                            const adv = getERAdvice(currentER, targetER);
+                                            if (!adv) return '';
                                 
-
-<div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px; display:flex; flex-direction:column; justify-content:space-between;">
-    
-    <div style="margin-bottom:12px;">
-        <div style="color:#aaa; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:flex-end;">
-            <p style="font-size:12px;">Répartition des Rolls</p>
-            <div style="font-size:11px;">
-                <span style="color:#22c55e;">${rollStats.usefulCount} Utiles</span> / 
-                <span style="color:#ff4d4d;">${rollStats.deadCount} Morts</span>
-            </div>
-        </div>
-        
-        <div style="display:flex; width:100%; height:8px; background:#333; border-radius:4px; overflow:hidden;">
-            <div style="width:${(rollStats.usefulCount / rollStats.total) * 100}%; background:#22c55e;"></div>
-            <div style="width:${(rollStats.deadCount / rollStats.total) * 100}%; background:#ff4d4d;"></div>
-        </div>
-    </div>
-
-    <div style="margin-bottom:10px;">
-        <p style="font-size:11px; color:#aaa; margin-bottom:4px;">Stats Utiles</p>
-        <div style="display:flex; flex-wrap:wrap; gap:5px;">
-            ${rollStats.usefulDetails.map(d =>
-            `<span style="background:rgba(34, 197, 94, 0.15); color:#86efac; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(34, 197, 94, 0.2);">
-                    ${d.label} (${d.count})
-                </span>`
-        ).join('')}
-        </div>
-    </div>
-
-    <div>
-        <p style="font-size:11px; color:#aaa; margin-bottom:4px;">Stats Inutiles</p>
-        <div style="display:flex; flex-wrap:wrap; gap:5px;">
-            ${rollStats.deadDetails.length > 0 ? rollStats.deadDetails.map(d =>
-            `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(255, 77, 77, 0.2);">
-                    ${d.label} (${d.count})
-                </span>`
-        ).join('') : '<span style="color:#22c55e; font-size:0.75rem;">Aucune !</span>'}
-        </div>
-    </div>
-
-</div>
+                                            const color = adv.type === 'success' ? '#22c55e' : (adv.type === 'info' ? '#3b82f6' : '#ef4444');
+                                
+                                            return `
+                                    <div style="flex: 1; background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                        <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
+                                        <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
+                                    </div>`;
+                                })()}
+                                <div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px; display:flex; flex-direction:column; justify-content:space-between;">
+                                    <div style="margin-bottom:12px;">
+                                        <div style="color:#aaa; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:flex-end;">
+                                            <p style="font-size:12px;">Répartition des Rolls</p>
+                                            <div style="font-size:11px;">
+                                                <span style="color:#22c55e;">${rollStats.usefulCount} Utiles</span> / 
+                                                <span style="color:#ff4d4d;">${rollStats.deadCount} Morts</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div style="display:flex; width:100%; height:8px; background:#333; border-radius:4px; overflow:hidden;">
+                                            <div style="width:${(rollStats.usefulCount / rollStats.total) * 100}%; background:#22c55e;"></div>
+                                            <div style="width:${(rollStats.deadCount / rollStats.total) * 100}%; background:#ff4d4d;"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="margin-bottom:10px;">
+                                        <p style="font-size:11px; color:#aaa; margin-bottom:4px;">Stats Utiles</p>
+                                        <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                                            ${rollStats.usefulDetails.map(d =>
+                                            `<span style="background:rgba(34, 197, 94, 0.15); color:#86efac; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(34, 197, 94, 0.2);">
+                                                    ${d.label} (${d.count})
+                                                </span>`
+                                        ).join('')}
+                                        </div>
+                                    </div>
+                                
+                                    <div>
+                                        <p style="font-size:11px; color:#aaa; margin-bottom:4px;">Stats Inutiles</p>
+                                        <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                                            ${rollStats.deadDetails.length > 0 ? rollStats.deadDetails.map(d =>
+                                            `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(255, 77, 77, 0.2);">
+                                                    ${d.label} (${d.count})
+                                                </span>`
+                                        ).join('') : '<span style="color:#22c55e; font-size:0.75rem;">Aucune !</span>'}
+                                        </div>
+                                    </div>
+                                
+                                </div>
                                 
                                 ${offPieceAdvice ? `
                                 <div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px; border: 1px solid rgba(255, 255, 255, 0.05); border-left:3px solid ${offPieceAdvice.type === 'success' ? '#22c55e' : (offPieceAdvice.type === 'warning' ? '#eab308' : '#ef4444')};">
@@ -2345,6 +2641,7 @@ function renderShowcase(index) {
     `; // Fin html
 
     container.innerHTML = html;
+    renderToolbar(index);
 }
 
 /* =========================================
