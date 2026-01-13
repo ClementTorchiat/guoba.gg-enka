@@ -89,11 +89,22 @@ const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", 
 const RESONANCE_DATA = {
     "pyro": { name: "Flammes de la ferveur (Pyro)", stats: { atk_: 0.25 } },
     "hydro": { name: "Eau médicinale (Hydro)", stats: { hp_: 0.25 } },
-    "dendro": { name: "Liane de la sagesse (Dendro)", stats: { eleMas: 50 } }, // Simplifié (normalement +30 +20)
-    "electro": { name: "Tonnerre puissant (Électro)", stats: {} }, // Juste particules (pas de stats)
-    "cryo": { name: "Glace brisée (Cryo)", stats: { critRate_: 0.15 } }, // Contre ennemis gelés/cryo
-    "geo": { name: "Roc inamovible (Géo)", stats: { dmgBonus: 0.15 } }, // +15% DGT sous bouclier
-    "anemo": { name: "Vents de la célérité (Anémo)", stats: {} } // Vitesse dep/CD
+    "dendro": { name: "Liane de la sagesse (Dendro)", stats: { eleMas: 50 } },
+    "electro": { name: "Tonnerre puissant (Électro)", stats: {} },
+    "cryo": { name: "Glace brisée (Cryo)", stats: { critRate_: 0.15 } },
+    "geo": { name: "Roc inamovible (Géo)", stats: { dmgBonus: 0.15 } },
+    "anemo": { name: "Vents de la célérité (Anémo)", stats: {} }
+};
+
+const ELEMENT_COLORS = {
+    "pyro": "#884A20",
+    "hydro": "#195293",
+    "dendro": "#516514",
+    "electro": "#512C88",
+    "anemo": "#2B7C6C",
+    "cryo": "#1B7A92",
+    "geo": "#886D01",
+    "physical": "#cccccc"
 };
 
 const WEAPON_NAME_MAPPING = {
@@ -529,7 +540,9 @@ function applyBonus(buffed, baseStats, bonuses, processScaling) {
                 const targetStat = mapTargetKey(statKey.replace('_bonus_scaling', ''));
                 const sourceStat = mapTargetKey(val.source);
                 if (targetStat && sourceStat) {
-                    const sourceValue = buffed[sourceStat] || 0;
+                    const rawValue = buffed[sourceStat] || 0;
+                    const baseline = val.baseline || 0;
+                    const sourceValue = Math.max(0, rawValue - baseline);
                     const bonusValue = sourceValue * val.percent;
                     buffed[targetStat] = (buffed[targetStat] || 0) + bonusValue;
                 }
@@ -564,8 +577,8 @@ function mapTargetKey(keyPart) {
     if (keyPart === 'hp') return 'hp';
     if (keyPart === 'def') return 'def';
     if (keyPart === 'eleMas') return 'em';
-    if (keyPart === 'enerRech') return 'er';
-    if (keyPart === 'elemental_dmg') return 'dmgBonus';
+    if (keyPart === 'enerRech' || keyPart === 'enerRech_') return 'er';
+    if (keyPart === 'elemental_dmg' || keyPart === 'elemental_dmg_') return 'dmgBonus';
     return null;
 }
 
@@ -1744,50 +1757,54 @@ function renderToolbar(index) {
         `<option value="${key}" ${key === currentBuildKey ? 'selected' : ''}>${build.name}</option>`
     ).join('');
 
-    // 2. ÉQUIPE (ICÔNES AVEC GESTION DUAL-SLOT)
+    // 2. ÉQUIPE (ICÔNES AVEC FONDS ÉLÉMENTAIRES)
     let teamHtml = '';
     if (p.activeBuild && p.activeBuild.team) {
-        const charIcon = `<img src="${p.image}" style="width:32px; height:32px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 5px rgba(0,0,0,0.5); object-fit:cover;" title="${p.nom}">`;
+
+        // A. Personnage Actif : On détecte son élément via sa stat de dégâts
+        const charElement = p.combatStats.dmgBonusKey.replace('_dmg_', '');
+        const charBg = ELEMENT_COLORS[charElement] || '#333';
+
+        // On ajoute "background:${charBg}" dans le style
+        const charIcon = `<img src="${p.image.replace('Side_', '')}" style="width:40px; height:40px; border-radius:5px; border:1px solid rgba(255,255,255,0.5); box-shadow:0 0 5px rgba(0,0,0,0.5); object-fit:cover; background:${charBg};" title="${p.nom}">`;
 
         const matesHtml = p.activeBuild.team.map(mate => {
-            // Fonction helper pour obtenir l'URL d'un mate (Nom ou Élément)
             const getIconUrl = (name, elem) => {
-                if (name) return `https://enka.network/ui/UI_AvatarIcon_Side_${name}.png`;
+                if (name) return `https://enka.network/ui/UI_AvatarIcon_${name}.png`;
                 return `${ICON_BASE_PATH}icon_${elem}.png`;
             };
 
-            // DÉTECTION DU DUAL SLOT
             const isDual = Array.isArray(mate.element) || Array.isArray(mate.name);
-
-            // Préparation des données (Tableaux normalisés)
             const names = Array.isArray(mate.name) ? mate.name : (mate.name ? [mate.name] : [null]);
             const elems = Array.isArray(mate.element) ? mate.element : [mate.element];
 
-            // Si Dual, on force 2 entrées, sinon 1
-            const count = isDual ? 2 : 1;
+            // B. Coéquipiers : Calcul du fond (Couleur unie ou Dégradé pour Dual)
+            let bgStyle = '';
+            if (isDual && elems.length >= 2) {
+                const c1 = ELEMENT_COLORS[elems[0]] || '#333';
+                const c2 = ELEMENT_COLORS[elems[1]] || '#333';
+                // Dégradé diagonal net pour séparer les deux éléments
+                bgStyle = `background: linear-gradient(135deg, ${c1} 50%, ${c2} 50%);`;
+            } else {
+                bgStyle = `background: ${ELEMENT_COLORS[elems[0]] || '#333'};`;
+            }
 
             let innerHtml = '';
 
             if (!isDual) {
-                // CAS CLASSIQUE (1 image)
                 const url = getIconUrl(names[0], elems[0]);
                 const fallback = `${ICON_BASE_PATH}icon_${elems[0]}.png`;
 
                 innerHtml = `
                     <img src="${url}" 
-                         style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+                         style="width:100%; height:100%; object-fit:cover;"
                          onerror="this.src='${fallback}'" 
                          title="${mate.role}: ${names[0] || elems[0]}">
-                    ${elems[0] ? `<img src="${ICON_BASE_PATH}icon_${elems[0]}.png" style="position:absolute; bottom:-2px; right:-2px; width:12px; height:12px; border-radius:50%; border:1px solid #222;">` : ''}
+                    ${elems[0] ? `` : ''}
                 `;
             } else {
-                // CAS DUAL SLOT (Split Diagonal)
-                // On génère 2 images coupées en triangle
-                // Image 1 (Haut Gauche)
-                const url1 = getIconUrl(names[0], elems[0] || elems[0]); // Fallback si name array mais pas elem array
+                const url1 = getIconUrl(names[0], elems[0] || elems[0]);
                 const fb1 = `${ICON_BASE_PATH}icon_${elems[0]}.png`;
-
-                // Image 2 (Bas Droite)
                 const url2 = getIconUrl(names[1] || names[0], elems[1] || elems[0]);
                 const fb2 = `${ICON_BASE_PATH}icon_${elems[1] || elems[0]}.png`;
 
@@ -1795,23 +1812,21 @@ function renderToolbar(index) {
                     <div style="position:absolute; inset:0; clip-path: polygon(0 0, 100% 0, 0 100%); z-index:2;">
                         <img src="${url1}" onerror="this.src='${fb1}'" style="width:100%; height:100%; object-fit:cover;">
                     </div>
-                    
                     <div style="position:absolute; inset:0; clip-path: polygon(100% 0, 100% 100%, 0 100%); z-index:1;">
                         <img src="${url2}" onerror="this.src='${fb2}'" style="width:100%; height:100%; object-fit:cover;">
                     </div>
-                    
-                    <div style="position:absolute; inset:0; background:linear-gradient(to bottom right, transparent 48%, #fff 48%, #fff 52%, transparent 52%); z-index:3; pointer-events:none;"></div>
-                `;
+                    <div style="position:absolute; inset:0; background:linear-gradient(to bottom right, transparent 49.5%, #fff 49.5%, #fff 50.5%, transparent 50.5%); z-index:3; pointer-events:none;"></div>                `;
             }
 
+            // On applique bgStyle sur le conteneur rond
             return `
-                <div style="position:relative; width:32px; height:32px; border-radius:50%; border:1px solid rgba(255,255,255,0.5); background:#000; overflow:hidden;" title="${mate.role}">
+                <div style="position:relative; width:40px; height:40px; border-radius:5px; ${bgStyle} overflow:hidden;" title="${mate.role}">
                     ${innerHtml}
                 </div>
             `;
         }).join('');
 
-        teamHtml = `<div style="display:flex; margin-left:10px; align-items:center; gap: 8px;">${charIcon}${matesHtml}</div>`;
+        teamHtml = `<div style="display:flex; color: #ffffff; border: none; border-radius: 8px; padding: 5px; flex-direction: row; align-items:center; gap: 5px; background: #2C2D32; ">${charIcon}${matesHtml}</div>`;
     }
 
     // 3. DROPDOWN ER TARGET
@@ -1825,8 +1840,7 @@ function renderToolbar(index) {
     // --- INJECTION HTML ---
     container.innerHTML = `
         <div style="display:flex; flex-direction:column; gap:2px;">
-            <label style="font-size:10px; color:#aaa; text-transform:uppercase;">Archétype</label>
-            <select onchange="switchBuild(${index}, this.value)" style="background:#333; color:#fff; border:1px solid #555; padding:4px 8px; border-radius:4px; font-size:12px;">
+            <select onchange="switchBuild(${index}, this.value)" class="main-content-menu-team">
                 ${buildOptions}
             </select>
         </div>
@@ -1834,8 +1848,7 @@ function renderToolbar(index) {
         ${teamHtml}
 
         <div style="display:flex; flex-direction:column; gap:2px;">
-            <label style="font-size:10px; color:#aaa; text-transform:uppercase;">Objectif ER</label>
-            <select id="er-selector-${index}" onchange="updateERTarget(${index}, this.value)" style="background:#333; color:#fff; border:1px solid #555; padding:4px 8px; border-radius:4px; font-size:12px;">
+            <select id="er-selector-${index}" onchange="updateERTarget(${index}, this.value)" class="main-content-menu-er">
                 ${erOptions}
             </select>
         </div>
@@ -2062,7 +2075,7 @@ function renderShowcase(index) {
                     <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
                         <img src="assets/simulator/icons/icon_score_white.png" alt="Score" style="width: 19px; height: 19px; margin-bottom: 2px; margin-right: 5px;">
                         <p>Score</p>
-                        <div class="dotted-line-invisible"></div> 
+                        <div class="dotted-line"></div> 
                         <div style="display: flex; flex-direction: row; gap: 4px;">
                             <p style="color: ${ev.grade.color};">${ev.score}</p>
                             <p>(${ev.grade.letter})</p>
@@ -2070,7 +2083,7 @@ function renderShowcase(index) {
                     </div>
                     <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
                         <p style="margin-left: 24px;">Rolls totaux</p>
-                        <div class="dotted-line-invisible"></div> 
+                        <div class="dotted-line"></div> 
                         <p>${ev.totalRolls}</p>
                     </div>
                 </div>
@@ -2264,7 +2277,7 @@ function renderShowcase(index) {
                         <label class="switch" style="position:relative; display:inline-block; width:30px; min-width: 30px; height:16px; box-sizing: border-box; flex-shrink: 0;">
                             <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${index}, ${bIndex})" style="opacity:0; width:0; height:0;">
                             <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:${trackColor}; transition:.4s; border-radius:34px; width: 100%;"></span>
-                            <span style="position:absolute; content:''; height:12px; width:12px; left:2px; bottom:2px; background-color:${knobColor}; transition:.4s; border-radius:50%; ${knobTransform} box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></span>
+                            <span style="position:absolute; content:''; height:12px; width:12px; left:2px; bottom:2px; background-color:${knobColor}; transition:.4s; ${knobTransform} box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></span>
                         </label>
                     </div>
                 `;

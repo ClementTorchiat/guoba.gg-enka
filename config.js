@@ -126,22 +126,6 @@ const CHARACTER_CONFIG = {
         talents: { auto: 1, skill: 10, burst: 10 }
     },
     "Arlecchino": {
-        weights: {
-            "critRate_": 1, "critDMG_": 1,
-            "atk_": 1, "atk": 0.1,
-            "hp_": 0, "hp": 0,
-            "def_": 0, "def": 0,
-            "eleMas": 0.75, "enerRech_": 0.3,
-            "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
-            "heal_": 0
-        },
-        bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
-        goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2"],
-        talents: { auto: 10, skill: 8, burst: 8 },
-        color : "#AB3D2D",
-        portraitOffset: -38
-    },
-    "Arlecchino": {
         color: "#AB3D2D",
         portraitOffset: -38,
         talents: {
@@ -258,6 +242,96 @@ const CHARACTER_CONFIG = {
                     { role: "Sustain", name: "Bennett", element: "pyro" },
                     { role: "Sub-DPS", name: "Xiangling", element: "pyro" },
                     { role: "Support", name: "Kazuha", element: "anemo" }
+                ]
+            }
+        }
+    },
+    "Shogun Raiden": {
+        color: "#a480df", // Violet Électro
+        portraitOffset: -30, // Ajustement de l'image
+
+        talents: { auto: 1, skill: 9, burst: 10 },
+
+        // --- BUFFS ---
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : L'illuminée (Conversion ER)",
+                        description: "Chaque 1% d'ER au-dessus de 100% confère 0.4% de DGT Électro.",
+                        active: true, // Toujours actif par défaut
+                        stats: {
+                            elemental_dmg_bonus_scaling: {
+                                source: "enerRech_", // On lit l'ER
+                                percent: 0.4,       // 0.4% de DGT par point d'ER
+                                baseline: 100       // On soustrait 100% avant de calculer
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Brise-acier (Ignorer DEF)",
+                        cons: 2, // S'affiche uniquement si C2+
+                        description: "Les attaques ignorent 60% de la DÉF (Simulé par un bonus de DGT).",
+                        stats: {
+                            dmgBonus: 0.40 // Simulation de l'impact DPS
+                        }
+                    }
+                ]
+            }
+        ],
+
+        // --- BUILD 1 : HYPERCARRY (Classique) ---
+        builds: {
+            "hypercarry": {
+                name: "Hypercarry / National",
+                description: "Build focalisé sur le Déchaînement et la Recharge d'Énergie.",
+
+                weights: {
+                    atk_: 1, atk: 0.1, critRate_: 1, critDMG_: 1,
+                    enerRech_: 1, // L'ER est aussi importante que le Crit !
+                    eleMas: 0,
+                    electro_dmg_: 1
+                },
+
+                bestSets: ["EmblemOfSeveredFate:4"],
+                goodSets: ["EmblemOfSeveredFate:2", "NoblesseOblige:2"],
+
+                er_req: 220, // Gros besoin d'ER
+
+                team: [
+                    { role: "Support", name: "KujouSara", element: "electro" },
+                    { role: "Sustain", name: "Bennett", element: "pyro" },
+                    { role: "Support", name: "KaedeharaKazuha", element: "anemo" }
+                ]
+            },
+
+            // --- BUILD 2 : HYPERBLOOM (Maîtrise) ---
+            "hyperbloom": {
+                name: "Hyperbloom (EM)",
+                description: "Raiden déclenche les réactions Dendro. Full Maîtrise Élémentaire.",
+
+                weights: {
+                    atk_: 0, critRate_: 0, critDMG_: 0, // Le crit ne sert à rien
+                    enerRech_: 0.2,
+                    eleMas: 1, // Priorité absolue
+                    electro_dmg_: 0
+                },
+
+                bestSets: ["FlowerOfParadiseLost:4", "GildedDreams:4"],
+                goodSets: ["GildedDreams:2", "WanderersTroupe:2"],
+
+                er_req: 100, // Pas besoin d'ER
+
+                team: [
+                    { role: "Applicator", name: "Nahida", element: "dendro" },
+                    { role: "Hydro", name: "Yelan", element: "hydro" },
+                    { role: "Healer", name: "SangonomiyaKokomi", element: "hydro" }
                 ]
             }
         }

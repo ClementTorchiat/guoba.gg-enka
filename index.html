@@ -100,7 +100,7 @@
         }
 
         .sidebar-title h2 {
-            font-size: 36px;
+            font-size: 34px;
         }
 
         .sidebar-search {
@@ -314,7 +314,7 @@
         }
 
         .main-content-menu-container {
-            margin-top: 46px;
+            margin-top: 43px;
         }
 
         .main-content-menu-title {
@@ -323,14 +323,49 @@
             margin-left: 4px;
         }
 
-        .main-content-menu-fake {
+        .main-content-menu-team {
             background: #2C2D32;
             border: none;
             border-radius: 8px;
             font-family: ShinShin, Inter, sans-serif;
             font-size: 14px;
-            padding: 17px 15px 14px;
+            padding-left: 15px;
+            padding-top: 16px;
+            padding-bottom: 13px;
             color: #ffffff;
+            width: 350px;
+            border-right: 16px solid transparent
+        }
+
+        .main-content-menu-er {
+            background: #2C2D32;
+            border: none;
+            border-radius: 8px;
+            font-family: ShinShin, Inter, sans-serif;
+            font-size: 14px;
+            padding-left: 10px;
+            padding-top: 16px;
+            padding-bottom: 13px;
+            color: #ffffff;
+            border-right: 11px solid transparent;
+            max-width: 106px;
+        }
+
+        .main-content-menu-export {
+            background: #2C2D32;
+            border: none;
+            border-radius: 8px;
+            font-family: ShinShin, Inter, sans-serif;
+            font-size: 14px;
+            padding-left: 15px;
+            padding-top: 17px;
+            padding-bottom: 14px;
+            padding-right: 15px;
+            color: #ffffff;
+        }
+
+        .main-content-menu-guide {
+
         }
 
         .main-content-showcase {
@@ -694,28 +729,30 @@
                     <div class="main-content-menu" style="display: flex; justify-content: space-between; align-items: flex-end;">
                         <div class="main-content-menu-container">
                             <p class="main-content-menu-title">Équipe :</p>
-                            <div id="toolbar-controls" style="display: flex; align-items: center; gap: 20px; flex: 1;"></div>
+                            <div id="toolbar-controls" style="display: flex; align-items: center; gap: 8px; flex: 1;"></div>
                             <div class="menu-actions" style="display:flex; gap:10px;"></div>
                         </div>
-                        <button onclick="openNotice()" title="Mode d'emploi" style="
+
+
+                        <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                            <button onclick="openNotice()" title="Mode d'emploi" style="
+                            background: #2C2D32;
+                            border: none;
+                            border-radius: 8px;
+                            font-family: ShinShin, Inter, sans-serif;
+                            font-size: 14px;
+                            color: #ffffff;
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            width: 44px;
-                            height: 44px;
-                            background-color: rgba(255, 255, 255, 0.1);
-                            border: 1px solid rgba(255, 255, 255, 0.2);
-                            border-radius: 12px;
-                            color: #fff;
+                            width: 50px;
+                            height: 50px;
                             cursor: pointer;
                             transition: 0.3s;
-                            margin-left: 10px;
-                        " onmouseover="this.style.background='var(--accent-gold)'; this.style.borderColor='var(--accent-gold)'; this.style.color='#000';" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'; this.style.color='#fff';">
-                                                    <i class="fa-solid fa-question" style="font-size: 18px;"></i>
-                        </button>
-
-                        <div style="">
-                            <button onclick="exportBuildAsImage()" class="main-content-menu-fake" style="cursor: pointer; display: flex; align-items: center; gap: 8px; background: #2C2D32; color: #fff; transition: 0.2s;">
+                            " onmouseover="this.style.background='var(--accent-gold)'; this.style.borderColor='var(--accent-gold)'; this.style.color='#000';" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'; this.style.color='#fff';">
+                                <i class="fa-solid fa-question" style="font-size: 18px;"></i>
+                            </button>
+                            <button onclick="exportBuildAsImage()" class="main-content-menu-export" style="cursor: pointer; display: flex; align-items: center; gap: 8px; background: #2C2D32; color: #fff; transition: 0.2s;">
                                 <i class="fa-solid fa-camera"></i>
                                 <span>Exporter en image</span>
                             </button>
