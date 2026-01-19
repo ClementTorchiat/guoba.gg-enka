@@ -443,17 +443,19 @@ let locData = {};
 
 async function loadGameData() {
     const loader = document.getElementById('loading-msg');
-    if(loader) loader.innerText = "Chargement API...";
+    if(loader) loader.innerText = "Chargement API V2...";
     try {
+        const t = Date.now();
         const [chars, locs] = await Promise.all([
-            fetch('https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/characters.json').then(r => r.json()),
-            fetch('https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/loc.json').then(r => r.json())
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/avatars.json?t=${t}`).then(r => r.json()),
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json?t=${t}`).then(r => r.json())
         ]);
         charData = chars;
         locData = locs;
         if(loader) loader.innerText = "";
+        console.log("✅ Données chargées (Architecture GI/Avatars)");
     } catch (e) {
-        console.error(e);
+        console.error("Erreur API V2 :", e);
         if(loader) loader.innerText = "Erreur JSON.";
     }
 }
@@ -487,8 +489,27 @@ async function fetchUserData() {
 }
 
 function getText(hash) {
-    if (locData && locData.fr && locData.fr[hash]) return locData.fr[hash];
-    return "Inconnu";
+    if (!hash) return "Inconnu";
+    if (!locData) return "Chargement...";
+
+    // 1. Détection de la langue (Français par défaut, sinon Anglais)
+    // On vérifie si "fr" existe, sinon on prend "en", sinon la première clé dispo
+    const lang = locData["fr"] ? "fr" : (locData["en"] ? "en" : Object.keys(locData)[0]);
+
+    if (!locData[lang]) return "Langue introuvable";
+
+    // 2. Conversion sécurisée du Hash en String pour la recherche
+    const key = String(hash);
+
+    // 3. Recherche
+    let val = locData[lang][key];
+
+    // 4. Nettoyage HTML (Parfois Enka renvoie du texte avec des balises de couleur)
+    if (val) {
+        return val.replace(/<[^>]*>/g, ""); // Enlève les <color=...>
+    }
+
+    return "Inconnu"; // Si hash introuvable
 }
 
 function formatValueDisplay(key, val) {
@@ -1443,22 +1464,39 @@ function processData(data) {
 
     data.avatarInfoList.forEach(perso => {
         const id = perso.avatarId;
+        const getKey = (obj, key) => {
+            if (!obj) return undefined;
+            // 1. Cherche la clé exacte
+            if (obj[key] !== undefined) return obj[key];
+            // 2. Cherche la version minuscule (camelCase)
+            const lowerKey = key.charAt(0).toLowerCase() + key.slice(1);
+            if (obj[lowerKey] !== undefined) return obj[lowerKey];
+            return undefined;
+        };
         const info = charData[id] || {};
-        let nom = getText(info.NameTextMapHash);
+        let nameHash = getKey(info, "NameTextMapHash");
+        let nom = getText(nameHash);
+        let iconNameRaw = getKey(info, "SideIconName")
+            || getKey(info, "sideIconName")
+            || getKey(info, "IconName")
+            || getKey(info, "iconName")
+            || getKey(info, "icon");
 
         if (!nom || nom === "Inconnu") {
-            if (info.SideIconName) {
-                nom = info.SideIconName.split('_').pop();
+            if (iconNameRaw) {
+                const clean = iconNameRaw.replace(/\.png$/i, "");
+                nom = clean.split('_').pop();
                 if (nom.includes("Player")) nom = "Voyageur";
             } else {
                 nom = "Inconnu";
             }
         }
-        const rarity = info.QualityType === "QUALITY_ORANGE" ? 5 : 4;
+        const qualityType = getKey(info, "QualityType");
+        const rarity = qualityType === "QUALITY_ORANGE" ? 5 : 4;
         const level = perso.propMap['4001'] ? parseInt(perso.propMap['4001'].val) : 0;
         const constellations = perso.talentIdList ? perso.talentIdList.length : 0;
-
-        const elemInfo = ELEMENT_DATA[info.Element] || { id: 30, key: "physical_dmg_" };
+        const elemKey = getKey(info, "Element");
+        const elemInfo = ELEMENT_DATA[elemKey] || { id: 30, key: "physical_dmg_" };
 
         const WEAPON_TYPE_MAP = {
             "WEAPON_SWORD_ONE_HAND": "sword",
@@ -1467,20 +1505,79 @@ function processData(data) {
             "WEAPON_BOW": "bow",
             "WEAPON_CATALYST": "catalyst"
         };
-        const charWeaponKey = WEAPON_TYPE_MAP[info.WeaponType] || "unknown";
+        const wTypeRaw = getKey(info, "WeaponType");
+        const charWeaponKey = WEAPON_TYPE_MAP[wTypeRaw] || "unknown";
 
-        const talents = [];
-        if (info.SkillOrder) {
-            info.SkillOrder.forEach(skillId => {
-                let lvl = perso.skillLevelMap[skillId] || 0;
-                const iconName = info.Skills && info.Skills[skillId] ? info.Skills[skillId] : "Skill_A_01";
-                talents.push({ level: lvl, icon: `https://enka.network/ui/${iconName}.png` });
-            });
+        // --- 2. GESTION DES IMAGES (Compatible Nouveau Format Enka) ---
+
+        // A. Valeurs par défaut
+        let sideIconUrl = "https://enka.network/ui/UI_AvatarIcon_Side_Unknown.png";
+        let splashUrl = "https://enka.network/ui/UI_Gacha_AvatarImg_Unknown.png";
+
+        // B. On cherche la clé d'image
+
+        // C. Traitement
+        if (iconNameRaw && typeof iconNameRaw === 'string') {
+
+            // CAS 1 : C'est le nouveau format (commence par /ui/)
+            // Ex: "/ui/UI_AvatarIcon_Side_Ayaka.png"
+            if (iconNameRaw.startsWith("/ui/")) {
+                // L'URL de l'icone est simple : on colle juste le domaine devant
+                sideIconUrl = `https://enka.network${iconNameRaw}`;
+
+                // Pour le Splash, on doit extraire le nom "Ayaka" du chemin
+                // On retire "/ui/", ".png", "UI_AvatarIcon_Side_"
+                let cleanName = iconNameRaw
+                    .replace("/ui/", "")
+                    .replace(/\.png$/i, "")
+                    .replace("UI_AvatarIcon_Side_", "")
+                    .replace("UI_AvatarIcon_", ""); // Au cas où
+
+                splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.png`;
+            }
+                // CAS 2 : C'est l'ancien format (juste le nom de fichier)
+            // Ex: "UI_AvatarIcon_Side_Ayaka"
+            else {
+                let cleanName = iconNameRaw
+                    .replace(/\.png$/i, "")
+                    .replace(/^UI_AvatarIcon_Side_/, "")
+                    .replace(/^UI_AvatarIcon_/, "");
+
+                // Sécurité anti-slash pour l'ancien format
+                if (!cleanName.includes("/")) {
+                    sideIconUrl = `https://enka.network/ui/UI_AvatarIcon_Side_${cleanName}.png`;
+                    splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.png`;
+                }
+            }
         }
 
-        const namePart = info.SideIconName ? info.SideIconName.split('_').pop() : "Nilou";
-        const splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${namePart}.png`;
-        const sideIcon = `https://enka.network/ui/${info.SideIconName?.replace("Side_Match", "Side")}.png`;
+        // --- FIN GESTION IMAGES ---
+
+        // --- FIN ADAPTATEUR ---
+
+        const talents = [];
+        const skillOrder = getKey(info, "SkillOrder");
+        const skillsMap = getKey(info, "Skills");
+
+        // Correction pour les Talents (Skills)
+        if (skillOrder) {
+            skillOrder.forEach(skillId => {
+                let lvl = perso.skillLevelMap[skillId] || 0;
+                // On récupère le nom brut
+                let iconName = skillsMap && skillsMap[skillId] ? skillsMap[skillId] : "Skill_A_01";
+
+                let talentUrl = "";
+                // Si ça commence par /ui/, on ajoute juste le domaine
+                if (iconName.startsWith("/ui/")) {
+                    talentUrl = `https://enka.network${iconName}`;
+                } else {
+                    // Sinon ancien format
+                    talentUrl = `https://enka.network/ui/${iconName}.png`;
+                }
+
+                talents.push({ level: lvl, icon: talentUrl });
+            });
+        }
 
         const fp = perso.fightPropMap;
         const baseStats = { hp: fp[1] || 0, atk: fp[4] || 0, def: fp[7] || 0 };
@@ -1598,53 +1695,31 @@ function processData(data) {
             }
         };
 
-        // --- 1. CHARGEMENT DE LA CONFIGURATION (INTELLIGENT) ---
         const configKey = nom.replace(/\s+/g, '') || "Default";
-        // On récupère la config brute du fichier config.js
         const rawConfig = G_CHAR_CONFIG[configKey] || G_CHAR_CONFIG[nom] || G_DEFAULT_CONFIG;
 
         let activeBuild = null;
-        let scoringConfig = { ...rawConfig }; // Copie de base
+        let scoringConfig = { ...rawConfig };
 
-        // DÉTECTION DES BUILDS MULTIPLES
-        // DÉTECTION DES BUILDS MULTIPLES (AUTO-SELECT BEST)
         if (rawConfig.builds) {
             let bestBuildKey = null;
             let maxScore = -1;
 
-            // 1. On teste chaque build disponible
             Object.entries(rawConfig.builds).forEach(([key, build]) => {
-                // On crée une config temporaire combinée pour ce test
                 const tempConfig = { ...rawConfig, ...build };
-
-                // On lance un calcul de score simulé sur les artéfacts du perso
-                // (On passe juste {artefacts} car c'est tout ce dont le calculateur a besoin)
                 const simulation = calculateCharacterScore({ artefacts: artefacts }, tempConfig);
-
-                // On garde le meilleur score
                 if (simulation.score > maxScore) {
                     maxScore = simulation.score;
                     bestBuildKey = key;
                 }
             });
 
-            // Sécurité : Si jamais le calcul échoue, on prend le premier par défaut
             if (!bestBuildKey) bestBuildKey = Object.keys(rawConfig.builds)[0];
-
-            // 2. On applique le build gagnant
             activeBuild = rawConfig.builds[bestBuildKey];
             activeBuild.key = bestBuildKey;
-
-            // 3. Fusion finale pour la suite du script
-            scoringConfig = {
-                ...rawConfig,
-                ...activeBuild
-            };
+            scoringConfig = { ...rawConfig, ...activeBuild };
         }
 
-        // --- 2. GESTION DES BUFFS ---
-
-        // A. Arme
         if (weapon && G_WEAPON_PASSIVES[weapon.key]) {
             const wConfig = G_WEAPON_PASSIVES[weapon.key];
             const isAdvanced = wConfig.buffs && Array.isArray(wConfig.buffs);
@@ -1653,7 +1728,6 @@ function processData(data) {
             addBuffs(weapon.key, `${weapon.name} (Arme)`, wData, wMode, weapon.rank);
         }
 
-        // B. Sets
         if (G_SET_PASSIVES) {
             for (const [setKey, count] of Object.entries(setsCounter)) {
                 if (G_SET_PASSIVES[setKey]) {
@@ -1667,41 +1741,36 @@ function processData(data) {
             }
         }
 
-        // C. Personnage (Passifs & Constellations)
         if (scoringConfig.buffs) {
             scoringConfig.buffs.forEach(group => {
-                // FILTRAGE INTELLIGENT
-                // On filtre les buffs qui demandent une constellation supérieure à celle du perso
                 const filteredBuffs = group.buffs.filter(b => {
-                    // Si le buff n'a pas de propriété 'cons', on le garde (c'est un passif standard)
                     if (b.cons === undefined) return true;
-                    // Sinon, on compare avec le niveau de constellation du perso (persoObj.cons)
                     return constellations >= b.cons;
                 });
 
-                // On n'ajoute le groupe que s'il reste des buffs dedans après filtrage
                 if (filteredBuffs.length > 0) {
                     addBuffs(nom, group.category, filteredBuffs, group.selectMode);
                 }
             });
         }
 
-        // --- 3. FINALISATION ---
         const buffedStats = calculateBuffedStats(baseStats, combatStats, buffs);
 
         const persoObj = {
             id: id, nom, rarity, level, cons: constellations, talents,
-            image: sideIcon, splashArt: splashUrl, combatStats, buffedStats, baseStats,
+            image: sideIconUrl, splashArt: splashUrl, combatStats, buffedStats, baseStats,
             weapon, artefacts, setsCounter, buffs, evaluation: null, weights: null,
             charWeapon: charWeaponKey,
-            // On stocke la config active pour que l'UI puisse s'en servir plus tard
             charConfig: rawConfig,
             activeBuild: activeBuild
         };
 
-        // Calcul du score avec la config fusionnée (Build actif)
+        if (activeBuild && activeBuild.team) {
+            updateResonanceBuffs(persoObj, activeBuild.team);
+        }
+
         persoObj.evaluation = calculateCharacterScore(persoObj, scoringConfig);
-        persoObj.weights = scoringConfig.weights; // Important pour l'affichage des stats oranges
+        persoObj.weights = scoringConfig.weights;
 
         globalPersoData.push(persoObj);
     });
@@ -1745,7 +1814,7 @@ function renderToolbar(index) {
 
     // Si le perso n'a pas de builds configurés, on vide la toolbar
     if (!p.charConfig.builds) {
-        container.innerHTML = '<span style="color:#aaa; font-size:12px;">Aucun archétype disponible</span>';
+        container.innerHTML = '<span class="main-content-menu-team" style="padding-top: 17px; padding-bottom: 14px;">Aucun archétype disponible</span>';
         return;
     }
 
@@ -1886,43 +1955,62 @@ function switchBuild(charIndex, buildKey) {
 }
 
 // --- LOGIQUE DE RÉSONANCE AUTOMATIQUE ---
+// --- LOGIQUE DE RÉSONANCE (Compatible Flex Slots) ---
 function updateResonanceBuffs(p, teamData) {
     if (!teamData) return;
 
-    // 1. On compte les éléments
-    // On commence par l'élément du perso actif (ex: Arlecchino = pyro)
-    // Note: p.charConfig.color donne une idée, mais mieux vaut mapper l'élément réel si dispo.
-    // Pour simplifier, on suppose que l'utilisateur a défini 'element' dans la team.
+    // 1. Nettoyage des anciennes résonances
+    p.buffs = p.buffs.filter(b => b.category !== "Résonance");
 
-    // On récupère l'élément du perso via son DMG Bonus Key (pyro_dmg_ -> pyro)
-    const charElement = p.combatStats.dmgBonusKey.replace('_dmg_', '');
-    const counts = { [charElement]: 1 };
+    // 2. Comptage des éléments
+    // Guaranteed = Sûr à 100% (ex: Perso fixe)
+    // Potential = Peut-être (ex: Flex slot)
+    const guaranteed = {};
+    const potential = {};
 
+    // A. On compte le perso actif
+    const charElement = p.combatStats.dmgBonusKey ? p.combatStats.dmgBonusKey.replace('_dmg_', '') : null;
+    if (charElement) guaranteed[charElement] = 1;
+
+    // B. On compte les coéquipiers
     teamData.forEach(mate => {
-        if (mate.element) {
-            counts[mate.element] = (counts[mate.element] || 0) + 1;
+        // Cas 1 : Élément fixe (String) -> "hydro"
+        if (typeof mate.element === 'string') {
+            guaranteed[mate.element] = (guaranteed[mate.element] || 0) + 1;
+        }
+        // Cas 2 : Élément flexible (Array) -> ["hydro", "cryo"]
+        else if (Array.isArray(mate.element)) {
+            mate.element.forEach(el => {
+                potential[el] = (potential[el] || 0) + 1;
+            });
         }
     });
 
-    // 2. On nettoie les anciennes résonances (pour éviter les doublons)
-    p.buffs = p.buffs.filter(b => b.category !== "Résonance");
+    // 3. Ajout des Buffs
+    Object.keys(RESONANCE_DATA).forEach(elem => {
+        const countG = guaranteed[elem] || 0;
+        const countP = potential[elem] || 0;
+        const total = countG + countP;
 
-    // 3. On ajoute les nouvelles
-    for (const [elem, count] of Object.entries(counts)) {
-        if (count >= 2 && RESONANCE_DATA[elem]) {
+        // Condition : Il faut au moins 2 persos potentiels pour faire une résonance
+        if (total >= 2) {
             const resData = RESONANCE_DATA[elem];
 
-            // On ajoute le buff coché par défaut
+            // EST-CE ACTIF PAR DÉFAUT ?
+            // Oui si on a 2 persos GARANTIS (ex: Arlecchino + Bennett)
+            // Non si ça dépend d'un Flex Slot (ex: Yelan + [Hydro/Cryo])
+            const isActive = (countG >= 2);
+
             p.buffs.push({
                 id: `res_${elem}`,
                 category: "Résonance",
                 name: resData.name,
                 bonuses: resData.stats,
-                active: true, // Activé par défaut
+                active: isActive, // Auto-active si garanti, sinon décoché
                 selectMode: 'standard'
             });
         }
-    }
+    });
 
     // 4. Recalcul des stats buffées
     p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
@@ -2277,7 +2365,7 @@ function renderShowcase(index) {
                         <label class="switch" style="position:relative; display:inline-block; width:30px; min-width: 30px; height:16px; box-sizing: border-box; flex-shrink: 0;">
                             <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${index}, ${bIndex})" style="opacity:0; width:0; height:0;">
                             <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:${trackColor}; transition:.4s; border-radius:34px; width: 100%;"></span>
-                            <span style="position:absolute; content:''; height:12px; width:12px; left:2px; bottom:2px; background-color:${knobColor}; transition:.4s; ${knobTransform} box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></span>
+                            <span style="position:absolute; content:''; border-radius:50%; height:12px; width:12px; left:2px; bottom:2px; background-color:${knobColor}; transition:.4s; ${knobTransform} box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></span>
                         </label>
                     </div>
                 `;
@@ -2665,6 +2753,7 @@ loadGameData(); // On charge les données du jeu (personnages, noms...)
 // Gestion de la touche "Entrée" dans le champ de texte
 const uidInput = document.getElementById('uidInput');
 if (uidInput) {
+    uidInput.focus();
     uidInput.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
             event.preventDefault(); // Empêche le rechargement de page indésirable
