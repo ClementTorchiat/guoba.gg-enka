@@ -426,7 +426,9 @@ const SET_NAME_MAPPING = {
     "Serment de la longue nuit": "LongNightsOath",
     "Finale des galeries profondes": "FinaleOfTheDeepGalleries",
     "Nuit de la révélation céleste": "NightOfTheSkysUnveiling",
-    "Sérénade de la lune soyeuse": "SilkenMoonsSerenade"
+    "Sérénade de la lune soyeuse": "SilkenMoonsSerenade",
+    "Journée sculptée par les vents ascendants": "ADayCarvedFromRisingWinds",
+    "Aubade d'astre et de lune": "AubadeOfMorningstarAndMoon"
 };
 
 const ARTIFACT_TYPE_MAPPING = { "EQUIP_BRACER": "Fleur de la vie", "EQUIP_NECKLACE": "Plume de la mort", "EQUIP_SHOES": "Sables du temps", "EQUIP_RING": "Coupe d'éonothème", "EQUIP_DRESS": "Diadème de Logos" };
@@ -443,20 +445,33 @@ let locData = {};
 
 async function loadGameData() {
     const loader = document.getElementById('loading-msg');
-    if(loader) loader.innerText = "Chargement API V2...";
+    if(loader) loader.innerText = "Chargement V2 (Indexation)...";
+    window.iconToNameHash = {};
     try {
         const t = Date.now();
-        const [chars, locs] = await Promise.all([
+        const [chars, locs, relics] = await Promise.all([
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/avatars.json?t=${t}`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json?t=${t}`).then(r => r.json())
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json?t=${t}`).then(r => r.json()),
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/relics.json?t=${t}`).then(r => r.json())
         ]);
         charData = chars;
         locData = locs;
+        if (relics && relics.Items && relics.Sets) {
+            Object.values(relics.Items).forEach(item => {
+                if (item.Icon && item.SetId && relics.Sets[item.SetId]) {
+                    const iconName = item.Icon.split('/').pop().replace('.png', '');
+                    const nameHash = relics.Sets[item.SetId].Name;
+                    if (iconName && nameHash) {
+                        window.iconToNameHash[iconName] = nameHash;
+                    }
+                }
+            });
+        }
         if(loader) loader.innerText = "";
-        console.log("✅ Données chargées (Architecture GI/Avatars)");
+        console.log(`✅ API V2 Chargée : ${Object.keys(window.iconToNameHash).length} artéfacts indexés.`);
     } catch (e) {
-        console.error("Erreur API V2 :", e);
-        if(loader) loader.innerText = "Erreur JSON.";
+        console.error("Erreur chargement :", e);
+        if(loader) loader.innerText = "Erreur Fichiers.";
     }
 }
 
@@ -491,25 +506,13 @@ async function fetchUserData() {
 function getText(hash) {
     if (!hash) return "Inconnu";
     if (!locData) return "Chargement...";
-
-    // 1. Détection de la langue (Français par défaut, sinon Anglais)
-    // On vérifie si "fr" existe, sinon on prend "en", sinon la première clé dispo
     const lang = locData["fr"] ? "fr" : (locData["en"] ? "en" : Object.keys(locData)[0]);
-
-    if (!locData[lang]) return "Langue introuvable";
-
-    // 2. Conversion sécurisée du Hash en String pour la recherche
     const key = String(hash);
-
-    // 3. Recherche
-    let val = locData[lang][key];
-
-    // 4. Nettoyage HTML (Parfois Enka renvoie du texte avec des balises de couleur)
+    const val = locData[lang] ? locData[lang][key] : null;
     if (val) {
-        return val.replace(/<[^>]*>/g, ""); // Enlève les <color=...>
+        return val.replace(/<[^>]*>/g, "");
     }
-
-    return "Inconnu"; // Si hash introuvable
+    return "Inconnu";
 }
 
 function formatValueDisplay(key, val) {
@@ -741,14 +744,16 @@ function getCritAdvice(cr, cd, config) {
         };
     }
 
-    // 2. Logique habituelle pour les persos Crit
-    if (cr > 100) return { color: '#ff4d4d', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Dépasser 100% est inutile.` };
-    if (cr >= 95) return { color: '#3b82f6', msg: "Taux CRIT excellent (plus de 95%). Orientez-vous sur l'obtention d'un maximum de DGT CRIT." };
-    if (cr >= 90) return { color: '#22c55e', msg: "Taux CRIT largement suffisant (plus de 90%). Orientez-vous sur l'obtention d'un maximum de DGT CRIT." };
-    if (cr >= 80) return { color: '#22c55e', msg: "Taux CRIT suffisant (plus de 80%). En obtenir plus est utile, mais vous pouvez vous orienter sur l'obtention de DGT CRIT." };
-    if (cr >= 70) return { color: '#eab308', msg: "Taux CRIT passable (plus de 70%). Vous devriez essayer d'en obtenir plus." };
-    if (cr >= 60) return { color: '#ffb13b', msg: "Taux CRIT insuffisant (plus de 60%). Il est conseillé d'en obtenir plus." };
-    if (cr <= 50) return { color: '#ff4d4d', msg: "Taux CRIT largement insuffisant (50% ou moins). Obtenez en plus avant d'aller chercher du DGT CRIT." };
+    const roundedCR = Math.round(cr * 10) / 10;
+
+    if (roundedCR > 100) return { color: '#ff4d4d', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Dépasser 100% est inutile.` };
+    if (roundedCR === 100) return { color: '#00FFFF', msg: `Taux CRIT parfait. Orientez-vous sur l'obtention d'un maximum de DGT CRIT.` };
+    if (roundedCR >= 95) return { color: '#3b82f6', msg: "Taux CRIT excellent (plus de 95%). Orientez-vous sur l'obtention d'un maximum de DGT CRIT." };
+    if (roundedCR >= 90) return { color: '#22c55e', msg: "Taux CRIT largement suffisant (plus de 90%). Orientez-vous sur l'obtention d'un maximum de DGT CRIT." };
+    if (roundedCR >= 80) return { color: '#22c55e', msg: "Taux CRIT suffisant (plus de 80%). En obtenir plus est utile, mais vous pouvez vous orienter sur l'obtention de DGT CRIT." };
+    if (roundedCR >= 70) return { color: '#eab308', msg: "Taux CRIT passable (plus de 70%). Vous devriez essayer d'en obtenir plus." };
+    if (roundedCR >= 60) return { color: '#ffb13b', msg: "Taux CRIT insuffisant (plus de 60%). Il est conseillé d'en obtenir plus." };
+    if (roundedCR < 60) return { color: '#ff4d4d', msg: "Taux CRIT largement insuffisant (59% ou moins). Obtenez en plus avant d'aller chercher du DGT CRIT." };
     return { color: '#888', msg: "Analyse impossible" };
 }
 
@@ -832,6 +837,30 @@ function getFarmDifficulty(pieceType, mainStatKey) {
 
 // ANALYSE OFF-PIECE (Avec nom de la pièce)
 function getOffPieceAdvice(persoObj) {
+    // --- CAS 4 : DÉTECTION DU 5 PIÈCES (FULL SET) ---
+    const fullSetKey = Object.keys(persoObj.setsCounter).find(key => persoObj.setsCounter[key] === 5);
+
+    if (fullSetKey) {
+        // 1. On récupère les 5 pièces
+        const setPieces = persoObj.artefacts.filter(art => art.setKey === fullSetKey);
+        setPieces.sort((a, b) => (a.score || 0) - (b.score || 0));
+        const worstPiece = setPieces[0];
+
+        // 2. Nom de la pièce (ex: Sablier)
+        const rawName = ARTIFACT_TYPE_MAPPING[worstPiece.type] || "Pièce";
+
+        // 3. TRADUCTION DU NOM DU SET (La nouveauté)
+        // On cherche la clé Française qui a pour valeur 'fullSetKey' dans ton mapping global
+        const setNameFR = Object.keys(SET_NAME_MAPPING).find(k => SET_NAME_MAPPING[k] === fullSetKey) || fullSetKey;
+
+        return {
+            type: "info",
+            // On utilise setNameFR ici au lieu de fullSetKey
+            msg: `Vous utilisez 5 pièces du set <b>${setNameFR}</b>. Votre <b style="color: #aaa;">${rawName}</b> étant statistiquement la plus faible (Score: ${Math.round(worstPiece.score || 0)}), vous devriez la remplacer par une meilleure pièce hors-set.`
+        };
+    }
+
+    // --- LOGIQUE ORIGINALE ---
     let offPiece = null;
     let setPiecesScores = [];
 
@@ -847,11 +876,7 @@ function getOffPieceAdvice(persoObj) {
 
     if (!offPiece || setPiecesScores.length === 0) return null;
 
-    // 1. Récupération du nom de la pièce (ex: "Sables du temps" ou "Coupe d'éonothème")
-    // On nettoie un peu le nom pour qu'il soit plus court si besoin, ou on garde le mapping standard
     const rawName = ARTIFACT_TYPE_MAPPING[offPiece.type] || "Pièce";
-    // Petite astuce : Pour "Sables du temps", on peut garder le nom complet, c'est joli.
-
     const avgSetScore = setPiecesScores.reduce((a, b) => a + b, 0) / setPiecesScores.length;
     const isHardMainStat = offPiece.mainStat.key.includes("dmg_") || offPiece.mainStat.key.includes("crit");
 
@@ -874,7 +899,6 @@ function getOffPieceAdvice(persoObj) {
         };
     }
 }
-
 // CONSEIL TALENTS
 function getTalentAdvice(persoObj, config) {
     if (!config.talents) return null;
@@ -952,13 +976,11 @@ function getSetForcingAdvice(persoObj, config) { // <-- Ajout de config ici
     const totalScore = setPieces.reduce((sum, art) => sum + art.score, 0);
     const avgScore = totalScore / setPieces.length;
 
-    if (avgScore < 20) {
+    if (avgScore < 25) {
         let warningMsg = `Vous forcez un set d'artéfacts de 4 pièces avec des artéfacts faibles. Vous devriez essayer une alternative.`;
 
         if (charLikes2p2p) {
             warningMsg += `Ce personnage fonctionne très bien en set d'artéfacts 2 pièces / 2 pièces, n'hésitez pas à casser votre set d'artéfacts actuel pour de meilleures stats.`;
-        } else {
-            warningMsg += `Vous forcez un set d'artéfacts de 4 pièces avec des artéfacts faibles. Vous devriez essayer une alternative.`;
         }
 
         return {
@@ -1613,18 +1635,39 @@ function processData(data) {
                 };
             }
             if (flat.itemType === "ITEM_RELIQUARY") {
-                const nomSetFR = getText(flat.setNameTextMapHash);
+                // 1. Hash par défaut (vieux)
+                let targetHash = flat.setNameTextMapHash;
+
+                // 2. CORRECTION PAR ICÔNE (Imparable)
+                // flat.icon contient ex: "UI_RelicIcon_10001_4"
+                if (window.iconToNameHash && flat.icon) {
+                    const newHash = window.iconToNameHash[flat.icon];
+                    if (newHash) {
+                        targetHash = newHash; // On remplace par le hash V2 trouvé dans notre index
+                    }
+                }
+
+                // 3. Traduction
+                const nomSetFR = getText(targetHash);
+
+                // --- Le reste de ton code ne change pas ---
                 const setKey = SET_NAME_MAPPING[nomSetFR] || "UnknownSet";
                 setsCounter[setKey] = (setsCounter[setKey] || 0) + 1;
+
                 const subs = [];
                 if (flat.reliquarySubstats) {
                     flat.reliquarySubstats.forEach(s => { subs.push(formatStat(s.appendPropId, s.statValue)); });
                 }
+
                 artefacts.push({
-                    type: flat.equipType, setKey: setKey, setName: nomSetFR,
+                    type: flat.equipType,
+                    setKey: setKey,
+                    setName: nomSetFR,
                     icon: `https://enka.network/ui/${flat.icon}.png`,
                     mainStat: formatStat(flat.reliquaryMainstat.mainPropId, flat.reliquaryMainstat.statValue),
-                    subStats: subs, level: item.reliquary.level - 1, stars: flat.rankLevel
+                    subStats: subs,
+                    level: item.reliquary.level - 1,
+                    stars: flat.rankLevel
                 });
             }
         });
@@ -1635,6 +1678,10 @@ function processData(data) {
         const addBuffs = (sourceName, category, configData, selectMode = 'standard', weaponRank = 1) => {
             const resolveStats = (statsObj) => {
                 const resolved = {};
+                if (!statsObj) {
+                    console.warn(`⚠️ Attention : Le buff "${sourceName} - ${category}" n'a pas de stats définies. Ignoré.`);
+                    return resolved;
+                }
                 for (const [k, v] of Object.entries(statsObj)) {
                     if (typeof v === 'object' && v.percent) {
                         resolved[k] = { ...v, percent: getRefinedValue(v.percent, weaponRank) };
@@ -1647,6 +1694,7 @@ function processData(data) {
 
             if (Array.isArray(configData)) {
                 configData.forEach((item, idx) => {
+                    if (!item) return;
                     const finalStats = resolveStats(item.stats);
                     let name = item.label || `Buff ${idx + 1}`;
                     if (!item.label) {
@@ -1741,15 +1789,18 @@ function processData(data) {
             }
         }
 
+        // --- GESTION DES BUFFS (Correction data/buffs) ---
         if (scoringConfig.buffs) {
             scoringConfig.buffs.forEach(group => {
-                const filteredBuffs = group.buffs.filter(b => {
-                    if (b.cons === undefined) return true;
-                    return constellations >= b.cons;
-                });
-
-                if (filteredBuffs.length > 0) {
-                    addBuffs(nom, group.category, filteredBuffs, group.selectMode);
+                const list = group.data || group.buffs;
+                if (list) {
+                    const filteredBuffs = list.filter(b => {
+                        if (b.cons === undefined) return true;
+                        return constellations >= b.cons;
+                    });
+                    if (filteredBuffs.length > 0) {
+                        addBuffs(nom, group.category, filteredBuffs, group.selectMode);
+                    }
                 }
             });
         }
@@ -1838,21 +1889,22 @@ function renderToolbar(index) {
         const charIcon = `<img src="${p.image.replace('Side_', '')}" style="width:40px; height:40px; border-radius:5px; border:1px solid rgba(255,255,255,0.5); box-shadow:0 0 5px rgba(0,0,0,0.5); object-fit:cover; background:${charBg};" title="${p.nom}">`;
 
         const matesHtml = p.activeBuild.team.map(mate => {
+            // 1. Correction Fallback : On gère le cas où elem est vide
             const getIconUrl = (name, elem) => {
                 if (name) return `https://enka.network/ui/UI_AvatarIcon_${name}.png`;
-                return `${ICON_BASE_PATH}icon_${elem}.png`;
+                if (elem) return `${ICON_BASE_PATH}icon_${elem}.png`;
+                return `${ICON_BASE_PATH}icon_unknown.png`; // <--- Le voilà le fallback !
             };
 
             const isDual = Array.isArray(mate.element) || Array.isArray(mate.name);
             const names = Array.isArray(mate.name) ? mate.name : (mate.name ? [mate.name] : [null]);
             const elems = Array.isArray(mate.element) ? mate.element : [mate.element];
 
-            // B. Coéquipiers : Calcul du fond (Couleur unie ou Dégradé pour Dual)
+            // ... (Calcul du bgStyle inchangé, le #333 par défaut est très bien) ...
             let bgStyle = '';
             if (isDual && elems.length >= 2) {
                 const c1 = ELEMENT_COLORS[elems[0]] || '#333';
                 const c2 = ELEMENT_COLORS[elems[1]] || '#333';
-                // Dégradé diagonal net pour séparer les deux éléments
                 bgStyle = `background: linear-gradient(135deg, ${c1} 50%, ${c2} 50%);`;
             } else {
                 bgStyle = `background: ${ELEMENT_COLORS[elems[0]] || '#333'};`;
@@ -1861,21 +1913,26 @@ function renderToolbar(index) {
             let innerHtml = '';
 
             if (!isDual) {
+                // 2. Correction Fallback image de secours (onerror)
                 const url = getIconUrl(names[0], elems[0]);
-                const fallback = `${ICON_BASE_PATH}icon_${elems[0]}.png`;
+                // Si l'élément est défini, on tente son icône, sinon icon_unknown
+                const fallback = elems[0]
+                    ? `${ICON_BASE_PATH}icon_${elems[0]}.png`
+                    : `${ICON_BASE_PATH}icon_unknown.png`;
 
                 innerHtml = `
                     <img src="${url}" 
                          style="width:100%; height:100%; object-fit:cover;"
                          onerror="this.src='${fallback}'" 
-                         title="${mate.role}: ${names[0] || elems[0]}">
-                    ${elems[0] ? `` : ''}
+                         title="${mate.role}: ${names[0] || elems[0] || 'Inconnu'}">
                 `;
             } else {
-                const url1 = getIconUrl(names[0], elems[0] || elems[0]);
-                const fb1 = `${ICON_BASE_PATH}icon_${elems[0]}.png`;
+                // ... (Code Dual inchangé, applique juste getIconUrl corrigé au dessus) ...
+                const url1 = getIconUrl(names[0], elems[0]);
+                const fb1 = elems[0] ? `${ICON_BASE_PATH}icon_${elems[0]}.png` : `${ICON_BASE_PATH}icon_unknown.png`;
+
                 const url2 = getIconUrl(names[1] || names[0], elems[1] || elems[0]);
-                const fb2 = `${ICON_BASE_PATH}icon_${elems[1] || elems[0]}.png`;
+                const fb2 = (elems[1] || elems[0]) ? `${ICON_BASE_PATH}icon_${elems[1] || elems[0]}.png` : `${ICON_BASE_PATH}icon_unknown.png`;
 
                 innerHtml = `
                     <div style="position:absolute; inset:0; clip-path: polygon(0 0, 100% 0, 0 100%); z-index:2;">
@@ -1884,10 +1941,10 @@ function renderToolbar(index) {
                     <div style="position:absolute; inset:0; clip-path: polygon(100% 0, 100% 100%, 0 100%); z-index:1;">
                         <img src="${url2}" onerror="this.src='${fb2}'" style="width:100%; height:100%; object-fit:cover;">
                     </div>
-                    <div style="position:absolute; inset:0; background:linear-gradient(to bottom right, transparent 49.5%, #fff 49.5%, #fff 50.5%, transparent 50.5%); z-index:3; pointer-events:none;"></div>                `;
+                    <div style="position:absolute; inset:0; background:linear-gradient(to bottom right, transparent 49.5%, #fff 49.5%, #fff 50.5%, transparent 50.5%); z-index:3; pointer-events:none;"></div>
+                `;
             }
 
-            // On applique bgStyle sur le conteneur rond
             return `
                 <div style="position:relative; width:40px; height:40px; border-radius:5px; ${bgStyle} overflow:hidden;" title="${mate.role}">
                     ${innerHtml}

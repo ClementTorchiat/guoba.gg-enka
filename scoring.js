@@ -175,11 +175,13 @@ function getGlobalGrade(totalRolls) {
 }
 
 function getGradeColor(grade) {
-    if (grade.includes("ARCHON")) return "#ff0000";
-    if (grade.includes("SSS")) return "#ff4400";
-    if (grade.includes("SS")) return "#ffaa00";
-    if (grade.includes("S")) return "#ffd700";
-    if (grade.includes("A")) return "#c66eff";
-    if (grade.includes("B")) return "#4d94ff";
+    if (grade.includes("ARCHON")) return "#00FFFF";
+    if (grade.includes("WTF")) return "#FF0080";
+    if (grade.includes("SSS")) return "#FF4500";
+    if (grade.includes("SS")) return "#FFA500";
+    if (grade.includes("S")) return "#FFD700";
+    if (grade.includes("A")) return "#C66EFF";
+    if (grade.includes("B")) return "#4D94FF";
+
     return "#aaa";
 }

@@ -6,22 +6,6 @@ const DEFAULT_CONFIG = {
 };
 
 const CHARACTER_CONFIG = {
-    "NOM_DU_PERSO": {
-        weights: {
-            "critRate_": 0, "critDMG_": 0,
-            "atk_": 0, "atk": 0,
-            "hp_": 0, "hp": 0,
-            "def_": 0, "def": 0,
-            "eleMas": 0, "enerRech_": 0,
-            "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
-            "heal_": 0
-        },
-        bestSets: [],
-        goodSets: [],
-        talents: { auto: 1, skill: 1, burst: 1 },
-        color : "#888888",
-        portraitOffset: 0
-    },
     "NomDuPersonnage": {
         // --- 1. CONFIGURATION GLOBALE ---
         color: "#FFFFFF", // Code Hex de l'élément ou de la tenue
@@ -126,21 +110,1490 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    "Navia": {
-        weights: {
-            "critRate_": 1, "critDMG_": 1,
-            "atk_": 1, "atk": 0.1,
-            "hp_": 0, "hp": 0,
-            "def_": 0, "def": 0,
-            "eleMas": 0, "enerRech_": 0.3,
-            "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
-            "heal_": 0
+    "Varesa": {
+        color: "#E86EE7",
+        portraitOffset: -36,
+        talents: {
+            auto: 8,
+            skill: 6,
+            burst: 8
         },
-        bestSets: ["NighttimeWhispersInTheEchoingWoods:4", "GoldenTroupe:4"],
-        goodSets: [],
-        talents: { auto: 8, skill: 10, burst: 8 },
-        color : "#888888",
-        portraitOffset: 0
+        buffs: [
+            {
+                category: "Passifs",
+                selectMode: "exclusive",
+                data: [
+                    {
+                        label: "A4 : L'héroïne une nouvelle fois de retour ! (1 Stack)",
+                        active: false,
+                        stats: {
+                            atk_: 0.35
+                        }
+                    },
+                    {
+                        label: "A4 : L'héroïne une nouvelle fois de retour ! (2 Stacks)",
+                        active: true,
+                        stats: {
+                            atk_: 0.70
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : Le triomphe d'une héroïne de la justice",
+                        cons: 6,
+                        description: "",
+                        stats: {
+                            critRate_: 0.10,
+                            critDMG_: 1,
+                        }
+                    }
+                ]
+            }
+        ],
+        builds: {
+            "Surcharge": {
+                name: "Surcharge",
+                description: "",
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.2, "enerRech_": 0.3,
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
+                goodSets: ["ThunderingFury:4"],
+
+                er_req: 120,
+
+                team: [
+                    { role: "Flex", name: ["Mavuika", "Durin"], element: "pyro" },
+
+                    { role: "Support", name: "Chevreuse", element: "pyro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    {
+                        role: "Support",
+                        name: "Iansan", // Noms (Optionnel)
+                        element: "electro" // Éléments pour la couleur de fond
+                    }
+                ]
+            },
+            "Hypercarry": {
+                name: "Hypercarry",
+                description: "",
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.3,
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
+                goodSets: ["MarechausseeHunter:4", "ThunderingFury:4"],
+
+                er_req: 120,
+
+                team: [
+                    { role: "Support", name: "Furina", element: "hydro" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Support", name: "Liuyun", element: "anemo" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    {
+                        role: "Support",
+                        name: "Iansan", // Noms (Optionnel)
+                        element: "electro" // Éléments pour la couleur de fond
+                    }
+                ]
+            },
+            "Suractivation": {
+                name: "Suractivation",
+                description: "",
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.6, "atk": 0.06,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.8, "enerRech_": 0.3,
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
+                goodSets: ["ThunderingFury:4"],
+
+                er_req: 120,
+
+                team: [
+                    { role: "Sub-DPS", name: "Lauma", element: "dendro" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Flex", name: ["Fischl", "Iansan"], element: "electro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    {
+                        role: "Support",
+                        name: ["Liuyun", "Nahida"], // Noms (Optionnel)
+                        element: ["anemo", "dendro"] // Éléments pour la couleur de fond
+                    }
+                ]
+            },
+            "Sélénocution": {
+                name: "Sélénocution",
+                description: "",
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.08,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.5, "enerRech_": 0.3,
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
+                goodSets: ["ThunderingFury:4"],
+
+                er_req: 130,
+
+                team: [
+                    { role: "Support", name: "Columbina", element: "hydro" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Support", name: "Aino", element: "hydro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    {
+                        role: "Support",
+                        name: "Liuyun", // Noms (Optionnel)
+                        element: "anemo" // Éléments pour la couleur de fond
+                    }
+                ]
+            }
+
+        }
+    },
+    "Lauma": {
+        color: "#8FE1E9",
+        portraitOffset: -35,
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 8
+        },
+        builds: {
+            "Sélénofleurissement": {
+                name: "Sélénofleurissement",
+                description: "",
+                weights: {
+                    "critRate_": 0.5, "critDMG_": 0.5,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1.2, "enerRech_": 1.2,
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["SilkenMoonsSerenade:4", "DeepwoodMemories:4", "AubadeOfMorningstarAndMoon:4"],
+                goodSets: ["NightOfTheSkysUnveiling:4", "NightOfTheSkysUnveiling:2", "SilkenMoonsSerenade:2", "Instructor:4"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "DPS", name: "Nefer", element: "dendro" },
+                    { role: "Sub-DPS", name: "Columbina", element: "hydro" },
+                    {
+                        role: "Support",
+                        name: "Nahida",
+                        element: "dendro",
+                    }
+                ]
+            },
+            "Fleurissement": {
+                name: "Fleurissement",
+                description: "",
+                weights: {
+                    "critRate_": 0.5, "critDMG_": 0.5,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1.2, "enerRech_": 1.2,
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["SilkenMoonsSerenade:4", "DeepwoodMemories:4"],
+                goodSets: ["NightOfTheSkysUnveiling:4", "NightOfTheSkysUnveiling:2", "SilkenMoonsSerenade:2", "Instructor:4"],
+
+                er_req: 220,
+
+                team: [
+                    { role: "Support", name: "Nilou", element: "hydro" },
+                    { role: "Sub-DPS", name: "Columbina", element: "hydro" },
+                    {
+                        role: "Support",
+                        name: "Nahida",
+                        element: "dendro",
+                    }
+                ]
+            },
+            "Exubérance": {
+                name: "Exubérance",
+                description: "",
+                weights: {
+                    "critRate_": 0.5, "critDMG_": 0.5,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1.2, "enerRech_": 1.2,
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["SilkenMoonsSerenade:4", "DeepwoodMemories:4"],
+                goodSets: ["NightOfTheSkysUnveiling:4", "NightOfTheSkysUnveiling:2", "SilkenMoonsSerenade:2", "Instructor:4"],
+
+                er_req: 220,
+
+                team: [
+                    { role: "DPS", name: "Neuvillette", element: "hydro" },
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    {
+                        role: "Sub-DPS",
+                        name: "Ineffa",
+                        element: "electro",
+                    }
+                ]
+            }
+        }
+    },
+    "Durin": {
+        color: "#92417E",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 8
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Visions sans fond",
+                        cons: 2,
+                        description: "",
+                        stats: {
+                            pyro_dmg_: 0.50
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Surcharge": {
+                name: "Surcharge",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.3,
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["ADayCarvedFromRisingWinds:4"],
+                goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "EmblemOfSeveredFate:2", "GladiatorsFinale:2", "Instructor:4"],
+
+                er_req: 110,
+                team: [
+                    { role: "DPS", name: ["Arlecchino", "Varesa"], element: ["pyro", "electro"] },
+                    { role: "Sub-DPS", name: "Fischl", element: "electro"},
+                    { role: "Support", name: "Chevreuse", element: "pyro"}
+                ]
+            },
+            "Brûlure": {
+                name: "Brûlure",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.3,
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["ADayCarvedFromRisingWinds:4"],
+                goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "EmblemOfSeveredFate:2", "GladiatorsFinale:2", "Instructor:4"],
+
+                er_req: 110,
+                team: [
+                    { role: "DPS", name: "Kinich", element: "dendro" },
+                    { role: "Sub-DPS", name: "Emilie", element: "dendro"},
+                    { role: "Support", name: "Bennett", element: "pyro"}
+                ]
+            },
+            "Arc-en-ciel": {
+                name: "Arc-en-ciel",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.3,
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["ADayCarvedFromRisingWinds:4"],
+                goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "EmblemOfSeveredFate:2", "GladiatorsFinale:2", "Instructor:4"],
+
+                er_req: 130,
+                team: [
+                    { role: "DPS", name: "Chasca", element: "anemo" },
+                    { role: "Sub-DPS", name: "Furina", element: "hydro"},
+                    { role: "Sub-DPS", name: "Fischl", element: "electro"}
+                ]
+            }
+        }
+    },
+    "Escoffier": {
+        color: "#4CBCFD",
+        portraitOffset: -35,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 6
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C1 : Danse pour les papilles gustatives",
+                        cons: 1,
+                        description: "",
+                        stats: {
+                            critDMG_: 0.60
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Gel": {
+                name: "Gel",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.5,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["GoldenTroupe:4"],
+                goodSets: ["BlizzardStrayer:4", "NoblesseOblige:4"],
+
+                er_req: 150,
+
+                team: [
+                    { role: "DPS", name: "SkirkNew", element: "cryo" },
+
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+
+                    {
+                        role: "Flex",
+                        element: ["hydro", "cryo"]
+                    }
+                ]
+            }
+        }
+    },
+    "Navia": {
+        color: "#caa53c",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 6,
+            skill: 8,
+            burst: 6
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                selectMode: "exclusive",
+                data: [
+                    {
+                        label: "A4 : Réseau d'assistance mutuelle (1 allié Pyro/Hydro/Cryo/Électro)",
+                        description: "",
+                        active: false,
+                        stats: {
+                            atk_: 0.20,
+                        }
+                    },
+                    {
+                        label: "A4 : Réseau d'assistance mutuelle (2 alliés Pyro/Hydro/Cryo/Électro)",
+                        description: "",
+                        active: true,
+                        stats: {
+                            atk_: 0.40,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Quête de victoire de la présidente (pour la compétence)",
+                        cons: 2,
+                        description: "",
+                        stats: {
+                            critRate_: 0.36
+                        }
+                    },
+                    {
+                        label: "C6 : Finesse flexible de la présidente de la Spina (pour la compétence)",
+                        cons: 6,
+                        description: "",
+                        stats: {
+                            critDMG_: 1.35
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Hypercarry cristallisation": {
+                name: "Hypercarry cristallisation",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.3,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["NighttimeWhispersInTheEchoingWoods:4", "MarechausseeHunter:4"],
+                goodSets: ["ArchaicPetra:2", "GladiatorsFinale:2", "GoldenTroupe:2"],
+
+                er_req: 130,
+
+                team: [
+                    { role: "Support", name: "Furina", element: "hydro" },
+
+                    { role: "Support", name: "Xilonen", element: "geo" },
+
+                    {
+                        role: "Support",
+                        name: "Bennett",
+                        element: "pyro"
+                    }
+                ]
+            },
+            "Sélénocristallisation": {
+                name: "Sélénocristallisation",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.2, "enerRech_": 0.3,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["NighttimeWhispersInTheEchoingWoods:4"],
+                goodSets: ["ArchaicPetra:2", "GladiatorsFinale:2", "GoldenTroupe:2"],
+
+                er_req: 130,
+
+                team: [
+                    { role: "Support", name: "Columbina", element: "hydro" },
+
+                    { role: "Support", name: "Xilonen", element: "geo" },
+
+                    {
+                        role: "Support",
+                        name: "Furina",
+                        element: "hydro"
+                    }
+                ]
+            }
+        }
+    },
+    "Nefer": {
+        color: "#257224",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 6,
+            skill: 8,
+            burst: 6
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Pari au clair de lune",
+                        description: "",
+                        active: true,
+                        stats: {
+                            eleMas: 100
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : L'observation nourrit la stratégie",
+                        cons: 2,
+                        description: "",
+                        stats: {
+                            eleMas: 200
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Sélénofleurissement": {
+                name: "Sélénofleurissement",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.2, "atk": 0.02,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1, "enerRech_": 0.2,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["NightOfTheSkysUnveiling:4"],
+                goodSets: ["DeepwoodMemories:4", "GildedDreams:4", "Instructor:4"],
+
+                er_req: 120,
+
+                team: [
+                    { role: "Support", name: "Columbina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Lauma", element: "dendro" },
+                    {
+                        role: "Flex",
+                        name: ["Nahida", "Nilou"],
+                        element: ["dendro", "hydro"]
+
+                    }
+                ]
+            }
+        }
+    },
+    "Columbina": {
+        color: "#1d65ff",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 6,
+            skill: 8,
+            burst: 8
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                selectMode: "exclusive",
+                data: [
+                    {
+                        label: "A1 : Appel de la lune (1 stack)",
+                        description: "",
+                        active: false,
+                        stats: {
+                            critRate_: 0.05,
+                        }
+                    },
+                    {
+                        label: "A1 : Appel de la lune (2 stacks)",
+                        description: "",
+                        active: false,
+                        stats: {
+                            critRate_: 0.10,
+                        }
+                    },
+                    {
+                        label: "A1 : Appel de la lune (3 stacks)",
+                        description: "",
+                        active: true,
+                        stats: {
+                            critRate_: 0.15,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Nuit en splendeur, jamais solitaire",
+                        cons: 2,
+                        description: "",
+                        stats: {
+                            hp_: 0.40
+                        }
+                    },
+                    {
+                        label: "C6 : Nuit lugubre, lune à travers (uniquement sur un élément)",
+                        cons: 6,
+                        description: "",
+                        stats: {
+                            critDMG_: "0.80"
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Support sélénofleurissement": {
+                name: "Support sélénofleurissement",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.3, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["SilkenMoonsSerenade:4", "AubadeOfMorningstarAndMoon:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4"],
+
+                er_req: 180,
+
+                team: [
+                    { role: "DPS", name: "Nefer", element: "dendro" },
+                    { role: "Sub-DPS", name: "Lauma", element: "dendro" },
+                    {
+                        role: "Flex",
+                        name: ["Nahida", "Nilou"],
+                        element: ["dendro", "hydro"]
+                    }
+                ]
+            },
+            "Driver sélénofleurissement": {
+                name: "Driver sélénofleurissement",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.3, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["NightOfTheSkysUnveiling:4"],
+                goodSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4", "Instructor:4"],
+
+                er_req: 180,
+
+                team: [
+                    { role: "Support", name: "Nilou", element: "hydro" },
+                    { role: "Sub-DPS", name: "Lauma", element: "dendro" },
+                    {
+                        role: "Support",
+                        name: "Nahida",
+                        element: "dendro",
+                    }
+                ]
+            },
+            "Support sélénocution": {
+                name: "Support sélénocution",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4"],
+
+                er_req: 180,
+
+                team: [
+                    { role: "DPS", name: "Flins", element: "electro" },
+                    { role: "Sub-DPS", name: "Ineffa", element: "electro" },
+                    {
+                        role: "Support",
+                        name: "Sucrose",
+                        element: "anemo",
+                    }
+                ]
+            },
+            "Support sélénocristallisation": {
+                name: "Support sélénocristallisation",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.3, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4"],
+
+                er_req: 180,
+
+                team: [
+                    { role: "DPS", name: "Zibai", element: "geo" },
+                    { role: "Support", name: "Illuga", element: "geo" },
+                    {
+                        role: "Support",
+                        name: "Gorou",
+                        element: "geo",
+                    }
+                ]
+            }
+        }
+    },
+    "Neuvillette": {
+        color: "#374eb4",
+        portraitOffset: -38,
+        talents: {
+            auto: 8,
+            skill: 6,
+            burst: 6
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Discipline de l'arbitrage suprême",
+                        active: true,
+                        description: "",
+                        stats: {
+                            hydro_dmg_: 0.30
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Exhortation de la loi",
+                        cons: 2,
+                        description: "",
+                        stats: {
+                            critDMG_: 0.42
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Hypercarry": {
+                name: "Hypercarry",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.3,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["MarechausseeHunter:4"],
+                goodSets: ["WanderersTroupe:4", "HeartOfDepth:4"],
+
+                er_req: 130,
+
+                team: [
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    { role: "Support", name: ["Kazuha", "Lanyan"], element: ["anemo", "anemo"] },
+                    { role: "Support", name: "Xilonen", element: "geo"
+                    }
+                ]
+            },
+            "Gel": {
+                name: "Gel",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.3,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["MarechausseeHunter:4"],
+                goodSets: ["WanderersTroupe:4", "HeartOfDepth:4"],
+
+                er_req: 130,
+
+                team: [
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Escoffier", element: "cryo" },
+                    { role: "Support", name: "Citlali", element: "cryo"}
+                ]
+            },
+            "Hyperbloom": {
+                name: "Hyperbloom",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0.8, "hp": 0.08,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.2, "enerRech_": 0.3,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["MarechausseeHunter:4", "NightOfTheSkysUnveiling:4"],
+                goodSets: ["WanderersTroupe:4", "HeartOfDepth:4"],
+
+                er_req: 130,
+
+                team: [
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Ineffa", element: "electro" },
+                    { role: "Sub-DPS", name: "Lauma", element: "dendro"}
+                ]
+            }
+        }
+    },
+    "Citlali": {
+        color: "#d4a5ff",
+        portraitOffset: -35,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 8
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Patrouille de dévoreur de cœurs",
+                        cons: 2,
+                        description: "",
+                        stats: {
+                            eleMas: 125
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Support universel (Fonte et Gel)": {
+                name: "Support universel (Fonte et Gel)",
+                description: "",
+
+                weights: {
+                    "critRate_": 0.5, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1.2, "enerRech_": 1.2,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["ScrollOfTheHeroOfCinderCity:4", "Instructor:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "GildedDreams:4"],
+
+                er_req: 180,
+
+                team: [
+                    {
+                        role: "Flex",
+                        name: ["Mavuika", "SkirkNew"],
+                        element: ["pyro", "cryo"]
+                    },
+                    {
+                        role: "Flex",
+                        name: ["Xilonen", "Furina"],
+                        element: ["geo", "hydro"]
+                    },
+                    {
+                        role: "Flex",
+                        name: ["Bennett", "Escoffier"],
+                        element: ["pyro", "cryo"]
+                    }
+                ]
+            }
+        }
+    },
+    "Xilonen": {
+        color: "#F29700",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 8
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Gaine blindée portable",
+                        description: "",
+                        active: true,
+                        stats: {
+                            def_: 0.20,
+                        }
+                    }
+                ]
+            },
+        ],
+
+        builds: {
+            "Support universel": {
+                name: "Support universel",
+                description: "",
+
+                weights: {
+                    "critRate_": 0, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 1, "def": 0.1,
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 1
+                },
+
+                bestSets: ["ScrollOfTheHeroOfCinderCity:4", "Instructor:4"],
+                goodSets: ["HuskOfOpulentDreams:2", "EmblemOfSeveredFate:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "DPS", name: "Mavuika", element: "pyro" },
+                    { role: "Support", name: "Citlali", element: "cryo" },
+                    { role: "support", name: "Bennett",element: "pyro" }
+                ]
+            },
+            "DPS": {
+                name: "DPS",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 1, "def": 0.1,
+                    "eleMas": 0, "enerRech_": 0,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["HuskOfOpulentDreams:4", "ScrollOfTheHeroOfCinderCity:4"],
+                goodSets: ["HuskOfOpulentDreams:2", "EmblemOfSeveredFate:2"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Sub-DPS", name: "Chiori", element: "geo" },
+                    { role: "Support", name: "Zhongli", element: "geo" },
+                    { role: "Sub-DPS", name: "Yelan",element: "hydro" }
+                ]
+            }
+        }
+    },
+    "Furina": {
+        color: "#4e9eff",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : « Comme la plume au vent, femme est volage » (Bonus Max)",
+                        cons: 2,
+                        description: "",
+                        stats: {
+                            hp_: 1.4
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Support et sub-DPS universel": {
+                name: "Support et sub-DPS universel",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["GoldenTroupe:4", "TenacityOfTheMillelith:4"],
+                goodSets: ["OceanHuedClam:4", "NoblesseOblige:4"],
+
+                er_req: 180,
+
+                team: [
+                    { role: "DPS", name: "Neuvillette", element: "hydro" },
+                    { role: "Support", name: "Xilonen", element: "geo" },
+                    { role: "Support", name: "Kazuha", element: "anemo" }
+                ]
+            }
+        }
+    },
+    "Yelan": {
+        color: "#4a5be1",
+        portraitOffset: -38,
+
+        talents: {
+            auto: 1,
+            skill: 6,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                selectMode: "exclusive",
+                buffs: [
+                    {
+                        label: "A1 : Contrôle stratégique (1 type élémentaire différent)",
+                        description: "",
+                        active: false,
+                        stats: {
+                            hp_: 0.06,
+                        }
+                    },
+                    {
+                        label: "A1 : Contrôle stratégique (2 types élémentaires différents)",
+                        description: "",
+                        active: false,
+                        stats: {
+                            hp_: 0.12,
+                        }
+                    },
+                    {
+                        label: "A1 : Contrôle stratégique (3 types élémentaires différents)",
+                        description: "",
+                        active: false,
+                        stats: {
+                            hp_: 0.18,
+                        }
+                    },
+                    {
+                        label: "A1 : Contrôle stratégique (4 types élémentaires différents)",
+                        description: "",
+                        active: true,
+                        stats: {
+                            hp_: 0.30,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C4 : Tour de passe-passe",
+                        cons: 4,
+                        description: "",
+                        stats: {
+                            hp_: 0.40
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Exubérance": {
+                name: "Exubérance",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0.8, "hp": 0.08,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.2, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:4"],
+                goodSets: ["EmblemOfSeveredFate:2", "NoblesseOblige:2", "TenacityOfTheMillelith:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "DPS", name: "Alhatham", element: "dendro" },
+                    { role: "Support", name: "Nahida", element: "dendro" },
+                    {
+                        role: "Flex",
+                        name: ["Shinobu", "Shougun"],
+                        element: ["electro", "electro"]
+                    }
+                ]
+            },
+            "Gel": {
+                name: "Gel",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:4"],
+                goodSets: ["EmblemOfSeveredFate:2", "NoblesseOblige:2", "TenacityOfTheMillelith:2"],
+
+                er_req: 170,
+
+                team: [
+                    { role: "DPS", name: "SkirkNew", element: "cryo" },
+                    { role: "Support", name: "Furina", element: "hydro" },
+                    {
+                        role: "Sub-DPS",
+                        name: "Escoffier",
+                        element: "cryo"
+                    }
+                ]
+            },
+            "Évaporation": {
+                name: "Évaporation",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0.8, "hp": 0.08,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.2, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:4"],
+                goodSets: ["EmblemOfSeveredFate:2", "NoblesseOblige:2", "TenacityOfTheMillelith:2"],
+
+                er_req: 170,
+
+                team: [
+                    { role: "DPS", name: "Hutao", element: "pyro" },
+                    { role: "Support", name: "Zhongli", element: "geo" },
+                    {
+                        role: "Sub-DPS",
+                        name: "Xingqiu",
+                        element: "hydro"
+                    }
+                ]
+            }
+        }
+    },
+    "Zibai": {
+        color: "#54cabb",
+        portraitOffset: -36.4,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 6
+        },
+
+        buffs: [
+            {
+                category: "A4 : Pics stratifiés perçant les nuages (Alliés Géo)",
+                selectMode: "exclusive",
+                buffs: [
+                    {
+                        label: "1 Allié Géo (+15% DEF)",
+                        stats: { def_: 0.15 }
+                    },
+                    {
+                        label: "2 Alliés Géo (+30% DEF)",
+                        active: true,
+                        stats: { def_: 0.30 }
+                    },
+                    {
+                        label: "3 Alliés Géo (+45% DEF)",
+                        stats: { def_: 0.45 }
+                    }
+                ]
+            },
+
+            {
+                category: "A4 : Pics stratifiés perçant les nuages (Alliés Hydro)",
+                selectMode: "exclusive",
+                buffs: [
+                    {
+                        label: "0 Allié Hydro",
+                        stats: {}
+                    },
+                    {
+                        label: "1 Allié Hydro (+60 EM)",
+                        active: true,
+                        stats: { eleMas: 60 }
+                    },
+                    {
+                        label: "2 Alliés Hydro (+120 EM)",
+                        stats: { eleMas: 120 }
+                    },
+                    {
+                        label: "3 Alliés Hydro (+180 EM)",
+                        stats: { eleMas: 180 }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C1 : Nom de la constellation",
+                        cons: 1, // IMPORTANT : Niveau requis (1 à 6)
+                        description: "Description...",
+                        stats: {
+                            dmgBonus: 0.10 // Simulation de gain DPS
+                        }
+                    },
+                    {
+                        label: "C2 : Nom de la constellation",
+                        cons: 2,
+                        description: "...",
+                        stats: { /* ... */ }
+                    }
+                ]
+            }
+        ],
+
+        // --- 3. ARCHÉTYPES (BUILDS) ---
+        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
+        builds: {
+            "Sélénocristallisation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Sélénocristallisation",
+                description: "",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 1, "def": 0.1,
+                    "eleMas": 0.5, "enerRech_": 0.2,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["NightOfTheSkysUnveiling:4"],
+                goodSets: ["HuskOfOpulentDreams:4", "HuskOfOpulentDreams:2", "NightOfTheSkysUnveiling:2", "WanderersTroupe:2"], // Viables
+
+                // Cible ER recommandée (%)
+                er_req: 110,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    { role: "Support", name: "Illuga", element: "geo" },
+
+                    { role: "Sub-DPS", name: "Columbina", element: "hydro" },
+
+                    {
+                        role: "Flex",
+                        name: ["Gorou", "Zhongli"], // Noms (Optionnel)
+                        element: ["geo", "geo"]  // Éléments pour la couleur de fond
+                    }
+                ]
+            }
+        }
     },
     "Amber": {
         weights: {
@@ -189,27 +1642,66 @@ const CHARACTER_CONFIG = {
         talents: { auto: 1, skill: 8, burst: 8 },
         color : "#80B7E2"
     },
+
     "Skirk": {
-        weights: {
-            "critRate_": 1, "critDMG_": 1,
-            "atk_": 1, "atk": 0.1,
-            "hp_": 0, "hp": 0,
-            "def_": 0, "def": 0,
-            "eleMas": 0, "enerRech_": 0,
-            "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
-            "heal_": 0
+        color: "#0525F4",
+        portraitOffset: -37,
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 8
         },
-        bestSets: ["FinaleOfTheDeepGalleries:4", "MarechausseeHunter:4"],
-        goodSets: ["GladiatorsFinale:4", "BlizzardStrayer:4", "GladiatorsFinale:2", "BlizzardStrayer:2"],
-        talents: { auto: 1, skill: 10, burst: 8 },
-        color : "#0525F4",
-        portraitOffset: -37
-    },
-    "Neuvillette": {
-        weights: { "critRate_": 1, "critDMG_": 1, "hp_": 1, "hp": 0.1, "atk_": 0, "enerRech_": 0.5, "elemental_dmg_": 1 },
-        bestSets: ["MarechausseeHunter:4"],
-        goodSets: ["MarechausseeHunter:2", "HeartOfDepth:2"],
-        talents: { auto: 10, skill: 8, burst: 8 }
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Abîme profond",
+                        cons: 2,
+                        description: "",
+                        stats: {
+                            atk_: 0.70
+                        }
+                    },
+                    {
+                        label: "C4 : Flux scindé",
+                        cons: 4,
+                        description: "",
+                        stats: {
+                            atk_: 0.40
+                        }
+                    }
+                ]
+            }
+        ],
+        builds: {
+            "freeze": {
+                name: "Gel hypercarry",
+                description: "",
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0,
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+                bestSets: ["FinaleOfTheDeepGalleries:4", "MarechausseeHunter:4"],
+                goodSets: ["GladiatorsFinale:4", "BlizzardStrayer:4", "GladiatorsFinale:2", "BlizzardStrayer:2"],
+                er_req: 100,
+                team: [
+                    { role: "Support", name: "Furina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Escoffier", element: "cryo" },
+                    {
+                        role: "Flex",
+                        element: ["hydro", "cryo"]
+                    }
+                ]
+            }
+        }
     },
     "Raiden Shogun": {
         weights: { "critRate_": 1, "critDMG_": 1, "atk_": 0.75, "atk": 0.075, "enerRech_": 1, "elemental_dmg_": 1 },
@@ -222,12 +1714,6 @@ const CHARACTER_CONFIG = {
         bestSets: ["CrimsonWitchOfFlames:4", "ShimenawasReminiscence:4"],
         goodSets: ["CrimsonWitchOfFlames:2", "GildedDreams:2"],
         talents: { auto: 10, skill: 10, burst: 8 }
-    },
-    "Furina": {
-        weights: { "critRate_": 1, "critDMG_": 1, "hp_": 1, "hp": 0.1, "enerRech_": 0.8, "elemental_dmg_": 1 },
-        bestSets: ["GoldenTroupe:4"],
-        goodSets: ["GoldenTroupe:2", "TenacityOfTheMillelith:2"],
-        talents: { auto: 1, skill: 10, burst: 10 }
     },
     "Arlecchino": {
         color: "#AB3D2D",
@@ -577,7 +2063,7 @@ const WEAPON_PASSIVES = {
         ]
     },
     "WolfFang": {
-        selectMode: "cumulative",
+        selectMode: "exclusive",
         buffs: [
             { label: "1 stack de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)", stats: { "critRate_": [0.02, 0.005] } },
             { label: "2 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)", stats: { "critRate_": [0.04, 0.010] } },
@@ -2465,6 +3951,18 @@ const SET_PASSIVES = {
             {
                 label: "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Ascendante (120 Maîtrise élémentaire)",
                 stats: { "eleMas": 120 }
+            }
+        ]
+    },
+    "ADayCarvedFromRisingWinds": {
+        4: [
+            {
+                label: "Si des ennemis sont touchés (25% ATQ)",
+                stats: { "atk_": 0.25 }
+            },
+            {
+                label: "Si le personnage a terminé son devoir de la sorcière (20% Taux CRIT)",
+                stats: { "critRate_": 0.2 }
             }
         ]
     }
