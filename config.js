@@ -1720,29 +1720,29 @@ const CHARACTER_CONFIG = {
                         label: "A1 : Équipe avec Pyro",
                         active: true,
                         stats: {
-                            anemo_dmg_scaling: { source: "atk", percent: 0.0001 },
-                            pyro_dmg_scaling: { source: "atk", percent: 0.0001 }
+                            anemo_dmg_bonus_scaling: { source: "atk", percent: 0.0001 },
+                            pyro_dmg_bonus_scaling: { source: "atk", percent: 0.0001 }
                         }
                     },
                     {
                         label: "A1 : Équipe avec Hydro",
                         stats: {
-                            anemo_dmg_scaling: { source: "atk", percent: 0.0001 },
-                            hydro_dmg_scaling: { source: "atk", percent: 0.0001 }
+                            anemo_dmg_bonus_scaling: { source: "atk", percent: 0.0001 },
+                            hydro_dmg_bonus_scaling: { source: "atk", percent: 0.0001 }
                         }
                     },
                     {
                         label: "A1 : Équipe avec Electro",
                         stats: {
-                            anemo_dmg_scaling: { source: "atk", percent: 0.0001 },
-                            electro_dmg_scaling: { source: "atk", percent: 0.0001 }
+                            anemo_dmg_bonus_scaling: { source: "atk", percent: 0.0001 },
+                            electro_dmg_bonus_scaling: { source: "atk", percent: 0.0001 }
                         }
                     },
                     {
                         label: "A1 : Équipe avec Cryo",
                         stats: {
-                            anemo_dmg_scaling: { source: "atk", percent: 0.0001 },
-                            cryo_dmg_scaling: { source: "atk", percent: 0.0001 }
+                            anemo_dmg_bonus_scaling: { source: "atk", percent: 0.0001 },
+                            cryo_dmg_bonus_scaling: { source: "atk", percent: 0.0001 }
                         }
                     }
                 ]
@@ -1928,6 +1928,105 @@ const CHARACTER_CONFIG = {
                         role: "Support",
                         name: "Mona", // Noms (Optionnel)
                         element: "hydro"  // Éléments pour la couleur de fond
+                    }
+                ]
+            }
+        }
+    },
+    //6.5
+    "Linnea": {
+        color: "#F56D84",
+        portraitOffset: -38,
+
+        // Objectifs de Talents (Pour le coaching)
+        talents: {
+            auto: 1,
+            skill: 10,
+            burst: 6
+        },
+
+        buffs: [
+            {
+                category: "A2 : Archive naturaliste universelle",
+                selectMode: "exclusive",
+                buffs: [
+                    {
+                        label: "Personnage lunaire sur le terrain",
+                        stats: {}
+                    },
+                    {
+                        label: "Personnage non-lunaire sur le terrain",
+                        active: true,
+                        stats: {
+                            eleMas_bonus_scaling: {
+                                source: "def",
+                                percent: 0.05
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Présage de joie et de tristesse",
+                        cons: 2,
+                        stats: {
+                            critDMG_: 0.40
+                        }
+                    },
+                    {
+                        label: "C4 : Instinct d'experte",
+                        cons: 4,
+                        description: "...",
+                        stats: {
+                            def_: 0.25
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Sub-DPS sélénocristallisation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Sub-DPS sélénocristallisation",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 1, "def": 0.1,
+                    "eleMas": 0.5, "enerRech_": 0.2, // Ajuster selon besoin
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["AubadeOfMorningstarAndMoon:4", "HuskOfOpulentDreams:4"], // Top Tier
+                goodSets: ["ArchaicPetra:2", "HuskOfOpulentDreams:2", "NightOfTheSkysUnveiling:2"], // Viables
+
+                // Cible ER recommandée (%)
+                er_req: 100,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "DPS", name: "Zibai", element: "geo" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Support", name: "Illuga", element: "geo" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    {
+                        role: "Sub-DPS",
+                        name: "Columbina", // Noms (Optionnel)
+                        element: "hydro" // Éléments pour la couleur de fond
                     }
                 ]
             }
@@ -3950,26 +4049,26 @@ const WEAPON_PASSIVES = {
             {
                 label: "Hymne des quatre vents (1 stacks)",
                 stats: {
-                    critDMG_: 0.075
+                    "critDMG_": [0.075, 0.02]
                 }
             },
             {
                 label: "Hymne des quatre vents (2 stacks)",
                 stats: {
-                    critDMG_: 0.15
+                    "critDMG_": [0,15, 0.04]
                 }
             },
             {
                 label: "Hymne des quatre vents (3 stacks)",
                 stats: {
-                    critDMG_: 0.225
+                    "critDMG_": [0.225, 0.06]
                 }
             },
             {
                 label: "Hymne des quatre vents (4 stacks)",
                 active: true,
                 stats: {
-                    critDMG_: 0.30
+                    "critDMG_": [0.30, 0.08]
                 }
             }
         ]

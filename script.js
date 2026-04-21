@@ -331,6 +331,8 @@ const WEAPON_NAME_MAPPING = {
     "Corde de pluie blanche": "SilvershowerHeartstrings",
     "Plumage cramoisi du vautour astral": "AstralVulturesCrimsonPlumage",
     "Les chroniques de l’aube": "TheDaybreakChronicles",
+    // 6.5
+    "Serment de gel doré": "GoldenFrostboundOath",
 
     // 5 étoiles - armes d'hast
     "Bâton de Homa": "StaffOfHoma",
