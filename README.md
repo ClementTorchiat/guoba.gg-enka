@@ -1,4 +1,4 @@
-# Genshin Simulator & Optimizer - Enka Import
+# guoba.gg
 
 Un outil web interactif et avancé conçu pour les joueurs de **Genshin Impact**. Ce projet permet d'importer automatiquement les données des personnages depuis le jeu via l'UID, d'évaluer la qualité des artéfacts, de simuler des statistiques en conditions de combat (buffs, résonances) et de fournir un coaching personnalisé pour optimiser les builds.
 
