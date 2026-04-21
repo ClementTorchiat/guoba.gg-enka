@@ -316,6 +316,8 @@ const WEAPON_NAME_MAPPING = {
     "Condamneur": "Verdict",
     "Croc du roi de la montagne": "FangOfTheMountainKing",
     "Mille soleils brûlants": "AThousandBlazingSuns",
+    // 6.4
+    "Geste du loup puissant": "GestOfTheMightyWolf",
 
     // 5 étoiles - arcs
     "Ailes de la Voûte d'Azur": "SkywardHarp",

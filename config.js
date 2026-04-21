@@ -1642,7 +1642,6 @@ const CHARACTER_CONFIG = {
         talents: { auto: 1, skill: 8, burst: 8 },
         color : "#80B7E2"
     },
-
     "Skirk": {
         color: "#0525F4",
         portraitOffset: -37,
@@ -1703,6 +1702,239 @@ const CHARACTER_CONFIG = {
             }
         }
     },
+    //6.4
+    "Varka": {
+        color: "#1D849A",
+        portraitOffset: -38,
+
+        talents: {
+            auto: 6,
+            skill: 10,
+            burst: 8
+        },
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Équipe avec Pyro",
+                        active: true,
+                        stats: {
+                            anemo_dmg_scaling: { source: "atk", percent: 0.0001 },
+                            pyro_dmg_scaling: { source: "atk", percent: 0.0001 }
+                        }
+                    },
+                    {
+                        label: "A1 : Équipe avec Hydro",
+                        stats: {
+                            anemo_dmg_scaling: { source: "atk", percent: 0.0001 },
+                            hydro_dmg_scaling: { source: "atk", percent: 0.0001 }
+                        }
+                    },
+                    {
+                        label: "A1 : Équipe avec Electro",
+                        stats: {
+                            anemo_dmg_scaling: { source: "atk", percent: 0.0001 },
+                            electro_dmg_scaling: { source: "atk", percent: 0.0001 }
+                        }
+                    },
+                    {
+                        label: "A1 : Équipe avec Cryo",
+                        stats: {
+                            anemo_dmg_scaling: { source: "atk", percent: 0.0001 },
+                            cryo_dmg_scaling: { source: "atk", percent: 0.0001 }
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C4 : Dispersion Pyro (+20% Anémo/Pyro)",
+                        cons: 4,
+                        description: "Accorde 20% de DGT Anémo et Pyro après une Dispersion Pyro.",
+                        stats: { anemo_dmg_: 0.20, pyro_dmg_: 0.20 }
+                    },
+                    {
+                        label: "C4 : Dispersion Hydro (+20% Anémo/Hydro)",
+                        cons: 4,
+                        description: "Accorde 20% de DGT Anémo et Hydro après une Dispersion Hydro.",
+                        stats: { anemo_dmg_: 0.20, hydro_dmg_: 0.20 }
+                    },
+                    {
+                        label: "C4 : Dispersion Électro (+20% Anémo/Électro)",
+                        cons: 4,
+                        description: "Accorde 20% de DGT Anémo et Électro après une Dispersion Électro.",
+                        stats: { anemo_dmg_: 0.20, electro_dmg_: 0.20 }
+                    },
+                    {
+                        label: "C4 : Dispersion Cryo (+20% Anémo/Cryo)",
+                        cons: 4,
+                        description: "Accorde 20% de DGT Anémo et Cryo après une Dispersion Cryo.",
+                        stats: { anemo_dmg_: 0.20, cryo_dmg_: 0.20 }
+                    },
+                    {
+                        label: "C6",
+                        cons: 6,
+                        description: "Augmente les DGT CRIT de 80%.",
+                        stats: {
+                            critDMG_: 0.80
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Anémo/Pyro": {
+                name: "Anémo/Pyro",
+                description: "",
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
+
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["ADayCarvedFromRisingWinds:4"],
+                goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
+
+                // Cible ER recommandée (%)
+                er_req: 100,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    { role: "Support", name: "Venti", element: "anemo" },
+
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
+
+                    {
+                        role: "Support",
+                        name: "Bennett", // Noms (Optionnel)
+                        element: "pyro"  // Éléments pour la couleur de fond
+                    }
+                ]
+            },
+            "Anémo/Cryo": {
+                name: "Anémo/Cryo",
+                description: "",
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["ADayCarvedFromRisingWinds:4"],
+                goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
+
+                // Cible ER recommandée (%)
+                er_req: 100,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    { role: "Support", name: "Venti", element: "anemo" },
+
+                    { role: "Sub-DPS", name: "Escoffier", element: "cryo" },
+
+                    {
+                        role: "Support",
+                        name: "Shenhe", // Noms (Optionnel)
+                        element: "cryo"  // Éléments pour la couleur de fond
+                    }
+                ]
+            },
+            "Anémo/Electro": {
+                name: "Anémo/Electro",
+                description: "",
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["ADayCarvedFromRisingWinds:4"],
+                goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
+
+                // Cible ER recommandée (%)
+                er_req: 100,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    { role: "Support", name: "Venti", element: "anemo" },
+
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+
+                    {
+                        role: "Support",
+                        name: "Iansan", // Noms (Optionnel)
+                        element: "electro"  // Éléments pour la couleur de fond
+                    }
+                ]
+            },
+            "Anémo/Hydro": {
+                name: "Anémo/Hydro",
+                description: "",
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                bestSets: ["ADayCarvedFromRisingWinds:4"],
+                goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
+
+                // Cible ER recommandée (%)
+                er_req: 100,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    { role: "Support", name: "Venti", element: "anemo" },
+
+                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
+
+                    {
+                        role: "Support",
+                        name: "Mona", // Noms (Optionnel)
+                        element: "hydro"  // Éléments pour la couleur de fond
+                    }
+                ]
+            }
+        }
+    },
+
+
     "Raiden Shogun": {
         weights: { "critRate_": 1, "critDMG_": 1, "atk_": 0.75, "atk": 0.075, "enerRech_": 1, "elemental_dmg_": 1 },
         bestSets: ["EmblemOfSeveredFate:4"],
@@ -3711,6 +3943,37 @@ const WEAPON_PASSIVES = {
             }
         ]
     },
+    // 6.4
+    "GestOfTheMightyWolf": {
+        selectMode: "exclusive",
+        buffs: [
+            {
+                label: "Hymne des quatre vents (1 stacks)",
+                stats: {
+                    critDMG_: 0.075
+                }
+            },
+            {
+                label: "Hymne des quatre vents (2 stacks)",
+                stats: {
+                    critDMG_: 0.15
+                }
+            },
+            {
+                label: "Hymne des quatre vents (3 stacks)",
+                stats: {
+                    critDMG_: 0.225
+                }
+            },
+            {
+                label: "Hymne des quatre vents (4 stacks)",
+                active: true,
+                stats: {
+                    critDMG_: 0.30
+                }
+            }
+        ]
+    }
 };
 
 const SET_PASSIVES = {
