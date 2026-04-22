@@ -453,13 +453,17 @@ async function loadGameData() {
     window.iconToNameHash = {};
     try {
         const t = Date.now();
-        const [chars, locs, relics] = await Promise.all([
+        const [chars, locs, relics, namecards, pfps] = await Promise.all([
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/avatars.json?t=${t}`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json?t=${t}`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/relics.json?t=${t}`).then(r => r.json())
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/relics.json?t=${t}`).then(r => r.json()),
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/namecards.json?t=${t}`).then(r => r.json()),
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/pfps.json?t=${t}`).then(r => r.json())
         ]);
         charData = chars;
         locData = locs;
+        window.namecardsData = namecards;
+        window.pfpsData = pfps;
         if (relics && relics.Items && relics.Sets) {
             Object.values(relics.Items).forEach(item => {
                 if (item.Icon && item.SetId && relics.Sets[item.SetId]) {
@@ -498,6 +502,7 @@ async function fetchUserData() {
 
         const data = await res.json();
         processData(data);
+        renderPlayerProfile(data.playerInfo, uid);
 
         if(loader) loader.innerText = ""; // On efface le message si c'est bon
     } catch (e) {
@@ -505,6 +510,111 @@ async function fetchUserData() {
         if(loader) loader.innerText = "Erreur UID/Vitrine.";
         alert("Impossible de récupérer les données. Vérifiez l'UID et assurez-vous que la vitrine est visible dans le jeu.");
     }
+}
+
+function renderPlayerProfile(playerInfo, uid) {
+    const container = document.getElementById('player-profile');
+    if (!container || !playerInfo) return;
+
+    // --- Bannière ---
+    const namecardsData = window.namecardsData || {};
+    const namecard = namecardsData[String(playerInfo.nameCardId)];
+    let bannerUrl = '';
+    if (namecard && namecard.Icon) bannerUrl = `https://enka.network${namecard.Icon}`;
+
+    // --- Photo de profil (pfps.json > charData fallback) ---
+    let profilePicUrl = 'https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png';
+    const pp = playerInfo.profilePicture || {};
+    if (pp.id) {
+        const pfp = (window.pfpsData || {})[String(pp.id)];
+        if (pfp && pfp.IconPath) profilePicUrl = `https://enka.network${pfp.IconPath}`;
+    } else if (pp.avatarId && charData && charData[pp.avatarId]) {
+        const info = charData[pp.avatarId];
+        const getKey = (o, k) => o?.[k] !== undefined ? o[k] : o?.[k[0].toLowerCase() + k.slice(1)];
+        let raw = getKey(info, 'IconName') || getKey(info, 'SideIconName') || getKey(info, 'icon');
+        if (raw) {
+            if (raw.startsWith('/ui/')) {
+                profilePicUrl = `https://enka.network${raw.replace('UI_AvatarIcon_Side_', 'UI_AvatarIcon_').replace(/\.png$/i, '_Circle.png')}`;
+            } else {
+                const n = raw.replace(/^.*UI_AvatarIcon_Side_/, '').replace(/^.*UI_AvatarIcon_/, '').replace(/\.png$/i, '');
+                profilePicUrl = `https://enka.network/ui/UI_AvatarIcon_${n}_Circle.png`;
+            }
+        }
+    }
+
+    // --- Serveur depuis le premier chiffre de l'UID ---
+    const serverMap = { '1': 'CN', '2': 'CN', '3': 'CN', '4': 'CN', '5': 'TW', '6': 'NA', '7': 'EU', '8': 'Asia', '9': 'TW' };
+    const server = serverMap[String(uid)[0]] || 'CN';
+
+    // --- Stats (noms de champs confirmés via Discord Enka) ---
+    const nickname     = playerInfo.nickname || 'Joueur inconnu';
+    const signature    = playerInfo.signature || '';
+    const ar           = playerInfo.level || 0;
+    const achievements = playerInfo.finishAchievementNum ?? null;
+    const abyssStars   = playerInfo.towerStarIndex ?? null;
+    const theaterStars = playerInfo.theaterStarIndex ?? null;
+    const stygianIndex = playerInfo.stygianIndex ?? null;
+    const stygianSec   = (playerInfo.stygianSeconds > 0) ? playerInfo.stygianSeconds : null;
+
+    // --- Icône Stygian dynamique ---
+    const ICON = './assets/simulator/icons/';
+    function stygianIcon() {
+        if (stygianIndex === null) return '';
+        // Cas spécial : index 6 ET temps < 180s
+        if (stygianIndex === 6 && stygianSec !== null && stygianSec < 180) {
+            return `<img src="${ICON}stygian_difficulty_6_minus_180.webp" class="pp-icon" alt="stygian">`;
+        }
+        if (stygianIndex >= 1 && stygianIndex <= 6) {
+            return `<img src="${ICON}stygian_difficulty_${stygianIndex}.webp" class="pp-icon" alt="stygian">`;
+        }
+        return '';
+    }
+
+    // --- Ligne 1 : infos générales (toujours visible) ---
+    const row1 = [
+        `<span class="pp-badge pp-badge-server">${server}</span>`,
+        achievements !== null
+            ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.png" class="pp-icon" alt="succès">${achievements.toLocaleString()}</span>`
+            : '',
+        ar ? `<span class="pp-badge pp-badge-ar">AR${ar}</span>` : '',
+    ].filter(Boolean).join('');
+
+    // --- Ligne 2 : activités (omise si aucun champ présent) ---
+    const row2Items = [
+        stygianSec !== null
+            ? `<span class="pp-badge pp-badge-stygian">${stygianIcon()}${stygianSec}s</span>`
+            : '',
+        theaterStars !== null
+            ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.png" class="pp-icon" alt="théâtre">${theaterStars}</span>`
+            : '',
+        abyssStars !== null
+            ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.png" class="pp-icon" alt="abysses">${abyssStars}</span>`
+            : '',
+    ].filter(Boolean);
+    const row2 = row2Items.join('');
+
+    container.innerHTML = `
+        <div class="player-profile-card">
+            <div class="player-profile-bg" ${bannerUrl ? `style="background-image:url('${bannerUrl}')"` : ''}></div>
+            <!--<div class="player-profile-gradient"></div>-->
+            <div class="player-profile-content">
+                <img class="player-profile-avatar"
+                     src="${profilePicUrl}" alt="Avatar"
+                     onerror="this.src='https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png'">
+                <div class="player-profile-identity">
+                    <div class="player-profile-name-row">
+                        <span class="player-profile-name">${nickname}</span>
+                        <!--<span class="player-profile-uid">${uid}</span>-->
+                    </div>
+                    ${signature ? `<span class="player-profile-sig">${signature}</span>` : ''}
+                </div>
+                <div class="player-profile-stats">
+                    <div class="pp-row">${row1}</div>
+                    ${row2 ? `<div class="pp-row">${row2}</div>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function getText(hash) {
@@ -2248,47 +2358,47 @@ function renderShowcase(index) {
                     <p style="margin-left: 10px; margin-right: 10px; margin-bottom: 9px; margin-top: 10px; font-size: 14px;">Statistiques de combat</p>
                     <div style="display: flex; flex-direction: column; gap: 9px; margin-left: 7px; margin-right: 10px; margin-bottom: 4px;">
                         ${(() => {
-                            let html = "";
-                            const dynamicDefs = [
-                                { wKey: 'hp',  sKey: 'hp',  icon: 'hp',  label: 'PV max', isPct: false },
-                                { wKey: 'atk', sKey: 'atk', icon: 'atk', label: 'ATQ',    isPct: false },
-                                { wKey: 'def', sKey: 'def', icon: 'def', label: 'DÉF',    isPct: false }
-                            ];
-                            
-                            dynamicDefs.forEach(def => {
-                                if (p.weights && p.weights[def.wKey] > 0) {
-                                    const val = b[def.sKey];
-                                    const oldVal = s[def.sKey];
-                                    const displayVal = def.isPct ? val.toFixed(1) + '%' : Math.round(val);
-                                    const isBuffed = val > oldVal;
-                                    html += statLine(createIcon(def.icon), def.label, displayVal, isBuffed);
-                                }
-                            });
-                    
-                            const fixedDefs = [
-                                { sKey: 'em',  icon: 'eleMas',    label: 'Maîtrise élémentaire', isPct: false },
-                                { sKey: 'cr',  icon: 'critRate_', label: 'Taux CRIT',   isPct: true },
-                                { sKey: 'cd',  icon: 'critDMG_',  label: 'DGT CRIT',    isPct: true },
-                                { sKey: 'er',  icon: 'enerRech_', label: "Recharge d'énergie", isPct: true }
-                            ];
-                    
-                            fixedDefs.forEach(def => {
-                                const val = b[def.sKey];
-                                const oldVal = s[def.sKey];
-                                const displayVal = def.isPct ? val.toFixed(1) + '%' : Math.round(val);
-                                const isBuffed = val > oldVal;
-                                html += statLine(createIcon(def.icon), def.label, displayVal, isBuffed);
-                            });
-                    
-                            const healVal = s.hb || 0;
-                            html += statLine(createIcon('heal_'), "Bonus de soins", healVal.toFixed(1)+'%', false);
-                    
-                            const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
-                            const isDmgBuffed = b.dmgBonus > s.dmgBonus;
-                            html += statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', isDmgBuffed);
-                    
-                            return html;
-                        })()}
+        let html = "";
+        const dynamicDefs = [
+            { wKey: 'hp',  sKey: 'hp',  icon: 'hp',  label: 'PV max', isPct: false },
+            { wKey: 'atk', sKey: 'atk', icon: 'atk', label: 'ATQ',    isPct: false },
+            { wKey: 'def', sKey: 'def', icon: 'def', label: 'DÉF',    isPct: false }
+        ];
+
+        dynamicDefs.forEach(def => {
+            if (p.weights && p.weights[def.wKey] > 0) {
+                const val = b[def.sKey];
+                const oldVal = s[def.sKey];
+                const displayVal = def.isPct ? val.toFixed(1) + '%' : Math.round(val);
+                const isBuffed = val > oldVal;
+                html += statLine(createIcon(def.icon), def.label, displayVal, isBuffed);
+            }
+        });
+
+        const fixedDefs = [
+            { sKey: 'em',  icon: 'eleMas',    label: 'Maîtrise élémentaire', isPct: false },
+            { sKey: 'cr',  icon: 'critRate_', label: 'Taux CRIT',   isPct: true },
+            { sKey: 'cd',  icon: 'critDMG_',  label: 'DGT CRIT',    isPct: true },
+            { sKey: 'er',  icon: 'enerRech_', label: "Recharge d'énergie", isPct: true }
+        ];
+
+        fixedDefs.forEach(def => {
+            const val = b[def.sKey];
+            const oldVal = s[def.sKey];
+            const displayVal = def.isPct ? val.toFixed(1) + '%' : Math.round(val);
+            const isBuffed = val > oldVal;
+            html += statLine(createIcon(def.icon), def.label, displayVal, isBuffed);
+        });
+
+        const healVal = s.hb || 0;
+        html += statLine(createIcon('heal_'), "Bonus de soins", healVal.toFixed(1)+'%', false);
+
+        const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
+        const isDmgBuffed = b.dmgBonus > s.dmgBonus;
+        html += statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', isDmgBuffed);
+
+        return html;
+    })()}
                     </div>
                 </div>
             </div>
@@ -2482,7 +2592,7 @@ function renderShowcase(index) {
         const setAdvice = getSetRecommendation(ev.setBonus, config);
         const deadRolls = calculateDeadRolls(p, config);
         const priorities = getPriorities(p);
-        const critAdvice = getCritAdvice(b.cr, b.cd, config);        
+        const critAdvice = getCritAdvice(b.cr, b.cd, config);
         const rollStats = calculateRollDistribution(p, config);
         const rngQuality = calculateRNGQuality(p, config).toFixed(1);
         const deadSims = simulateDeadStatReplacements(p, config);
@@ -2542,21 +2652,21 @@ function renderShowcase(index) {
                                     <p style="font-size:16px; color:#fff;">${critAdvice.msg}</p>
                                 </div>
                                 ${(() => {
-                                            // On récupère la cible définie dans le build actif (ou 100 par défaut)
-                                            const targetER = (p.activeBuild && p.activeBuild.er_req) ? p.activeBuild.er_req : 100;
-                                            const currentER = b.er; // b = buffedStats
-                                
-                                            const adv = getERAdvice(currentER, targetER);
-                                            if (!adv) return '';
-                                
-                                            const color = adv.type === 'success' ? '#22c55e' : (adv.type === 'info' ? '#3b82f6' : '#ef4444');
-                                
-                                            return `
+            // On récupère la cible définie dans le build actif (ou 100 par défaut)
+            const targetER = (p.activeBuild && p.activeBuild.er_req) ? p.activeBuild.er_req : 100;
+            const currentER = b.er; // b = buffedStats
+
+            const adv = getERAdvice(currentER, targetER);
+            if (!adv) return '';
+
+            const color = adv.type === 'success' ? '#22c55e' : (adv.type === 'info' ? '#3b82f6' : '#ef4444');
+
+            return `
                                     <div style="flex: 1; background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
                                         <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
                                         <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
                                     </div>`;
-                                })()}
+        })()}
                                 <div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px; display:flex; flex-direction:column; justify-content:space-between;">
                                     <div style="margin-bottom:12px;">
                                         <div style="color:#aaa; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:flex-end;">
@@ -2577,10 +2687,10 @@ function renderShowcase(index) {
                                         <p style="font-size:11px; color:#aaa; margin-bottom:4px;">Stats Utiles</p>
                                         <div style="display:flex; flex-wrap:wrap; gap:5px;">
                                             ${rollStats.usefulDetails.map(d =>
-                                            `<span style="background:rgba(34, 197, 94, 0.15); color:#86efac; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(34, 197, 94, 0.2);">
+            `<span style="background:rgba(34, 197, 94, 0.15); color:#86efac; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(34, 197, 94, 0.2);">
                                                     ${d.label} (${d.count})
                                                 </span>`
-                                        ).join('')}
+        ).join('')}
                                         </div>
                                     </div>
                                 
@@ -2588,10 +2698,10 @@ function renderShowcase(index) {
                                         <p style="font-size:11px; color:#aaa; margin-bottom:4px;">Stats Inutiles</p>
                                         <div style="display:flex; flex-wrap:wrap; gap:5px;">
                                             ${rollStats.deadDetails.length > 0 ? rollStats.deadDetails.map(d =>
-                                            `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(255, 77, 77, 0.2);">
+            `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(255, 77, 77, 0.2);">
                                                     ${d.label} (${d.count})
                                                 </span>`
-                                        ).join('') : '<span style="color:#22c55e; font-size:0.75rem;">Aucune !</span>'}
+        ).join('') : '<span style="color:#22c55e; font-size:0.75rem;">Aucune !</span>'}
                                         </div>
                                     </div>
                                 
@@ -2615,24 +2725,24 @@ function renderShowcase(index) {
                             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
                         
                                 ${(() => {
-                                    const adv = getLevelAdvice(p);
-                                    const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
-                                    return `
+            const adv = getLevelAdvice(p);
+            const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+            return `
                                     <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
                                         <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
                                         <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
                                     </div>`;
-                                })()}
+        })()}
                         
                                 ${(() => {
-                                    const adv = getWeaponAdvice(p);
-                                    const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
-                                    return `
+            const adv = getWeaponAdvice(p);
+            const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+            return `
                                     <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
                                         <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
                                         <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
                                     </div>`;
-                                })()}
+        })()}
                         
                                 ${talentAdvices && talentAdvices.length > 0 ? `
                                     <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${talentAdvices[0].type === 'success' ? '#22c55e' : (talentAdvices.some(a => a.type === 'critical') ? '#ef4444' : '#ef4444')};">
@@ -2641,59 +2751,59 @@ function renderShowcase(index) {
                                             <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
                                         `).join('')}
                                     </div>`
-                                : ''}
+            : ''}
                         
                                 ${(() => {
-                                    const adv = getMainStatAdvice(p, config);
-                                    const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
-                                    return `
+            const adv = getMainStatAdvice(p, config);
+            const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+            return `
                                     <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
                                         <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
                                         ${adv.type === 'success'
-                                        ? `<p style="font-size:16px; color:#fff;">${adv.msg}</p>`
-                                        : adv.details.map(d => `
+                ? `<p style="font-size:16px; color:#fff;">${adv.msg}</p>`
+                : adv.details.map(d => `
                                             <p style="font-size:16px; color:#fff;">
                                                 Sur <b style="color: #aaa;">${d.piece}</b>, visez <span style="color:var(--accent-gold); font-weight:bold;">${d.better}</span> (Actuellement : <span style="color:var(--accent-gold);">${d.current}</span>).
                                             </p>
                                         `).join('') }
                                     </div>`;
-                                })()}
+        })()}
                         
                                 ${(() => {
-                                    const adv = getMetaSetAdvice(p, config);
-                                    if (!adv) return '';
-                        
-                                    let color;
-                                    if (adv.type === 'success') {
-                                        color = '#22c55e';
-                                    } else if (adv.type === 'warning') {
-                                        color = '#ef4444';
-                                    } else {
-                                        color = '#f97316';
-                                    }
-                        
-                                    return `
+            const adv = getMetaSetAdvice(p, config);
+            if (!adv) return '';
+
+            let color;
+            if (adv.type === 'success') {
+                color = '#22c55e';
+            } else if (adv.type === 'warning') {
+                color = '#ef4444';
+            } else {
+                color = '#f97316';
+            }
+
+            return `
                                     <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
                                         <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
                                         <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
                                     </div>`;
-                                })()}
+        })()}
                         
                                 ${(() => {
-                                    const adv = getSetForcingAdvice(p, config);
-                                    const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
-                                    return `
+            const adv = getSetForcingAdvice(p, config);
+            const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+            return `
                                     <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">
                                         <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${adv.title}</p>
                                         <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
                                     </div>`;
-                                })()}
+        })()}
                         
                                 <div style="background:#2C2D32; padding:15px; border-radius:8px; grid-column: 1 / -1;">
                                     <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Top 3 des artéfacts à changer par ordre de priorité</p>
                                     ${priorities.length > 0 ? priorities.map((p, i) => {
-                                        const difficulty = getFarmDifficulty(p.type, p.mainKey);
-                                        return `
+            const difficulty = getFarmDifficulty(p.type, p.mainKey);
+            return `
                                         <div style="display:flex; justify-content:space-between; align-items:center; font-size:16px; margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
                                             <div style="display:flex; flex-direction:column;">
                                                 <div style="display:flex; align-items:center; gap:6px;">
@@ -2741,16 +2851,16 @@ function renderShowcase(index) {
                         
                             <div style="display:flex; flex-direction: row; justify-content: space-between; gap:15px;">
                                 ${p.artefacts.map(art => {
-                                    // --- Logique JavaScript ---
-                                    const metrics = calculateRerollMetrics(art, config);
-                        
-                                    // Si pas de métriques, on n'affiche rien
-                                    if (!metrics) return '';
-                        
-                                    const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
-                        
-                                    // --- Template HTML ---
-                                    return `
+            // --- Logique JavaScript ---
+            const metrics = calculateRerollMetrics(art, config);
+
+            // Si pas de métriques, on n'affiche rien
+            if (!metrics) return '';
+
+            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+
+            // --- Template HTML ---
+            return `
                                     <div style="width: 100%; background:#2C2D32; padding:12px; border-radius:8px; border-left: 3px solid ${metrics.badge.color}">
                                         
                                         <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
@@ -2791,7 +2901,7 @@ function renderShowcase(index) {
                         
                                     </div>
                                     `;
-                                }).join('')}
+        }).join('')}
                             </div>
                         </div>
 
