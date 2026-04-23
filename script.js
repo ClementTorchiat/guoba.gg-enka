@@ -663,6 +663,7 @@ function formatStat(propId, value) {
 }
 
 // --- LOGIQUE CALCUL BONUS ---
+// --- LOGIQUE CALCUL BONUS ---
 function calculateBuffedStats(baseStats, currentStats, buffsList) {
     let buffed = { ...currentStats };
     buffsList.forEach(buff => { if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, false); });
@@ -681,7 +682,12 @@ function applyBonus(buffed, baseStats, bonuses, processScaling) {
                     const rawValue = buffed[sourceStat] || 0;
                     const baseline = val.baseline || 0;
                     const sourceValue = Math.max(0, rawValue - baseline);
-                    const bonusValue = sourceValue * val.percent;
+                    let bonusValue = sourceValue * val.percent;
+
+                    if (val.max !== undefined) {
+                        bonusValue = Math.min(bonusValue, val.max);
+                    }
+
                     buffed[targetStat] = (buffed[targetStat] || 0) + bonusValue;
                 }
             }
@@ -693,11 +699,15 @@ function applyBonus(buffed, baseStats, bonuses, processScaling) {
             else if (statKey === "critRate_" || statKey === "critDMG_" || statKey === "enerRech_") {
                 let shortKey = getShortKey(statKey);
                 if(shortKey) buffed[shortKey] += val * 100;
-            } else if (statKey === "eleMas") {
+            } // <--- L'accolade qui manquait tout à l'heure est bien là !
+            else if (statKey === "eleMas") {
                 buffed.em += val;
             }
             else if (statKey === buffed.dmgBonusKey || statKey === 'elemental_dmg_') {
                 buffed.dmgBonus += val * 100;
+            }
+            else if (statKey.endsWith('_dmg_')) {
+                buffed[statKey] = (buffed[statKey] || 0) + val * 100;
             }
         }
     }
@@ -717,6 +727,9 @@ function mapTargetKey(keyPart) {
     if (keyPart === 'eleMas') return 'em';
     if (keyPart === 'enerRech' || keyPart === 'enerRech_') return 'er';
     if (keyPart === 'elemental_dmg' || keyPart === 'elemental_dmg_') return 'dmgBonus';
+    if (keyPart.endsWith('_dmg') || keyPart.endsWith('_dmg_')) {
+        return keyPart.endsWith('_') ? keyPart : keyPart + '_';
+    }
     return null;
 }
 
@@ -1909,8 +1922,9 @@ function processData(data) {
                 const list = group.data || group.buffs;
                 if (list) {
                     const filteredBuffs = list.filter(b => {
-                        if (b.cons === undefined) return true;
-                        return constellations >= b.cons;
+                        if (b.cons !== undefined && constellations < b.cons) return false;
+                        if (b.maxCons !== undefined && constellations > b.maxCons) return false;
+                        return true;
                     });
                     if (filteredBuffs.length > 0) {
                         addBuffs(nom, group.category, filteredBuffs, group.selectMode);
@@ -2366,7 +2380,9 @@ function renderShowcase(index) {
         ];
 
         dynamicDefs.forEach(def => {
-            if (p.weights && p.weights[def.wKey] > 0) {
+            const isHidden = p.activeBuild && p.activeBuild.hideUIStats && p.activeBuild.hideUIStats.includes(def.wKey);
+            const isForced = p.activeBuild && p.activeBuild.showUIStats && p.activeBuild.showUIStats.includes(def.wKey);
+            if ((p.weights && p.weights[def.wKey] > 0 && !isHidden) || isForced) {
                 const val = b[def.sKey];
                 const oldVal = s[def.sKey];
                 const displayVal = def.isPct ? val.toFixed(1) + '%' : Math.round(val);
@@ -2376,26 +2392,50 @@ function renderShowcase(index) {
         });
 
         const fixedDefs = [
-            { sKey: 'em',  icon: 'eleMas',    label: 'Maîtrise élémentaire', isPct: false },
-            { sKey: 'cr',  icon: 'critRate_', label: 'Taux CRIT',   isPct: true },
-            { sKey: 'cd',  icon: 'critDMG_',  label: 'DGT CRIT',    isPct: true },
-            { sKey: 'er',  icon: 'enerRech_', label: "Recharge d'énergie", isPct: true }
+            { wKey: 'eleMas',    sKey: 'em',  icon: 'eleMas',    label: 'Maîtrise élémentaire', isPct: false },
+            { wKey: 'critRate_', sKey: 'cr',  icon: 'critRate_', label: 'Taux CRIT',   isPct: true },
+            { wKey: 'critDMG_',  sKey: 'cd',  icon: 'critDMG_',  label: 'DGT CRIT',    isPct: true },
+            { wKey: 'enerRech_', sKey: 'er',  icon: 'enerRech_', label: "Recharge d'énergie", isPct: true }
         ];
 
         fixedDefs.forEach(def => {
-            const val = b[def.sKey];
-            const oldVal = s[def.sKey];
-            const displayVal = def.isPct ? val.toFixed(1) + '%' : Math.round(val);
-            const isBuffed = val > oldVal;
-            html += statLine(createIcon(def.icon), def.label, displayVal, isBuffed);
+            const isHidden = p.activeBuild && p.activeBuild.hideUIStats && p.activeBuild.hideUIStats.includes(def.wKey);
+            if (!isHidden) {
+                const val = b[def.sKey];
+                const oldVal = s[def.sKey];
+                const displayVal = def.isPct ? val.toFixed(1) + '%' : Math.round(val);
+                const isBuffed = val > oldVal;
+                html += statLine(createIcon(def.icon), def.label, displayVal, isBuffed);
+            }
         });
 
-        const healVal = s.hb || 0;
-        html += statLine(createIcon('heal_'), "Bonus de soins", healVal.toFixed(1)+'%', false);
+        const isHealHidden = p.activeBuild && p.activeBuild.hideUIStats && p.activeBuild.hideUIStats.includes("heal_");
+        if (!isHealHidden) {
+            const healVal = s.hb || 0;
+            html += statLine(createIcon('heal_'), "Bonus de soins", healVal.toFixed(1)+'%', false);
+        }
 
-        const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
-        const isDmgBuffed = b.dmgBonus > s.dmgBonus;
-        html += statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', isDmgBuffed);
+        const isDmgHidden = p.activeBuild && p.activeBuild.hideUIStats && p.activeBuild.hideUIStats.includes("elemental_dmg_");
+        if (!isDmgHidden) {
+            const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
+            const isDmgBuffed = b.dmgBonus > s.dmgBonus;
+            html += statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', isDmgBuffed);
+        }
+
+        // --- DÉBUT ÉTAPE 3 : STATS SPÉCIFIQUES FORCÉES ---
+        if (p.activeBuild && p.activeBuild.showUIStats) {
+            p.activeBuild.showUIStats.forEach(forcedKey => {
+                // Si la clé demandée est un élément ET que ce n'est pas déjà son élément principal
+                if (forcedKey.endsWith('_dmg_') && forcedKey !== b.dmgBonusKey && forcedKey !== 'elemental_dmg_') {
+                    const val = b[forcedKey] || 0;
+                    const oldVal = s[forcedKey] || 0;
+                    const isBuffed = val > oldVal;
+                    const statInfo = formatStat(forcedKey, val / 100);
+                    html += statLine(statInfo.icon, statInfo.label, val.toFixed(1) + '%', isBuffed);
+                }
+            });
+        }
+        // --- FIN ÉTAPE 3 ---
 
         return html;
     })()}

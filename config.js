@@ -85,6 +85,9 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                hideUIStats: [],
+                showUIStats: [],
+
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
                 bestSets: ["Set1:4", "Set2:4"], // Top Tier
                 goodSets: ["Set1:2", "Set2:2"], // Viables
@@ -106,6 +109,200 @@ const CHARACTER_CONFIG = {
                         name: ["Kazuha", "Sucrose"], // Noms (Optionnel)
                         element: ["anemo", "anemo"]  // Éléments pour la couleur de fond
                     }
+                ]
+            }
+        }
+    },
+    "Chiori": {
+        // --- 1. CONFIGURATION GLOBALE ---
+        color: "#D44B10", // Code Hex de l'élément ou de la tenue
+        portraitOffset: -37, // Décalage vertical de l'image (négatif = monte, positif = descend)
+
+        // Objectifs de Talents (Pour le coaching)
+        talents: {
+            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            skill: 10,
+            burst: 8
+        },
+
+        // --- 2. PASSIFS & CONSTELLATIONS ---
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Retouche finale",
+                        active: true, // Coché par défaut ?
+                        stats: {
+                            geo_dmg_: 0.20,
+                        }
+                    }
+                ]
+            },
+        ],
+
+        // --- 3. ARCHÉTYPES (BUILDS) ---
+        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
+        builds: {
+            "Chiori": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Chiori",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.2, "atk": 0.02, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 1, "def": 0.1,
+                    "eleMas": 0, "enerRech_": 0.3, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+                hideUIStats: ["eleMas"],
+                showUIStats: [],
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["GoldenTroupe:4", "HuskOfOpulentDreams:4"], // Top Tier
+                goodSets: ["GoldenTroupe:2", "HuskOfOpulentDreams:2"], // Viables
+
+                // Cible ER recommandée (%)
+                er_req: 130,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "DPS", name: "Itto", element: "geo" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Support", name: "Gorou", element: "geo" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Zhongli", element: "geo" },
+                ]
+            }
+        }
+    },
+    "Hu Tao": {
+        // --- 1. CONFIGURATION GLOBALE ---
+        color: "#D33933", // Code Hex de l'élément ou de la tenue
+        portraitOffset: -40, // Décalage vertical de l'image (négatif = monte, positif = descend)
+
+        // Objectifs de Talents (Pour le coaching)
+        talents: {
+            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            skill: 10,
+            burst: 8
+        },
+
+        // --- 2. PASSIFS & CONSTELLATIONS ---
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Sang bouillant",
+                        active: true, // Coché par défaut ?
+                        stats: {
+                            pyro_dmg_: 0.33,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : L'envol du papillon",
+                        cons: 6, // IMPORTANT : Niveau requis (1 à 6)
+                        stats: {
+                            critRate_: 1 // Simulation de gain DPS
+                        }
+                    }
+                ]
+            }
+        ],
+
+        // --- 3. ARCHÉTYPES (BUILDS) ---
+        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
+        builds: {
+            "Évaporation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Évaporation",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.8, "enerRech_": 0.2, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["CrimsonWitchOfFlames:4", "ShimenawasReminiscence:4", "MarechausseeHunter:4"],
+                goodSets: ["CrimsonWitchOfFlames:2", "GildedDreams:2"],
+
+                // Cible ER recommandée (%)
+                er_req: 120,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Sub-DPS", name: "Xingqiu", element: "hydro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Zhongli", element: "geo" },
+                ]
+            },
+            "Fonte": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Fonte",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0.8, "hp": 0.08,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1, "enerRech_": 0.2, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["CrimsonWitchOfFlames:4", "ShimenawasReminiscence:4", "MarechausseeHunter:4"],
+                goodSets: ["CrimsonWitchOfFlames:2", "GildedDreams:2"],
+
+                // Cible ER recommandée (%)
+                er_req: 120,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "Support", name: "Rosaria", element: "cryo" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Support", name: "Kazuha", element: "anemo" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Citlali", element: "cryo" },
                 ]
             }
         }
@@ -317,6 +514,9 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                hideUIStats: [],
+                showUIStats: ["atk"],
+
                 bestSets: ["SilkenMoonsSerenade:4", "DeepwoodMemories:4", "AubadeOfMorningstarAndMoon:4"],
                 goodSets: ["NightOfTheSkysUnveiling:4", "NightOfTheSkysUnveiling:2", "SilkenMoonsSerenade:2", "Instructor:4"],
 
@@ -347,6 +547,9 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                hideUIStats: [],
+                showUIStats: ["atk"],
+
                 bestSets: ["SilkenMoonsSerenade:4", "DeepwoodMemories:4"],
                 goodSets: ["NightOfTheSkysUnveiling:4", "NightOfTheSkysUnveiling:2", "SilkenMoonsSerenade:2", "Instructor:4"],
 
@@ -376,6 +579,9 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
                 },
+
+                hideUIStats: [],
+                showUIStats: ["atk"],
 
                 bestSets: ["SilkenMoonsSerenade:4", "DeepwoodMemories:4"],
                 goodSets: ["NightOfTheSkysUnveiling:4", "NightOfTheSkysUnveiling:2", "SilkenMoonsSerenade:2", "Instructor:4"],
@@ -739,7 +945,7 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.2, "atk": 0.02,
+                    "atk_": 0, "atk": 0,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.2,
@@ -750,6 +956,9 @@ const CHARACTER_CONFIG = {
 
                     "heal_": 0
                 },
+
+                hideUIStats: [],
+                showUIStats: ["atk"],
 
                 bestSets: ["NightOfTheSkysUnveiling:4"],
                 goodSets: ["DeepwoodMemories:4", "GildedDreams:4", "Instructor:4"],
@@ -1097,6 +1306,127 @@ const CHARACTER_CONFIG = {
             }
         }
     },
+    "Arlecchino": {
+        color: "#AB3D2D",
+        portraitOffset: -38,
+        talents: {
+            auto: 10,
+            skill: 8,
+            burst: 6
+        },
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Masque Rouge (En combat)",
+                        description: "Accorde un Bonus de DGT Pyro de 40%.",
+                        stats: {
+                            pyro_dmg_: 0.40
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                selectMode: "cumulative",
+                buffs: [
+                    {
+                        label: "C1 : Masque de la Mort Rouge",
+                        cons: 1,
+                        description: "Augmente la valeur du Masque de 100%. (Simulation : Ajout d'un équivalent DGT bonus approximatif pour le scoring).",
+                        stats: {
+                        }
+                    },
+                    {
+                        label: "C2 : Ordre Royal",
+                        cons: 2,
+                        description: "Accorde 20% de RES Pyro/Hydro/etc.",
+                        stats: {
+                        }
+                    }
+                ]
+            }
+        ],
+        builds: {
+            "vape": {
+                name: "Vaporisation (Classique)",
+                description: "Arlecchino joue avec un applicateur Hydro pour vaporiser ses coups.",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.75, "enerRech_": 0,
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
+                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
+                    { role: "Sustain", name: "Bennett", element: "pyro" },
+                    { role: "Flex", element: ["hydro", "cryo"] },
+                ]
+            },
+
+            "overload": {
+                name: "Surcharge (Chevreuse)",
+                description: "Team limitant aux éléments Pyro et Électro pour activer le passif de Chevreuse.",
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0,
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
+                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Support", name: "Chevreuse", element: "pyro" },
+                    { role: "Sub-DPS", element: "electro" },
+                    { role: "Flex", element: "electro" }
+                ]
+            },
+
+            "mono_pyro": {
+                name: "Mono Pyro",
+                description: "Force brute Pyro pure sans réaction.",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0,
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
+                    "heal_": 0
+                },
+
+                bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
+                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Sustain", name: "Bennett", element: "pyro" },
+                    { role: "Sub-DPS", name: "Xiangling", element: "pyro" },
+                    { role: "Support", name: "Kazuha", element: "anemo" }
+                ]
+            }
+        }
+    },
     "Citlali": {
         color: "#d4a5ff",
         portraitOffset: -35,
@@ -1142,6 +1472,9 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                hideUIStats: [],
+                showUIStats: ["hp"],
+
                 bestSets: ["ScrollOfTheHeroOfCinderCity:4", "Instructor:4"],
                 goodSets: ["TenacityOfTheMillelith:4", "GildedDreams:4"],
 
@@ -1163,6 +1496,61 @@ const CHARACTER_CONFIG = {
                         name: ["Bennett", "Escoffier"],
                         element: ["pyro", "cryo"]
                     }
+                ]
+            }
+        }
+    },
+    "Chasca": {
+        // --- 1. CONFIGURATION GLOBALE ---
+        color: "#3EABE0", // Code Hex de l'élément ou de la tenue
+        portraitOffset: -39, // Décalage vertical de l'image (négatif = monte, positif = descend)
+
+        // Objectifs de Talents (Pour le coaching)
+        talents: {
+            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            skill: 10,
+            burst: 8
+        },
+
+        // --- 3. ARCHÉTYPES (BUILDS) ---
+        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
+        builds: {
+            "DPS Dispersion": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "DPS Dispersion",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.2, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.4, "enerRech_": 0.2, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["ObsidianCodex:4"], // Top Tier
+                goodSets: ["ViridescentVenerer:4", "ShimenawasReminiscence:4"], // Viables
+
+                // Cible ER recommandée (%)
+                er_req: 120,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "Support", name: "Citlali", element: "cryo" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Support", name: "Iansan", element: "electro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Bennett", element: "pyro" },
                 ]
             }
         }
@@ -1556,8 +1944,8 @@ const CHARACTER_CONFIG = {
         // --- 3. ARCHÉTYPES (BUILDS) ---
         // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "Sélénocristallisation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
-                name: "Sélénocristallisation",
+            "DPS Sélénocristallisation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "DPS Sélénocristallisation",
                 description: "",
 
                 weights: {
@@ -1587,9 +1975,9 @@ const CHARACTER_CONFIG = {
                     { role: "Sub-DPS", name: "Columbina", element: "hydro" },
 
                     {
-                        role: "Flex",
-                        name: ["Gorou", "Zhongli"], // Noms (Optionnel)
-                        element: ["geo", "geo"]  // Éléments pour la couleur de fond
+                        role: "Sub-DPS",
+                        name: "Linnea", // Noms (Optionnel)
+                        element: "geo"  // Éléments pour la couleur de fond
                     }
                 ]
             }
@@ -1612,35 +2000,466 @@ const CHARACTER_CONFIG = {
         portraitOffset: 0
     },
     "Mavuika": {
-        weights: {
-            "critRate_": 1, "critDMG_": 1,
-            "atk_": 0.75, "atk": 0.075,
-            "hp_": 0, "hp": 0,
-            "def_": 0, "def": 0,
-            "eleMas": 1, "enerRech_": 0,
-            "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
-            "heal_": 0
-        },
-        bestSets: ["ObsidianCodex:4", "CrimsonWitchOfFlames:4"],
-        goodSets: ["ObsidianCodex:2", "CrimsonWitchOfFlames:2", "GildedDreams:4"],
-        talents: { auto: 1, skill: 10, burst: 10 },
+        // --- 1. CONFIGURATION GLOBALE ---
         color : "#C74644",
-        portraitOffset: -35
+        portraitOffset: -35,
+        // Objectifs de Talents (Pour le coaching)
+        talents: {
+            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            skill: 8,
+            burst: 10
+        },
+
+        // --- 2. PASSIFS & CONSTELLATIONS ---
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Cadeau de fleurs enflammées",
+                        active: true,
+                        stats: {
+                            atk_: 0.30,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C1 : Confession du seigneur de la nuit",
+                        cons: 1,
+                        stats: {
+                            atk_: 0.40
+                        }
+                    },
+                    {
+                        label: "C2 : Prix des braises cendrées",
+                        cons: 2,
+                        stats: {
+                            atk: 200
+                        }
+                    }
+                ]
+            }
+        ],
+
+        // --- 3. ARCHÉTYPES (BUILDS) ---
+        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
+        builds: {
+            "Fonte": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Fonte",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.2, "atk": 0.02, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.8, "enerRech_": 0, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["ObsidianCodex:4", "CrimsonWitchOfFlames:4"],
+                goodSets: ["ObsidianCodex:2", "CrimsonWitchOfFlames:2", "GildedDreams:4"],
+
+                // Cible ER recommandée (%)
+                er_req: 100,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "Support", name: "Citlali", element: "cryo" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Support", name: "Xilonen", element: "geo" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Bennett", element: "pyro" },
+                ]
+            },
+            "Surcharge": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Surcharge",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.9, "atk": 0.09, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.1, "enerRech_": 0, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["ObsidianCodex:4", "CrimsonWitchOfFlames:4"],
+                goodSets: ["ObsidianCodex:2", "CrimsonWitchOfFlames:2", "GildedDreams:4"],
+
+                // Cible ER recommandée (%)
+                er_req: 100,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "DPS", name: "Varesa", element: "electro" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Support", name: "Chevreuse", element: "pyro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Iansan", element: "electro" },
+                ]
+            }
+        }
+    },
+    "Yumemizuki Mizuki": {
+        // --- 1. CONFIGURATION GLOBALE ---
+        color: "#e38ff1", // Code Hex de l'élément ou de la tenue
+        portraitOffset: -36, // Décalage vertical de l'image (négatif = monte, positif = descend)
+
+        // Objectifs de Talents (Pour le coaching)
+        talents: {
+            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            skill: 8,
+            burst: 6
+        },
+
+        // --- 2. PASSIFS & CONSTELLATIONS ---
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A2 : Pensées de jour, rêveries de nuit",
+                        active: true, // Coché par défaut ?
+                        stats: {
+                            eleMas: 100,
+                        }
+                    }
+                ]
+            }
+        ],
+
+        // --- 3. ARCHÉTYPES (BUILDS) ---
+        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
+        builds: {
+            "Driver Dispersion": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Driver Dispersion",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 0.5, "critDMG_": 0.5,
+                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1, "enerRech_": 1, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                hideUIStats: [],
+                showUIStats: ["atk"],
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["ViridescentVenerer:4"], // Top Tier
+                goodSets: ["WanderersTroupe:2", "GildedDreams:2", "NoblesseOblige:4", "Instructor:4"], // Viables
+
+                // Cible ER recommandée (%)
+                er_req: 150,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Sub-DPS", name: "Ororon", element: "electro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Sub-DPS", name: "Mavuika", element: "pyro" },
+
+                ]
+            }
+        }
     },
     "Nilou": {
-        weights: {
-            "critRate_": 0.5, "critDMG_": 0.5,
-            "atk_": 0, "atk": 0,
-            "hp_": 1, "hp": 0.8,
-            "def_": 0, "def": 0,
-            "eleMas": 1, "enerRech_": 0.8,
-            "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
-            "heal_": 0
+        // --- 1. CONFIGURATION GLOBALE ---
+        color: "#80B7E2", // Code Hex de l'élément ou de la tenue
+        portraitOffset: -36.5, // Décalage vertical de l'image (négatif = monte, positif = descend)
+
+        // Objectifs de Talents (Pour le coaching)
+        talents: {
+            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            skill: 8,
+            burst: 8
         },
-        bestSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2"],
-        goodSets: ["FlowerOfParadiseLost:4", "GildedDreams:2", "WanderersTroupe:2", "NightOfTheSkysUnveiling:2"],
-        talents: { auto: 1, skill: 8, burst: 8 },
-        color : "#80B7E2"
+
+        // --- 2. PASSIFS & CONSTELLATIONS ---
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Cour des pétales dansants",
+                        active: true, // Coché par défaut ?
+                        stats: {
+                            eleMas: 100,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : Mélodie du brise-givre",
+                        cons: 6,
+                        description: "Le Taux CRIT et les DGT CRIT augmentent en fonction des PV max (jusqu'à 50 000 PV).",
+                        active: true,
+                        stats: {
+                            critRate_bonus_scaling: {
+                                source: "hp",
+                                percent: 0.0006,
+                                max: 30
+                            },
+                            critDMG_bonus_scaling: {
+                                source: "hp",
+                                percent: 0.0012,
+                                max: 60
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+
+        // --- 3. ARCHÉTYPES (BUILDS) ---
+        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
+        builds: {
+            "Enabler Fleurissement": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Enabler Fleurissement",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 0.2, "critDMG_": 0.2,
+                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1, "enerRech_": 0.8, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2"],
+                goodSets: ["FlowerOfParadiseLost:4", "GildedDreams:2", "WanderersTroupe:2", "NightOfTheSkysUnveiling:2"],
+
+                // Cible ER recommandée (%)
+                er_req: 130,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "Driver", name: "Columbina", element: "hydro" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Sub-DPS", name: "Lauma", element: "dendro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Nahida", element: "dendro" },
+                ]
+            }
+        }
+    },
+    "Yoimiya": {
+        // --- 1. CONFIGURATION GLOBALE ---
+        color: "#ff846d", // Code Hex de l'élément ou de la tenue
+        portraitOffset: -37, // Décalage vertical de l'image (négatif = monte, positif = descend)
+
+        // Objectifs de Talents (Pour le coaching)
+        talents: {
+            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            skill: 10,
+            burst: 8
+        },
+
+        // --- 2. PASSIFS & CONSTELLATIONS ---
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Tour de passe-passe",
+                        active: true, // Coché par défaut ?
+                        stats: {
+                            pyro_dmg_: 0.20,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C1 : Agate Ryuukin",
+                        cons: 1, // IMPORTANT : Niveau requis (1 à 6)
+                        stats: {
+                            atk_: 0.20 // Simulation de gain DPS
+                        }
+                    },
+                    {
+                        label: "C2 : Procession de feux de joie\n",
+                        cons: 2,
+                        stats: {
+                            pyro_dmg_: 0.25
+                        }
+                    }
+                ]
+            }
+        ],
+
+        // --- 3. ARCHÉTYPES (BUILDS) ---
+        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
+        builds: {
+            "Évaporation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Évaporation",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.08, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.2, "enerRech_": 0.2, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["ShimenawasReminiscence:4", "CrimsonWitchOfFlames:4"], // Top Tier
+                goodSets: ["CrimsonWitchOfFlames:2", "ShimenawasReminiscence:2"], // Viables
+
+                // Cible ER recommandée (%)
+                er_req: 120,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Lanyan", element: "anemo" },
+                ]
+            },
+            "Fonte": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Fonte",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.6, "atk": 0.06, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.4, "enerRech_": 0.2, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["ShimenawasReminiscence:4", "CrimsonWitchOfFlames:4"], // Top Tier
+                goodSets: ["CrimsonWitchOfFlames:2", "ShimenawasReminiscence:2"], // Viables
+
+                // Cible ER recommandée (%)
+                er_req: 120,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "Sub-DPS", name: "Rosaria", element: "cryo" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Support", name: "Citlali", element: "cryo" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Bennett", element: "pyro" },
+                ]
+            },
+            "Surcharge": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Surcharge",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.2, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["ShimenawasReminiscence:4", "CrimsonWitchOfFlames:4"], // Top Tier
+                goodSets: ["CrimsonWitchOfFlames:2", "ShimenawasReminiscence:2"], // Viables
+
+                // Cible ER recommandée (%)
+                er_req: 120,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "Sub-DPS", name: "Yae", element: "electro" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Chevreuse", element: "pyro" },
+                ]
+            }
+        }
     },
     "Skirk": {
         color: "#0525F4",
@@ -1702,6 +2521,173 @@ const CHARACTER_CONFIG = {
             }
         }
     },
+    "Ineffa": {
+        // --- 1. CONFIGURATION GLOBALE ---
+        color: "#4fbfff", // Code Hex de l'élément ou de la tenue
+        portraitOffset: -37, // Décalage vertical de l'image (négatif = monte, positif = descend)
+
+        // Objectifs de Talents (Pour le coaching)
+        talents: {
+            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            skill: 10,
+            burst: 8
+        },
+
+        // --- 2. PASSIFS & CONSTELLATIONS ---
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Protocole de permutation panoramique\n",
+                        active: true, // Coché par défaut ?
+                        stats: {
+                            eleMas_bonus_scaling: {
+                                source: "atk",
+                                percent: 0.06
+                            }
+                        }
+                    }
+                ]
+            },
+        ],
+
+        // --- 3. ARCHÉTYPES (BUILDS) ---
+        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
+        builds: {
+            "Sub-DPS Sélénocution": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "Sub-DPS Sélénocution",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.2, "enerRech_": 0.5, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4"], // Top Tier
+                goodSets: ["GildedDreams:4"], // Viables
+
+                // Cible ER recommandée (%)
+                er_req: 120,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "DPS", name: "Flins", element: "electro" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Sub-DPS", name: "Columbina", element: "hydro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Sucrose", element: "anemo" },
+                ]
+            }
+        }
+    },
+    "Flins": {
+        // --- 1. CONFIGURATION GLOBALE ---
+        color: "#6163E8", // Code Hex de l'élément ou de la tenue
+        portraitOffset: -35, // Décalage vertical de l'image (négatif = monte, positif = descend)
+
+        // Objectifs de Talents (Pour le coaching)
+        talents: {
+            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            skill: 8,
+            burst: 10
+        },
+
+        // --- 2. PASSIFS & CONSTELLATIONS ---
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Murmure de flamme",
+                        active: true,
+                        maxCons: 3, // NOUVEAUTÉ : Ce buff disparaît si le perso est C4 ou plus !
+                        stats: {
+                            eleMas_bonus_scaling: {
+                                source: "atk",
+                                percent: 0.08,
+                                max: 160
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C4 : Nuit sur la montagne nue",
+                        cons: 4, // N'apparaît que si le perso est C4+
+                        active: true,
+                        stats: {
+                            eleMas_bonus_scaling: {
+                                source: "atk",
+                                percent: 0.10,
+                                max: 220
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+
+        // --- 3. ARCHÉTYPES (BUILDS) ---
+        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
+        builds: {
+            "DPS Sélénocution": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+                name: "DPS Sélénocution",
+
+                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.2, "enerRech_": 0.5, // Ajuster selon besoin
+
+                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
+                bestSets: ["NightOfTheSkysUnveiling:4"], // Top Tier
+                goodSets: ["GildedDreams:4", "NightOfTheSkysUnveiling:2", "GladiatorsFinale:2"], // Viables
+
+                // Cible ER recommandée (%)
+                er_req: 130,
+
+                // Composition d'équipe (4 Slots)
+                team: [
+                    // Slot 1 : Généralement un Support clé
+                    { role: "Sub-DPS", name: "Ineffa", element: "electro" },
+
+                    // Slot 2 : Sub-DPS ou Réaction
+                    { role: "Support", name: "Columbina", element: "hydro" },
+
+                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
+                    { role: "Support", name: "Sucrose", element: "anemo" },
+                ]
+            }
+        }
+    },
     //6.4
     "Varka": {
         color: "#1D849A",
@@ -1715,40 +2701,39 @@ const CHARACTER_CONFIG = {
         buffs: [
             {
                 category: "Passifs",
+                selectMode: "exclusive",
                 buffs: [
                     {
                         label: "A1 : Équipe avec Pyro",
                         active: true,
                         stats: {
-                            anemo_dmg_bonus_scaling: { source: "atk", percent: 0.0001 },
-                            pyro_dmg_bonus_scaling: { source: "atk", percent: 0.0001 }
+                            elemental_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 },
+                            pyro_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 }
                         }
                     },
                     {
                         label: "A1 : Équipe avec Hydro",
                         stats: {
-                            anemo_dmg_bonus_scaling: { source: "atk", percent: 0.0001 },
-                            hydro_dmg_bonus_scaling: { source: "atk", percent: 0.0001 }
-                        }
+                            elemental_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 },
+                            hydro_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 }                        }
                     },
                     {
                         label: "A1 : Équipe avec Electro",
                         stats: {
-                            anemo_dmg_bonus_scaling: { source: "atk", percent: 0.0001 },
-                            electro_dmg_bonus_scaling: { source: "atk", percent: 0.0001 }
-                        }
+                            elemental_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 },
+                            electro_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 }                        }
                     },
                     {
                         label: "A1 : Équipe avec Cryo",
                         stats: {
-                            anemo_dmg_bonus_scaling: { source: "atk", percent: 0.0001 },
-                            cryo_dmg_bonus_scaling: { source: "atk", percent: 0.0001 }
-                        }
+                            elemental_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 },
+                            cryo_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 }                        }
                     }
                 ]
             },
             {
-                category: "Constellations",
+                category: "Constellation 4",
+                selectMode: "exclusive",
                 buffs: [
                     {
                         label: "C4 : Dispersion Pyro (+20% Anémo/Pyro)",
@@ -1774,6 +2759,11 @@ const CHARACTER_CONFIG = {
                         description: "Accorde 20% de DGT Anémo et Cryo après une Dispersion Cryo.",
                         stats: { anemo_dmg_: 0.20, cryo_dmg_: 0.20 }
                     },
+                ]
+            },
+            {
+                category: "Constellation 6",
+                buffs: [
                     {
                         label: "C6",
                         cons: 6,
@@ -1803,6 +2793,9 @@ const CHARACTER_CONFIG = {
 
                     "heal_": 0
                 },
+
+                hideUIStats: ["heal_"],
+                showUIStats: ["pyro_dmg_"],
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
                 goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
@@ -1840,6 +2833,9 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                hideUIStats: ["heal_"],
+                showUIStats: ["cryo_dmg_"],
+
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
                 goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
 
@@ -1876,6 +2872,9 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                hideUIStats: ["heal_"],
+                showUIStats: ["electro_dmg_"],
+
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
                 goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
 
@@ -1911,6 +2910,9 @@ const CHARACTER_CONFIG = {
 
                     "heal_": 0
                 },
+
+                hideUIStats: ["heal_"],
+                showUIStats: ["hydro_dmg_"],
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
                 goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
@@ -2039,133 +3041,6 @@ const CHARACTER_CONFIG = {
         bestSets: ["EmblemOfSeveredFate:4"],
         goodSets: ["EmblemOfSeveredFate:2", "NoblesseOblige:2"],
         talents: { auto: 1, skill: 8, burst: 10 }
-    },
-    "HuTao": {
-        weights: { "critRate_": 1, "critDMG_": 1, "hp_": 0.8, "hp": 0.08, "eleMas": 1, "atk_": 0.2, "elemental_dmg_": 1 },
-        bestSets: ["CrimsonWitchOfFlames:4", "ShimenawasReminiscence:4"],
-        goodSets: ["CrimsonWitchOfFlames:2", "GildedDreams:2"],
-        talents: { auto: 10, skill: 10, burst: 8 }
-    },
-    "Arlecchino": {
-        color: "#AB3D2D",
-        portraitOffset: -38,
-        talents: {
-            auto: 10,
-            skill: 8,
-            burst: 6
-        },
-        buffs: [
-            {
-                category: "Passifs",
-                buffs: [
-                    {
-                        label: "A1 : Masque Rouge (En combat)",
-                        description: "Accorde un Bonus de DGT Pyro de 40%.",
-                        stats: {
-                            pyro_dmg_: 0.40
-                        }
-                    }
-                ]
-            },
-            {
-                category: "Constellations",
-                selectMode: "cumulative",
-                buffs: [
-                    {
-                        label: "C1 : Masque de la Mort Rouge",
-                        cons: 1,
-                        description: "Augmente la valeur du Masque de 100%. (Simulation : Ajout d'un équivalent DGT bonus approximatif pour le scoring).",
-                        stats: {
-                        }
-                    },
-                    {
-                        label: "C2 : Ordre Royal",
-                        cons: 2,
-                        description: "Accorde 20% de RES Pyro/Hydro/etc.",
-                        stats: {
-                        }
-                    }
-                ]
-            }
-        ],
-        builds: {
-            "vape": {
-                name: "Vaporisation (Classique)",
-                description: "Arlecchino joue avec un applicateur Hydro pour vaporiser ses coups.",
-
-                weights: {
-                    "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
-                    "hp_": 0, "hp": 0,
-                    "def_": 0, "def": 0,
-                    "eleMas": 0.75, "enerRech_": 0,
-                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
-                    "heal_": 0
-                },
-
-                bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
-                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
-
-                er_req: 100,
-
-                team: [
-                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
-                    { role: "Sustain", name: "Bennett", element: "pyro" },
-                    { role: "Flex", element: ["hydro", "cryo"] },
-                ]
-            },
-
-            "overload": {
-                name: "Surcharge (Chevreuse)",
-                description: "Team limitant aux éléments Pyro et Électro pour activer le passif de Chevreuse.",
-                weights: {
-                    "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
-                    "hp_": 0, "hp": 0,
-                    "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0,
-                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
-                    "heal_": 0
-                },
-
-                bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
-                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
-
-                er_req: 100,
-
-                team: [
-                    { role: "Support", name: "Chevreuse", element: "pyro" },
-                    { role: "Sub-DPS", element: "electro" },
-                    { role: "Flex", element: "electro" }
-                ]
-            },
-
-            "mono_pyro": {
-                name: "Mono Pyro",
-                description: "Force brute Pyro pure sans réaction.",
-
-                weights: {
-                    "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
-                    "hp_": 0, "hp": 0,
-                    "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0,
-                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
-                    "heal_": 0
-                },
-
-                bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
-                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
-
-                er_req: 100,
-
-                team: [
-                    { role: "Sustain", name: "Bennett", element: "pyro" },
-                    { role: "Sub-DPS", name: "Xiangling", element: "pyro" },
-                    { role: "Support", name: "Kazuha", element: "anemo" }
-                ]
-            }
-        }
     },
     "Shogun Raiden": {
         color: "#a480df", // Violet Électro
