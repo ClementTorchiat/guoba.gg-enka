@@ -12,6 +12,7 @@ const SCORING_NORMS = {
 };
 
 const MAINSTAT_BASE_VALUE = 62.2;
+const MAINSTAT_ROLL_VALUE = 7.776;
 const VARIABLE_PIECES = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
 
 // MODIFICATION : On prend 'config' en argument pour éviter les erreurs de scope
@@ -100,7 +101,7 @@ function scoreArtifact(artifact, weights) {
     mainWeight = mainWeight || 0;
 
     if (mainWeight > 0) {
-        score += 5.1 * (SCORING_NORMS[artifact.mainStat.key] || 1) * mainWeight;
+        score += MAINSTAT_ROLL_VALUE * (SCORING_NORMS[artifact.mainStat.key] || 1) * mainWeight;
     }
 
     artifact.subStats.forEach(sub => {

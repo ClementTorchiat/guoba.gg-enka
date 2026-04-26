@@ -797,32 +797,27 @@ function toggleBuff(charIndex, buffIndex) {
 }
 
 // --- FONCTIONS COACHING ---
-
-function generateScoreBar(totalRolls, currentGrade) {
-    const maxScale = 45;
+function generateScoreBar(totalRolls, currentGrade, maxPossibleRolls = 45) {
+    // 1. Sécurité : On récupère le plafond dynamique (ex: 42 ou 38)
+    const maxScale = maxPossibleRolls || 45;
     const percent = Math.min((totalRolls / maxScale) * 100, 100);
-    const markers = [
-        { val: 0, label: "F" },
-        { val: 2.5, label: "F+" },
-        { val: 5, label: "D" },
-        { val: 7.5, label: "D+" },
-        { val: 10, label: "C" },
-        { val: 12.5, label: "C+" },
-        { val: 15, label: "B" },
-        { val: 17.5, label: "B+" },
-        { val: 20, label: "A" },
-        { val: 22.5, label: "A+" },
-        { val: 25, label: "S" },
-        { val: 27.5, label: "S+" },
-        { val: 30, label: "SS" },
-        { val: 32.5, label: "SS+" },
-        { val: 35, label: "SSS" },
-        { val: 37.5, label: "SSS+" },
-        { val: 40, label: "WTF" },
-        { val: 42.5, label: "WTF+" },
-        { val: 45, label: "ARCHON" }
+
+    // 2. La liste de tous tes rangs (NOUVEAU : ARCHON affiche sa valeur dynamiquement !)
+    const labels = [
+        "F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+",
+        "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", `ARCHON (${maxScale})`
     ];
 
+    // 3. Calcul proportionnel
+    const steps = labels.length - 1; // 18 intervalles
+    const interval = maxScale / steps;
+
+    let markers = labels.map((label, index) => ({
+        val: parseFloat((index * interval).toFixed(2)),
+        label: label
+    }));
+
+    // 4. Génération HTML des marqueurs
     let markersHtml = "";
     markers.forEach(m => {
         const left = (m.val / maxScale) * 100;
@@ -844,19 +839,94 @@ function generateScoreBar(totalRolls, currentGrade) {
     `;
 }
 
-function calculatePotentialScore(persoObj, config) {
-    if (!config || !config.weights) return { score: 0 };
-    let fakeArtefacts = persoObj.artefacts.map(art => {
-        let newSubs = art.subStats.map(sub => {
-            const rolls = getRollCount(sub.key, sub.value);
-            const maxValRoll = window.MAX_ROLLS && window.MAX_ROLLS[sub.key];
-            const potentialValue = maxValRoll ? (rolls * maxValRoll) : sub.value;
-            return { key: sub.key, value: potentialValue };
-        });
-        return { ...art, subStats: newSubs, mainStat: art.mainStat };
+function calculateMaxTheoreticalScore(persoObj, config) {
+    if (!config || !config.weights || !window.MAX_ROLLS) {
+        return { score: 100, totalRolls: 45 };
+    }
+
+    const forbiddenSubStats = ["heal_", "physical_dmg_"];
+
+    // 1. On trie les poids uniquement pour les SUBSTATS
+    const sortedSubWeights = Object.entries(config.weights)
+        .filter(([key, w]) => w > 0 && !key.includes("_dmg_") && !forbiddenSubStats.includes(key))
+        .sort((a, b) => b[1] - a[1]);
+
+    if (sortedSubWeights.length === 0) return { score: 0, totalRolls: 0 };
+
+    let maxTotalRolls = 0;
+
+    // 2. On génère les 5 artéfacts ABSOLUS
+    let perfectArtefacts = persoObj.artefacts.map(art => {
+
+        let idealMainStatKey = art.mainStat.key; // Fallback par défaut
+
+        if (art.type === "EQUIP_BRACER") {
+            idealMainStatKey = "hp"; // Fleur
+        } else if (art.type === "EQUIP_NECKLACE") {
+            idealMainStatKey = "atk"; // Plume
+        } else {
+            // NOUVEAU : On lit les instructions claires du Game Designer !
+            if (config.idealMainStats && config.idealMainStats[art.type] && config.idealMainStats[art.type].length > 0) {
+                // On prend le Graal absolu (le premier élément du tableau)
+                idealMainStatKey = config.idealMainStats[art.type][0];
+            } else {
+                // Filet de sécurité si tu as oublié de définir idealMainStats
+                const possibleMains = SLOT_POSSIBLE_MAIN_STATS[art.type] || [];
+                let bestW = -1;
+                possibleMains.forEach(stat => {
+                    let w = config.weights[stat];
+                    if (w === undefined && stat.includes("_dmg_")) w = config.weights["elemental_dmg_"];
+                    w = w || 0;
+                    if (w > bestW) {
+                        bestW = w;
+                        idealMainStatKey = stat;
+                    }
+                });
+            }
+        }
+
+        const perfectMainStat = {
+            key: idealMainStatKey,
+            value: 0, // Inutile, scoring.js n'utilise que la clé et le weight pour la mainstat
+            label: STAT_LABELS[idealMainStatKey] || idealMainStatKey
+        };
+
+        // RÈGLE 1 : Exclusion de la Main Stat Parfaite des substats
+        const availableStats = sortedSubWeights.filter(sw => sw[0] !== perfectMainStat.key);
+
+        // RÈGLE 2 & 3 : 4 Substats max, 6 procs sur la meilleure dispo
+        const topStats = availableStats.slice(0, 4);
+        let fakeSubStats = [];
+
+        if (topStats.length > 0) {
+            const bestStat = topStats[0];
+            fakeSubStats.push({
+                key: bestStat[0],
+                value: window.MAX_ROLLS[bestStat[0]] * 6
+            });
+            maxTotalRolls += 6;
+
+            // RÈGLE 4 : 1 proc sur les autres
+            for (let i = 1; i < topStats.length; i++) {
+                fakeSubStats.push({
+                    key: topStats[i][0],
+                    value: window.MAX_ROLLS[topStats[i][0]] * 1
+                });
+                maxTotalRolls += 1;
+            }
+        }
+
+        return { ...art, subStats: fakeSubStats, mainStat: perfectMainStat };
     });
-    let fakePerso = { ...persoObj, artefacts: fakeArtefacts };
-    return calculateCharacterScore(fakePerso, config);
+
+    // 3. On calcule le score absolu !
+    let fakePerso = { ...persoObj, artefacts: perfectArtefacts };
+    let simulation = calculateCharacterScore(fakePerso, config);
+
+    return {
+        score: simulation.score,
+        totalRolls: maxTotalRolls
+    };
 }
 
 function getCritAdvice(cr, cd, config) {
@@ -1878,13 +1948,26 @@ function processData(data) {
 
         if (rawConfig.builds) {
             let bestBuildKey = null;
-            let maxScore = -1;
+            let maxEfficiency = -1; // On cherche désormais le meilleur pourcentage, pas le meilleur score brut !
 
             Object.entries(rawConfig.builds).forEach(([key, build]) => {
                 const tempConfig = { ...rawConfig, ...build };
+
+                // 1. Calcul du score actuel avec ce build
                 const simulation = calculateCharacterScore({ artefacts: artefacts }, tempConfig);
-                if (simulation.score > maxScore) {
-                    maxScore = simulation.score;
+
+                // 2. Calcul du potentiel maximum (le plafond) de ce build avec ces artéfacts
+                const potential = calculateMaxTheoreticalScore({ artefacts: artefacts }, tempConfig);
+
+                // 3. Calcul de l'Efficacité (Ratio)
+                let efficiency = 0;
+                if (potential && potential.score > 0) {
+                    efficiency = simulation.score / potential.score;
+                }
+
+                // 4. On compare les pourcentages !
+                if (efficiency > maxEfficiency) {
+                    maxEfficiency = efficiency;
                     bestBuildKey = key;
                 }
             });
@@ -2000,10 +2083,24 @@ function renderToolbar(index) {
     const currentBuildKey = p.activeBuild ? p.activeBuild.key : Object.keys(p.charConfig.builds)[0];
     const builds = p.charConfig.builds;
 
-    // 1. DROPDOWN ARCHÉTYPE
-    let buildOptions = Object.entries(builds).map(([key, build]) =>
-        `<option value="${key}" ${key === currentBuildKey ? 'selected' : ''}>${build.name}</option>`
-    ).join('');
+    // 1. DROPDOWN ARCHÉTYPE (Avec calcul d'efficacité en temps réel)
+    let buildOptions = Object.entries(builds).map(([key, build]) => {
+        const tempConfig = { ...p.charConfig, ...build };
+
+        // On recalcule rapidement le ratio pour l'affichage
+        const simulation = calculateCharacterScore({ artefacts: p.artefacts }, tempConfig);
+        const potential = calculateMaxTheoreticalScore({ artefacts: p.artefacts }, tempConfig);
+
+        let efficiency = 0;
+        if (potential && potential.score > 0) {
+            efficiency = (simulation.score / potential.score) * 100;
+        }
+
+        // On formate le texte (ex: "Main DPS (Surcharge) - 87.5%")
+        const effText = efficiency > 0 ? ` - ${efficiency.toFixed(1)}% Optimal` : '';
+
+        return `<option value="${key}" ${key === currentBuildKey ? 'selected' : ''}>${build.name}${effText}</option>`;
+    }).join('');
 
     // 2. ÉQUIPE (ICÔNES AVEC FONDS ÉLÉMENTAIRES)
     let teamHtml = '';
@@ -2621,7 +2718,7 @@ function renderShowcase(index) {
     html += `
         <div class="coaching-row" style="margin-top:64px; width:100%;">
             ${(() => {
-        const potential = calculatePotentialScore(p, config);
+        const potential = calculateMaxTheoreticalScore(p, config);
         const efficiency = (potential.score > 0) ? ((ev.score / potential.score) * 100).toFixed(1) : 0;
         let effColor = '#ff4d4d';
         if (efficiency > 70) effColor = '#eab308';
@@ -2653,7 +2750,7 @@ function renderShowcase(index) {
                         <div style="">
                             <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">1. Vue d'ensemble</h3>
                             <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Évaluez la qualité de vos sous-stats et ayez un aperçu réel du potentiel de vos artéfacts actuels.</p>
-                            ${generateScoreBar(ev.totalRolls, ev.grade.letter)}
+                            ${generateScoreBar(ev.totalRolls, ev.grade.letter, potential.totalRolls)}
                             
                             <div style="background:#2C2D32; padding:16px; border-radius:8px;">   
                                 <div style="display:flex; justify-content:space-around; align-items:center; flex-wrap:wrap; gap:32px;">

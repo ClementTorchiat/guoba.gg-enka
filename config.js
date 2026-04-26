@@ -1828,18 +1828,23 @@ const CHARACTER_CONFIG = {
             }
         ],
         builds: {
-            "vape": {
-                name: "Vaporisation (Classique)",
-                description: "Arlecchino joue avec un applicateur Hydro pour vaporiser ses coups.",
+            "DPS Fonte": {
+                name: "DPS Fonte",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
                     "eleMas": 0.75, "enerRech_": 0,
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "atk_"],
+                    "EQUIP_RING": ["pyro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
@@ -1848,9 +1853,9 @@ const CHARACTER_CONFIG = {
                 er_req: 100,
 
                 team: [
-                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
-                    { role: "Sustain", name: "Bennett", element: "pyro" },
-                    { role: "Flex", element: ["hydro", "cryo"] },
+                    { role: "Support", name: "Citlali", element: "cryo" },
+                    { role: "Support", name: "Xilonen", element: "geo" },
+                    { role: "Support", name: "Bennett", element: "pyro" },
                 ]
             },
 
@@ -1859,12 +1864,18 @@ const CHARACTER_CONFIG = {
                 description: "Team limitant aux éléments Pyro et Électro pour activer le passif de Chevreuse.",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0,
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["pyro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
@@ -1885,7 +1896,7 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0,
@@ -2817,6 +2828,13 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
                 },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["cryo_dmg_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
+                },
+
                 bestSets: ["FinaleOfTheDeepGalleries:4", "MarechausseeHunter:4"],
                 goodSets: ["GladiatorsFinale:4", "BlizzardStrayer:4", "GladiatorsFinale:2", "BlizzardStrayer:2"],
                 er_req: 100,
@@ -3732,6 +3750,12 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["pyro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
+                },
+
                 hideUIStats: ["heal_"],
                 showUIStats: ["pyro_dmg_"],
 
@@ -3770,6 +3794,12 @@ const CHARACTER_CONFIG = {
 
                     "heal_": 0
                 },
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["cryo_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
+                },
+
 
                 hideUIStats: ["heal_"],
                 showUIStats: ["cryo_dmg_"],
@@ -3810,6 +3840,12 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["electro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
+                },
+
                 hideUIStats: ["heal_"],
                 showUIStats: ["electro_dmg_"],
 
@@ -3847,6 +3883,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["hydro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 hideUIStats: ["heal_"],
