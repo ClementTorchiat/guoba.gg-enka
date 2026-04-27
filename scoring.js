@@ -16,7 +16,7 @@ const MAINSTAT_ROLL_VALUE = 7.776;
 const VARIABLE_PIECES = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
 
 // MODIFICATION : On prend 'config' en argument pour éviter les erreurs de scope
-function calculateCharacterScore(perso, config) {
+function calculateCharacterScore(perso, config, maxRolls = 45.0) {
 
     // Sécurité si la config est vide
     if (!config || !config.weights) {
@@ -35,7 +35,26 @@ function calculateCharacterScore(perso, config) {
 
         // B. Note Qualité (Rolls)
         const qualityPoints = calculateArtifactRollQuality(art, config.weights);
-        const gradeLetter = getGradeFromPoints(qualityPoints);
+        // --- NOUVEAU : On calcule le max théorique de CELA pièce ---
+        // On récupère les weights utiles dispo (sans la mainstat actuelle)
+        const availableWeights = Object.entries(config.weights)
+            .filter(([k, w]) => w > 0 && k !== art.mainStat.key && !k.includes("_dmg_") && k !== "heal_" && k !== "physical_dmg_")
+            .map(entry => entry[1])
+            .sort((a, b) => b - a);
+
+        let maxPiecePoints = 9.0; // Valeur par défaut
+        if (availableWeights.length > 0) {
+            maxPiecePoints = 0;
+            const top = availableWeights.slice(0, 4);
+            maxPiecePoints += top[0] * 6; // 6 procs sur la meilleure
+            for (let i = 1; i < top.length; i++) {
+                maxPiecePoints += top[i] * 1; // 1 proc sur les autres
+            }
+        }
+
+        // On donne ce max à la fonction pour avoir une lettre juste !
+        const gradeLetter = getGradeFromPoints(qualityPoints, maxPiecePoints);
+        // --- FIN NOUVEAU ---
 
         art.grade = {
             letter: gradeLetter,
@@ -76,7 +95,7 @@ function calculateCharacterScore(perso, config) {
 
     return {
         score: finalScore,
-        grade: getGlobalGrade(totalRolls),
+        grade: getGlobalGrade(totalRolls, maxRolls),
         setBonus: activeBonuses,
         setMultiplier: setMultiplier,
         totalRolls: totalRolls.toFixed(1)
@@ -130,49 +149,43 @@ function calculateArtifactRollQuality(artifact, weights) {
 }
 
 // --- ECHELLES ---
-function getGradeFromPoints(pts) {
-    if (pts >= 9.0) return "ARCHON";
-    if (pts >= 8.5) return "WTF+";
-    if (pts >= 8.0) return "WTF";
-    if (pts >= 7.5) return "SSS+";
-    if (pts >= 7.0) return "SSS";
-    if (pts >= 6.5) return "SS+";
-    if (pts >= 6.0) return "SS";
-    if (pts >= 5.5) return "S+";
-    if (pts >= 5.0) return "S";
-    if (pts >= 4.5) return "A+";
-    if (pts >= 4.0) return "A";
-    if (pts >= 3.5) return "B+";
-    if (pts >= 3.0) return "B";
-    if (pts >= 2.5) return "C+";
-    if (pts >= 2.0) return "C";
-    if (pts >= 1.5) return "D+";
-    if (pts >= 1.0) return "D";
-    if (pts >= 0.5) return "F+";
+function getGradeFromPoints(pts, maxPossiblePts = 9.0) {
+    const labels = [
+        "F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+",
+        "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"
+    ];
+    const steps = labels.length - 1;
+    const interval = maxPossiblePts / steps;
+
+    for (let i = steps; i >= 0; i--) {
+        const threshold = i * interval;
+        if (pts >= threshold - 0.05) {
+            return labels[i];
+        }
+    }
     return "F";
 }
 
-function getGlobalGrade(totalRolls) {
-    let grade = "F";
-    if (totalRolls >= 45)      grade = "ARCHON";
-    else if (totalRolls >= 42.5) grade = "WTF+";
-    else if (totalRolls >= 40)   grade = "WTF";
-    else if (totalRolls >= 37.5) grade = "SSS+";
-    else if (totalRolls >= 35)   grade = "SSS";
-    else if (totalRolls >= 32.5) grade = "SS+";
-    else if (totalRolls >= 30)   grade = "SS";
-    else if (totalRolls >= 27.5) grade = "S+";
-    else if (totalRolls >= 25)   grade = "S";
-    else if (totalRolls >= 22.5) grade = "A+";
-    else if (totalRolls >= 20)   grade = "A";
-    else if (totalRolls >= 17.5) grade = "B+";
-    else if (totalRolls >= 15)   grade = "B";
-    else if (totalRolls >= 12.5) grade = "C+";
-    else if (totalRolls >= 10)   grade = "C";
-    else if (totalRolls >= 7.5)  grade = "D+";
-    else if (totalRolls >= 5)    grade = "D";
-    else if (totalRolls >= 2.5)  grade = "F+";
-    return { letter: grade, color: getGradeColor(grade) };
+// On ajoute le maxPossibleRolls (45 par défaut pour éviter les crashs)
+function getGlobalGrade(pts, maxPossibleRolls = 45.0) {
+    if (maxPossibleRolls <= 0 || pts <= 0 && maxPossibleRolls < 1) {
+        return { letter: "Bro...", color: getGradeColor("F") };
+    }
+    const labels = [
+        "F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+",
+        "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"
+    ];
+
+    const steps = labels.length - 1; // 18 paliers
+    const interval = maxPossibleRolls / steps;
+
+    for (let i = steps; i >= 0; i--) {
+        const threshold = i * interval;
+        if (pts >= threshold - 0.05) { // Marge de tolérance
+            return { letter: labels[i], color: getGradeColor(labels[i]) };
+        }
+    }
+    return { letter: "F", color: getGradeColor("F") };
 }
 
 function getGradeColor(grade) {

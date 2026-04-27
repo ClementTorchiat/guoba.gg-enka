@@ -798,6 +798,7 @@ function toggleBuff(charIndex, buffIndex) {
 
 // --- FONCTIONS COACHING ---
 function generateScoreBar(totalRolls, currentGrade, maxPossibleRolls = 45) {
+    if (maxPossibleRolls <= 0) maxPossibleRolls = 45;
     // 1. Sécurité : On récupère le plafond dynamique (ex: 42 ou 38)
     const maxScale = maxPossibleRolls || 45;
     const percent = Math.min((totalRolls / maxScale) * 100, 100);
@@ -919,13 +920,13 @@ function calculateMaxTheoreticalScore(persoObj, config) {
         return { ...art, subStats: fakeSubStats, mainStat: perfectMainStat };
     });
 
-    // 3. On calcule le score absolu !
+    // 3. On calcule le score de ce set divin via ton propre moteur de calcul
     let fakePerso = { ...persoObj, artefacts: perfectArtefacts };
     let simulation = calculateCharacterScore(fakePerso, config);
 
     return {
         score: simulation.score,
-        totalRolls: maxTotalRolls
+        totalRolls: parseFloat(simulation.totalRolls)
     };
 }
 
@@ -2031,7 +2032,8 @@ function processData(data) {
             updateResonanceBuffs(persoObj, activeBuild.team);
         }
 
-        persoObj.evaluation = calculateCharacterScore(persoObj, scoringConfig);
+        const potentialMax = calculateMaxTheoreticalScore(persoObj, scoringConfig);
+        persoObj.evaluation = calculateCharacterScore(persoObj, scoringConfig, potentialMax.totalRolls);
         persoObj.weights = scoringConfig.weights;
 
         globalPersoData.push(persoObj);
@@ -2228,8 +2230,10 @@ function switchBuild(charIndex, buildKey) {
     // 3. Résonances
     updateResonanceBuffs(p, newBuild.team);
 
-    // 4. Recalcul Score
-    p.evaluation = calculateCharacterScore(p, newScoringConfig);
+    // 4. Recalcul Score (MODIFIÉ)
+    const potentialMax = calculateMaxTheoreticalScore(p, newScoringConfig);
+    p.evaluation = calculateCharacterScore(p, newScoringConfig, potentialMax.totalRolls);
+    // ...
 
     // 5. Rafraîchissement UI
     renderSidebar(idx); // On passe l'index nettoyé

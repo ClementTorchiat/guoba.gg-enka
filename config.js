@@ -7,31 +7,25 @@ const DEFAULT_CONFIG = {
 
 const CHARACTER_CONFIG = {
     "NomDuPersonnage": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#FFFFFF", // Code Hex de l'élément ou de la tenue
-        portraitOffset: 0, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#FFFFFF",
+        portraitOffset: 0,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
             skill: 8,
             burst: 8
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
                 buffs: [
                     {
                         label: "Nom du Passif (A1/A4)",
-                        description: "Description courte de l'effet.",
-                        active: true, // Coché par défaut ?
+                        active: true,
                         stats: {
-                            // Stats simples
                             atk_: 0.20,
 
-                            // EXEMPLE SCALING (Optionnel) :
                             // elemental_dmg_bonus_scaling: {
                             //     source: "enerRech_", // Stat source
                             //     percent: 0.4,       // % converti
@@ -46,38 +40,26 @@ const CHARACTER_CONFIG = {
                 buffs: [
                     {
                         label: "C1 : Nom de la constellation",
-                        cons: 1, // IMPORTANT : Niveau requis (1 à 6)
-                        description: "Description...",
+                        cons: 1,
                         stats: {
-                            dmgBonus: 0.10 // Simulation de gain DPS
+                            dmgBonus: 0.10
                         }
-                    },
-                    {
-                        label: "C2 : Nom de la constellation",
-                        cons: 2,
-                        description: "...",
-                        stats: { /* ... */ }
                     }
                 ]
             }
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "main_build": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
-                name: "Nom du Build (ex: Vaporisation)",
-                description: "Brève explication du style de jeu.",
+            "main_build": {
+                name: "",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.2, // ATQ% vaut souvent 1, ATQ flat ~0.2
-                    "hp_": 0, "hp": 0,
-                    "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.5, // Ajuster selon besoin
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -85,30 +67,24 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": [],
+                    "EQUIP_RING": [],
+                    "EQUIP_DRESS": []
+                },
+
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["Set1:4", "Set2:4"], // Top Tier
-                goodSets: ["Set1:2", "Set2:2"], // Viables
+                bestSets: ["Set1:4", "Set2:4"],
+                goodSets: ["Set1:2", "Set2:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
-                    { role: "Support", name: "Bennett", element: "pyro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
-                    { role: "Sub-DPS", name: "Xingqiu", element: "hydro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
-                    {
-                        role: "Flex",
-                        name: ["Kazuha", "Sucrose"], // Noms (Optionnel)
-                        element: ["anemo", "anemo"]  // Éléments pour la couleur de fond
-                    }
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "Flex", name: ["Kazuha", "Sucrose"], element: ["anemo", "anemo"] }
                 ]
             }
         }
