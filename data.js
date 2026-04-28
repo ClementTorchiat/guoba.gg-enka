@@ -34,3 +34,5 @@ window.MAX_ROLLS = {
     "eleMas": 23.31,
     "enerRech_": 6.48,
 };
+
+window.BASE_ROLLS = BASE_ROLLS;

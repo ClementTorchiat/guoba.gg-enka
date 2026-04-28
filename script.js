@@ -51,11 +51,48 @@ function createIcon(key) {
     return `<img src="${ICON_BASE_PATH}${filename}" class="stat-icon" alt="${key}">`;
 }
 
-function getRollCount(key, value) {
-    if (!window.MAX_ROLLS || !window.MAX_ROLLS[key]) return 0;
-    const avgRoll = window.MAX_ROLLS[key] * 0.85;
-    return Math.round(value / avgRoll);
+// Fonction ultime : Trouve le nombre ET la valeur de chaque roll
+function getRollDetails(key, value) {
+    const baseRollsDef = window.BASE_ROLLS || (typeof BASE_ROLLS !== 'undefined' ? BASE_ROLLS : null);
+
+    // Fallback de sécurité
+    if (!baseRollsDef || !baseRollsDef[key]) {
+        return { count: 1, rolls: [value] };
+    }
+
+    const possibleRolls = baseRollsDef[key];
+    let bestMatch = { k: 1, diff: Infinity, rolls: [value] };
+
+    // Recherche récursive des combinaisons
+    function checkCombinations(k, currentSum, startIndex, depth, currentRolls) {
+        if (depth === k) {
+            const diff = Math.abs(currentSum - value);
+            if (diff < bestMatch.diff) {
+                // On clone le tableau des rolls actuels
+                bestMatch = { k: k, diff: diff, rolls: [...currentRolls] };
+            }
+            return;
+        }
+        for (let i = startIndex; i < 4; i++) {
+            currentRolls.push(possibleRolls[i]);
+            checkCombinations(k, currentSum + possibleRolls[i], i, depth + 1, currentRolls);
+            currentRolls.pop(); // Backtracking
+        }
+    }
+
+    for (let k = 1; k <= 6; k++) {
+        checkCombinations(k, 0, 0, 0, []);
+        if (bestMatch.diff < 0.15) break;
+    }
+
+    return bestMatch;
 }
+
+// L'ancienne fonction qui fait le pont pour ne pas casser ton code actuel
+function getRollCount(key, value) {
+    return getRollDetails(key, value).k;
+}
+
 
 // 2. MAPPINGS & DATA
 const ELEMENT_DATA = {
@@ -1518,33 +1555,27 @@ function simulateDeadStatReplacements(persoObj, config) {
     suggestions.sort((a, b) => b.totalDeadRolls - a.totalDeadRolls);
     return suggestions;
 }
-// CALCULATEUR REROLL (VERSION FINALE : BADGES VARIÉS)
+// CALCULATEUR REROLL (VERSION DUST OF ENLIGHTENMENT 5.X)
 function calculateRerollMetrics(artifact, config) {
     if (!config || !config.weights || !window.MAX_ROLLS) return null;
 
     let totalRolls = 0;
+    let terrainWeights = [];
+    let upgradeTokens = [];
+    let maxWeightOnArtifact = 0;
 
-    // --- VARIABLES D'ANALYSE ---
-    let terrainWeights = [];    // Les poids des 4 lignes de base (Le Socle)
-    let upgradeTokens = [];     // Les poids des rolls supplémentaires (Les 5 Jetons)
-    let maxWeightOnArtifact = 0; // La meilleure stat présente (ex: 1.0 pour CRIT)
-
-    // 1. EXTRACTION DES DONNÉES
+    // 1. EXTRACTION DES DONNÉES (Inchangée)
     artifact.subStats.forEach(sub => {
         const rolls = getRollCount(sub.key, sub.value);
         totalRolls += rolls;
 
-        // Récupération du poids
         let w = config.weights[sub.key];
         if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
         const weight = (w && w > 0) ? w : 0;
 
-        // Analyse du Socle (1er roll) vs Upgrades (rolls suivants)
-        // Le socle est immuable, on ne peut pas le reroll.
         terrainWeights.push(weight);
         if (weight > maxWeightOnArtifact) maxWeightOnArtifact = weight;
 
-        // Si on a plus d'1 roll, les suivants sont des "Jetons" qu'on a dépensés
         if (rolls > 1) {
             for (let i = 0; i < rolls - 1; i++) {
                 upgradeTokens.push(weight);
@@ -1552,113 +1583,68 @@ function calculateRerollMetrics(artifact, config) {
         }
     });
 
-    // Sécurité : Clamp (Si jamais l'user a rentré des valeurs bizarres)
-    // Un artéfact +20 a techniquement 8 ou 9 rolls totaux.
-    // Donc 4 Base + 4 ou 5 Upgrades.
     const totalTokensAvailable = Math.max(4, totalRolls - 4);
+    const currentUpgradeValue = upgradeTokens.reduce((a, b) => a + b, 0);
 
+    // --- 2. LOGIQUE "DUST OF ENLIGHTENMENT" ---
+    // Le joueur n'est pas bête : il va sélectionner les 2 meilleures stats de l'artéfact.
+    const sortedTerrain = [...terrainWeights].sort((a, b) => b - a);
+    const top2Avg = (sortedTerrain[0] + sortedTerrain[1]) / 2;
+    const bot2Avg = (sortedTerrain[2] + sortedTerrain[3]) / 2;
 
-    // --- 2. ANALYSE DU TERRAIN (DENSITÉ) ---
-    // Quelle est la probabilité qu'un jeton tombe sur une bonne case ?
-    // Ex: CR(1) + CD(1) + ATQ(0.75) + PV(0) = 2.75 / 4 = 0.6875
-    const density = terrainWeights.reduce((a, b) => a + b, 0) / 4;
+    // Calcul de l'espérance mathématique (Expected Value)
+    // Règle du jeu : 2 procs sont GARANTIS de tomber dans le Top 2. Le reste est aléatoire (réparti sur les 4).
+    const guaranteedTokens = Math.min(2, totalTokensAvailable);
+    const rngTokens = totalTokensAvailable - guaranteedTokens;
 
+    const expectedValue = (guaranteedTokens * top2Avg) + (rngTokens * ((top2Avg + bot2Avg) / 2));
 
-    // --- 3. CALCUL DU POTENTIEL (GAIN) ---
-    // Logique : "Combien de valeur puis-je créer en replaçant mes jetons ?"
-
-    let potentialValueGain = 0;
-
-    upgradeTokens.forEach(tokenWeight => {
-        if (tokenWeight === 0) {
-            // A. RECYCLAGE (Cas Navia)
-            // Le jeton est actuellement à la poubelle.
-            // Si je le relance, j'espère obtenir la moyenne du terrain (Density).
-            potentialValueGain += density;
-        } else {
-            // B. OPTIMISATION (Cas Atk vs Crit)
-            // Le jeton est utile (ex: 0.75), mais peut-on faire mieux ?
-            // Gain marginal = Différence avec la meilleure stat présente.
-            // On pondère par 0.8 pour ne pas surestimer l'optimisation vs le recyclage pur.
-            const margin = Math.max(0, maxWeightOnArtifact - tokenWeight);
-            potentialValueGain += (margin * 0.8);
-        }
-    });
-
-    // Normalisation sur 100
-    // Le gain max théorique serait de transformer tous les jetons en la meilleure stat.
+    // --- 3. POTENTIEL & RISQUE ---
     const maxTheoreticalGain = totalTokensAvailable * maxWeightOnArtifact;
 
+    // POTENTIEL : Le gain moyen attendu par rapport à l'état actuel de l'artéfact.
     let potential = 0;
     if (maxTheoreticalGain > 0) {
-        potential = (potentialValueGain / maxTheoreticalGain) * 100;
+        const valueGain = expectedValue - currentUpgradeValue;
+        if (valueGain > 0) {
+            // Multiplicateur *2 pour l'échelle UI (0 à 100%) afin que ça soit lisible
+            potential = (valueGain / maxTheoreticalGain) * 100 * 2.0;
+        }
     }
 
-    // Bonus psychologique : Si l'artéfact a beaucoup de stats mortes (density basse),
-    // le potentiel mathématique est là, mais le risque de frustration est haut.
-    // On réduit légèrement le potentiel affiché pour les terrains "pourris".
-    if (density < 0.3) potential *= 0.5;
-
-
-    // --- 4. CALCUL DU RISQUE (SATURATION) ---
-    // Logique : "À quel point mes jetons actuels sont-ils proches de la perfection ?"
-
-    let currentUpgradeValue = upgradeTokens.reduce((a, b) => a + b, 0);
-
-    // Saturation : 0.0 (Tout raté) à 1.0 (Arlecchino God Roll)
+    // RISQUE : La probabilité de gâcher une Poussière d'illumination pour rien.
+    // Si l'artéfact est déjà proche de la perfection (saturation), le risque de gaspiller la Poussière est immense.
     let saturation = (maxTheoreticalGain > 0) ? (currentUpgradeValue / maxTheoreticalGain) : 0;
-
-    // Courbe de risque Exponentielle
-    // Si Saturation = 0.5 (Moyen) -> Risque faible (~8%)
-    // Si Saturation = 0.8 (Très bon) -> Risque élevé (~45%)
-    // Si Saturation = 1.0 (Parfait) -> Risque total (100%)
     let risk = Math.pow(saturation, 3.5) * 100;
 
-    // Ajustement "Rareté"
-    // Si les points viennent de stats à poids 1.0 (Crit), c'est plus précieux que l'ATQ (0.75).
-    // On augmente le risque si l'artéfact est porté par des Top Stats.
-    const highValueTokens = upgradeTokens.filter(t => t === 1).length;
-    if (highValueTokens > 2) risk += 10;
-
-    // Clamp final
+    // Sécurités d'affichage
+    if (potential > 100) potential = 100;
     if (risk > 99) risk = 99;
     if (risk < 1) risk = 1;
 
-
-    // --- 5. BADGES ---
+    // --- 4. BADGES (Ajustés au contexte de l'objet) ---
     let badge = { text: "Neutre", color: "#9ca3af" };
 
-    // Cas Spécial : Terrain inconstructible
-    if (density < 0.25) {
-        badge = { text: "Poubelle", color: "#4b5563" };
+    if (sortedTerrain[0] === 0 && sortedTerrain[1] === 0) {
+        badge = { text: "Poubelle (Ne pas reroll)", color: "#4b5563" }; // Même le Top 2 est inutile
     }
-    // Cas Spécial : God Roll (Arlecchino)
-    else if (risk > 85) {
-        badge = { text: "Garder", color: "#ef4444" }; // Rouge
+    else if (risk > 75) {
+        badge = { text: "Trop risqué (Garder)", color: "#ef4444" }; // Artéfact déjà trop bon, ne gâchez pas la poussière
     }
-    // Cas Spécial : Très fort (Risqué)
-    else if (risk > 60) {
-        badge = { text: "Solide", color: "#f97316" }; // Orange
+    else if (potential > 40 && risk < 35) {
+        badge = { text: "Poussière Recommandée", color: "#22c55e" }; // Beaucoup de stats mortes à recycler
     }
-        // Cas Spécial : Reroll évident (Navia)
-    // Haut potentiel + Risque modéré/faible
-    else if (potential > 60 && risk < 40) {
-        badge = { text: "Reroll Recommandé", color: "#22c55e" }; // Vert
-    }
-    // Cas Spécial : Optimisation possible
-    else if (potential > 40) {
-        badge = { text: "Optimisable", color: "#3b82f6" }; // Bleu
+    else if (potential > 15) {
+        badge = { text: "Optimisable", color: "#3b82f6" };
     }
     else {
-        badge = { text: "Incertain", color: "#9ca3af" };
+        badge = { text: "Peu rentable", color: "#f97316" }; // Le gain espéré est plus faible que l'état actuel
     }
 
     return {
         potential: Math.round(potential),
         risk: Math.round(risk),
-        badge: badge,
-        // Debug pour vérifier la logique dans la console si besoin
-        _debug: { density, upgrades: upgradeTokens, sat: saturation }
+        badge: badge
     };
 }
 // Fonction pour calculer la valeur selon le rang (R1 à R5)
@@ -2099,7 +2085,7 @@ function renderToolbar(index) {
         }
 
         // On formate le texte (ex: "Main DPS (Surcharge) - 87.5%")
-        const effText = efficiency > 0 ? ` - ${efficiency.toFixed(1)}% Optimal` : '';
+        const effText = efficiency > 0 ? ` - ${efficiency.toFixed(1)}%` : '';
 
         return `<option value="${key}" ${key === currentBuildKey ? 'selected' : ''}>${build.name}${effText}</option>`;
     }).join('');
@@ -2987,7 +2973,79 @@ function renderShowcase(index) {
                         <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
                         <div>
-                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">5. Simulateur de reroll</h3>
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">5. Détails des rolls</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Lisez dans le code source du jeu et découvrez exactement quelle qualité de statistiques vous avez obtenue.</p>
+                            
+                            <div style="display:flex; flex-direction: row; justify-content: space-between; gap:15px;">
+                                ${p.artefacts.map(art => {
+            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+
+            // Génération des lignes de substats
+            // Génération des lignes de substats (VERSION COMPACTE)
+            let subsDetailsHtml = art.subStats.map((sub, idx) => {
+                const details = getRollDetails(sub.key, sub.value);
+                const baseRolls = window.BASE_ROLLS[sub.key] || [];
+                const colors = ['#6CED75', '#00E497', '#00BFE9', '#EE72F7'];
+
+                const rollsHtml = details.rolls.map((rollValue, index) => {
+                    const tierIndex = baseRolls.indexOf(rollValue);
+                    const color = tierIndex !== -1 ? colors[tierIndex] : '#fff';
+                    const displayVal = (sub.key === "atk" || sub.key === "def" || sub.key === "hp") ? Math.round(rollValue) : rollValue.toFixed(1);
+                    const plusSign = (index < details.rolls.length - 1) ? ' <span style="color:#555;">+</span> ' : '';
+                    return `<span style="color:${color}; font-weight:bold;">${displayVal}</span>${plusSign}`;
+                }).join('');
+
+                // Le design sans boîte : juste du texte bien aligné et un pointillé de séparation
+                return `
+        <div style="padding: 4px 0; ${idx < art.subStats.length - 1 ? 'border-bottom: 1px dashed rgba(255,255,255,0.08);' : ''}">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2px;">
+                <p style="font-size:11px; color:#aaa; display:flex; align-items:center; gap:4px;">
+                    <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width:13px; height:13px;" alt="">
+                    ${sub.label}
+                </p>
+                <p style="font-size:12px; color:#fff; font-weight:bold;">${formatValueDisplay(sub.key, sub.value)}</p>
+            </div>
+            <div style="font-size:11px; text-align:right; font-family: monospace; line-height: 1.2;">
+                ${rollsHtml}
+            </div>
+        </div>
+    `;
+            }).join('');
+
+            return `
+<div style="width: 100%; background:#2C2D32; padding:10px 12px; border-radius:8px;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom:8px;">
+        <img src="${art.icon}" style="width:38px; height:38px; border-radius:8px; background-color: rgba(0,0,0,0.1)" alt="">
+        <div style="display:flex; flex-direction:column; justify-content:center; gap: 2px;">
+            <p style="font-size:12px; color:#fff; font-weight:bold; overflow:hidden; text-overflow:ellipsis;">
+                ${pieceName}
+            </p>
+            <p style="font-size:11px; color:${art.grade.color}; opacity:0.9;">
+                ${art.score} (${art.grade.letter})
+            </p>
+        </div>
+    </div>
+    
+    <div style="display:flex; flex-direction:column; gap:0;">
+        ${subsDetailsHtml}
+    </div>
+</div>
+`;
+        }).join('')}
+                            </div>
+                            
+                            <div style="display:flex; justify-content:center; gap:15px; margin-top:15px; font-size:11px; color:#aaa; background:#2C2D32; padding: 8px; border-radius: 6px;">
+                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#6CED75;"></span> Jet faible</span>
+                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#00E497;"></span> Jet moyen</span>
+                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#00BFE9;"></span> Jet fort</span>
+                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#EE72F7;"></span> Jet parfait</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
+
+                        <div>
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">6. Simulateur de reroll</h3>
                             <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Évaluez s'il est rentable de redistribuer les valeurs des statistiques de vos artéfacts vers de meilleures valeurs.</p>
                         
                             <div style="display:flex; flex-direction: row; justify-content: space-between; gap:15px;">
