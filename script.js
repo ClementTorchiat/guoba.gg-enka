@@ -516,7 +516,7 @@ function saveRecentProfile(uid, playerInfo, profilePicUrl, bannerUrl) {
         timestamp: Date.now()
     });
 
-    if (profiles.length > 8) profiles.pop();
+    if (profiles.length > 12) profiles.pop();
     localStorage.setItem('guoba_recent_profiles', JSON.stringify(profiles));
 }
 
@@ -648,6 +648,18 @@ async function fetchUserData(optionalUid) {
         if(!res.ok) throw new Error("Erreur Enka ou Proxy");
 
         const data = await res.json();
+
+        //Sécurité vitrine vide
+        if (!data.avatarInfoList || data.avatarInfoList.length === 0) {
+            alert("La vitrine de ce compte est vide ou privée !\nVeuillez ajouter des personnages et activer l'option 'Afficher les détails des personnages' en jeu.");
+
+            clearSearch();
+
+            const loader = document.getElementById('loading-msg');
+            if (loader) loader.innerText = "";
+
+            return;
+        }
 
         // --- NOUVEAU : ON SAUVEGARDE EN CACHE ---
         apiSessionCache[uid] = {
@@ -2275,7 +2287,8 @@ function processData(data) {
             weapon, artefacts, setsCounter, buffs, evaluation: null, weights: null,
             charWeapon: charWeaponKey,
             charConfig: rawConfig,
-            activeBuild: activeBuild
+            activeBuild: activeBuild,
+            friendship: (perso.fetterInfo && perso.fetterInfo.expLevel) ? perso.fetterInfo.expLevel : 0
         };
 
         if (activeBuild && activeBuild.team) {
@@ -2741,55 +2754,77 @@ function renderGlobalEvaluation(playerInfo) {
     const namecard = namecardsData[String(playerInfo.nameCardId)];
     let bannerUrl = namecard && namecard.Icon ? `https://enka.network${namecard.Icon}` : '';
 
-    // 2. Calculs des Moyennes (On prend le meilleur build de chaque perso)
+    // 2. Calculs des Moyennes & Cumuls
     let totalScore = 0, totalEfficiency = 0, totalRNG = 0, validChars = 0;
 
+    // NOUVEAU : Tes deux paniers pour la note globale (La méthode "Total Rolls")
+    let totalCurrentRolls = 0;
+    let totalMaxRolls = 0;
+
     globalPersoData.forEach(p => {
-        let bestScore = 0;
-        let bestEff = 0;
+        // On vérifie que le perso a bien été évalué
+        if (p.evaluation && p.evaluation.score) {
 
-        // On parcourt les builds pour prendre le meilleur résultat
-        if (p.charConfig.builds) {
-            Object.values(p.charConfig.builds).forEach(build => {
-                const tempConfig = { ...p.charConfig, ...build };
-                const sim = calculateCharacterScore({ artefacts: p.artefacts }, tempConfig);
-                const pot = calculateMaxTheoreticalScore({ artefacts: p.artefacts }, tempConfig);
+            // On récupère la configuration du build actif
+            const config = { ...p.charConfig, ...(p.activeBuild || {}) };
 
-                if (sim.score > bestScore) bestScore = sim.score;
-                if (pot.score > 0) {
-                    const eff = (sim.score / pot.score) * 100;
-                    if (eff > bestEff) bestEff = eff;
-                }
-            });
-        }
+            // On calcule le plafond pour récupérer le MAX Rolls de ce perso
+            const pot = calculateMaxTheoreticalScore(p, config);
+            const maxRolls = (pot && pot.totalRolls > 0) ? pot.totalRolls : 45;
 
-        if (bestScore > 0) {
-            totalScore += bestScore;
-            totalEfficiency += bestEff;
+            // SÉCURITÉ : parseFloat() empêche le bug du texte qui se concatène !
+            const currentRolls = parseFloat(p.evaluation.totalRolls) || 0;
+            const currentScore = parseFloat(p.evaluation.score) || 0;
+
+            // 1. On remplit les paniers pour la note géante
+            totalCurrentRolls += currentRolls;
+            totalMaxRolls += parseFloat(maxRolls);
+
+            // 2. On remplit les stats classiques (Efficacité, RNG, Score)
+            totalScore += currentScore;
+            if (pot && pot.score > 0) {
+                totalEfficiency += (currentScore / pot.score) * 100;
+            }
             totalRNG += calculateRNGQuality(p, { weights: p.weights });
+
             validChars++;
         }
     });
 
+    // Statistiques d'affichage (Efficacité %, RNG %, Score brut)
     const avgScore = validChars > 0 ? (totalScore / validChars) : 0;
     const avgEff = validChars > 0 ? (totalEfficiency / validChars) : 0;
     const avgRNG = validChars > 0 ? (totalRNG / validChars) : 0;
 
-    // 3. Conversion en Lettre Géante
-    let globalGrade = { letter: 'F', color: '#ff4d4d' };
-    if (avgEff >= 90) globalGrade = { letter: 'SSS', color: '#a855f7' };
-    else if (avgEff >= 80) globalGrade = { letter: 'SS', color: '#22c55e' };
-    else if (avgEff >= 70) globalGrade = { letter: 'S', color: '#eab308' };
-    else if (avgEff >= 60) globalGrade = { letter: 'A', color: '#3b82f6' };
-    else if (avgEff >= 50) globalGrade = { letter: 'B', color: '#ffb13b' };
-    else if (avgEff >= 40) globalGrade = { letter: 'C', color: '#f97316' };
+    // 3. Conversion en Lettre Géante (Synchronisée avec tes fiches personnages)
+    let globalGrade = { letter: "F", color: getGradeColor("F") };
+
+    if (validChars > 0 && totalMaxRolls > 0) {
+        const labels = [
+            "F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+",
+            "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"
+        ];
+
+        const steps = labels.length - 1; // 18 paliers
+
+        // C'est exactement TA formule `getGlobalGrade`, mais appliquée à l'échelle du compte
+        const globalInterval = totalMaxRolls / steps;
+
+        for (let i = steps; i >= 0; i--) {
+            const threshold = i * globalInterval;
+
+            // La marge de tolérance de 0.05 est logiquement multipliée par le nombre de personnages
+            if (totalCurrentRolls >= threshold - (0.05 * validChars)) {
+                globalGrade = { letter: labels[i], color: getGradeColor(labels[i]) };
+                break; // On a trouvé le bon palier, on arrête de chercher !
+            }
+        }
+    }
 
     // 4. GÉNÉRATION DES BADGES
     const badges = [];
-    // NOUVEAU : tooltipColor est maintenant fixé à blanc semi-transparent par défaut pour tous
     const addBadge = (icon, name, desc, bgRgba, tooltipColor = "rgba(255, 255, 255, 0.4)") => {
         const safeDesc = desc.replace(/'/g, "\\'");
-
         badges.push(`
             <div class="guoba-badge" style="background: ${bgRgba};"
                  onmouseenter="showGlobalTooltip(this, '${safeDesc}', '${tooltipColor}')"
@@ -2803,49 +2838,82 @@ function renderGlobalEvaluation(playerInfo) {
     const isAbyss = playerInfo.towerStarIndex >= 36;
     const isTheater = playerInfo.theaterStarIndex >= 8;
     const isStygian = playerInfo.stygianIndex >= 5;
+    const isStygianDiff6 = playerInfo.stygianIndex >= 6;
+    const stygianSec = (playerInfo.stygianSeconds > 0) ? playerInfo.stygianSeconds : null;
 
     if (isAbyss && isTheater && isStygian) {
         addBadge("👑", "Maître de l'Endgame", "A conquis les Abysses, le Théâtre et le Carnage. Respect absolu.", "linear-gradient(135deg, rgba(230,190,255,0.7), rgba(154,204,255,0.7), rgba(255,204,229,0.7), rgba(253,245,169,0.7))");
     } else {
         if (isAbyss) addBadge("🏆", "Archon des Abysses", "A obtenu 36 étoiles dans les Profondeurs spiralées.", "rgba(37, 51, 85, 0.6)");
         if (isTheater) addBadge("🎭", "Étoile du Théâtre", "A brillé dans le Théâtre de l'Imaginarium.", "rgba(82, 42, 138, 0.6)");
-        if (isStygian) addBadge("🐉", "Roi du Carnage", "A vaincu les pires horreurs du Carnage Chtonien.", "rgba(139, 45, 139, 0.6)");
+        if (isStygian && !isStygianDiff6) {
+            addBadge("🐉", "Roi du Carnage", "A vaincu les pires horreurs du Carnage Chtonien.", "rgba(139, 45, 139, 0.6)");
+        }
     }
 
-    if (playerInfo.level === 60) {
-        addBadge("🏅", "Vétéran Endurci", "Niveau d'aventure 60 atteint. Il est temps d'aller toucher de l'herbe.", "rgba(207, 156, 79, 0.6)");
+    if (isStygianDiff6 && stygianSec !== null && stygianSec <= 180) {
+        addBadge("🌌", "Mythe Vivant", "Carnage Chtonien Difficulté 6 complété en moins de 180s. Vous avez officiellement 'fini' le jeu.", "linear-gradient(135deg, rgba(30,27,75,0.8), rgba(109,40,217,0.7), rgba(250,204,21,0.6))");
+    } else if (isStygianDiff6) {
+        addBadge("🩸", "Fléau du Carnage", "Difficulté 6 du Carnage Chtonien complétée. Les monstres vous craignent.", "linear-gradient(135deg, rgba(153,27,27,0.7), rgba(220,38,38,0.7))");
     }
 
-    // B. Les Vitrines (Quantité)
+    if (playerInfo.level === 60) addBadge("🏅", "Vétéran Endurci", "Niveau d'aventure 60 atteint. Il est temps d'aller toucher de l'herbe.", "rgba(207, 156, 79, 0.6)");
+    if (avgEff >= 95) addBadge("🌟", "Perfection Inatteignable", "Plus de 95% d'efficacité moyenne. Vos artéfacts n'ont aucun défaut.", "linear-gradient(135deg, rgba(255,215,0,0.7), rgba(255,255,255,0.6))");
+
     if (globalPersoData.length === 1) addBadge("🃏", `${globalPersoData[0].nom} One Trick`, `Votre vitrine entière est dédiée à ${globalPersoData[0].nom}.`, "rgba(107, 114, 128, 0.6)");
     else if (globalPersoData.length < 12) addBadge("🥷", "Collection Cachée", "Moins de 12 personnages exposés. Vous gardez vos secrets.", "rgba(107, 114, 128, 0.6)");
 
-    // C. Baleines & Narvals
     const c6FiveStars = globalPersoData.filter(p => p.rarity === 5 && p.cons === 6).length;
     if (c6FiveStars > 1) addBadge("🐋", "Le Narval", "Plusieurs personnages 5 étoiles C6 détectés.", "rgba(59, 130, 246, 0.6)");
     else if (c6FiveStars === 1) addBadge("🐳", "Baleine", "Un personnage 5 étoiles C6 détecté.", "rgba(59, 172, 197, 0.6)");
 
-    // D. La Chance (RNG)
     if (avgRNG > 80) addBadge("🍀", "Touché par la Grâce", `RNG moyenne exceptionnelle (${avgRNG.toFixed(1)}%). Le jeu vous aime.`, "rgba(61, 160, 97, 0.6)");
     else if (avgRNG < 40 && validChars > 0) addBadge("🌧️", "Maudit par la RNG", `RNG moyenne catastrophique (${avgRNG.toFixed(1)}%).`, "rgba(107, 114, 128, 0.6)");
 
     // E. Extrêmes de Gameplay & Compo
-    let highER = false, asthmatic = false, casino = false, alchemist = false;
+    let holyGrail = false, level89Syndrome = false, level67EasterEgg = false;
+    let highER = false, asthmatic = false, casino = false, alchemist = false, allInCrit = false;
+    let bruteForce = false, surgicalPrec = false, hospital = false, brickWall = false;
     let rainbowFan = 0, emblemFan = 0, pacifist = false, hpSack = false, impostor = false;
+    let tripleCrown = false, leviathan = false, qiqiCurse = false, diogenes = false, nudist = false;
     let fourStarCount = 0, maxFriendshipCount = 0;
+    let archonCount = 0, favoniusCount = 0, aloyFound = false, internFound = false;
     let elementCount = {};
 
+    const archonNames = ["Venti", "Zhongli", "Raiden", "Nahida", "Furina", "Mavuika"];
+
     globalPersoData.forEach(p => {
-        // --- 1. Stats de Combat (Sécurisées) ---
+
+        // --- NOUVEAUX TROLLS & EASTER EGGS ---
+        if (p.level === 89) level89Syndrome = true;
+        if (p.level === 67) level67EasterEgg = true;
+
+        // Vérification du Saint Graal (CV >= 50 sur une seule pièce)
+        if (p.artefacts) {
+            p.artefacts.forEach(art => {
+                let cv = 0;
+                art.subStats.forEach(sub => {
+                    if (sub.key === "critRate_") cv += sub.value * 2;
+                    if (sub.key === "critDMG_") cv += sub.value;
+                });
+                if (cv >= 50) holyGrail = true;
+            });
+        }
+        // Stats
         if (p.combatStats) {
             if (p.combatStats.er > 200) highER = true;
-            if (Math.round(p.combatStats.er) === 100) asthmatic = true; // Tolérance pour les décimales invisibles
+            if (Math.round(p.combatStats.er) === 100) asthmatic = true;
             if (p.combatStats.hp > 60000) hpSack = true;
+            if (p.combatStats.cd >= 300) allInCrit = true;
+            if (p.combatStats.atk >= 3500) bruteForce = true;
+            if (p.combatStats.def >= 3500) brickWall = true;
+            if (p.combatStats.cr >= 100) surgicalPrec = true;
+            if (p.combatStats.hb >= 75) hospital = true;
 
             const em = p.combatStats.em || p.combatStats.eleMas || 0;
             if (em > 1000) alchemist = true;
+            if (p.level === 90 && em === 0) p.analphabet = true; // Flagged for later
 
-            // Casino Impact
             if (p.weights && p.weights['critRate_'] > 0.5 && p.weights['critDMG_'] > 0.5) {
                 if (p.combatStats.cr < 40 && p.combatStats.cd > 200) casino = true;
             }
@@ -2854,22 +2922,48 @@ function renderGlobalEvaluation(playerInfo) {
             if (elem) elementCount[elem] = (elementCount[elem] || 0) + 1;
         }
 
-        // --- 2. Rareté & Affinité ---
+        // Rareté & Cast
         if (p.rarity === 4 || p.stars === 4) fourStarCount++;
+        if (archonNames.includes(p.nom)) archonCount++;
+        if (p.nom === "Aloy") aloyFound = true;
+        if (p.level <= 20) internFound = true;
 
-        const friendship = p.friendshipLevel || p.fetterLevel || (p.rawData && p.rawData.fetterInfo && p.rawData.fetterInfo.expLevel) || 0;
-        if (friendship === 10) maxFriendshipCount++;
+        // Affinité (Robuste)
+        if (p.friendship >= 10) {
+            maxFriendshipCount++;
+        }
 
-        // --- 3. Imposteur (Sécurisé) ---
+        // Talents
+        if (p.talents && p.talents.length >= 3) {
+            const t1 = p.talents[0].level || 0;
+            const t2 = p.talents[1].level || 0;
+            const t3 = p.talents[2].level || 0;
+            if (t1 >= 10 && t2 >= 10 && t3 >= 10) tripleCrown = true;
+        }
+
+        // Armes
+        if (p.weapon) {
+            const weaponRarity = p.weapon.stars || p.weapon.rarity || 1;
+            const weaponRefinement = p.weapon.rank || p.weapon.refinement || p.weapon.affixLevel || 1;
+
+            if (p.rarity === 5 && p.cons === 6 && weaponRarity === 5 && weaponRefinement === 5) leviathan = true;
+            if (p.rarity === 5 && p.level >= 80 && weaponRarity <= 2) diogenes = true;
+            if (p.level === 90 && weaponRarity === 3) p.ghettoKing = true;
+
+            if (p.weapon.name.includes("Favonius")) favoniusCount++;
+        }
+
+        const standard5Stars = ['Qiqi', 'Keqing', 'Mona', 'Diluc', 'Jean', 'Dehya', 'Tighnari'];
+        if (p.cons === 6 && standard5Stars.includes(p.nom)) qiqiCurse = true;
+
+        if (p.level >= 80 && (!p.artefacts || p.artefacts.length === 0)) nudist = true;
+
         if (p.artefacts && Array.isArray(p.artefacts) && p.weights) {
             p.artefacts.forEach(art => {
-                if (art.mainStatKey && p.weights[art.mainStatKey] === 0) {
-                    impostor = true;
-                }
+                if (art.mainStatKey && p.weights[art.mainStatKey] === 0) impostor = true;
             });
         }
 
-        // --- 4. Pacifiste (Sécurisé) ---
         if (p.level >= 80) {
             let lowTalentButNeeded = false;
             if (p.charConfig && p.charConfig.talents && p.talents && p.talents.length >= 3) {
@@ -2882,83 +2976,95 @@ function renderGlobalEvaluation(playerInfo) {
             if (lowTalentButNeeded || (p.weapon && p.weapon.level <= 50)) pacifist = true;
         }
 
-        // --- 5. Sets d'Artéfacts (LE FIX EST LÀ !) ---
         if (p.setsCounter) {
             if (p.setsCounter['EmblemOfSeveredFate'] >= 4) emblemFan++;
             if (Object.values(p.setsCounter).every(c => c < 4)) rainbowFan++;
         } else {
-            // S'il n'a aucun set (perso nu ou sans 2pc), il est de facto "Arc-en-ciel" !
             rainbowFan++;
         }
     });
 
     // Ajout des badges détectés
+    if (archonCount >= 4) addBadge("🏛️", "Réunion Divine", "Votre vitrine rassemble au moins 4 Archons. Le Mont Olympe vous envie.", "linear-gradient(135deg, rgba(255,215,0,0.6), rgba(255,255,255,0.4))");
+    if (tripleCrown) addBadge("👑", "Triple Couronne", "Vous avez investi 3 couronnes sur un même personnage. Dévouement royal.", "linear-gradient(135deg, rgba(251,191,36,0.8), rgba(245,158,11,0.8), rgba(217,119,6,0.8))");
+    if (leviathan) addBadge("🔱", "Léviathan", "Personnage 5★ C6 avec arme 5★ R5 détecté. Merci de financer le jeu !", "linear-gradient(135deg, rgba(6,182,212,0.8), rgba(59,130,246,0.8), rgba(30,58,138,0.8))");
+    if (allInCrit) addBadge("🎯", "All-in Crit", "Plus de 300% de DGT CRIT détecté. Si ça critique, ça désintègre.", "linear-gradient(135deg, rgba(220,38,38,0.8), rgba(249,115,22,0.8))");
+    if (surgicalPrec) addBadge("🎯", "Précision Chirurgicale", "100% de Taux Critique atteint. Vous ne laissez aucune place au hasard.", "rgba(220, 38, 38, 0.6)");
+
     if (highER) addBadge("⚡", "Centrale Électrique", "Au moins un perso dépasse les 200% d'ER. Déchaînement infini !", "rgba(207, 156, 79, 0.6)");
     if (asthmatic) addBadge("😮‍💨", "Asthmatique", "Exactement 100% d'ER sur un perso. Vous courez après les particules.", "rgba(107, 114, 128, 0.6)");
     if (alchemist) addBadge("🧪", "Alchimiste", "Plus de 1000 de ME détecté. Les réactions sont votre religion.", "rgba(61, 160, 97, 0.6)");
     if (casino) addBadge("🎰", "Casino Impact", "Ratio Crit extrême sur un DPS (<40% TC / >200% DC).", "rgba(184, 63, 63, 0.6)");
     if (hpSack) addBadge("🛡️", "Increvable", "Au moins un personnage dépasse les 60 000 PV !", "rgba(207, 156, 79, 0.6)");
+
     if (impostor) addBadge("🤡", "Imposteur", "Une de vos pièces d'artéfact a une stat principale totalement inadaptée.", "rgba(184, 63, 63, 0.6)");
+    if (qiqiCurse) addBadge("🧟‍♀️", "Malédiction de la Perma", "Personnage de la bannière permanente C6 détecté. On respecte la douleur des 50/50 perdus.", "rgba(107, 114, 128, 0.6)");
+    if (nudist) addBadge("🩳", "En Grève", "Ce personnage HL refuse de travailler tant qu'il n'aura pas d'artéfacts.", "rgba(107, 114, 128, 0.6)");
+    if (internFound) addBadge("👶", "Le Stagiaire", "Ce personnage de bas niveau s'est perdu dans votre vitrine.", "rgba(107, 114, 128, 0.6)");
+    if (aloyFound) addBadge("⏳", "Voyageur Temporel", "Aloy détectée. Vous êtes l'un des 12 derniers joueurs à vous souvenir d'elle.", "rgba(107, 114, 128, 0.6)");
+    if (globalPersoData.some(p => p.ghettoKing)) addBadge("🪵", "Tiers-Monde", "Un personnage niveau 90 avec une arme 3★. Si c'est bête mais que ça marche...", "rgba(139, 69, 19, 0.6)");
+
+    // Le badge Premium
+    if (holyGrail) addBadge("🏆", "Le Saint Graal", "Possède un artéfact dépassant les 50 de Valeur Critique (CV). Une véritable relique divine.", "linear-gradient(135deg, rgba(255,215,0,0.8), rgba(255,255,255,0.7), rgba(255,215,0,0.8))");
+
+    // Les Trolls & Easter Egg
+    if (level89Syndrome) addBadge("🪙", "89 Enjoyer", "On économise les leçons du héros jusqu'au bout !", "rgba(107, 114, 128, 0.6)");
+    if (level67EasterEgg) addBadge("👀", "67", "SIX SEVEEEEN", "rgba(168, 85, 247, 0.6)");
+
     if (emblemFan >= 3) addBadge("👘", "Accro à l'Emblème", "Vous passez trop de temps dans le donjon de Momiji.", "rgba(168, 85, 247, 0.6)");
+    if (favoniusCount >= 3) addBadge("🗡️", "Secte de Favonius", "La moitié de l'équipe a une arme de Favonius. Bonjour les particules blanches !", "rgba(107, 114, 128, 0.6)");
 
     if (rainbowFan > globalPersoData.length / 2 && globalPersoData.length >= 4) {
-        // J'ai gardé ton joli dégradé avec les opacités à 0.4 !
         addBadge("🌈", "Artiste Arc-en-ciel", "La majorité de votre vitrine n'a aucun bonus 4 pièces.", "linear-gradient(90deg, rgba(255,0,0,0.4), rgba(255,165,0,0.4), rgba(255,255,0,0.4), rgba(0,128,0,0.4), rgba(0,0,255,0.4), rgba(75,0,130,0.4), rgba(238,130,238,0.4))");
     }
 
     if (pacifist) addBadge("🕊️", "Pacifiste", "Un personnage haut niveau mais avec des aptitudes utiles non montées.", "rgba(107, 114, 128, 0.6)");
 
-    // --- Badges de Composition ---
     if (globalPersoData.length >= 4 && fourStarCount > globalPersoData.length / 2) {
         addBadge("🧑‍🌾", "F2P By The Way", "La majorité de votre vitrine est composée de 4 étoiles.", "rgba(107, 114, 128, 0.6)");
     }
     if (globalPersoData.length >= 8 && fourStarCount === 0) {
         addBadge("💎", "Ligue des Champions", "Aucun 4 étoiles. Seule l'élite a le droit de figurer sur votre profil.", "rgba(59, 130, 246, 0.6)");
     }
-    if (globalPersoData.length > 0 && maxFriendshipCount === globalPersoData.length) {
+    if (globalPersoData.length >= 4 && maxFriendshipCount === globalPersoData.length) {
         addBadge("🤝", "Lien Indéfectible", "Niveau d'affinité 10 sur toute la vitrine. Vous aimez vraiment vos persos.", "rgba(238, 130, 238, 0.6)");
     }
 
-    // F. Suprématies
-    const majority = Math.ceil(globalPersoData.length / 2);
+    let monopolyElem = null;
     Object.entries(elementCount).forEach(([elem, count]) => {
-        if (count > majority && globalPersoData.length >= 4) {
+        if (count === globalPersoData.length && globalPersoData.length >= 4) {
+            monopolyElem = elem;
+            addBadge("🔮", `Monopole ${elem.charAt(0).toUpperCase() + elem.slice(1)}`, "Vitrine 100% mono-élément. Les autres éléments n'existent pas pour vous.", "linear-gradient(135deg, rgba(37,51,85,0.8), rgba(168,85,247,0.7))");
+        } else if (count > Math.ceil(globalPersoData.length / 2) && globalPersoData.length >= 4 && !monopolyElem) {
             addBadge("👑", `Suprématie ${elem.charAt(0).toUpperCase() + elem.slice(1)}`, "La majorité de votre vitrine partage cet élément.", "rgba(61, 160, 97, 0.6)");
         }
     });
 
-    // 5. Injection HTML avec le fond Profile-Player
+    // 5. Injection HTML
     evalContainer.innerHTML = `
         <div class="player-profile-bg" ${bannerUrl ? `style="background-image:url('${bannerUrl}')"` : ''}></div>
         
-        <div style="position: relative; z-index: 2; display: flex; width: 100%; height: 100%; align-items: center; gap: 20px;">
-            
-            <!-- Note Géante -->
+        <div style="position: relative; z-index: 2; display: flex; width: 100%; height: 100%; align-items: center; gap: 15px;">
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-right: 15px; padding-left: 15px; gap: 4px; border-right: 1px solid rgba(255,255,255,0.2); height: 100%;">
-                <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 0px;">Éval. Globale</p>
+                <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 0px;">Note Globale</p>
                 <p style="font-size: 42px; font-weight: 800; color: ${globalGrade.color}; line-height: 1; text-shadow: 0 0 10px ${globalGrade.color}40;">${globalGrade.letter}</p>
             </div>
-
-            <!-- Moyennes -->
-            <div style="display: flex; flex-direction: column; justify-content: center; gap: 6px; padding-right: 15px; border-right: 1px solid rgba(255,255,255,0.2); height: 100%;">
+            <div style="display: flex; flex-direction: column; text-align: center; justify-content: center; gap: 2px; padding-right: 15px; border-right: 1px solid rgba(255,255,255,0.2); height: 100%;">
                 <div>
                     <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6);">Efficacité</p>
-                    <p style="font-size: 16px; font-weight: bold; color: #fff;">${avgEff.toFixed(1)}%</p>
+                    <p style="font-size: 14px; font-weight: bold; color: #fff;">${avgEff.toFixed(1)}%</p>
                 </div>
                 <div>
                     <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6);">Score</p>
-                    <p style="font-size: 16px; font-weight: bold; color: #fff;">${avgScore.toFixed(1)}</p>
+                    <p style="font-size: 14px; font-weight: bold; color: #fff;">${avgScore.toFixed(1)}</p>
                 </div>
             </div>
-
-            <!-- Badges Gallery Scrollable -->
-            <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding: 6px 0;">
-                <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; flex-shrink: 0;">Titres & Hauts Faits</p>
-                <div class="card-buff-list-container" style="display: flex; flex-wrap: wrap; gap: 4px; overflow-y: auto; overflow-x: hidden; padding-right: 5px; max-height: 100%;">
+            <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 2px 12px 2px 0;">
+                <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 2px; flex-shrink: 0; margin-top: 4px;">Badges et titres</p>
+                <div class="card-buff-list-container badges-scroll" style="display: flex; flex-wrap: wrap; gap: 4px; overflow-y: auto; overflow-x: hidden; padding-right: 8px; max-height: 100%; padding-bottom: 4px;">
                     ${badges.length > 0 ? badges.join('') : '<p style="color: rgba(255,255,255,0.5); font-size: 11px; font-style: italic;">Aucun fait marquant détecté...</p>'}
                 </div>
             </div>
-            
         </div>
     `;
 }
