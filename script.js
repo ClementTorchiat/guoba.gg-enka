@@ -483,6 +483,51 @@ const SLOT_POSSIBLE_MAIN_STATS = {
 let globalPersoData = [];
 let charData = {};
 let locData = {};
+const apiSessionCache = {};
+
+// ==========================================
+// GESTION DU LOCALSTORAGE (Profils Récents)
+// ==========================================
+
+// 1. Lire l'historique
+function getRecentProfiles() {
+    const data = localStorage.getItem('guoba_recent_profiles');
+    return data ? JSON.parse(data) : [];
+}
+
+// 2. Sauvegarder un profil (Appelé à chaque recherche réussie)
+// 2. Sauvegarder un profil complet
+function saveRecentProfile(uid, playerInfo, profilePicUrl, bannerUrl) {
+    let profiles = getRecentProfiles();
+    profiles = profiles.filter(p => p.uid !== uid);
+
+    profiles.unshift({
+        uid: uid,
+        nickname: playerInfo.nickname || 'Joueur inconnu',
+        signature: playerInfo.signature || '',
+        ar: playerInfo.level || 0,
+        achievements: playerInfo.finishAchievementNum ?? null,
+        abyssStars: playerInfo.towerStarIndex ?? null,
+        theaterStars: playerInfo.theaterStarIndex ?? null,
+        stygianIndex: playerInfo.stygianIndex ?? null,
+        stygianSec: (playerInfo.stygianSeconds > 0) ? playerInfo.stygianSeconds : null,
+        pic: profilePicUrl,
+        banner: bannerUrl || '',
+        timestamp: Date.now()
+    });
+
+    if (profiles.length > 8) profiles.pop();
+    localStorage.setItem('guoba_recent_profiles', JSON.stringify(profiles));
+}
+
+// 3. Supprimer un profil
+function deleteRecentProfile(uid, event) {
+    if (event) event.stopPropagation(); // Empêche de lancer la recherche quand on clique sur la croix
+    let profiles = getRecentProfiles();
+    profiles = profiles.filter(p => p.uid !== uid);
+    localStorage.setItem('guoba_recent_profiles', JSON.stringify(profiles));
+    renderHome(); // On rafraîchit l'affichage
+}
 
 async function loadGameData() {
     const loader = document.getElementById('loading-msg');
@@ -520,6 +565,47 @@ async function loadGameData() {
     }
 }
 
+// ==========================================
+// GESTION DE LA BARRE DE RECHERCHE (Loupe / Croix)
+// ==========================================
+function toggleSearchIcon(isLoaded) {
+    const searchBtn = document.getElementById('searchBtn');
+    if (!searchBtn) return;
+
+    if (isLoaded) {
+        // Mode "CROIX" (On a chargé un compte)
+        searchBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff4d4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+        searchBtn.onclick = clearSearch;
+    } else {
+        // Mode "LOUPE" (État de base)
+        searchBtn.innerHTML = `<img src="assets/simulator/icons/icon_search_white.svg" alt="Valider" style="width: 20px; height: 20px;">`;
+        searchBtn.onclick = () => fetchUserData();
+    }
+}
+
+function clearSearch() {
+    // 1. Vider le champ de texte
+    const uidInput = document.getElementById('uidInput');
+    if (uidInput) uidInput.value = '';
+
+    // 2. Nettoyer l'URL (On retire le ?uid=... de la barre d'adresse)
+    window.history.pushState({}, '', window.location.pathname);
+
+    // 3. Vider la barre latérale des personnages
+    const sidebar = document.getElementById('sidebar-list');
+    if (sidebar) sidebar.innerHTML = '';
+
+    // 4. Vider le profil du joueur en haut à droite
+    const playerProfile = document.getElementById('player-profile');
+    if (playerProfile) playerProfile.innerHTML = '';
+
+    // 5. Remettre l'icône de loupe
+    toggleSearchIcon(false);
+
+    // 6. Afficher la page d'accueil (les comptes récents)
+    renderHome();
+}
+
 async function fetchUserData(optionalUid) {
     // 1. On prend l'UID passé en paramètre (via l'URL) ou dans l'input
     const uid = optionalUid || document.getElementById('uidInput').value;
@@ -529,9 +615,22 @@ async function fetchUserData(optionalUid) {
     window.history.pushState({}, '', `?uid=${uid}`);
 
     const loader = document.getElementById('loading-msg');
+
+    // --- NOUVEAU : SYSTÈME DE CACHE LOCAL ---
+    // Si on a déjà chargé cet UID il y a moins de 5 minutes (300 000 ms)
+    if (apiSessionCache[uid] && (Date.now() - apiSessionCache[uid].timestamp < 180000)) {
+        console.log("⚡ Chargement instantané depuis le cache !");
+        const cachedData = apiSessionCache[uid].data;
+        processData(cachedData);
+        renderPlayerProfile(cachedData.playerInfo, uid);
+        toggleSearchIcon(true);
+        return; // On arrête la fonction ici, pas besoin du réseau !
+    }
+    // ----------------------------------------
+
     if(loader) loader.innerText = "Récupération...";
 
-    // 3. Retour du proxy (tu avais totalement raison !)
+    // 3. Appel réseau si pas de cache
     const urlCible = `https://enka.network/api/uid/${uid}?t=${Date.now()}`;
     const proxy = `https://corsproxy.io/?${encodeURIComponent(urlCible)}`;
 
@@ -540,10 +639,20 @@ async function fetchUserData(optionalUid) {
         if(!res.ok) throw new Error("Erreur Enka ou Proxy");
 
         const data = await res.json();
+
+        // --- NOUVEAU : ON SAUVEGARDE EN CACHE ---
+        apiSessionCache[uid] = {
+            data: data,
+            timestamp: Date.now()
+        };
+        // ----------------------------------------
+
         processData(data);
         renderPlayerProfile(data.playerInfo, uid);
 
         if(loader) loader.innerText = ""; // Succès
+        toggleSearchIcon(true);
+
     } catch (e) {
         console.error("Erreur de récupération :", e);
         if(loader) loader.innerText = "Erreur UID/Vitrine.";
@@ -595,6 +704,7 @@ function renderPlayerProfile(playerInfo, uid) {
     const stygianIndex = playerInfo.stygianIndex ?? null;
     const stygianSec   = (playerInfo.stygianSeconds > 0) ? playerInfo.stygianSeconds : null;
 
+    saveRecentProfile(uid, playerInfo, profilePicUrl, bannerUrl);
     // --- Icône Stygian dynamique ---
     const ICON = './assets/simulator/icons/';
     function stygianIcon() {
@@ -2440,6 +2550,118 @@ function updateERTarget(index, val) {
     }
 }
 
+// ==========================================
+// AFFICHAGE DE LA PAGE D'ACCUEIL
+// ==========================================
+function renderHome() {
+    const container = document.getElementById('main-container');
+    const profiles = getRecentProfiles();
+
+    // On cache le menu latéral
+    const menu = document.querySelector('.main-content-menu') || document.getElementById('main-content-menu');
+    if (menu) menu.style.display = 'none';
+
+    if (!container) return;
+
+    if (profiles.length === 0) {
+        container.innerHTML = `
+            <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0.5;">
+                <img src="${ICON_BASE_PATH}icon_score.png" style="width: 64px; height: 64px; margin-bottom: 20px; filter: grayscale(100%);">
+                <h2 style="color: #fff; font-size: 24px; margin-bottom: 8px;">Aucun compte chargé</h2>
+                <p style="color: #aaa; font-size: 14px;">Entrez un UID Genshin Impact dans la barre latérale pour commencer l'analyse.</p>
+            </div>
+        `;
+        return;
+    }
+
+    const serverMap = { '1': 'CN', '2': 'CN', '3': 'CN', '4': 'CN', '5': 'TW', '6': 'NA', '7': 'EU', '8': 'Asia', '9': 'TW' };
+    const ICON = './assets/simulator/icons/';
+
+    let cardsHtml = profiles.map(p => {
+        const server = serverMap[String(p.uid)[0]] || 'CN';
+
+        // Reconstruction des icônes Stygian
+        function stygianIcon() {
+            if (p.stygianIndex === null) return '';
+            if (p.stygianIndex === 6 && p.stygianSec !== null && p.stygianSec < 180) {
+                return `<img src="${ICON}stygian_difficulty_6_minus_180.webp" class="pp-icon" alt="stygian">`;
+            }
+            if (p.stygianIndex >= 1 && p.stygianIndex <= 6) {
+                return `<img src="${ICON}stygian_difficulty_${p.stygianIndex}.webp" class="pp-icon" alt="stygian">`;
+            }
+            return '';
+        }
+
+        // Ligne 1 : AR + Succès (Sécurisé contre les vieux profils 'undefined')
+        const row1 = [
+            `<span class="pp-badge pp-badge-server">${server}</span>`,
+            p.achievements != null
+                ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.png" class="pp-icon" alt="succès">${p.achievements.toLocaleString()}</span>`
+                : '',
+            p.ar ? `<span class="pp-badge pp-badge-ar">AR${p.ar}</span>` : '',
+        ].filter(Boolean).join('');
+
+        // Ligne 2 : End-Game (Sécurisé)
+        const row2Items = [
+            p.stygianSec != null
+                ? `<span class="pp-badge pp-badge-stygian">${stygianIcon()}${p.stygianSec}s</span>`
+                : '',
+            p.theaterStars != null
+                ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.png" class="pp-icon" alt="théâtre">${p.theaterStars}</span>`
+                : '',
+            p.abyssStars != null
+                ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.png" class="pp-icon" alt="abysses">${p.abyssStars}</span>`
+                : '',
+        ].filter(Boolean);
+        const row2 = row2Items.join('');
+
+        // Le HTML final identique à ta carte
+        return `
+        <div onclick="document.getElementById('uidInput').value = '${p.uid}'; fetchUserData();" 
+             style="width: 480px; height: 82px; position: relative; cursor: pointer; transition: transform 0.2s;"
+             onmouseover="this.style.transform='scale(1.02)';"
+             onmouseout="this.style.transform='scale(1)';">
+             
+            <!-- Bouton Supprimer -->
+            <div onclick="deleteRecentProfile('${p.uid}', event)" 
+                 style="position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(239, 68, 68, 0.9); color: #fff; font-size: 12px; z-index: 50; box-shadow: 0 2px 4px rgba(0,0,0,0.5); transition: 0.2s;"
+                 onmouseover="this.style.background='rgba(220, 38, 38, 1)'; this.style.transform='scale(1.1)';"
+                 onmouseout="this.style.background='rgba(239, 68, 68, 0.9)'; this.style.transform='scale(1)';">
+                 ✕
+            </div>
+
+            <div class="player-profile-card" style="margin: 0; width: 100%; height: 100%; box-sizing: border-box; pointer-events: none;">
+                <div class="player-profile-bg" ${p.banner ? `style="background-image:url('${p.banner}')"` : ''}></div>
+                <div class="player-profile-content">
+                    <img class="player-profile-avatar" src="${p.pic}" onerror="this.src='https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png'">
+                    <div class="player-profile-identity">
+                        <div class="player-profile-name-row">
+                            <span class="player-profile-name">${p.nickname}</span>
+                        </div>
+                        ${p.signature ? `<span class="player-profile-sig">${p.signature}</span>` : `<span class="player-profile-sig" style="opacity: 0.5;">UID: ${p.uid}</span>`}
+                    </div>
+                    <div class="player-profile-stats">
+                        <div class="pp-row">${row1}</div>
+                        ${row2 ? `<div class="pp-row">${row2}</div>` : ''}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        `;
+    }).join('');
+
+    container.innerHTML = `
+        <div style="padding-left: 40px; padding-top: 12px;">
+            <h2 style="color: #fff; font-size: 28px; margin-bottom: 10px;">Comptes récents</h2>
+            <p style="color: #aaa; font-size: 14px; margin-bottom: 30px;">Sélectionnez un compte précédemment analysé pour le recharger instantanément.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                ${cardsHtml}
+            </div>
+            <p style="color: #aaa; font-size: 12px; margin-bottom: 30px; margin-top: 32px;">Outil réalisé avec passion.</p>
+        </div>
+    `;
+}
 function renderShowcase(index) {
     const p = globalPersoData[index];
     const container = document.getElementById('main-container');
@@ -2457,6 +2679,12 @@ function renderShowcase(index) {
             card.classList.remove('active');
         }
     });
+
+    const menu = document.querySelector('.main-content-menu') || document.getElementById('main-content-menu');
+    const menuContainer = document.querySelector('.main-content-menu-container') || document.getElementById('main-content-menu-container');
+
+    if (menu) menu.style.display = 'flex';
+    if (menuContainer) menuContainer.style.display = 'flex';
 
     const configKey = p.nom.replace(/\s+/g, '') || "Default";
     let config = window.CHARACTER_CONFIG[configKey] || window.CHARACTER_CONFIG[p.nom] || window.DEFAULT_CONFIG;
@@ -3482,11 +3710,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
     if (urlUid) {
         // 1. On remplit le champ input visuellement
-        const uidInput = document.getElementById('uidInput'); // Remplace par l'ID réel de ton input
+        const uidInput = document.getElementById('uidInput');
         if (uidInput) uidInput.value = urlUid;
 
-        // 2. On lance la recherche automatiquement
-        fetchUserData().then(() => {
+        // 2. On lance la recherche automatiquement avec l'UID de l'URL
+        fetchUserData(urlUid).then(() => {
+
+            // --- NOUVEAU : On met la croix si l'URL a bien chargé un compte ---
+            toggleSearchIcon(true);
+            // ------------------------------------------------------------------
+
             // 3. Si un perso est spécifié et que les données sont chargées
             if (urlChar && globalPersoData && globalPersoData.length > 0) {
                 // On cherche l'index du perso dans la vitrine
@@ -3500,5 +3733,8 @@ window.addEventListener('DOMContentLoaded', () => {
         }).catch(err => {
             console.error("Erreur lors du chargement via URL :", err);
         });
+    } else {
+        // S'il n'y a pas d'UID dans l'URL, on affiche l'accueil !
+        renderHome();
     }
 });
