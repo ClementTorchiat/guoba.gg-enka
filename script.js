@@ -520,32 +520,34 @@ async function loadGameData() {
     }
 }
 
-async function fetchUserData() {
-    const uid = document.getElementById('uidInput').value;
+async function fetchUserData(optionalUid) {
+    // 1. On prend l'UID passé en paramètre (via l'URL) ou dans l'input
+    const uid = optionalUid || document.getElementById('uidInput').value;
     if (!uid) return alert("UID manquant");
+
+    // 2. On met à jour l'URL silencieusement
+    window.history.pushState({}, '', `?uid=${uid}`);
 
     const loader = document.getElementById('loading-msg');
     if(loader) loader.innerText = "Récupération...";
 
-    // 1. On ajoute le timestamp (?t=...) pour forcer le navigateur/proxy à recharger
+    // 3. Retour du proxy (tu avais totalement raison !)
     const urlCible = `https://enka.network/api/uid/${uid}?t=${Date.now()}`;
-
-    // 2. On encode le tout pour le proxy
     const proxy = `https://corsproxy.io/?${encodeURIComponent(urlCible)}`;
 
     try {
         const res = await fetch(proxy);
-        if(!res.ok) throw new Error("Erreur Enka");
+        if(!res.ok) throw new Error("Erreur Enka ou Proxy");
 
         const data = await res.json();
         processData(data);
         renderPlayerProfile(data.playerInfo, uid);
 
-        if(loader) loader.innerText = ""; // On efface le message si c'est bon
+        if(loader) loader.innerText = ""; // Succès
     } catch (e) {
-        console.error(e);
+        console.error("Erreur de récupération :", e);
         if(loader) loader.innerText = "Erreur UID/Vitrine.";
-        alert("Impossible de récupérer les données. Vérifiez l'UID et assurez-vous que la vitrine est visible dans le jeu.");
+        alert("Impossible de récupérer les données. Vérifiez l'UID. (Le proxy ou Enka peut aussi être temporairement surchargé).");
     }
 }
 
@@ -1411,6 +1413,147 @@ function calculateDeadRolls(persoObj, config) {
         .map(([key, count]) => ({ label: STAT_LABELS[key] || key, count: count }))
         .sort((a, b) => b.count - a.count);
     return { count: deadRolls, details: details };
+}
+
+// DÉTECTEUR DE VOL D'ARTÉFACTS (Cross-Check)
+/*function getCrossCheckAdvice(charIndex) {
+    const currChar = globalPersoData[charIndex];
+    if (!currChar || !currChar.artefacts) return null;
+
+    const scoringConfig = { ...currChar.charConfig, ...(currChar.activeBuild || {}) };
+
+    let bestSwap = null;
+    let maxDiff = 10; // Le gain doit être STRICTEMENT supérieur à 10
+
+    // 1. Détection du Set 4 Pièces actif
+    const active4pSet = Object.keys(currChar.setsCounter || {}).find(key => currChar.setsCounter[key] >= 4);
+    const active4pCount = active4pSet ? currChar.setsCounter[active4pSet] : 0;
+
+    // 2. On parcourt les autres personnages de la vitrine
+    globalPersoData.forEach((otherChar, otherIndex) => {
+        if (otherIndex === charIndex) return; // On ne se vole pas soi-même
+
+        otherChar.artefacts.forEach(otherArt => {
+            // On cherche la pièce équivalente sur le personnage actuel
+            const currArtIndex = currChar.artefacts.findIndex(a => a.type === otherArt.type);
+            if (currArtIndex === -1) return;
+            const currArt = currChar.artefacts[currArtIndex];
+
+            // --- SÉCURITÉ 1 : LA STAT PRINCIPALE ---
+            // On ne propose l'échange QUE si la stat principale de la nouvelle pièce est "Parfaite" pour nous
+            let mWeight = scoringConfig.weights[otherArt.mainStat.key];
+            if (mWeight === undefined && otherArt.mainStat.key.includes("_dmg_")) {
+                mWeight = scoringConfig.weights["elemental_dmg_"];
+            }
+            if (!mWeight || mWeight < 1) return; // Stat principale poubelle pour ce perso, on annule
+
+            // --- SÉCURITÉ 2 : LA PROTECTION DU SET 4 PIÈCES ---
+            if (active4pSet) {
+                const isCurrArtSetPiece = (currArt.setKey === active4pSet);
+                // Si la pièce actuelle fait partie du set ET qu'on en a pile 4, on est en danger !
+                if (isCurrArtSetPiece && active4pCount === 4) {
+                    // La NOUVELLE pièce doit obligatoirement être du même set
+                    if (otherArt.setKey !== active4pSet) return;
+                }
+                // Si on en a 5, on peut voler n'importe quoi (ça devient l'off-piece)
+                // Si isCurrArtSetPiece est false, c'est déjà l'off-piece, on peut voler n'importe quoi
+            }
+
+            // --- SIMULATION DU NOUVEAU SCORE ---
+            // On clone la pièce pour ne pas polluer l'artéfact du copain
+            const clonedOtherArt = JSON.parse(JSON.stringify(otherArt));
+            const fakeArtefacts = [...currChar.artefacts];
+            fakeArtefacts[currArtIndex] = clonedOtherArt;
+
+            const fakePerso = { ...currChar, artefacts: fakeArtefacts };
+
+            // On lance le moteur de notation sur ce personnage fictif
+            calculateCharacterScore(fakePerso, scoringConfig);
+
+            // On récupère le score calculé pour l'artéfact cloné
+            const scoredNewArt = fakePerso.artefacts[currArtIndex];
+            const diff = scoredNewArt.score - currArt.score;
+
+            if (diff > maxDiff) {
+                maxDiff = diff;
+
+                // --- 1. Calcul du nouveau score GLOBAL du personnage actuel ---
+                // On a besoin d'évaluer le faux perso pour obtenir sa note globale
+                const newCurrEval = calculateCharacterScore(fakePerso, scoringConfig);
+
+                // --- 2. Simulation de l'échange pour l'autre personnage ---
+                const otherScoringConfig = { ...otherChar.charConfig, ...(otherChar.activeBuild || {}) };
+                const fakeOtherArtefacts = [...otherChar.artefacts];
+                const otherArtIndex = otherChar.artefacts.findIndex(a => a.type === otherArt.type);
+                fakeOtherArtefacts[otherArtIndex] = currArt; // Il récupère notre vieille pièce
+                const fakeOtherPerso = { ...otherChar, artefacts: fakeOtherArtefacts };
+
+                const newOtherEval = calculateCharacterScore(fakeOtherPerso, otherScoringConfig);
+
+                bestSwap = {
+                    otherCharName: otherChar.nom,
+                    otherCharIcon: otherChar.image,
+                    currCharName: currChar.nom,
+                    currCharIcon: currChar.image,
+                    oldArt: currArt,
+                    newArt: scoredNewArt,
+                    diff: diff,
+                    typeLabel: ARTIFACT_TYPE_MAPPING[currArt.type] || "Artéfact",
+
+                    // Évaluations globales (Anciennes et Nouvelles)
+                    currEvalOld: currChar.evaluation,
+                    currEvalNew: newCurrEval,
+                    otherEvalOld: otherChar.evaluation,
+                    otherEvalNew: newOtherEval
+                };
+            }
+        });
+    });
+
+    return bestSwap;
+}*/
+
+// CALCUL DU COÛT EN RÉSINE ET EN TEMPS
+function getResinCostEstimate(pieceType, mainStatKey, currentScore) {
+    // 1. Probabilité d'obtenir la bonne pièce (Fleur, Plume, etc.) = 20% (0.2)
+    // Probabilité d'obtenir le bon set = 50% (0.5) (Sans compter la synthèse pour simplifier)
+    const pSetAndPiece = 0.5 * 0.2;
+
+    // 2. Probabilité d'obtenir la bonne stat principale
+    let pMainStat = 1.0; // 100% pour Fleur et Plume
+    if (pieceType !== "EQUIP_BRACER" && pieceType !== "EQUIP_NECKLACE") {
+        const rates = MAINSTAT_DROP_RATES[pieceType];
+        if (rates && rates[mainStatKey]) {
+            pMainStat = rates[mainStatKey] / 100; // Conversion % en décimale
+        } else {
+            pMainStat = 0.05; // Fallback générique à 5% si introuvable
+        }
+    }
+
+    // 3. Calcul du nombre d'artéfacts 5★ nécessaires EN MOYENNE pour avoir la base
+    const expectedArtifacts = 1 / (pSetAndPiece * pMainStat);
+
+    // 4. Coût en résine de base (1 artéfact 5★ garanti = 20 résines environ)
+    let baseResin = expectedArtifacts * 20;
+
+    // 5. Multiplicateur d'exigence (Courbe exponentielle selon le score à battre)
+    // Plus le score actuel est haut, plus il faut relancer les dés pour faire MIEUX.
+    // Un score de 20 est notre "normale" (multiplicateur x1)
+    let safeScore = Math.max(10, currentScore); // On cap à 10 minimum pour éviter les coûts à 0
+    let difficultyMultiplier = Math.pow(safeScore / 20, 2.5);
+
+    // 6. Calcul final
+    const totalResin = Math.round(baseResin * difficultyMultiplier);
+    const daysOfFarm = Math.ceil(totalResin / 180); // 180 résines par jour
+
+    // 7. Formatage de l'affichage (ex: 1.2k, 15k)
+    let formattedResin = totalResin > 1000 ? (totalResin / 1000).toFixed(1) + 'k' : totalResin;
+
+    return {
+        resin: formattedResin,
+        days: daysOfFarm,
+        rawResin: totalResin // Utile pour du tri si besoin
+    };
 }
 
 function getPriorities(persoObj) {
@@ -2302,6 +2445,19 @@ function renderShowcase(index) {
     const container = document.getElementById('main-container');
     if(!container) return;
 
+    // --- DÉBUT CODE B : MAJ du personnage dans l'URL ---
+    const currentUid = new URLSearchParams(window.location.search).get('uid') || document.getElementById('uidInput').value;
+    window.history.pushState({}, '', `?uid=${currentUid}&char=${encodeURIComponent(p.nom)}`);
+    // --- FIN CODE B ---
+
+    document.querySelectorAll('#sidebar-list .char-card').forEach((card, i) => {
+        if (i === parseInt(index)) {
+            card.classList.add('active');
+        } else {
+            card.classList.remove('active');
+        }
+    });
+
     const configKey = p.nom.replace(/\s+/g, '') || "Default";
     let config = window.CHARACTER_CONFIG[configKey] || window.CHARACTER_CONFIG[p.nom] || window.DEFAULT_CONFIG;
     if (p.activeBuild) {
@@ -2410,7 +2566,7 @@ function renderShowcase(index) {
                                 <p style="font-size: 14px;">C${p.cons}</p>
                             </div>
                         </div>
-                        <div style="margin-left: 10px; margin-right: 10px;">
+                        <div style="margin-left: 10px; margin-right: 10px; display: flex; justify-content: space-between; align-items: center;">
                             <h2 style="font-size: 24px;">${p.nom}</h2>
                         </div>
                     </div>
@@ -2850,6 +3006,95 @@ function renderShowcase(index) {
                             <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Votre feuille de route prioritaire avec les corrections urgentes à appliquer et les artéfacts à remplacer.</p>
                             
                             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+                            
+                            
+                            ${(() => {
+                                        /*const crossCheck = getCrossCheckAdvice(index);
+                                        if (!crossCheck) return '';
+                            
+                                        // Fonction locale pour générer les sous-stats en colonne
+                                        const renderSubs = (art) => {
+                                            return `<div style="display:flex; flex-direction:column; gap:5px; margin-top:8px;">
+                                                                        ${art.subStats.map(sub => `
+                                                                            <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#ccc;">
+                                                                                <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width:14px; height:14px;">
+                                                                                <span>${formatValueDisplay(sub.key, sub.value)}</span>
+                                                                            </div>
+                                                                        `).join('')}
+                                                                    </div>`;
+                                        };
+                            
+                                        return `
+                                                                <div style="background:#2C2D32; padding:15px; border-radius:8px; grid-column: 1 / -1; border-left: 3px solid var(--accent-gold); box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                                                                    <p style="font-size:13px; color:var(--accent-gold); text-transform:uppercase; margin-bottom:12px; font-weight: bold; display:flex; align-items:center; gap:8px;">
+                                                                        <span style="background: var(--accent-gold); color: #000; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">⇄</span>
+                                                                        Échange tactique détecté !
+                                                                    </p>
+                                                                    <p style="font-size:15px; color:#fff; margin-bottom:15px;">
+                                                                        Votre <b>${crossCheck.otherCharName}</b> est actuellement équipé d'un(e) <b style="color: #aaa;">${crossCheck.typeLabel} ${crossCheck.newArt.mainStat.label}</b> qui pourrait faire passer le score de ${p.nom} sur cette pièce de <span style="color:${crossCheck.oldArt.grade.color}; font-weight:bold;">${Math.round(crossCheck.oldArt.score)} (${crossCheck.oldArt.grade.letter})</span> à <span style="color:${crossCheck.newArt.grade.color}; font-weight:bold;">${Math.round(crossCheck.newArt.score)} (${crossCheck.newArt.grade.letter})</span>.
+                                                                    </p>
+                                                                    
+                                                                    <div style="display:flex; align-items:center; justify-content:space-between; background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; gap: 15px;">
+                                                                        
+                                                                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-width: 110px; border-right: 1px dashed rgba(255,255,255,0.1); padding-right: 15px;">
+                                                                            <img src="${crossCheck.currCharIcon}" style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,0.4);">
+                                                                            <p style="font-size:12px; color:#fff; margin-top:6px; font-weight:bold;">${crossCheck.currCharName}</p>
+                                                                            <p style="font-size:10px; color:#aaa; margin-bottom:4px;">Score global</p>
+                                                                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;">
+                                                                                <span style="color:${crossCheck.currEvalOld.grade.color};">${crossCheck.currEvalOld.score}</span>
+                                                                                <span style="color:#666;">➔</span>
+                                                                                <span style="color:${crossCheck.currEvalNew.grade.color}; font-weight:bold;">${crossCheck.currEvalNew.score}</span>
+                                                                            </div>
+                                                                        </div>
+                            
+                                                                        <div style="flex: 1; display: flex; justify-content: center; align-items: center; gap: 40px;">
+                                                                            
+                                                                            <div style="display:flex; align-items:center; gap:12px;">
+                                                                                <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+                                                                                    <img src="${crossCheck.oldArt.icon}" style="width:48px; height:48px; border-radius:8px; border:1px solid ${crossCheck.oldArt.grade.color};">
+                                                                                    <p style="font-size:14px; color:${crossCheck.oldArt.grade.color}; font-weight:bold;">${Math.round(crossCheck.oldArt.score)}</p>
+                                                                                </div>
+                                                                                <div style="text-align:left;">
+                                                                                    <p style="font-size:12px; color:#fff; white-space:nowrap;">${crossCheck.oldArt.setName}</p>
+                                                                                    ${renderSubs(crossCheck.oldArt)}
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            <div style="color:var(--accent-gold); font-size:24px; display:flex; align-items:center; justify-content:center;">
+                                                                                ➔
+                                                                            </div>
+                                                            
+                                                                            <div style="display:flex; align-items:center; gap:12px;">
+                                                                                <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+                                                                                    <img src="${crossCheck.newArt.icon}" style="width:48px; height:48px; border-radius:8px; border:1px solid ${crossCheck.newArt.grade.color};">
+                                                                                    <p style="font-size:14px; color:${crossCheck.newArt.grade.color}; font-weight:bold;">${Math.round(crossCheck.newArt.score)}</p>
+                                                                                </div>
+                                                                                <div style="text-align:left;">
+                                                                                    <p style="font-size:12px; color:#fff; white-space:nowrap; display:flex; align-items:center; gap:6px;">
+                                                                                        ${crossCheck.newArt.setName} 
+                                                                                        <span style="font-size:11px; color:#22c55e; padding:2px 6px; background:rgba(34, 197, 94, 0.15); border-radius:4px;">+${Math.round(crossCheck.diff)} pts</span>
+                                                                                    </p>
+                                                                                    ${renderSubs(crossCheck.newArt)}
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                        
+                                                                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-width: 110px; border-left: 1px dashed rgba(255,255,255,0.1); padding-left: 15px;">
+                                                                            <img src="${crossCheck.otherCharIcon}" style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,0.4);">
+                                                                            <p style="font-size:12px; color:#fff; margin-top:6px; font-weight:bold;">${crossCheck.otherCharName}</p>
+                                                                            <p style="font-size:10px; color:#aaa; margin-bottom:4px;">Après échange</p>
+                                                                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;">
+                                                                                <span style="color:${crossCheck.otherEvalOld.grade.color};">${crossCheck.otherEvalOld.score}</span>
+                                                                                <span style="color:#666;">➔</span>
+                                                                                <span style="color:${crossCheck.otherEvalNew.grade.color}; font-weight:bold;">${crossCheck.otherEvalNew.score}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                </div>`;*/
+                                return ''; // à retirer si on enlève le commentaire
+                                                            })()}
                         
                                 ${(() => {
             const adv = getLevelAdvice(p);
@@ -2930,6 +3175,8 @@ function renderShowcase(index) {
                                     <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Top 3 des artéfacts à changer par ordre de priorité</p>
                                     ${priorities.length > 0 ? priorities.map((p, i) => {
             const difficulty = getFarmDifficulty(p.type, p.mainKey);
+            const estimate = getResinCostEstimate(p.type, p.mainKey, p.score); // NOUVEAU
+
             return `
                                         <div style="display:flex; justify-content:space-between; align-items:center; font-size:16px; margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
                                             <div style="display:flex; flex-direction:column;">
@@ -2940,7 +3187,13 @@ function renderShowcase(index) {
                                                 
                                                 <p style="font-size:12px; color:#9ca3af; margin-left: 16px; margin-top:1px;">${p.setName} • <span style="color:#fff;">${p.mainLabel}</span></p>
                                                 
-                                                <p style="font-size:12px; color:${difficulty.color}; margin-left: 16px; margin-top:2px;">${difficulty.label} à farmer</p>
+                                                <div style="display:flex; align-items:center; gap: 8px; margin-left: 16px; margin-top:4px;">
+                                                    <p style="font-size:12px; color:${difficulty.color};">${difficulty.label}</p>
+                                                    <div style="width: 4px; height: 4px; border-radius: 50%; background-color: rgba(255,255,255,0.2);"></div>
+                                                    <p style="font-size:12px; color:#aaa; font-family: ShinShin, sans-serif;">
+                                                        <span style="color:#fff;">~${estimate.resin}</span> Résines (<span style="color:#fff;">${estimate.days} jours</span>)
+                                                    </p>
+                                                </div>
                                             </div>
                                             
                                             <div style="text-align:right; display: flex; flex-direction: row; gap: 4px;">
@@ -3220,3 +3473,32 @@ window.exportBuildAsImage = async function() {
             if(btn) btn.innerHTML = originalContent;
         });
 };
+
+// GESTION DES LIENS DE PARTAGE (À l'ouverture de la page)
+window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlUid = urlParams.get('uid');
+    const urlChar = urlParams.get('char');
+
+    if (urlUid) {
+        // 1. On remplit le champ input visuellement
+        const uidInput = document.getElementById('uidInput'); // Remplace par l'ID réel de ton input
+        if (uidInput) uidInput.value = urlUid;
+
+        // 2. On lance la recherche automatiquement
+        fetchUserData().then(() => {
+            // 3. Si un perso est spécifié et que les données sont chargées
+            if (urlChar && globalPersoData && globalPersoData.length > 0) {
+                // On cherche l'index du perso dans la vitrine
+                const targetIndex = globalPersoData.findIndex(p => p.nom.toLowerCase() === urlChar.toLowerCase());
+
+                if (targetIndex !== -1) {
+                    // On simule le clic sur l'onglet de ce perso
+                    renderShowcase(targetIndex);
+                }
+            }
+        }).catch(err => {
+            console.error("Erreur lors du chargement via URL :", err);
+        });
+    }
+});
