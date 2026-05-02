@@ -989,21 +989,29 @@
             <div class="main-content">
                 <!-- <div id="placeholder-msg">Entrez un UID et sélectionnez un personnage.</div> -->
                 <div id="player-profile"></div>
-                <div class="main-content-menu" style="display: flex; justify-content: space-between; align-items: flex-end;">
+                <div class="main-content-menu" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 8px;">
                     <div class="main-content-menu-container">
                         <!--<p class="main-content-menu-title">Équipe :</p>-->
                         <div id="toolbar-controls" style="display: flex; align-items: center; gap: 8px; flex: 1;"></div>
                         <div class="menu-actions" style="display:flex; gap:10px;"></div>
                     </div>
 
+                    <div class="leaderboards-container" style="max-width:240px;display: flex; justify-content: space-between; padding-left: 15px; padding-right: 16px; align-items: center; width: 100%; height: 50px; background: #2C2D32; color: #fff;border: none;border-radius: 8px;">
+                        <div class="leaderboards-left" style="display: flex;">
+                            <i class="fa-solid fa-ranking-star"></i>
+                            <div class="leaderboards-placeholder" style="font-size: 14px; margin-left: 12px;">
+                                Top 2% - 161/9264
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
 
-                    <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                    <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; max-width: 240px; width: 100%;">
+                        <!-- BOUTON 1 : Fixe à 50px -->
                         <button onclick="openNotice()" title="Mode d'emploi" style="
                             background: #2C2D32;
                             border: none;
                             border-radius: 8px;
-                            font-family: ShinShin, Inter, sans-serif;
-                            font-size: 14px;
                             color: #ffffff;
                             display: flex;
                             align-items: center;
@@ -1011,13 +1019,26 @@
                             width: 50px;
                             height: 50px;
                             cursor: pointer;
-                            transition: 0.3s;
-                            " onmouseover="this.style.background='var(--accent-gold)'; this.style.borderColor='var(--accent-gold)'; this.style.color='#000';" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'; this.style.color='#fff';">
-                            <i class="fa-solid fa-question" style="font-size: 18px;"></i>
+                            flex-shrink: 0;
+                            ">
+                            <i class="fa-solid fa-question"></i>
                         </button>
-                        <button onclick="exportBuildAsImage()" class="main-content-menu-export" style="cursor: pointer; display: flex; align-items: center; gap: 8px; background: #2C2D32; color: #fff; transition: 0.2s;">
+                        <button onclick="exportBuildAsImage()" class="main-content-menu-export" style="
+                            background: #2C2D32;
+                            color: #fff;
+                            border: none;
+                            border-radius: 8px;
+                            height: 50px;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 8px;
+                            flex-grow: 1;
+                            min-width: 0;
+                            ">
                             <i class="fa-solid fa-camera"></i>
-                            <span>Exporter en image</span>
+                            <span style="white-space: nowrap;">Exporter image</span>
                         </button>
                     </div>
                 </div>

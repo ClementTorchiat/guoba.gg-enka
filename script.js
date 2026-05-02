@@ -2682,7 +2682,13 @@ function renderHome() {
             <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                 ${cardsHtml}
             </div>
-            <p style="color: #aaa; font-size: 12px; margin-bottom: 30px; margin-top: 32px;">Outil réalisé avec passion.</p>
+            <p style="color: #aaa; font-size: 12px; margin-bottom: 30px; margin-top: 32px;">
+                Ce site est un projet de fan indépendant et n'est en aucun cas affilié à, parrainé ou approuvé par HoYoverse. <br>
+                Tous les contenus et actifs liés aux jeux sont la propriété exclusive de HoYoverse. <br><br>
+                Ce projet s'appuie sur l'API fournie par 
+                <a href="https://enka.network" style="color: inherit; text-decoration: underline;">Enka.Network</a>, 
+                que nous remercions chaleureusement pour leur contribution indispensable à la communauté.
+            </p>        
         </div>
     `;
 }
