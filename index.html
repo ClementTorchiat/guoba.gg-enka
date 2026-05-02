@@ -948,6 +948,23 @@
         #global-evaluation .badges-scroll::-webkit-scrollbar-track {
             background: transparent;
         }
+
+        .link-button {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+            padding: 9px 16px 9px 12px;
+            border-radius: 8px;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+
+        .link-button:hover {
+            background-color: #2C2D32;
+        }
     </style>
 </head>
 <body>
@@ -1072,9 +1089,20 @@
 
         <div class="notice-section">
             <h2 class="notice-h2"><i class="fa-solid fa-chart-bar"></i> 2. Comprendre le Score</h2>
-            <h3 class="notice-h3">La note (SSS, S, A...)</h3>
-            <p class="notice-p">Calculée selon le nombre de <b>Rolls Utiles</b> (améliorations tombées sur des stats pertinentes pour ce personnage précis).</p>
-            <h3 class="notice-h3">Efficacité & RNG</h3>
+            <p>Le simulateur de guoba.gg se base sur 3 métriques différentes pour évaluer vos builds.</p>
+            <h3 class="notice-h3">Le Score</h3>
+            <p class="notice-p">Le score est un système hybride :</p>
+            <ul style="padding-left: 30px;">
+                <li style="margin-top: 12px; font-size: 14px;"><b>Valeur de Base :</b> Chaque "Roll" parfait (ex: 7.8% DGT Crit) vaut une fraction de point.</li>
+                <li style="margin-top: 12px; font-size: 14px;"><b>Pondération :</b> Ces points sont multipliés par un "poids" (défini dans <code>config.js</code>). <i>Exemple : La Défense aura un poids de 1 pour Chiori, mais de 0 pour Arlecchino.</i></li>
+                <li style="margin-top: 12px; font-size: 14px;"><b>Bonus Mainstat :</b> L'algorithme prend en compte la pertinence de la statistique principale des pièces variables (Sablier, Coupe, Diadème).</li>
+                <li style="margin-top: 12px; font-size: 14px;"><b>Multiplicateur de Set :</b> Un bonus est appliqué si le joueur possède le Set Best-in-Slot (BiS) recommandé.</li>
+            </ul>
+            <h3 class="notice-h3">La Note</h3>
+            <p class="notice-p">La note représente la chance qu'a eu le joueur dans les substats de ses artéfacts.</p>
+            <p style="margin-top: 12px; font-size: 14px;">La note est calculée selon le nombre de <b>Rolls Utiles</b> (améliorations tombées sur des stats pertinentes pour ce personnage précis).</p>
+            <p style="margin-top: 12px; font-size: 14px;">Chaque team de chaque personnage a un plafond théorique. Ce plafond est divisé en plusieurs tiers proportionnels correspondant à des lettres.</p>
+            <h3 class="notice-h3">L'Efficacité</h3>
             <p class="notice-p"><b>Efficacité :</b> Votre puissance actuelle vs votre potentiel théorique max.</p>
             <p class="notice-p"><b>RNG :</b> Votre chance. Un score élevé signifie que vous obtenez souvent des valeurs hautes lors des améliorations.</p>
         </div>

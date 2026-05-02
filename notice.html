@@ -166,6 +166,15 @@
         <h2><i class="fa-solid fa-chart-bar"></i> 2. Comprendre le Score</h2>
         <p>Le système de notation n'évalue pas seulement la force brute, mais l'optimisation de vos artéfacts.</p>
 
+        <h3>Le Score</h3>
+        <p>Le score est un système hybride :</p>
+        <ul>
+            <li><b>Valeur de Base :</b> Chaque "Roll" parfait (ex: 7.8% DGT Crit) vaut une fraction de point.</li>
+            <li><b>Pondération :</b> Ces points sont multipliés par un "poids" (défini dans <code>config.js</code>). <i>Exemple : La Défense aura un poids de 1 pour Chiori, mais de 0 pour Arlecchino.</i></li>
+            <li><b>Bonus Mainstat :</b> L'algorithme prend en compte la pertinence de la statistique principale des pièces variables (Sablier, Coupe, Diadème).</li>
+            <li><b>Multiplicateur de Set :</b> Un bonus est appliqué si le joueur possède le Set Best-in-Slot (BiS) recommandé.</li>
+        </ul>
+
         <h3>La note (SSS, S, A, B...)</h3>
         <p>Elle est calculée en fonction du nombre de <b>Rolls Utiles</b> sur vos artéfacts.</p>
         <ul>

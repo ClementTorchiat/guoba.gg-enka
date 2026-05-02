@@ -153,11 +153,11 @@ const CHARACTER_CONFIG = {
 
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
-                    "critRate_": 0.5, "critDMG_": 0.5,
+                    "critRate_": 0.4, "critDMG_": 0,
                     "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 1, "hp": 0.8,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 1, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0.3, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -175,7 +175,7 @@ const CHARACTER_CONFIG = {
                 goodSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2", "NoblesseOblige:4"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 120,
+                er_req: 100,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -242,10 +242,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.2, "atk": 0.02, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.1, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
-                    "def_": 1, "def": 0.1,
-                    "eleMas": 0, "enerRech_": 0.5, // Ajuster selon besoin
+                    "def_": 0.8, "def": 0.1,
+                    "eleMas": 0, "enerRech_": 0.1, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -253,6 +253,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["def_"],
+                    "EQUIP_RING": ["geo_dmg_", "def_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 hideUIStats: ["heal_"],
@@ -263,7 +269,7 @@ const CHARACTER_CONFIG = {
                 goodSets: ["HuskOfOpulentDreams:2", "GoldenTroupe:2"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 150,
+                er_req: 100,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -323,10 +329,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0.3, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
@@ -334,6 +340,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["cryo_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 hideUIStats: [],
@@ -344,7 +356,7 @@ const CHARACTER_CONFIG = {
                 goodSets: ["BlizzardStrayer:2", "MarechausseeHunter:2", "ShimenawasReminiscence:4"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 120,
+                er_req: 110,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -364,10 +376,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.7, "atk": 0.07, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.3, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
@@ -375,6 +387,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["cryo_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 hideUIStats: [],
@@ -385,7 +403,7 @@ const CHARACTER_CONFIG = {
                 goodSets: ["BlizzardStrayer:2", "MarechausseeHunter:2", "ShimenawasReminiscence:4"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 120,
+                er_req: 100,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -410,7 +428,7 @@ const CHARACTER_CONFIG = {
 
         // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 10,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
             skill: 10,
             burst: 8
         },
@@ -452,10 +470,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
-                    "hp_": 1, "hp": 0.1,
+                    "atk_": 0.1, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0.8, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.8, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0.1, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -463,6 +481,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "hp_"],
+                    "EQUIP_RING": ["pyro_dmg_", "hp_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
@@ -490,10 +514,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
-                    "hp_": 0.8, "hp": 0.08,
+                    "atk_": 0.1, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "hp_": 0.8, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 1, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0.1, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -501,6 +525,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "hp_"],
+                    "EQUIP_RING": ["pyro_dmg_", "hp_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
@@ -545,9 +575,9 @@ const CHARACTER_CONFIG = {
 
         // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 10,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
             skill: 10,
-            burst: 8
+            burst: 6
         },
 
         // --- 2. PASSIFS & CONSTELLATIONS ---
@@ -594,10 +624,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.08, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.2, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -607,12 +637,18 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["pyro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_","critDMG_"]
+                },
+
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
                 bestSets: ["ShimenawasReminiscence:4", "CrimsonWitchOfFlames:4"], // Top Tier
                 goodSets: ["CrimsonWitchOfFlames:2", "ShimenawasReminiscence:2"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 120,
+                er_req: 100,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -623,7 +659,7 @@ const CHARACTER_CONFIG = {
                     { role: "Sub-DPS", name: "Yelan", element: "hydro" },
 
                     // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
-                    { role: "Support", name: "Lanyan", element: "anemo" },
+                    { role: "Support", name: "Bennett", element: "pyro" },
                 ]
             },
             "Fonte": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
@@ -632,10 +668,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.6, "atk": 0.06, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.4, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -645,12 +681,18 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["pyro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_","critDMG_"]
+                },
+
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
                 bestSets: ["ShimenawasReminiscence:4", "CrimsonWitchOfFlames:4"], // Top Tier
                 goodSets: ["CrimsonWitchOfFlames:2", "ShimenawasReminiscence:2"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 120,
+                er_req: 100,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -670,10 +712,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -683,12 +725,18 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["pyro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_","critDMG_"]
+                },
+
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
                 bestSets: ["ShimenawasReminiscence:4", "CrimsonWitchOfFlames:4"], // Top Tier
                 goodSets: ["CrimsonWitchOfFlames:2", "ShimenawasReminiscence:2"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 120,
+                er_req: 100,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -757,6 +805,12 @@ const CHARACTER_CONFIG = {
                     "heal_": 1
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["hp_", "enerRech_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["heal_", "hp_"]
+                },
+
                 hideUIStats: [],
                 showUIStats: [],
 
@@ -765,7 +819,7 @@ const CHARACTER_CONFIG = {
                 goodSets: ["MaidenBeloved:4", "MaidenBeloved:2", "OceanHuedClam:2"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 180,
+                er_req: 200,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -786,16 +840,22 @@ const CHARACTER_CONFIG = {
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
                     "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
-                    "hp_": 0.6, "hp": 0.06,
+                    "hp_": 0.8, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 1, "enerRech_": 1, // Ajuster selon besoin
+                    "eleMas": 1, "enerRech_": 0.8, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
-                    "heal_": 0
+                    "heal_": 1
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "enerRech_", "hp_"],
+                    "EQUIP_RING": ["eleMas", "hp_"],
+                    "EQUIP_DRESS": ["eleMas","heal_", "hp_"]
                 },
 
                 hideUIStats: [],
@@ -806,7 +866,7 @@ const CHARACTER_CONFIG = {
                 goodSets: ["FlowerOfParadiseLost:2", "GildedDreams:2", "WanderersTroupe:2"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 140,
+                er_req: 200,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -879,8 +939,8 @@ const CHARACTER_CONFIG = {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
-                    "def_": 1, "def": 0.1,
-                    "eleMas": 0, "enerRech_": 0.4, // Ajuster selon besoin
+                    "def_": 0.8, "def": 0.1,
+                    "eleMas": 0, "enerRech_": 0.8, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -888,6 +948,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["def_"],
+                    "EQUIP_RING": ["geo_dmg_", "def_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 hideUIStats: [],
@@ -920,8 +986,8 @@ const CHARACTER_CONFIG = {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
-                    "def_": 0.6, "def": 0.06,
-                    "eleMas": 0.5, "enerRech_": 0.4, // Ajuster selon besoin
+                    "def_": 0.8, "def": 0.1,
+                    "eleMas": 0.5, "enerRech_": 0.8, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -929,6 +995,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["def_"],
+                    "EQUIP_RING": ["geo_dmg_", "def_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 hideUIStats: [],
@@ -1041,15 +1113,21 @@ const CHARACTER_CONFIG = {
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0,
-                    "hp_": 0.8, "hp": 0.08,
+                    "hp_": 0.9, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.2, "enerRech_": 1,
+                    "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "hp_"],
+                    "EQUIP_RING": ["hydro_dmg_","hp_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:4"],
@@ -1074,7 +1152,7 @@ const CHARACTER_CONFIG = {
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0,
-                    "hp_": 1, "hp": 0.1,
+                    "hp_": 0.9, "hp": 0.1,
                     "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
@@ -1083,6 +1161,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "hp_"],
+                    "EQUIP_RING": ["hydro_dmg_","hp_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:4"],
@@ -1107,15 +1191,21 @@ const CHARACTER_CONFIG = {
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0,
-                    "hp_": 0.8, "hp": 0.08,
+                    "hp_": 0.8, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.2, "enerRech_": 1,
+                    "eleMas": 0.6, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "hp_"],
+                    "EQUIP_RING": ["hydro_dmg_","hp_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:4"],
@@ -1205,11 +1295,11 @@ const CHARACTER_CONFIG = {
 
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
-                    "critRate_": 0.2, "critDMG_": 0.2,
+                    "critRate_": 0, "critDMG_": 0,
                     "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 1, "hp": 0.8,
                     "def_": 0, "def": 0,
-                    "eleMas": 1, "enerRech_": 0.8, // Ajuster selon besoin
+                    "eleMas": 0.5, "enerRech_": 0.3, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -1217,6 +1307,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["hp_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["hp_"]
                 },
 
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
@@ -1291,10 +1387,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.2, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0.3, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -1407,13 +1503,19 @@ const CHARACTER_CONFIG = {
                     "atk_": 0, "atk": 0,
                     "hp_": 1, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.3,
+                    "eleMas": 0, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["hp_"],
+                    "EQUIP_RING": ["hydro_dmg_"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_"]
                 },
 
                 bestSets: ["MarechausseeHunter:4"],
@@ -1437,13 +1539,19 @@ const CHARACTER_CONFIG = {
                     "atk_": 0, "atk": 0,
                     "hp_": 1, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.3,
+                    "eleMas": 0, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["hp_"],
+                    "EQUIP_RING": ["hydro_dmg_"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_"]
                 },
 
                 bestSets: ["MarechausseeHunter:4"],
@@ -1464,15 +1572,21 @@ const CHARACTER_CONFIG = {
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0,
-                    "hp_": 0.8, "hp": 0.08,
+                    "hp_": 1, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.2, "enerRech_": 0.3,
+                    "eleMas": 0, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["hp_"],
+                    "EQUIP_RING": ["hydro_dmg_"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_"]
                 },
 
                 bestSets: ["MarechausseeHunter:4", "NightOfTheSkysUnveiling:4"],
@@ -1533,6 +1647,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "hp_"],
+                    "EQUIP_RING": ["hp_", "hydro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["GoldenTroupe:4", "TenacityOfTheMillelith:4"],
@@ -1614,7 +1734,7 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.3,
@@ -1624,6 +1744,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["geo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["NighttimeWhispersInTheEchoingWoods:4", "MarechausseeHunter:4"],
@@ -1649,16 +1775,22 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.2, "enerRech_": 0.3,
+                    "eleMas": 0.5, "enerRech_": 0.3,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["geo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["NighttimeWhispersInTheEchoingWoods:4"],
@@ -1723,10 +1855,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.2, "atk": 0.02, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.1, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
-                    "def_": 1, "def": 0.1,
-                    "eleMas": 0, "enerRech_": 0.3, // Ajuster selon besoin
+                    "def_": 0.8, "def": 0.1,
+                    "eleMas": 0, "enerRech_": 0.6, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -1735,6 +1867,13 @@ const CHARACTER_CONFIG = {
 
                     "heal_": 0
                 },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["def_"],
+                    "EQUIP_RING": ["geo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
                 hideUIStats: ["heal_"],
                 showUIStats: ["atk"],
 
@@ -1743,7 +1882,7 @@ const CHARACTER_CONFIG = {
                 goodSets: ["GoldenTroupe:2", "HuskOfOpulentDreams:2"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 130,
+                er_req: 160,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -1812,7 +1951,7 @@ const CHARACTER_CONFIG = {
                     "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.75, "enerRech_": 0,
+                    "eleMas": 0.6, "enerRech_": 0,
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
                 },
@@ -1948,10 +2087,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0.5, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -1959,6 +2098,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["electro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 hideUIStats: [],
@@ -1969,7 +2114,7 @@ const CHARACTER_CONFIG = {
                 goodSets: ["ThunderingFury:4", "GladiatorsFinale:4"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 120,
+                er_req: 130,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -1992,7 +2137,7 @@ const CHARACTER_CONFIG = {
                     "atk_": 0.6, "atk": 0.06, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.4, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0.8, "enerRech_": 0.5, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2000,6 +2145,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["electro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 hideUIStats: [],
@@ -2010,7 +2161,7 @@ const CHARACTER_CONFIG = {
                 goodSets: ["ThunderingFury:4", "GladiatorsFinale:4"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 120,
+                er_req: 130,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -2018,7 +2169,7 @@ const CHARACTER_CONFIG = {
                     { role: "Support", name: "Nahida", element: "dendro" },
 
                     // Slot 2 : Sub-DPS ou Réaction
-                    { role: "Support", name: "Kazuha", element: "anemo" },
+                    { role: "Support", name: "Lauma", element: "dendro" },
 
                     // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Sub-DPS", name: "Fischl", element: "electro" },
@@ -2030,10 +2181,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.5, "atk": 0.05, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.5, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0.5, "enerRech_": 0.5, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2041,6 +2192,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["electro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 hideUIStats: [],
@@ -2051,7 +2208,7 @@ const CHARACTER_CONFIG = {
                 goodSets: ["ThunderingFury:4", "GladiatorsFinale:4"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 120,
+                er_req: 130,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -2124,6 +2281,12 @@ const CHARACTER_CONFIG = {
                     "heal_": 1
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "def_"],
+                    "EQUIP_RING": ["def_"],
+                    "EQUIP_DRESS": ["def_", "heal_"]
+                },
+
                 bestSets: ["ScrollOfTheHeroOfCinderCity:4", "Instructor:4"],
                 goodSets: ["HuskOfOpulentDreams:2", "EmblemOfSeveredFate:2"],
 
@@ -2143,7 +2306,7 @@ const CHARACTER_CONFIG = {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0,
                     "hp_": 0, "hp": 0,
-                    "def_": 1, "def": 0.1,
+                    "def_": 0.8, "def": 0.1,
                     "eleMas": 0, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2151,6 +2314,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["def_"],
+                    "EQUIP_RING": ["geo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["HuskOfOpulentDreams:4", "ScrollOfTheHeroOfCinderCity:4"],
@@ -2189,10 +2358,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.2, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.4, "enerRech_": 0.2, // Ajuster selon besoin
+                    "eleMas": 0.3, "enerRech_": 0.1, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2202,12 +2371,18 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
+                },
+
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
                 bestSets: ["ObsidianCodex:4"], // Top Tier
                 goodSets: ["ViridescentVenerer:4", "ShimenawasReminiscence:4"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 120,
+                er_req: 110,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -2281,10 +2456,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.2, "atk": 0.02, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.8, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2292,6 +2467,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "atk_"],
+                    "EQUIP_RING": ["pyro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
@@ -2319,10 +2500,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.9, "atk": 0.09, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.1, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2330,6 +2511,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["pyro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
@@ -2385,17 +2572,23 @@ const CHARACTER_CONFIG = {
                 description: "",
 
                 weights: {
-                    "critRate_": 0.5, "critDMG_": 0,
+                    "critRate_": 0, "critDMG_": 0,
                     "atk_": 0, "atk": 0,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 1.2, "enerRech_": 1.2,
+                    "eleMas": 1, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "enerRech_"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas"]
                 },
 
                 hideUIStats: [],
@@ -2465,7 +2658,7 @@ const CHARACTER_CONFIG = {
 
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
-                    "critRate_": 0.5, "critDMG_": 0.5,
+                    "critRate_": 0, "critDMG_": 0,
                     "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
@@ -2479,6 +2672,12 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas","enerRech_"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas"]
+                },
+
                 hideUIStats: [],
                 showUIStats: ["atk"],
 
@@ -2487,7 +2686,7 @@ const CHARACTER_CONFIG = {
                 goodSets: ["WanderersTroupe:2", "GildedDreams:2", "NoblesseOblige:4", "Instructor:4"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 150,
+                er_req: 200,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -2556,14 +2755,20 @@ const CHARACTER_CONFIG = {
                 description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.2, "enerRech_": 0.3,
+                    "eleMas": 0, "enerRech_": 0.8,
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["electro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
@@ -2589,14 +2794,20 @@ const CHARACTER_CONFIG = {
                 description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.3,
+                    "eleMas": 0, "enerRech_": 0.8,
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["electro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
@@ -2623,14 +2834,20 @@ const CHARACTER_CONFIG = {
                 description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.6, "atk": 0.06,
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.8, "enerRech_": 0.3,
+                    "eleMas": 0.8, "enerRech_": 0.8,
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["electro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
@@ -2647,8 +2864,8 @@ const CHARACTER_CONFIG = {
                     // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     {
                         role: "Support",
-                        name: ["Liuyun", "Nahida"], // Noms (Optionnel)
-                        element: ["anemo", "dendro"] // Éléments pour la couleur de fond
+                        name: ["Ineffa", "Nahida"], // Noms (Optionnel)
+                        element: ["electro", "dendro"] // Éléments pour la couleur de fond
                     }
                 ]
             },
@@ -2657,14 +2874,20 @@ const CHARACTER_CONFIG = {
                 description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.08,
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.5, "enerRech_": 0.3,
+                    "eleMas": 0.5, "enerRech_": 0.8,
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["electro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
                 bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
@@ -2676,7 +2899,7 @@ const CHARACTER_CONFIG = {
                     { role: "Support", name: "Columbina", element: "hydro" },
 
                     // Slot 2 : Sub-DPS ou Réaction
-                    { role: "Support", name: "Aino", element: "hydro" },
+                    { role: "Sub-DPS", name: "Ineffa", element: "electro" },
 
                     // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     {
@@ -2725,10 +2948,10 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.5,
+                    "eleMas": 0, "enerRech_": 0.7,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -2740,7 +2963,7 @@ const CHARACTER_CONFIG = {
                 bestSets: ["GoldenTroupe:4"],
                 goodSets: ["BlizzardStrayer:4", "NoblesseOblige:4"],
 
-                er_req: 150,
+                er_req: 170,
 
                 team: [
                     { role: "DPS", name: "SkirkNew", element: "cryo" },
@@ -2795,7 +3018,7 @@ const CHARACTER_CONFIG = {
                 description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0,
@@ -2807,7 +3030,7 @@ const CHARACTER_CONFIG = {
 
                 idealMainStats: {
                     "EQUIP_SHOES": ["atk_"],
-                    "EQUIP_RING": ["cryo_dmg_"],
+                    "EQUIP_RING": ["cryo_dmg_", "atk_"],
                     "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
@@ -2868,10 +3091,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.2, "enerRech_": 0.5, // Ajuster selon besoin
+                    "eleMas": 0.4, "enerRech_": 0.6, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2881,12 +3104,18 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["atk_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
                 bestSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4"], // Top Tier
                 goodSets: ["GildedDreams:4"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 120,
+                er_req: 160,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -2917,15 +3146,21 @@ const CHARACTER_CONFIG = {
                 name: "Sélénofleurissement",
                 description: "",
                 weights: {
-                    "critRate_": 0.5, "critDMG_": 0.5,
+                    "critRate_": 0.4, "critDMG_": 0.4,
                     "atk_": 0, "atk": 0,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 1.2, "enerRech_": 1.2,
+                    "eleMas": 1, "enerRech_": 1,
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "enerRech_"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas"]
                 },
 
                 hideUIStats: [],
@@ -2950,15 +3185,21 @@ const CHARACTER_CONFIG = {
                 name: "Fleurissement",
                 description: "",
                 weights: {
-                    "critRate_": 0.5, "critDMG_": 0.5,
+                    "critRate_": 0.4, "critDMG_": 0.4,
                     "atk_": 0, "atk": 0,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 1.2, "enerRech_": 1.2,
+                    "eleMas": 1, "enerRech_": 1,
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "enerRech_"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas"]
                 },
 
                 hideUIStats: [],
@@ -2983,15 +3224,21 @@ const CHARACTER_CONFIG = {
                 name: "Exubérance",
                 description: "",
                 weights: {
-                    "critRate_": 0.5, "critDMG_": 0.5,
+                    "critRate_": 0.4, "critDMG_": 0.4,
                     "atk_": 0, "atk": 0,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 1.2, "enerRech_": 1.2,
+                    "eleMas": 1, "enerRech_": 1,
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "enerRech_"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas"]
                 },
 
                 hideUIStats: [],
@@ -3073,10 +3320,10 @@ const CHARACTER_CONFIG = {
                 // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.2, "enerRech_": 0.5, // Ajuster selon besoin
+                    "eleMas": 0.4, "enerRech_": 0.6, // Ajuster selon besoin
 
                     // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -3084,6 +3331,12 @@ const CHARACTER_CONFIG = {
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["atk_"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_"]
                 },
 
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
@@ -3168,21 +3421,27 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_", "eleMas"]
+                },
+
                 hideUIStats: [],
                 showUIStats: ["atk"],
 
                 bestSets: ["NightOfTheSkysUnveiling:4"],
                 goodSets: ["DeepwoodMemories:4", "GildedDreams:4", "Instructor:4"],
 
-                er_req: 120,
+                er_req: 100,
 
                 team: [
                     { role: "Support", name: "Columbina", element: "hydro" },
                     { role: "Sub-DPS", name: "Lauma", element: "dendro" },
                     {
                         role: "Flex",
-                        name: ["Nahida", "Nilou"],
-                        element: ["dendro", "hydro"]
+                        name: ["Nahida", "Sucrose"],
+                        element: ["dendro", "anemo"]
 
                     }
                 ]
@@ -3221,24 +3480,31 @@ const CHARACTER_CONFIG = {
         builds: {
             "Surcharge": {
                 name: "Surcharge",
-                description: "",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
-                    "hp_": 0, "hp": 0,
-                    "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.3,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.8,
+
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
+
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["atk_", "pyro_dmg_"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_"]
                 },
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
                 goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "EmblemOfSeveredFate:2", "GladiatorsFinale:2", "Instructor:4"],
 
-                er_req: 110,
+                er_req: 130,
                 team: [
                     { role: "DPS", name: ["Arlecchino", "Varesa"], element: ["pyro", "electro"] },
                     { role: "Sub-DPS", name: "Fischl", element: "electro"},
@@ -3251,20 +3517,28 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
-                    "hp_": 0, "hp": 0,
-                    "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.3,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.8,
+
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
+
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["atk_", "pyro_dmg_"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_"]
                 },
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
                 goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "EmblemOfSeveredFate:2", "GladiatorsFinale:2", "Instructor:4"],
 
-                er_req: 110,
+                er_req: 130,
                 team: [
                     { role: "DPS", name: "Kinich", element: "dendro" },
                     { role: "Sub-DPS", name: "Emilie", element: "dendro"},
@@ -3273,24 +3547,31 @@ const CHARACTER_CONFIG = {
             },
             "Arc-en-ciel": {
                 name: "Arc-en-ciel",
-                description: "",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1,
-                    "hp_": 0, "hp": 0,
-                    "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.3,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.8,
+
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
+
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["atk_", "pyro_dmg_"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_"]
                 },
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
                 goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "EmblemOfSeveredFate:2", "GladiatorsFinale:2", "Instructor:4"],
 
-                er_req: 130,
+                er_req: 150,
                 team: [
                     { role: "DPS", name: "Chasca", element: "anemo" },
                     { role: "Sub-DPS", name: "Furina", element: "hydro"},
@@ -3374,15 +3655,21 @@ const CHARACTER_CONFIG = {
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0,
-                    "hp_": 1, "hp": 0.1,
+                    "hp_": 0.9, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.3, "enerRech_": 1,
+                    "eleMas": 0.4, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "hp_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["SilkenMoonsSerenade:4", "AubadeOfMorningstarAndMoon:4"],
@@ -3407,15 +3694,21 @@ const CHARACTER_CONFIG = {
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0,
-                    "hp_": 1, "hp": 0.1,
+                    "hp_": 0.9, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.3, "enerRech_": 1,
+                    "eleMas": 0.4, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "hp_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_"]
                 },
 
                 bestSets: ["NightOfTheSkysUnveiling:4"],
@@ -3440,15 +3733,21 @@ const CHARACTER_CONFIG = {
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0,
-                    "hp_": 1, "hp": 0.1,
+                    "hp_": 0.9, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 1,
+                    "eleMas": 0.4, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "hp_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4"],
@@ -3473,15 +3772,21 @@ const CHARACTER_CONFIG = {
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0,
-                    "hp_": 1, "hp": 0.1,
+                    "hp_": 0.9, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.3, "enerRech_": 1,
+                    "eleMas": 0.4, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "hp_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
                 bestSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4"],
@@ -3494,7 +3799,7 @@ const CHARACTER_CONFIG = {
                     { role: "Support", name: "Illuga", element: "geo" },
                     {
                         role: "Support",
-                        name: "Gorou",
+                        name: "Linnea",
                         element: "geo",
                     }
                 ]
@@ -3555,25 +3860,6 @@ const CHARACTER_CONFIG = {
                     }
                 ]
             },
-            {
-                category: "Constellations",
-                buffs: [
-                    {
-                        label: "C1 : Nom de la constellation",
-                        cons: 1, // IMPORTANT : Niveau requis (1 à 6)
-                        description: "Description...",
-                        stats: {
-                            dmgBonus: 0.10 // Simulation de gain DPS
-                        }
-                    },
-                    {
-                        label: "C2 : Nom de la constellation",
-                        cons: 2,
-                        description: "...",
-                        stats: { /* ... */ }
-                    }
-                ]
-            }
         ],
 
         // --- 3. ARCHÉTYPES (BUILDS) ---
@@ -3587,8 +3873,8 @@ const CHARACTER_CONFIG = {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0,
                     "hp_": 0, "hp": 0,
-                    "def_": 1, "def": 0.1,
-                    "eleMas": 0.5, "enerRech_": 0.2,
+                    "def_": 0.8, "def": 0.1,
+                    "eleMas": 0.4, "enerRech_": 0.3,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -3597,11 +3883,17 @@ const CHARACTER_CONFIG = {
                     "heal_": 0
                 },
 
+                idealMainStats: {
+                    "EQUIP_SHOES": ["def_"],
+                    "EQUIP_RING": ["def_"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_"]
+                },
+
                 bestSets: ["NightOfTheSkysUnveiling:4"],
                 goodSets: ["HuskOfOpulentDreams:4", "HuskOfOpulentDreams:2", "NightOfTheSkysUnveiling:2", "WanderersTroupe:2"], // Viables
 
                 // Cible ER recommandée (%)
-                er_req: 110,
+                er_req: 120,
 
                 // Composition d'équipe (4 Slots)
                 team: [
@@ -3714,7 +4006,7 @@ const CHARACTER_CONFIG = {
                 description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
@@ -3759,7 +4051,7 @@ const CHARACTER_CONFIG = {
                 description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
@@ -3804,7 +4096,7 @@ const CHARACTER_CONFIG = {
                 description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
@@ -3849,7 +4141,7 @@ const CHARACTER_CONFIG = {
                 description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 1, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
@@ -3956,14 +4248,20 @@ const CHARACTER_CONFIG = {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
                     "hp_": 0, "hp": 0,
-                    "def_": 1, "def": 0.1,
-                    "eleMas": 0.5, "enerRech_": 0.2, // Ajuster selon besoin
+                    "def_": 0.8, "def": 0.1,
+                    "eleMas": 0.4, "enerRech_": 0.1, // Ajuster selon besoin
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
 
                     "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["def_"],
+                    "EQUIP_RING": ["def_"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_"]
                 },
 
                 // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
