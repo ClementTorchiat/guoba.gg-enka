@@ -848,7 +848,8 @@ function applyBonus(buffed, baseStats, bonuses, processScaling) {
         if (typeof val === 'object') {
             if (!processScaling) continue;
             if (statKey.endsWith('_scaling')) {
-                const targetStat = mapTargetKey(statKey.replace('_bonus_scaling', ''));
+                const targetStatRaw = statKey.replace('_bonus_scaling', '');
+                const targetStat = getShortKey(targetStatRaw) || mapTargetKey(targetStatRaw);
                 const sourceStat = mapTargetKey(val.source);
                 if (targetStat && sourceStat) {
                     const rawValue = buffed[sourceStat] || 0;
@@ -871,7 +872,7 @@ function applyBonus(buffed, baseStats, bonuses, processScaling) {
             else if (statKey === "critRate_" || statKey === "critDMG_" || statKey === "enerRech_") {
                 let shortKey = getShortKey(statKey);
                 if(shortKey) buffed[shortKey] += val * 100;
-            } // <--- L'accolade qui manquait tout à l'heure est bien là !
+            }
             else if (statKey === "eleMas") {
                 buffed.em += val;
             }
@@ -1093,7 +1094,7 @@ function calculateMaxTheoreticalScore(persoObj, config) {
     });
 
     // 3. On calcule le score de ce set divin via ton propre moteur de calcul
-    let fakePerso = { ...persoObj, artefacts: perfectArtefacts };
+    let fakePerso = { ...persoObj, artefacts: perfectArtefacts, isSimulation: true };
     let simulation = calculateCharacterScore(fakePerso, config);
 
     return {
@@ -1103,28 +1104,34 @@ function calculateMaxTheoreticalScore(persoObj, config) {
 }
 
 function getCritAdvice(cr, cd, config) {
-    // 1. Vérification de l'importance du Crit
-    // On regarde si le poids du Taux Crit est défini et s'il est significatif (>= 1)
     const crWeight = (config && config.weights && config.weights['critRate_']) || 0;
 
     if (crWeight < 1) {
-        return {
-            color: '#888',
-            msg: "Ce personnage ne dépend pas des statistiques critiques."
-        };
+        return { color: '#888', msg: "Ce personnage ne dépend pas des statistiques critiques." };
     }
 
     const roundedCR = Math.round(cr * 10) / 10;
+    const roundedCD = Math.round(cd);
 
-    if (roundedCR > 100) return { color: '#ff4d4d', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Dépasser 100% est inutile.` };
-    if (roundedCR === 100) return { color: '#00FFFF', msg: `Taux CRIT parfait. Orientez-vous sur l'obtention d'un maximum de DGT CRIT.` };
-    if (roundedCR >= 95) return { color: '#3b82f6', msg: "Taux CRIT excellent (plus de 95%). Orientez-vous sur l'obtention d'un maximum de DGT CRIT." };
-    if (roundedCR >= 90) return { color: '#22c55e', msg: "Taux CRIT largement suffisant (plus de 90%). Orientez-vous sur l'obtention d'un maximum de DGT CRIT." };
-    if (roundedCR >= 80) return { color: '#22c55e', msg: "Taux CRIT suffisant (plus de 80%). En obtenir plus est utile, mais vous pouvez vous orienter sur l'obtention de DGT CRIT." };
-    if (roundedCR >= 70) return { color: '#eab308', msg: "Taux CRIT passable (plus de 70%). Vous devriez essayer d'en obtenir plus." };
-    if (roundedCR >= 60) return { color: '#ffb13b', msg: "Taux CRIT insuffisant (plus de 60%). Il est conseillé d'en obtenir plus." };
-    if (roundedCR < 60) return { color: '#ff4d4d', msg: "Taux CRIT largement insuffisant (59% ou moins). Obtenez en plus avant d'aller chercher du DGT CRIT." };
-    return { color: '#888', msg: "Analyse impossible" };
+    if (roundedCR > 100) return { color: '#ef4444', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Le surplus a été déduit de votre score global.` };
+
+    if (roundedCR === 100) return { color: '#00FFFF', msg: `Taux CRIT parfait. Misez absolument tout sur les DGT CRIT.` };
+
+    if (roundedCR >= 90) {
+        if (roundedCD < 160) return { color: '#eab308', msg: `Taux CRIT excellent (${roundedCR}%), mais vos DGT CRIT (${roundedCD}%) sont trop faibles. Rééquilibrez !` };
+        return { color: '#22c55e', msg: "Taux CRIT largement suffisant (plus de 90%). Cherchez un maximum de DGT CRIT." };
+    }
+
+    if (roundedCR >= 80) return { color: '#22c55e', msg: "Taux CRIT suffisant (plus de 80%). En obtenir plus est utile, mais le DGT CRIT devient prioritaire." };
+
+    if (roundedCR >= 70) {
+        if (roundedCD > 200) return { color: '#f97316', msg: `Vous avez beaucoup de DGT CRIT (${roundedCD}%) mais votre Taux CRIT (${roundedCR}%) est trop bas pour en profiter !` };
+        return { color: '#eab308', msg: "Taux CRIT passable (plus de 70%). Essayez de vous rapprocher des 80%." };
+    }
+
+    if (roundedCR >= 60) return { color: '#f97316', msg: "Taux CRIT insuffisant (plus de 60%). Vos grosses attaques rateront trop souvent leur coup critique." };
+
+    return { color: '#ef4444', msg: "Taux CRIT largement insuffisant (moins de 60%). Fixez ce problème d'urgence avant de chercher d'autres stats." };
 }
 
 function getSetRecommendation(activeSets, config) {
@@ -1143,32 +1150,27 @@ function getMainStatAdvice(persoObj, config) {
     const slotsToCheck = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
     let warnings = [];
 
+    // Sécurité : si tu as oublié de configurer idealMainStats, on ne dit rien pour éviter de planter
+    if (!config.idealMainStats) return null;
+
     persoObj.artefacts.forEach(art => {
         if (!slotsToCheck.includes(art.type)) return;
 
         const currentKey = art.mainStat.key;
-        let weight = config.weights[currentKey];
-        if (weight === undefined && currentKey.includes("_dmg_")) weight = config.weights["elemental_dmg_"];
+        const allowedMainStats = config.idealMainStats[art.type] || [];
 
-        // Si Mainstat suboptimale
-        if (!weight || weight < 1) {
-            const possibleStats = SLOT_POSSIBLE_MAIN_STATS[art.type];
-            if (!possibleStats) return;
+        // Si la stat actuelle de la pièce n'est pas dans la liste des stats idéales de ton JSON
+        if (!allowedMainStats.includes(currentKey)) {
+            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
 
-            const idealStats = Object.entries(config.weights)
-                .filter(([statKey, statWeight]) => {
-                    if (statWeight !== 1) return false;
-                    if (statKey.includes("_dmg_") && statKey !== "elemental_dmg_") return possibleStats.includes(statKey) || possibleStats.includes("pyro_dmg_");
-                    if (statKey === "elemental_dmg_") return art.type === "EQUIP_RING";
-                    return possibleStats.includes(statKey);
-                })
-                .map(([statKey]) => (statKey === "elemental_dmg_") ? "Dégâts Élem." : (STAT_LABELS[statKey] || statKey));
+            // On traduit les clés (ex: "atk_") en textes propres ("ATQ %")
+            const cleanList = allowedMainStats.map(statKey => STAT_LABELS[statKey] || statKey).join(" / ");
 
-            if (idealStats.length > 0) {
-                const pieceName = ARTIFACT_TYPE_MAPPING[art.type];
-                const cleanList = [...new Set(idealStats)].join(" / ");
-                warnings.push({ piece: pieceName, current: art.mainStat.label, better: cleanList });
-            }
+            warnings.push({
+                piece: pieceName,
+                current: art.mainStat.label,
+                better: cleanList
+            });
         }
     });
 
@@ -2888,6 +2890,7 @@ function renderGlobalEvaluation(playerInfo) {
     let fourStarCount = 0, maxFriendshipCount = 0;
     let archonCount = 0, favoniusCount = 0, aloyFound = false, internFound = false;
     let elementCount = {};
+    let akashamaxxing = false; // <-- NOUVELLE VARIABLE ICI
 
     const archonNames = ["Venti", "Zhongli", "Raiden", "Nahida", "Furina", "Mavuika"];
 
@@ -2926,6 +2929,19 @@ function renderGlobalEvaluation(playerInfo) {
             if (p.weights && p.weights['critRate_'] > 0.5 && p.weights['critDMG_'] > 0.5) {
                 if (p.combatStats.cr < 40 && p.combatStats.cd > 200) casino = true;
             }
+
+            // --- NOUVEAU : DÉTECTION AKASHAMAXXING ---
+            if (p.weights) {
+                // On vérifie que le CRIT n'a absolument aucune valeur pour ce build (poids à 0)
+                const noCritNeeded = (!p.weights['critRate_'] || p.weights['critRate_'] === 0) && (!p.weights['critDMG_'] || p.weights['critDMG_'] === 0);
+                // On vérifie que le joueur en a quand même bourré dans ses stats
+                const tooMuchCrit = (p.combatStats.cr >= 40 || p.combatStats.cd >= 100);
+
+                if (noCritNeeded && tooMuchCrit) {
+                    akashamaxxing = true;
+                }
+            }
+            // ------------------------------------------
 
             const elem = p.combatStats.dmgBonusKey ? p.combatStats.dmgBonusKey.replace('_dmg_', '') : null;
             if (elem) elementCount[elem] = (elementCount[elem] || 0) + 1;
@@ -3012,6 +3028,10 @@ function renderGlobalEvaluation(playerInfo) {
     if (internFound) addBadge("👶", "Le Stagiaire", "Ce personnage de bas niveau s'est perdu dans votre vitrine.", "rgba(107, 114, 128, 0.6)");
     if (aloyFound) addBadge("⏳", "Voyageur Temporel", "Aloy détectée. Vous êtes l'un des 12 derniers joueurs à vous souvenir d'elle.", "rgba(107, 114, 128, 0.6)");
     if (globalPersoData.some(p => p.ghettoKing)) addBadge("🪵", "Tiers-Monde", "Un personnage niveau 90 avec une arme 3★. Si c'est bête mais que ça marche...", "rgba(139, 69, 19, 0.6)");
+
+    // --- NOUVEAU BADGE ICI ---
+    if (akashamaxxing) addBadge("📈", "Akashamaxxing", "Vous avez bourré les stats critiques sur un personnage qui n'en a pas besoin. Tout pour le Top 1%, rien pour l'équipe.", "linear-gradient(135deg, rgba(236,72,153,0.7), rgba(168,85,247,0.7))");
+    // -------------------------
 
     // Le badge Premium
     if (holyGrail) addBadge("🏆", "Le Saint Graal", "Possède un artéfact dépassant les 50 de Valeur Critique (CV). Une véritable relique divine.", "linear-gradient(135deg, rgba(255,215,0,0.8), rgba(255,255,255,0.7), rgba(255,215,0,0.8))");
@@ -3770,6 +3790,7 @@ function renderShowcase(index) {
                         
                                 ${(() => {
             const adv = getMainStatAdvice(p, config);
+            if (!adv) return '';
             const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
             return `
                                     <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${color};">

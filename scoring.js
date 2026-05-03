@@ -67,7 +67,7 @@ function calculateCharacterScore(perso, config, maxRolls = 45.0) {
 
         // C. BONUS MAINSTAT (Fribbels)
         if (VARIABLE_PIECES.includes(art.type)) {
-            const mainStatBonus = calculateMainStatBonus(art, config.weights);
+            const mainStatBonus = calculateMainStatBonus(art, config.weights, config.idealMainStats);
             totalScore += mainStatBonus;
         }
 
@@ -75,6 +75,32 @@ function calculateCharacterScore(perso, config, maxRolls = 45.0) {
             setsCounter[art.setKey] = (setsCounter[art.setKey] || 0) + 1;
         }
     });
+
+    // --- NOUVEAU : MALUS D'OVERCAP CRITIQUE ---
+    let overcapScorePenalty = 0;
+    let overcapRollsPenalty = 0;
+
+    // On n'applique pas le malus lors de la simulation du score parfait (car le build parfait ne ferait pas d'overcap)
+    if (!perso.isSimulation && perso.buffedStats && perso.buffedStats.cr > 100 && config.weights["critRate_"] > 0) {
+        const excessCR = perso.buffedStats.cr - 100;
+        const crWeight = config.weights["critRate_"];
+
+        // On calcule combien de points de score cet excédent représente
+        overcapScorePenalty = excessCR * crWeight * (SCORING_NORMS["critRate_"] || 2);
+
+        // On calcule combien de "Rolls" cet excédent représente (1 roll max CR = 3.9)
+        const maxCrRoll = (window.MAX_ROLLS && window.MAX_ROLLS["critRate_"]) ? window.MAX_ROLLS["critRate_"] : 3.9;
+        overcapRollsPenalty = (excessCR / maxCrRoll) * crWeight;
+
+        // On applique la punition
+        totalScore -= overcapScorePenalty;
+        totalRolls -= overcapRollsPenalty;
+
+        // Sécurité pour ne pas avoir un compte en négatif
+        if (totalScore < 0) totalScore = 0;
+        if (totalRolls < 0) totalRolls = 0;
+    }
+    // --- FIN NOUVEAU ---
 
     // 3. Bonus de Set (Multiplicateur)
     let setMultiplier = 0.5;
@@ -98,16 +124,22 @@ function calculateCharacterScore(perso, config, maxRolls = 45.0) {
         grade: getGlobalGrade(totalRolls, maxRolls),
         setBonus: activeBonuses,
         setMultiplier: setMultiplier,
-        totalRolls: totalRolls.toFixed(1)
+        totalRolls: totalRolls.toFixed(1),
+        overcapPenalty: parseFloat((overcapScorePenalty * setMultiplier).toFixed(1))
     };
 }
 
 // --- FONCTIONS CALCULS ---
 
-function calculateMainStatBonus(artifact, weights) {
+function calculateMainStatBonus(artifact, weights, idealMainStats) {
     let key = artifact.mainStat.key;
+    if (idealMainStats && idealMainStats[artifact.type] && idealMainStats[artifact.type].includes(key)) {
+        return MAINSTAT_BASE_VALUE * 1;
+    }
     let w = weights[key];
-    if (w === undefined && key.includes("_dmg_")) { w = weights["elemental_dmg_"]; }
+    if (w === undefined && key.includes("_dmg_")) {
+        w = weights["elemental_dmg_"];
+    }
     w = w || 0;
     if (w > 0) return MAINSTAT_BASE_VALUE * w;
     return 0;
