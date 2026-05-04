@@ -128,8 +128,8 @@ const RESONANCE_DATA = {
     "hydro": { name: "Eau médicinale (Hydro)", stats: { hp_: 0.25 } },
     "dendro": { name: "Liane de la sagesse (Dendro)", stats: { eleMas: 50 } },
     "electro": { name: "Tonnerre puissant (Électro)", stats: {} },
-    "cryo": { name: "Glace brisée (Cryo)", stats: { critRate_: 0.15 } },
-    "geo": { name: "Roc inamovible (Géo)", stats: { dmgBonus: 0.15 } },
+    "cryo": { name: "Glace brisée (Cryo)", active: false, stats: { critRate_: 0.15 } },
+    "geo": { name: "Roc inamovible (Géo)", stats: {} },
     "anemo": { name: "Vents de la célérité (Anémo)", stats: {} }
 };
 
@@ -529,18 +529,234 @@ function deleteRecentProfile(uid, event) {
     renderHome(); // On rafraîchit l'affichage
 }
 
+function showSkeletonCard() {
+    // ── 1. SIDEBAR : 12 faux char-cards ───────────────────────────────────
+    const sidebarList = document.getElementById('sidebar-list');
+    if (sidebarList) {
+        sidebarList.innerHTML = Array(12).fill(0).map(() => `
+            <div class="char-card">
+                <div class="sk" style="width:52px; height:52px; border-radius:8px;"></div>
+                <div class="char-card-container">
+                    <div class="sk" style="width:90px; height:14px;"></div>
+                    <div class="sk" style="width:48px; height:12px;"></div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ── 2. TOP HEADER AREA (global-evaluation + player-profile) ──────────
+    let topHeader = document.getElementById('top-header-area');
+    const pp = document.getElementById('player-profile');
+    if (!topHeader && pp) {
+        topHeader = document.createElement('div');
+        topHeader.id = 'top-header-area';
+        const evalDiv = document.createElement('div');
+        evalDiv.id = 'global-evaluation';
+        topHeader.appendChild(evalDiv);
+        pp.parentNode.insertBefore(topHeader, pp);
+        topHeader.appendChild(pp);
+    }
+    if (topHeader) topHeader.style.display = 'flex';
+
+    const evalContainer = document.getElementById('global-evaluation');
+    if (evalContainer) {
+        evalContainer.style.display = 'flex';
+        evalContainer.style.flex = '1';
+        evalContainer.innerHTML = `
+            <div class="sk" style="width:100%; height:76px; border-radius:8px;"></div>
+        `;
+    }
+
+    if (pp) {
+        pp.innerHTML = `
+            <div class="sk" style="width:400px; height:76px; border-radius:8px;"></div>
+        `;
+    }
+
+    // ── 3. TOOLBAR CONTROLS (dropdown build + équipe + ER) ───────────────
+    const toolbar = document.getElementById('toolbar-controls');
+    const menu = document.querySelector('.main-content-menu');
+    if (menu) menu.style.display = 'flex';
+    if (toolbar) {
+        toolbar.innerHTML = `
+            <div class="sk" style="width:350px; height:50px; border-radius:8px;"></div>
+            <div style="display:flex; gap:5px; padding:5px; background:#2C2D32; border-radius:8px;">
+                ${Array(4).fill(0).map(() =>
+            `<div class="sk" style="width:40px; height:40px; border-radius:5px;"></div>`
+        ).join('')}
+            </div>
+            <div class="sk" style="width:106px; height:50px; border-radius:8px;"></div>
+        `;
+    }
+
+    // ── 4. MAIN CONTAINER : la .top-row (856px) ───────────────────────────
+    const container = document.getElementById('main-container');
+    if (!container) return;
+
+    // 9 lignes de stats (colonne milieu, panel stats de base)
+    const statRows = Array(9).fill(0).map(() => `
+        <div style="display:flex; align-items:center; gap:8px; height:20px;">
+            <div class="sk" style="width:18px; height:18px; border-radius:50%;"></div>
+            <div class="sk" style="flex:1; height:10px;"></div>
+            <div class="sk" style="width:50px; height:10px;"></div>
+        </div>
+    `).join('');
+
+    // 5 lignes de stats combat
+    const combatRows = Array(5).fill(0).map(() => `
+        <div style="display:flex; align-items:center; gap:8px; height:18px;">
+            <div class="sk" style="width:18px; height:18px; border-radius:50%;"></div>
+            <div class="sk" style="flex:1; height:10px;"></div>
+            <div class="sk" style="width:55px; height:10px;"></div>
+        </div>
+    `).join('');
+
+    // 5 cartes artéfacts (240×280, grille 2 colonnes)
+    const artifactCards = Array(5).fill(0).map(() => `
+        <div style="width:240px; min-width:240px; height:280px; border:1px solid #2d3342; border-radius:8px; padding:12px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
+            <div style="display:flex; gap:12px; align-items:center; height:50px;">
+                <div class="sk" style="width:48px; height:48px; border-radius:6px;"></div>
+                <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
+                    <div class="sk" style="height:12px; width:80%;"></div>
+                    <div class="sk" style="height:10px; width:65%; background:rgba(255,177,59,0.15);"></div>
+                    <div class="sk" style="height:9px;  width:30%;"></div>
+                </div>
+            </div>
+            <div style="border-top:1px solid #2d3342;"></div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="sk" style="height:10px; width:45%;"></div>
+                <div class="sk" style="height:10px; width:28%;"></div>
+            </div>
+            <div style="border-top:1px solid #2d3342;"></div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                ${Array(4).fill(0).map(() => `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; gap:5px; align-items:center;">
+                            <div class="sk" style="width:17px; height:17px; border-radius:3px;"></div>
+                            <div class="sk" style="height:10px; width:75px;"></div>
+                        </div>
+                        <div class="sk" style="height:10px; width:35px;"></div>
+                    </div>
+                `).join('')}
+            </div>
+            <div style="border-top:1px solid #2d3342;"></div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="sk" style="height:10px; width:45px;"></div>
+                <div class="sk" style="height:10px; width:55px;"></div>
+            </div>
+        </div>
+    `).join('');
+
+    // 1 carte buffs (240×280)
+    const buffsCard = `
+        <div style="width:240px; min-width:240px; height:280px; border:1px solid #2d3342; border-radius:8px; padding:12px; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;">
+            <div class="sk" style="height:14px; width:60%;"></div>
+            <div class="sk" style="height:9px; width:90%;"></div>
+            <div class="sk" style="height:9px; width:80%;"></div>
+            <div style="border-top:1px solid #2d3342; margin:2px 0;"></div>
+            ${Array(5).fill(0).map(() => `
+                <div style="display:flex; justify-content:space-between; align-items:center; height:28px; background:rgba(0,0,0,0.2); border-radius:8px; padding:0 8px; box-sizing:border-box;">
+                    <div class="sk" style="height:10px; width:70%;"></div>
+                    <div class="sk" style="width:30px; height:16px; border-radius:34px;"></div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+
+    container.innerHTML = `
+        <div class="top-row">
+
+            <!-- Fond neutre (remplace le splash art blurré) -->
+            <div style="position:absolute; inset:0; z-index:0; background:#1e2024;"></div>
+
+            <!-- Colonne gauche : portrait (350×720) + arme (350×128) -->
+            <div style="display:flex; flex-direction:column; gap:8px; flex-shrink:0; position:relative; z-index:1;">
+                <div class="sk" style="width:350px; height:720px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);"></div>
+                <div class="sk" style="width:350px; height:128px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);"></div>
+            </div>
+
+            <!-- Colonne milieu : stats + score + skills + combat (299px) -->
+            <div style="width:299px; flex-shrink:0; display:flex; flex-direction:column; gap:8px; position:relative; z-index:1;">
+
+                <!-- Stats de base (flex:1 pour occuper le max) -->
+                <div style="flex:1; border-radius:8px; border:1px solid rgba(255,255,255,0.15); padding:12px; display:flex; flex-direction:column; gap:11px; background:rgba(30,32,36,0.8);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; height:40px; margin-bottom:2px;">
+                        <div style="display:flex; gap:4px; align-items:center;">
+                            <div class="sk" style="width:25px; height:25px; border-radius:50%;"></div>
+                            <div class="sk" style="width:29px; height:29px; border-radius:50%;"></div>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:5px; align-items:flex-end;">
+                            <div class="sk" style="width:60px; height:11px;"></div>
+                            <div class="sk" style="width:32px; height:11px;"></div>
+                        </div>
+                    </div>
+                    <div class="sk" style="width:55%; height:22px; border-radius:6px;"></div>
+                    <div class="sk" style="width:50%; height:11px;"></div>
+                    <div style="display:flex; flex-direction:column; gap:9px;">
+                        ${statRows}
+                    </div>
+                </div>
+
+                <!-- Score -->
+                <div style="border-radius:8px; border:1px solid rgba(255,255,255,0.15); padding:10px 10px 8px 7px; display:flex; flex-direction:column; gap:8px; background:rgba(30,32,36,0.8);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="sk" style="width:70px; height:12px;"></div>
+                        <div class="sk" style="width:65px; height:12px;"></div>
+                    </div>
+                    <div class="sk" style="height:8px; width:100%; border-radius:4px;"></div>
+                </div>
+
+                <!-- Skills (3 aptitudes 64×64) -->
+                <div style="border-radius:8px; border:1px solid rgba(255,255,255,0.15); padding:10px; display:flex; justify-content:space-around; align-items:center; background:rgba(30,32,36,0.8);">
+                    ${Array(3).fill(0).map(() => `
+                        <div style="display:flex; flex-direction:column; align-items:center; gap:8px; margin-bottom:11px;">
+                            <div class="sk" style="width:64px; height:64px; border-radius:50%;"></div>
+                            <div class="sk" style="width:28px; height:10px; border-radius:34px;"></div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <!-- Stats en combat -->
+                <div style="border-radius:8px; border:1px solid rgba(255,255,255,0.15); padding:10px; display:flex; flex-direction:column; gap:9px; background:rgba(30,32,36,0.8);">
+                    ${combatRows}
+                </div>
+            </div>
+
+            <!-- Colonne droite : équipement (grille 2×240px) -->
+            <div class="equipment-area" style="position:relative; z-index:1;">
+                ${artifactCards}
+                ${buffsCard}
+            </div>
+
+        </div>
+    `;
+}
+
 async function loadGameData() {
     const loader = document.getElementById('loading-msg');
     if(loader) loader.innerText = "Chargement V2 (Indexation)...";
     window.iconToNameHash = {};
+    const CACHE_KEY = 'guoba_gamedata_v1';
+    const CACHE_TTL = 24 * 60 * 60 * 1000;
     try {
-        const t = Date.now();
+        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+        if (cached && (Date.now() - cached.ts < CACHE_TTL)) {
+            console.log("⚡ Données jeu chargées depuis le cache local !");
+            charData = cached.chars;
+            locData = cached.locs;
+            window.namecardsData = cached.namecards;
+            window.pfpsData = cached.pfps;
+            window.iconToNameHash = cached.iconToNameHash;
+            if(loader) loader.innerText = "";
+            return;
+        }
+
         const [chars, locs, relics, namecards, pfps] = await Promise.all([
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/avatars.json?t=${t}`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json?t=${t}`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/relics.json?t=${t}`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/namecards.json?t=${t}`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/pfps.json?t=${t}`).then(r => r.json())
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/avatars.json`).then(r => r.json()),
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json`).then(r => r.json()),
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/relics.json`).then(r => r.json()),
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/namecards.json`).then(r => r.json()),
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/pfps.json`).then(r => r.json())
         ]);
         charData = chars;
         locData = locs;
@@ -557,6 +773,11 @@ async function loadGameData() {
                 }
             });
         }
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+            ts: Date.now(),
+            chars, locs, namecards, pfps,
+            iconToNameHash: window.iconToNameHash
+        }));
         if(loader) loader.innerText = "";
         console.log(`✅ API V2 Chargée : ${Object.keys(window.iconToNameHash).length} artéfacts indexés.`);
     } catch (e) {
@@ -635,13 +856,19 @@ async function fetchUserData(optionalUid) {
         toggleSearchIcon(true);
         return; // On arrête la fonction ici, pas besoin du réseau !
     }
+
+    showSkeletonCard();
+
     // ----------------------------------------
 
     if(loader) loader.innerText = "Récupération...";
 
-    // 3. Appel réseau si pas de cache
-    const urlCible = `https://enka.network/api/uid/${uid}?t=${Date.now()}`;
-    const proxy = `https://corsproxy.io/?${encodeURIComponent(urlCible)}`;
+    // 3. Ancien proxy
+    // const urlCible = `https://enka.network/api/uid/${uid}?t=${Date.now()}`;
+    // const proxy = `https://corsproxy.io/?${encodeURIComponent(urlCible)}`;
+
+    //3. Nouveau proxy
+    const proxy = `https://guobagg.clement-torchiat.workers.dev/?uid=${uid}`;
 
     try {
         const res = await fetch(proxy);
@@ -2140,10 +2367,7 @@ function processData(data) {
         const addBuffs = (sourceName, category, configData, selectMode = 'standard', weaponRank = 1) => {
             const resolveStats = (statsObj) => {
                 const resolved = {};
-                if (!statsObj) {
-                    console.warn(`⚠️ Attention : Le buff "${sourceName} - ${category}" n'a pas de stats définies. Ignoré.`);
-                    return resolved;
-                }
+                if (!statsObj) return resolved;
                 for (const [k, v] of Object.entries(statsObj)) {
                     if (typeof v === 'object' && v.percent) {
                         resolved[k] = { ...v, percent: getRefinedValue(v.percent, weaponRank) };
@@ -2159,16 +2383,8 @@ function processData(data) {
                     if (!item) return;
                     const finalStats = resolveStats(item.stats);
                     let name = item.label || `Buff ${idx + 1}`;
-                    if (!item.label) {
-                        name = Object.entries(finalStats).map(([k, v]) => {
-                            if(typeof v === 'object' && v.percent) return `${STAT_LABELS[k]||k} (Scaling)`;
-                            const l = STAT_LABELS[k] || k;
-                            const val = (typeof v === 'number' && v < 2) ? Math.round(v*100)+'%' : v;
-                            return `${l} +${val}`;
-                        }).join(", ");
-                    }
-                    let isActive = true;
-                    if (selectMode === 'exclusive') {
+                    let isActive = item.active !== undefined ? item.active : true;
+                    if (selectMode === 'exclusive' && item.active === undefined) {
                         isActive = (idx === configData.length - 1);
                     }
                     buffs.push({
@@ -2182,6 +2398,7 @@ function processData(data) {
                 });
             } else {
                 const finalStats = resolveStats(configData);
+                let isActive = configData.active !== undefined ? configData.active : true;
                 for (const [statKey, val] of Object.entries(finalStats)) {
                     if (typeof val === 'object' && statKey.endsWith('_scaling')) {
                         const targetStat = statKey.replace('_bonus_scaling', '');
@@ -2189,7 +2406,7 @@ function processData(data) {
                         buffs.push({
                             id: `${category}_${statKey}`, category,
                             name: `${STAT_LABELS[targetStat]} (+${percentDisplay} ${val.source})`,
-                            bonuses: { [statKey]: val }, active: true, selectMode: selectMode
+                            bonuses: { [statKey]: val }, active: isActive, selectMode: selectMode
                         });
                         continue;
                     }
@@ -2198,7 +2415,7 @@ function processData(data) {
                         buffs.push({
                             id: `${category}_${statKey}`, category,
                             name: `${STAT_LABELS[statKey]} (+${valDisplay})`,
-                            bonuses: { [statKey]: val }, active: true, selectMode: selectMode
+                            bonuses: { [statKey]: val }, active: isActive, selectMode: selectMode
                         });
                     }
                 }
@@ -2505,7 +2722,6 @@ function switchBuild(charIndex, buildKey) {
     renderShowcase(idx);
 }
 
-// --- LOGIQUE DE RÉSONANCE AUTOMATIQUE ---
 // --- LOGIQUE DE RÉSONANCE (Compatible Flex Slots) ---
 function updateResonanceBuffs(p, teamData) {
     if (!teamData) return;
@@ -2547,17 +2763,16 @@ function updateResonanceBuffs(p, teamData) {
         if (total >= 2) {
             const resData = RESONANCE_DATA[elem];
 
-            // EST-CE ACTIF PAR DÉFAUT ?
-            // Oui si on a 2 persos GARANTIS (ex: Arlecchino + Bennett)
-            // Non si ça dépend d'un Flex Slot (ex: Yelan + [Hydro/Cryo])
-            const isActive = (countG >= 2);
+            // CORRECTION ICI : On lit la valeur 'active' du dictionnaire en priorité.
+            // Si elle n'existe pas, on retombe sur la logique "2 persos garantis = true"
+            const isActive = resData.active !== undefined ? resData.active : (countG >= 2);
 
             p.buffs.push({
                 id: `res_${elem}`,
                 category: "Résonance",
                 name: resData.name,
                 bonuses: resData.stats,
-                active: isActive, // Auto-active si garanti, sinon décoché
+                active: isActive,
                 selectMode: 'standard'
             });
         }
