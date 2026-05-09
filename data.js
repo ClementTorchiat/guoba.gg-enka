@@ -36,3 +36,32 @@ window.MAX_ROLLS = {
 };
 
 window.BASE_ROLLS = BASE_ROLLS;
+
+// Valeurs 4★ (issues de subStatsRolls.json rareté "4")
+const BASE_ROLLS_4 = {
+    "critRate_": [2.18, 2.49, 2.80, 3.11],
+    "critDMG_":  [4.35, 4.97, 5.60, 6.22],
+    "atk_":      [3.26, 3.73, 4.20, 4.66],
+    "hp_":       [3.26, 3.73, 4.20, 4.66],
+    "def_":      [4.08, 4.66, 5.25, 5.83],
+    "enerRech_": [3.63, 4.14, 4.66, 5.18],
+    "eleMas":    [13.06, 14.92, 16.79, 18.65],
+    "atk":       [10.89, 12.45, 14.00, 15.56],
+    "hp":        [167.30, 191.20, 215.10, 239.00],
+    "def":       [12.96, 14.82, 16.67, 18.52]
+};
+
+window.MAX_ROLLS_4 = {
+    "critRate_": 3.11,
+    "critDMG_":  6.22,
+    "atk_":      4.66,
+    "hp_":       4.66,
+    "def_":      5.83,
+    "enerRech_": 5.18,
+    "eleMas":    18.65,
+    "atk":       15.56,
+    "hp":        239.00,
+    "def":       18.52
+};
+
+window.BASE_ROLLS_4 = BASE_ROLLS_4;

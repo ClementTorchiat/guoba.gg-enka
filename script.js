@@ -52,23 +52,39 @@ function createIcon(key) {
 }
 
 // Fonction ultime : Trouve le nombre ET la valeur de chaque roll
-function getRollDetails(key, value) {
-    const baseRollsDef = window.BASE_ROLLS || (typeof BASE_ROLLS !== 'undefined' ? BASE_ROLLS : null);
+const KEY_TO_FIGHT_PROP = {
+    'hp':        'FIGHT_PROP_HP',
+    'hp_':       'FIGHT_PROP_HP_PERCENT',
+    'atk':       'FIGHT_PROP_ATTACK',
+    'atk_':      'FIGHT_PROP_ATTACK_PERCENT',
+    'def':       'FIGHT_PROP_DEFENSE',
+    'def_':      'FIGHT_PROP_DEFENSE_PERCENT',
+    'critRate_': 'FIGHT_PROP_CRITICAL',
+    'critDMG_':  'FIGHT_PROP_CRITICAL_HURT',
+    'enerRech_': 'FIGHT_PROP_CHARGE_EFFICIENCY',
+    'eleMas':    'FIGHT_PROP_ELEMENT_MASTERY'
+};
 
-    // Fallback de sécurité
+// Stats plate (pas de ×100)
+const FLAT_STATS = new Set(['hp', 'atk', 'def', 'eleMas']);
+
+function getRollDetails(key, value, rarity = 5) {
+    // Sélection des bonnes valeurs de référence selon la rareté
+    const baseRollsDef = rarity === 4
+        ? (window.BASE_ROLLS_4 || BASE_ROLLS_4)
+        : (window.BASE_ROLLS || BASE_ROLLS);
+
     if (!baseRollsDef || !baseRollsDef[key]) {
-        return { count: 1, rolls: [value] };
+        return { k: 1, rolls: [value] };
     }
 
     const possibleRolls = baseRollsDef[key];
     let bestMatch = { k: 1, diff: Infinity, rolls: [value] };
 
-    // Recherche récursive des combinaisons
     function checkCombinations(k, currentSum, startIndex, depth, currentRolls) {
         if (depth === k) {
             const diff = Math.abs(currentSum - value);
             if (diff < bestMatch.diff) {
-                // On clone le tableau des rolls actuels
                 bestMatch = { k: k, diff: diff, rolls: [...currentRolls] };
             }
             return;
@@ -76,7 +92,7 @@ function getRollDetails(key, value) {
         for (let i = startIndex; i < 4; i++) {
             currentRolls.push(possibleRolls[i]);
             checkCombinations(k, currentSum + possibleRolls[i], i, depth + 1, currentRolls);
-            currentRolls.pop(); // Backtracking
+            currentRolls.pop();
         }
     }
 
@@ -88,9 +104,8 @@ function getRollDetails(key, value) {
     return bestMatch;
 }
 
-// L'ancienne fonction qui fait le pont pour ne pas casser ton code actuel
-function getRollCount(key, value) {
-    return getRollDetails(key, value).k;
+function getRollCount(key, value, rarity = 5) {
+    return getRollDetails(key, value, rarity).k;
 }
 
 
@@ -124,13 +139,13 @@ const STAT_MAPPING = { "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_", "F
 const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %", "eleMas": "Maîtrise élémentaire", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT", "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "Bonus de DGT Pyro", "hydro_dmg_": "Bonus de DGT Hydro", "cryo_dmg_": "Bonus de DGT Cryo", "electro_dmg_": "Bonus de DGT Électro", "anemo_dmg_": "Bonus de DGT Anémo", "geo_dmg_": "Bonus de DGT Géo", "dendro_dmg_": "Bonus de DGT Dendro", "physical_dmg_": "Bonus de DGT Physiques" };
 
 const RESONANCE_DATA = {
-    "pyro": { name: "Flammes de la ferveur (Pyro)", stats: { atk_: 0.25 } },
-    "hydro": { name: "Eau médicinale (Hydro)", stats: { hp_: 0.25 } },
-    "dendro": { name: "Liane de la sagesse (Dendro)", stats: { eleMas: 50 } },
+    "pyro": { name: "Flammes de la ferveur (Pyro)",active: false, stats: { atk_: 0.25 } },
+    "hydro": { name: "Eau médicinale (Hydro)",active: false, stats: { hp_: 0.25 } },
+    "dendro": { name: "Liane de la sagesse (Dendro)",active: false, stats: { eleMas: 50 } },
     "electro": { name: "Tonnerre puissant (Électro)", stats: {} },
     "cryo": { name: "Glace brisée (Cryo)", active: false, stats: { critRate_: 0.15 } },
     "geo": { name: "Roc inamovible (Géo)", stats: {} },
-    "anemo": { name: "Vents de la célérité (Anémo)", stats: {} }
+    "anemo": { name: "Vents de la célérité (Anémo)",active: false, stats: {} }
 };
 
 const ELEMENT_COLORS = {
@@ -732,13 +747,18 @@ function showSkeletonCard() {
     `;
 }
 
+let gameDataReady = false;
 async function loadGameData() {
     const loader = document.getElementById('loading-msg');
     if(loader) loader.innerText = "Chargement V2 (Indexation)...";
     window.iconToNameHash = {};
-    const CACHE_KEY = 'guoba_gamedata_v1';
+    const CACHE_KEY = 'guoba_gamedata_v2';
     const CACHE_TTL = 24 * 60 * 60 * 1000;
     try {
+        const uidInput   = document.getElementById('uidInput');
+        const searchBtn  = document.getElementById('searchBtn');
+        if (uidInput)  { uidInput.disabled  = true; uidInput.placeholder  = "Chargement des données…"; }
+        if (searchBtn) { searchBtn.disabled = true; }
         const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
         if (cached && (Date.now() - cached.ts < CACHE_TTL)) {
             console.log("⚡ Données jeu chargées depuis le cache local !");
@@ -747,17 +767,23 @@ async function loadGameData() {
             window.namecardsData = cached.namecards;
             window.pfpsData = cached.pfps;
             window.iconToNameHash = cached.iconToNameHash;
+            window.ROLL_TABLE = cached.rollTable;
+            gameDataReady = true;
+            if (uidInput)  { uidInput.disabled = false; uidInput.placeholder = "Entrez votre UID..."; }
+            if (searchBtn) { searchBtn.disabled = false; }
             if(loader) loader.innerText = "";
             return;
         }
 
-        const [chars, locs, relics, namecards, pfps] = await Promise.all([
+        const [chars, locs, relics, namecards, pfps, rollTable] = await Promise.all([
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/avatars.json`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/relics.json`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/namecards.json`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/pfps.json`).then(r => r.json())
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/pfps.json`).then(r => r.json()),
+            fetch(`./rollTable.json`).then(r => r.json())
         ]);
+        window.ROLL_TABLE = rollTable;
         charData = chars;
         locData = locs;
         window.namecardsData = namecards;
@@ -776,13 +802,23 @@ async function loadGameData() {
         localStorage.setItem(CACHE_KEY, JSON.stringify({
             ts: Date.now(),
             chars, locs, namecards, pfps,
-            iconToNameHash: window.iconToNameHash
+            iconToNameHash: window.iconToNameHash,
+            rollTable
         }));
         if(loader) loader.innerText = "";
-        console.log(`✅ API V2 Chargée : ${Object.keys(window.iconToNameHash).length} artéfacts indexés.`);
+        gameDataReady = true;
+        if (uidInput)  { uidInput.disabled = false; uidInput.placeholder = "Entrez votre UID..."; }
+        if (searchBtn) { searchBtn.disabled = false; }
+        console.log(`API V2 Chargée : ${Object.keys(window.iconToNameHash).length} artéfacts indexés.`);
     } catch (e) {
         console.error("Erreur chargement :", e);
         if(loader) loader.innerText = "Erreur Fichiers.";
+        if (uidInput) {
+            uidInput.placeholder = "Erreur de chargement — rechargez la page";
+            uidInput.style.color = "#ef4444";
+        }
+        if (searchBtn) { searchBtn.disabled = false; }
+        alert("Impossible de charger les données du jeu (GitHub ou réseau indisponible).\nVeuillez recharger la page.");
     }
 }
 
@@ -837,8 +873,18 @@ function clearSearch() {
 
 async function fetchUserData(optionalUid) {
     // 1. On prend l'UID passé en paramètre (via l'URL) ou dans l'input
-    const uid = optionalUid || document.getElementById('uidInput').value;
+    const uid = (optionalUid || document.getElementById('uidInput').value).trim();
     if (!uid) return alert("UID manquant");
+
+    // Validation du format UID (9 ou 10 chiffres)
+    if (!/^\d{9,10}$/.test(uid)) {
+        return alert("L'UID doit être un nombre de 9 ou 10 chiffres.\nVérifiez votre identifiant en jeu (Menu Paimon > Profil).");
+    }
+
+    // Bloquer si les données de jeu ne sont pas encore prêtes
+    if (!gameDataReady) {
+        return alert("Les données du jeu sont encore en cours de chargement.\nPatientez quelques secondes puis réessayez.");
+    }
 
     // 2. On met à jour l'URL silencieusement
     window.history.pushState({}, '', `?uid=${uid}`);
@@ -869,10 +915,17 @@ async function fetchUserData(optionalUid) {
 
     //3. Nouveau proxy
     const proxy = `https://guobagg.clement-torchiat.workers.dev/?uid=${uid}`;
+    const controller = new AbortController();
+    const timeoutId  = setTimeout(() => controller.abort(), 30000);
 
     try {
-        const res = await fetch(proxy);
-        if(!res.ok) throw new Error("Erreur Enka ou Proxy");
+        const res = await fetch(proxy, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (!res.ok) {
+            if (res.status === 404)      throw new Error("404");
+            else if (res.status === 429) throw new Error("429");
+            else                         throw new Error("SERVER");
+        }
 
         const data = await res.json();
 
@@ -904,9 +957,21 @@ async function fetchUserData(optionalUid) {
         toggleSearchIcon(true);
 
     } catch (e) {
+        clearTimeout(timeoutId);
         console.error("Erreur de récupération :", e);
-        if(loader) loader.innerText = "Erreur UID/Vitrine.";
-        alert("Impossible de récupérer les données. Vérifiez l'UID. (Le proxy ou Enka peut aussi être temporairement surchargé).");
+        if(loader) loader.innerText = "Erreur.";
+
+        if (e.name === 'AbortError') {
+            alert("La requête a expiré (délai de 30 s dépassé).\nEnka Network ou le proxy est peut-être surchargé. Réessayez dans quelques instants.");
+        } else if (e.message === '404') {
+            alert("Aucun compte trouvé pour cet UID (404).\nVérifiez que l'identifiant est correct.");
+        } else if (e.message === '429') {
+            alert("Trop de requêtes envoyées (429 — Rate Limit).\nPatientez quelques secondes avant de réessayer.");
+        } else if (e.message === 'SERVER') {
+            alert("Le serveur Enka ou le proxy est temporairement indisponible.\nRéessayez dans quelques minutes.");
+        } else {
+            alert("Impossible de récupérer les données.\nVérifiez votre connexion ou réessayez plus tard.");
+        }
     }
 }
 
@@ -1720,7 +1785,7 @@ function calculateRollDistribution(persoObj, config) {
             let w = config.weights[sub.key];
             if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
 
-            const rolls = getRollCount(sub.key, sub.value);
+            const rolls = getRollCount(sub.key, sub.value, art.stars || 5);
 
             // On ignore les stats qui n'ont aucun roll (ce qui ne devrait pas arriver avec getRollCount mais sécurité)
             if (rolls > 0) {
@@ -1764,7 +1829,7 @@ function calculateDeadRolls(persoObj, config) {
             let w = config.weights[sub.key];
             if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
             if (!w || w === 0) {
-                const rolls = getRollCount(sub.key, sub.value);
+                const rolls = getRollCount(sub.key, sub.value, art.stars || 5);
                 deadRolls += rolls;
                 deadStatsCounts[sub.key] = (deadStatsCounts[sub.key] || 0) + rolls;
             }
@@ -1955,9 +2020,10 @@ function calculateRNGQuality(persoObj, config) {
             let w = config.weights[sub.key];
             if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
             if (w && w > 0) {
-                const maxVal = window.MAX_ROLLS[sub.key];
+                const maxRollsRef = (art.stars === 4 && window.MAX_ROLLS_4) ? window.MAX_ROLLS_4 : window.MAX_ROLLS;
+                const maxVal = maxRollsRef[sub.key];
                 if (maxVal) {
-                    const rolls = getRollCount(sub.key, sub.value);
+                    const rolls = getRollCount(sub.key, sub.value, art.stars || 5);
                     if (rolls > 0) {
                         const theoreticalMax = rolls * maxVal;
                         totalPct += (sub.value / theoreticalMax);
@@ -1987,7 +2053,7 @@ function simulateDeadStatReplacements(persoObj, config) {
 
             // Si le poids est 0 ou indéfini, c'est une stat morte
             if (!w || w === 0) {
-                const rolls = getRollCount(sub.key, sub.value);
+                const rolls = getRollCount(sub.key, sub.value, art.stars || 5);
                 // On ne simule que s'il y a eu au moins un roll dedans (sinon c'est juste une stat de base)
                 if (rolls > 0) {
                     deadStats.push({
@@ -2064,6 +2130,17 @@ function simulateDeadStatReplacements(persoObj, config) {
 function calculateRerollMetrics(artifact, config) {
     if (!config || !config.weights || !window.MAX_ROLLS) return null;
 
+    if ((artifact.stars || 5) === 4) {
+        return {
+            potential: 0,
+            risk: 100,
+            badge: {
+                text: "Artéfact 4★ — Ne pas reroll",
+                color: "#6b7280"
+            }
+        };
+    }
+
     let totalRolls = 0;
     let terrainWeights = [];
     let upgradeTokens = [];
@@ -2071,7 +2148,7 @@ function calculateRerollMetrics(artifact, config) {
 
     // 1. EXTRACTION DES DONNÉES (Inchangée)
     artifact.subStats.forEach(sub => {
-        const rolls = getRollCount(sub.key, sub.value);
+        const rolls = getRollCount(sub.key, sub.value, artifact.stars || 5);
         totalRolls += rolls;
 
         let w = config.weights[sub.key];
@@ -3575,7 +3652,7 @@ function renderShowcase(index) {
             if (w === undefined && sub.key.includes("dmg_")) w = p.weights["elemental_dmg_"] || 0;
             if (w === undefined) w = 0;
             const isDead = w === 0;
-            const rolls = getRollCount(sub.key, sub.value);
+            const rolls = getRollCount(sub.key, sub.value, art.stars || 5);
             subsHtml += `
                 <div style="color: #FFFFFF; display: flex; justify-content: space-between; align-items: center;" class="substat-row ${isDead ? 'dead' : ''}">
                     <div style="display:flex; flex-direction: row; align-items:center; gap:5px;">
@@ -4115,8 +4192,8 @@ function renderShowcase(index) {
             // Génération des lignes de substats
             // Génération des lignes de substats (VERSION COMPACTE)
             let subsDetailsHtml = art.subStats.map((sub, idx) => {
-                const details = getRollDetails(sub.key, sub.value);
-                const baseRolls = window.BASE_ROLLS[sub.key] || [];
+                const details = getRollDetails(sub.key, sub.value, art.stars || 5);
+                const baseRolls = (art.stars === 4 ? window.BASE_ROLLS_4 : window.BASE_ROLLS)?.[sub.key] || [];
                 const colors = ['#6CED75', '#00E497', '#00BFE9', '#EE72F7'];
 
                 const rollsHtml = details.rolls.map((rollValue, index) => {
@@ -4383,6 +4460,16 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }).catch(err => {
             console.error("Erreur lors du chargement via URL :", err);
+            const uidInput = document.getElementById('uidInput');
+            if (uidInput) uidInput.value = '';
+            window.history.replaceState({}, '', window.location.pathname);
+            renderHome();
+            const loader = document.getElementById('loading-msg');
+            if (loader) {
+                loader.innerText = "Lien invalide ou compte introuvable.";
+                loader.style.color = "#ef4444";
+                setTimeout(() => { loader.innerText = ""; loader.style.color = ""; }, 5000);
+            }
         });
     } else {
         // S'il n'y a pas d'UID dans l'URL, on affiche l'accueil !

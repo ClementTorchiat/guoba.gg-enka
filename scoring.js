@@ -167,13 +167,16 @@ function scoreArtifact(artifact, weights) {
 }
 
 function calculateArtifactRollQuality(artifact, weights) {
+    const maxRollsRef = (artifact.stars === 4 && window.MAX_ROLLS_4)
+        ? window.MAX_ROLLS_4
+        : window.MAX_ROLLS;
     let points = 0;
     artifact.subStats.forEach(sub => {
         let w = weights[sub.key];
         if (w === undefined && sub.key.includes("_dmg_")) w = weights["elemental_dmg_"];
         w = w || 0;
         if (w > 0) {
-            const maxRoll = (window.MAX_ROLLS && window.MAX_ROLLS[sub.key]) || 9999;
+            const maxRoll = (maxRollsRef && maxRollsRef[sub.key]) || 9999;
             points += (sub.value / maxRoll) * w;
         }
     });
