@@ -6,8 +6,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="assets/global/favicon.png">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image-more/2.9.5/dom-to-image-more.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="tdm-reservation" content="1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image-more/2.9.5/dom-to-image-more.min.js" defer></script>
 
     <style>
         /* ===== SKELETON SCREEN ===== */
@@ -985,19 +986,81 @@
         .link-button:hover {
             background-color: #2C2D32;
         }
+
+        /* =========================================
+   BLOCAGE MOBILE
+   ========================================= */
+        #mobile-block-overlay {
+            display: none; /* Caché par défaut sur les grands écrans */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #1e2024; /* Couleur de fond de ton site */
+            z-index: 999999; /* S'assure d'être au-dessus de TOUT le reste */
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .mobile-block-content {
+            background: #2d3342;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Si l'écran est inférieur ou égal à 1024px (Mobiles et la plupart des tablettes en portrait) */
+        @media (max-width: 1024px) {
+            #mobile-block-overlay {
+                display: flex !important; /* Affiche le message */
+            }
+
+            /* Cache tout le reste du contenu de la page pour éviter le défilement (scroll) */
+            body > *:not(#mobile-block-overlay) {
+                display: none !important;
+            }
+
+            /* Optionnel : bloque le défilement sur le body */
+            body {
+                overflow: hidden !important;
+                background-color: #1e2024;
+            }
+        }
     </style>
 </head>
 <body>
+<div id="mobile-block-overlay">
+    <div class="mobile-block-content">
+        <h2 style="margin: 0 0 10px 0;">Version Mobile Non Disponible</h2>
+        <p style="color: #a0a5b1; margin-bottom: 20px;">
+            L'interface de ce simulateur a été conçue exclusivement pour les ordinateurs afin de garantir la meilleure expérience possible et d'afficher toutes les statistiques correctement.
+        </p>
+        <p style="font-weight: bold; color: #fff;">
+            Une version mobile du site est actuellement en cours de création.
+        </p>
+        <p style="font-weight: bold; color: #fff; margin-top: 24px;">
+            Pour l'instant, veuillez y accéder depuis un PC ou un Mac.
+        </p>
+    </div>
+</div>
 <main>
     <div class="layout-flex">
         <div class="layout-content">
             <aside class="sidebar">
                 <div class="sidebar-title">
-                    <div class="sidebar-title-container">
+                    <div class="sidebar-title-container" onclick="clearSearch()" style="cursor: pointer;">
                         <img src="assets/global/favicon.png" alt="Simulateur" style="border-radius: 100%;">
                         <h2>guoba.gg</h2>
                     </div>
-                    <p class="sidebar-text">Ver. 1.0.4 - Alpha Build</p>
+                    <p class="sidebar-text">Ver. 1.0.5 - Alpha Build</p>
                 </div>
                 <div class="sidebar-search">
                     <div class="search-container">
@@ -1167,9 +1230,9 @@
     });
 </script>
 
-<script src="data.js"></script>
-<script src="config.js" defer></script>
-<script src="scoring.js"></script>
-<script src="script.js" defer></script>
+<script defer src="data.js"></script>
+<script defer src="scoring.js"></script>
+<script defer src="config.js"></script>
+<script defer src="script.js"></script>
 </body>
 </html>

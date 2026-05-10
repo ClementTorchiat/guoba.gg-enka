@@ -112,15 +112,704 @@ const CHARACTER_CONFIG = {
     // Lisa
     // Barbara
     // Noelle
-    // Bennett
+    "Bennett": {
+        color: "#df4d4d",
+        portraitOffset: -38,
+
+        talents: {
+            auto: 1,
+            skill: 1,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C1 : Perspective de voyage",
+                        cons: 1,
+                        stats: {
+                            atk_: 0.20
+                        }
+                    },
+                    {
+                        label: "C2 : Brise-désespoir (si PV inférieurs à 70%)",
+                        cons: 2,
+                        active: false,
+                        stats: {
+                            enerRech_: 0.30
+                        }
+                    },
+                    {
+                        label: "C6 : Feu et courage (si sur le terrain)",
+                        cons: 6,
+                        active: false,
+                        stats: {
+                            elemental_dmg_: 0.15
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Buffer universel": {
+                name: "Buffer universel",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 1
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "hp_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["heal_", "hp_", "critRate_"]
+                },
+
+                hideUIStats: ["critDMG_"],
+                showUIStats: ["atk"],
+
+                bestSets: ["NoblesseOblige:4", "ScrollOfTheHeroOfCinderCity:4"],
+                goodSets: ["Instructor:4", "TheExile:4"],
+
+                er_req: 220,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                ]
+            }
+        }
+    },
     // Razor
-    // Beidou
-    // Fischl
-    // Xiangling
-    // Xingqiu
+    "Beidou": {
+        color: "#6d43b0",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 10
+        },
+
+        builds: {
+            "Sub-DPS électrocution": {
+                name: "Sub-DPS électrocution",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["electro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4"],
+                goodSets: ["NoblesseOblige:4", "ThunderingFury:4", "Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2", "EmblemOfSeveredFate:2"],
+
+                er_req: 150,
+
+                team: [
+                    { role: "Support", name: "Sucrose", element: "anemo" },
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+                    { role: "Sub-DPS", name: "Xingqiu", element: "hydro" }
+                ]
+            },
+            "Sub-DPS stimulation": {
+                name: "Sub-DPS stimulation",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0.8, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_", "eleMas"],
+                    "EQUIP_RING": ["electro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4", "GildedDreams:4"],
+                goodSets: ["NoblesseOblige:4", "ThunderingFury:4", "Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2", "EmblemOfSeveredFate:2", "GildedDreams:2", "WanderersTroupe:2"],
+
+                er_req: 150,
+
+                team: [
+                    { role: "DPS", name: "Tighnari", element: "dendro" },
+                    { role: "Sub-DPS", name: "Nahida", element: "dendro" },
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+                ]
+            }
+        }
+    },
+    "Fischl": {
+        color: "#3c1e71",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 10,
+            burst: 9
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                selectMode: "exclusive",
+                buffs: [
+                    {
+                        label: "Hexerei : Nocturne fantomatique (surcharge)",
+                        stats: {
+                            atk_: 0.225,
+                        }
+                    },
+                    {
+                        label: "Hexerei : Nocturne fantomatique (électrocution ou sélénocution)",
+                        stats: {
+                            eleMas: 90,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                selectMode: "exclusive",
+                buffs: [
+                    {
+                        label: "C6 Hexerei : Oiseau de la nuit éternelle (surcharge)",
+                        cons: 6,
+                        stats: {
+                            atk_: 0.225,
+                        }
+                    },
+                    {
+                        label: "C6 Hexerei : Oiseau de la nuit éternelle (électrocution ou sélénocution)",
+                        cons: 6,
+                        stats: {
+                            eleMas: 90,
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Sub-DPS surcharge Hexerei": {
+                name: "Sub-DPS surcharge Hexerei",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["electro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["GoldenTroupe:4"],
+                goodSets: ["Thundersoother:4", "TenacityOfTheMillelith:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2"],
+
+                er_req: 140,
+
+                team: [
+                    { role: "DPS", name: "Clorinde", element: "electro" },
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
+                    { role: "Support", name: "Chevreuse", element: "pyro" },
+                ]
+            },
+            "Sub-DPS propagation": {
+                name: "Sub-DPS propagation",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0.8, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_", "eleMas"],
+                    "EQUIP_RING": ["electro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["GoldenTroupe:4", "GildedDreams:4"],
+                goodSets: ["Thundersoother:4", "TenacityOfTheMillelith:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2"],
+
+                er_req: 140,
+
+                team: [
+                    { role: "DPS", name: "Tighnari", element: "dendro" },
+                    { role: "Sub-DPS", name: "Shinobu", element: "electro" },
+                    { role: "Support", name: "Kazuha", element: "anemo" },
+                ]
+            }
+        }
+    },
+    "Xiangling": {
+        color: "#652c14",
+        portraitOffset: -33,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Attention, ça pique (piment)",
+                        active: true,
+                        stats: {
+                            atk_: 0.10,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : Pyrotation condensée",
+                        cons: 6,
+                        stats: {
+                            elemental_dmg_: 0.15
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Sub-DPS évaporation": {
+                name: "Sub-DPS évaporation",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0.6, "enerRech_": 1,
+
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "eleMas", "atk_"],
+                    "EQUIP_RING": ["pyro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4"],
+                goodSets: ["CrimsonWitchOfFlames:4", "GildedDreams:4", "CrimsonWitchOfFlames:2", "GildedDreams:2", "EmblemOfSeveredFate:2", "ShimenawasReminiscence:2", "GladiatorsFinale:2"],
+
+                er_req: 220,
+
+                team: [
+                    { role: "DPS", name: "Tartaglia", element: "hydro" },
+                    { role: "Support", name: "Kazuha", element: "anemo" },
+                    { role: "Support", name: "Bennett", element: "pyro" },
+                ]
+            },
+            "Sub-DPS fonte": {
+                name: "Sub-DPS fonte",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0.6, "enerRech_": 1,
+
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "eleMas", "atk_"],
+                    "EQUIP_RING": ["pyro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4"],
+                goodSets: ["CrimsonWitchOfFlames:4", "GildedDreams:4", "CrimsonWitchOfFlames:2", "GildedDreams:2", "EmblemOfSeveredFate:2", "ShimenawasReminiscence:2", "GladiatorsFinale:2"],
+
+                er_req: 220,
+
+                team: [
+                    { role: "DPS", name: "Chongyun", element: "cryo" },
+                    { role: "Support", name: "Rosaria", element: "cryo" },
+                    { role: "Support", name: "Bennett", element: "pyro" },
+                ]
+            },
+            "Sub-DPS mono-pyro": {
+                name: "Sub-DPS mono-pyro",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "atk_"],
+                    "EQUIP_RING": ["pyro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4"],
+                goodSets: ["CrimsonWitchOfFlames:4", "CrimsonWitchOfFlames:2", "EmblemOfSeveredFate:2", "ShimenawasReminiscence:2", "GladiatorsFinale:2"],
+
+                er_req: 220,
+
+                team: [
+                    { role: "DPS", name: "Lyney", element: "pyro" },
+                    { role: "Support", name: "Zhongli", element: "geo" },
+                    { role: "Support", name: "Bennett", element: "pyro" },
+                ]
+            },
+            "Sub-DPS surcharge": {
+                name: "Sub-DPS surcharge",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "atk_"],
+                    "EQUIP_RING": ["pyro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4"],
+                goodSets: ["CrimsonWitchOfFlames:4", "CrimsonWitchOfFlames:2", "EmblemOfSeveredFate:2", "ShimenawasReminiscence:2", "GladiatorsFinale:2"],
+
+                er_req: 220,
+
+                team: [
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+                    { role: "Support", name: "Chevreuse", element: "pyro" },
+                    { role: "Support", name: "Bennett", element: "pyro" },
+                ]
+            }
+        }
+    },
+    "Xingqiu": {
+        color: "#407ea3",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 10
+        },
+
+        builds: {
+            "Sub-DPS évaporation": {
+                name: "Sub-DPS évaporation",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0.6, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "atk_"],
+                    "EQUIP_RING": ["hydro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4"],
+                goodSets: ["EmblemOfSeveredFate:2", "GladiatorsFinale:2", "NoblesseOblige:2", "HeartOfDepth:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "DPS", name: "Hutao", element: "pyro" },
+                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
+                    { role: "Support", name: "Zhongli", element: "geo" },
+                ]
+            },
+            "Sub-DPS gel": {
+                name: "Sub-DPS gel",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "atk_"],
+                    "EQUIP_RING": ["hydro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4"],
+                goodSets: ["EmblemOfSeveredFate:2", "GladiatorsFinale:2", "NoblesseOblige:2", "HeartOfDepth:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "DPS", name: "SkirkNew", element: "cryo" },
+                    { role: "Sub-DPS", name: "Escoffier", element: "cryo" },
+                    { role: "Support", name: "Furina", element: "hydro" },
+                ]
+            },
+            "Sub-DPS fleurissement": {
+                name: "Sub-DPS fleurissement",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 1, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "eleMas"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["critRate_", "eleMas"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4", "FlowerOfParadiseLost:4"],
+                goodSets: ["EmblemOfSeveredFate:2", "GladiatorsFinale:2", "NoblesseOblige:2", "HeartOfDepth:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "DPS", name: "Nilou", element: "hydro" },
+                    { role: "Sub-DPS", name: "Nahida", element: "dendro" },
+                    { role: "Sub-DPS", name: "Lauma", element: "dendro" },
+                ]
+            },
+            "Sub-DPS électrocution": {
+                name: "Sub-DPS électrocution",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "atk_"],
+                    "EQUIP_RING": ["hydro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4"],
+                goodSets: ["EmblemOfSeveredFate:2", "GladiatorsFinale:2", "NoblesseOblige:2", "HeartOfDepth:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+                    { role: "Sub-DPS", name: "Beidou", element: "electro" },
+                    { role: "Support", name: "Sucrose", element: "anemo" },
+                ]
+            },
+        }
+    },
     // Chongyun
     // Ningguang
-    // Sucrose
+    "Sucrose": {
+        color: "#2b8e57",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 8
+        },
+
+        builds: {
+            "Support universel": {
+                name: "Support universel",
+
+                weights: {
+                    "critRate_": 0, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 1, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "enerRech_"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas"]
+                },
+
+                hideUIStats: [],
+                showUIStats: ["atk"],
+
+                bestSets: ["ViridescentVenerer:4"],
+                goodSets: [],
+
+                er_req: 170,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                ]
+            }
+        }
+    },
     // Venti
     "Klee": {
         color: "#f6330a",
@@ -1229,7 +1918,108 @@ const CHARACTER_CONFIG = {
     },
 
     // 1.4
-    // Rosaria
+    "Rosalia": {
+        color: "#521240",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 6,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Confession forcée (compétence dans le dos)",
+                        active: false,
+                        stats: {
+                            critRate_: 0.12,
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Sub-DPS fonte inversée": {
+                name: "Sub-DPS fonte inversée",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0.6, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "atk_", "enerRech_"],
+                    "EQUIP_RING": ["cryo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["GildedDreams:4"],
+                goodSets: ["EmblemOfSeveredFate:4","GildedDreams:2", "BlizzardStrayer:2", "NoblesseOblige:2", "GladiatorsFinale:2", "WanderersTroupe:2", "EmblemOfSeveredFate:2"],
+
+                er_req: 170,
+
+                team: [
+                    { role: "Support", name: "Bennett", element: "pyro" },
+                    { role: "Support", name: "Kazuha", element: "anemo" },
+                    { role: "Support", name: "Shenhe", element: "cryo" },
+                ]
+            },
+            "Sub-DPS gel": {
+                name: "Sub-DPS gel",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["cryo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["BlizzardStrayer:4", "MarechausseeHunter:4"],
+                goodSets: ["EmblemOfSeveredFate:4","NoblesseOblige:4","ScrollOfTheHeroOfCinderCity:4", "BlizzardStrayer:2", "NoblesseOblige:2", "GladiatorsFinale:2", "EmblemOfSeveredFate:2"],
+
+                er_req: 170,
+
+                team: [
+                    { role: "DPS", name: "SkirkNew", element: "cryo" },
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Escoffier", element: "cryo" },
+                ]
+            }
+        }
+    },
 
     // 1.5
     "Eula": {
@@ -2008,7 +2798,95 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Gorou
+    "Gorou": {
+        color: "#7a4e28",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 10,
+            burst: 6
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Nonchalance du vent et de la pluie",
+                        active: true,
+                        stats: {
+                            def_: 0.25,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                selectMode: "exclusive",
+                buffs: [
+                    {
+                        label: "C6 : Vaillance de la bête (1 Géo / Pied ferme)",
+                        cons: 6,
+                        active: false,
+                        stats: { critDMG_: 0.10 }
+                    },
+                    {
+                        label: "C6 : Vaillance de la bête (2 Géo / Imprenabilité)",
+                        cons: 6,
+                        active: false,
+                        stats: { critDMG_: 0.20 }
+                    },
+                    {
+                        label: "C6 : Vaillance de la bête (3 Géo+ / Fracas)",
+                        cons: 6,
+                        active: true,
+                        stats: { critDMG_: 0.40 }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Support Géo": {
+                name: "Support Géo",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0.4, "def": 0.1,
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_"],
+                    "EQUIP_RING": ["def_"],
+                    "EQUIP_DRESS": ["critRate_", "def_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ScrollOfTheHeroOfCinderCity:4", "TheExile:4"],
+                goodSets: ["NoblesseOblige:4", "Instructor:4", "SilkenMoonsSerenade:4"],
+
+                er_req: 220,
+
+                team: [
+                    { role: "DPS", name: "Itto", element: "geo" },
+                    { role: "Sub-DPS", name: "Chiori", element: "geo" },
+                    { role: "Support", name: "Zhongli", element: "geo" }
+                ]
+            }
+        }
+    },
 
     // 2.4
     "Shenhe": {
@@ -2409,7 +3287,120 @@ const CHARACTER_CONFIG = {
     },
 
     // 2.7
-    // Kuki Shinobu
+    "Kuki Shinobu": {
+        color: "#55267b",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 10,
+            burst: 6
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Désir libérateur (PV <= 50%)",
+                        active: true,
+                        stats: {
+                            heal_: 0.15
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : Pour parer à la faiblesse (PV <= 25%)",
+                        cons: 6,
+                        stats: {
+                            eleMas: 150
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Exubérance": {
+                name: "Exubérance",
+
+                weights: {
+                    "critRate_": 0, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0.4, "hp": 0.1, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 1, "enerRech_": 0.4,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas"]
+                },
+
+                hideUIStats: [],
+                showUIStats: ["hp"],
+
+                bestSets: ["FlowerOfParadiseLost:4"],
+                goodSets: ["GildedDreams:4", "GildedDreams:2", "FlowerOfParadiseLost:2", "WanderersTroupe:2", "NightOfTheSkysUnveiling:2", "ThunderingFury:4", "DeepwoodMemories:4"],
+
+                er_req: 130,
+
+                team: [
+                    { role: "DPS", name: "Alhatham", element: "dendro" },
+                    { role: "Sub-DPS", name: "Nahida", element: "dendro" },
+                    { role: "Flex", name: ["Yelan", "Xingqiu"], element: ["hydro", "hydro"] }
+                ]
+            },
+            "Propagation": {
+                name: "Propagation",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0.4, "hp": 0.1, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0.8, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas"],
+                    "EQUIP_RING": ["eleMas", "electro_dmg_"],
+                    "EQUIP_DRESS": ["eleMas", "critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: ["hp"],
+
+                bestSets: ["GoldenTroupe:4", "TenacityOfTheMillelith:4"],
+                goodSets: ["ScrollOfTheHeroOfCinderCity:4", "DeepwoodMemories:4", "Instructor:4", "NoblesseOblige:4", "EmblemOfSeveredFate:4", "ThunderingFury:4", "GildedDreams:4", "GildedDreams:2"],
+
+                er_req: 130,
+
+                team: [
+                    { role: "DPS", name: "Shougun", element: "electro" },
+                    { role: "Sub-DPS", name: "Nahida", element: "dendro" },
+                    { role: "Support", name: "Kazuha", element: "anemo" },
+                ]
+            }
+        }
+    },
     "Yelan": {
         color: "#4a5be1",
         portraitOffset: -38,
@@ -2596,7 +3587,90 @@ const CHARACTER_CONFIG = {
     },
 
     // 2.8
-    // Shikanoin Heizou
+    "Shikanoin Heizou": {
+        color: "#852f47",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 9,
+            skill: 10,
+            burst: 8
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                selectMode: "cumulative",
+                buffs: [
+                    {
+                        label: "C6 : Registre curieux (1 cumul - Compétence)",
+                        cons: 6,
+                        active: false,
+                        stats: { critRate_: 0.04 }
+                    },
+                    {
+                        label: "C6 : Registre curieux (2 cumuls - Compétence)",
+                        cons: 6,
+                        active: false,
+                        stats: { critRate_: 0.04 }
+                    },
+                    {
+                        label: "C6 : Registre curieux (3 cumuls - Compétence)",
+                        cons: 6,
+                        active: false,
+                        stats: { critRate_: 0.04 }
+                    },
+                    {
+                        label: "C6 : Registre curieux (4 cumuls + Conviction)",
+                        cons: 6,
+                        active: false,
+                        description: "Attention : Ce buff massif de Crit ne s'applique normalement qu'à la compétence élémentaire.",
+                        stats: { critRate_: 0.04, critDMG_: 0.32 }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "DPS Anémo": {
+                name: "DPS Anémo",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.4,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 1, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["anemo_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ViridescentVenerer:4", "ViridescentVenerer:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2"],
+                goodSets: ["Lavawalker:4"],
+
+                er_req: 150,
+
+                team: [
+                    { role: "Support", name: "Faruzan", element: "anemo" },
+                    { role: "Sub-DPS", name: "Xiangling", element: "pyro" },
+                    { role: "Support", name: "Bennett", element: "pyro" },
+                ]
+            }
+        }
+    },
 
     // 3.0
     "Tighnari": {
@@ -2709,7 +3783,109 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Collei
+    "Collei": {
+        color: "#86933b",
+        portraitOffset: -35,
+
+        talents: {
+            auto: 1,
+            skill: 6,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C1 : Patrouille sylvestre (off-field)",
+                        cons: 1,
+                        active: true,
+                        stats: {
+                            enerRech_: 0.20
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Sub-DPS général": {
+                name: "Sub-DPS général",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0.8, "enerRech_": 0.5,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 1, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "eleMas", "atk_"],
+                    "EQUIP_RING": ["dendro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["DeepwoodMemories:4", "ScrollOfTheHeroOfCinderCity:4", "Instructor:4","GildedDreams:4" ],
+                goodSets: ["DeepwoodMemories:2", "ScrollOfTheHeroOfCinderCity:2","GildedDreams:2" ],
+
+                er_req: 200,
+
+                team: [
+                    { role: "DPS", name: "Shougun", element: "electro" },
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+                    { role: "Support", name: "Xilonen", element: "geo" },
+                ]
+            },
+            "Driver fleurissement": {
+                name: "Driver fleurissement",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 1, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "eleMas"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["critRate_", "eleMas"]
+                },
+
+                hideUIStats: [],
+                showUIStats: ["atk"],
+
+                bestSets: ["FlowerOfParadiseLost:4","DeepwoodMemories:4", "ScrollOfTheHeroOfCinderCity:4", "Instructor:4","GildedDreams:4" ],
+                goodSets: ["DeepwoodMemories:2", "ScrollOfTheHeroOfCinderCity:2","GildedDreams:2" ],
+
+                er_req: 200,
+
+                team: [
+                    { role: "Support", name: "Nilou", element: "hydro" },
+                    { role: "Sub-DPS", name: "Nahida", element: "dendro" },
+                    { role: "Support", name: "Kokomi", element: "hydro" },
+                ]
+            }
+        }
+    },
     // Dori
 
     // 3.1
@@ -3147,7 +4323,56 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Layla
+    "Layla": {
+        color: "#3744b0",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 1,
+            skill: 10,
+            burst: 6
+        },
+
+        builds: {
+            "Shielder universel": {
+                name: "Shielder universel",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.5,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["hp_", "enerRech_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["hp_", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["TenacityOfTheMillelith:4"],
+                goodSets: ["NoblesseOblige:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "Instructor:4", "DeepwoodMemories:4"],
+
+                er_req: 140,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                ]
+            }
+        }
+    },
 
     // 3.3
     "Nomade": {
@@ -3244,7 +4469,71 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Faruzan
+    "Faruzan": {
+        color: "#5591a0",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : Merveilleux chemin de la vérité (dans le déchaînement)",
+                        cons: 6,
+                        stats: {
+                            critDMG_: 0.40
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Support Anémo": {
+                name: "Support Anémo",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 1, "atk": 0.8, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "atk_"],
+                    "EQUIP_RING": ["atk_"],
+                    "EQUIP_DRESS": ["atk_", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["TenacityOfTheMillelith:4", "NoblesseOblige:4", "ViridescentVenerer:4"],
+                goodSets: ["GoldenTroupe:4", "TheExile:4", "EmblemOfSeveredFate:2", "TheExile:2", "SilkenMoonsSerenade:2"],
+
+                er_req: 220,
+
+                team: [
+                    { role: "Flex", name: ["Xiao", "Wanderer"], element: ["anemo", "anemo"] },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                ]
+            }
+        }
+    },
 
     // 3.4
     "Alhaitham": {
@@ -3457,7 +4746,158 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Yaoyao
+    "Yaoyao": {
+        color: "#54701f",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 1,
+            skill: 10,
+            burst: 9
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C1 : Tutelle",
+                        cons: 1,
+                        active: true,
+                        stats: {
+                            elemental_dmg_: 0.15
+                        }
+                    },
+                    {
+                        label: "C4 : Attrait",
+                        cons: 4,
+                        active: true,
+                        stats: {
+                            eleMas_bonus_scaling: {
+                                source: "hp",
+                                percent: 0.003,
+                                max: 120
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Healeuse universelle": {
+                name: "Healeuse universelle",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 1
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "hp_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["hp_", "heal_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["DeepwoodMemories:4", "MaidenBeloved:4"],
+                goodSets: ["MaidenBeloved:2", "OceanHuedClam:2"],
+
+                er_req: 220,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                ]
+            },
+            "Sub-DPS propagation": {
+                name: "Sub-DPS propagation",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0.4, "hp": 0.1, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0.8, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 1, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas"],
+                    "EQUIP_RING": ["dendro_dmg_", "eleMas"],
+                    "EQUIP_DRESS": ["eleMas", "critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["DeepwoodMemories:4", "Instructor:4", "GildedDreams:4"],
+                goodSets: ["DeepwoodMemories:2", "GildedDreams:2", "WanderersTroupe:2"],
+
+                er_req: 160,
+
+                team: [
+                    { role: "DPS", name: "Alhatham", element: "dendro" },
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+                    { role: "Support", name: "Kazuha", element: "anemo" },
+                ]
+            },
+            "Sub-DPS fleurissement": {
+                name: "Sub-DPS fleurissement",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0.4, "hp": 0.1, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 1, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 1, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["DeepwoodMemories:4", "Instructor:4", "GildedDreams:4", "FlowerOfParadiseLost:4"],
+                goodSets: ["DeepwoodMemories:2", "GildedDreams:2", "WanderersTroupe:2"],
+
+                er_req: 160,
+
+                team: [
+                    { role: "Support", name: "Nilou", element: "hydro" },
+                    { role: "Sub-DPS", name: "Lauma", element: "dendro" },
+                    { role: "Sub-DPS", name: "Columbina", element: "hydro" },
+                ]
+            }
+        }
+    },
 
     // 3.5
     "Dehya": {
@@ -3923,7 +5363,109 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Charlotte
+    "Charlotte": {
+        color: "#a64d6d",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 1,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "A4 : Enquête de diversité",
+                selectMode: "exclusive",
+                buffs: [
+                    {
+                        label: "3 alliés de Fontaine (+15% Soins)",
+                        active: true,
+                        stats: { heal_: 0.15 }
+                    },
+                    {
+                        label: "2 Fontaine / 1 Autre (+10% Soins, +5% DGT Cryo)",
+                        active: false,
+                        stats: { heal_: 0.10, cryo_dmg_: 0.05 }
+                    },
+                    {
+                        label: "1 Fontaine / 2 Autres (+5% Soins, +10% DGT Cryo)",
+                        active: false,
+                        stats: { heal_: 0.05, cryo_dmg_: 0.10 }
+                    },
+                    {
+                        label: "3 alliés d'autres régions (+15% DGT Cryo)",
+                        active: false,
+                        stats: { cryo_dmg_: 0.15 }
+                    }
+                ]
+            },
+            {
+                category: "C2 : Une poursuite de la vérité",
+                selectMode: "exclusive",
+                buffs: [
+                    {
+                        label: "1 ennemi touché",
+                        cons: 2,
+                        active: false,
+                        stats: { atk_: 0.10 }
+                    },
+                    {
+                        label: "2 ennemis touchés",
+                        cons: 2,
+                        active: false,
+                        stats: { atk_: 0.20 }
+                    },
+                    {
+                        label: "3 ennemis touchés ou +",
+                        cons: 2,
+                        active: true,
+                        stats: { atk_: 0.30 }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Healer universel": {
+                name: "Healer universel",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 1, "atk": 0.8, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 1
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "atk_"],
+                    "EQUIP_RING": ["atk_"],
+                    "EQUIP_DRESS": ["heal_", "atk_", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["GladiatorsFinale:2", "MaidenBeloved:2", "EmblemOfSeveredFate:2", "OceanHuedClam:4"],
+                goodSets: ["NoblesseOblige:4", "TenacityOfTheMillelith:4", "MaidenBeloved:4"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                ]
+            }
+        }
+    },
 
     // 4.3
     "Navia": {
@@ -4068,7 +5610,105 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Chevreuse
+    "Chevreuse": {
+        color: "#c7445d",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 1,
+            skill: 10,
+            burst: 6
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Manœuvre de coordination tactique",
+                        active: true,
+                        stats: {
+                            atk_bonus_scaling: {
+                                source: "hp",
+                                percent: 0.00001,
+                                max: 0.40
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                selectMode: "cumulative",
+                buffs: [
+                    {
+                        label: "C6 : Poursuite de l'anéantissement du mal (1 stack)",
+                        cons: 6,
+                        stats: {
+                            elemental_dmg_: 0.20,
+                            electro_dmg_: 0.20
+                        }
+                    },
+                    {
+                        label: "C6 : Poursuite de l'anéantissement du mal (2 stacks)",
+                        cons: 6,
+                        stats: {
+                            elemental_dmg_: 0.20,
+                            electro_dmg_: 0.20
+                        }
+                    },
+                    {
+                        label: "C6 : Poursuite de l'anéantissement du mal (3 stacks)",
+                        cons: 6,
+                        stats: {
+                            elemental_dmg_: 0.20,
+                            electro_dmg_: 0.20
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Buffer surcharge": {
+                name: "Buffer surcharge",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 1
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "hp_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["heal_", "hp_", "critRate_"]
+                },
+
+                hideUIStats: ["critDMG_", "eleMas"],
+                showUIStats: ["atk", "electro_dmg_"],
+
+                bestSets: ["NoblesseOblige:4"],
+                goodSets: ["SongOfDaysPast:4", "ScrollOfTheHeroOfCinderCity:4", "TenacityOfTheMillelith:4"],
+
+                er_req: 170,
+
+                team: [
+                    { role: "Flex", name: "", element: "pyro" },
+                    { role: "Flex", name: "", element: "electro" },
+                    { role: "Flex", name: "", element: "electro" }
+                ]
+            }
+        }
+    },
 
     // 4.4
     // Xianyun
@@ -4982,7 +6622,130 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Ororon
+    "Ororon": {
+        color: "#1458bc",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 1,
+            skill: 6,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "C2 : Roi du vin nectarin",
+                selectMode: "cumulative",
+                buffs: [
+                    {
+                        label: "1 ennemi touché par le déchaînement",
+                        cons: 2,
+                        stats: {
+                            elemental_dmg_: 0.08
+                        }
+                    },
+                    {
+                        label: "2 ennemis touchés par le déchaînement",
+                        cons: 2,
+                        stats: {
+                            elemental_dmg_: 0.08
+                        }
+                    },
+                    {
+                        label: "3 ennemis touchés par le déchaînement",
+                        cons: 2,
+                        stats: {
+                            elemental_dmg_: 0.08
+                        }
+                    },
+                    {
+                        label: "4 ennemis touchés par le déchaînement",
+                        cons: 2,
+                        stats: {
+                            elemental_dmg_: 0.08
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Sub-DPS électrocution": {
+                name: "Sub-DPS électrocution",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["electro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ScrollOfTheHeroOfCinderCity:4"],
+                goodSets: ["NoblesseOblige:4", "Instructor:4"],
+
+                er_req: 140,
+
+                team: [
+                    { role: "DPS", name: "Neuvillette", element: "hydro" },
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    { role: "Support", name: "Kazuha", element: "anemo" },
+                ]
+            },
+            "Sub-DPS surcharge": {
+                name: "Sub-DPS surcharge",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["electro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ScrollOfTheHeroOfCinderCity:4"],
+                goodSets: ["NoblesseOblige:4", "Instructor:4"],
+
+                er_req: 120,
+
+                team: [
+                    { role: "Support", name: "Chevreuse", element: "pyro" },
+                    { role: "Flex", name: "", element: "pyro" },
+                    { role: "Flex", name: "", element: "electro" },
+                ]
+            }
+        }
+    },
 
     // 5.3
     "Mavuika": {
@@ -5497,7 +7260,71 @@ const CHARACTER_CONFIG = {
 
         }
     },
-    // Iansan
+    "Iansan": {
+        color: "#593cb5",
+        portraitOffset: -35,
+
+        talents: {
+            auto: 1,
+            skill: 1,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Formation de résistance améliorée",
+                        active: true,
+                        stats: {
+                            atk_: 0.20,
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Buffer universel": {
+                name: "Buffer universel",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 1, "atk": 0.8, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "atk_"],
+                    "EQUIP_RING": ["atk_"],
+                    "EQUIP_DRESS": ["atk_", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ScrollOfTheHeroOfCinderCity:4", "NoblesseOblige:4"],
+                goodSets: ["GladiatorsFinale:2", "EmblemOfSeveredFate:2", "ShimenawasReminiscence:2"],
+
+                er_req: 170,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                ]
+            }
+        }
+    },
 
     // 5.6
     "Escoffier": {
@@ -5563,7 +7390,83 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Ifa
+    "Ifa": {
+        color: "#23aba4",
+        portraitOffset: -38,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 8
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Accord d'entraide (éruption noctâme)",
+                        active: true,
+                        stats: {
+                            eleMas: 80,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C4 : Permutation de vaisseau en décomposition (utilisation du déchaînement)",
+                        cons: 4,
+                        stats: {
+                            eleMas: 100
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Driver dispersion": {
+                name: "Driver dispersion",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 1, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "enerRech_"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas", "heal_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: ["atk"],
+
+                bestSets: ["ViridescentVenerer:4"],
+                goodSets: ["ScrollOfTheHeroOfCinderCity:4", "GildedDreams:4"],
+
+                er_req: 170,
+
+                team: [
+                    { role: "Sub-DPS", name: "Olorun", element: "electro" },
+                    { role: "Support", name: "Aino", element: "hydro" },
+                    { role: "Sub-DPS", name: "Ineffa", element: "electro" },
+                ]
+            }
+        }
+    },
 
     // 5.7
     "Skirk": {
@@ -6495,7 +8398,56 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Illuga
+    "Illuga": {
+        color: "#826351",
+        portraitOffset: -35,
+
+        talents: {
+            auto: 1,
+            skill: 1,
+            burst: 10
+        },
+
+        builds: {
+            "Buffer sélénocristallisation": {
+                name: "Buffer sélénocristallisation",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0.4, "def": 0.1, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 1, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "enerRech_"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["SilkenMoonsSerenade:4", "WanderersTroupe:2", "GildedDreams:2"],
+                goodSets: ["Instructor:4", "ScrollOfTheHeroOfCinderCity:4", "NoblesseOblige:4", "TheExile:4", "TenacityOfTheMillelith:4"],
+
+                er_req: 150,
+
+                team: [
+                    { role: "DPS", name: "Zibai", element: "geo" },
+                    { role: "Sub-DPS", name: "Columbina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Linnea", element: "geo" },
+                ]
+            }
+        }
+    },
 
     //6.4
     "Varka": {

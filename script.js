@@ -142,9 +142,9 @@ const RESONANCE_DATA = {
     "pyro": { name: "Flammes de la ferveur (Pyro)",active: false, stats: { atk_: 0.25 } },
     "hydro": { name: "Eau médicinale (Hydro)",active: false, stats: { hp_: 0.25 } },
     "dendro": { name: "Liane de la sagesse (Dendro)",active: false, stats: { eleMas: 50 } },
-    "electro": { name: "Tonnerre puissant (Électro)", stats: {} },
+    "electro": { name: "Tonnerre puissant (Électro)",active: false, stats: {} },
     "cryo": { name: "Glace brisée (Cryo)", active: false, stats: { critRate_: 0.15 } },
-    "geo": { name: "Roc inamovible (Géo)", stats: {} },
+    "geo": { name: "Roc inamovible (Géo)",active: false, stats: {} },
     "anemo": { name: "Vents de la célérité (Anémo)",active: false, stats: {} }
 };
 
@@ -2133,9 +2133,20 @@ function calculateRerollMetrics(artifact, config) {
     if ((artifact.stars || 5) === 4) {
         return {
             potential: 0,
-            risk: 100,
+            risk: 0,
             badge: {
                 text: "Artéfact 4★ — Ne pas reroll",
+                color: "#6b7280"
+            }
+        };
+    }
+
+    if ((artifact.level || 0) < 20) {
+        return {
+            potential: 0,
+            risk: 0,
+            badge: {
+                text: `Niveau ${artifact.level ?? 0}/20 — Montez l'artéfact avant d'analyser`,
                 color: "#6b7280"
             }
         };
@@ -2956,7 +2967,8 @@ function renderHome() {
                         <div class="player-profile-name-row">
                             <span class="player-profile-name">${p.nickname}</span>
                         </div>
-                        ${p.signature ? `<span class="player-profile-sig">${p.signature}</span>` : `<span class="player-profile-sig" style="opacity: 0.5;">UID: ${p.uid}</span>`}
+                        ${p.signature ? `<span class="player-profile-sig">${p.signature}</span>` : ''}
+                        <span class="player-profile-sig" style="opacity: 0.5;">UID: ${p.uid}</span>
                     </div>
                     <div class="player-profile-stats">
                         <div class="pp-row">${row1}</div>
@@ -2972,7 +2984,7 @@ function renderHome() {
     container.innerHTML = `
         <div style="padding-left: 40px; padding-top: 12px;">
             <h2 style="color: #fff; font-size: 28px; margin-bottom: 10px;">Comptes récents</h2>
-            <p style="color: #aaa; font-size: 14px; margin-bottom: 30px;">Sélectionnez un compte précédemment analysé pour le recharger instantanément.</p>
+            <p style="color: #aaa; font-size: 14px; margin-bottom: 30px;">Sélectionnez un compte précédemment analysé pour le recharger instantanément (jusqu'à 12 comptes à la fois).</p>
             <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                 ${cardsHtml}
             </div>
