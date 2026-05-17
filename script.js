@@ -496,6 +496,39 @@ const SLOT_POSSIBLE_MAIN_STATS = {
 };
 
 let globalPersoData = [];
+
+// --- TRI DE LA SIDEBAR ---
+// column : 'original' | 'name' | 'score'
+// direction : 'desc' (ordre par défaut/décroissant) | 'asc' (inversé/croissant)
+let sidebarSortState = { column: 'original', direction: 'desc' };
+
+function setSidebarSort(column) {
+    if (sidebarSortState.column === column) {
+        sidebarSortState.direction = sidebarSortState.direction === 'desc' ? 'asc' : 'desc';
+    } else {
+        sidebarSortState.column = column;
+        sidebarSortState.direction = 'desc';
+    }
+    // On récupère l'index original du perso actif pour le conserver après le tri
+    const activeCard = document.querySelector('#sidebar-list .char-card.active');
+    const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : 0;
+    renderSidebar(activeOriginalIndex);
+}
+
+function updateSortArrows() {
+    ['original', 'name', 'score'].forEach(col => {
+        const arrow   = document.getElementById(`arrow-${col}`);
+        const section = document.getElementById(`sort-col-${col}`);
+        if (!arrow || !section) return;
+        const isActive = sidebarSortState.column === col;
+        // Opacité de la colonne
+        section.style.opacity = isActive ? '1' : '0.4';
+        // Rotation de la flèche : vers le haut = 'asc', vers le bas = 'desc'
+        arrow.style.transition = 'transform 0.2s ease';
+        arrow.style.transform  = (isActive && sidebarSortState.direction === 'asc') ? 'rotate(180deg)' : 'rotate(0deg)';
+        arrow.style.opacity    = isActive ? '1' : '0.4';
+    });
+}
 let charData = {};
 let locData = {};
 const apiSessionCache = {};
@@ -849,8 +882,11 @@ function clearSearch() {
     window.history.pushState({}, '', window.location.pathname);
 
     // 3. Vider la barre latérale des personnages
+    globalPersoData = [];
+    sidebarSortState = { column: 'original', direction: 'desc' };
     const sidebar = document.getElementById('sidebar-list');
     if (sidebar) sidebar.innerHTML = '';
+    updateSortArrows();
 
     // 4. Vider le profil du joueur en haut à droite
     const playerProfile = document.getElementById('player-profile');
@@ -1843,102 +1879,101 @@ function calculateDeadRolls(persoObj, config) {
 }
 
 // DÉTECTEUR DE VOL D'ARTÉFACTS (Cross-Check)
-/*function getCrossCheckAdvice(charIndex) {
+function getAllCrossCheckAdvice(charIndex) {
+    const SLOT_ORDER = ["EQUIP_BRACER", "EQUIP_NECKLACE", "EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
     const currChar = globalPersoData[charIndex];
-    if (!currChar || !currChar.artefacts) return null;
+    if (!currChar || !currChar.artefacts) return SLOT_ORDER.map(() => null);
 
     const scoringConfig = { ...currChar.charConfig, ...(currChar.activeBuild || {}) };
-
-    let bestSwap = null;
-    let maxDiff = 10; // Le gain doit être STRICTEMENT supérieur à 10
-
-    // 1. Détection du Set 4 Pièces actif
     const active4pSet = Object.keys(currChar.setsCounter || {}).find(key => currChar.setsCounter[key] >= 4);
     const active4pCount = active4pSet ? currChar.setsCounter[active4pSet] : 0;
 
-    // 2. On parcourt les autres personnages de la vitrine
-    globalPersoData.forEach((otherChar, otherIndex) => {
-        if (otherIndex === charIndex) return; // On ne se vole pas soi-même
+    return SLOT_ORDER.map(slotType => {
+        const currArtIndex = currChar.artefacts.findIndex(a => a.type === slotType);
+        if (currArtIndex === -1) return null;
+        const currArt = currChar.artefacts[currArtIndex];
 
-        otherChar.artefacts.forEach(otherArt => {
-            // On cherche la pièce équivalente sur le personnage actuel
-            const currArtIndex = currChar.artefacts.findIndex(a => a.type === otherArt.type);
-            if (currArtIndex === -1) return;
-            const currArt = currChar.artefacts[currArtIndex];
+        let bestSwap = null;
+        let maxDiff = 10;
 
-            // --- SÉCURITÉ 1 : LA STAT PRINCIPALE ---
-            // On ne propose l'échange QUE si la stat principale de la nouvelle pièce est "Parfaite" pour nous
-            let mWeight = scoringConfig.weights[otherArt.mainStat.key];
-            if (mWeight === undefined && otherArt.mainStat.key.includes("_dmg_")) {
-                mWeight = scoringConfig.weights["elemental_dmg_"];
-            }
-            if (!mWeight || mWeight < 1) return; // Stat principale poubelle pour ce perso, on annule
+        globalPersoData.forEach((otherChar, otherIndex) => {
+            if (otherIndex === charIndex) return;
 
-            // --- SÉCURITÉ 2 : LA PROTECTION DU SET 4 PIÈCES ---
-            if (active4pSet) {
-                const isCurrArtSetPiece = (currArt.setKey === active4pSet);
-                // Si la pièce actuelle fait partie du set ET qu'on en a pile 4, on est en danger !
-                if (isCurrArtSetPiece && active4pCount === 4) {
-                    // La NOUVELLE pièce doit obligatoirement être du même set
-                    if (otherArt.setKey !== active4pSet) return;
+            otherChar.artefacts.forEach(otherArt => {
+                if (otherArt.type !== slotType) return;
+
+                // Sécurité 1 : stat principale utile pour ce perso
+                let mWeight = scoringConfig.weights[otherArt.mainStat.key];
+                if (mWeight === undefined && otherArt.mainStat.key.includes("_dmg_")) {
+                    mWeight = scoringConfig.weights["elemental_dmg_"];
                 }
-                // Si on en a 5, on peut voler n'importe quoi (ça devient l'off-piece)
-                // Si isCurrArtSetPiece est false, c'est déjà l'off-piece, on peut voler n'importe quoi
-            }
+                if (!mWeight || mWeight < 1) return;
 
-            // --- SIMULATION DU NOUVEAU SCORE ---
-            // On clone la pièce pour ne pas polluer l'artéfact du copain
-            const clonedOtherArt = JSON.parse(JSON.stringify(otherArt));
-            const fakeArtefacts = [...currChar.artefacts];
-            fakeArtefacts[currArtIndex] = clonedOtherArt;
+                // Sécurité 2 : protection du set 4 pièces
+                if (active4pSet) {
+                    const isCurrArtSetPiece = (currArt.setKey === active4pSet);
+                    if (isCurrArtSetPiece && active4pCount === 4) {
+                        if (otherArt.setKey !== active4pSet) return;
+                    }
+                }
 
-            const fakePerso = { ...currChar, artefacts: fakeArtefacts };
-
-            // On lance le moteur de notation sur ce personnage fictif
-            calculateCharacterScore(fakePerso, scoringConfig);
-
-            // On récupère le score calculé pour l'artéfact cloné
-            const scoredNewArt = fakePerso.artefacts[currArtIndex];
-            const diff = scoredNewArt.score - currArt.score;
-
-            if (diff > maxDiff) {
-                maxDiff = diff;
-
-                // --- 1. Calcul du nouveau score GLOBAL du personnage actuel ---
-                // On a besoin d'évaluer le faux perso pour obtenir sa note globale
+                // Simulation du score avec la nouvelle pièce
+                const clonedOtherArt = JSON.parse(JSON.stringify(otherArt));
+                const fakeArtefacts = [...currChar.artefacts];
+                fakeArtefacts[currArtIndex] = clonedOtherArt;
+                const fakePerso = { ...currChar, artefacts: fakeArtefacts };
                 const newCurrEval = calculateCharacterScore(fakePerso, scoringConfig);
+                const scoredNewArt = fakePerso.artefacts[currArtIndex];
+                const diff = scoredNewArt.score - currArt.score;
 
-                // --- 2. Simulation de l'échange pour l'autre personnage ---
-                const otherScoringConfig = { ...otherChar.charConfig, ...(otherChar.activeBuild || {}) };
-                const fakeOtherArtefacts = [...otherChar.artefacts];
-                const otherArtIndex = otherChar.artefacts.findIndex(a => a.type === otherArt.type);
-                fakeOtherArtefacts[otherArtIndex] = currArt; // Il récupère notre vieille pièce
-                const fakeOtherPerso = { ...otherChar, artefacts: fakeOtherArtefacts };
+                if (diff > maxDiff) {
+                    if (newCurrEval.score <= currChar.evaluation.score) return;
 
-                const newOtherEval = calculateCharacterScore(fakeOtherPerso, otherScoringConfig);
+                    maxDiff = diff;
 
-                bestSwap = {
-                    otherCharName: otherChar.nom,
-                    otherCharIcon: otherChar.image,
-                    currCharName: currChar.nom,
-                    currCharIcon: currChar.image,
-                    oldArt: currArt,
-                    newArt: scoredNewArt,
-                    diff: diff,
-                    typeLabel: ARTIFACT_TYPE_MAPPING[currArt.type] || "Artéfact",
+                    // Simulation pour le personnage donneur
+                    const otherScoringConfig = { ...otherChar.charConfig, ...(otherChar.activeBuild || {}) };
+                    const fakeOtherArtefacts = [...otherChar.artefacts];
+                    const otherArtIndex = otherChar.artefacts.findIndex(a => a.type === slotType);
+                    fakeOtherArtefacts[otherArtIndex] = currArt;
+                    const fakeOtherPerso = { ...otherChar, artefacts: fakeOtherArtefacts };
+                    const newOtherEval = calculateCharacterScore(fakeOtherPerso, otherScoringConfig);
 
-                    // Évaluations globales (Anciennes et Nouvelles)
-                    currEvalOld: currChar.evaluation,
-                    currEvalNew: newCurrEval,
-                    otherEvalOld: otherChar.evaluation,
-                    otherEvalNew: newOtherEval
-                };
-            }
+                    // Deltas de sous-stats
+                    const currSubMap = {};
+                    currArt.subStats.forEach(s => { currSubMap[s.key] = s.value; });
+                    const newSubMap = {};
+                    scoredNewArt.subStats.forEach(s => { newSubMap[s.key] = s.value; });
+                    const allKeys = new Set([...Object.keys(currSubMap), ...Object.keys(newSubMap)]);
+                    const deltas = [];
+                    allKeys.forEach(key => {
+                        const oldVal = currSubMap[key] || 0;
+                        const newVal = newSubMap[key] || 0;
+                        const delta = newVal - oldVal;
+                        if (Math.abs(delta) < 0.01) return;
+                        const label = STAT_LABELS[key] || key;
+                        const isPercent = key.endsWith("_");
+                        const formatted = isPercent
+                            ? `${delta > 0 ? "+" : ""}${delta.toFixed(1)}% ${label}`
+                            : `${delta > 0 ? "+" : ""}${Math.round(delta)} ${label}`;
+                        deltas.push({ delta, formatted });
+                    });
+                    deltas.sort((a, b) => b.delta - a.delta);
+
+                    bestSwap = {
+                        currArt, newArt: scoredNewArt, diff, deltas,
+                        currCharName: currChar.nom, currCharIcon: currChar.image,
+                        otherCharName: otherChar.nom, otherCharIcon: otherChar.image,
+                        currEvalOld: currChar.evaluation, currEvalNew: newCurrEval,
+                        otherEvalOld: otherChar.evaluation, otherEvalNew: newOtherEval
+                    };
+                }
+            });
         });
-    });
 
-    return bestSwap;
-}*/
+        return bestSwap;
+    });
+}
 
 // CALCUL DU COÛT EN RÉSINE ET EN TEMPS
 function getResinCostEstimate(pieceType, mainStatKey, currentScore) {
@@ -2614,18 +2649,41 @@ function processData(data) {
 }
 
 // ... (RENDER SIDEBAR Identique) ...
-function renderSidebar(activeIndex = 0) {
+function renderSidebar(activeOriginalIndex = 0) {
     const list = document.getElementById('sidebar-list');
     if(!list) return;
     list.innerHTML = "";
-    const targetIndex = parseInt(activeIndex, 10);
-    globalPersoData.forEach((p, index) => {
+    const targetIndex = parseInt(activeOriginalIndex, 10);
+
+    // Construction d'un tableau { p, originalIndex } pour le tri
+    let entries = globalPersoData.map((p, i) => ({ p, originalIndex: i }));
+
+    // Application du tri selon l'état courant
+    const { column, direction } = sidebarSortState;
+    if (column === 'original') {
+        if (direction === 'asc') entries.reverse();
+        // direction 'desc' = ordre vitrine original, rien à faire
+    } else if (column === 'name') {
+        entries.sort((a, b) => {
+            const cmp = a.p.nom.localeCompare(b.p.nom, 'fr', { sensitivity: 'base' });
+            return direction === 'desc' ? cmp : -cmp;
+        });
+    } else if (column === 'score') {
+        entries.sort((a, b) => {
+            const cmp = b.p.evaluation.score - a.p.evaluation.score;
+            return direction === 'desc' ? cmp : -cmp;
+        });
+    }
+
+    entries.forEach(({ p, originalIndex }) => {
         const div = document.createElement('div');
-        div.className = `char-card ${index === targetIndex ? 'active' : ''}`;
+        div.className = `char-card ${originalIndex === targetIndex ? 'active' : ''}`;
+        // On stocke l'index original pour que renderShowcase reste correct
+        div.dataset.originalIndex = originalIndex;
         div.onclick = () => {
             document.querySelectorAll('.char-card').forEach(c => c.classList.remove('active'));
             div.classList.add('active');
-            renderShowcase(index);
+            renderShowcase(originalIndex);
         };
         div.innerHTML = `
             <img alt="" src="${p.image}" class="char-card-avatar">
@@ -2638,6 +2696,7 @@ function renderSidebar(activeIndex = 0) {
             </div>`;
         list.appendChild(div);
     });
+    updateSortArrows();
 }
 
 // --- FONCTION PRINCIPALE DE LA TOOLBAR ---
@@ -3411,8 +3470,8 @@ function renderShowcase(index) {
     window.history.pushState({}, '', `?uid=${currentUid}&char=${encodeURIComponent(p.nom)}`);
     // --- FIN CODE B ---
 
-    document.querySelectorAll('#sidebar-list .char-card').forEach((card, i) => {
-        if (i === parseInt(index)) {
+    document.querySelectorAll('#sidebar-list .char-card').forEach((card) => {
+        if (parseInt(card.dataset.originalIndex) === parseInt(index)) {
             card.classList.add('active');
         } else {
             card.classList.remove('active');
@@ -3976,92 +4035,48 @@ function renderShowcase(index) {
                             
                             
                             ${(() => {
-                                        /*const crossCheck = getCrossCheckAdvice(index);
-                                        if (!crossCheck) return '';
-                            
-                                        // Fonction locale pour générer les sous-stats en colonne
-                                        const renderSubs = (art) => {
-                                            return `<div style="display:flex; flex-direction:column; gap:5px; margin-top:8px;">
-                                                                        ${art.subStats.map(sub => `
-                                                                            <div style="display:flex; align-items:center; gap:6px; font-size:12px; color:#ccc;">
-                                                                                <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width:14px; height:14px;">
-                                                                                <span>${formatValueDisplay(sub.key, sub.value)}</span>
-                                                                            </div>
-                                                                        `).join('')}
-                                                                    </div>`;
-                                        };
-                            
-                                        return `
-                                                                <div style="background:#2C2D32; padding:15px; border-radius:8px; grid-column: 1 / -1; border-left: 3px solid var(--accent-gold); box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                                                                    <p style="font-size:13px; color:var(--accent-gold); text-transform:uppercase; margin-bottom:12px; font-weight: bold; display:flex; align-items:center; gap:8px;">
-                                                                        <span style="background: var(--accent-gold); color: #000; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px;">⇄</span>
-                                                                        Échange tactique détecté !
-                                                                    </p>
-                                                                    <p style="font-size:15px; color:#fff; margin-bottom:15px;">
-                                                                        Votre <b>${crossCheck.otherCharName}</b> est actuellement équipé d'un(e) <b style="color: #aaa;">${crossCheck.typeLabel} ${crossCheck.newArt.mainStat.label}</b> qui pourrait faire passer le score de ${p.nom} sur cette pièce de <span style="color:${crossCheck.oldArt.grade.color}; font-weight:bold;">${Math.round(crossCheck.oldArt.score)} (${crossCheck.oldArt.grade.letter})</span> à <span style="color:${crossCheck.newArt.grade.color}; font-weight:bold;">${Math.round(crossCheck.newArt.score)} (${crossCheck.newArt.grade.letter})</span>.
-                                                                    </p>
-                                                                    
-                                                                    <div style="display:flex; align-items:center; justify-content:space-between; background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; gap: 15px;">
-                                                                        
-                                                                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-width: 110px; border-right: 1px dashed rgba(255,255,255,0.1); padding-right: 15px;">
-                                                                            <img src="${crossCheck.currCharIcon}" style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,0.4);">
-                                                                            <p style="font-size:12px; color:#fff; margin-top:6px; font-weight:bold;">${crossCheck.currCharName}</p>
-                                                                            <p style="font-size:10px; color:#aaa; margin-bottom:4px;">Score global</p>
-                                                                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;">
-                                                                                <span style="color:${crossCheck.currEvalOld.grade.color};">${crossCheck.currEvalOld.score}</span>
-                                                                                <span style="color:#666;">➔</span>
-                                                                                <span style="color:${crossCheck.currEvalNew.grade.color}; font-weight:bold;">${crossCheck.currEvalNew.score}</span>
-                                                                            </div>
-                                                                        </div>
-                            
-                                                                        <div style="flex: 1; display: flex; justify-content: center; align-items: center; gap: 40px;">
-                                                                            
-                                                                            <div style="display:flex; align-items:center; gap:12px;">
-                                                                                <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
-                                                                                    <img src="${crossCheck.oldArt.icon}" style="width:48px; height:48px; border-radius:8px; border:1px solid ${crossCheck.oldArt.grade.color};">
-                                                                                    <p style="font-size:14px; color:${crossCheck.oldArt.grade.color}; font-weight:bold;">${Math.round(crossCheck.oldArt.score)}</p>
-                                                                                </div>
-                                                                                <div style="text-align:left;">
-                                                                                    <p style="font-size:12px; color:#fff; white-space:nowrap;">${crossCheck.oldArt.setName}</p>
-                                                                                    ${renderSubs(crossCheck.oldArt)}
-                                                                                </div>
-                                                                            </div>
-                                                                            
-                                                                            <div style="color:var(--accent-gold); font-size:24px; display:flex; align-items:center; justify-content:center;">
-                                                                                ➔
-                                                                            </div>
-                                                            
-                                                                            <div style="display:flex; align-items:center; gap:12px;">
-                                                                                <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
-                                                                                    <img src="${crossCheck.newArt.icon}" style="width:48px; height:48px; border-radius:8px; border:1px solid ${crossCheck.newArt.grade.color};">
-                                                                                    <p style="font-size:14px; color:${crossCheck.newArt.grade.color}; font-weight:bold;">${Math.round(crossCheck.newArt.score)}</p>
-                                                                                </div>
-                                                                                <div style="text-align:left;">
-                                                                                    <p style="font-size:12px; color:#fff; white-space:nowrap; display:flex; align-items:center; gap:6px;">
-                                                                                        ${crossCheck.newArt.setName} 
-                                                                                        <span style="font-size:11px; color:#22c55e; padding:2px 6px; background:rgba(34, 197, 94, 0.15); border-radius:4px;">+${Math.round(crossCheck.diff)} pts</span>
-                                                                                    </p>
-                                                                                    ${renderSubs(crossCheck.newArt)}
-                                                                                </div>
-                                                                            </div>
-                                                                            
-                                                                        </div>
-                                                                        
-                                                                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-width: 110px; border-left: 1px dashed rgba(255,255,255,0.1); padding-left: 15px;">
-                                                                            <img src="${crossCheck.otherCharIcon}" style="width:44px; height:44px; border-radius:50%; border:1px solid rgba(255,255,255,0.4);">
-                                                                            <p style="font-size:12px; color:#fff; margin-top:6px; font-weight:bold;">${crossCheck.otherCharName}</p>
-                                                                            <p style="font-size:10px; color:#aaa; margin-bottom:4px;">Après échange</p>
-                                                                            <div style="display:flex; align-items:center; gap:6px; font-size:12px;">
-                                                                                <span style="color:${crossCheck.otherEvalOld.grade.color};">${crossCheck.otherEvalOld.score}</span>
-                                                                                <span style="color:#666;">➔</span>
-                                                                                <span style="color:${crossCheck.otherEvalNew.grade.color}; font-weight:bold;">${crossCheck.otherEvalNew.score}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                        
-                                                                    </div>
-                                                                </div>`;*/
-                                return ''; // à retirer si on enlève le commentaire
-                                                            })()}
+            const crossChecks = getAllCrossCheckAdvice(index);
+            const hasAnySwap = crossChecks.some(s => s !== null);
+            if (!hasAnySwap) return '<div style="grid-column:1/-1; color:#666; font-size:13px; font-style:italic;">Aucun échange avantageux entre personnages de la vitrine.</div>';
+            const cards = crossChecks.map(swap => {
+                if (!swap) {
+                    return `
+                <div style="background:#2C2D32; border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid #3a3b42; width:210px; flex-shrink:0; box-sizing:border-box; opacity:0.4; align-items:center; justify-content:center; min-height:160px;">
+                    <div style="font-size:22px; color:#444;">✗</div>
+                    <p style="font-size:11px; color:#888; text-align:center; line-height:1.5;">Aucun échange<br>avantageux détecté</p>
+                </div>`;
+                }
+                const deltasHtml = swap.deltas.map(d => `
+            <div style="display:flex; align-items:center; gap:5px; font-size:11px; color:${d.delta > 0 ? '#4ade80' : '#f87171'};">
+                <div style="width:6px; height:6px; border-radius:50%; flex-shrink:0; background:${d.delta > 0 ? '#4ade80' : '#f87171'};"></div>
+                ${d.formatted}
+            </div>`).join('');
+                const scoreDiff = Math.round(swap.currEvalNew.score - swap.currEvalOld.score);
+                return `
+            <div style="background:#2C2D32; border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid var(--accent-gold); width:210px; flex-shrink:0; box-sizing:border-box;">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
+                    <div style="position:relative; flex-shrink:0;">
+                        <img src="${swap.currArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);}">
+                        <img src="${swap.currCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid #2C2D32;">
+                    </div>
+                    <span style="color:var(--accent-gold); font-size:16px;">⇒</span>
+                    <div style="position:relative; flex-shrink:0;">
+                        <img src="${swap.newArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);">
+                        <img src="${swap.otherCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid #2C2D32;">
+                    </div>
+                </div>
+                <div style="width:100%; height:1px; background:rgba(255,255,255,0.06);"></div>
+                <div style="display:flex; flex-direction:column; gap:4px;">${deltasHtml}</div>
+                <div style="width:100%; height:1px; background:rgba(255,255,255,0.06);"></div>
+                <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <span style="font-size:13px; font-weight:bold; color:${swap.currEvalOld.grade.color};">${swap.currEvalOld.score}</span>
+                    <span style="font-size:12px; color:#666;">→</span>
+                    <span style="font-size:13px; font-weight:bold; color:${swap.currEvalNew.grade.color};">${swap.currEvalNew.score} <span style="font-size:11px; color:#c8a96e; font-weight:normal;">(${scoreDiff > 0 ? '+' : ''}${scoreDiff} pts)</span></span>
+                </div>
+            </div>`;
+            });
+            return `<div style="grid-column:1/-1; display:flex; flex-wrap:nowrap; gap:8px; overflow-x:auto;">${cards.join('')}</div>`;
+        })()}
                         
                                 ${(() => {
             const adv = getLevelAdvice(p);

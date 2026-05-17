@@ -246,6 +246,21 @@
             margin-right: 8px;
         }
 
+        /* TRI SIDEBAR */
+        .sort-col {
+            cursor: pointer;
+            transition: opacity 0.15s ease;
+        }
+        .sort-col:hover {
+            opacity: 0.75 !important;
+        }
+        .sort-arrow {
+            width: 10px;
+            height: 10px;
+            flex-shrink: 0;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
         .char-list {
             flex: 1;
             overflow-y: auto;
@@ -1060,7 +1075,7 @@
                         <img src="assets/global/favicon.png" alt="Simulateur" style="border-radius: 100%;">
                         <h2>guoba.gg</h2>
                     </div>
-                    <p class="sidebar-text">Ver. 1.0.5 - Alpha Build</p>
+                    <p class="sidebar-text">Ver. 1.0.6 - Alpha Build</p>
                 </div>
                 <div class="sidebar-search">
                     <div class="search-container">
@@ -1069,17 +1084,17 @@
                 </div>
                 <div class="sidebar-characters">
                     <div class="character-header">
-                        <div class="character-header-section-1">
+                        <div class="character-header-section-1 sort-col" id="sort-col-original" onclick="setSidebarSort('original')" title="Ordre vitrine">
                             <img src="assets/simulator/icons/icon_face.png" alt="Portrait">
-                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="Flèche">
+                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="Flèche" class="sort-arrow" id="arrow-original">
                         </div>
-                        <div class="character-header-section-2">
+                        <div class="character-header-section-2 sort-col" id="sort-col-name" onclick="setSidebarSort('name')" title="Trier par nom">
                             <p>Nom</p>
-                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="Flèche">
+                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="Flèche" class="sort-arrow" id="arrow-name">
                         </div>
-                        <div class="character-header-section-3">
+                        <div class="character-header-section-3 sort-col" id="sort-col-score" onclick="setSidebarSort('score')" title="Trier par score">
                             <p>Score</p>
-                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="Flèche">
+                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="Flèche" class="sort-arrow" id="arrow-score">
                         </div>
                     </div>
                     <div id="sidebar-list" class="char-list">
