@@ -25,12 +25,6 @@ const CHARACTER_CONFIG = {
                         active: true,
                         stats: {
                             atk_: 0.20,
-
-                            // elemental_dmg_bonus_scaling: {
-                            //     source: "enerRech_", // Stat source
-                            //     percent: 0.4,       // % converti
-                            //     baseline: 100       // (Optionnel) Seuil à soustraire
-                            // }
                         }
                     }
                 ]
@@ -55,9 +49,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -93,25 +87,537 @@ const CHARACTER_CONFIG = {
 
     // 1.0
     "Amber": {
-        weights: {
-            "critRate_": 1, "critDMG_": 1,
-            "atk_": 0.75, "atk": 0.075,
-            "hp_": 0, "hp": 0,
-            "def_": 0, "def": 0,
-            "eleMas": 0.5, "enerRech_": 1,
-            "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0, "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0, "dendro_dmg_": 0, "physical_dmg_": 0,
-            "heal_": 0
+        color: "#e24b4b",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 8,
+            skill: 9,
+            burst: 10
         },
-        bestSets: ["NoblesseOblige:4", "ShimenawasReminiscence:4", "WanderersTroupe:4", "EmblemOfSeveredFate:4", "CrimsonWitchOfFlames:4"],
-        goodSets: ["NoblesseOblige:2", "EmblemOfSeveredFate:2", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2"],
-        talents: { auto: 1, skill: 1, burst: 1 },
-        color : "#888888",
-        portraitOffset: 0
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Dans le mille ! (uniquement le déchaînement)",
+                        active: false,
+                        stats: {
+                            critRate_: 0.10,
+                        }
+                    },
+                    {
+                        label: "A4 :Tir précis (uniquement après avoir touché un point faible)",
+                        active: false,
+                        stats: {
+                            atk_: 0.15,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : Feu sauvage (après le déchaînement)",
+                        cons: 6,
+                        active: false,
+                        stats: {
+                            atk_: 0.15
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "DPS Fonte": {
+                name: "DPS Fonte",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "atk_"],
+                    "EQUIP_RING": ["pyro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ShimenawasReminiscence:4", "WanderersTroupe:4", "CrimsonWitchOfFlames:4"],
+                goodSets: ["DesertPavilionChronicle:4", "GildedDreams:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 110,
+
+                team: [
+                    { role: "Support", name: "Citlali", element: "cryo" },
+                    { role: "Support", name: "Xilonen", element: "geo" },
+                    { role: "Support", name: "Bennett", element: "pyro" }
+                ]
+            },
+            "DPS Bourgeonnement": {
+                name: "DPS Bourgeonnement",
+
+                weights: {
+                    "critRate_": 0, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1, "enerRech_": 0,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas"]
+                },
+
+                hideUIStats: [],
+                showUIStats: ["atk"],
+
+                bestSets: ["FlowerOfParadiseLost:4", "GildedDreams:4"],
+                goodSets: ["WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Sub-DPS", name: "Collei", element: "dendro" },
+                    { role: "Support", name: "Kokomi", element: "hydro" },
+                    { role: "Sub-DPS", name: "Rosaria", element: "cryo" }
+                ]
+            }
+        }
     },
-    // Kaeya
-    // Lisa
-    // Barbara
-    // Noelle
+    "Kaeya": {
+        color: "#28657c",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 9,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C1 : Lignée de l'excellence (uniquement les NA et CA sur un ennemi affecté par cryo)",
+                        cons: 1,
+                        active: false,
+                        stats: {
+                            critRate_: 0.15
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Sub-DPS Fonte": {
+                name: "Sub-DPS Fonte",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "atk_", "enerRech_"],
+                    "EQUIP_RING": ["cryo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4", "GildedDreams:4"],
+                goodSets: ["BlizzardStrayer:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2"],
+
+                er_req: 220,
+
+                team: [
+                    { role: "DPS", name: "Mavuika", element: "pyro" },
+                    { role: "Support", name: "Xilonen", element: "geo" },
+                    { role: "Support", name: "Bennett", element: "pyro" }
+                ]
+            },
+            "Sub-DPS Gel": {
+                name: "Sub-DPS Gel",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["cryo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["BlizzardStrayer:4", "EmblemOfSeveredFate:4"],
+                goodSets: ["GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2"],
+
+                er_req: 150,
+
+                team: [
+                    { role: "DPS", name: "SkirkNew", element: "cryo" },
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Escoffier", element: "cryo" }
+                ]
+            }
+        }
+    },
+    "Lisa": {
+        color: "#3c327e",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 8,
+            skill: 9,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Champ électromagnétique",
+                        cons: 2,
+                        stats: {
+                            def_: 0.25
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "DPS Suractivation": {
+                name: "DPS Suractivation",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.8, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["electro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ThunderingFury:4", "GildedDreams:4"],
+                goodSets: ["Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 110,
+
+                team: [
+                    { role: "", name: "", element: "dendro" },
+                    { role: "", name: "", element: "dendro" },
+                    { role: "", name: "", element: "electro" }
+                ]
+            },
+            "DPS Sélénocution": {
+                name: "DPS Sélénocution",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.4, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["electro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ThunderingFury:4", "GildedDreams:4", "NightOfTheSkysUnveiling:4"],
+                goodSets: ["Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 110,
+
+                team: [
+                    { role: "Sub-DPS", name: "Ineffa", element: "electro" },
+                    { role: "Sub-DPS", name: "Columbina", element: "hydro" },
+                    { role: "Support", name: "Sucrose", element: "anemo" }
+                ]
+            },
+            "Sub-DPS Propagation": {
+                name: "Sub-DPS Propagation",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.8, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["electro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ThunderingFury:4", "GildedDreams:4"],
+                goodSets: ["Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 140,
+
+                team: [
+                    { role: "", name: "", element: "dendro" },
+                    { role: "", name: "", element: "dendro" },
+                    { role: "", name: "", element: "electro" }
+                ]
+            },
+        }
+    },
+    "Barbara": {
+        color: "#3a54a5",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 10,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Éclat de vitalité",
+                        cons: 2,
+                        stats: {
+                            elemental_dmg_: 0.15
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Healeuse générale": {
+                name: "Healeuse générale",
+
+                weights: {
+                    "critRate_": 0, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 1
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["hp_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["heal_", "hp_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["MaidenBeloved:4", "OceanHuedClam:4"],
+                goodSets: ["MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" }
+                ]
+            }
+        }
+    },
+    "Noëlle": {
+        color: "#b23a54",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 10,
+            skill: 8,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : Aucune poussière",
+                        cons: 6,
+                        atk_bonus_scaling: {
+                            source: "def",
+                            percent: 0.50
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "DPS Géo": {
+                name: "DPS Géo",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.4, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
+                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
+                    "def_": 0.8, "def": 0.1, // 0.8 à 0.9, 0.8 si crit important
+                    "eleMas": 0, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["def_"],
+                    "EQUIP_RING": ["geo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: ["heal_"],
+                showUIStats: ["def", "atk"],
+
+                bestSets: ["HuskOfOpulentDreams:4", "MarechausseeHunter:4"],
+                goodSets: ["GladiatorsFinale:4", "RetracingBolide:4", "ArchaicPetra:4", "ArchaicPetra:2", "HuskOfOpulentDreams:2", "MarechausseeHunter:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
+
+                er_req: 140,
+
+                team: [
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Albedo", element: "geo" },
+                    { role: "Support", name: "Gorou", element: "geo" }
+                ]
+            },
+            "DPS Sélénocristallisation": {
+                name: "DPS Sélénocristallisation",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.4, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0.8, "def": 0.1,
+                    "eleMas": 0.4, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["def_"],
+                    "EQUIP_RING": ["geo_dmg_", "def_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
+                },
+
+                hideUIStats: ["heal_"],
+                showUIStats: ["def", "atk"],
+
+                bestSets: ["NightOfTheSkysUnveiling:4"],
+                goodSets: ["HuskOfOpulentDreams:4", "GladiatorsFinale:4", "RetracingBolide:4", "ArchaicPetra:4", "ArchaicPetra:2", "HuskOfOpulentDreams:2", "MarechausseeHunter:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GildedDreams:4"],
+
+                er_req: 140,
+
+                team: [
+                    { role: "Sub-DPS", name: "Linnea", element: "geo" },
+                    { role: "Sub-DPS", name: "Columbina", element: "hydro" },
+                    { role: "Support", name: "Illuga", element: "geo" }
+                ]
+            }
+        }
+    },
     "Bennett": {
         color: "#df4d4d",
         portraitOffset: -38,
@@ -159,9 +665,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -181,7 +687,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["NoblesseOblige:4", "ScrollOfTheHeroOfCinderCity:4"],
-                goodSets: ["Instructor:4", "TheExile:4"],
+                goodSets: ["Instructor:4", "TheExile:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 220,
 
@@ -193,7 +699,130 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Razor
+    "Razor": {
+        color: "#715458",
+        portraitOffset: -38,
+
+        talents: {
+            auto: 10,
+            skill: 8,
+            burst: 9
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Famine (ER < 50%)",
+                        active: false,
+                        stats: {
+                            enerRech_: 0.30,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Répression (ennemis PV < 30%)",
+                        cons: 2,
+                        active: false,
+                        stats: {
+                            critRate_: 0.10
+                        }
+                    },
+                    {
+                        label: "C6 : Lupus Fulguris (Hexerei)",
+                        cons: 6,
+                        active: true,
+                        stats: {
+                            critRate_: 0.10,
+                            critDMG_: 0.50
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "DPS Surcharge Hexerei": {
+                name: "DPS Surcharge Hexerei",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.5,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["electro_dmg_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ADayCarvedFromRisingWinds:4"],
+                goodSets: ["EchoesOfAnOfferin:4", "GladiatorsFinale:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "ThunderingFury:2"],
+
+                er_req: 110,
+
+                team: [
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
+                    { role: "Support", name: "Chevreuse", element: "pyro" },
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" }
+                ]
+            },
+            "DPS Physique": {
+                name: "DPS Physique",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.5,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 1,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["physical_dmg_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ADayCarvedFromRisingWinds:4", "PaleFlame:4"],
+                goodSets: ["EchoesOfAnOfferin:4", "GladiatorsFinale:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "BloodstainedChivalry:2", "PaleFlame:2"],
+
+                er_req: 110,
+
+                team: [
+                    { role: "Sub-DPS", name: "Rosaria", element: "cryo" },
+                    { role: "Support", name: "Zhongli", element: "geo" },
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" }
+                ]
+            }
+        }
+    },
     "Beidou": {
         color: "#6d43b0",
         portraitOffset: -37,
@@ -210,9 +839,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -232,7 +861,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4"],
-                goodSets: ["NoblesseOblige:4", "ThunderingFury:4", "Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2", "EmblemOfSeveredFate:2"],
+                goodSets: ["NoblesseOblige:4", "ThunderingFury:4", "Thundersoother:4", "ThunderingFury:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 150,
 
@@ -247,9 +876,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.8, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -269,7 +898,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4", "GildedDreams:4"],
-                goodSets: ["NoblesseOblige:4", "ThunderingFury:4", "Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2", "EmblemOfSeveredFate:2", "GildedDreams:2", "WanderersTroupe:2"],
+                goodSets: ["NoblesseOblige:4", "ThunderingFury:4", "Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 150,
 
@@ -338,9 +967,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -360,7 +989,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["GoldenTroupe:4"],
-                goodSets: ["Thundersoother:4", "TenacityOfTheMillelith:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2"],
+                goodSets: ["Thundersoother:4", "TenacityOfTheMillelith:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 140,
 
@@ -375,9 +1004,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.8, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -397,7 +1026,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["GoldenTroupe:4", "GildedDreams:4"],
-                goodSets: ["Thundersoother:4", "TenacityOfTheMillelith:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2"],
+                goodSets: ["Thundersoother:4", "TenacityOfTheMillelith:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 140,
 
@@ -452,9 +1081,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.6, "enerRech_": 1,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -474,7 +1103,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4"],
-                goodSets: ["CrimsonWitchOfFlames:4", "GildedDreams:4", "CrimsonWitchOfFlames:2", "GildedDreams:2", "EmblemOfSeveredFate:2", "ShimenawasReminiscence:2", "GladiatorsFinale:2"],
+                goodSets: ["CrimsonWitchOfFlames:4", "GildedDreams:4", "CrimsonWitchOfFlames:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 220,
 
@@ -489,9 +1118,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.6, "enerRech_": 1,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -511,7 +1140,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4"],
-                goodSets: ["CrimsonWitchOfFlames:4", "GildedDreams:4", "CrimsonWitchOfFlames:2", "GildedDreams:2", "EmblemOfSeveredFate:2", "ShimenawasReminiscence:2", "GladiatorsFinale:2"],
+                goodSets: ["CrimsonWitchOfFlames:4", "GildedDreams:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 220,
 
@@ -526,9 +1155,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -548,7 +1177,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4"],
-                goodSets: ["CrimsonWitchOfFlames:4", "CrimsonWitchOfFlames:2", "EmblemOfSeveredFate:2", "ShimenawasReminiscence:2", "GladiatorsFinale:2"],
+                goodSets: ["CrimsonWitchOfFlames:4", "CrimsonWitchOfFlames:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 220,
 
@@ -563,9 +1192,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -585,7 +1214,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4"],
-                goodSets: ["CrimsonWitchOfFlames:4", "CrimsonWitchOfFlames:2", "EmblemOfSeveredFate:2", "ShimenawasReminiscence:2", "GladiatorsFinale:2"],
+                goodSets: ["CrimsonWitchOfFlames:4", "CrimsonWitchOfFlames:2","GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 220,
 
@@ -613,9 +1242,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.6, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -635,7 +1264,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4"],
-                goodSets: ["EmblemOfSeveredFate:2", "GladiatorsFinale:2", "NoblesseOblige:2", "HeartOfDepth:2"],
+                goodSets: ["NoblesseOblige:2", "HeartOfDepth:2", "NymphsDream:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 200,
 
@@ -650,9 +1279,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -672,7 +1301,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4"],
-                goodSets: ["EmblemOfSeveredFate:2", "GladiatorsFinale:2", "NoblesseOblige:2", "HeartOfDepth:2"],
+                goodSets: ["NoblesseOblige:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "HeartOfDepth:2", "NymphsDream:2"],
 
                 er_req: 200,
 
@@ -687,9 +1316,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -709,7 +1338,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4", "FlowerOfParadiseLost:4"],
-                goodSets: ["EmblemOfSeveredFate:2", "GladiatorsFinale:2", "NoblesseOblige:2", "HeartOfDepth:2"],
+                goodSets: ["NoblesseOblige:2", "GildedDreams:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 200,
 
@@ -724,9 +1353,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -746,7 +1375,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4"],
-                goodSets: ["EmblemOfSeveredFate:2", "GladiatorsFinale:2", "NoblesseOblige:2", "HeartOfDepth:2"],
+                goodSets: ["NoblesseOblige:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "HeartOfDepth:2", "NymphsDream:2"],
 
                 er_req: 200,
 
@@ -758,8 +1387,158 @@ const CHARACTER_CONFIG = {
             },
         }
     },
-    // Chongyun
-    // Ningguang
+    "Chongyun": {
+        color: "#68b8db",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 9,
+            burst: 10
+        },
+
+        builds: {
+            "DPS Fonte": {
+                name: "DPS Fonte",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas", "enerRech_"],
+                    "EQUIP_RING": ["cryo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["NoblesseOblige:4", "EmblemOfSeveredFate:4"],
+                goodSets: ["GildedDreams:4", "Lavawalker:4", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2", "DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 130,
+
+                team: [
+                    { role: "Sub-DPS", name: "Rosaria", element: "cryo" },
+                    { role: "Sub-DPS", name: "Xiangling", element: "pyro" },
+                    { role: "Support", name: "Bennett", element: "pyro" }
+                ]
+            },
+            "DPS Gel": {
+                name: "DPS Gel",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["cryo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["NoblesseOblige:4", "EmblemOfSeveredFate:4", "BlizzardStrayer:4", "MarechausseeHunter:4"],
+                goodSets: ["Lavawalker:4", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2", "DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
+
+                er_req: 130,
+
+                team: [
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Escoffier", element: "cryo" },
+                    { role: "Support", name: "Citlali", element: "cryo" }
+                ]
+            },
+        }
+    },
+    "Ningguang": {
+        color: "#715927",
+        portraitOffset: -38,
+
+        talents: {
+            auto: 9,
+            skill: 8,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Réserve stratégique (en traversant le paravent)",
+                        active: false,
+                        stats: {
+                            geo_dmg_: 0.12,
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "DPS Géo": {
+                name: "DPS Géo",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["geo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["NighttimeWhispersInTheEchoingWoods:4", "MarechausseeHunter:4"],
+                goodSets: ["EmblemOfSeveredFate:4", "ArchaicPetra:4", "ArchaicPetra:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
+
+                er_req: 140,
+
+                team: [
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+                    { role: "Support", name: "Xilonen", element: "geo" }
+                ]
+            }
+        }
+    },
     "Sucrose": {
         color: "#2b8e57",
         portraitOffset: -37,
@@ -776,9 +1555,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -798,7 +1577,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["ViridescentVenerer:4"],
-                goodSets: [],
+                goodSets: ["GildedDreams:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 170,
 
@@ -850,9 +1629,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -872,7 +1651,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["ViridescentVenerer:4"],
-                goodSets: ["ScrollOfTheHeroOfCinderCity:4", "GildedDreams:4"],
+                goodSets: ["ScrollOfTheHeroOfCinderCity:4", "GildedDreams:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 180,
 
@@ -887,9 +1666,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -909,7 +1688,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
-                goodSets: ["EchoesOfAnOffering:4", "ViridescentVenerer:4", "DesertPavilionChronicle:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "ViridescentVenerer:2", "DesertPavilionChronicle:2"],
+                goodSets: ["EchoesOfAnOffering:4", "ViridescentVenerer:4", "DesertPavilionChronicle:4", "ViridescentVenerer:2", "DesertPavilionChronicle:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 140,
 
@@ -959,9 +1738,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.3,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -981,7 +1760,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
-                goodSets: ["CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ADayCarvedFromRisingWinds:2"],
+                goodSets: ["CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 130,
 
@@ -996,9 +1775,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.6, "enerRech_": 0.3,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -1018,7 +1797,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ADayCarvedFromRisingWinds:4", "CrimsonWitchOfFlames:4", "MarechausseeHunter:4"],
-                goodSets: ["CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ADayCarvedFromRisingWinds:2"],
+                goodSets: ["CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 130,
 
@@ -1046,9 +1825,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -1068,7 +1847,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ViridescentVenerer:4"],
-                goodSets: ["NoblesseOblige:4", "OceanHuedClam:4", "ViridescentVenerer:2", "NoblesseOblige:2", "GladiatorsFinale:2"],
+                goodSets: ["NoblesseOblige:4", "OceanHuedClam:4", "ViridescentVenerer:2","DesertPavilionChronicle:2", "NoblesseOblige:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2"],
 
                 er_req: 140,
 
@@ -1083,9 +1862,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0.4,
-                    "atk_": 0.4, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.4, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -1104,8 +1883,8 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                bestSets: ["ViridescentVenerer:4"],
-                goodSets: ["NoblesseOblige:4", "OceanHuedClam:4", "ViridescentVenerer:2", "NoblesseOblige:2", "GladiatorsFinale:2"],
+                bestSets: ["ViridescentVenerer:4", "GildedDreams:4"],
+                goodSets: ["NoblesseOblige:4", "OceanHuedClam:4", "ViridescentVenerer:2","DesertPavilionChronicle:2", "NoblesseOblige:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 180,
 
@@ -1175,10 +1954,10 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
-                    "eleMas": 0.4, "enerRech_": 0.4,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.4,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -1197,7 +1976,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["CrimsonWitchOfFlames:4", "MarechausseeHunter:4"],
-                goodSets: ["GildedDreams:4", "GladiatorsFinale:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "GildedDreams:2", "WanderersTroupe:2", "ShimenawasReminiscence:2", "VermillionHereafter:2"],
+                goodSets: ["GildedDreams:4", "GladiatorsFinale:4", "CrimsonWitchOfFlames:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 110,
 
@@ -1212,10 +1991,10 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
-                    "eleMas": 0.4, "enerRech_": 0.4,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.4,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -1234,7 +2013,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["CrimsonWitchOfFlames:4"],
-                goodSets: ["GildedDreams:4", "GladiatorsFinale:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "GildedDreams:2", "WanderersTroupe:2", "ShimenawasReminiscence:2", "VermillionHereafter:2"],
+                goodSets: ["GildedDreams:4", "GladiatorsFinale:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 110,
 
@@ -1249,9 +2028,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.4,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -1271,7 +2050,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["Lavawalker:4"],
-                goodSets: ["CrimsonWitchOfFlames:4", "GladiatorsFinale:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2"],
+                goodSets: ["CrimsonWitchOfFlames:4", "GladiatorsFinale:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 110,
 
@@ -1361,9 +2140,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.8, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -1383,7 +2162,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ThunderingFury:4", "GildedDreams:4"],
-                goodSets: ["Thundersoother:4", "ThunderingFury:2", "GildedDreams:2", "GladiatorsFinale:4", "GladiatorsFinale:2"],
+                goodSets: ["Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 100,
 
@@ -1398,9 +2177,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -1420,7 +2199,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ThunderingFury:4", "GladiatorsFinale:4"],
-                goodSets: ["Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2"],
+                goodSets: ["Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 100,
 
@@ -1435,9 +2214,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.4, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -1457,7 +2236,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ThunderingFury:4", "MarechausseeHunter:4", "NightOfTheSkysUnveiling:4"],
-                goodSets: ["Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2", "GladiatorsFinale:4"],
+                goodSets: ["Thundersoother:4", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "GladiatorsFinale:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 100,
 
@@ -1534,9 +2313,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0.4,
-                    "atk_": 0.4, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.4, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -1556,7 +2335,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["NoblesseOblige:4", "TenacityOfTheMillelith:4"],
-                goodSets: ["EmblemOfSeveredFate:2", "NoblesseOblige:2", "EmblemOfSeveredFate:4"],
+                goodSets: ["EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "NoblesseOblige:2", "EmblemOfSeveredFate:4"],
 
                 er_req: 220,
 
@@ -1574,7 +2353,7 @@ const CHARACTER_CONFIG = {
                     "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.6, "enerRech_": 0.8, // L'ER est rentable grâce à l'Emblème et son passif A4
+                    "eleMas": 0.6, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -1592,15 +2371,15 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:2", "HeartOfDepth:2"],
-                goodSets: ["WanderersTroupe:2", "GildedDreams:2"],
+                bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:2"],
+                goodSets: ["HeartOfDepth:2", "NymphsDream:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 160,
 
                 team: [
                     { role: "Support", name: "Bennett", element: "pyro" },
                     { role: "Support", name: "Kazuha", element: "anemo" },
-                    { role: "Sub-DPS", name: "Durin", element: "pyro" } // Yanfei ou autre pour setup Pyro
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" }
                 ]
             }
         }
@@ -1624,7 +2403,7 @@ const CHARACTER_CONFIG = {
                     "atk_": 1, "atk": 0.8,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 1, // Elle ne génère pas d'énergie, l'ER est vitale
+                    "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -1643,7 +2422,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["OceanHuedClam:4", "MaidenBeloved:4"],
-                goodSets: ["MaidenBeloved:2", "GladiatorsFinale:2", "OceanHuedClam:2"],
+                goodSets: ["GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2"],
 
                 er_req: 200,
 
@@ -1680,7 +2459,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["PaleFlame:4", "GladiatorsFinale:4"],
-                goodSets: ["BloodstainedChivalry:2", "PaleFlame:2", "GladiatorsFinale:2"],
+                goodSets: ["BloodstainedChivalry:2", "PaleFlame:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 130,
 
@@ -1694,7 +2473,71 @@ const CHARACTER_CONFIG = {
     },
 
     // 1.1
-    // Diona
+    "Diona": {
+        color: "#252572",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 1,
+            skill: 10,
+            burst: 8
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : Dernière tournée (PV > 50%)",
+                        cons: 6,
+                        stats: {
+                            eleMas: 200
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Shieldeuse générale": {
+                name: "Shieldeuse générale",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 1
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["hp_", "enerRech_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["heal_", "hp_", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["NoblesseOblige:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2"],
+                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4", "DeepwoodMemories:4"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" }
+                ]
+            }
+        }
+    },
     "Tartaglia": {
         color: "#267ea8",
         portraitOffset: -36,
@@ -1711,10 +2554,10 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
-                    "eleMas": 0.4, "enerRech_": 0,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -1733,7 +2576,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["NymphsDream:4"],
-                goodSets: ["HeartOfDepth:4", "HeartOfDepth:2", "NymphsDream:2"],
+                goodSets: ["HeartOfDepth:4", "HeartOfDepth:2", "NymphsDream:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 100,
 
@@ -1748,9 +2591,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -1770,7 +2613,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["NymphsDream:4"],
-                goodSets: ["HeartOfDepth:4", "HeartOfDepth:2", "NymphsDream:2"],
+                goodSets: ["HeartOfDepth:4", "HeartOfDepth:2", "NymphsDream:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 100,
 
@@ -1785,9 +2628,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -1807,7 +2650,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["NymphsDream:4", "MarechausseeHunter:4"],
-                goodSets: ["HeartOfDepth:4", "HeartOfDepth:2", "NymphsDream:2"],
+                goodSets: ["HeartOfDepth:4", "HeartOfDepth:2", "NymphsDream:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 100,
 
@@ -1819,34 +2662,182 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Xinyan
-    "Zhongli": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#814b32", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -35, // Décalage vertical de l'image (négatif = monte, positif = descend)
+    "Xinyan": {
+        color: "#941f1f",
+        portraitOffset: -37,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
+            skill: 10,
+            burst: 1
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : « ... Ça, c'est du rock ! »",
+                        active: true,
+                        stats: {
+                            physical_dmg_: 0.15,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : Rock infernal (uniquement les attaques chargées)",
+                        cons: 6,
+                        active: false,
+                        stats: {
+                            atk_bonus_scaling: {
+                                source: "def",
+                                percent: 0.50
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Shieldeuse générale": {
+                name: "Shieldeuse générale",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 1, "def": 0.8,
+                    "eleMas": 0, "enerRech_": 0.3,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["def_"],
+                    "EQUIP_RING": ["def_"],
+                    "EQUIP_DRESS": ["def_"]
+                },
+
+                hideUIStats: ["heal_", "eleMas"],
+                showUIStats: ["atk", "physical_dmg_"],
+
+                bestSets: ["TenacityOfTheMillelith:4", "HuskOfOpulentDreams:4"],
+                goodSets: ["HuskOfOpulentDreams:2"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" }
+                ]
+            },
+            "DPS physique": {
+                name: "DPS physique",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.3,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 1,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["physical_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: ["heal_"],
+                showUIStats: ["atk", "physical_dmg_"],
+
+                bestSets: ["PaleFlame:4"],
+                goodSets: ["PaleFlame:2", "BloodstainedChivalry:2", "BloodstainedChivalry:4", "GladiatorsFinale:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Sub-DPS", name: "Rosaria", element: "cryo" },
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+                    { role: "Support", name: "Bennett", element: "pyro" }
+                ]
+            },
+            "DPS fonte": {
+                name: "DPS fonte",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.3,
+
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["pyro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: ["heal_"],
+                showUIStats: ["atk", "physical_dmg_"],
+
+                bestSets: ["Lavawalker:4"],
+                goodSets: ["CrimsonWitchOfFlames:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2","GladiatorsFinale:4"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Support", name: "Citlali", element: "cryo" },
+                    { role: "Support", name: "Xilonen", element: "geo" },
+                    { role: "Support", name: "Bennett", element: "pyro" }
+                ]
+            }
+        }
+    },
+    "Zhongli": {
+        color: "#814b32",
+        portraitOffset: -35,
+
+        talents: {
+            auto: 1,
             skill: 10,
             burst: 6
         },
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "Shielder": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
-                name: "Shielder",
+            "Shielder général": {
+                name: "Shielder général",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0, "atk": 0,
                     "hp_": 1, "hp": 0.8,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.3, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0.3,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -1857,22 +2848,14 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["TenacityOfTheMillelith:4"], // Top Tier
-                goodSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2", "NoblesseOblige:4"], // Viables
+                bestSets: ["TenacityOfTheMillelith:4"],
+                goodSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2", "NoblesseOblige:4"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Flex", name: "", element: "geo" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Flex", name: "", element: "geo" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Flex", name: "", element: "geo" },
                 ]
             }
@@ -1881,18 +2864,15 @@ const CHARACTER_CONFIG = {
 
     // 1.2
     "Albedo": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#3e387f", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -36, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#3e387f",
+        portraitOffset: -36,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
             skill: 8,
             burst: 8
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
@@ -1920,21 +2900,17 @@ const CHARACTER_CONFIG = {
             }
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "Sub-DPS Géo": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "Sub-DPS Géo": {
                 name: "Sub-DPS Géo",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.1, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.1, "atk": 0,
                     "hp_": 0, "hp": 0,
                     "def_": 0.8, "def": 0.1,
-                    "eleMas": 0, "enerRech_": 0.1, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0.1,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -1951,40 +2927,29 @@ const CHARACTER_CONFIG = {
                 hideUIStats: ["heal_"],
                 showUIStats: ["atk"],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["HuskOfOpulentDreams:4", "GoldenTroupe:4"], // Top Tier
-                goodSets: ["HuskOfOpulentDreams:2", "GoldenTroupe:2"], // Viables
+                bestSets: ["HuskOfOpulentDreams:4", "GoldenTroupe:4"],
+                goodSets: ["HuskOfOpulentDreams:2", "GoldenTroupe:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "DPS", name: "Arlecchino", element: "pyro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Durin", element: "pyro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Xilonen", element: "geo" },
                 ]
             }
         }
     },
     "Ganyu": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#6dc5ff", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -37, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#6dc5ff",
+        portraitOffset: -37,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 10,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 10,
             skill: 6,
             burst: 8
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
@@ -1998,7 +2963,7 @@ const CHARACTER_CONFIG = {
                     },
                     {
                         label: "A4 : Harmonie du ciel et de la terre",
-                        active: true, // Coché par défaut ?
+                        active: true,
                         stats: {
                             elemental_dmg_: 0.20,
                         }
@@ -2007,21 +2972,17 @@ const CHARACTER_CONFIG = {
             },
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "DPS Gel": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "DPS Gel": {
                 name: "DPS Gel",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.3, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0.3,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -2038,37 +2999,27 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["BlizzardStrayer:4", "MarechausseeHunter:4", "WanderersTroupe:4"], // Top Tier
-                goodSets: ["BlizzardStrayer:2", "MarechausseeHunter:2", "ShimenawasReminiscence:4"], // Viables
+                bestSets: ["BlizzardStrayer:4", "MarechausseeHunter:4", "WanderersTroupe:4"],
+                goodSets: ["BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2", "MarechausseeHunter:2", "ShimenawasReminiscence:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 110,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Furina", element: "hydro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Escoffier", element: "cryo" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Shenhe", element: "cryo" },
                 ]
             },
-            "DPS Fonte": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "DPS Fonte": {
                 name: "DPS Fonte",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.6, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -2085,22 +3036,14 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["UnfinishedReverie:4", "BlizzardStrayer:4", "WanderersTroupe:4"], // Top Tier
-                goodSets: ["BlizzardStrayer:2", "MarechausseeHunter:2", "ShimenawasReminiscence:4"], // Viables
+                bestSets: ["UnfinishedReverie:4", "BlizzardStrayer:4", "WanderersTroupe:4"],
+                goodSets: ["BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2", "MarechausseeHunter:2", "ShimenawasReminiscence:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Emilie", element: "dendro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Xiangling", element: "pyro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Bennett", element: "pyro" },
                 ]
             }
@@ -2109,25 +3052,22 @@ const CHARACTER_CONFIG = {
 
     // 1.3
     "Hu Tao": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#D33933", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -40, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#D33933",
+        portraitOffset: -40,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 10,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 10,
             skill: 10,
             burst: 8
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
                 buffs: [
                     {
                         label: "A4 : Sang bouillant",
-                        active: true, // Coché par défaut ?
+                        active: true,
                         stats: {
                             pyro_dmg_: 0.33,
                         }
@@ -2139,31 +3079,27 @@ const CHARACTER_CONFIG = {
                 buffs: [
                     {
                         label: "C6 : L'envol du papillon",
-                        cons: 6, // IMPORTANT : Niveau requis (1 à 6)
+                        cons: 6,
                         active: false,
                         stats: {
-                            critRate_: 1 // Simulation de gain DPS
+                            critRate_: 1
                         }
                     }
                 ]
             }
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "Évaporation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
-                name: "Évaporation",
+            "DPS Évaporation": {
+                name: "DPS Évaporation",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.1, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.1, "atk": 0,
                     "hp_": 0.8, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.6, "enerRech_": 0.1, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0.1,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -2177,37 +3113,27 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
                 bestSets: ["CrimsonWitchOfFlames:4", "ShimenawasReminiscence:4", "MarechausseeHunter:4"],
-                goodSets: ["CrimsonWitchOfFlames:2", "GildedDreams:2"],
+                goodSets: ["CrimsonWitchOfFlames:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 120,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Yelan", element: "hydro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Xingqiu", element: "hydro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Zhongli", element: "geo" },
                 ]
             },
-            "Fonte": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
-                name: "Fonte",
+            "DPS Fonte": {
+                name: "DPS Fonte",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.1, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.1, "atk": 0,
                     "hp_": 0.8, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.6, "enerRech_": 0.1, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0.1,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -2221,22 +3147,14 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
                 bestSets: ["CrimsonWitchOfFlames:4", "ShimenawasReminiscence:4", "MarechausseeHunter:4"],
-                goodSets: ["CrimsonWitchOfFlames:2", "GildedDreams:2"],
+                goodSets: ["CrimsonWitchOfFlames:2", "GildedDreams:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 120,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Support", name: "Rosaria", element: "cryo" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Kazuha", element: "anemo" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Citlali", element: "cryo" },
                 ]
             }
@@ -2280,9 +3198,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.5,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2302,7 +3220,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["def"],
 
                 bestSets: ["LongNightsOath:4", "VermillionHereafter:4"],
-                goodSets: ["MarechausseeHunter:4", "DesertPavilionChronicle:4", "LongNightsOath:2", "VermillionHereafter:2", "GladiatorsFinale:2", "ViridescentVenerer:2", "EmblemOfSeveredFate:2"],
+                goodSets: ["MarechausseeHunter:4", "DesertPavilionChronicle:4", "LongNightsOath:2", "ViridescentVenerer:2","DesertPavilionChronicle:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 130,
 
@@ -2347,9 +3265,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.6, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
@@ -2369,7 +3287,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["GildedDreams:4"],
-                goodSets: ["EmblemOfSeveredFate:4","GildedDreams:2", "BlizzardStrayer:2", "NoblesseOblige:2", "GladiatorsFinale:2", "WanderersTroupe:2", "EmblemOfSeveredFate:2"],
+                goodSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2","EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2"],
 
                 er_req: 170,
 
@@ -2384,9 +3302,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
@@ -2406,7 +3324,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["BlizzardStrayer:4", "MarechausseeHunter:4"],
-                goodSets: ["EmblemOfSeveredFate:4","NoblesseOblige:4","ScrollOfTheHeroOfCinderCity:4", "BlizzardStrayer:2", "NoblesseOblige:2", "GladiatorsFinale:2", "EmblemOfSeveredFate:2"],
+                goodSets: ["EmblemOfSeveredFate:4","NoblesseOblige:4","ScrollOfTheHeroOfCinderCity:4", "NoblesseOblige:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2"],
 
                 er_req: 170,
 
@@ -2451,9 +3369,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2473,7 +3391,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["physical_dmg_"],
 
                 bestSets: ["PaleFlame:4"],
-                goodSets: ["PaleFlame:2", "GladiatorsFinale:2", "BloodstainedChivalry:2", "EmblemOfSeveredFate:2"],
+                goodSets: ["GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "BloodstainedChivalry:2", "PaleFlame:2"],
 
                 er_req: 140,
 
@@ -2485,7 +3403,211 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Yanfei
+    "Yanfei": {
+        color: "#a43347",
+        portraitOffset: -32,
+
+        talents: {
+            auto: 10,
+            skill: 8,
+            burst: 9
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        category: "A1 - Dispositions supplémentaires",
+                        selectMode: "cumulative",
+                        buffs: [
+                            {
+                                label: "1 Sceau consommé (+5% DGT Pyro)",
+                                stats: { pyro_dmg_: 0.05 }
+                            },
+                            {
+                                label: "2 Sceaux consommés (+10% DGT Pyro)",
+                                stats: { pyro_dmg_: 0.05 }
+                            },
+                            {
+                                label: "3 Sceaux consommés (Max de base)",
+                                stats: { pyro_dmg_: 0.05 }
+                            },
+                            {
+                                label: "4 Sceaux consommés (Max C6)",
+                                active: true,
+                                stats: { pyro_dmg_: 0.05 }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Verdict final (PV ennemi < 50% et uniquement attaques chargées)",
+                        cons: 2,
+                        active: false,
+                        stats: {
+                            critRate_: 0.20
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "DPS Évaporation": {
+                name: "DPS Évaporation",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["pyro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["CrimsonWitchOfFlames:4", "MarechausseeHunter:4", "WanderersTroupe:4"],
+                goodSets: ["GildedDreams:4", "ShimenawasReminiscence:4", "Lavawalker:4", "MarechausseeHunter:2", "CrimsonWitchOfFlames:2","WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
+
+                er_req: 120,
+
+                team: [
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
+                    { role: "Support", name: "Bennett", element: "pyro" }
+                ]
+            },
+            "DPS Fonte": {
+                name: "DPS Fonte",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["pyro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["CrimsonWitchOfFlames:4", "WanderersTroupe:4"],
+                goodSets: ["GildedDreams:4", "ShimenawasReminiscence:4", "Lavawalker:4", "MarechausseeHunter:2", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 120,
+
+                team: [
+                    { role: "Support", name: "Citlali", element: "cryo" },
+                    { role: "Support", name: "Xilonen", element: "geo" },
+                    { role: "Support", name: "Bennett", element: "pyro" }
+                ]
+            },
+            "DPS Surcharge": {
+                name: "DPS Surcharge",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["pyro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["CrimsonWitchOfFlames:4", "WanderersTroupe:4"],
+                goodSets: ["GildedDreams:4", "ShimenawasReminiscence:4", "Lavawalker:4", "MarechausseeHunter:2", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
+
+                er_req: 120,
+
+                team: [
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+                    { role: "Support", name: "Chevreuse", element: "pyro" },
+                    { role: "Support", name: "Bennett", element: "pyro" }
+                ]
+            },
+            "DPS Bourgeonnement": {
+                name: "DPS Bourgeonnement",
+
+                weights: {
+                    "critRate_": 0, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas"]
+                },
+
+                hideUIStats: [],
+                showUIStats: ["atk"],
+
+                bestSets: ["GildedDreams:4", "FlowerOfParadiseLost:4"],
+                goodSets: ["CrimsonWitchOfFlames:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 120,
+
+                team: [
+                    { role: "Sub-DPS", name: "Nahida", element: "dendro" },
+                    { role: "Sub-DPS", name: "Xingqiu", element: "hydro" },
+                    { role: "Support", name: "Kokomi", element: "hydro" }
+                ]
+            }
+        }
+    },
 
     // 1.6
     "Kaedehara Kazuha": {
@@ -2528,14 +3650,14 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Support Universel": {
-                name: "Support Universel",
+            "Support général": {
+                name: "Support général",
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0.4,
-                    "atk_": 0.4, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.4, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2555,7 +3677,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ViridescentVenerer:4"],
-                goodSets: [],
+                goodSets: ["WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 200,
 
@@ -2599,9 +3721,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
@@ -2621,7 +3743,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["BlizzardStrayer:4", "MarechausseeHunter:4"],
-                goodSets: ["BlizzardStrayer:2", "GladiatorsFinale:2", "GladiatorsFinale:4", "EmblemOfSeveredFate:2"],
+                goodSets: ["BlizzardStrayer:2", "GladiatorsFinale:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2"],
 
                 er_req: 140,
 
@@ -2634,25 +3756,22 @@ const CHARACTER_CONFIG = {
         }
     },
     "Yoimiya": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#ff846d", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -37, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#ff846d",
+        portraitOffset: -37,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 10,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 10,
             skill: 10,
             burst: 6
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
                 buffs: [
                     {
                         label: "A1 : Tour de passe-passe",
-                        active: true, // Coché par défaut ?
+                        active: true,
                         stats: {
                             pyro_dmg_: 0.20,
                         }
@@ -2664,13 +3783,13 @@ const CHARACTER_CONFIG = {
                 buffs: [
                     {
                         label: "C1 : Agate Ryuukin",
-                        cons: 1, // IMPORTANT : Niveau requis (1 à 6)
+                        cons: 1,
                         stats: {
-                            atk_: 0.20 // Simulation de gain DPS
+                            atk_: 0.20
                         }
                     },
                     {
-                        label: "C2 : Procession de feux de joie\n",
+                        label: "C2 : Procession de feux de joie",
                         cons: 2,
                         stats: {
                             pyro_dmg_: 0.25
@@ -2680,21 +3799,17 @@ const CHARACTER_CONFIG = {
             }
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "Évaporation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
-                name: "Évaporation",
+            "DPS Évaporation": {
+                name: "DPS Évaporation",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.6, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -2708,37 +3823,27 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["critRate_","critDMG_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["ShimenawasReminiscence:4", "CrimsonWitchOfFlames:4"], // Top Tier
-                goodSets: ["CrimsonWitchOfFlames:2", "ShimenawasReminiscence:2"], // Viables
+                bestSets: ["ShimenawasReminiscence:4", "CrimsonWitchOfFlames:4"],
+                goodSets: ["CrimsonWitchOfFlames:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Furina", element: "hydro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Yelan", element: "hydro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Bennett", element: "pyro" },
                 ]
             },
-            "Fonte": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "Fonte": {
                 name: "Fonte",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.6, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -2752,37 +3857,27 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["critRate_","critDMG_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["ShimenawasReminiscence:4", "CrimsonWitchOfFlames:4"], // Top Tier
-                goodSets: ["CrimsonWitchOfFlames:2", "ShimenawasReminiscence:2"], // Viables
+                bestSets: ["ShimenawasReminiscence:4", "CrimsonWitchOfFlames:4"],
+                goodSets: ["CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Rosaria", element: "cryo" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Citlali", element: "cryo" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Bennett", element: "pyro" },
                 ]
             },
-            "Surcharge": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "Surcharge": {
                 name: "Surcharge",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -2796,28 +3891,106 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["critRate_","critDMG_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["ShimenawasReminiscence:4", "GladiatorsFinale:4"], // Top Tier
-                goodSets: ["CrimsonWitchOfFlames:2", "ShimenawasReminiscence:2"], // Viables
+                bestSets: ["ShimenawasReminiscence:4", "GladiatorsFinale:4"],
+                goodSets: ["CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Yae", element: "electro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Fischl", element: "electro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Chevreuse", element: "pyro" },
                 ]
             }
         }
     },
-    // Sayu
+    "Sayu": {
+        color: "#967866",
+        portraitOffset: -42,
+
+        talents: {
+            auto: 1,
+            skill: 9,
+            burst: 9
+        },
+
+        builds: {
+            "Burst support": {
+                name: "Burst support",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.9, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 1
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["enerRech_", "atk_", "eleMas"],
+                    "EQUIP_RING": ["atk_", "eleMas"],
+                    "EQUIP_DRESS": ["heal_", "atk_", "eleMas", "criRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ViridescentVenerer:4", "DeepwoodMemories:4"],
+                goodSets: ["NoblesseOblige:4", "OceanHuedClam:4", "ViridescentVenerer:2","DesertPavilionChronicle:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "DPS", name: "Keqing", element: "electro" },
+                    { role: "Sub-DPS", name: "Nahida", element: "dendro" },
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" }
+                ]
+            },
+            "Driver dispersion": {
+                name: "Driver dispersion",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.9, "enerRech_": 0,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 1, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["anemo_dmg_", "eleMas"],
+                    "EQUIP_DRESS": ["eleMas", "criRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ViridescentVenerer:4", "DeepwoodMemories:4"],
+                goodSets: ["NoblesseOblige:4", "OceanHuedClam:4", "ViridescentVenerer:2","DesertPavilionChronicle:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Sub-DPS", name: "Kaeya", element: "cryo" },
+                    { role: "Sub-DPS", name: "Xiangling", element: "pyro" },
+                    { role: "Support", name: "Bennett", element: "pyro" }
+                ]
+            }
+        }
+    },
 
     // 2.1
     "Shogun Raiden": {
@@ -2854,9 +4027,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2876,7 +4049,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4"],
-                goodSets: ["MarechausseeHunter:4", "GildedDreams:4"],
+                goodSets: ["MarechausseeHunter:4", "GildedDreams:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "ThunderingFury:2"],
 
                 er_req: 280,
 
@@ -2891,9 +4064,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -2913,7 +4086,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["FlowerOfParadiseLost:4", "GildedDreams:4"],
-                goodSets: ["FlowerOfParadiseLost:2", "GildedDreams:2", "DeepwoodMemories:4"],
+                goodSets: ["WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "DeepwoodMemories:4"],
 
                 er_req: 100,
 
@@ -2926,17 +4099,15 @@ const CHARACTER_CONFIG = {
         }
     },
     "Sangonomiya Kokomi": {
-        color: "#858fff", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -36, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#858fff",
+        portraitOffset: -36,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
             skill: 8,
             burst: 8
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Constellations",
@@ -2952,21 +4123,17 @@ const CHARACTER_CONFIG = {
             }
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "Healer": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
-                name: "Healer",
+            "Healeuse générale": {
+                name: "Healeuse générale",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0, "atk": 0,
                     "hp_": 1, "hp": 0.8,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 1, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 1,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -2983,37 +4150,27 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["OceanHuedClam:4", "TenacityOfTheMillelith:4"], // Top Tier
-                goodSets: ["MaidenBeloved:4", "MaidenBeloved:2", "OceanHuedClam:2"], // Viables
+                bestSets: ["OceanHuedClam:4", "TenacityOfTheMillelith:4"],
+                goodSets: ["MaidenBeloved:4", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 200,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Flex", name: "", element: "hydro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Flex", name: "", element: "hydro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Flex", name: "", element: "hydro" },
                 ]
             },
-            "Driver Fleurissement": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "Driver Fleurissement": {
                 name: "Driver Fleurissement",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0, "atk": 0,
                     "hp_": 0.8, "hp": 0.1,
                     "def_": 0, "def": 0,
-                    "eleMas": 1, "enerRech_": 0.8, // Ajuster selon besoin
+                    "eleMas": 1, "enerRech_": 0.8,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -3030,48 +4187,296 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["FlowerOfParadiseLost:4", "GildedDreams:4"], // Top Tier
-                goodSets: ["FlowerOfParadiseLost:2", "GildedDreams:2", "WanderersTroupe:2"], // Viables
+                bestSets: ["FlowerOfParadiseLost:4", "GildedDreams:4"],
+                goodSets: ["WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 200,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Support", name: "Nilou", element: "hydro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Lauma", element: "dendro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Nahida", element: "dendro" },
                 ]
             },
 
         }
     },
-    // Kujou Sara
+    "Kujou Sara": {
+        color: "#712eac",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 8
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : Péché d'orgueil (uniquement les dégâts électro)",
+                        cons: 6,
+                        active: false,
+                        stats: {
+                            critDMG_: 0.60
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Buffeuse électro": {
+                name: "Buffeuse électro",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.5,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["electro_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "NoblesseOblige:2", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
+
+                er_req: 180,
+
+                team: [
+                    { role: "DPS", name: "Shougun", element: "electro" },
+                    { role: "Support", name: "Kazuha", element: "anemo" },
+                    { role: "Support", name: "Bennett", element: "pyro" }
+                ]
+            }
+        }
+    },
 
     // 2.2
-    // Thoma
-    // Aloy
+    "Thomas": {
+        color: "#922533",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 1,
+            skill: 9,
+            burst: 9
+        },
+
+        builds: {
+            "Shielder général": {
+                name: "Shielder général",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["hp_", "enerRech_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["hp_", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["NoblesseOblige:4"],
+                goodSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" }
+                ]
+            },
+            "Sub-DPS bourgeonnement": {
+                name: "Sub-DPS bourgeonnement",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0.4, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas","hp_", "enerRech_"],
+                    "EQUIP_RING": ["eleMas", "hp_"],
+                    "EQUIP_DRESS": ["eleMas", "hp_", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["FlowerOfParadiseLost:4", "GildedDreams:4"],
+                goodSets: ["CrimsonWitchOfFlames:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "WanderersTroupe:2", "GildedDreams:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "Support", name: "Baizhuer", element: "dendro" },
+                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
+                    { role: "Sub-DPS", name: "Xingqiu", element: "hydro" }
+                ]
+            }
+        }
+    },
+    "Aloy": {
+        color: "#479ab4",
+        portraitOffset: -32,
+
+        talents: {
+            auto: 8,
+            skill: 9,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Surcharge offensive",
+                        active: true,
+                        stats: {
+                            atk_: 0.16,
+                        }
+                    },
+                    {
+                        label: "A4 : Frappe puissante",
+                        active: true,
+                        stats: {
+                            elemental_dmg_: 0.35,
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "DPS Fonte": {
+                name: "DPS Fonte",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.4,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "atk_", "enerRech_"],
+                    "EQUIP_RING": ["cryo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["EmblemOfSeveredFate:4", "GildedDreams:4"],
+                goodSets: ["Lavawalker:4", "NoblesseOblige:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 140,
+
+                team: [
+                    { role: "Sub-DPS", name: "Xiangling", element: "pyro" },
+                    { role: "Support", name: "Kazuha", element: "anemo" },
+                    { role: "Support", name: "Bennett", element: "pyro" },
+                ]
+            },
+            "DPS Gel": {
+                name: "DPS Gel",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.4,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["cryo_dmg_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["NoblesseOblige:4", "BlizzardStrayer:4", "MarechausseeHunter:4"],
+                goodSets: ["GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2", "NoblesseOblige:2"],
+
+                er_req: 120,
+
+                team: [
+                    { role: "Sub-DPS", name: "Furina", element: "hydro" },
+                    { role: "Sub-DPS", name: "Escoffier", element: "cryo" },
+                    { role: "Support", name: "Citlali", element: "cryo" },
+                ]
+            }
+        }
+    },
 
     // 2.3
     "Arataki Itto": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#7F473A", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -39, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#7F473A",
+        portraitOffset: -39,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 10,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 10,
             skill: 8,
             burst: 9
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Constellations",
@@ -3079,7 +4484,7 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C4 : Au pain sec et à l'eau !",
                         cons: 4,
-                        active: true, // Libre au joueur de le décocher s'il simule sa 1ère rotation
+                        active: true,
                         stats: {
                             def_: 0.20,
                             atk_: 0.20
@@ -3088,7 +4493,7 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C6 : Arataki Itto, présent !",
                         cons: 6,
-                        active: true, // Libre au joueur de le décocher s'il simule sa 1ère rotation
+                        active: true,
                         stats: {
                             critDMG_: 0.70
                         }
@@ -3097,21 +4502,17 @@ const CHARACTER_CONFIG = {
             }
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "DPS Géo": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "DPS Géo": {
                 name: "DPS Géo",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0, "atk": 0,
                     "hp_": 0, "hp": 0,
                     "def_": 0.8, "def": 0.1,
-                    "eleMas": 0, "enerRech_": 0.8, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0.8,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -3128,37 +4529,27 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["HuskOfOpulentDreams:4"], // Top Tier
-                goodSets: ["RetracingBolide:4", "HuskOfOpulentDreams:2", "ArchaicPetra:2"], // Viables
+                bestSets: ["HuskOfOpulentDreams:4"],
+                goodSets: ["RetracingBolide:4", "HuskOfOpulentDreams:2", "ArchaicPetra:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 140,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Albedo", element: "geo" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Gorou", element: "geo" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Zhongli", element: "geo" },
                 ]
             },
-            "Sélénocristallisation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
-                name: "Sélénocristallisation",
+            "DPS Sélénocristallisation": {
+                name: "DPS Sélénocristallisation",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0, "atk": 0,
                     "hp_": 0, "hp": 0,
                     "def_": 0.8, "def": 0.1,
-                    "eleMas": 0.5, "enerRech_": 0.8, // Ajuster selon besoin
+                    "eleMas": 0.5, "enerRech_": 0.8,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -3175,22 +4566,14 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["HuskOfOpulentDreams:4", "NightOfTheSkysUnveiling:4"], // Top Tier
-                goodSets: ["RetracingBolide:4", "HuskOfOpulentDreams:2", "ArchaicPetra:2"], // Viables
+                bestSets: ["HuskOfOpulentDreams:4", "NightOfTheSkysUnveiling:4"],
+                goodSets: ["RetracingBolide:4", "HuskOfOpulentDreams:2", "ArchaicPetra:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 140,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Columbina", element: "hydro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Gorou", element: "geo" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Sub-DPS", name: "Linnea", element: "geo" },
                 ]
             }
@@ -3273,7 +4656,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ScrollOfTheHeroOfCinderCity:4", "TheExile:4"],
-                goodSets: ["NoblesseOblige:4", "Instructor:4", "SilkenMoonsSerenade:4"],
+                goodSets: ["NoblesseOblige:4", "Instructor:4", "SilkenMoonsSerenade:4", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 220,
 
@@ -3324,14 +4707,14 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Support Gel": {
-                name: "Support Gel",
+            "Support Cryo": {
+                name: "Support Cryo",
 
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
-                    "atk_": 1, "atk": 0.8, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 1, "atk": 0.8,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -3351,7 +4734,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["NoblesseOblige:4", "ScrollOfTheHeroOfCinderCity:4"],
-                goodSets: ["GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2"],
+                goodSets: ["GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 180,
 
@@ -3363,7 +4746,71 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Yun Jin
+    "Yun Jin": {
+        color: "#48308d",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 1,
+            skill: 1,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C4 : Le tranchant d'une fleur",
+                        cons: 4,
+                        stats: {
+                            def_: 0.20
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Support universel": {
+                name: "Support universel",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 1, "def": 0.8,
+                    "eleMas": 0, "enerRech_": 0.8,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["def_", "enerRech_"],
+                    "EQUIP_RING": ["def_"],
+                    "EQUIP_DRESS": ["def_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["HuskOfOpulentDreams:4", "NoblesseOblige:4"],
+                goodSets: ["ArchaicPetra:4", "ScrollOfTheHeroOfCinderCity:4", "HuskOfOpulentDreams:2", "ScrollOfTheHeroOfCinderCity:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" }
+                ]
+            }
+        }
+    },
 
     // 2.5
     "Yae Miko": {
@@ -3392,14 +4839,14 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Suractivation": {
-                name: "Suractivation",
+            "Sub-DPS Suractivation": {
+                name: "Sub-DPS Suractivation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.8, "enerRech_": 0.5,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -3419,7 +4866,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4", "GoldenTroupe:4", "GildedDreams:4"],
-                goodSets: ["MarechausseeHunter:4", "LongNightsOath:4", "EmblemOfSeveredFate:2", "GoldenTroupe:2", "GildedDreams:2", "TenacityOfTheMillelith:4", "Instructor:4"],
+                goodSets: ["MarechausseeHunter:4", "LongNightsOath:4", "GoldenTroupe:2", "TenacityOfTheMillelith:4", "Instructor:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "ThunderingFury:2"],
 
                 er_req: 140,
 
@@ -3459,14 +4906,14 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Hypercarry": {
-                name: "Hypercarry",
+            "DPS Hydro": {
+                name: "DPS Hydro",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0.4, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0.4, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.4,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -3486,7 +4933,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["hp"],
 
                 bestSets: ["HeartOfDepth:4", "GladiatorsFinale:4", "NymphsDream:4"],
-                goodSets: ["EchoesOfAnOffering:4", "HeartOfDepth:2", "GladiatorsFinale:2", "NymphsDream:2", "EchoesOfAnOffering:2"],
+                goodSets: ["EchoesOfAnOffering:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "HeartOfDepth:2", "NymphsDream:2"],
 
                 er_req: 120,
 
@@ -3501,9 +4948,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0.4, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0.4, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.4,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -3523,7 +4970,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["hp"],
 
                 bestSets: ["HeartOfDepth:4", "GladiatorsFinale:4", "NymphsDream:4", "MarechausseeHunter:4"],
-                goodSets: ["EchoesOfAnOffering:4", "HeartOfDepth:2", "GladiatorsFinale:2", "NymphsDream:2", "EchoesOfAnOffering:2"],
+                goodSets: ["EchoesOfAnOffering:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "HeartOfDepth:2", "NymphsDream:2"],
 
                 er_req: 120,
 
@@ -3533,14 +4980,14 @@ const CHARACTER_CONFIG = {
                     { role: "Flex", name: ["Yelan", "Citlali"], element: ["hydro", "cryo"]},
                 ]
             },
-            "Exubérance": {
-                name: "Exubérance",
+            "DPS Exubérance": {
+                name: "DPS Exubérance",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0.4, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0.4, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -3560,7 +5007,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["hp"],
 
                 bestSets: ["HeartOfDepth:4", "GladiatorsFinale:4", "NymphsDream:4"],
-                goodSets: ["EchoesOfAnOffering:4", "HeartOfDepth:2", "GladiatorsFinale:2", "NymphsDream:2", "EchoesOfAnOffering:2", "EmblemOfSeveredFate:4"],
+                goodSets: ["EchoesOfAnOffering:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "HeartOfDepth:2", "NymphsDream:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 140,
 
@@ -3575,9 +5022,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -3597,7 +5044,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["hp", "atk"],
 
                 bestSets: ["FlowerOfParadiseLost:4", "GildedDreams:4"],
-                goodSets: ["FlowerOfParadiseLost:2", "GildedDreams:2", "WanderersTroupe:2"],
+                goodSets: ["WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 170,
 
@@ -3607,14 +5054,14 @@ const CHARACTER_CONFIG = {
                     { role: "Support", name: "Baizhuer", element: "dendro" },
                 ]
             },
-            "Électrocution": {
-                name: "Électrocution",
+            "DPS Électrocution": {
+                name: "DPS Électrocution",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0.4, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0.4, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.4,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -3634,7 +5081,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["hp"],
 
                 bestSets: ["HeartOfDepth:4", "GladiatorsFinale:4", "NymphsDream:4"],
-                goodSets: ["EchoesOfAnOffering:4", "HeartOfDepth:2", "GladiatorsFinale:2", "NymphsDream:2", "EchoesOfAnOffering:2"],
+                goodSets: ["EchoesOfAnOffering:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "HeartOfDepth:2", "NymphsDream:2"],
 
                 er_req: 120,
 
@@ -3644,14 +5091,14 @@ const CHARACTER_CONFIG = {
                     { role: "Support", name: "Sucrose", element: "anemo" },
                 ]
             },
-            "Évaporation": {
-                name: "Évaporation",
+            "DPS Évaporation": {
+                name: "DPS Évaporation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0.4, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0.4, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.6, "enerRech_": 0.4,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -3671,7 +5118,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["hp"],
 
                 bestSets: ["HeartOfDepth:4", "GladiatorsFinale:4", "NymphsDream:4"],
-                goodSets: ["EchoesOfAnOffering:4", "HeartOfDepth:2", "GladiatorsFinale:2", "NymphsDream:2", "EchoesOfAnOffering:2"],
+                goodSets: ["EchoesOfAnOffering:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "HeartOfDepth:2", "NymphsDream:2"],
 
                 er_req: 120,
 
@@ -3723,14 +5170,14 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Exubérance": {
-                name: "Exubérance",
+            "Sub-DPS Exubérance": {
+                name: "Sub-DPS Exubérance",
 
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0.4, "hp": 0.1, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0.4, "hp": 0.1,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.4,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -3750,7 +5197,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["hp"],
 
                 bestSets: ["FlowerOfParadiseLost:4"],
-                goodSets: ["GildedDreams:4", "GildedDreams:2", "FlowerOfParadiseLost:2", "WanderersTroupe:2", "NightOfTheSkysUnveiling:2", "ThunderingFury:4", "DeepwoodMemories:4"],
+                goodSets: ["GildedDreams:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "ThunderingFury:4", "DeepwoodMemories:4"],
 
                 er_req: 130,
 
@@ -3760,14 +5207,14 @@ const CHARACTER_CONFIG = {
                     { role: "Flex", name: ["Yelan", "Xingqiu"], element: ["hydro", "hydro"] }
                 ]
             },
-            "Propagation": {
-                name: "Propagation",
+            "Sub-DPS Propagation": {
+                name: "Sub-DPS Propagation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0.4, "hp": 0.1, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0.4, "hp": 0.1,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.8, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -3787,7 +5234,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["hp"],
 
                 bestSets: ["GoldenTroupe:4", "TenacityOfTheMillelith:4"],
-                goodSets: ["ScrollOfTheHeroOfCinderCity:4", "DeepwoodMemories:4", "Instructor:4", "NoblesseOblige:4", "EmblemOfSeveredFate:4", "ThunderingFury:4", "GildedDreams:4", "GildedDreams:2"],
+                goodSets: ["ScrollOfTheHeroOfCinderCity:4", "DeepwoodMemories:4", "Instructor:4", "NoblesseOblige:4", "EmblemOfSeveredFate:4", "ThunderingFury:4", "GildedDreams:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 130,
 
@@ -3816,7 +5263,6 @@ const CHARACTER_CONFIG = {
                 buffs: [
                     {
                         label: "A1 : Contrôle stratégique (1 type élémentaire différent)",
-                        description: "",
                         active: false,
                         stats: {
                             hp_: 0.06,
@@ -3824,7 +5270,6 @@ const CHARACTER_CONFIG = {
                     },
                     {
                         label: "A1 : Contrôle stratégique (2 types élémentaires différents)",
-                        description: "",
                         active: false,
                         stats: {
                             hp_: 0.12,
@@ -3832,7 +5277,6 @@ const CHARACTER_CONFIG = {
                     },
                     {
                         label: "A1 : Contrôle stratégique (3 types élémentaires différents)",
-                        description: "",
                         active: false,
                         stats: {
                             hp_: 0.18,
@@ -3840,7 +5284,6 @@ const CHARACTER_CONFIG = {
                     },
                     {
                         label: "A1 : Contrôle stratégique (4 types élémentaires différents)",
-                        description: "",
                         active: true,
                         stats: {
                             hp_: 0.30,
@@ -3854,7 +5297,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C4 : Tour de passe-passe",
                         cons: 4,
-                        description: "",
                         stats: {
                             hp_: 0.40
                         }
@@ -3864,9 +5306,8 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Exubérance": {
-                name: "Exubérance",
-                description: "",
+            "Sub-DPS Exubérance": {
+                name: "Sub-DPS Exubérance",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -3889,7 +5330,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:4"],
-                goodSets: ["EmblemOfSeveredFate:2", "NoblesseOblige:2", "TenacityOfTheMillelith:2"],
+                goodSets: ["EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "NoblesseOblige:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "HeartOfDepth:2", "NymphsDream:2"],
 
                 er_req: 200,
 
@@ -3903,9 +5344,8 @@ const CHARACTER_CONFIG = {
                     }
                 ]
             },
-            "Gel": {
-                name: "Gel",
-                description: "",
+            "Sub-DPS Gel": {
+                name: "Sub-DPS Gel",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -3928,7 +5368,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:4"],
-                goodSets: ["EmblemOfSeveredFate:2", "NoblesseOblige:2", "TenacityOfTheMillelith:2"],
+                goodSets: ["EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "NoblesseOblige:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "HeartOfDepth:2", "NymphsDream:2"],
 
                 er_req: 170,
 
@@ -3942,9 +5382,8 @@ const CHARACTER_CONFIG = {
                     }
                 ]
             },
-            "Évaporation": {
-                name: "Évaporation",
-                description: "",
+            "Sub-DPS Évaporation": {
+                name: "Sub-DPS Évaporation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -3967,7 +5406,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["EmblemOfSeveredFate:4", "NoblesseOblige:4"],
-                goodSets: ["EmblemOfSeveredFate:2", "NoblesseOblige:2", "TenacityOfTheMillelith:2"],
+                goodSets: ["EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "NoblesseOblige:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "HeartOfDepth:2", "NymphsDream:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 170,
 
@@ -4022,7 +5461,6 @@ const CHARACTER_CONFIG = {
                         label: "C6 : Registre curieux (4 cumuls + Conviction)",
                         cons: 6,
                         active: false,
-                        description: "Attention : Ce buff massif de Crit ne s'applique normalement qu'à la compétence élémentaire.",
                         stats: { critRate_: 0.04, critDMG_: 0.32 }
                     }
                 ]
@@ -4035,9 +5473,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.4,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -4056,7 +5494,7 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                bestSets: ["ViridescentVenerer:4", "ViridescentVenerer:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2"],
+                bestSets: ["ViridescentVenerer:4", "ViridescentVenerer:2","DesertPavilionChronicle:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
                 goodSets: ["Lavawalker:4"],
 
                 er_req: 150,
@@ -4142,14 +5580,14 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Propagation": {
+            "DPS Propagation": {
                 name: "Propagation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.5,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -4169,7 +5607,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["DeepwoodMemories:4", "WanderersTroupe:4", "GildedDreams:4"],
-                goodSets: ["DeepwoodMemories:2", "WanderersTroupe:2", "GildedDreams:2"],
+                goodSets: ["DeepwoodMemories:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 130,
 
@@ -4213,9 +5651,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.8, "enerRech_": 0.5,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -4235,7 +5673,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["DeepwoodMemories:4", "ScrollOfTheHeroOfCinderCity:4", "Instructor:4","GildedDreams:4" ],
-                goodSets: ["DeepwoodMemories:2", "ScrollOfTheHeroOfCinderCity:2","GildedDreams:2" ],
+                goodSets: ["DeepwoodMemories:2", "ScrollOfTheHeroOfCinderCity:2","WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 200,
 
@@ -4250,9 +5688,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -4272,7 +5710,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["FlowerOfParadiseLost:4","DeepwoodMemories:4", "ScrollOfTheHeroOfCinderCity:4", "Instructor:4","GildedDreams:4" ],
-                goodSets: ["DeepwoodMemories:2", "ScrollOfTheHeroOfCinderCity:2","GildedDreams:2" ],
+                goodSets: ["DeepwoodMemories:2", "ScrollOfTheHeroOfCinderCity:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 200,
 
@@ -4284,7 +5722,109 @@ const CHARACTER_CONFIG = {
             }
         }
     },
-    // Dori
+    "Dori": {
+        color: "#9774cd",
+        portraitOffset: -37,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 8
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C4 : Supplément discrétionnaire (si ER < 50%)",
+                        cons: 4,
+                        active: false,
+                        stats: {
+                            enerRech_: 0.30
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Driver Suractivation": {
+                name: "Driver Suractivation",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.8, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "enerRech_"],
+                    "EQUIP_RING": ["electro_dmg_", "eleMas"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["GildedDreams:4", "ThunderingFury:4"],
+                goodSets: ["Thundersoother:4", "NoblesseOblige:4", "DeepwoodMemories:4", "OceanHuedClam:4", "Instructor:4", "TheExile:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2"],
+
+                er_req: 140,
+
+                team: [
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+                    { role: "Sub-DPS", name: "Nahida", element: "dendro" },
+                    { role: "Support", name: "Kazuha", element: "anemo" },
+                ]
+            },
+            "Driver Exubérance": {
+                name: "Driver Exubérance",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1, "enerRech_": 0.6,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "enerRech_"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["critRate_", "eleMas"]
+                },
+
+                hideUIStats: [],
+                showUIStats: ["atk"],
+
+                bestSets: ["GildedDreams:4", "FlowerOfParadiseLost:4"],
+                goodSets: ["NoblesseOblige:4", "DeepwoodMemories:4", "OceanHuedClam:4", "Instructor:4", "TheExile:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 140,
+
+                team: [
+                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
+                    { role: "Sub-DPS", name: "Nahida", element: "dendro" },
+                    { role: "Support", name: "Qin", element: "anemo" },
+                ]
+            }
+        }
+    },
 
     // 3.1
     "Cyno": {
@@ -4342,15 +5882,15 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Exubérance": {
-                name: "Exubérance",
+            "DPS Exubérance": {
+                name: "DPS Exubérance",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.4, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
-                    "eleMas": 1, "enerRech_": .80,
+                    "atk_": 0.4, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
@@ -4369,7 +5909,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ThunderingFury:4", "GildedDreams:4"],
-                goodSets: ["ThunderingFury:2", "GildedDreams:2", "GladiatorsFinale:4", "WanderersTroupe:2", "FlowerOfParadiseLost:4"],
+                goodSets: ["ThunderingFury:2", "GladiatorsFinale:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2","FlowerOfParadiseLost:4"],
                 er_req: 130,
 
                 team: [
@@ -4378,15 +5918,15 @@ const CHARACTER_CONFIG = {
                     { role: "Sub-DPS", name: "Shinobu", element: "electro" },
                 ]
             },
-            "Suractivation": {
-                name: "Suractivation",
+            "DPS Suractivation": {
+                name: "DPS Suractivation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.4, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
-                    "eleMas": 1, "enerRech_": .80,
+                    "atk_": 0.4, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
@@ -4405,7 +5945,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ThunderingFury:4", "GildedDreams:4"],
-                goodSets: ["ThunderingFury:2", "GildedDreams:2", "GladiatorsFinale:4", "WanderersTroupe:2"],
+                goodSets: ["ThunderingFury:2", "GladiatorsFinale:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
                 er_req: 130,
 
                 team: [
@@ -4417,25 +5957,22 @@ const CHARACTER_CONFIG = {
         }
     },
     "Nilou": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#80B7E2", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -36.5, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#80B7E2",
+        portraitOffset: -36.5,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
             skill: 8,
             burst: 8
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
                 buffs: [
                     {
                         label: "A1 : Cour des pétales dansants",
-                        active: true, // Coché par défaut ?
+                        active: true,
                         stats: {
                             eleMas: 100,
                         }
@@ -4448,7 +5985,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C6 : Mélodie du brise-givre",
                         cons: 6,
-                        description: "Le Taux CRIT et les DGT CRIT augmentent en fonction des PV max (jusqu'à 50 000 PV).",
                         active: false,
                         stats: {
                             critRate__bonus_scaling: {
@@ -4467,21 +6003,17 @@ const CHARACTER_CONFIG = {
             }
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "Enabler Fleurissement": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "Enabler Fleurissement": {
                 name: "Enabler Fleurissement",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0, "atk": 0,
                     "hp_": 1, "hp": 0.8,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.5, "enerRech_": 0.3, // Ajuster selon besoin
+                    "eleMas": 0.5, "enerRech_": 0.3,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -4495,28 +6027,158 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["hp_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
                 bestSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2"],
-                goodSets: ["FlowerOfParadiseLost:4", "GildedDreams:2", "WanderersTroupe:2", "NightOfTheSkysUnveiling:2"],
+                goodSets: ["FlowerOfParadiseLost:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 130,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Driver", name: "Columbina", element: "hydro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Lauma", element: "dendro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Nahida", element: "dendro" },
                 ]
             }
         }
     },
-    // Candace
+    "Candace": {
+        color: "#3a306a",
+        portraitOffset: -39,
+
+        talents: {
+            auto: 8,
+            skill: 10,
+            burst: 9
+        },
+
+        buffs: [
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Brillance perçant la lune",
+                        cons: 2,
+                        stats: {
+                            hp_: 0.20
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Driver fleurissement": {
+                name: "Driver fleurissement",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0.8, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 1, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["eleMas", "enerRech_"],
+                    "EQUIP_RING": ["eleMas"],
+                    "EQUIP_DRESS": ["eleMas","critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["FlowerOfParadiseLost:4"],
+                goodSets: ["GildedDreams:4", "SilkenMoonsSerenade:4", "DeepwoodMemories:4", "FlowerOfParadiseLost:2", "GildedDreams:2", "WanderersTroupe:2", "AubadeOfMorningstarAndMoon:2", "NightOfTheSkysUnveiling:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "Support", name: "Nilou", element: "hydro" },
+                    { role: "Support", name: "Yaoyao", element: "dendro" },
+                    { role: "Sub-DPS", name: "Lauma", element: "dendro" }
+                ]
+            },
+            "Support général": {
+                name: "Support général",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["hp_", "enerRech_"],
+                    "EQUIP_RING": ["hp_"],
+                    "EQUIP_DRESS": ["hp_","critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ScrollOfTheHeroOfCinderCity:4", "NoblesseOblige:4"],
+                goodSets: ["Instructor:4", "SilkenMoonsSerenade:4", "EmblemOfSeveredFate:4", "TenacityOfTheMillelith:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "VourukashasGlow:2", "ScrollOfTheHeroOfCinderCity:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" },
+                ]
+            },
+            "Applicatrice évaporation": {
+                name: "Applicatrice évaporation",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0.8, "hp": 0.1,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["hp_", "enerRech_"],
+                    "EQUIP_RING": ["hydro_dmg_"],
+                    "EQUIP_DRESS": ["critDMG_","critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ScrollOfTheHeroOfCinderCity:4", "NoblesseOblige:4"],
+                goodSets: ["Instructor:4", "SilkenMoonsSerenade:4", "EmblemOfSeveredFate:4", "TenacityOfTheMillelith:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "VourukashasGlow:2", "ScrollOfTheHeroOfCinderCity:2", "HeartOfDepth:2", "NymphsDream:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "DPS", name: "Hutao", element: "pyro" },
+                    { role: "Sub-DPS", name: "Yelan", element: "hydro" },
+                    { role: "Support", name: "Zhongli", element: "geo" },
+                ]
+            }
+        }
+    },
 
     // 3.2
     "Nahida": {
@@ -4608,14 +6270,14 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Propagation": {
-                name: "Propagation",
+            "Sub-DPS Propagation": {
+                name: "Sub-DPS Propagation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -4635,7 +6297,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["DeepwoodMemories:4", "ScrollOfTheHeroOfCinderCity:4"],
-                goodSets: ["TenacityOfTheMillelith:4", "GoldenTroupe:4", "GildedDreams:4", "Instructor:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "GoldenTroupe:4", "GildedDreams:4", "Instructor:4", "DeepwoodMemories:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 120,
 
@@ -4645,14 +6307,14 @@ const CHARACTER_CONFIG = {
                     { role: "Sub-DPS", name: "Shinobu", element: "electro" },
                 ]
             },
-            "Exubérance": {
-                name: "Exubérance",
+            "Sub-DPS Exubérance": {
+                name: "Sub-DPS Exubérance",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -4672,7 +6334,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["DeepwoodMemories:4", "ScrollOfTheHeroOfCinderCity:4"],
-                goodSets: ["TenacityOfTheMillelith:4", "GoldenTroupe:4", "GildedDreams:4", "Instructor:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "GoldenTroupe:4", "GildedDreams:4", "Instructor:4", "DeepwoodMemories:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 140,
 
@@ -4682,14 +6344,14 @@ const CHARACTER_CONFIG = {
                     { role: "Sub-DPS", name: "Shinobu", element: "electro" },
                 ]
             },
-            "Fleurissement": {
-                name: "Fleurissement",
+            "Sub-DPS Fleurissement": {
+                name: "Sub-DPS Fleurissement",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -4709,7 +6371,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["DeepwoodMemories:4", "ScrollOfTheHeroOfCinderCity:4"],
-                goodSets: ["TenacityOfTheMillelith:4", "GoldenTroupe:4", "GildedDreams:4", "Instructor:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "GoldenTroupe:4", "GildedDreams:4", "Instructor:4", "DeepwoodMemories:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 120,
 
@@ -4737,9 +6399,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.5,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -4759,7 +6421,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["TenacityOfTheMillelith:4"],
-                goodSets: ["NoblesseOblige:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "Instructor:4", "DeepwoodMemories:4"],
+                goodSets: ["NoblesseOblige:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "Instructor:4", "DeepwoodMemories:4", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 140,
 
@@ -4774,18 +6436,15 @@ const CHARACTER_CONFIG = {
 
     // 3.3
     "Nomade": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#1d40ee", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -36, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#1d40ee",
+        portraitOffset: -36,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 10,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 10,
             skill: 9,
             burst: 8
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
@@ -4808,21 +6467,17 @@ const CHARACTER_CONFIG = {
             },
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "DPS Dispersion": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "DPS Dispersion": {
                 name: "DPS Dispersion",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.3, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0.3,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 1, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -4839,29 +6494,22 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["DesertPavilionChronicle:4"], // Top Tier
-                goodSets: ["ShimenawasReminiscence:4", "MarechausseeHunter:4"], // Viables
+                bestSets: ["DesertPavilionChronicle:4"],
+                goodSets: ["ShimenawasReminiscence:4", "MarechausseeHunter:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "ViridescentVenerer:2", "DesertPavilionChronicle:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 120,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Support", name: "Faruzan", element: "anemo" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     {
                         role: "Flex",
-                        name: ["", ""], // Noms (Optionnel)
-                        element: ["pyro", "hydro"]  // Éléments pour la couleur de fond
+                        name: ["", ""],
+                        element: ["pyro", "hydro"]
                     },
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     {
                         role: "Flex",
-                        name: ["", ""], // Noms (Optionnel)
-                        element: ["cryo", "electro"]  // Éléments pour la couleur de fond
+                        name: ["", ""],
+                        element: ["cryo", "electro"]
                     }
                 ]
             }
@@ -4898,9 +6546,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 1, "atk": 0.8, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 1, "atk": 0.8,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -4920,7 +6568,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["TenacityOfTheMillelith:4", "NoblesseOblige:4", "ViridescentVenerer:4"],
-                goodSets: ["GoldenTroupe:4", "TheExile:4", "EmblemOfSeveredFate:2", "TheExile:2", "SilkenMoonsSerenade:2"],
+                goodSets: ["GoldenTroupe:4", "TheExile:4", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 220,
 
@@ -5031,14 +6679,14 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Exubérance": {
-                name: "Exubérance",
+            "DPS Exubérance": {
+                name: "DPS Exubérance",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.4, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.4, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5058,7 +6706,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["GildedDreams:4"],
-                goodSets: ["GildedDreams:2", "DeepwoodMemories:2", "GoldenTroupe:2", "GladiatorsFinale:2", "GoldenTroupe:4", "MarechausseeHunter:4", "DeepwoodMemories:4"],
+                goodSets: ["DeepwoodMemories:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GoldenTroupe:2", "GoldenTroupe:4", "MarechausseeHunter:4", "DeepwoodMemories:4"],
 
                 er_req: 130,
 
@@ -5068,14 +6716,14 @@ const CHARACTER_CONFIG = {
                     { role: "Flex", name: ["Yelan", "Xingqiu"], element: ["hydro", "hydro"] }
                 ]
             },
-            "Propagation": {
-                name: "Propagation",
+            "DPS Propagation": {
+                name: "DPS Propagation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.4, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.4, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5095,7 +6743,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["GildedDreams:4"],
-                goodSets: ["GildedDreams:2", "DeepwoodMemories:2", "GoldenTroupe:2", "GladiatorsFinale:2", "GoldenTroupe:4", "MarechausseeHunter:4", "DeepwoodMemories:4"],
+                goodSets: ["DeepwoodMemories:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "GoldenTroupe:4", "MarechausseeHunter:4", "DeepwoodMemories:4"],
 
                 er_req: 130,
 
@@ -5105,14 +6753,14 @@ const CHARACTER_CONFIG = {
                     { role: "Support", name: "Zhongli", element: "geo" },
                 ]
             },
-            "Fleurissement": {
-                name: "Fleurissement",
+            "Driver Fleurissement": {
+                name: "Driver Fleurissement",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.4, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.4, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5132,7 +6780,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["GildedDreams:4"],
-                goodSets: ["GildedDreams:2", "DeepwoodMemories:2", "GoldenTroupe:2", "GladiatorsFinale:2", "GoldenTroupe:4", "MarechausseeHunter:4", "DeepwoodMemories:4"],
+                goodSets: ["WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "DeepwoodMemories:2", "GoldenTroupe:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "GoldenTroupe:4", "MarechausseeHunter:4", "DeepwoodMemories:4"],
 
                 er_req: 130,
 
@@ -5188,9 +6836,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5210,7 +6858,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["DeepwoodMemories:4", "MaidenBeloved:4"],
-                goodSets: ["MaidenBeloved:2", "OceanHuedClam:2"],
+                goodSets: ["MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2"],
 
                 er_req: 220,
 
@@ -5225,9 +6873,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0.4, "hp": 0.1, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0.4, "hp": 0.1,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.8, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5247,7 +6895,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["DeepwoodMemories:4", "Instructor:4", "GildedDreams:4"],
-                goodSets: ["DeepwoodMemories:2", "GildedDreams:2", "WanderersTroupe:2"],
+                goodSets: ["DeepwoodMemories:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 160,
 
@@ -5262,9 +6910,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0.4, "hp": 0.1, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0.4, "hp": 0.1,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5284,7 +6932,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["DeepwoodMemories:4", "Instructor:4", "GildedDreams:4", "FlowerOfParadiseLost:4"],
-                goodSets: ["DeepwoodMemories:2", "GildedDreams:2", "WanderersTroupe:2"],
+                goodSets: ["DeepwoodMemories:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 160,
 
@@ -5331,9 +6979,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 1, "hp": 0.1, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.4, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5353,7 +7001,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["TenacityOfTheMillelith:4", "ScrollOfTheHeroOfCinderCity:4", "Instructor:4"],
-                goodSets: ["SilkenMoonsSerenade:4", "DeepwoodMemories:4"],
+                goodSets: ["SilkenMoonsSerenade:4", "DeepwoodMemories:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 100,
 
@@ -5363,15 +7011,15 @@ const CHARACTER_CONFIG = {
                     { role: "Flex", name: ["Nahida", "Xilonen"], element: ["dendro", "geo"] }
                 ]
             },
-            "DPS": {
-                name: "DPS",
+            "DPS Évaporation": {
+                name: "DPS Évaporation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0.1, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
-                    "eleMas": 0.4, "enerRech_": 0.8,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0.1, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.8,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -5390,7 +7038,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["hp"],
 
                 bestSets: ["MarechausseeHunter:4", "VourukashasGlow:4", "EmblemOfSeveredFate:4"],
-                goodSets: ["NightOfTheSkysUnveiling:4", "UnfinishedReverie:4", "LongNightsOath:4"],
+                goodSets: ["NightOfTheSkysUnveiling:4", "UnfinishedReverie:4", "LongNightsOath:4", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "CrimsonWitchOfFlames:2"],
 
                 er_req: 180,
 
@@ -5447,7 +7095,6 @@ const CHARACTER_CONFIG = {
                         label: "C6 : Conseil du compagnon",
                         cons: 6,
                         active: false,
-                        description: "Augmente les DGT CRIT physiques uniquement",
                         stats: { critDMG_: 0.60 }
                     }
                 ]
@@ -5460,9 +7107,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5482,7 +7129,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["physical_dmg_"],
 
                 bestSets: ["NoblesseOblige:4"],
-                goodSets: ["OceanHuedClam:4", "SongOfDaysPast:4", "TheExile:4","OceanHuedClam:2", "SongOfDaysPast:2", "TenacityOfTheMillelith:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2"],
+                goodSets: ["OceanHuedClam:4", "SongOfDaysPast:4", "TheExile:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2"],
 
                 er_req: 200,
 
@@ -5547,9 +7194,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5569,7 +7216,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["DeepwoodMemories:4", "Instructor:4"],
-                goodSets: ["OceanHuedClam:4", "NoblesseOblige:4", "MaidenBeloved:4", "MaidenBeloved:2", "EmblemOfSeveredFate:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "SilkenMoonsSerenade:2"],
+                goodSets: ["OceanHuedClam:4", "NoblesseOblige:4", "MaidenBeloved:4", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2"],
 
                 er_req: 180,
 
@@ -5630,9 +7277,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5652,7 +7299,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["DeepwoodMemories:4", "OceanHuedClam:4", "Instructor:4"],
-                goodSets: ["FlowerOfParadiseLost:4", "GildedDreams:4", "GildedDreams:2", "FlowerOfParadiseLost:2", "WanderersTroupe:2", "AubadeOfMorningstarAndMoon:2", "NightOfTheSkysUnveiling:2"],
+                goodSets: ["FlowerOfParadiseLost:4", "GildedDreams:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 200,
 
@@ -5697,9 +7344,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.4, "enerRech_": 0.6,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5719,7 +7366,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["TenacityOfTheMillelith:4", "Instructor:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2"],
-                goodSets: ["DeepwoodMemories:4", "NoblesseOblige:4"],
+                goodSets: ["DeepwoodMemories:4", "NoblesseOblige:4", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 140,
 
@@ -5779,9 +7426,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.3,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5801,7 +7448,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["MarechausseeHunter:4"],
-                goodSets: ["Lavawalker:4", "VermillionHereafter:4", "ShimenawasReminiscence:4", "WanderersTroupe:4", "DesertPavilionChronicle:4", "MarechausseeHunter:2", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "FragmentOfHarmonicWhimsy:2", "ADayCarvedFromRisingWinds:2"],
+                goodSets: ["Lavawalker:4", "VermillionHereafter:4", "ShimenawasReminiscence:4", "WanderersTroupe:4", "DesertPavilionChronicle:4", "MarechausseeHunter:2", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 120,
 
@@ -5870,9 +7517,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -5892,7 +7539,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ViridescentVenerer:4", "EmblemOfSeveredFate:4", "NoblesseOblige:4"],
-                goodSets: ["GildedDreams:4", "ViridescentVenerer:2", "EmblemOfSeveredFate:2", "NoblesseOblige:2"],
+                goodSets: ["GildedDreams:4", "ViridescentVenerer:2","DesertPavilionChronicle:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "NoblesseOblige:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 170,
 
@@ -5983,9 +7630,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.5,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -6005,7 +7652,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["PaleFlame:4", "MarechausseeHunter:4"],
-                goodSets: ["BlizzardStrayer:4", "PaleFlame:2", "BloodstainedChivalry:2", "GladiatorsFinale:2", "GoldenTroupe:2", "ShimenawasReminiscence:2"],
+                goodSets: ["BlizzardStrayer:4", "PaleFlame:2", "BloodstainedChivalry:2", "GoldenTroupe:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 130,
 
@@ -6020,9 +7667,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.5,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
@@ -6042,7 +7689,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["BlizzardStrayer:4", "GoldenTroupe:4"],
-                goodSets: ["MarechausseeHunter:4", "PaleFlame:4", "BlizzardStrayer:2", "GladiatorsFinale:2", "GoldenTroupe:2", "ShimenawasReminiscence:2"],
+                goodSets: ["MarechausseeHunter:4", "PaleFlame:4", "BlizzardStrayer:2", "GoldenTroupe:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 130,
 
@@ -6100,7 +7747,6 @@ const CHARACTER_CONFIG = {
                         label: "C6 : Estime pour les irréprochables (Att. Chargée)",
                         cons: 6,
                         active: false,
-                        description: "Attention : Ce buff ne s'applique normalement qu'à l'attaque chargée. L'activer ici modifiera vos stats globales.",
                         stats: {
                             critRate_: 0.10,
                             critDMG_: 0.80
@@ -6116,9 +7762,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
@@ -6138,7 +7784,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["MarechausseeHunter:4", "BlizzardStrayer:4"],
-                goodSets: ["ShimenawasReminiscence:4", "ShimenawasReminiscence:2", "MarechausseeHunter:2", "BlizzardStrayer:2", "GladiatorsFinale:2"],
+                goodSets: ["ShimenawasReminiscence:4", "MarechausseeHunter:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 110,
 
@@ -6153,9 +7799,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.6, "enerRech_": 0.1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
@@ -6175,7 +7821,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ShimenawasReminiscence:4"],
-                goodSets: ["ShimenawasReminiscence:2", "MarechausseeHunter:2", "BlizzardStrayer:2", "GladiatorsFinale:2"],
+                goodSets: ["MarechausseeHunter:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 110,
 
@@ -6203,7 +7849,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "A4 : Discipline de l'arbitrage suprême",
                         active: true,
-                        description: "",
                         stats: {
                             hydro_dmg_: 0.30
                         }
@@ -6216,7 +7861,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C2 : Exhortation de la loi",
                         cons: 2,
-                        description: "",
                         stats: {
                             critDMG_: 0.42
                         }
@@ -6226,9 +7870,8 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Hypercarry": {
-                name: "Hypercarry",
-                description: "",
+            "DPS Hydro": {
+                name: "DPS Hydro",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -6251,7 +7894,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["MarechausseeHunter:4"],
-                goodSets: ["WanderersTroupe:4", "HeartOfDepth:4"],
+                goodSets: ["WanderersTroupe:4", "HeartOfDepth:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "HeartOfDepth:2", "NymphsDream:2"],
 
                 er_req: 130,
 
@@ -6262,9 +7905,8 @@ const CHARACTER_CONFIG = {
                     }
                 ]
             },
-            "Gel": {
-                name: "Gel",
-                description: "",
+            "DPS Gel": {
+                name: "DPS Gel",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -6287,7 +7929,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["MarechausseeHunter:4"],
-                goodSets: ["WanderersTroupe:4", "HeartOfDepth:4"],
+                goodSets: ["WanderersTroupe:4", "HeartOfDepth:4", "HeartOfDepth:2", "NymphsDream:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2"],
 
                 er_req: 130,
 
@@ -6297,9 +7939,8 @@ const CHARACTER_CONFIG = {
                     { role: "Support", name: "Citlali", element: "cryo"}
                 ]
             },
-            "Hyperbloom": {
-                name: "Hyperbloom",
-                description: "",
+            "DPS Exubérance": {
+                name: "DPS Exubérance",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -6322,7 +7963,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["MarechausseeHunter:4", "NightOfTheSkysUnveiling:4"],
-                goodSets: ["WanderersTroupe:4", "HeartOfDepth:4"],
+                goodSets: ["WanderersTroupe:4", "HeartOfDepth:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "HeartOfDepth:2", "NymphsDream:2"],
 
                 er_req: 130,
 
@@ -6353,7 +7994,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C2 : « Comme la plume au vent, femme est volage » (Bonus Max)",
                         cons: 2,
-                        description: "",
                         stats: {
                             hp_: 1.4
                         }
@@ -6365,7 +8005,6 @@ const CHARACTER_CONFIG = {
         builds: {
             "Support et sub-DPS universel": {
                 name: "Support et sub-DPS universel",
-                description: "",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -6388,7 +8027,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["GoldenTroupe:4", "TenacityOfTheMillelith:4"],
-                goodSets: ["OceanHuedClam:4", "NoblesseOblige:4"],
+                goodSets: ["OceanHuedClam:4", "NoblesseOblige:4", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "HeartOfDepth:2", "NymphsDream:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2"],
 
                 er_req: 180,
 
@@ -6469,9 +8108,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 1, "atk": 0.8, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 1, "atk": 0.8,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -6490,8 +8129,8 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                bestSets: ["GladiatorsFinale:2", "MaidenBeloved:2", "EmblemOfSeveredFate:2", "OceanHuedClam:4"],
-                goodSets: ["NoblesseOblige:4", "TenacityOfTheMillelith:4", "MaidenBeloved:4"],
+                bestSets: ["NoblesseOblige:4", "TenacityOfTheMillelith:4", "OceanHuedClam:4"],
+                goodSets: ["MaidenBeloved:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2"],
 
                 er_req: 200,
 
@@ -6522,7 +8161,6 @@ const CHARACTER_CONFIG = {
                 data: [
                     {
                         label: "A4 : Réseau d'assistance mutuelle (1 allié Pyro/Hydro/Cryo/Électro)",
-                        description: "",
                         active: false,
                         stats: {
                             atk_: 0.20,
@@ -6530,7 +8168,6 @@ const CHARACTER_CONFIG = {
                     },
                     {
                         label: "A4 : Réseau d'assistance mutuelle (2 alliés Pyro/Hydro/Cryo/Électro)",
-                        description: "",
                         active: true,
                         stats: {
                             atk_: 0.40,
@@ -6545,7 +8182,6 @@ const CHARACTER_CONFIG = {
                         label: "C2 : Quête de victoire de la présidente (pour la compétence)",
                         cons: 2,
                         active: false,
-                        description: "",
                         stats: {
                             critRate_: 0.36
                         }
@@ -6553,7 +8189,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C6 : Finesse flexible de la présidente de la Spina (pour la compétence)",
                         cons: 6,
-                        description: "",
                         stats: {
                             critDMG_: 1.35
                         }
@@ -6563,9 +8198,8 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Hypercarry cristallisation": {
-                name: "Hypercarry cristallisation",
-                description: "",
+            "DPS cristallisation": {
+                name: "DPS cristallisation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -6588,7 +8222,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["NighttimeWhispersInTheEchoingWoods:4", "MarechausseeHunter:4"],
-                goodSets: ["ArchaicPetra:2", "GladiatorsFinale:2", "GoldenTroupe:2"],
+                goodSets: ["ArchaicPetra:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "GoldenTroupe:2"],
 
                 er_req: 130,
 
@@ -6604,16 +8238,15 @@ const CHARACTER_CONFIG = {
                     }
                 ]
             },
-            "Sélénocristallisation": {
-                name: "Sélénocristallisation",
-                description: "",
+            "DPS Sélénocristallisation": {
+                name: "DPS Sélénocristallisation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.5, "enerRech_": 0.3,
+                    "eleMas": 0.4, "enerRech_": 0.3,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -6629,7 +8262,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["NighttimeWhispersInTheEchoingWoods:4"],
-                goodSets: ["ArchaicPetra:2", "GladiatorsFinale:2", "GoldenTroupe:2"],
+                goodSets: ["ArchaicPetra:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "GoldenTroupe:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 130,
 
@@ -6712,9 +8345,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -6734,7 +8367,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk", "electro_dmg_"],
 
                 bestSets: ["NoblesseOblige:4"],
-                goodSets: ["SongOfDaysPast:4", "ScrollOfTheHeroOfCinderCity:4", "TenacityOfTheMillelith:4"],
+                goodSets: ["SongOfDaysPast:4", "ScrollOfTheHeroOfCinderCity:4", "TenacityOfTheMillelith:4", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2"],
 
                 er_req: 170,
 
@@ -6832,9 +8465,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 1, "atk": 0.8, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 1, "atk": 0.8,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -6854,7 +8487,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ViridescentVenerer:4", "OceanHuedClam:4", "NoblesseOblige:4"],
-                goodSets: ["SongOfDaysPast:4", "EmblemOfSeveredFate:4", "MaidenBeloved:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "ADayCarvedFromRisingWinds:2", "FragmentOfHarmonicWhimsy:2"],
+                goodSets: ["SongOfDaysPast:4", "EmblemOfSeveredFate:4", "MaidenBeloved:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2"],
 
                 er_req: 200,
 
@@ -6907,10 +8540,10 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
-                    "eleMas": 0.4, "enerRech_": 0.8,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.8,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -6929,7 +8562,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["CrimsonWitchOfFlames:4", "MarechausseeHunter:4", "LongNightsOath:4"],
-                goodSets: ["GildedDreams:4", "VermillionHereafter:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "EmblemOfSeveredFate:2", "CrimsonWitchOfFlames:2", "GildedDreams:2"],
+                goodSets: ["GildedDreams:4", "VermillionHereafter:4","LongNightsOath:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "CrimsonWitchOfFlames:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 150,
 
@@ -6944,10 +8577,10 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
-                    "eleMas": 0.4, "enerRech_": 0.8,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0.8,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -6966,7 +8599,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["CrimsonWitchOfFlames:4", "LongNightsOath:4"],
-                goodSets: ["GildedDreams:4", "VermillionHereafter:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "EmblemOfSeveredFate:2", "CrimsonWitchOfFlames:2", "GildedDreams:2"],
+                goodSets: ["GildedDreams:4", "VermillionHereafter:4","LongNightsOath:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "CrimsonWitchOfFlames:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 150,
 
@@ -6981,9 +8614,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -7003,7 +8636,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["CrimsonWitchOfFlames:4", "LongNightsOath:4"],
-                goodSets: ["GildedDreams:4", "VermillionHereafter:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "EmblemOfSeveredFate:2", "CrimsonWitchOfFlames:2", "GildedDreams:2"],
+                goodSets: ["VermillionHereafter:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "CrimsonWitchOfFlames:2"],
 
                 er_req: 150,
 
@@ -7018,24 +8651,21 @@ const CHARACTER_CONFIG = {
 
     // 4.5
     "Chiori": {
-        color: "#D44B10", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -37, // Décalage vertical de l'image (négatif = monte, positif = descend)
-
-        // Objectifs de Talents (Pour le coaching)
+        color: "#D44B10",
+        portraitOffset: -37,
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
             skill: 10,
             burst: 8
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
                 buffs: [
                     {
                         label: "A4 : Retouche finale",
-                        active: true, // Coché par défaut ?
+                        active: true,
                         stats: {
                             geo_dmg_: 0.20,
                         }
@@ -7044,21 +8674,17 @@ const CHARACTER_CONFIG = {
             },
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "Chiori": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
-                name: "Chiori",
+            "Sub-DPS Géo": {
+                name: "Sub-DPS Géo",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.1, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.4, "atk": 0,
                     "hp_": 0, "hp": 0,
                     "def_": 0.8, "def": 0.1,
-                    "eleMas": 0, "enerRech_": 0.6, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0.6,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 1, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -7075,22 +8701,14 @@ const CHARACTER_CONFIG = {
                 hideUIStats: ["heal_"],
                 showUIStats: ["atk"],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["GoldenTroupe:4", "HuskOfOpulentDreams:4"], // Top Tier
-                goodSets: ["GoldenTroupe:2", "HuskOfOpulentDreams:2"], // Viables
+                bestSets: ["GoldenTroupe:4", "HuskOfOpulentDreams:4"],
+                goodSets: ["GoldenTroupe:2", "HuskOfOpulentDreams:2", "ArchaicPetra:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 160,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "DPS", name: "Itto", element: "geo" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Gorou", element: "geo" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Zhongli", element: "geo" },
                 ]
             }
@@ -7112,7 +8730,6 @@ const CHARACTER_CONFIG = {
                 buffs: [
                     {
                         label: "A1 : Masque Rouge (En combat)",
-                        description: "Accorde un Bonus de DGT Pyro de 40%.",
                         stats: {
                             pyro_dmg_: 0.40
                         }
@@ -7126,14 +8743,12 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C1 : Masque de la Mort Rouge",
                         cons: 1,
-                        description: "Augmente la valeur du Masque de 100%. (Simulation : Ajout d'un équivalent DGT bonus approximatif pour le scoring).",
                         stats: {
                         }
                     },
                     {
                         label: "C2 : Ordre Royal",
                         cons: 2,
-                        description: "Accorde 20% de RES Pyro/Hydro/etc.",
                         stats: {
                         }
                     }
@@ -7161,7 +8776,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
-                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
+                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "CrimsonWitchOfFlames:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 100,
 
@@ -7171,10 +8786,8 @@ const CHARACTER_CONFIG = {
                     { role: "Support", name: "Bennett", element: "pyro" },
                 ]
             },
-
-            "overload": {
-                name: "Surcharge (Chevreuse)",
-                description: "Team limitant aux éléments Pyro et Électro pour activer le passif de Chevreuse.",
+            "DPS Surcharge": {
+                name: "DPS Surcharge",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0.8, "atk": 0.1,
@@ -7192,7 +8805,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
-                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
+                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "CrimsonWitchOfFlames:4"],
 
                 er_req: 100,
 
@@ -7202,10 +8815,8 @@ const CHARACTER_CONFIG = {
                     { role: "Flex", element: "electro" }
                 ]
             },
-
-            "mono_pyro": {
-                name: "Mono Pyro",
-                description: "Force brute Pyro pure sans réaction.",
+            "DPS mono Pyro": {
+                name: "DPS mono Pyro",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -7218,7 +8829,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["FragmentOfHarmonicWhimsy:4", "GladiatorsFinale:4"],
-                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "CrimsonWitchOfFlames:4"],
+                goodSets: ["EchoesOfAnOffering:4", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 100,
 
@@ -7233,17 +8844,15 @@ const CHARACTER_CONFIG = {
 
     // 4.7
     "Clorinde": {
-        color: "#3939f6", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -35, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#3939f6",
+        portraitOffset: -35,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
             skill: 10,
             burst: 8
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
@@ -7257,7 +8866,7 @@ const CHARACTER_CONFIG = {
                     {
                         label: "A4 : Rémunération honorant le pacte (2 Stacks)",
                         active: true,
-                        stats: { critRate_: 0.10 } // On remet 0.10 car le mode cumulatif additionne les deux !
+                        stats: { critRate_: 0.10 }
                     }
                 ]
             },
@@ -7266,7 +8875,7 @@ const CHARACTER_CONFIG = {
                 buffs: [
                     {
                         label: "C6 : « Ainsi, je ne désespérerai jamais plus »",
-                        cons: 6, // IMPORTANT : Niveau requis (1 à 6)
+                        cons: 6,
                         active: false,
                         stats: {
                             critRate_: 0.10,
@@ -7277,21 +8886,17 @@ const CHARACTER_CONFIG = {
             }
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "DPS Surcharge": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "DPS Surcharge": {
                 name: "DPS Surcharge",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0.5, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0.5,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -7308,37 +8913,27 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["FragmentOfHarmonicWhimsy:4"], // Top Tier
-                goodSets: ["ThunderingFury:4", "GladiatorsFinale:4"], // Viables
+                bestSets: ["FragmentOfHarmonicWhimsy:4"],
+                goodSets: ["ThunderingFury:4", "GladiatorsFinale:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "ThunderingFury:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 130,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Durin", element: "pyro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Chevreuse", element: "pyro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Sub-DPS", name: "Fischl", element: "electro" },
                 ]
             },
-            "DPS Stimulation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "DPS Stimulation": {
                 name: "DPS Stimulation",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.6, "atk": 0.06, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.6, "atk": 0.06,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.8, "enerRech_": 0.5, // Ajuster selon besoin
+                    "eleMas": 0.8, "enerRech_": 0.5,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -7355,37 +8950,27 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["FragmentOfHarmonicWhimsy:4"], // Top Tier
-                goodSets: ["ThunderingFury:4", "GladiatorsFinale:4"], // Viables
+                bestSets: ["FragmentOfHarmonicWhimsy:4"],
+                goodSets: ["ThunderingFury:4", "GladiatorsFinale:4","ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 130,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Support", name: "Nahida", element: "dendro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Lauma", element: "dendro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Sub-DPS", name: "Fischl", element: "electro" },
                 ]
             },
-            "DPS Sélénocution": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "DPS Sélénocution": {
                 name: "DPS Sélénocution",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.5, "enerRech_": 0.5, // Ajuster selon besoin
+                    "eleMas": 0.4, "enerRech_": 0.5,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -7402,22 +8987,14 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["FragmentOfHarmonicWhimsy:4", "NightOfTheSkysUnveiling:4"], // Top Tier
-                goodSets: ["ThunderingFury:4", "GladiatorsFinale:4"], // Viables
+                bestSets: ["FragmentOfHarmonicWhimsy:4", "NightOfTheSkysUnveiling:4"],
+                goodSets: ["ThunderingFury:4", "GladiatorsFinale:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "ThunderingFury:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 130,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Ineffa", element: "electro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Columbina", element: "hydro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Sucrose", element: "anemo" },
                 ]
             }
@@ -7503,7 +9080,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["SongOfDaysPast:4", "OceanHuedClam:4"],
-                goodSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2", "MaidenBeloved:2"],
+                goodSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2"],
 
                 er_req: 160,
 
@@ -7540,7 +9117,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["EmblemOfSeveredFate:4", "VourukashasGlow:4"],
-                goodSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2", "HeartOfDepth:2"],
+                goodSets: ["TenacityOfTheMillelith:2", "VourukashasGlow:2", "HeartOfDepth:2", "NymphsDream:2"],
 
                 er_req: 180,
 
@@ -7600,9 +9177,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.8, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -7622,7 +9199,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["WanderersTroupe:4", "GildedDreams:4"],
-                goodSets: ["DesertPavilionChronicle:4", "WanderersTroupe:2", "GildedDreams:2", "MarechausseeHunter:2", "ThunderingFury:2"],
+                goodSets: ["DesertPavilionChronicle:4", "MarechausseeHunter:2", "ThunderingFury:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 140,
 
@@ -7652,9 +9229,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.4,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -7674,7 +9251,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["UnfinishedReverie:4", "DeepwoodMemories:4"],
-                goodSets: ["DeepwoodMemories:2", "GladiatorsFinale:2", "GoldenTroupe:2", "GoldenTroupe:4"],
+                goodSets: ["DeepwoodMemories:2", "GoldenTroupe:2", "GoldenTroupe:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 140,
 
@@ -7699,14 +9276,14 @@ const CHARACTER_CONFIG = {
         },
 
         builds: {
-            "DPS Natlan": {
-                name: "DPS Natlan",
+            "DPS Évaporation": {
+                name: "DPS Évaporation",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 1, "hp": 0.1, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.6, "enerRech_": 0.1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -7726,7 +9303,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ObsidianCodex:4"],
-                goodSets: ["UnfinishedReverie:4", "HeartOfDepth:4", "HeartOfDepth:2", "WanderersTroupe:2", "VourukashasGlow:2", "NymphsDream:2"],
+                goodSets: ["UnfinishedReverie:4", "HeartOfDepth:4","ObsidianCodex:2", "HeartOfDepth:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "NymphsDream:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 100,
 
@@ -7741,9 +9318,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 1, "hp": 0.1, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.1,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.6, "enerRech_": 0.1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
@@ -7763,7 +9340,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ObsidianCodex:4"],
-                goodSets: ["UnfinishedReverie:4", "HeartOfDepth:4", "HeartOfDepth:2", "WanderersTroupe:2", "VourukashasGlow:2", "NymphsDream:2"],
+                goodSets: ["UnfinishedReverie:4", "HeartOfDepth:4","ObsidianCodex:2", "HeartOfDepth:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2", "NymphsDream:2"],
 
                 er_req: 100,
 
@@ -7806,9 +9383,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -7828,7 +9405,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ObsidianCodex:4"],
-                goodSets: ["UnfinishedReverie:4", "MarechausseeHunter:4", "GoldenTroupe:4", "DeepwoodMemories:4", "UnfinishedReverie:2", "MarechausseeHunter:2", "GoldenTroupe:2", "DeepwoodMemories:2"],
+                goodSets: ["UnfinishedReverie:4", "MarechausseeHunter:4", "GoldenTroupe:4", "DeepwoodMemories:4", "MarechausseeHunter:2", "GoldenTroupe:2", "DeepwoodMemories:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "ObsidianCodex:2"],
 
                 er_req: 110,
 
@@ -7909,9 +9486,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 1, "def": 0.8, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 1, "def": 0.8,
                     "eleMas": 0, "enerRech_": 0.4,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -7931,7 +9508,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ScrollOfTheHeroOfCinderCity:4"],
-                goodSets: ["ArchaicPetra:4", "NoblesseOblige:4", "TenacityOfTheMillelith:4"],
+                goodSets: ["ArchaicPetra:4", "NoblesseOblige:4", "TenacityOfTheMillelith:4", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 120,
 
@@ -7961,7 +9538,6 @@ const CHARACTER_CONFIG = {
                 buffs: [
                     {
                         label: "A4 : Gaine blindée portable",
-                        description: "",
                         active: true,
                         stats: {
                             def_: 0.20,
@@ -7974,7 +9550,6 @@ const CHARACTER_CONFIG = {
         builds: {
             "Support universel": {
                 name: "Support universel",
-                description: "",
 
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
@@ -7997,7 +9572,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["ScrollOfTheHeroOfCinderCity:4", "Instructor:4"],
-                goodSets: ["HuskOfOpulentDreams:2", "EmblemOfSeveredFate:2"],
+                goodSets: ["HuskOfOpulentDreams:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "MaidenBeloved:2", "OceanHuedClam:2", "SongOfDaysPast:2"],
 
                 er_req: 200,
 
@@ -8009,7 +9584,6 @@ const CHARACTER_CONFIG = {
             },
             "DPS": {
                 name: "DPS",
-                description: "",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -8032,7 +9606,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["HuskOfOpulentDreams:4", "ScrollOfTheHeroOfCinderCity:4"],
-                goodSets: ["HuskOfOpulentDreams:2", "EmblemOfSeveredFate:2"],
+                goodSets: ["HuskOfOpulentDreams:2", "ArchaicPetra:2"],
 
                 er_req: 100,
 
@@ -8047,32 +9621,26 @@ const CHARACTER_CONFIG = {
 
     // 5.2
     "Chasca": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#3EABE0", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -39, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#3EABE0",
+        portraitOffset: -39,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
             skill: 10,
             burst: 8
         },
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "DPS Dispersion": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "DPS Dispersion": {
                 name: "DPS Dispersion",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.3, "enerRech_": 0.1, // Ajuster selon besoin
+                    "eleMas": 0.3, "enerRech_": 0.1,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -8086,22 +9654,14 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["ObsidianCodex:4"], // Top Tier
-                goodSets: ["ViridescentVenerer:4", "ShimenawasReminiscence:4"], // Viables
+                bestSets: ["ObsidianCodex:4"],
+                goodSets: ["ViridescentVenerer:4", "ShimenawasReminiscence:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 110,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Support", name: "Citlali", element: "cryo" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Iansan", element: "electro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Bennett", element: "pyro" },
                 ]
             }
@@ -8160,9 +9720,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -8182,7 +9742,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ScrollOfTheHeroOfCinderCity:4"],
-                goodSets: ["NoblesseOblige:4", "Instructor:4"],
+                goodSets: ["NoblesseOblige:4", "Instructor:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "ThunderingFury:2"],
 
                 er_req: 140,
 
@@ -8197,9 +9757,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -8219,7 +9779,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ScrollOfTheHeroOfCinderCity:4"],
-                goodSets: ["NoblesseOblige:4", "Instructor:4"],
+                goodSets: ["NoblesseOblige:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "ThunderingFury:2"],
 
                 er_req: 120,
 
@@ -8234,17 +9794,14 @@ const CHARACTER_CONFIG = {
 
     // 5.3
     "Mavuika": {
-        // --- 1. CONFIGURATION GLOBALE ---
         color : "#C74644",
         portraitOffset: -35,
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
             skill: 8,
             burst: 10
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
@@ -8279,21 +9836,17 @@ const CHARACTER_CONFIG = {
             }
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "Fonte": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
-                name: "Fonte",
+            "DPS Fonte": {
+                name: "DPS Fonte",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.6, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0.6, "enerRech_": 0,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -8307,37 +9860,27 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
                 bestSets: ["ObsidianCodex:4", "CrimsonWitchOfFlames:4"],
-                goodSets: ["ObsidianCodex:2", "CrimsonWitchOfFlames:2", "GildedDreams:4"],
+                goodSets: ["ObsidianCodex:2", "CrimsonWitchOfFlames:2", "GildedDreams:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Support", name: "Citlali", element: "cryo" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Xilonen", element: "geo" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Bennett", element: "pyro" },
                 ]
             },
-            "Surcharge": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
-                name: "Surcharge",
+            "DPS Surcharge": {
+                name: "DPS Surcharge",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -8351,22 +9894,14 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["critDMG_", "critRate_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
                 bestSets: ["ObsidianCodex:4", "CrimsonWitchOfFlames:4"],
-                goodSets: ["ObsidianCodex:2", "CrimsonWitchOfFlames:2", "GildedDreams:4"],
+                goodSets: ["ObsidianCodex:2", "CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "DPS", name: "Varesa", element: "electro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Chevreuse", element: "pyro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Iansan", element: "electro" },
                 ]
             }
@@ -8389,7 +9924,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C2 : Patrouille de dévoreur de cœurs",
                         cons: 2,
-                        description: "",
                         stats: {
                             eleMas: 125
                         }
@@ -8401,7 +9935,6 @@ const CHARACTER_CONFIG = {
         builds: {
             "Support universel (Fonte et Gel)": {
                 name: "Support universel (Fonte et Gel)",
-                description: "",
 
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
@@ -8427,7 +9960,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["hp"],
 
                 bestSets: ["ScrollOfTheHeroOfCinderCity:4", "Instructor:4"],
-                goodSets: ["TenacityOfTheMillelith:4", "GildedDreams:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "GildedDreams:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 180,
 
@@ -8482,9 +10015,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 1, "atk": 0.8, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 1, "atk": 0.8,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0.4, "enerRech_": 0.8,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -8504,7 +10037,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ViridescentVenerer:4", "ScrollOfTheHeroOfCinderCity:4"],
-                goodSets: ["GladiatorsFinale:2", "ShimenawasReminiscence:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "FragmentOfHarmonicWhimsy:2"],
+                goodSets: ["GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 200,
 
@@ -8519,25 +10052,22 @@ const CHARACTER_CONFIG = {
 
     // 5.4
     "Yumemizuki Mizuki": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#e38ff1", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -36, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#e38ff1",
+        portraitOffset: -36,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
             skill: 8,
             burst: 6
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
                 buffs: [
                     {
                         label: "A2 : Pensées de jour, rêveries de nuit",
-                        active: true, // Coché par défaut ?
+                        active: true,
                         stats: {
                             eleMas: 100,
                         }
@@ -8546,21 +10076,17 @@ const CHARACTER_CONFIG = {
             }
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "Driver Dispersion": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "Driver Dispersion": {
                 name: "Driver Dispersion",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 0, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0, "atk": 0,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 1, "enerRech_": 1, // Ajuster selon besoin
+                    "eleMas": 1, "enerRech_": 1,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -8577,24 +10103,15 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: ["atk"],
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["ViridescentVenerer:4"], // Top Tier
-                goodSets: ["WanderersTroupe:2", "GildedDreams:2", "NoblesseOblige:4", "Instructor:4"], // Viables
+                bestSets: ["ViridescentVenerer:4"],
+                goodSets: ["NoblesseOblige:4", "Instructor:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 200,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Furina", element: "hydro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Ororon", element: "electro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Sub-DPS", name: "Mavuika", element: "pyro" },
-
                 ]
             }
         }
@@ -8637,7 +10154,6 @@ const CHARACTER_CONFIG = {
                         label: "C6 : Le triomphe d'une héroïne de la justice",
                         cons: 6,
                         active: false,
-                        description: "",
                         stats: {
                             critRate_: 0.10,
                             critDMG_: 1,
@@ -8647,9 +10163,8 @@ const CHARACTER_CONFIG = {
             }
         ],
         builds: {
-            "Surcharge": {
+            "DPS Surcharge": {
                 name: "Surcharge",
-                description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0.8, "atk": 0.1,
@@ -8669,7 +10184,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
-                goodSets: ["ThunderingFury:4"],
+                goodSets: ["ThunderingFury:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "LongNightsOath:2", "ThunderingFury:2"],
 
                 er_req: 120,
 
@@ -8678,17 +10193,15 @@ const CHARACTER_CONFIG = {
 
                     { role: "Support", name: "Chevreuse", element: "pyro" },
 
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     {
                         role: "Support",
-                        name: "Iansan", // Noms (Optionnel)
-                        element: "electro" // Éléments pour la couleur de fond
+                        name: "Iansan",
+                        element: "electro"
                     }
                 ]
             },
-            "Hypercarry": {
+            "DPS Hypercarry": {
                 name: "Hypercarry",
-                description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0.8, "atk": 0.1,
@@ -8708,27 +10221,22 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
-                goodSets: ["MarechausseeHunter:4", "ThunderingFury:4"],
+                goodSets: ["MarechausseeHunter:4", "ThunderingFury:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "LongNightsOath:2", "ThunderingFury:2"],
 
                 er_req: 120,
 
                 team: [
                     { role: "Support", name: "Furina", element: "hydro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Liuyun", element: "anemo" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     {
                         role: "Support",
-                        name: "Iansan", // Noms (Optionnel)
-                        element: "electro" // Éléments pour la couleur de fond
+                        name: "Iansan",
+                        element: "electro"
                     }
                 ]
             },
-            "Suractivation": {
+            "DPS Suractivation": {
                 name: "Suractivation",
-                description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0.8, "atk": 0.1,
@@ -8748,27 +10256,24 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
-                goodSets: ["ThunderingFury:4"],
+                goodSets: ["ThunderingFury:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "LongNightsOath:2", "ThunderingFury:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 120,
 
                 team: [
                     { role: "Sub-DPS", name: "Lauma", element: "dendro" },
 
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Flex", name: ["Fischl", "Iansan"], element: "electro" },
 
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     {
                         role: "Support",
-                        name: ["Ineffa", "Nahida"], // Noms (Optionnel)
-                        element: ["electro", "dendro"] // Éléments pour la couleur de fond
+                        name: ["Ineffa", "Nahida"],
+                        element: ["electro", "dendro"]
                     }
                 ]
             },
-            "Sélénocution": {
+            "DPS Sélénocution": {
                 name: "Sélénocution",
-                description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0.8, "atk": 0.1,
@@ -8788,21 +10293,17 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["LongNightsOath:4", "ObsidianCodex:4"],
-                goodSets: ["ThunderingFury:4"],
+                goodSets: ["ThunderingFury:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "LongNightsOath:2", "ThunderingFury:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 130,
 
                 team: [
                     { role: "Support", name: "Columbina", element: "hydro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Ineffa", element: "electro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     {
                         role: "Support",
-                        name: "Liuyun", // Noms (Optionnel)
-                        element: "anemo" // Éléments pour la couleur de fond
+                        name: "Liuyun",
+                        element: "anemo"
                     }
                 ]
             }
@@ -8840,9 +10341,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 1, "atk": 0.8, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 1, "atk": 0.8,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -8862,7 +10363,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ScrollOfTheHeroOfCinderCity:4", "NoblesseOblige:4"],
-                goodSets: ["GladiatorsFinale:2", "EmblemOfSeveredFate:2", "ShimenawasReminiscence:2"],
+                goodSets: ["GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 170,
 
@@ -8893,7 +10394,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C1 : Danse pour les papilles gustatives",
                         cons: 1,
-                        description: "",
                         stats: {
                             critDMG_: 0.60
                         }
@@ -8905,7 +10405,6 @@ const CHARACTER_CONFIG = {
         builds: {
             "Gel": {
                 name: "Gel",
-                description: "",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -8922,7 +10421,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["GoldenTroupe:4"],
-                goodSets: ["BlizzardStrayer:4", "NoblesseOblige:4"],
+                goodSets: ["BlizzardStrayer:4", "NoblesseOblige:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2"],
 
                 er_req: 170,
 
@@ -8982,9 +10481,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 1, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -9004,7 +10503,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["ViridescentVenerer:4"],
-                goodSets: ["ScrollOfTheHeroOfCinderCity:4", "GildedDreams:4"],
+                goodSets: ["ScrollOfTheHeroOfCinderCity:4", "GildedDreams:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 170,
 
@@ -9033,7 +10532,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C2 : Abîme profond",
                         cons: 2,
-                        description: "",
                         stats: {
                             atk_: 0.70
                         }
@@ -9041,7 +10539,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C4 : Flux scindé",
                         cons: 4,
-                        description: "",
                         stats: {
                             atk_: 0.40
                         }
@@ -9050,9 +10547,8 @@ const CHARACTER_CONFIG = {
             }
         ],
         builds: {
-            "freeze": {
-                name: "Gel hypercarry",
-                description: "",
+            "DPS Gel": {
+                name: "DPS Gel",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
                     "atk_": 0.8, "atk": 0.1,
@@ -9072,7 +10568,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["FinaleOfTheDeepGalleries:4", "MarechausseeHunter:4"],
-                goodSets: ["GladiatorsFinale:4", "BlizzardStrayer:4", "GladiatorsFinale:2", "BlizzardStrayer:2"],
+                goodSets: ["GladiatorsFinale:4", "BlizzardStrayer:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2"],
                 er_req: 100,
                 team: [
                     { role: "Support", name: "Furina", element: "hydro" },
@@ -9101,9 +10597,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 1, "hp": 0.8, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 1, "hp": 0.8,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -9123,7 +10619,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["NoblesseOblige:4", "ScrollOfTheHeroOfCinderCity:4"],
-                goodSets: ["ArchaicPetra:4", "TenacityOfTheMillelith:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "VourukashasGlow:2", "ScrollOfTheHeroOfCinderCity:2"],
+                goodSets: ["ArchaicPetra:4", "ScrollOfTheHeroOfCinderCity:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2"],
 
                 er_req: 200,
 
@@ -9138,25 +10634,22 @@ const CHARACTER_CONFIG = {
 
     // 5.8
     "Ineffa": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#4fbfff", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -37, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#4fbfff",
+        portraitOffset: -37,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
             skill: 10,
             burst: 8
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
                 buffs: [
                     {
-                        label: "A4 : Protocole de permutation panoramique\n",
-                        active: true, // Coché par défaut ?
+                        label: "A4 : Protocole de permutation panoramique",
+                        active: true,
                         stats: {
                             eleMas_bonus_scaling: {
                                 source: "atk",
@@ -9168,21 +10661,17 @@ const CHARACTER_CONFIG = {
             },
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "Sub-DPS Sélénocution": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "Sub-DPS Sélénocution": {
                 name: "Sub-DPS Sélénocution",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.4, "enerRech_": 0.6, // Ajuster selon besoin
+                    "eleMas": 0.4, "enerRech_": 0.6,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -9196,22 +10685,14 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["critRate_", "critDMG_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4"], // Top Tier
-                goodSets: ["GildedDreams:4"], // Viables
+                bestSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4"],
+                goodSets: ["GildedDreams:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 160,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "DPS", name: "Flins", element: "electro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Sub-DPS", name: "Columbina", element: "hydro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Sucrose", element: "anemo" },
                 ]
             }
@@ -9230,7 +10711,6 @@ const CHARACTER_CONFIG = {
         builds: {
             "Sélénofleurissement": {
                 name: "Sélénofleurissement",
-                description: "",
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0.4,
                     "atk_": 0, "atk": 0,
@@ -9253,7 +10733,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["SilkenMoonsSerenade:4", "DeepwoodMemories:4", "AubadeOfMorningstarAndMoon:4"],
-                goodSets: ["NightOfTheSkysUnveiling:4", "NightOfTheSkysUnveiling:2", "SilkenMoonsSerenade:2", "Instructor:4"],
+                goodSets: ["NightOfTheSkysUnveiling:4", "Instructor:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 200,
 
@@ -9269,7 +10749,6 @@ const CHARACTER_CONFIG = {
             },
             "Fleurissement": {
                 name: "Fleurissement",
-                description: "",
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0.4,
                     "atk_": 0, "atk": 0,
@@ -9292,7 +10771,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["SilkenMoonsSerenade:4", "DeepwoodMemories:4"],
-                goodSets: ["NightOfTheSkysUnveiling:4", "NightOfTheSkysUnveiling:2", "SilkenMoonsSerenade:2", "Instructor:4"],
+                goodSets: ["NightOfTheSkysUnveiling:4", "Instructor:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 220,
 
@@ -9308,7 +10787,6 @@ const CHARACTER_CONFIG = {
             },
             "Exubérance": {
                 name: "Exubérance",
-                description: "",
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0.4,
                     "atk_": 0, "atk": 0,
@@ -9331,7 +10809,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["SilkenMoonsSerenade:4", "DeepwoodMemories:4"],
-                goodSets: ["NightOfTheSkysUnveiling:4", "NightOfTheSkysUnveiling:2", "SilkenMoonsSerenade:2", "Instructor:4"],
+                goodSets: ["NightOfTheSkysUnveiling:4", "Instructor:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 220,
 
@@ -9348,18 +10826,15 @@ const CHARACTER_CONFIG = {
         }
     },
     "Flins": {
-        // --- 1. CONFIGURATION GLOBALE ---
-        color: "#6163E8", // Code Hex de l'élément ou de la tenue
-        portraitOffset: -35, // Décalage vertical de l'image (négatif = monte, positif = descend)
+        color: "#6163E8",
+        portraitOffset: -35,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
-            auto: 1,  // 1 = Inutile, 6 = Utile, 8-10 = Prioritaire
+            auto: 1,
             skill: 8,
             burst: 10
         },
 
-        // --- 2. PASSIFS & CONSTELLATIONS ---
         buffs: [
             {
                 category: "Passifs",
@@ -9367,7 +10842,7 @@ const CHARACTER_CONFIG = {
                     {
                         label: "A4 : Murmure de flamme",
                         active: true,
-                        maxCons: 3, // NOUVEAUTÉ : Ce buff disparaît si le perso est C4 ou plus !
+                        maxCons: 3,
                         stats: {
                             eleMas_bonus_scaling: {
                                 source: "atk",
@@ -9383,7 +10858,7 @@ const CHARACTER_CONFIG = {
                 buffs: [
                     {
                         label: "C4 : Nuit sur la montagne nue",
-                        cons: 4, // N'apparaît que si le perso est C4+
+                        cons: 4,
                         active: true,
                         stats: {
                             eleMas_bonus_scaling: {
@@ -9397,21 +10872,17 @@ const CHARACTER_CONFIG = {
             }
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "DPS Sélénocution": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "DPS Sélénocution": {
                 name: "DPS Sélénocution",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0.4, "enerRech_": 0.6, // Ajuster selon besoin
+                    "eleMas": 0.4, "enerRech_": 0.6,
 
-                    // Bonus Élémentaires (Mettre 1 à l'élément du perso, 0 aux autres)
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
                     "dendro_dmg_": 0, "physical_dmg_": 0,
@@ -9425,22 +10896,14 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["critDMG_","critRate_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["NightOfTheSkysUnveiling:4"], // Top Tier
-                goodSets: ["GildedDreams:4", "NightOfTheSkysUnveiling:2", "GladiatorsFinale:2"], // Viables
+                bestSets: ["NightOfTheSkysUnveiling:4"],
+                goodSets: ["GildedDreams:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 130,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "Sub-DPS", name: "Ineffa", element: "electro" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Columbina", element: "hydro" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     { role: "Support", name: "Sucrose", element: "anemo" },
                 ]
             }
@@ -9499,7 +10962,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["SilkenMoonsSerenade:4", "Instructor:4"],
-                goodSets: ["NoblesseOblige:4", "ScrollOfTheHeroOfCinderCity:4", "DeepwoodMemories:4", "GildedDreams:4", "FlowerOfParadiseLost:4"],
+                goodSets: ["NoblesseOblige:4", "ScrollOfTheHeroOfCinderCity:4", "DeepwoodMemories:4", "GildedDreams:4", "FlowerOfParadiseLost:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 220,
 
@@ -9529,7 +10992,6 @@ const CHARACTER_CONFIG = {
                 buffs: [
                     {
                         label: "A1 : Pari au clair de lune",
-                        description: "",
                         active: true,
                         stats: {
                             eleMas: 100
@@ -9543,7 +11005,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C2 : L'observation nourrit la stratégie",
                         cons: 2,
-                        description: "",
                         stats: {
                             eleMas: 200
                         }
@@ -9553,9 +11014,8 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Sélénofleurissement": {
-                name: "Sélénofleurissement",
-                description: "",
+            "DPS Sélénofleurissement": {
+                name: "DPS Sélénofleurissement",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -9581,7 +11041,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["atk"],
 
                 bestSets: ["NightOfTheSkysUnveiling:4"],
-                goodSets: ["DeepwoodMemories:4", "GildedDreams:4", "Instructor:4"],
+                goodSets: ["DeepwoodMemories:4", "GildedDreams:4", "Instructor:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
                 er_req: 100,
 
@@ -9618,7 +11078,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C2 : Visions sans fond",
                         cons: 2,
-                        description: "",
                         stats: {
                             pyro_dmg_: 0.50
                         }
@@ -9628,14 +11087,14 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Surcharge": {
-                name: "Surcharge",
+            "Sub-DPS Surcharge": {
+                name: "Sub-DPS Surcharge",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -9652,7 +11111,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
-                goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "EmblemOfSeveredFate:2", "GladiatorsFinale:2", "Instructor:4"],
+                goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "Instructor:4", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2"],
 
                 er_req: 130,
                 team: [
@@ -9661,15 +11120,14 @@ const CHARACTER_CONFIG = {
                     { role: "Support", name: "Chevreuse", element: "pyro"}
                 ]
             },
-            "Brûlure": {
-                name: "Brûlure",
-                description: "",
+            "Sub-DPS Brûlure": {
+                name: "Sub-DPS Brûlure",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -9686,7 +11144,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
-                goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "EmblemOfSeveredFate:2", "GladiatorsFinale:2", "Instructor:4"],
+                goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "Instructor:4"],
 
                 er_req: 130,
                 team: [
@@ -9695,14 +11153,14 @@ const CHARACTER_CONFIG = {
                     { role: "Support", name: "Bennett", element: "pyro"}
                 ]
             },
-            "Arc-en-ciel": {
-                name: "Arc-en-ciel",
+            "Sub-DPS général": {
+                name: "Sub-DPS général",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 0.8,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -9719,7 +11177,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
-                goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "EmblemOfSeveredFate:2", "GladiatorsFinale:2", "Instructor:4"],
+                goodSets: ["NoblesseOblige:4", "NoblesseOblige:2", "EmblemOfSeveredFate:4", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "Instructor:4"],
 
                 er_req: 150,
                 team: [
@@ -9762,9 +11220,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 1, "atk": 0.8, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0, "def": 0, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 1, "atk": 0.8,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
                     "eleMas": 0, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -9784,7 +11242,7 @@ const CHARACTER_CONFIG = {
                 showUIStats: [],
 
                 bestSets: ["ViridescentVenerer:4", "SilkenMoonsSerenade:4"],
-                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4", "DeepwoodMemories:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4", "DeepwoodMemories:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
 
                 er_req: 230,
 
@@ -9815,7 +11273,6 @@ const CHARACTER_CONFIG = {
                 data: [
                     {
                         label: "A1 : Appel de la lune (1 stack)",
-                        description: "",
                         active: false,
                         stats: {
                             critRate_: 0.05,
@@ -9823,7 +11280,6 @@ const CHARACTER_CONFIG = {
                     },
                     {
                         label: "A1 : Appel de la lune (2 stacks)",
-                        description: "",
                         active: false,
                         stats: {
                             critRate_: 0.10,
@@ -9831,7 +11287,6 @@ const CHARACTER_CONFIG = {
                     },
                     {
                         label: "A1 : Appel de la lune (3 stacks)",
-                        description: "",
                         active: true,
                         stats: {
                             critRate_: 0.15,
@@ -9845,7 +11300,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C2 : Nuit en splendeur, jamais solitaire",
                         cons: 2,
-                        description: "",
                         stats: {
                             hp_: 0.40
                         }
@@ -9853,7 +11307,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C6 : Nuit lugubre, lune à travers (uniquement sur un élément)",
                         cons: 6,
-                        description: "",
                         stats: {
                             critDMG_: "0.80"
                         }
@@ -9865,7 +11318,6 @@ const CHARACTER_CONFIG = {
         builds: {
             "Support sélénofleurissement": {
                 name: "Support sélénofleurissement",
-                description: "",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -9888,7 +11340,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["SilkenMoonsSerenade:4", "AubadeOfMorningstarAndMoon:4"],
-                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2"],
 
                 er_req: 180,
 
@@ -9904,7 +11356,6 @@ const CHARACTER_CONFIG = {
             },
             "Driver sélénofleurissement": {
                 name: "Driver sélénofleurissement",
-                description: "",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -9927,7 +11378,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["NightOfTheSkysUnveiling:4"],
-                goodSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4", "Instructor:4"],
+                goodSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4", "Instructor:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2"],
 
                 er_req: 180,
 
@@ -9943,7 +11394,6 @@ const CHARACTER_CONFIG = {
             },
             "Support sélénocution": {
                 name: "Support sélénocution",
-                description: "",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -9966,7 +11416,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4"],
-                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2"],
 
                 er_req: 180,
 
@@ -9982,7 +11432,6 @@ const CHARACTER_CONFIG = {
             },
             "Support sélénocristallisation": {
                 name: "Support sélénocristallisation",
-                description: "",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -10005,7 +11454,7 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["AubadeOfMorningstarAndMoon:4", "SilkenMoonsSerenade:4"],
-                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4"],
+                goodSets: ["TenacityOfTheMillelith:4", "Instructor:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2", "TenacityOfTheMillelith:2", "VourukashasGlow:2"],
 
                 er_req: 180,
 
@@ -10057,10 +11506,6 @@ const CHARACTER_CONFIG = {
                 selectMode: "exclusive",
                 buffs: [
                     {
-                        label: "0 Allié Hydro",
-                        stats: {}
-                    },
-                    {
                         label: "1 Allié Hydro (+60 EM)",
                         active: true,
                         stats: { eleMas: 60 }
@@ -10077,12 +11522,9 @@ const CHARACTER_CONFIG = {
             },
         ],
 
-        // --- 3. ARCHÉTYPES (BUILDS) ---
-        // Tu peux en mettre autant que tu veux. Le premier est celui par défaut.
         builds: {
-            "DPS Sélénocristallisation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "DPS Sélénocristallisation": {
                 name: "DPS Sélénocristallisation",
-                description: "",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -10105,12 +11547,10 @@ const CHARACTER_CONFIG = {
                 },
 
                 bestSets: ["NightOfTheSkysUnveiling:4"],
-                goodSets: ["HuskOfOpulentDreams:4", "HuskOfOpulentDreams:2", "NightOfTheSkysUnveiling:2", "WanderersTroupe:2"], // Viables
+                goodSets: ["HuskOfOpulentDreams:4", "HuskOfOpulentDreams:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 120,
 
-                // Composition d'équipe (4 Slots)
                 team: [
                     { role: "Support", name: "Illuga", element: "geo" },
 
@@ -10118,8 +11558,8 @@ const CHARACTER_CONFIG = {
 
                     {
                         role: "Sub-DPS",
-                        name: "Linnea", // Noms (Optionnel)
-                        element: "geo"  // Éléments pour la couleur de fond
+                        name: "Linnea",
+                        element: "geo"
                     }
                 ]
             }
@@ -10141,9 +11581,9 @@ const CHARACTER_CONFIG = {
 
                 weights: {
                     "critRate_": 0.4, "critDMG_": 0,
-                    "atk_": 0, "atk": 0, // 0.8 + 0.1 mais 1 si peu de buff extérieur
-                    "hp_": 0, "hp": 0, // 0.9 à 1 + 0.1 mais 0.8 pour Hu Tao par exemple
-                    "def_": 0.4, "def": 0.1, // 0.8 à 0.9, 0.8 si crit important
+                    "atk_": 0, "atk": 0,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0.4, "def": 0.1,
                     "eleMas": 1, "enerRech_": 1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
@@ -10162,7 +11602,7 @@ const CHARACTER_CONFIG = {
                 hideUIStats: [],
                 showUIStats: [],
 
-                bestSets: ["SilkenMoonsSerenade:4", "WanderersTroupe:2", "GildedDreams:2"],
+                bestSets: ["SilkenMoonsSerenade:4", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
                 goodSets: ["Instructor:4", "ScrollOfTheHeroOfCinderCity:4", "NoblesseOblige:4", "TheExile:4", "TenacityOfTheMillelith:4"],
 
                 er_req: 150,
@@ -10226,25 +11666,21 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C4 : Dispersion Pyro (+20% Anémo/Pyro)",
                         cons: 4,
-                        description: "Accorde 20% de DGT Anémo et Pyro après une Dispersion Pyro.",
                         stats: { anemo_dmg_: 0.20, pyro_dmg_: 0.20 }
                     },
                     {
                         label: "C4 : Dispersion Hydro (+20% Anémo/Hydro)",
                         cons: 4,
-                        description: "Accorde 20% de DGT Anémo et Hydro après une Dispersion Hydro.",
                         stats: { anemo_dmg_: 0.20, hydro_dmg_: 0.20 }
                     },
                     {
                         label: "C4 : Dispersion Électro (+20% Anémo/Électro)",
                         cons: 4,
-                        description: "Accorde 20% de DGT Anémo et Électro après une Dispersion Électro.",
                         stats: { anemo_dmg_: 0.20, electro_dmg_: 0.20 }
                     },
                     {
                         label: "C4 : Dispersion Cryo (+20% Anémo/Cryo)",
                         cons: 4,
-                        description: "Accorde 20% de DGT Anémo et Cryo après une Dispersion Cryo.",
                         stats: { anemo_dmg_: 0.20, cryo_dmg_: 0.20 }
                     },
                 ]
@@ -10255,7 +11691,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C6",
                         cons: 6,
-                        description: "Augmente les DGT CRIT de 80%.",
                         stats: {
                             critDMG_: 0.80
                         }
@@ -10267,13 +11702,12 @@ const CHARACTER_CONFIG = {
         builds: {
             "Anémo/Pyro": {
                 name: "Anémo/Pyro",
-                description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0,
 
                     "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -10292,12 +11726,10 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["pyro_dmg_"],
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
-                goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
+                goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4","ViridescentVenerer:2", "DesertPavilionChronicle:2", "EchoesOfAnOffering:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "CrimsonWitchOfFlames:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
                     { role: "Support", name: "Venti", element: "anemo" },
 
@@ -10305,20 +11737,19 @@ const CHARACTER_CONFIG = {
 
                     {
                         role: "Support",
-                        name: "Bennett", // Noms (Optionnel)
-                        element: "pyro"  // Éléments pour la couleur de fond
+                        name: "Bennett",
+                        element: "pyro"
                     }
                 ]
             },
             "Anémo/Cryo": {
                 name: "Anémo/Cryo",
-                description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -10337,12 +11768,10 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["cryo_dmg_"],
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
-                goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
+                goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4","ViridescentVenerer:2", "DesertPavilionChronicle:2", "EchoesOfAnOffering:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
                     { role: "Support", name: "Venti", element: "anemo" },
 
@@ -10350,20 +11779,19 @@ const CHARACTER_CONFIG = {
 
                     {
                         role: "Support",
-                        name: "Shenhe", // Noms (Optionnel)
-                        element: "cryo"  // Éléments pour la couleur de fond
+                        name: "Shenhe",
+                        element: "cryo"
                     }
                 ]
             },
             "Anémo/Electro": {
                 name: "Anémo/Electro",
-                description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 1,
@@ -10382,12 +11810,10 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["electro_dmg_"],
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
-                goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
+                goodSets: ["DesertPavilionChronicle:4","ViridescentVenerer:2", "DesertPavilionChronicle:2", "GladiatorsFinale:4", "EchoesOfAnOffering:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "ThunderingFury:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
                     { role: "Support", name: "Venti", element: "anemo" },
 
@@ -10395,20 +11821,19 @@ const CHARACTER_CONFIG = {
 
                     {
                         role: "Support",
-                        name: "Iansan", // Noms (Optionnel)
-                        element: "electro"  // Éléments pour la couleur de fond
+                        name: "Iansan",
+                        element: "electro"
                     }
                 ]
             },
             "Anémo/Hydro": {
                 name: "Anémo/Hydro",
-                description: "",
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0.8, "atk": 0.1, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0.8, "atk": 0.1,
                     "hp_": 0, "hp": 0,
                     "def_": 0, "def": 0,
-                    "eleMas": 0, "enerRech_": 0, // Ajuster selon besoin
+                    "eleMas": 0, "enerRech_": 0,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 1, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -10427,12 +11852,10 @@ const CHARACTER_CONFIG = {
                 showUIStats: ["hydro_dmg_"],
 
                 bestSets: ["ADayCarvedFromRisingWinds:4"],
-                goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4"],
+                goodSets: ["DesertPavilionChronicle:4", "GladiatorsFinale:4", "EchoesOfAnOffering:4","ViridescentVenerer:2", "DesertPavilionChronicle:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "HeartOfDepth:2", "NymphsDream:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
                     { role: "Support", name: "Venti", element: "anemo" },
 
@@ -10440,8 +11863,8 @@ const CHARACTER_CONFIG = {
 
                     {
                         role: "Support",
-                        name: "Mona", // Noms (Optionnel)
-                        element: "hydro"  // Éléments pour la couleur de fond
+                        name: "Mona",
+                        element: "hydro"
                     }
                 ]
             }
@@ -10453,7 +11876,6 @@ const CHARACTER_CONFIG = {
         color: "#F56D84",
         portraitOffset: -38,
 
-        // Objectifs de Talents (Pour le coaching)
         talents: {
             auto: 1,
             skill: 10,
@@ -10465,10 +11887,6 @@ const CHARACTER_CONFIG = {
                 category: "A2 : Archive naturaliste universelle",
                 selectMode: "exclusive",
                 buffs: [
-                    {
-                        label: "Personnage lunaire sur le terrain",
-                        stats: {}
-                    },
                     {
                         label: "Personnage non-lunaire sur le terrain",
                         active: true,
@@ -10494,7 +11912,6 @@ const CHARACTER_CONFIG = {
                     {
                         label: "C4 : Instinct d'experte",
                         cons: 4,
-                        description: "...",
                         stats: {
                             def_: 0.25
                         }
@@ -10504,16 +11921,15 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Sub-DPS sélénocristallisation": { // Clé unique (ex: 'vape', 'freeze', 'hypercarry')
+            "Sub-DPS sélénocristallisation": {
                 name: "Sub-DPS sélénocristallisation",
 
-                // Poids des stats (1 = Prioritaire, 0.5 = Utile, 0 = Inutile)
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
-                    "atk_": 0, "atk": 0, // ATQ% vaut souvent 1, ATQ flat ~0.2
+                    "atk_": 0, "atk": 0,
                     "hp_": 0, "hp": 0,
                     "def_": 0.8, "def": 0.1,
-                    "eleMas": 0.4, "enerRech_": 0.1, // Ajuster selon besoin
+                    "eleMas": 0.4, "enerRech_": 0.1,
 
                     "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
                     "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
@@ -10528,26 +11944,18 @@ const CHARACTER_CONFIG = {
                     "EQUIP_DRESS": ["critDMG_","critRate_"]
                 },
 
-                // Sets (Utiliser les noms exacts du mapping SET_NAME_MAPPING ou la clé EN)
-                bestSets: ["AubadeOfMorningstarAndMoon:4", "HuskOfOpulentDreams:4"], // Top Tier
-                goodSets: ["ArchaicPetra:2", "HuskOfOpulentDreams:2", "NightOfTheSkysUnveiling:2"], // Viables
+                bestSets: ["AubadeOfMorningstarAndMoon:4", "HuskOfOpulentDreams:4"],
+                goodSets: ["ArchaicPetra:2", "HuskOfOpulentDreams:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
 
-                // Cible ER recommandée (%)
                 er_req: 100,
 
-                // Composition d'équipe (4 Slots)
                 team: [
-                    // Slot 1 : Généralement un Support clé
                     { role: "DPS", name: "Zibai", element: "geo" },
-
-                    // Slot 2 : Sub-DPS ou Réaction
                     { role: "Support", name: "Illuga", element: "geo" },
-
-                    // Slot 3 : Flex (Exemple Dual Slot : Kazuha ou Sucrose)
                     {
                         role: "Sub-DPS",
-                        name: "Columbina", // Noms (Optionnel)
-                        element: "hydro" // Éléments pour la couleur de fond
+                        name: "Columbina",
+                        element: "hydro"
                     }
                 ]
             }
@@ -10733,7 +12141,7 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si une compétence élémentaire est utilisée (Recharge d'énergie)",
                 stats: {
-                    "enerRech_": [0.16, 0.04] // 16% -> 32%
+                    "enerRech_": [0.16, 0.04]
                 }
             }
         ]
@@ -11073,27 +12481,27 @@ const WEAPON_PASSIVES = {
             {
                 label: "Si l'équipe est composée d'1 personnage de Natlan ou d'un élément différent du porteur (ATQ%)",
                 stats: {
-                    "atk_": [0.048, 0.012] // 1x
+                    "atk_": [0.048, 0.012]
                 }
             },
             {
                 label: "Si l'équipe est composée de 2 personnages de Natlan ou d'un élément différent du porteur (ATQ%)",
                 stats: {
-                    "atk_": [0.096, 0.024] // 2x
+                    "atk_": [0.096, 0.024]
                 }
             },
             {
                 label: "Si l'équipe est composée de 3 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
                 stats: {
-                    "atk_": [0.144, 0.036], // 3x
-                    "eleMas": [24, 6]       // Se déclenche ici
+                    "atk_": [0.144, 0.036],
+                    "eleMas": [24, 6]
                 }
             },
             {
                 label: "Si l'équipe est composée de 4 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
                 stats: {
-                    "atk_": [0.192, 0.048], // 4x
-                    "eleMas": [24, 6]       // Toujours le même bonus ME
+                    "atk_": [0.192, 0.048],
+                    "eleMas": [24, 6]
                 }
             }
         ]
@@ -11604,8 +13012,8 @@ const WEAPON_PASSIVES = {
                 label: "1 Stack (PV% en Maîtrise élémentaire)",
                 stats: {
                     "eleMas_bonus_scaling": {
-                        source: "hp", // Basé sur les PV Max
-                        percent: [0.0012, 0.0003] // 0.12%
+                        source: "hp",
+                        percent: [0.0012, 0.0003]
                     }
                 }
             },
@@ -11614,7 +13022,7 @@ const WEAPON_PASSIVES = {
                 stats: {
                     "eleMas_bonus_scaling": {
                         source: "hp",
-                        percent: [0.0024, 0.0006] // 0.24%
+                        percent: [0.0024, 0.0006]
                     }
                 }
             },
@@ -11623,7 +13031,6 @@ const WEAPON_PASSIVES = {
                 stats: {
                     "eleMas_bonus_scaling": {
                         source: "hp",
-                        // 0.36% (Perso) + 0.20% (Team) = 0.56% Total
                         percent: [0.0056, 0.0014]
                     }
                 }
@@ -12638,7 +14045,6 @@ const SET_PASSIVES = {
     }
 };
 
-// --- EXPORT GLOBAL ---
 window.DEFAULT_CONFIG = DEFAULT_CONFIG;
 window.CHARACTER_CONFIG = CHARACTER_CONFIG;
 window.WEAPON_PASSIVES = WEAPON_PASSIVES;

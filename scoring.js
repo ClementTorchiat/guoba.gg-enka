@@ -110,11 +110,24 @@ function calculateCharacterScore(perso, config, maxRolls = 45.0) {
         else if (count >= 2) activeBonuses.push(`${setKey}:2`);
     }
 
-    let isBest = false; let isGood = false;
-    if (activeBonuses.some(b => config.bestSets.includes(b))) isBest = true;
-    else if (activeBonuses.some(b => config.goodSets.includes(b))) isGood = true;
+    const active4p = activeBonuses.filter(b => b.endsWith(":4"));
+    const active2p  = activeBonuses.filter(b => b.endsWith(":2"));
 
-    if (isBest) setMultiplier = 1.0;
+    let isBest = false;
+    let isGood = false;
+
+    if (active4p.some(b => config.bestSets.includes(b))) isBest = true;
+    else if (active4p.some(b => config.goodSets.includes(b))) isGood = true;
+
+    if (!isBest && !isGood && active2p.length >= 2) {
+        const allInBest       = active2p.every(b => config.bestSets.includes(b));
+        const allInBestOrGood = active2p.every(b => config.bestSets.includes(b) || config.goodSets.includes(b));
+
+        if (allInBest)            isBest = true;
+        else if (allInBestOrGood) isGood = true;
+    }
+
+    if (isBest)      setMultiplier = 1.0;
     else if (isGood) setMultiplier = 0.75;
 
     const finalScore = parseFloat((totalScore * setMultiplier).toFixed(1));

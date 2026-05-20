@@ -53,16 +53,16 @@ function createIcon(key) {
 
 // Fonction ultime : Trouve le nombre ET la valeur de chaque roll
 const KEY_TO_FIGHT_PROP = {
-    'hp':        'FIGHT_PROP_HP',
-    'hp_':       'FIGHT_PROP_HP_PERCENT',
-    'atk':       'FIGHT_PROP_ATTACK',
-    'atk_':      'FIGHT_PROP_ATTACK_PERCENT',
-    'def':       'FIGHT_PROP_DEFENSE',
-    'def_':      'FIGHT_PROP_DEFENSE_PERCENT',
+    'hp': 'FIGHT_PROP_HP',
+    'hp_': 'FIGHT_PROP_HP_PERCENT',
+    'atk': 'FIGHT_PROP_ATTACK',
+    'atk_': 'FIGHT_PROP_ATTACK_PERCENT',
+    'def': 'FIGHT_PROP_DEFENSE',
+    'def_': 'FIGHT_PROP_DEFENSE_PERCENT',
     'critRate_': 'FIGHT_PROP_CRITICAL',
-    'critDMG_':  'FIGHT_PROP_CRITICAL_HURT',
+    'critDMG_': 'FIGHT_PROP_CRITICAL_HURT',
     'enerRech_': 'FIGHT_PROP_CHARGE_EFFICIENCY',
-    'eleMas':    'FIGHT_PROP_ELEMENT_MASTERY'
+    'eleMas': 'FIGHT_PROP_ELEMENT_MASTERY'
 };
 
 // Stats plate (pas de ×100)
@@ -75,17 +75,17 @@ function getRollDetails(key, value, rarity = 5) {
         : (window.BASE_ROLLS || BASE_ROLLS);
 
     if (!baseRollsDef || !baseRollsDef[key]) {
-        return { k: 1, rolls: [value] };
+        return {k: 1, rolls: [value]};
     }
 
     const possibleRolls = baseRollsDef[key];
-    let bestMatch = { k: 1, diff: Infinity, rolls: [value] };
+    let bestMatch = {k: 1, diff: Infinity, rolls: [value]};
 
     function checkCombinations(k, currentSum, startIndex, depth, currentRolls) {
         if (depth === k) {
             const diff = Math.abs(currentSum - value);
             if (diff < bestMatch.diff) {
-                bestMatch = { k: k, diff: diff, rolls: [...currentRolls] };
+                bestMatch = {k: k, diff: diff, rolls: [...currentRolls]};
             }
             return;
         }
@@ -111,41 +111,102 @@ function getRollCount(key, value, rarity = 5) {
 
 // 2. MAPPINGS & DATA
 const ELEMENT_DATA = {
-    "Fire": { id: 40, key: "pyro_dmg_" },
-    "Water": { id: 42, key: "hydro_dmg_" },
-    "Wind": { id: 44, key: "anemo_dmg_" },
-    "Electric": { id: 41, key: "electro_dmg_" },
-    "Grass": { id: 43, key: "dendro_dmg_" },
-    "Ice": { id: 46, key: "cryo_dmg_" },
-    "Rock": { id: 45, key: "geo_dmg_" }
+    "Fire": {id: 40, key: "pyro_dmg_"},
+    "Water": {id: 42, key: "hydro_dmg_"},
+    "Wind": {id: 44, key: "anemo_dmg_"},
+    "Electric": {id: 41, key: "electro_dmg_"},
+    "Grass": {id: 43, key: "dendro_dmg_"},
+    "Ice": {id: 46, key: "cryo_dmg_"},
+    "Rock": {id: 45, key: "geo_dmg_"}
 };
 
 const SUBSTAT_RANGES = {
-    "critRate_": { min: 2.7, max: 3.9 }, "critDMG_": { min: 5.4, max: 7.8 },
-    "atk_": { min: 4.1, max: 5.8 }, "hp_": { min: 4.1, max: 5.8 }, "def_": { min: 5.1, max: 7.3 },
-    "eleMas": { min: 16, max: 23 }, "enerRech_": { min: 4.5, max: 6.5 },
-    "atk": { min: 14, max: 19 }, "hp": { min: 209, max: 299 }, "def": { min: 16, max: 23 }
+    "critRate_": {min: 2.7, max: 3.9}, "critDMG_": {min: 5.4, max: 7.8},
+    "atk_": {min: 4.1, max: 5.8}, "hp_": {min: 4.1, max: 5.8}, "def_": {min: 5.1, max: 7.3},
+    "eleMas": {min: 16, max: 23}, "enerRech_": {min: 4.5, max: 6.5},
+    "atk": {min: 14, max: 19}, "hp": {min: 209, max: 299}, "def": {min: 16, max: 23}
 };
 
 // TAUX DE DROP MAINSTATS (Wiki Genshin)
 const MAINSTAT_DROP_RATES = {
-    "EQUIP_SHOES": { "hp_": 26.68, "atk_": 26.66, "def_": 26.66, "enerRech_": 10.0, "eleMas": 10.0 },
-    "EQUIP_RING": { "hp_": 19.25, "atk_": 19.25, "def_": 19.0, "eleMas": 2.5, "physical_dmg_": 5.0, "pyro_dmg_": 5.0, "electro_dmg_": 5.0, "cryo_dmg_": 5.0, "hydro_dmg_": 5.0, "anemo_dmg_": 5.0, "geo_dmg_": 5.0, "dendro_dmg_": 5.0 },
-    "EQUIP_DRESS": { "hp_": 22.0, "atk_": 22.0, "def_": 22.0, "critRate_": 10.0, "critDMG_": 10.0, "heal_": 10.0, "eleMas": 4.0 }
+    "EQUIP_SHOES": {"hp_": 26.68, "atk_": 26.66, "def_": 26.66, "enerRech_": 10.0, "eleMas": 10.0},
+    "EQUIP_RING": {
+        "hp_": 19.25,
+        "atk_": 19.25,
+        "def_": 19.0,
+        "eleMas": 2.5,
+        "physical_dmg_": 5.0,
+        "pyro_dmg_": 5.0,
+        "electro_dmg_": 5.0,
+        "cryo_dmg_": 5.0,
+        "hydro_dmg_": 5.0,
+        "anemo_dmg_": 5.0,
+        "geo_dmg_": 5.0,
+        "dendro_dmg_": 5.0
+    },
+    "EQUIP_DRESS": {
+        "hp_": 22.0,
+        "atk_": 22.0,
+        "def_": 22.0,
+        "critRate_": 10.0,
+        "critDMG_": 10.0,
+        "heal_": 10.0,
+        "eleMas": 4.0
+    }
 };
 
-const STAT_MAPPING = { "FIGHT_PROP_HP": "hp", "FIGHT_PROP_HP_PERCENT": "hp_", "FIGHT_PROP_ATTACK": "atk", "FIGHT_PROP_ATTACK_PERCENT": "atk_", "FIGHT_PROP_DEFENSE": "def", "FIGHT_PROP_DEFENSE_PERCENT": "def_", "FIGHT_PROP_CRITICAL": "critRate_", "FIGHT_PROP_CRITICAL_HURT": "critDMG_", "FIGHT_PROP_CHARGE_EFFICIENCY": "enerRech_", "FIGHT_PROP_ELEMENT_MASTERY": "eleMas", "FIGHT_PROP_HEAL_ADD": "heal_", "FIGHT_PROP_PHYSICAL_ADD_HURT": "physical_dmg_", "FIGHT_PROP_FIRE_ADD_HURT": "pyro_dmg_", "FIGHT_PROP_ELEC_ADD_HURT": "electro_dmg_", "FIGHT_PROP_WATER_ADD_HURT": "hydro_dmg_", "FIGHT_PROP_GRASS_ADD_HURT": "dendro_dmg_", "FIGHT_PROP_WIND_ADD_HURT": "anemo_dmg_", "FIGHT_PROP_ROCK_ADD_HURT": "geo_dmg_", "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_" };
+const STAT_MAPPING = {
+    "FIGHT_PROP_HP": "hp",
+    "FIGHT_PROP_HP_PERCENT": "hp_",
+    "FIGHT_PROP_ATTACK": "atk",
+    "FIGHT_PROP_ATTACK_PERCENT": "atk_",
+    "FIGHT_PROP_DEFENSE": "def",
+    "FIGHT_PROP_DEFENSE_PERCENT": "def_",
+    "FIGHT_PROP_CRITICAL": "critRate_",
+    "FIGHT_PROP_CRITICAL_HURT": "critDMG_",
+    "FIGHT_PROP_CHARGE_EFFICIENCY": "enerRech_",
+    "FIGHT_PROP_ELEMENT_MASTERY": "eleMas",
+    "FIGHT_PROP_HEAL_ADD": "heal_",
+    "FIGHT_PROP_PHYSICAL_ADD_HURT": "physical_dmg_",
+    "FIGHT_PROP_FIRE_ADD_HURT": "pyro_dmg_",
+    "FIGHT_PROP_ELEC_ADD_HURT": "electro_dmg_",
+    "FIGHT_PROP_WATER_ADD_HURT": "hydro_dmg_",
+    "FIGHT_PROP_GRASS_ADD_HURT": "dendro_dmg_",
+    "FIGHT_PROP_WIND_ADD_HURT": "anemo_dmg_",
+    "FIGHT_PROP_ROCK_ADD_HURT": "geo_dmg_",
+    "FIGHT_PROP_ICE_ADD_HURT": "cryo_dmg_"
+};
 
-const STAT_LABELS = { "hp": "PV", "hp_": "PV %", "atk": "ATQ", "atk_": "ATQ %", "def": "DÉF", "def_": "DÉF %", "eleMas": "Maîtrise élémentaire", "enerRech_": "Recharge d'énergie", "critRate_": "Taux CRIT", "critDMG_": "DGT CRIT", "heal_": "Bonus de Soins", "pyro_dmg_": "Bonus de DGT Pyro", "hydro_dmg_": "Bonus de DGT Hydro", "cryo_dmg_": "Bonus de DGT Cryo", "electro_dmg_": "Bonus de DGT Électro", "anemo_dmg_": "Bonus de DGT Anémo", "geo_dmg_": "Bonus de DGT Géo", "dendro_dmg_": "Bonus de DGT Dendro", "physical_dmg_": "Bonus de DGT Physiques" };
+const STAT_LABELS = {
+    "hp": "PV",
+    "hp_": "PV %",
+    "atk": "ATQ",
+    "atk_": "ATQ %",
+    "def": "DÉF",
+    "def_": "DÉF %",
+    "eleMas": "Maîtrise élémentaire",
+    "enerRech_": "Recharge d'énergie",
+    "critRate_": "Taux CRIT",
+    "critDMG_": "DGT CRIT",
+    "heal_": "Bonus de Soins",
+    "pyro_dmg_": "Bonus de DGT Pyro",
+    "hydro_dmg_": "Bonus de DGT Hydro",
+    "cryo_dmg_": "Bonus de DGT Cryo",
+    "electro_dmg_": "Bonus de DGT Électro",
+    "anemo_dmg_": "Bonus de DGT Anémo",
+    "geo_dmg_": "Bonus de DGT Géo",
+    "dendro_dmg_": "Bonus de DGT Dendro",
+    "physical_dmg_": "Bonus de DGT Physiques"
+};
 
 const RESONANCE_DATA = {
-    "pyro": { name: "Flammes de la ferveur (Pyro)",active: false, stats: { atk_: 0.25 } },
-    "hydro": { name: "Eau médicinale (Hydro)",active: false, stats: { hp_: 0.25 } },
-    "dendro": { name: "Liane de la sagesse (Dendro)",active: false, stats: { eleMas: 50 } },
-    "electro": { name: "Tonnerre puissant (Électro)",active: false, stats: {} },
-    "cryo": { name: "Glace brisée (Cryo)", active: false, stats: { critRate_: 0.15 } },
-    "geo": { name: "Roc inamovible (Géo)",active: false, stats: {} },
-    "anemo": { name: "Vents de la célérité (Anémo)",active: false, stats: {} }
+    "pyro": {name: "Flammes de la ferveur (Pyro)", active: false, stats: {atk_: 0.25}},
+    "hydro": {name: "Eau médicinale (Hydro)", active: false, stats: {hp_: 0.25}},
+    "dendro": {name: "Liane de la sagesse (Dendro)", active: false, stats: {eleMas: 50}},
+    "electro": {name: "Tonnerre puissant (Électro)", active: false, stats: {}},
+    "cryo": {name: "Glace brisée (Cryo)", active: false, stats: {critRate_: 0.15}},
+    "geo": {name: "Roc inamovible (Géo)", active: false, stats: {}},
+    "anemo": {name: "Vents de la célérité (Anémo)", active: false, stats: {}}
 };
 
 const ELEMENT_COLORS = {
@@ -487,7 +548,13 @@ const SET_NAME_MAPPING = {
     "Aubade d'astre et de lune": "AubadeOfMorningstarAndMoon"
 };
 
-const ARTIFACT_TYPE_MAPPING = { "EQUIP_BRACER": "Fleur de la vie", "EQUIP_NECKLACE": "Plume de la mort", "EQUIP_SHOES": "Sables du temps", "EQUIP_RING": "Coupe d'éonothème", "EQUIP_DRESS": "Diadème de Logos" };
+const ARTIFACT_TYPE_MAPPING = {
+    "EQUIP_BRACER": "Fleur de la vie",
+    "EQUIP_NECKLACE": "Plume de la mort",
+    "EQUIP_SHOES": "Sables du temps",
+    "EQUIP_RING": "Coupe d'éonothème",
+    "EQUIP_DRESS": "Diadème de Logos"
+};
 
 const SLOT_POSSIBLE_MAIN_STATS = {
     "EQUIP_SHOES": ["hp_", "atk_", "def_", "enerRech_", "eleMas"],
@@ -500,7 +567,7 @@ let globalPersoData = [];
 // --- TRI DE LA SIDEBAR ---
 // column : 'original' | 'name' | 'score'
 // direction : 'desc' (ordre par défaut/décroissant) | 'asc' (inversé/croissant)
-let sidebarSortState = { column: 'original', direction: 'desc' };
+let sidebarSortState = {column: 'original', direction: 'desc'};
 
 function setSidebarSort(column) {
     if (sidebarSortState.column === column) {
@@ -517,7 +584,7 @@ function setSidebarSort(column) {
 
 function updateSortArrows() {
     ['original', 'name', 'score'].forEach(col => {
-        const arrow   = document.getElementById(`arrow-${col}`);
+        const arrow = document.getElementById(`arrow-${col}`);
         const section = document.getElementById(`sort-col-${col}`);
         if (!arrow || !section) return;
         const isActive = sidebarSortState.column === col;
@@ -525,10 +592,11 @@ function updateSortArrows() {
         section.style.opacity = isActive ? '1' : '0.4';
         // Rotation de la flèche : vers le haut = 'asc', vers le bas = 'desc'
         arrow.style.transition = 'transform 0.2s ease';
-        arrow.style.transform  = (isActive && sidebarSortState.direction === 'asc') ? 'rotate(180deg)' : 'rotate(0deg)';
-        arrow.style.opacity    = isActive ? '1' : '0.4';
+        arrow.style.transform = (isActive && sidebarSortState.direction === 'asc') ? 'rotate(180deg)' : 'rotate(0deg)';
+        arrow.style.opacity = isActive ? '1' : '0.4';
     });
 }
+
 let charData = {};
 let locData = {};
 const apiSessionCache = {};
@@ -781,17 +849,23 @@ function showSkeletonCard() {
 }
 
 let gameDataReady = false;
+
 async function loadGameData() {
     const loader = document.getElementById('loading-msg');
-    if(loader) loader.innerText = "Chargement V2 (Indexation)...";
+    if (loader) loader.innerText = "Chargement V2 (Indexation)...";
     window.iconToNameHash = {};
     const CACHE_KEY = 'guoba_gamedata_v2';
     const CACHE_TTL = 24 * 60 * 60 * 1000;
     try {
-        const uidInput   = document.getElementById('uidInput');
-        const searchBtn  = document.getElementById('searchBtn');
-        if (uidInput)  { uidInput.disabled  = true; uidInput.placeholder  = "Chargement des données…"; }
-        if (searchBtn) { searchBtn.disabled = true; }
+        const uidInput = document.getElementById('uidInput');
+        const searchBtn = document.getElementById('searchBtn');
+        if (uidInput) {
+            uidInput.disabled = true;
+            uidInput.placeholder = "Chargement des données…";
+        }
+        if (searchBtn) {
+            searchBtn.disabled = true;
+        }
         const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
         if (cached && (Date.now() - cached.ts < CACHE_TTL)) {
             console.log("⚡ Données jeu chargées depuis le cache local !");
@@ -802,9 +876,14 @@ async function loadGameData() {
             window.iconToNameHash = cached.iconToNameHash;
             window.ROLL_TABLE = cached.rollTable;
             gameDataReady = true;
-            if (uidInput)  { uidInput.disabled = false; uidInput.placeholder = "Entrez votre UID..."; }
-            if (searchBtn) { searchBtn.disabled = false; }
-            if(loader) loader.innerText = "";
+            if (uidInput) {
+                uidInput.disabled = false;
+                uidInput.placeholder = "Entrez votre UID...";
+            }
+            if (searchBtn) {
+                searchBtn.disabled = false;
+            }
+            if (loader) loader.innerText = "";
             return;
         }
 
@@ -838,19 +917,26 @@ async function loadGameData() {
             iconToNameHash: window.iconToNameHash,
             rollTable
         }));
-        if(loader) loader.innerText = "";
+        if (loader) loader.innerText = "";
         gameDataReady = true;
-        if (uidInput)  { uidInput.disabled = false; uidInput.placeholder = "Entrez votre UID..."; }
-        if (searchBtn) { searchBtn.disabled = false; }
+        if (uidInput) {
+            uidInput.disabled = false;
+            uidInput.placeholder = "Entrez votre UID...";
+        }
+        if (searchBtn) {
+            searchBtn.disabled = false;
+        }
         console.log(`API V2 Chargée : ${Object.keys(window.iconToNameHash).length} artéfacts indexés.`);
     } catch (e) {
         console.error("Erreur chargement :", e);
-        if(loader) loader.innerText = "Erreur Fichiers.";
+        if (loader) loader.innerText = "Erreur Fichiers.";
         if (uidInput) {
             uidInput.placeholder = "Erreur de chargement — rechargez la page";
             uidInput.style.color = "#ef4444";
         }
-        if (searchBtn) { searchBtn.disabled = false; }
+        if (searchBtn) {
+            searchBtn.disabled = false;
+        }
         alert("Impossible de charger les données du jeu (GitHub ou réseau indisponible).\nVeuillez recharger la page.");
     }
 }
@@ -883,7 +969,7 @@ function clearSearch() {
 
     // 3. Vider la barre latérale des personnages
     globalPersoData = [];
-    sidebarSortState = { column: 'original', direction: 'desc' };
+    sidebarSortState = {column: 'original', direction: 'desc'};
     const sidebar = document.getElementById('sidebar-list');
     if (sidebar) sidebar.innerHTML = '';
     updateSortArrows();
@@ -943,7 +1029,7 @@ async function fetchUserData(optionalUid) {
 
     // ----------------------------------------
 
-    if(loader) loader.innerText = "Récupération...";
+    if (loader) loader.innerText = "Récupération...";
 
     // 3. Ancien proxy
     // const urlCible = `https://enka.network/api/uid/${uid}?t=${Date.now()}`;
@@ -952,15 +1038,15 @@ async function fetchUserData(optionalUid) {
     //3. Nouveau proxy
     const proxy = `https://guobagg.clement-torchiat.workers.dev/?uid=${uid}`;
     const controller = new AbortController();
-    const timeoutId  = setTimeout(() => controller.abort(), 30000);
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
 
     try {
-        const res = await fetch(proxy, { signal: controller.signal });
+        const res = await fetch(proxy, {signal: controller.signal});
         clearTimeout(timeoutId);
         if (!res.ok) {
-            if (res.status === 404)      throw new Error("404");
+            if (res.status === 404) throw new Error("404");
             else if (res.status === 429) throw new Error("429");
-            else                         throw new Error("SERVER");
+            else throw new Error("SERVER");
         }
 
         const data = await res.json();
@@ -989,13 +1075,13 @@ async function fetchUserData(optionalUid) {
 
         renderGlobalEvaluation(data.playerInfo);
 
-        if(loader) loader.innerText = ""; // Succès
+        if (loader) loader.innerText = ""; // Succès
         toggleSearchIcon(true);
 
     } catch (e) {
         clearTimeout(timeoutId);
         console.error("Erreur de récupération :", e);
-        if(loader) loader.innerText = "Erreur.";
+        if (loader) loader.innerText = "Erreur.";
 
         if (e.name === 'AbortError') {
             alert("La requête a expiré (délai de 30 s dépassé).\nEnka Network ou le proxy est peut-être surchargé. Réessayez dans quelques instants.");
@@ -1042,22 +1128,33 @@ function renderPlayerProfile(playerInfo, uid) {
     }
 
     // --- Serveur depuis le premier chiffre de l'UID ---
-    const serverMap = { '1': 'CN', '2': 'CN', '3': 'CN', '4': 'CN', '5': 'TW', '6': 'NA', '7': 'EU', '8': 'Asia', '9': 'TW' };
+    const serverMap = {
+        '1': 'CN',
+        '2': 'CN',
+        '3': 'CN',
+        '4': 'CN',
+        '5': 'TW',
+        '6': 'NA',
+        '7': 'EU',
+        '8': 'Asia',
+        '9': 'TW'
+    };
     const server = serverMap[String(uid)[0]] || 'CN';
 
     // --- Stats (noms de champs confirmés via Discord Enka) ---
-    const nickname     = playerInfo.nickname || 'Joueur inconnu';
-    const signature    = playerInfo.signature || '';
-    const ar           = playerInfo.level || 0;
+    const nickname = playerInfo.nickname || 'Joueur inconnu';
+    const signature = playerInfo.signature || '';
+    const ar = playerInfo.level || 0;
     const achievements = playerInfo.finishAchievementNum ?? null;
-    const abyssStars   = playerInfo.towerStarIndex ?? null;
+    const abyssStars = playerInfo.towerStarIndex ?? null;
     const theaterStars = playerInfo.theaterStarIndex ?? null;
     const stygianIndex = playerInfo.stygianIndex ?? null;
-    const stygianSec   = (playerInfo.stygianSeconds > 0) ? playerInfo.stygianSeconds : null;
+    const stygianSec = (playerInfo.stygianSeconds > 0) ? playerInfo.stygianSeconds : null;
 
     saveRecentProfile(uid, playerInfo, profilePicUrl, bannerUrl);
     // --- Icône Stygian dynamique ---
     const ICON = './assets/simulator/icons/';
+
     function stygianIcon() {
         if (stygianIndex === null) return '';
         // Cas spécial : index 6 ET temps < 180s
@@ -1130,7 +1227,7 @@ function getText(hash) {
 }
 
 function formatValueDisplay(key, val) {
-    if(['hp', 'atk', 'def', 'eleMas'].includes(key)) return Math.round(val).toLocaleString();
+    if (['hp', 'atk', 'def', 'eleMas'].includes(key)) return Math.round(val).toLocaleString();
     return val.toFixed(1) + '%';
 }
 
@@ -1138,7 +1235,7 @@ function formatStat(propId, value) {
     // 1. Mapping de la clé (inchangé)
     let key = STAT_MAPPING[propId];
     if (!key && (STAT_LABELS[propId] || propId === 'dmgBonus')) key = propId;
-    if (!key) return { key: "unknown", value: value, label: propId, icon: createIcon("unknown") };
+    if (!key) return {key: "unknown", value: value, label: propId, icon: createIcon("unknown")};
 
     // 2. Gestion des pourcentages (inchangé)
     let val = value;
@@ -1165,9 +1262,13 @@ function formatStat(propId, value) {
 // --- LOGIQUE CALCUL BONUS ---
 // --- LOGIQUE CALCUL BONUS ---
 function calculateBuffedStats(baseStats, currentStats, buffsList) {
-    let buffed = { ...currentStats };
-    buffsList.forEach(buff => { if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, false); });
-    buffsList.forEach(buff => { if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, true); });
+    let buffed = {...currentStats};
+    buffsList.forEach(buff => {
+        if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, false);
+    });
+    buffsList.forEach(buff => {
+        if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, true);
+    });
     return buffed;
 }
 
@@ -1199,15 +1300,12 @@ function applyBonus(buffed, baseStats, bonuses, processScaling) {
             else if (statKey === "def_") buffed.def += baseStats.def * val;
             else if (statKey === "critRate_" || statKey === "critDMG_" || statKey === "enerRech_") {
                 let shortKey = getShortKey(statKey);
-                if(shortKey) buffed[shortKey] += val * 100;
-            }
-            else if (statKey === "eleMas") {
+                if (shortKey) buffed[shortKey] += val * 100;
+            } else if (statKey === "eleMas") {
                 buffed.em += val;
-            }
-            else if (statKey === buffed.dmgBonusKey || statKey === 'elemental_dmg_') {
+            } else if (statKey === buffed.dmgBonusKey || statKey === 'elemental_dmg_') {
                 buffed.dmgBonus += val * 100;
-            }
-            else if (statKey.endsWith('_dmg_')) {
+            } else if (statKey.endsWith('_dmg_')) {
                 buffed[statKey] = (buffed[statKey] || 0) + val * 100;
             }
         }
@@ -1262,8 +1360,7 @@ function toggleBuff(charIndex, buffIndex) {
             // Ici je laisse la possibilité de décocher (toggle).
             targetBuff.active = false;
         }
-    }
-    else if (mode === 'cumulative') {
+    } else if (mode === 'cumulative') {
         // Mode CUMULATIF (Escalier)
         // On récupère tous les buffs de ce set pour trouver l'ordre
         const groupBuffs = p.buffs.filter(b => b.category === targetBuff.category);
@@ -1280,8 +1377,7 @@ function toggleBuff(charIndex, buffIndex) {
                 if (idx >= targetIndexInGroup) b.active = false;
             });
         }
-    }
-    else {
+    } else {
         // Mode STANDARD (Comportement actuel)
         targetBuff.active = willBeActive;
     }
@@ -1343,7 +1439,7 @@ function generateScoreBar(totalRolls, currentGrade, maxPossibleRolls = 45) {
 
 function calculateMaxTheoreticalScore(persoObj, config) {
     if (!config || !config.weights || !window.MAX_ROLLS) {
-        return { score: 100, totalRolls: 45 };
+        return {score: 100, totalRolls: 45};
     }
 
     const forbiddenSubStats = ["heal_", "physical_dmg_"];
@@ -1353,7 +1449,7 @@ function calculateMaxTheoreticalScore(persoObj, config) {
         .filter(([key, w]) => w > 0 && !key.includes("_dmg_") && !forbiddenSubStats.includes(key))
         .sort((a, b) => b[1] - a[1]);
 
-    if (sortedSubWeights.length === 0) return { score: 0, totalRolls: 0 };
+    if (sortedSubWeights.length === 0) return {score: 0, totalRolls: 0};
 
     let maxTotalRolls = 0;
 
@@ -1418,15 +1514,15 @@ function calculateMaxTheoreticalScore(persoObj, config) {
             }
         }
 
-        return { ...art, subStats: fakeSubStats, mainStat: perfectMainStat };
+        return {...art, subStats: fakeSubStats, mainStat: perfectMainStat};
     });
 
     // 3. On calcule le score de ce set divin via ton propre moteur de calcul
-    let fakePerso = { ...persoObj, artefacts: perfectArtefacts, isSimulation: true };
+    let fakePerso = {...persoObj, artefacts: perfectArtefacts, isSimulation: true};
     let simulation = calculateCharacterScore(fakePerso, config);
 
     return {
-        score: simulation.score,
+        score: simulation.score / simulation.setMultiplier,
         totalRolls: parseFloat(simulation.totalRolls)
     };
 }
@@ -1435,42 +1531,60 @@ function getCritAdvice(cr, cd, config) {
     const crWeight = (config && config.weights && config.weights['critRate_']) || 0;
 
     if (crWeight < 1) {
-        return { color: '#888', msg: "Ce personnage ne dépend pas des statistiques critiques." };
+        return {color: '#888', msg: "Ce personnage ne dépend pas des statistiques critiques."};
     }
 
     const roundedCR = Math.round(cr * 10) / 10;
     const roundedCD = Math.round(cd);
 
-    if (roundedCR > 100) return { color: '#ef4444', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Le surplus a été déduit de votre score global.` };
+    if (roundedCR > 100) return {
+        color: '#ef4444',
+        msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Le surplus a été déduit de votre score global.`
+    };
 
-    if (roundedCR === 100) return { color: '#00FFFF', msg: `Taux CRIT parfait. Misez absolument tout sur les DGT CRIT.` };
+    if (roundedCR === 100) return {color: '#00FFFF', msg: `Taux CRIT parfait. Misez absolument tout sur les DGT CRIT.`};
 
     if (roundedCR >= 90) {
-        if (roundedCD < 160) return { color: '#eab308', msg: `Taux CRIT excellent (${roundedCR}%), mais vos DGT CRIT (${roundedCD}%) sont trop faibles. Rééquilibrez !` };
-        return { color: '#22c55e', msg: "Taux CRIT largement suffisant (plus de 90%). Cherchez un maximum de DGT CRIT." };
+        if (roundedCD < 160) return {
+            color: '#eab308',
+            msg: `Taux CRIT excellent (${roundedCR}%), mais vos DGT CRIT (${roundedCD}%) sont trop faibles. Rééquilibrez !`
+        };
+        return {color: '#22c55e', msg: "Taux CRIT largement suffisant (plus de 90%). Cherchez un maximum de DGT CRIT."};
     }
 
-    if (roundedCR >= 80) return { color: '#22c55e', msg: "Taux CRIT suffisant (plus de 80%). En obtenir plus est utile, mais le DGT CRIT devient prioritaire." };
+    if (roundedCR >= 80) return {
+        color: '#22c55e',
+        msg: "Taux CRIT suffisant (plus de 80%). En obtenir plus est utile, mais le DGT CRIT devient prioritaire."
+    };
 
     if (roundedCR >= 70) {
-        if (roundedCD > 200) return { color: '#f97316', msg: `Vous avez beaucoup de DGT CRIT (${roundedCD}%) mais votre Taux CRIT (${roundedCR}%) est trop bas pour en profiter !` };
-        return { color: '#eab308', msg: "Taux CRIT passable (plus de 70%). Essayez de vous rapprocher des 80%." };
+        if (roundedCD > 200) return {
+            color: '#f97316',
+            msg: `Vous avez beaucoup de DGT CRIT (${roundedCD}%) mais votre Taux CRIT (${roundedCR}%) est trop bas pour en profiter !`
+        };
+        return {color: '#eab308', msg: "Taux CRIT passable (plus de 70%). Essayez de vous rapprocher des 80%."};
     }
 
-    if (roundedCR >= 60) return { color: '#f97316', msg: "Taux CRIT insuffisant (plus de 60%). Vos grosses attaques rateront trop souvent leur coup critique." };
+    if (roundedCR >= 60) return {
+        color: '#f97316',
+        msg: "Taux CRIT insuffisant (plus de 60%). Vos grosses attaques rateront trop souvent leur coup critique."
+    };
 
-    return { color: '#ef4444', msg: "Taux CRIT largement insuffisant (moins de 60%). Fixez ce problème d'urgence avant de chercher d'autres stats." };
+    return {
+        color: '#ef4444',
+        msg: "Taux CRIT largement insuffisant (moins de 60%). Fixez ce problème d'urgence avant de chercher d'autres stats."
+    };
 }
 
 function getSetRecommendation(activeSets, config) {
     if (!config || !config.bestSets || config.bestSets.length === 0) return null;
     const hasBest = activeSets.some(s => config.bestSets.includes(s));
-    if (hasBest) return { type: 'success', msg: "Vous utilisez le meilleur set recommandé !" };
+    if (hasBest) return {type: 'success', msg: "Vous utilisez le meilleur set recommandé !"};
     const hasGood = config.goodSets && activeSets.some(s => config.goodSets.includes(s));
     const recommended = config.bestSets[0].split(':')[0];
     const recName = Object.keys(SET_NAME_MAPPING).find(key => SET_NAME_MAPPING[key] === recommended) || recommended;
-    if (hasGood) return { type: 'info', msg: `Set correct, mais <b>${recName} (4p)</b> serait optimal.` };
-    return { type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.` };
+    if (hasGood) return {type: 'info', msg: `Set correct, mais <b>${recName} (4p)</b> serait optimal.`};
+    return {type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.`};
 }
 
 // CONSEIL MAINSTAT
@@ -1517,22 +1631,23 @@ function getMainStatAdvice(persoObj, config) {
         };
     }
 }
+
 // Calcul Difficulté Farming
 function getFarmDifficulty(pieceType, mainStatKey) {
     // Si c'est Fleur ou Plume -> Facile (Stat fixe)
     if (pieceType === "EQUIP_BRACER" || pieceType === "EQUIP_NECKLACE") {
-        return { label: "Facile", color: "#3b82f6" }; // Vert
+        return {label: "Facile", color: "#3b82f6"}; // Vert
     }
 
     const rates = MAINSTAT_DROP_RATES[pieceType];
-    if (!rates || !rates[mainStatKey]) return { label: "Relativement difficile", color: "#eab308" }; // Default
+    if (!rates || !rates[mainStatKey]) return {label: "Relativement difficile", color: "#eab308"}; // Default
 
     const probability = rates[mainStatKey];
 
-    if (probability >= 19) return { label: "Relativement facile", color: "#22c55e" }; // Vert (>20%)
-    if (probability >= 10) return { label: "Relativement difficile", color: "#eab308" }; // Jaune (10-20%)
-    if (probability >= 5) return { label: "Difficile", color: "#f97316" }; // Orange (5-10%)
-    return { label: "Très difficile", color: "#ef4444" }; // Rouge (<5%)
+    if (probability >= 19) return {label: "Relativement facile", color: "#22c55e"}; // Vert (>20%)
+    if (probability >= 10) return {label: "Relativement difficile", color: "#eab308"}; // Jaune (10-20%)
+    if (probability >= 5) return {label: "Difficile", color: "#f97316"}; // Orange (5-10%)
+    return {label: "Très difficile", color: "#ef4444"}; // Rouge (<5%)
 }
 
 // ANALYSE OFF-PIECE (Avec nom de la pièce)
@@ -1585,25 +1700,24 @@ function getOffPieceAdvice(persoObj) {
             type: "success",
             msg: `Excellente pièce hors-set <b style="color: #aaa;">(${rawName})</b>. Cette dernière porte votre build vers le haut.`
         };
-    }
-    else if (isHardMainStat && offPiece.score > (avgSetScore * 0.8)) {
+    } else if (isHardMainStat && offPiece.score > (avgSetScore * 0.8)) {
         return {
             type: "warning",
             msg: `Votre pièce hors-set <b style="color: #aaa;">(${rawName})</b> suffit pour l'instant en vue de la rareté de sa stat principale.`
         };
-    }
-    else {
+    } else {
         return {
             type: "error",
             msg: `Votre pièce hors-set <b style="color: #aaa;">(${rawName})</b> est moins bonne que le reste. Vous devriez en chercher une autre dans votre inventaire ou permettre à une autre pièce d'être hors-set.`
         };
     }
 }
+
 // CONSEIL TALENTS
 function getTalentAdvice(persoObj, config) {
     if (!config.talents) return null;
     const target = config.talents;
-    const current = { auto: 0, skill: 0, burst: 0 };
+    const current = {auto: 0, skill: 0, burst: 0};
 
     if (persoObj.talents.length >= 3) {
         current.auto = persoObj.talents[0].level;
@@ -1622,10 +1736,16 @@ function getTalentAdvice(persoObj, config) {
         const diff = goal - lvl;
         if (diff >= 2) {
             isPerfect = false;
-            advices.push({ type: "critical", msg: `Améliorer votre <b style="color: #aaa;">${label}</b> au niv ${goal} est important pour ce personnage.` });
+            advices.push({
+                type: "critical",
+                msg: `Améliorer votre <b style="color: #aaa;">${label}</b> au niv ${goal} est important pour ce personnage.`
+            });
         } else if (diff >= 1) {
             isPerfect = false;
-            advices.push({ type: "info", msg: `Améliorer votre <b style="color: #aaa;">${label}</b> au niveau ${goal} est recommandé pour ce personnage.` });
+            advices.push({
+                type: "info",
+                msg: `Améliorer votre <b style="color: #aaa;">${label}</b> au niveau ${goal} est recommandé pour ce personnage.`
+            });
         }
     };
 
@@ -1634,7 +1754,7 @@ function getTalentAdvice(persoObj, config) {
     check('burst', 'Déchaînement');
 
     if (isPerfect && advices.length === 0) {
-        return [{ type: "success", msg: "Vos aptitudes sont au niveau recommandé." }];
+        return [{type: "success", msg: "Vos aptitudes sont au niveau recommandé."}];
     }
 
     return advices;
@@ -1741,6 +1861,7 @@ function getMetaSetAdvice(persoObj, config) {
         msg: `Votre set d'artéfacts actuel ne correspond pas aux standards du personnage. Vous devriez opter pour le set d'artéfacts ${recommendationStr}.`
     };
 }
+
 function getWeaponAdvice(persoObj) {
     if (!persoObj.weapon) return null;
 
@@ -1807,7 +1928,7 @@ function getLevelAdvice(persoObj) {
 
 
 function calculateRollDistribution(persoObj, config) {
-    if (!config || !config.weights) return { usefulCount: 0, deadCount: 0, total: 0, usefulDetails: [], deadDetails: [] };
+    if (!config || !config.weights) return {usefulCount: 0, deadCount: 0, total: 0, usefulDetails: [], deadDetails: []};
 
     let usefulCount = 0;
     let deadCount = 0;
@@ -1857,7 +1978,7 @@ function calculateRollDistribution(persoObj, config) {
 }
 
 function calculateDeadRolls(persoObj, config) {
-    if (!config || !config.weights) return { count: 0, details: [] };
+    if (!config || !config.weights) return {count: 0, details: []};
     let deadRolls = 0;
     let deadStatsCounts = {};
     persoObj.artefacts.forEach(art => {
@@ -1873,9 +1994,9 @@ function calculateDeadRolls(persoObj, config) {
     });
     const details = Object.entries(deadStatsCounts)
         .filter(([_, count]) => count > 0)
-        .map(([key, count]) => ({ label: STAT_LABELS[key] || key, count: count }))
+        .map(([key, count]) => ({label: STAT_LABELS[key] || key, count: count}))
         .sort((a, b) => b.count - a.count);
-    return { count: deadRolls, details: details };
+    return {count: deadRolls, details: details};
 }
 
 // DÉTECTEUR DE VOL D'ARTÉFACTS (Cross-Check)
@@ -1884,7 +2005,7 @@ function getAllCrossCheckAdvice(charIndex) {
     const currChar = globalPersoData[charIndex];
     if (!currChar || !currChar.artefacts) return SLOT_ORDER.map(() => null);
 
-    const scoringConfig = { ...currChar.charConfig, ...(currChar.activeBuild || {}) };
+    const scoringConfig = {...currChar.charConfig, ...(currChar.activeBuild || {})};
     const active4pSet = Object.keys(currChar.setsCounter || {}).find(key => currChar.setsCounter[key] >= 4);
     const active4pCount = active4pSet ? currChar.setsCounter[active4pSet] : 0;
 
@@ -1921,7 +2042,7 @@ function getAllCrossCheckAdvice(charIndex) {
                 const clonedOtherArt = JSON.parse(JSON.stringify(otherArt));
                 const fakeArtefacts = [...currChar.artefacts];
                 fakeArtefacts[currArtIndex] = clonedOtherArt;
-                const fakePerso = { ...currChar, artefacts: fakeArtefacts };
+                const fakePerso = {...currChar, artefacts: fakeArtefacts};
                 const newCurrEval = calculateCharacterScore(fakePerso, scoringConfig);
                 const scoredNewArt = fakePerso.artefacts[currArtIndex];
                 const diff = scoredNewArt.score - currArt.score;
@@ -1932,18 +2053,22 @@ function getAllCrossCheckAdvice(charIndex) {
                     maxDiff = diff;
 
                     // Simulation pour le personnage donneur
-                    const otherScoringConfig = { ...otherChar.charConfig, ...(otherChar.activeBuild || {}) };
+                    const otherScoringConfig = {...otherChar.charConfig, ...(otherChar.activeBuild || {})};
                     const fakeOtherArtefacts = [...otherChar.artefacts];
                     const otherArtIndex = otherChar.artefacts.findIndex(a => a.type === slotType);
                     fakeOtherArtefacts[otherArtIndex] = currArt;
-                    const fakeOtherPerso = { ...otherChar, artefacts: fakeOtherArtefacts };
+                    const fakeOtherPerso = {...otherChar, artefacts: fakeOtherArtefacts};
                     const newOtherEval = calculateCharacterScore(fakeOtherPerso, otherScoringConfig);
 
                     // Deltas de sous-stats
                     const currSubMap = {};
-                    currArt.subStats.forEach(s => { currSubMap[s.key] = s.value; });
+                    currArt.subStats.forEach(s => {
+                        currSubMap[s.key] = s.value;
+                    });
                     const newSubMap = {};
-                    scoredNewArt.subStats.forEach(s => { newSubMap[s.key] = s.value; });
+                    scoredNewArt.subStats.forEach(s => {
+                        newSubMap[s.key] = s.value;
+                    });
                     const allKeys = new Set([...Object.keys(currSubMap), ...Object.keys(newSubMap)]);
                     const deltas = [];
                     allKeys.forEach(key => {
@@ -1956,7 +2081,7 @@ function getAllCrossCheckAdvice(charIndex) {
                         const formatted = isPercent
                             ? `${delta > 0 ? "+" : ""}${delta.toFixed(1)}% ${label}`
                             : `${delta > 0 ? "+" : ""}${Math.round(delta)} ${label}`;
-                        deltas.push({ delta, formatted });
+                        deltas.push({delta, formatted});
                     });
                     deltas.sort((a, b) => b.delta - a.delta);
 
@@ -2161,6 +2286,7 @@ function simulateDeadStatReplacements(persoObj, config) {
     suggestions.sort((a, b) => b.totalDeadRolls - a.totalDeadRolls);
     return suggestions;
 }
+
 // CALCULATEUR REROLL (VERSION DUST OF ENLIGHTENMENT 5.X)
 function calculateRerollMetrics(artifact, config) {
     if (!config || !config.weights || !window.MAX_ROLLS) return null;
@@ -2251,22 +2377,18 @@ function calculateRerollMetrics(artifact, config) {
     if (risk < 1) risk = 1;
 
     // --- 4. BADGES (Ajustés au contexte de l'objet) ---
-    let badge = { text: "Neutre", color: "#9ca3af" };
+    let badge = {text: "Neutre", color: "#9ca3af"};
 
     if (sortedTerrain[0] === 0 && sortedTerrain[1] === 0) {
-        badge = { text: "Poubelle (Ne pas reroll)", color: "#4b5563" }; // Même le Top 2 est inutile
-    }
-    else if (risk > 75) {
-        badge = { text: "Trop risqué (Garder)", color: "#ef4444" }; // Artéfact déjà trop bon, ne gâchez pas la poussière
-    }
-    else if (potential > 40 && risk < 35) {
-        badge = { text: "Poussière Recommandée", color: "#22c55e" }; // Beaucoup de stats mortes à recycler
-    }
-    else if (potential > 15) {
-        badge = { text: "Optimisable", color: "#3b82f6" };
-    }
-    else {
-        badge = { text: "Peu rentable", color: "#f97316" }; // Le gain espéré est plus faible que l'état actuel
+        badge = {text: "Poubelle (Ne pas reroll)", color: "#4b5563"}; // Même le Top 2 est inutile
+    } else if (risk > 75) {
+        badge = {text: "Trop risqué (Garder)", color: "#ef4444"}; // Artéfact déjà trop bon, ne gâchez pas la poussière
+    } else if (potential > 40 && risk < 35) {
+        badge = {text: "Poussière Recommandée", color: "#22c55e"}; // Beaucoup de stats mortes à recycler
+    } else if (potential > 15) {
+        badge = {text: "Optimisable", color: "#3b82f6"};
+    } else {
+        badge = {text: "Peu rentable", color: "#f97316"}; // Le gain espéré est plus faible que l'état actuel
     }
 
     return {
@@ -2275,6 +2397,7 @@ function calculateRerollMetrics(artifact, config) {
         badge: badge
     };
 }
+
 // Fonction pour calculer la valeur selon le rang (R1 à R5)
 // Si val est un nombre (0.2), on le garde.
 // Si val est un tableau [0.2, 0.05], on calcule : Base + (Rang-1)*Step
@@ -2294,7 +2417,7 @@ function processData(data) {
     const G_CHAR_CONFIG = window.CHARACTER_CONFIG || {};
     const G_WEAPON_PASSIVES = window.WEAPON_PASSIVES || {};
     const G_SET_PASSIVES = window.SET_PASSIVES || {};
-    const G_DEFAULT_CONFIG = window.DEFAULT_CONFIG || { weights: {}, bestSets: [], goodSets: [] };
+    const G_DEFAULT_CONFIG = window.DEFAULT_CONFIG || {weights: {}, bestSets: [], goodSets: []};
 
     data.avatarInfoList.forEach(perso => {
         const id = perso.avatarId;
@@ -2330,7 +2453,7 @@ function processData(data) {
         const level = perso.propMap['4001'] ? parseInt(perso.propMap['4001'].val) : 0;
         const constellations = perso.talentIdList ? perso.talentIdList.length : 0;
         const elemKey = getKey(info, "Element");
-        const elemInfo = ELEMENT_DATA[elemKey] || { id: 30, key: "physical_dmg_" };
+        const elemInfo = ELEMENT_DATA[elemKey] || {id: 30, key: "physical_dmg_"};
 
         const WEAPON_TYPE_MAP = {
             "WEAPON_SWORD_ONE_HAND": "sword",
@@ -2409,12 +2532,12 @@ function processData(data) {
                     talentUrl = `https://enka.network/ui/${iconName}.png`;
                 }
 
-                talents.push({ level: lvl, icon: talentUrl });
+                talents.push({level: lvl, icon: talentUrl});
             });
         }
 
         const fp = perso.fightPropMap;
-        const baseStats = { hp: fp[1] || 0, atk: fp[4] || 0, def: fp[7] || 0 };
+        const baseStats = {hp: fp[1] || 0, atk: fp[4] || 0, def: fp[7] || 0};
         const combatStats = {
             hp: fp[2000], atk: fp[2001], def: fp[2002], em: fp[28],
             cr: fp[20] * 100, cd: fp[22] * 100, er: fp[23] * 100,
@@ -2468,7 +2591,9 @@ function processData(data) {
 
                 const subs = [];
                 if (flat.reliquarySubstats) {
-                    flat.reliquarySubstats.forEach(s => { subs.push(formatStat(s.appendPropId, s.statValue)); });
+                    flat.reliquarySubstats.forEach(s => {
+                        subs.push(formatStat(s.appendPropId, s.statValue));
+                    });
                 }
 
                 artefacts.push({
@@ -2493,7 +2618,7 @@ function processData(data) {
                 if (!statsObj) return resolved;
                 for (const [k, v] of Object.entries(statsObj)) {
                     if (typeof v === 'object' && v.percent) {
-                        resolved[k] = { ...v, percent: getRefinedValue(v.percent, weaponRank) };
+                        resolved[k] = {...v, percent: getRefinedValue(v.percent, weaponRank)};
                     } else {
                         resolved[k] = getRefinedValue(v, weaponRank);
                     }
@@ -2529,7 +2654,7 @@ function processData(data) {
                         buffs.push({
                             id: `${category}_${statKey}`, category,
                             name: `${STAT_LABELS[targetStat]} (+${percentDisplay} ${val.source})`,
-                            bonuses: { [statKey]: val }, active: isActive, selectMode: selectMode
+                            bonuses: {[statKey]: val}, active: isActive, selectMode: selectMode
                         });
                         continue;
                     }
@@ -2538,7 +2663,7 @@ function processData(data) {
                         buffs.push({
                             id: `${category}_${statKey}`, category,
                             name: `${STAT_LABELS[statKey]} (+${valDisplay})`,
-                            bonuses: { [statKey]: val }, active: isActive, selectMode: selectMode
+                            bonuses: {[statKey]: val}, active: isActive, selectMode: selectMode
                         });
                     }
                 }
@@ -2549,20 +2674,20 @@ function processData(data) {
         const rawConfig = G_CHAR_CONFIG[configKey] || G_CHAR_CONFIG[nom] || G_DEFAULT_CONFIG;
 
         let activeBuild = null;
-        let scoringConfig = { ...rawConfig };
+        let scoringConfig = {...rawConfig};
 
         if (rawConfig.builds) {
             let bestBuildKey = null;
             let maxEfficiency = -1; // On cherche désormais le meilleur pourcentage, pas le meilleur score brut !
 
             Object.entries(rawConfig.builds).forEach(([key, build]) => {
-                const tempConfig = { ...rawConfig, ...build };
+                const tempConfig = {...rawConfig, ...build};
 
                 // 1. Calcul du score actuel avec ce build
-                const simulation = calculateCharacterScore({ artefacts: artefacts }, tempConfig);
+                const simulation = calculateCharacterScore({artefacts: artefacts}, tempConfig);
 
                 // 2. Calcul du potentiel maximum (le plafond) de ce build avec ces artéfacts
-                const potential = calculateMaxTheoreticalScore({ artefacts: artefacts }, tempConfig);
+                const potential = calculateMaxTheoreticalScore({artefacts: artefacts}, tempConfig);
 
                 // 3. Calcul de l'Efficacité (Ratio)
                 let efficiency = 0;
@@ -2580,7 +2705,7 @@ function processData(data) {
             if (!bestBuildKey) bestBuildKey = Object.keys(rawConfig.builds)[0];
             activeBuild = rawConfig.builds[bestBuildKey];
             activeBuild.key = bestBuildKey;
-            scoringConfig = { ...rawConfig, ...activeBuild };
+            scoringConfig = {...rawConfig, ...activeBuild};
         }
 
         if (weapon && G_WEAPON_PASSIVES[weapon.key]) {
@@ -2645,27 +2770,27 @@ function processData(data) {
     });
 
     renderSidebar();
-    if(globalPersoData.length > 0) renderShowcase(0);
+    if (globalPersoData.length > 0) renderShowcase(0);
 }
 
 // ... (RENDER SIDEBAR Identique) ...
 function renderSidebar(activeOriginalIndex = 0) {
     const list = document.getElementById('sidebar-list');
-    if(!list) return;
+    if (!list) return;
     list.innerHTML = "";
     const targetIndex = parseInt(activeOriginalIndex, 10);
 
     // Construction d'un tableau { p, originalIndex } pour le tri
-    let entries = globalPersoData.map((p, i) => ({ p, originalIndex: i }));
+    let entries = globalPersoData.map((p, i) => ({p, originalIndex: i}));
 
     // Application du tri selon l'état courant
-    const { column, direction } = sidebarSortState;
+    const {column, direction} = sidebarSortState;
     if (column === 'original') {
         if (direction === 'asc') entries.reverse();
         // direction 'desc' = ordre vitrine original, rien à faire
     } else if (column === 'name') {
         entries.sort((a, b) => {
-            const cmp = a.p.nom.localeCompare(b.p.nom, 'fr', { sensitivity: 'base' });
+            const cmp = a.p.nom.localeCompare(b.p.nom, 'fr', {sensitivity: 'base'});
             return direction === 'desc' ? cmp : -cmp;
         });
     } else if (column === 'score') {
@@ -2675,7 +2800,7 @@ function renderSidebar(activeOriginalIndex = 0) {
         });
     }
 
-    entries.forEach(({ p, originalIndex }) => {
+    entries.forEach(({p, originalIndex}) => {
         const div = document.createElement('div');
         div.className = `char-card ${originalIndex === targetIndex ? 'active' : ''}`;
         // On stocke l'index original pour que renderShowcase reste correct
@@ -2716,11 +2841,11 @@ function renderToolbar(index) {
 
     // 1. DROPDOWN ARCHÉTYPE (Avec calcul d'efficacité en temps réel)
     let buildOptions = Object.entries(builds).map(([key, build]) => {
-        const tempConfig = { ...p.charConfig, ...build };
+        const tempConfig = {...p.charConfig, ...build};
 
         // On recalcule rapidement le ratio pour l'affichage
-        const simulation = calculateCharacterScore({ artefacts: p.artefacts }, tempConfig);
-        const potential = calculateMaxTheoreticalScore({ artefacts: p.artefacts }, tempConfig);
+        const simulation = calculateCharacterScore({artefacts: p.artefacts}, tempConfig);
+        const potential = calculateMaxTheoreticalScore({artefacts: p.artefacts}, tempConfig);
 
         let efficiency = 0;
         if (potential && potential.score > 0) {
@@ -2853,7 +2978,7 @@ function switchBuild(charIndex, buildKey) {
     p.activeBuild.key = buildKey;
 
     // 2. Fusion Config
-    const newScoringConfig = { ...p.charConfig, ...newBuild };
+    const newScoringConfig = {...p.charConfig, ...newBuild};
     p.weights = newScoringConfig.weights;
 
     // 3. Résonances
@@ -2932,7 +3057,7 @@ function updateResonanceBuffs(p, teamData) {
 function updateERTarget(index, val) {
     // Juste pour stocker la valeur si on veut l'utiliser plus tard dans l'analyse
     const p = globalPersoData[index];
-    if(p.activeBuild) {
+    if (p.activeBuild) {
         p.activeBuild.er_req = parseInt(val);
         renderShowcase(index); // Pour mettre à jour l'analyse ER (future étape)
     }
@@ -2962,7 +3087,17 @@ function renderHome() {
         return;
     }
 
-    const serverMap = { '1': 'CN', '2': 'CN', '3': 'CN', '4': 'CN', '5': 'TW', '6': 'NA', '7': 'EU', '8': 'Asia', '9': 'TW' };
+    const serverMap = {
+        '1': 'CN',
+        '2': 'CN',
+        '3': 'CN',
+        '4': 'CN',
+        '5': 'TW',
+        '6': 'NA',
+        '7': 'EU',
+        '8': 'Asia',
+        '9': 'TW'
+    };
     const ICON = './assets/simulator/icons/';
 
     let cardsHtml = profiles.map(p => {
@@ -3073,7 +3208,7 @@ if (!document.getElementById('global-tooltip')) {
 }
 
 // 2. Fonction pour l'afficher à la bonne position
-window.showGlobalTooltip = function(element, text, color) {
+window.showGlobalTooltip = function (element, text, color) {
     const tooltip = document.getElementById('global-tooltip');
     tooltip.innerHTML = text;
     tooltip.style.setProperty('--tooltip-color', color);
@@ -3089,7 +3224,7 @@ window.showGlobalTooltip = function(element, text, color) {
 };
 
 // 3. Fonction pour le cacher
-window.hideGlobalTooltip = function() {
+window.hideGlobalTooltip = function () {
     const tooltip = document.getElementById('global-tooltip');
     if (tooltip) {
         tooltip.style.visibility = 'hidden';
@@ -3140,7 +3275,7 @@ function renderGlobalEvaluation(playerInfo) {
         if (p.evaluation && p.evaluation.score) {
 
             // On récupère la configuration du build actif
-            const config = { ...p.charConfig, ...(p.activeBuild || {}) };
+            const config = {...p.charConfig, ...(p.activeBuild || {})};
 
             // On calcule le plafond pour récupérer le MAX Rolls de ce perso
             const pot = calculateMaxTheoreticalScore(p, config);
@@ -3159,7 +3294,7 @@ function renderGlobalEvaluation(playerInfo) {
             if (pot && pot.score > 0) {
                 totalEfficiency += (currentScore / pot.score) * 100;
             }
-            totalRNG += calculateRNGQuality(p, { weights: p.weights });
+            totalRNG += calculateRNGQuality(p, {weights: p.weights});
 
             validChars++;
         }
@@ -3171,7 +3306,7 @@ function renderGlobalEvaluation(playerInfo) {
     const avgRNG = validChars > 0 ? (totalRNG / validChars) : 0;
 
     // 3. Conversion en Lettre Géante (Synchronisée avec tes fiches personnages)
-    let globalGrade = { letter: "F", color: getGradeColor("F") };
+    let globalGrade = {letter: "F", color: getGradeColor("F")};
 
     if (validChars > 0 && totalMaxRolls > 0) {
         const labels = [
@@ -3189,7 +3324,7 @@ function renderGlobalEvaluation(playerInfo) {
 
             // La marge de tolérance de 0.05 est logiquement multipliée par le nombre de personnages
             if (totalCurrentRolls >= threshold - (0.05 * validChars)) {
-                globalGrade = { letter: labels[i], color: getGradeColor(labels[i]) };
+                globalGrade = {letter: labels[i], color: getGradeColor(labels[i])};
                 break; // On a trouvé le bon palier, on arrête de chercher !
             }
         }
@@ -3356,7 +3491,7 @@ function renderGlobalEvaluation(playerInfo) {
             let lowTalentButNeeded = false;
             if (p.charConfig && p.charConfig.talents && p.talents && p.talents.length >= 3) {
                 const target = p.charConfig.talents;
-                const current = { auto: p.talents[0].level, skill: p.talents[1].level, burst: p.talents[2].level };
+                const current = {auto: p.talents[0].level, skill: p.talents[1].level, burst: p.talents[2].level};
                 if ((target.auto > 1 && current.auto < 4) || (target.skill > 1 && current.skill < 4) || (target.burst > 1 && current.burst < 4)) {
                     lowTalentButNeeded = true;
                 }
@@ -3460,10 +3595,11 @@ function renderGlobalEvaluation(playerInfo) {
         </div>
     `;
 }
+
 function renderShowcase(index) {
     const p = globalPersoData[index];
     const container = document.getElementById('main-container');
-    if(!container) return;
+    if (!container) return;
 
     // --- DÉBUT CODE B : MAJ du personnage dans l'URL ---
     const currentUid = new URLSearchParams(window.location.search).get('uid') || document.getElementById('uidInput').value;
@@ -3487,7 +3623,7 @@ function renderShowcase(index) {
     const configKey = p.nom.replace(/\s+/g, '') || "Default";
     let config = window.CHARACTER_CONFIG[configKey] || window.CHARACTER_CONFIG[p.nom] || window.DEFAULT_CONFIG;
     if (p.activeBuild) {
-        config = { ...config, ...p.activeBuild };
+        config = {...config, ...p.activeBuild};
     }
     const portraitX = (config.portraitOffset !== undefined) ? config.portraitOffset : -35;
 
@@ -3512,7 +3648,7 @@ function renderShowcase(index) {
 
 
     // Template de ligne de stat
-    const statLine = (svg, label, val, isHighlight=false) => `
+    const statLine = (svg, label, val, isHighlight = false) => `
         <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
             ${svg}
             <p>${label}</p>
@@ -3521,9 +3657,6 @@ function renderShowcase(index) {
         </div>`;
 
     const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
-
-
-
 
 
     // 1. PARTIE HAUTE (STATS + EQUIPMENT)
@@ -3643,9 +3776,9 @@ function renderShowcase(index) {
                         ${(() => {
         let html = "";
         const dynamicDefs = [
-            { wKey: 'hp',  sKey: 'hp',  icon: 'hp',  label: 'PV max', isPct: false },
-            { wKey: 'atk', sKey: 'atk', icon: 'atk', label: 'ATQ',    isPct: false },
-            { wKey: 'def', sKey: 'def', icon: 'def', label: 'DÉF',    isPct: false }
+            {wKey: 'hp', sKey: 'hp', icon: 'hp', label: 'PV max', isPct: false},
+            {wKey: 'atk', sKey: 'atk', icon: 'atk', label: 'ATQ', isPct: false},
+            {wKey: 'def', sKey: 'def', icon: 'def', label: 'DÉF', isPct: false}
         ];
 
         dynamicDefs.forEach(def => {
@@ -3661,10 +3794,10 @@ function renderShowcase(index) {
         });
 
         const fixedDefs = [
-            { wKey: 'eleMas',    sKey: 'em',  icon: 'eleMas',    label: 'Maîtrise élémentaire', isPct: false },
-            { wKey: 'critRate_', sKey: 'cr',  icon: 'critRate_', label: 'Taux CRIT',   isPct: true },
-            { wKey: 'critDMG_',  sKey: 'cd',  icon: 'critDMG_',  label: 'DGT CRIT',    isPct: true },
-            { wKey: 'enerRech_', sKey: 'er',  icon: 'enerRech_', label: "Recharge d'énergie", isPct: true }
+            {wKey: 'eleMas', sKey: 'em', icon: 'eleMas', label: 'Maîtrise élémentaire', isPct: false},
+            {wKey: 'critRate_', sKey: 'cr', icon: 'critRate_', label: 'Taux CRIT', isPct: true},
+            {wKey: 'critDMG_', sKey: 'cd', icon: 'critDMG_', label: 'DGT CRIT', isPct: true},
+            {wKey: 'enerRech_', sKey: 'er', icon: 'enerRech_', label: "Recharge d'énergie", isPct: true}
         ];
 
         fixedDefs.forEach(def => {
@@ -3681,14 +3814,14 @@ function renderShowcase(index) {
         const isHealHidden = p.activeBuild && p.activeBuild.hideUIStats && p.activeBuild.hideUIStats.includes("heal_");
         if (!isHealHidden) {
             const healVal = s.hb || 0;
-            html += statLine(createIcon('heal_'), "Bonus de soins", healVal.toFixed(1)+'%', false);
+            html += statLine(createIcon('heal_'), "Bonus de soins", healVal.toFixed(1) + '%', false);
         }
 
         const isDmgHidden = p.activeBuild && p.activeBuild.hideUIStats && p.activeBuild.hideUIStats.includes("elemental_dmg_");
         if (!isDmgHidden) {
             const dmgStat = formatStat(b.dmgBonusKey, b.dmgBonus / 100);
             const isDmgBuffed = b.dmgBonus > s.dmgBonus;
-            html += statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1)+'%', isDmgBuffed);
+            html += statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1) + '%', isDmgBuffed);
         }
 
         // --- DÉBUT ÉTAPE 3 : STATS SPÉCIFIQUES FORCÉES ---
@@ -3808,7 +3941,7 @@ function renderShowcase(index) {
             if (!groupedBuffs[buff.category]) {
                 groupedBuffs[buff.category] = [];
             }
-            groupedBuffs[buff.category].push({ buff: buff, originalIndex: bIndex });
+            groupedBuffs[buff.category].push({buff: buff, originalIndex: bIndex});
         });
 
         // 2. GÉNÉRATION HTML : On crée une DIV par groupe
@@ -3880,12 +4013,6 @@ function renderShowcase(index) {
     html += `</div></div>`; // Fin equipment-area et top-row
 
 
-
-
-
-
-
-
     // --- 3. COACHING SECTION (Bas - Full Width - Structuré par Familles) ---
     html += `
         <div class="coaching-row" style="margin-top:64px; width:100%;">
@@ -3940,7 +4067,7 @@ function renderShowcase(index) {
                                             <span style="font-weight:bold; color:var(--accent-gold);">${potential.score} <span style="color:#22c55e; font-size:0.7rem;">(+${gain})</span></span>
                                         </div>
                                         <div style="width:100%; background:#333; height:40px; border-radius:8px; position:relative;">
-                                            <div style="height:100%; background:#fff; width:${Math.min((ev.score / potential.score)*100, 100)}%; border-radius:8px; position:absolute;"></div>
+                                            <div style="height:100%; background:#fff; width:${Math.min((ev.score / potential.score) * 100, 100)}%; border-radius:8px; position:absolute;"></div>
                                             <div style="height:100%; background:var(--accent-gold); width:100%; opacity:0.3; border-radius:8px;"></div>
                                         </div>
                                     </div>
@@ -4038,44 +4165,49 @@ function renderShowcase(index) {
             const crossChecks = getAllCrossCheckAdvice(index);
             const hasAnySwap = crossChecks.some(s => s !== null);
             if (!hasAnySwap) return '<div style="grid-column:1/-1; color:#666; font-size:13px; font-style:italic;">Aucun échange avantageux entre personnages de la vitrine.</div>';
+
             const cards = crossChecks.map(swap => {
                 if (!swap) {
                     return `
-                <div style="background:#2C2D32; border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid #3a3b42; width:210px; flex-shrink:0; box-sizing:border-box; opacity:0.4; align-items:center; justify-content:center; min-height:160px;">
-                    <div style="font-size:22px; color:#444;">✗</div>
-                    <p style="font-size:11px; color:#888; text-align:center; line-height:1.5;">Aucun échange<br>avantageux détecté</p>
-                </div>`;
+        <div style="flex: 1; min-width: 200px; background:#2C2D32; border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid #3a3b42; box-sizing:border-box; opacity:0.4; align-items:center; justify-content:center; min-height:160px;">
+            <div style="font-size:22px; color:#444;">✗</div>
+            <p style="font-size:11px; color:#888; text-align:center; line-height:1.5;">Aucun échange<br>avantageux détecté</p>
+        </div>`;
                 }
+
                 const deltasHtml = swap.deltas.map(d => `
-            <div style="display:flex; align-items:center; gap:5px; font-size:11px; color:${d.delta > 0 ? '#4ade80' : '#f87171'};">
-                <div style="width:6px; height:6px; border-radius:50%; flex-shrink:0; background:${d.delta > 0 ? '#4ade80' : '#f87171'};"></div>
-                ${d.formatted}
-            </div>`).join('');
+    <div style="display:flex; align-items:center; gap:5px; font-size:11px; color:${d.delta > 0 ? '#4ade80' : '#f87171'};">
+        <div style="width:6px; height:6px; border-radius:50%; flex-shrink:0; background:${d.delta > 0 ? '#4ade80' : '#f87171'};"></div>
+        ${d.formatted}
+    </div>`).join('');
+
                 const scoreDiff = Math.round(swap.currEvalNew.score - swap.currEvalOld.score);
+
                 return `
-            <div style="background:#2C2D32; border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid var(--accent-gold); width:210px; flex-shrink:0; box-sizing:border-box;">
-                <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
-                    <div style="position:relative; flex-shrink:0;">
-                        <img src="${swap.currArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);}">
-                        <img src="${swap.currCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid #2C2D32;">
-                    </div>
-                    <span style="color:var(--accent-gold); font-size:16px;">⇒</span>
-                    <div style="position:relative; flex-shrink:0;">
-                        <img src="${swap.newArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);">
-                        <img src="${swap.otherCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid #2C2D32;">
-                    </div>
-                </div>
-                <div style="width:100%; height:1px; background:rgba(255,255,255,0.06);"></div>
-                <div style="display:flex; flex-direction:column; gap:4px;">${deltasHtml}</div>
-                <div style="width:100%; height:1px; background:rgba(255,255,255,0.06);"></div>
-                <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <span style="font-size:13px; font-weight:bold; color:${swap.currEvalOld.grade.color};">${swap.currEvalOld.score}</span>
-                    <span style="font-size:12px; color:#666;">→</span>
-                    <span style="font-size:13px; font-weight:bold; color:${swap.currEvalNew.grade.color};">${swap.currEvalNew.score} <span style="font-size:11px; color:#c8a96e; font-weight:normal;">(${scoreDiff > 0 ? '+' : ''}${scoreDiff} pts)</span></span>
-                </div>
-            </div>`;
+    <div style="flex: 1; min-width: 200px; background:#2C2D32; border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid var(--accent-gold); box-sizing:border-box;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
+            <div style="position:relative; flex-shrink:0;">
+                <img src="${swap.currArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);">
+                <img src="${swap.currCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid #2C2D32;">
+            </div>
+            <span style="color:var(--accent-gold); font-size:16px;">⇒</span>
+            <div style="position:relative; flex-shrink:0;">
+                <img src="${swap.newArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);">
+                <img src="${swap.otherCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid #2C2D32;">
+            </div>
+        </div>
+        <div style="width:100%; height:1px; background:rgba(255,255,255,0.06);"></div>
+        <div style="display:flex; flex-direction:column; gap:4px;">${deltasHtml}</div>
+        <div style="width:100%; height:1px; background:rgba(255,255,255,0.06);"></div>
+        <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+            <span style="font-size:13px; font-weight:bold; color:${swap.currEvalOld.grade.color};">${swap.currEvalOld.score}</span>
+            <span style="font-size:12px; color:#666;">→</span>
+            <span style="font-size:13px; font-weight:bold; color:${swap.currEvalNew.grade.color};">${swap.currEvalNew.score} <span style="font-size:11px; color:#c8a96e; font-weight:normal;">(${scoreDiff > 0 ? '+' : ''}${scoreDiff} pts)</span></span>
+        </div>
+    </div>`;
             });
-            return `<div style="grid-column:1/-1; display:flex; flex-wrap:nowrap; gap:8px; overflow-x:auto;">${cards.join('')}</div>`;
+
+            return `<div style="grid-column:1/-1; width:100%; box-sizing:border-box; display:flex; flex-wrap:nowrap; gap:20px; overflow-x:auto;">${cards.join('')}</div>`;
         })()}
                         
                                 ${(() => {
@@ -4120,7 +4252,7 @@ function renderShowcase(index) {
                                             <p style="font-size:16px; color:#fff;">
                                                 Sur <b style="color: #aaa;">${d.piece}</b>, visez <span style="color:var(--accent-gold); font-weight:bold;">${d.better}</span> (Actuellement : <span style="color:var(--accent-gold);">${d.current}</span>).
                                             </p>
-                                        `).join('') }
+                                        `).join('')}
                                     </div>`;
         })()}
                         
@@ -4164,7 +4296,7 @@ function renderShowcase(index) {
                                         <div style="display:flex; justify-content:space-between; align-items:center; font-size:16px; margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
                                             <div style="display:flex; flex-direction:column;">
                                                 <div style="display:flex; align-items:center; gap:6px;">
-                                                    <p style="font-size: 16px; color:#ddd;">${i+1}. ${p.piece}</p>
+                                                    <p style="font-size: 16px; color:#ddd;">${i + 1}. ${p.piece}</p>
                                                     ${p.isOffPiece ? '<p style="font-size:0.7rem; color:rgba(34, 198, 94, 1); background:rgba(34, 198, 94, 0.15); padding:1px 4px; border-radius:4px;">Off-Set</p>' : ''}
                                                 </div>
                                                 
@@ -4184,7 +4316,8 @@ function renderShowcase(index) {
                                                 <p style="color:${p.color}; font-size:16px;">(${p.grade})</p>
                                             </div>
                                         </div>
-                                    `}).join('') : '<p style="color:#22c55e;">Rien à signaler, excellent travail.</p>'}
+                                    `
+        }).join('') : '<p style="color:#22c55e;">Rien à signaler, excellent travail.</p>'}
                                 </div>
                             </div>
                         </div>
@@ -4360,7 +4493,7 @@ loadGameData(); // On charge les données du jeu (personnages, noms...)
 const uidInput = document.getElementById('uidInput');
 if (uidInput) {
     uidInput.focus();
-    uidInput.addEventListener('keydown', function(event) {
+    uidInput.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault(); // Empêche le rechargement de page indésirable
             fetchUserData();        // Lance la recherche
@@ -4372,13 +4505,13 @@ if (uidInput) {
 /* =========================================
    EXPORT IMAGE (dom-to-image) - VERSION WSRV + UID
    ========================================= */
-window.exportBuildAsImage = async function() {
+window.exportBuildAsImage = async function () {
     const element = document.querySelector('.top-row');
     if (!element) return alert("Aucun build affiché !");
 
     const btn = document.querySelector('button[onclick="exportBuildAsImage()"]');
     const originalContent = btn ? btn.innerHTML : 'Exporter';
-    if(btn) btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Traitement...';
+    if (btn) btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Traitement...';
 
     // On sauvegarde le style original
     const bgDiv = element.querySelector('.background-splash-art');
@@ -4448,12 +4581,12 @@ window.exportBuildAsImage = async function() {
             console.error('Erreur export dom-to-image :', error);
             alert('Erreur lors de la création de l\'image.');
         })
-        .finally(function() {
+        .finally(function () {
             // --- NETTOYAGE ---
             if (bgDiv && originalBgImage) {
                 bgDiv.style.backgroundImage = originalBgImage;
             }
-            if(btn) btn.innerHTML = originalContent;
+            if (btn) btn.innerHTML = originalContent;
         });
 };
 
@@ -4495,7 +4628,10 @@ window.addEventListener('DOMContentLoaded', () => {
             if (loader) {
                 loader.innerText = "Lien invalide ou compte introuvable.";
                 loader.style.color = "#ef4444";
-                setTimeout(() => { loader.innerText = ""; loader.style.color = ""; }, 5000);
+                setTimeout(() => {
+                    loader.innerText = "";
+                    loader.style.color = "";
+                }, 5000);
             }
         });
     } else {
