@@ -10,6 +10,13 @@ const CHARACTER_CONFIG = {
         color: "#000000",
         portraitOffset: -35,
 
+        skins: {
+            000000: {
+                color: "#000000",
+                portraitOffset: -35
+            }
+        },
+
         talents: {
             auto: 1,
             skill: 8,
@@ -212,6 +219,13 @@ const CHARACTER_CONFIG = {
         color: "#28657c",
         portraitOffset: -37,
 
+        skins: {
+            201501: {
+                color: "#4b4cb0",
+                portraitOffset: -35
+            }
+        },
+
         talents: {
             auto: 1,
             skill: 9,
@@ -314,6 +328,13 @@ const CHARACTER_CONFIG = {
     "Lisa": {
         color: "#3c327e",
         portraitOffset: -36,
+
+        skins: {
+            200601: {
+                color: "#3b9f99",
+                portraitOffset: -41
+            }
+        },
 
         talents: {
             auto: 8,
@@ -453,6 +474,13 @@ const CHARACTER_CONFIG = {
     "Barbara": {
         color: "#3a54a5",
         portraitOffset: -37,
+
+        skins: {
+            201401: {
+                color: "#8499fb",
+                portraitOffset: -37
+            }
+        },
 
         talents: {
             auto: 1,
@@ -621,6 +649,13 @@ const CHARACTER_CONFIG = {
     "Bennett": {
         color: "#df4d4d",
         portraitOffset: -38,
+
+        skins: {
+            203201: {
+                color: "#ef9c50",
+                portraitOffset: -36
+            }
+        },
 
         talents: {
             auto: 1,
@@ -914,6 +949,13 @@ const CHARACTER_CONFIG = {
         color: "#3c1e71",
         portraitOffset: -37,
 
+        skins: {
+            203101: {
+                color: "#5732e3",
+                portraitOffset: -37
+            }
+        },
+
         talents: {
             auto: 1,
             skill: 10,
@@ -1041,6 +1083,13 @@ const CHARACTER_CONFIG = {
     "Xiangling": {
         color: "#652c14",
         portraitOffset: -33,
+
+        skins: {
+            202301: {
+                color: "#d22c36",
+                portraitOffset: -36
+            }
+        },
 
         talents: {
             auto: 1,
@@ -1229,6 +1278,13 @@ const CHARACTER_CONFIG = {
     "Xingqiu": {
         color: "#407ea3",
         portraitOffset: -37,
+
+        skins: {
+            202501: {
+                color: "#3a62cf",
+                portraitOffset: -34
+            }
+        },
 
         talents: {
             auto: 1,
@@ -1478,6 +1534,13 @@ const CHARACTER_CONFIG = {
         color: "#715927",
         portraitOffset: -38,
 
+        skins: {
+            202701: {
+                color: "#30349c",
+                portraitOffset: -36
+            }
+        },
+
         talents: {
             auto: 9,
             skill: 8,
@@ -1704,6 +1767,13 @@ const CHARACTER_CONFIG = {
         color: "#f6330a",
         portraitOffset: -35,
 
+        skins: {
+            202901: {
+                color: "#b5ce89",
+                portraitOffset: -35
+            }
+        },
+
         talents: {
             auto: 10,
             skill: 8,
@@ -1813,6 +1883,13 @@ const CHARACTER_CONFIG = {
         color: "#45cab1",
         portraitOffset: -37,
 
+        skins: {
+            200301: {
+                color: "#3a84ed",
+                portraitOffset: -37
+            }
+        },
+
         talents: {
             auto: 1,
             skill: 8,
@@ -1899,6 +1976,13 @@ const CHARACTER_CONFIG = {
     "Diluc": {
         color: "#ca4a35",
         portraitOffset: -37,
+
+        skins: {
+            201601: {
+                color: "#ff3818",
+                portraitOffset: -37
+            }
+        },
 
         talents: {
             auto: 10,
@@ -2065,6 +2149,13 @@ const CHARACTER_CONFIG = {
     "Keqing": {
         color: "#673885",
         portraitOffset: -37,
+
+        skins: {
+            204201: {
+                color: "#2c46f7",
+                portraitOffset: -37
+            }
+        },
 
         talents: {
             auto: 10,
@@ -2944,6 +3035,13 @@ const CHARACTER_CONFIG = {
         color: "#6dc5ff",
         portraitOffset: -37,
 
+        skins: {
+            203701: {
+                color: "#4e72e6",
+                portraitOffset: -37
+            }
+        },
+
         talents: {
             auto: 10,
             skill: 6,
@@ -2955,7 +3053,7 @@ const CHARACTER_CONFIG = {
                 category: "Passifs",
                 buffs: [
                     {
-                        label: "A1 : Cœur indivisible",
+                        label: "A1 : Cœur indivisible (uniquement les attaques chargées)",
                         active: false,
                         stats: {
                             critRate_: 0.20,
@@ -3054,6 +3152,13 @@ const CHARACTER_CONFIG = {
     "Hu Tao": {
         color: "#D33933",
         portraitOffset: -40,
+
+        skins: {
+            204601: {
+                color: "#234bda",
+                portraitOffset: -36
+            }
+        },
 
         talents: {
             auto: 10,
@@ -3694,6 +3799,13 @@ const CHARACTER_CONFIG = {
     "Kamisato Ayaka": {
         color: "#71d0ff",
         portraitOffset: -36.5,
+
+        skins: {
+            200201: {
+                color: "#9d897d",
+                portraitOffset: -36.5
+            }
+        },
 
         talents: {
             auto: 9,
@@ -4674,6 +4786,13 @@ const CHARACTER_CONFIG = {
         color: "#a1c4ff",
         portraitOffset: -36,
 
+        skins: {
+            206301: {
+                color: "#b1e5ff",
+                portraitOffset: -34
+            }
+        },
+
         talents: {
             auto: 1,
             skill: 10,
@@ -5249,6 +5368,13 @@ const CHARACTER_CONFIG = {
     "Yelan": {
         color: "#4a5be1",
         portraitOffset: -38,
+
+        skins: {
+            206001: {
+                color: "#4a5be1",
+                portraitOffset: -38
+            }
+        },
 
         talents: {
             auto: 1,
@@ -5959,6 +6085,13 @@ const CHARACTER_CONFIG = {
     "Nilou": {
         color: "#80B7E2",
         portraitOffset: -36.5,
+
+        skins: {
+            207001: {
+                color: "#2d65bd",
+                portraitOffset: -38
+            }
+        },
 
         talents: {
             auto: 1,
@@ -6796,6 +6929,13 @@ const CHARACTER_CONFIG = {
         color: "#54701f",
         portraitOffset: -36,
 
+        skins: {
+            207701: {
+                color: "#6ed3ea",
+                portraitOffset: -38
+            }
+        },
+
         talents: {
             auto: 1,
             skill: 10,
@@ -7317,6 +7457,13 @@ const CHARACTER_CONFIG = {
         color: "#3a748c",
         portraitOffset: -36,
 
+        skins: {
+            206101: {
+                color: "#2765be",
+                portraitOffset: -36
+            }
+        },
+
         talents: {
             auto: 1,
             skill: 10,
@@ -7836,6 +7983,14 @@ const CHARACTER_CONFIG = {
     "Neuvillette": {
         color: "#374eb4",
         portraitOffset: -38,
+
+        skins: {
+            208701: {
+                color: "#3248e3",
+                portraitOffset: -39
+            }
+        },
+
         talents: {
             auto: 10,
             skill: 6,
@@ -11064,6 +11219,13 @@ const CHARACTER_CONFIG = {
     "Durin": {
         color: "#92417E",
         portraitOffset: -37,
+
+        skins: {
+            212301: {
+                color: "#ff5f75",
+                portraitOffset: -37
+            }
+        },
 
         talents: {
             auto: 1,

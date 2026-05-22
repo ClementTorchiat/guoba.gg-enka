@@ -1242,7 +1242,7 @@ function formatStat(propId, value) {
     let isPercent = false;
     if (key.endsWith('_') || ['critRate_', 'critDMG_', 'enerRech_', 'heal_'].includes(key)) {
         isPercent = true;
-        if (val < 2.0) val = val * 100; // Conversion 0.5 -> 50
+        if (val < 1.0) val = val * 100;
     }
 
     // 3. Génération de l'image (NOUVEAU)
@@ -2040,7 +2040,7 @@ function getAllCrossCheckAdvice(charIndex) {
 
                 // Simulation du score avec la nouvelle pièce
                 const clonedOtherArt = JSON.parse(JSON.stringify(otherArt));
-                const fakeArtefacts = [...currChar.artefacts];
+                const fakeArtefacts = currChar.artefacts.map(a => ({...a}));
                 fakeArtefacts[currArtIndex] = clonedOtherArt;
                 const fakePerso = {...currChar, artefacts: fakeArtefacts};
                 const newCurrEval = calculateCharacterScore(fakePerso, scoringConfig);
@@ -2054,9 +2054,9 @@ function getAllCrossCheckAdvice(charIndex) {
 
                     // Simulation pour le personnage donneur
                     const otherScoringConfig = {...otherChar.charConfig, ...(otherChar.activeBuild || {})};
-                    const fakeOtherArtefacts = [...otherChar.artefacts];
+                    const fakeOtherArtefacts = otherChar.artefacts.map(a => ({...a}));
                     const otherArtIndex = otherChar.artefacts.findIndex(a => a.type === slotType);
-                    fakeOtherArtefacts[otherArtIndex] = currArt;
+                    fakeOtherArtefacts[otherArtIndex] = JSON.parse(JSON.stringify(currArt));
                     const fakeOtherPerso = {...otherChar, artefacts: fakeOtherArtefacts};
                     const newOtherEval = calculateCharacterScore(fakeOtherPerso, otherScoringConfig);
 
@@ -2291,12 +2291,24 @@ function simulateDeadStatReplacements(persoObj, config) {
 function calculateRerollMetrics(artifact, config) {
     if (!config || !config.weights || !window.MAX_ROLLS) return null;
 
+    if ((artifact.stars || 5) < 4) {
+        return {
+            potential: 0,
+            risk: 0,
+            badge: {
+                text: `Artéfact ${artifact.stars ?? '?'}★ — Non applicable`,
+                color: "#6b7280"
+            }
+        };
+    }
+
+
     if ((artifact.stars || 5) === 4) {
         return {
             potential: 0,
             risk: 0,
             badge: {
-                text: "Artéfact 4★ — Ne pas reroll",
+                text: "Artéfact 4★ — Non applicable",
                 color: "#6b7280"
             }
         };
@@ -2430,7 +2442,12 @@ function processData(data) {
             if (obj[lowerKey] !== undefined) return obj[lowerKey];
             return undefined;
         };
-        const info = charData[id] || {};
+        let infoKey = String(id);
+        if ((id === 10000005 || id === 10000007) && perso.skillDepotId) {
+            const compoundKey = `${id}-${perso.skillDepotId}`;
+            if (charData[compoundKey]) infoKey = compoundKey;
+        }
+        const info = charData[infoKey] || {};
         let nameHash = getKey(info, "NameTextMapHash");
         let nom = getText(nameHash);
         let iconNameRaw = getKey(info, "SideIconName")
@@ -2506,6 +2523,15 @@ function processData(data) {
                     splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.png`;
                 }
             }
+        }
+
+        const costumeId = perso.costumeId || null;
+        if (costumeId && info.Costumes && info.Costumes[costumeId]) {
+            const costume = info.Costumes[costumeId];
+            if (costume.SideIcon)
+                sideIconUrl = `https://enka.network${costume.SideIcon}`;
+            if (costume.Art)
+                splashUrl   = `https://enka.network${costume.Art}`;
         }
 
         // --- FIN GESTION IMAGES ---
@@ -2684,7 +2710,8 @@ function processData(data) {
                 const tempConfig = {...rawConfig, ...build};
 
                 // 1. Calcul du score actuel avec ce build
-                const simulation = calculateCharacterScore({artefacts: artefacts}, tempConfig);
+                const clonedArtefacts = artefacts.map(a => ({...a}));
+                const simulation = calculateCharacterScore({artefacts: clonedArtefacts}, tempConfig);
 
                 // 2. Calcul du potentiel maximum (le plafond) de ce build avec ces artéfacts
                 const potential = calculateMaxTheoreticalScore({artefacts: artefacts}, tempConfig);
@@ -2755,6 +2782,7 @@ function processData(data) {
             charWeapon: charWeaponKey,
             charConfig: rawConfig,
             activeBuild: activeBuild,
+            costumeId: costumeId,                                                              // ← AJOUT
             friendship: (perso.fetterInfo && perso.fetterInfo.expLevel) ? perso.fetterInfo.expLevel : 0
         };
 
@@ -2844,7 +2872,8 @@ function renderToolbar(index) {
         const tempConfig = {...p.charConfig, ...build};
 
         // On recalcule rapidement le ratio pour l'affichage
-        const simulation = calculateCharacterScore({artefacts: p.artefacts}, tempConfig);
+        const clonedArtefacts = p.artefacts.map(a => ({...a}));
+        const simulation = calculateCharacterScore({artefacts: clonedArtefacts}, tempConfig);
         const potential = calculateMaxTheoreticalScore({artefacts: p.artefacts}, tempConfig);
 
         let efficiency = 0;
@@ -3625,13 +3654,18 @@ function renderShowcase(index) {
     if (p.activeBuild) {
         config = {...config, ...p.activeBuild};
     }
-    const portraitX = (config.portraitOffset !== undefined) ? config.portraitOffset : -35;
+
+    const skinOverride = (config.skins && p.costumeId && config.skins[p.costumeId])
+        ? config.skins[p.costumeId]
+        : null;
+
+    const portraitX = skinOverride?.portraitOffset ?? config.portraitOffset ?? -35;
 
     const s = p.combatStats;
     const b = p.buffedStats;
     const ev = p.evaluation;
 
-    const charColor = config.color || "#4b5563";
+    const charColor = skinOverride?.color || config.color || "#4b5563";
     container.style.setProperty('--char-hex', charColor);
 
 
@@ -3888,7 +3922,7 @@ function renderShowcase(index) {
                     
                     <div class="item-header" style="height: 50px; display: flex; flex-direction: row; align-items: center; gap: 12px;">
                         <div style="position:relative; display:inline-block;">
-                            <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : '#a855f7'};">
+                            <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : art.stars === 4 ? '#a855f7' : '#6b7280'};">
                             <p style="position:absolute; bottom:7px; right:1px; background:rgba(0, 0, 0, 0.4); color:rgba(255, 255, 255, 0.8); font-size:11px;padding: 1px 5px 1px 4px; border-radius:8px;">+${art.level}</p>
                         </div>
                         <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center;">
@@ -3922,7 +3956,7 @@ function renderShowcase(index) {
                             <p>Score</p>
                         </div>
                         <div style="display: flex; flex-direction: row; gap: 4px;">
-                            <p>${art.score}</p>
+                            <p>${(art.stars || 5) < 4 ? '—' : art.score}</p>
                             <p>(${art.grade.letter})</p>
                         </div>
                     </div>
@@ -4349,8 +4383,20 @@ function renderShowcase(index) {
                                 ${p.artefacts.map(art => {
             const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
 
+            // ✅ Artéfact < 4★ : bloc simplifié sans analyse
+            if ((art.stars || 5) < 4) {
+                return `
+<div style="width: 100%; background:#2C2D32; padding:10px 12px; border-radius:8px; opacity:0.5;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+        <img src="${art.icon}" style="width:38px; height:38px; border-radius:8px;" alt="">
+        <div>
+            <p style="font-size:12px; color:#fff; font-weight:bold;">${pieceName}</p>
+            <p style="font-size:11px; color:#6b7280;">Artéfact ${art.stars}★ — Analyse indisponible</p>
+        </div>
+    </div>
+</div>`;
+            }
             // Génération des lignes de substats
-            // Génération des lignes de substats (VERSION COMPACTE)
             let subsDetailsHtml = art.subStats.map((sub, idx) => {
                 const details = getRollDetails(sub.key, sub.value, art.stars || 5);
                 const baseRolls = (art.stars === 4 ? window.BASE_ROLLS_4 : window.BASE_ROLLS)?.[sub.key] || [];

@@ -29,6 +29,11 @@ function calculateCharacterScore(perso, config, maxRolls = 45.0) {
 
     // 2. Parcourir les artéfacts
     perso.artefacts.forEach(art => {
+        if ((art.stars || 5) < 4) {
+            art.score = 0;
+            art.grade = { letter: '—', color: '#6b7280', points: 0 };
+            return;
+        }
         // A. Score Artefact
         const powerResult = scoreArtifact(art, config.weights);
         art.score = powerResult.score;
