@@ -460,6 +460,8 @@ const WEAPON_NAME_MAPPING = {
     "Symphoniste des senteurs": "SymphonistOfScents",
     "Halo fracturé": "FracturedHalo",
     "Ruines sanglantes": "BloodsoakedRuins",
+    //6.6
+    "Désastre et remords": "DisasterAndRemorse",
 
     // 5 étoiles - catalyseurs
     "Atlas de la Voûte d'Azur": "SkywardAtlas",
@@ -481,6 +483,8 @@ const WEAPON_NAME_MAPPING = {
     "Reliquaire de la vérité": "ReliquaryOfTruth",
     // 6.3
     "Rappel de la nocturne": "NocturnesCurtainCall",
+    // 6.6
+    "Heptades des anges": "AngelosHeptades",
 };
 
 const SET_NAME_MAPPING = {
@@ -545,7 +549,10 @@ const SET_NAME_MAPPING = {
     "Nuit de la révélation céleste": "NightOfTheSkysUnveiling",
     "Sérénade de la lune soyeuse": "SilkenMoonsSerenade",
     "Journée sculptée par les vents ascendants": "ADayCarvedFromRisingWinds",
-    "Aubade d'astre et de lune": "AubadeOfMorningstarAndMoon"
+    "Aubade d'astre et de lune": "AubadeOfMorningstarAndMoon",
+    // 6.6
+    "Don céleste": "CelestialGift",
+    "Désenchantement dans l'ombre profonde": "DisenchantmentInDeepShadow"
 };
 
 const ARTIFACT_TYPE_MAPPING = {
@@ -1296,8 +1303,11 @@ function applyBonus(buffed, baseStats, bonuses, processScaling) {
         } else {
             if (processScaling) continue;
             if (statKey === "atk_") buffed.atk += baseStats.atk * val;
+            else if (statKey === "atk") buffed.atk += val;
             else if (statKey === "hp_") buffed.hp += baseStats.hp * val;
+            else if (statKey === "hp") buffed.hp += val;
             else if (statKey === "def_") buffed.def += baseStats.def * val;
+            else if (statKey === "def") buffed.def += val;
             else if (statKey === "critRate_" || statKey === "critDMG_" || statKey === "enerRech_") {
                 let shortKey = getShortKey(statKey);
                 if (shortKey) buffed[shortKey] += val * 100;

@@ -1756,9 +1756,9 @@ const CHARACTER_CONFIG = {
                 er_req: 140,
 
                 team: [
-                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
                     { role: "Support", name: "Faruzan", element: "anemo" },
-                    { role: "Support", name: "Bennett", element: "pyro" },
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
+                    { role: "Support", name: "Nicole", element: "pyro" },
                 ]
             }
         }
@@ -1803,8 +1803,8 @@ const CHARACTER_CONFIG = {
         ],
 
         builds: {
-            "Surcharge Hexerei": {
-                name: "Surcharge Hexerei",
+            "DPS Surcharge Hexerei": {
+                name: "DPS Surcharge Hexerei",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -1840,8 +1840,8 @@ const CHARACTER_CONFIG = {
                     { role: "Support", name: "Bennett", element: "pyro" },
                 ]
             },
-            "Évaporation Hexerei": {
-                name: "Évaporation Hexerei",
+            "DPS Évaporation Hexerei": {
+                name: "DPS Évaporation Hexerei",
 
                 weights: {
                     "critRate_": 1, "critDMG_": 1,
@@ -1875,6 +1875,43 @@ const CHARACTER_CONFIG = {
                     { role: "Sub-DPS", name: "Furina", element: "hydro" },
                     { role: "Sub-DPS", name: "Albedo", element: "geo" },
                     { role: "Support", name: "Xilonen", element: "geo" },
+                ]
+            },
+            "DPS Mono-pyro Hexerei": {
+                name: "DPS Mono-pyro Hexerei",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 0.3,
+
+                    "pyro_dmg_": 1, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_"],
+                    "EQUIP_RING": ["pyro_dmg_", "atk_"],
+                    "EQUIP_DRESS": ["critRate_", "critDMG_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ADayCarvedFromRisingWinds:4"],
+                goodSets: ["CrimsonWitchOfFlames:2", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"],
+
+                er_req: 130,
+
+                team: [
+                    { role: "Support", name: "Prune", element: "anemo" },
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
+                    { role: "Support", name: "Nicole", element: "pyro" },
                 ]
             }
         }
@@ -6634,16 +6671,8 @@ const CHARACTER_CONFIG = {
 
                 team: [
                     { role: "Support", name: "Faruzan", element: "anemo" },
-                    {
-                        role: "Flex",
-                        name: ["", ""],
-                        element: ["pyro", "hydro"]
-                    },
-                    {
-                        role: "Flex",
-                        name: ["", ""],
-                        element: ["cryo", "electro"]
-                    }
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
+                    { role: "Support", name: "Nicole", element: "pyro" },
                 ]
             }
         }
@@ -7973,9 +8002,9 @@ const CHARACTER_CONFIG = {
                 er_req: 110,
 
                 team: [
-                    { role: "Sub-DPS", name: "Mavuika", element: "pyro" },
-                    { role: "Support", name: "Xilonen", element: "geo" },
-                    { role: "Support", name: "Bennett", element: "pyro" },
+                    { role: "Sub-DPS", name: "Emilie", element: "dendro" },
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
+                    { role: "Support", name: "Nicole", element: "pyro" },
                 ]
             }
         }
@@ -8966,8 +8995,8 @@ const CHARACTER_CONFIG = {
 
                 team: [
                     { role: "Support", name: "Chevreuse", element: "pyro" },
-                    { role: "Sub-DPS", element: "electro" },
-                    { role: "Flex", element: "electro" }
+                    { role: "Sub-DPS", name: "Fischl", element: "electro" },
+                    { role: "Support", name: "Nicole", element: "pyro" }
                 ]
             },
             "DPS mono Pyro": {
@@ -9565,9 +9594,9 @@ const CHARACTER_CONFIG = {
                 er_req: 110,
 
                 team: [
-                    { role: "Sub-DPS", name: "Mavuika", element: "pyro" },
                     { role: "Sub-DPS", name: "Emilie", element: "dendro" },
-                    { role: "Support", name: "Bennett", element: "pyro" },
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
+                    { role: "Support", name: "Nicole", element: "pyro" },
                 ]
             }
         }
@@ -11893,13 +11922,13 @@ const CHARACTER_CONFIG = {
                 er_req: 100,
 
                 team: [
-                    { role: "Support", name: "Venti", element: "anemo" },
+                    { role: "Flex", name: ["Venti", "Prune"], element: "anemo" },
 
                     { role: "Sub-DPS", name: "Durin", element: "pyro" },
 
                     {
                         role: "Support",
-                        name: "Bennett",
+                        name: "Nicole",
                         element: "pyro"
                     }
                 ]
@@ -11935,7 +11964,7 @@ const CHARACTER_CONFIG = {
                 er_req: 100,
 
                 team: [
-                    { role: "Support", name: "Venti", element: "anemo" },
+                    { role: "Flex", name: ["Venti", "Prune"], element: "anemo" },
 
                     { role: "Sub-DPS", name: "Escoffier", element: "cryo" },
 
@@ -11977,7 +12006,7 @@ const CHARACTER_CONFIG = {
                 er_req: 100,
 
                 team: [
-                    { role: "Support", name: "Venti", element: "anemo" },
+                    { role: "Flex", name: ["Venti", "Prune"], element: "anemo" },
 
                     { role: "Sub-DPS", name: "Fischl", element: "electro" },
 
@@ -12019,7 +12048,7 @@ const CHARACTER_CONFIG = {
                 er_req: 100,
 
                 team: [
-                    { role: "Support", name: "Venti", element: "anemo" },
+                    { role: "Flex", name: ["Venti", "Prune"], element: "anemo" },
 
                     { role: "Sub-DPS", name: "Yelan", element: "hydro" },
 
@@ -12125,9 +12154,241 @@ const CHARACTER_CONFIG = {
     },
 
     // 6.6
-    // Nicole
-    // Lohen
-    // Prune
+    "Nicole": {
+        color: "#5763bf",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 1,
+            skill: 10,
+            burst: 9
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A1 : Méthexis",
+                        active: true,
+                        stats: {
+                            atk: 300,
+                        }
+                    },
+                    {
+                        label: "A1 : Méthexis (C2)",
+                        active: true,
+                        cons: 2,
+                        stats: {
+                            atk: 600,
+                        }
+                    },
+                ]
+            }
+        ],
+
+        builds: {
+            "Support Hexerei": {
+                name: "Support Hexerei",
+
+                weights: {
+                    "critRate_": 0, "critDMG_": 0,
+                    "atk_": 1, "atk": 0.8,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["atk_"],
+                    "EQUIP_DRESS": ["atk_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["CelestialGift:4", "NoblesseOblige:4"],
+                goodSets: ["GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
+                    { role: "", name: "", element: "" },
+                    { role: "", name: "", element: "" }
+                ]
+            }
+        }
+    },
+    "Lohen": {
+        color: "#273d80",
+        portraitOffset: -38,
+
+        talents: {
+            auto: 1,
+            skill: 10,
+            burst: 8
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "A4 : Chef-d'œuvre désinvolte",
+                        active: true,
+                        stats: {
+                            atk_: 0.15,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C6 : Se noyer, sombrer, inconscient — Joie suprême (uniquement la compétence et le déchaînement)",
+                        cons: 6,
+                        active: false,
+                        stats: {
+                            critDMG_: 1.75
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "DPS Fonte": {
+                name: "DPS Fonte",
+
+                weights: {
+                    "critRate_": 1, "critDMG_": 1,
+                    "atk_": 0.8, "atk": 0.1,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0.6, "enerRech_": 0,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 1,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "eleMas"],
+                    "EQUIP_RING": ["cryo_dmg_"],
+                    "EQUIP_DRESS": ["critDMG_", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ADayCarvedFromRisingWinds:4"],
+                goodSets: ["GladiatorsFinale:4", "GildedDreams:4", "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2"],
+
+                er_req: 100,
+
+                team: [
+                    { role: "Support", name: "Citlali", element: "cryo" },
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
+                    { role: "Support", name: "Nicole", element: "pyro" }
+                ]
+            }
+        }
+    },
+    "Prune": {
+        color: "#4a52b6",
+        portraitOffset: -36,
+
+        talents: {
+            auto: 1,
+            skill: 8,
+            burst: 10
+        },
+
+        buffs: [
+            {
+                category: "Passifs",
+                buffs: [
+                    {
+                        label: "Hexerei : Vœu de recherche de sorcières",
+                        active: true,
+                        stats: {
+                            atk_: 0.60,
+                        }
+                    }
+                ]
+            },
+            {
+                category: "Constellations",
+                buffs: [
+                    {
+                        label: "C2 : Bons pour nettoyer les bagages négligés sont les pouvoirs élémentaires",
+                        cons: 2,
+                        stats: {
+                            atk_: 0.40
+                        }
+                    },
+                    {
+                        label: "C6 : Et voilà l'histoire ! À partager avec vos amis !",
+                        cons: 6,
+                        stats: {
+                            atk: 350
+                        }
+                    }
+                ]
+            }
+        ],
+
+        builds: {
+            "Support Hexerei": {
+                name: "Support Hexerei",
+
+                weights: {
+                    "critRate_": 0.4, "critDMG_": 0,
+                    "atk_": 1, "atk": 0.8,
+                    "hp_": 0, "hp": 0,
+                    "def_": 0, "def": 0,
+                    "eleMas": 0, "enerRech_": 1,
+
+                    "pyro_dmg_": 0, "hydro_dmg_": 0, "cryo_dmg_": 0,
+                    "geo_dmg_": 0, "anemo_dmg_": 0, "electro_dmg_": 0,
+                    "dendro_dmg_": 0, "physical_dmg_": 0,
+
+                    "heal_": 0
+                },
+
+                idealMainStats: {
+                    "EQUIP_SHOES": ["atk_", "enerRech_"],
+                    "EQUIP_RING": ["atk_"],
+                    "EQUIP_DRESS": ["atk_", "critRate_"]
+                },
+
+                hideUIStats: [],
+                showUIStats: [],
+
+                bestSets: ["ViridescentVenerer:4", "NoblesseOblige:4", "CelestialGift:4"],
+                goodSets: ["GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"],
+
+                er_req: 200,
+
+                team: [
+                    { role: "DPS", name: "Varka", element: "anemo" },
+                    { role: "Sub-DPS", name: "Durin", element: "pyro" },
+                    { role: "Support", name: "Nicole", element: "pyro" },
+                ]
+            }
+        }
+    },
 };
 
 const WEAPON_PASSIVES = {
@@ -14202,6 +14463,28 @@ const SET_PASSIVES = {
             {
                 label: "Si le personnage a terminé son devoir de la sorcière (20% Taux CRIT)",
                 stats: { "critRate_": 0.2 }
+            }
+        ]
+    },
+    "CelestialGift": {
+        selectMode: "exclusive",
+        4: [
+            {
+                label: "Si le personnage a terminé son devoir de la sorcière et a utilisé une compétence élémentaire (20% DGT Élémentaires)",
+                stats: {"elemental_dmg_": 0.2}
+            },
+            {
+                label: "Si l'équipe compte deux personnages Hexerei (40% DGT Élémentaires)",
+                stats: {"elemental_dmg_": 0.4}
+            },
+        ]
+    },
+    "DisenchantmentInDeepShadow": {
+        4: [
+            {
+                label: "Si l'adversaire est affecté par Supraconduction (16% Taux Critique uniquement sur cette attaque)",
+                stats: {"critRate_": 0.16},
+                active: false
             }
         ]
     }
