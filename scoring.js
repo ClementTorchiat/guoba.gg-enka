@@ -1,7 +1,3 @@
-/* =========================================
-   MOTEUR DE NOTATION (Système Hybride : Fribbels Mainstat + Old Substats)
-   ========================================= */
-
 const SCORING_NORMS = {
     "critRate_": 2, "critDMG_": 1,
     "atk_": 1.33, "atk": 0.40,
@@ -15,10 +11,8 @@ const MAINSTAT_BASE_VALUE = 62.2;
 const MAINSTAT_ROLL_VALUE = 7.776;
 const VARIABLE_PIECES = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
 
-// MODIFICATION : On prend 'config' en argument pour éviter les erreurs de scope
 function calculateCharacterScore(perso, config, maxRolls = 45.0) {
 
-    // Sécurité si la config est vide
     if (!config || !config.weights) {
         return { score: 0, grade: { letter: "?", color: "#888" }, totalRolls: 0 };
     }
@@ -27,39 +21,32 @@ function calculateCharacterScore(perso, config, maxRolls = 45.0) {
     let totalRolls = 0;
     const setsCounter = {};
 
-    // 2. Parcourir les artéfacts
     perso.artefacts.forEach(art => {
         if ((art.stars || 5) < 4) {
             art.score = 0;
             art.grade = { letter: '—', color: '#6b7280', points: 0 };
             return;
         }
-        // A. Score Artefact
         const powerResult = scoreArtifact(art, config.weights);
         art.score = powerResult.score;
 
-        // B. Note Qualité (Rolls)
         const qualityPoints = calculateArtifactRollQuality(art, config.weights);
-        // --- NOUVEAU : On calcule le max théorique de CELA pièce ---
-        // On récupère les weights utiles dispo (sans la mainstat actuelle)
         const availableWeights = Object.entries(config.weights)
             .filter(([k, w]) => w > 0 && k !== art.mainStat.key && !k.includes("_dmg_") && k !== "heal_" && k !== "physical_dmg_")
             .map(entry => entry[1])
             .sort((a, b) => b - a);
 
-        let maxPiecePoints = 9.0; // Valeur par défaut
+        let maxPiecePoints = 9.0;
         if (availableWeights.length > 0) {
             maxPiecePoints = 0;
             const top = availableWeights.slice(0, 4);
-            maxPiecePoints += top[0] * 6; // 6 procs sur la meilleure
+            maxPiecePoints += top[0] * 6;
             for (let i = 1; i < top.length; i++) {
-                maxPiecePoints += top[i] * 1; // 1 proc sur les autres
+                maxPiecePoints += top[i] * 1;
             }
         }
 
-        // On donne ce max à la fonction pour avoir une lettre juste !
         const gradeLetter = getGradeFromPoints(qualityPoints, maxPiecePoints);
-        // --- FIN NOUVEAU ---
 
         art.grade = {
             letter: gradeLetter,
@@ -70,7 +57,6 @@ function calculateCharacterScore(perso, config, maxRolls = 45.0) {
         totalScore += art.score;
         totalRolls += qualityPoints;
 
-        // C. BONUS MAINSTAT (Fribbels)
         if (VARIABLE_PIECES.includes(art.type)) {
             const mainStatBonus = calculateMainStatBonus(art, config.weights, config.idealMainStats);
             totalScore += mainStatBonus;
@@ -81,33 +67,25 @@ function calculateCharacterScore(perso, config, maxRolls = 45.0) {
         }
     });
 
-    // --- NOUVEAU : MALUS D'OVERCAP CRITIQUE ---
     let overcapScorePenalty = 0;
     let overcapRollsPenalty = 0;
 
-    // On n'applique pas le malus lors de la simulation du score parfait (car le build parfait ne ferait pas d'overcap)
     if (!perso.isSimulation && perso.buffedStats && perso.buffedStats.cr > 100 && config.weights["critRate_"] > 0) {
         const excessCR = perso.buffedStats.cr - 100;
         const crWeight = config.weights["critRate_"];
 
-        // On calcule combien de points de score cet excédent représente
         overcapScorePenalty = excessCR * crWeight * (SCORING_NORMS["critRate_"] || 2);
 
-        // On calcule combien de "Rolls" cet excédent représente (1 roll max CR = 3.9)
         const maxCrRoll = (window.MAX_ROLLS && window.MAX_ROLLS["critRate_"]) ? window.MAX_ROLLS["critRate_"] : 3.9;
         overcapRollsPenalty = (excessCR / maxCrRoll) * crWeight;
 
-        // On applique la punition
         totalScore -= overcapScorePenalty;
         totalRolls -= overcapRollsPenalty;
 
-        // Sécurité pour ne pas avoir un compte en négatif
         if (totalScore < 0) totalScore = 0;
         if (totalRolls < 0) totalRolls = 0;
     }
-    // --- FIN NOUVEAU ---
 
-    // 3. Bonus de Set (Multiplicateur)
     let setMultiplier = 0.5;
     let activeBonuses = [];
     for (const [setKey, count] of Object.entries(setsCounter)) {
@@ -147,7 +125,6 @@ function calculateCharacterScore(perso, config, maxRolls = 45.0) {
     };
 }
 
-// --- FONCTIONS CALCULS ---
 
 function calculateMainStatBonus(artifact, weights, idealMainStats) {
     let key = artifact.mainStat.key;
@@ -201,7 +178,6 @@ function calculateArtifactRollQuality(artifact, weights) {
     return parseFloat(points.toFixed(1));
 }
 
-// --- ECHELLES ---
 function getGradeFromPoints(pts, maxPossiblePts = 9.0) {
     const labels = [
         "F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+",
@@ -219,7 +195,6 @@ function getGradeFromPoints(pts, maxPossiblePts = 9.0) {
     return "F";
 }
 
-// On ajoute le maxPossibleRolls (45 par défaut pour éviter les crashs)
 function getGlobalGrade(pts, maxPossibleRolls = 45.0) {
     if (maxPossibleRolls <= 0 || pts <= 0 && maxPossibleRolls < 1) {
         return { letter: "Bro...", color: getGradeColor("F") };
@@ -229,12 +204,12 @@ function getGlobalGrade(pts, maxPossibleRolls = 45.0) {
         "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"
     ];
 
-    const steps = labels.length - 1; // 18 paliers
+    const steps = labels.length - 1;
     const interval = maxPossibleRolls / steps;
 
     for (let i = steps; i >= 0; i--) {
         const threshold = i * interval;
-        if (pts >= threshold - 0.05) { // Marge de tolérance
+        if (pts >= threshold - 0.05) {
             return { letter: labels[i], color: getGradeColor(labels[i]) };
         }
     }

@@ -1,9 +1,3 @@
-/* =========================================
-   DONNÉES DE RÉFÉRENCE (Genshin Impact V3+)
-   ========================================= */
-
-// Les 4 valeurs possibles pour chaque proc de substat (5 étoiles)
-// Cela correspond aux qualités : 0.7, 0.8, 0.9 et 1.0
 const BASE_ROLLS = {
     "critRate_": [2.72, 3.11, 3.50, 3.89],
     "critDMG_": [5.44, 6.22, 6.99, 7.77],
@@ -17,11 +11,6 @@ const BASE_ROLLS = {
     "def": [16.20, 18.52, 20.83, 23.15]
 };
 
-// Pour le calcul rapide : la valeur maximale d'un roll (vaut 1 point)
-// AJOUTER À LA FIN DE data.js
-
-// Valeurs maximales possibles pour une substat (Vaut 1.0 point de notation)
-// On attache directement à window pour être sûr que scoring.js le trouve
 window.MAX_ROLLS = {
     "critRate_": 3.89,
     "critDMG_": 7.77,
@@ -37,7 +26,6 @@ window.MAX_ROLLS = {
 
 window.BASE_ROLLS = BASE_ROLLS;
 
-// Valeurs 4★ (issues de subStatsRolls.json rareté "4")
 const BASE_ROLLS_4 = {
     "critRate_": [2.18, 2.49, 2.80, 3.11],
     "critDMG_":  [4.35, 4.97, 5.60, 6.22],

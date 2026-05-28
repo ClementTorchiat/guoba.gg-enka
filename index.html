@@ -11,7 +11,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image-more/2.9.5/dom-to-image-more.min.js" defer></script>
 
     <style>
-        /* ===== SKELETON SCREEN ===== */
+        button[title="Mode d'emploi"],
+        .main-content-menu-export {
+            transition: all 0.2s ease;
+        }
+
+        button[title="Mode d'emploi"]:hover,
+        .main-content-menu-export:hover {
+            background: rgb(61, 62, 67) !important;
+            color: #e8ecf4;
+        }
         @keyframes shimmer {
             0%   { background-position: 200% 0; }
             100% { background-position: -200% 0; }
@@ -164,6 +173,15 @@
 
         .search-input:focus {
             outline: none;
+        }
+
+        .search-input:-webkit-autofill,
+        .search-input:-webkit-autofill:hover,
+        .search-input:-webkit-autofill:focus,
+        .search-input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px #2C2D32 inset !important;
+            -webkit-text-fill-color: #ffffff !important;
+            transition: background-color 5000s ease-in-out 0s;
         }
 
         .search-btn {
@@ -733,13 +751,6 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* Styles du contenu (H2, H3...) pour qu'ils ressemblent à l'interface */
-        .notice-section { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .notice-section:last-child { border-bottom: none; }
-        .notice-h2 { color: var(--accent-gold); font-size: 20px; margin-top: 0; display:flex; align-items:center; gap:10px; }
-        .notice-h3 { color: #fff; font-size: 16px; margin-top: 20px; border-left: 3px solid var(--accent-gold); padding-left: 10px; }
-        .notice-p, .notice-li { color: #ccc; font-size: 14px; line-height: 1.6; }
-        .notice-badge { padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; border: 1px solid; }
         /* PLAYER PROFILE */
         #player-profile {
             align-self: flex-end;
@@ -1050,6 +1061,185 @@
             }
         }
     </style>
+    <style id="onboarding-styles">
+
+        .ob-overlay {
+            display: none;
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(7, 10, 18, 0.85);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        .ob-overlay.visible { display: flex; }
+
+        /* Hauteur fixe = footer immobile entre les étapes */
+        .ob-card {
+            position: relative;
+            width: 100%; max-width: 580px;
+            height: 580px;
+            background: #16181d;
+            border: 1px solid #2d3342;
+            border-radius: 16px; overflow: hidden;
+            display: flex; flex-direction: column;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,177,59,0.08);
+        }
+
+        .ob-progress-bar { height: 3px; background: #2d3342; flex-shrink: 0; }
+        .ob-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFB13B, #ffd280);
+            transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .ob-header {
+            padding: 20px 28px 0;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .ob-logo-row { display: flex; align-items: center; gap: 8px; opacity: 0.5; }
+        .ob-logo-img { width: 20px; height: 20px; }
+        .ob-logo-text { font-size: 15px; letter-spacing: 0.02em; color: #fff; }
+        .ob-step-label {
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: #FFB13B;
+        }
+
+        /* Zone de contenu : flex: 1 + overflow scroll */
+        .ob-body {
+            padding: 18px 28px 0;
+            flex: 1; overflow-y: auto; overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: #2d3342 transparent;
+        }
+        .ob-body::-webkit-scrollbar { width: 4px; }
+        .ob-body::-webkit-scrollbar-track { background: transparent; }
+        .ob-body::-webkit-scrollbar-thumb { background: #2d3342; border-radius: 2px; }
+
+        .ob-step-content { width: 100%; }
+        .ob-step-content.slide-in-right {
+            animation: ob-slide-in-right 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        .ob-step-content.slide-in-left {
+            animation: ob-slide-in-left 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        @keyframes ob-slide-in-right {
+            from { opacity: 0; transform: translateX(40px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes ob-slide-in-left {
+            from { opacity: 0; transform: translateX(-40px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .ob-title {
+            font-size: 21px; font-weight: 700; color: #fff;
+            margin: 6px 0 14px; line-height: 1.25; letter-spacing: -0.01em;
+        }
+        .ob-text {
+            font-size: 13.5px; line-height: 1.75; color: #b0b8c8;
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .ob-text strong { color: #e8ecf4; }
+        .ob-text ul { padding-left: 18px; display: flex; flex-direction: column; gap: 3px; }
+        .ob-text li { color: #9ca3af; }
+        .ob-text li strong { color: #e8ecf4; }
+
+        .ob-note {
+            padding: 10px 14px;
+            background: rgba(255,177,59,0.07);
+            border-left: 2px solid #FFB13B;
+            border-radius: 0 6px 6px 0;
+            color: #c8a96e; font-size: 12.5px;
+            font-style: italic; line-height: 1.6;
+        }
+        .ob-note-blue {
+            padding: 10px 14px;
+            background: rgba(99,179,255,0.07);
+            border-left: 2px solid #63b3ff;
+            border-radius: 0 6px 6px 0;
+            color: #93c5fd; font-size: 12.5px;
+            font-style: italic; line-height: 1.6;
+        }
+
+        .ob-metric {
+            display: flex; gap: 10px; align-items: flex-start;
+            padding: 9px 0; border-bottom: 1px solid #1e2229;
+        }
+        .ob-metric:last-of-type { border-bottom: none; }
+        .ob-metric-icon { font-size: 16px; width: 24px; flex-shrink: 0; margin-top: 1px; }
+        .ob-metric-body strong { display: block; color: #e8ecf4; font-size: 13px; margin-bottom: 2px; }
+        .ob-metric-body span { color: #8a93a8; font-size: 12.5px; line-height: 1.5; display: block; }
+
+        /* Grille 2×2 pour l'étape Analyse */
+        .ob-grid-2x2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px; margin-top: 2px;
+        }
+        .ob-grid-card {
+            background: #1a1d24; border: 1px solid #252a35;
+            border-radius: 10px; padding: 13px 14px;
+            display: flex; flex-direction: column; gap: 5px;
+        }
+        .ob-grid-card .ob-gc-icon { font-size: 18px; }
+        .ob-grid-card .ob-gc-title { font-size: 12.5px; font-weight: 700; color: #e8ecf4; line-height: 1.3; }
+        .ob-grid-card .ob-gc-desc { font-size: 11.5px; color: #6b7280; line-height: 1.5; }
+
+        .ob-image-zone {
+            margin-top: 16px; border-radius: 10px; overflow: hidden;
+            background: #0d1018; border: 1px solid #252a35;
+            display: flex; align-items: center; justify-content: center;
+            width: 100%;
+        }
+        .ob-image-zone img {
+            width: 100%; height: 100%;
+            width: 100%; height: auto; display: block;
+        }
+        .ob-image-placeholder {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 10px; width: 100%; height: 90px; color: #2d3548;
+        }
+        .ob-image-placeholder i { font-size: 24px; }
+        .ob-image-placeholder span { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+        /* Footer fixe en bas, jamais déplacé */
+        .ob-footer {
+            padding: 14px 28px 18px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-top: 1px solid #1e2229;
+            flex-shrink: 0;
+            background: #16181d;
+        }
+        .ob-dots { display: flex; gap: 7px; align-items: center; }
+        .ob-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: #2d3342; transition: all 0.3s ease;
+        }
+        .ob-dot.active { background: #FFB13B; width: 22px; border-radius: 4px; }
+        .ob-nav-btns { display: flex; gap: 8px; }
+        .ob-btn {
+            height: 38px; border-radius: 8px; border: none;
+            font-family: inherit; font-size: 13px; cursor: pointer;
+            display: flex; align-items: center; gap: 7px;
+            padding: 0 16px; transition: all 0.2s ease;
+        }
+        .ob-btn-prev {
+            background: #1e2229; color: #9ca3af;
+            border: 1px solid #2d3342;
+        }
+        .ob-btn-prev:hover { background: #252b36; color: #e8ecf4; }
+        .ob-btn-prev:disabled { opacity: 0; pointer-events: none; }
+        .ob-btn-next { background: #FFB13B; color: #0b0f19; font-weight: 700; }
+        .ob-btn-next:hover {background: #ffc55a;}
+        .ob-btn-next.ob-final { background: #22c55e; }
+        .ob-btn-next.ob-final:hover { box-shadow: 0 4px 16px rgba(34,197,94,0.3); }
+
+    </style>
 </head>
 <body>
 <div id="mobile-block-overlay">
@@ -1075,7 +1265,7 @@
                         <img src="assets/global/favicon.png" alt="Simulateur" style="border-radius: 100%;">
                         <h2>guoba.gg</h2>
                     </div>
-                    <p class="sidebar-text">Ver. 1.1.0 - Bêta Build (GI Ver. 6.6)</p>
+                    <p class="sidebar-text">Ver. 1.1.1 - Bêta Build (GI Ver. 6.6)</p>
                 </div>
                 <div class="sidebar-search">
                     <div class="search-container">
@@ -1111,6 +1301,7 @@
                         <div class="menu-actions" style="display:flex; gap:10px;"></div>
                     </div>
 
+                    <!--
                     <div class="leaderboards-container" style="max-width:240px;display: flex; justify-content: space-between; padding-left: 15px; padding-right: 16px; align-items: center; width: 100%; height: 50px; background: #2C2D32; color: #fff;border: none;border-radius: 8px;">
                         <div class="leaderboards-left" style="display: flex;">
                             <i class="fa-solid fa-ranking-star"></i>
@@ -1120,10 +1311,19 @@
                         </div>
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </div>
+                    -->
+
+                    <div class="leaderboards-container" style="max-width:240px;display: flex; justify-content: space-between; padding-left: 15px; padding-right: 16px; align-items: center; width: 100%; height: 50px; background: #2C2D32; color: #fff;border: none;border-radius: 8px;">
+                        <div class="leaderboards-left" style="display: flex;">
+                            <i class="fa-solid fa-ranking-star"></i>
+                            <div class="leaderboards-placeholder" style="font-size: 14px; margin-left: 12px;">
+                                Work in progress...
+                            </div>
+                        </div>
+                    </div>
 
                     <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; max-width: 240px; width: 100%;">
-                        <!-- BOUTON 1 : Fixe à 50px -->
-                        <button onclick="openNotice()" title="Mode d'emploi" style="
+                        <button onclick="openOnboarding()" title="Mode d'emploi" style="
                             background: #2C2D32;
                             border: none;
                             border-radius: 8px;
@@ -1164,85 +1364,238 @@
         </div>
     </div>
 </main>
-<div id="noticeModal" class="modal-overlay" onclick="if(event.target === this) closeNotice()">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeNotice()">&times;</span>
-
-        <div style="text-align:center; margin-bottom:30px;">
-            <h1 style="font-family:'OTBrut-Regular'; font-size:28px; color:#fff; margin:0;">Notice d'utilisation</h1>
-            <p style="color:#888; margin-top:5px;">Comprendre le simulateur et optimiser vos personnages</p>
+<div id="onboardingModal" class="ob-overlay">
+    <div class="ob-card">
+        <div class="ob-progress-bar">
+            <div class="ob-progress-fill" id="ob-progress-fill" style="width:20%"></div>
         </div>
-
-        <div class="notice-section">
-            <h2 class="notice-h2"><i class="fa-solid fa-cloud-arrow-down"></i> 1. Importation</h2>
-            <p class="notice-p">Le simulateur utilise l'API <b>Enka.Network</b> pour récupérer vos données en temps réel.</p>
-            <h3 class="notice-h3">Prérequis en jeu</h3>
-            <ul style="padding-left:20px;">
-                <li class="notice-li">Menu Paimon > Modifier le profil.</li>
-                <li class="notice-li">Activez <b>"Afficher les détails des personnages"</b>.</li>
-                <li class="notice-li">Placez les personnages dans votre <b>Vitrine</b>.</li>
-                <li class="notice-li">Attendez 2-5 min après la déconnexion pour la mise à jour serveur.</li>
-            </ul>
-        </div>
-
-        <div class="notice-section">
-            <h2 class="notice-h2"><i class="fa-solid fa-chart-bar"></i> 2. Comprendre le Score</h2>
-            <p>Le simulateur de guoba.gg se base sur 3 métriques différentes pour évaluer vos builds.</p>
-            <h3 class="notice-h3">Le Score</h3>
-            <p class="notice-p">Le score est un système hybride :</p>
-            <ul style="padding-left: 30px;">
-                <li style="margin-top: 12px; font-size: 14px;"><b>Valeur de Base :</b> Chaque "Roll" parfait (ex: 7.8% DGT Crit) vaut une fraction de point.</li>
-                <li style="margin-top: 12px; font-size: 14px;"><b>Pondération :</b> Ces points sont multipliés par un "poids" (défini dans <code>config.js</code>). <i>Exemple : La Défense aura un poids de 1 pour Chiori, mais de 0 pour Arlecchino.</i></li>
-                <li style="margin-top: 12px; font-size: 14px;"><b>Bonus Mainstat :</b> L'algorithme prend en compte la pertinence de la statistique principale des pièces variables (Sablier, Coupe, Diadème).</li>
-                <li style="margin-top: 12px; font-size: 14px;"><b>Multiplicateur de Set :</b> Un bonus est appliqué si le joueur possède le Set Best-in-Slot (BiS) recommandé.</li>
-            </ul>
-            <h3 class="notice-h3">La Note</h3>
-            <p class="notice-p">La note représente la chance qu'a eu le joueur dans les substats de ses artéfacts.</p>
-            <p style="margin-top: 12px; font-size: 14px;">La note est calculée selon le nombre de <b>Rolls Utiles</b> (améliorations tombées sur des stats pertinentes pour ce personnage précis).</p>
-            <p style="margin-top: 12px; font-size: 14px;">Chaque team de chaque personnage a un plafond théorique. Ce plafond est divisé en plusieurs tiers proportionnels correspondant à des lettres.</p>
-            <h3 class="notice-h3">L'Efficacité</h3>
-            <p class="notice-p"><b>Efficacité :</b> Votre puissance actuelle vs votre potentiel théorique max.</p>
-            <p class="notice-p"><b>RNG :</b> Votre chance. Un score élevé signifie que vous obtenez souvent des valeurs hautes lors des améliorations.</p>
-        </div>
-
-        <div class="notice-section">
-            <h2 class="notice-h2"><i class="fa-solid fa-magnifying-glass-chart"></i> 3. Analyse & Conseils</h2>
-            <p class="notice-p"><b>Stats Mortes :</b> Points perdus dans des stats inutiles (ex: DÉF sur un DPS).</p>
-            <p class="notice-p"><b>Pièce Joker (Off-Set) :</b> Le simulateur vérifie si votre 5ème pièce (hors-set) est assez puissante pour justifier sa place. Elle doit être bien meilleure que vos pièces de set.</p>
-        </div>
-
-        <div class="notice-section">
-            <h2 class="notice-h2"><i class="fa-solid fa-dice"></i> 4. Simulateur de Reroll</h2>
-            <p class="notice-p">Estime la rentabilité d'utiliser l'Offrande Mystique (Strongbox) sur un artéfact.</p>
-            <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
-                <span class="notice-badge" style="color:#ef4444; background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3);">Risque Élevé</span>
-                <span class="notice-badge" style="color:#22c55e; background:rgba(34,197,94,0.1); border-color:rgba(34,197,94,0.3);">Potentiel Élevé</span>
+        <div class="ob-header">
+            <div class="ob-logo-row">
+                <img src="assets/global/favicon.png" alt="guoba" class="ob-logo-img">
+                <span class="ob-logo-text">guoba.gg</span>
             </div>
-            <p class="notice-p" style="margin-top:10px; font-style:italic; font-size:12px; color:#888;">Conseil : Ne recyclez jamais une pièce "Solide" ou "Déconseillée".</p>
+            <span class="ob-step-label" id="ob-step-label">Étape 1 / 5</span>
         </div>
-
+        <div class="ob-body" id="ob-body"><!-- rempli par JS --></div>
+        <div class="ob-footer">
+            <div class="ob-dots" id="ob-dots"></div>
+            <div class="ob-nav-btns">
+                <button class="ob-btn ob-btn-prev" id="ob-prev-btn" onclick="obPrev()" disabled>
+                    <i class="fa-solid fa-arrow-left"></i> Précédent
+                </button>
+                <button class="ob-btn ob-btn-next" id="ob-next-btn" onclick="obNext()">
+                    Suivant <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
-    function openNotice() {
-        document.getElementById('noticeModal').style.display = 'flex';
-        // Empêche le scroll de la page derrière
+    const OB_STEPS = [
+        {
+            title: "Préparez votre vitrine",
+            html: `
+            <p>Bienvenue sur <strong>guoba.gg</strong> !</p>
+            <p class="ob-note-blue">guoba.gg est un outil d'analyse de builds pour Genshin Impact. Il évalue la qualité de vos artéfacts, note vos personnages et vous aide à prioriser votre farm — le tout automatiquement, à partir de votre vitrine en jeu.</p>
+            <p>Le site récupère vos données via <strong>Enka.Network</strong>. Voici comment préparer votre compte en jeu :</p>
+            <ul>
+                <li>Menu Paimon → <strong>Modifier le profil</strong></li>
+                <li>Activez <strong>"Afficher les détails des personnages"</strong></li>
+                <li>Placez vos personnages dans votre <strong>Vitrine</strong></li>
+                <li>Attendez ~5 min après déconnexion</li>
+            </ul>
+            <p>Ensuite, entrez votre <strong>UID</strong> dans la barre de recherche à gauche — et c'est parti !</p>
+        `,
+            image: "assets/onboarding/step1.gif",
+            placeholder: false
+        },
+        {
+            title: "Score & Grade : deux lectures",
+            html: `
+            <p>Chaque build est évalué avec <strong>deux métriques complémentaires</strong> :</p>
+            <div class="ob-metric">
+                <div class="ob-metric-icon">🎯</div>
+                <div class="ob-metric-body">
+                    <strong>Le Score — votre puissance réelle</strong>
+                    <span>Tient compte des substats, de la mainstat et du set — pondérés selon l'utilité de chaque stat pour <em>ce personnage précis</em>.</span>
+                </div>
+            </div>
+            <div class="ob-metric">
+                <div class="ob-metric-icon">🎲</div>
+                <div class="ob-metric-body">
+                    <strong>Le Grade (F → ARCHON) — votre chance au RNG</strong>
+                    <span>Mesure combien de vos améliorations sont tombées sur de bonnes stats, et à quelle valeur.</span>
+                </div>
+            </div>
+            <div class="ob-note-blue">💡 Un Grade élevé avec un Score moyen ? Vous avez eu de la chance, mais les pièces ne sont pas optimales. L'inverse ? Bon build, RNG difficile. Les deux ensemble ? C'est le Saint-Graal.</div>
+        `,
+            image: "assets/onboarding/step2.png",
+            placeholder: false
+        },
+        {
+            title: "Lisez votre build d'un coup d'œil",
+            html: `
+            <p>Une fois votre UID chargé, vos personnages apparaissent dans la <strong>liste à gauche</strong>. Cliquez sur l'un d'eux pour afficher son build complet.</p>
+            <ul>
+                <li>Chaque artéfact affiche son <strong>grade individuel</strong> et met en valeur les substats selon leur poids</li>
+                <li>La liste latérale permet de <strong>comparer vos personnages</strong>.</li>
+                <li>Le bouton <strong>Exporter image</strong> génère un récap visuel à partager avec vos amis !</li>
+            </ul>
+        `,
+            image: "assets/onboarding/step3.png",
+            placeholder: false
+        },
+        {
+            title: "Vérifiez vos Buffs Actifs",
+            html: `
+            <p>Avant de passer à la partie <strong>conseils</strong>, vérifiez la carte <strong>Buffs Actifs</strong>, en bas à droite de la fiche personnage.</p>
+            <p>Certains personnages bénéficient de buffs situationnels — constellation, résonance d'équipe, passifs conditionnels — qui peuvent faire varier les conseils et les stats de combat de façon significative.</p>
+            <div class="ob-note-blue">⚠️ Votre score peut être impacté par un overcap de Taux Critique. Ce malus restera même si vous désactivez les buffs liés au Taux Critique.</div>
+        `,
+            image: "assets/onboarding/step4.png",
+            placeholder: false
+        },
+        {
+            title: "La section Analyse & Conseils",
+            html: `
+        <p>Accessible depuis la fiche de chaque personnage, cette section se décompose en <strong>6 parties</strong> :</p>
+        <div class="ob-grid-2x2">
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon">📊</span>
+                <span class="ob-gc-title">1. Vue d'ensemble</span>
+                <span class="ob-gc-desc">Efficacité du build, facteur chance RNG et score potentiel maximum.</span>
+            </div>
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon">🔍</span>
+                <span class="ob-gc-title">2. Analyse stratégique</span>
+                <span class="ob-gc-desc">Taux critique, recharge d'énergie, rolls utiles/morts et pièce hors-set.</span>
+            </div>
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon">🗺️</span>
+                <span class="ob-gc-title">3. Plan d'action</span>
+                <span class="ob-gc-desc">Feuille de route : échanges entre persos, niveau, arme, aptitudes et mainstat.</span>
+            </div>
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon">✨</span>
+                <span class="ob-gc-title">4. Projection idéale</span>
+                <span class="ob-gc-desc">Simulez ce que vos artéfacts donneraient si vos stats inutiles devenaient optimales.</span>
+            </div>
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon">🎲</span>
+                <span class="ob-gc-title">5. Détails des rolls</span>
+                <span class="ob-gc-desc">La qualité exacte de chaque roll par artéfact, lue dans le code source du jeu.</span>
+            </div>
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon">♻️</span>
+                <span class="ob-gc-title">6. Simulateur de reroll</span>
+                <span class="ob-gc-desc">Estimez si passer une pièce à l'Offrande Mystique vaut vraiment le risque.</span>
+            </div>
+        </div>
+    `,
+            image: "assets/onboarding/step5.png",
+            placeholder: false
+        }
+    ];
+
+    let obCurrentStep = 0;
+    let obAnimating = false;
+    const OB_TOTAL = OB_STEPS.length;
+
+    function obRender(direction = 'right') {
+        const step = OB_STEPS[obCurrentStep];
+
+        const imageHTML = step.placeholder
+            ? `<div class="ob-image-zone">
+               <div class="ob-image-placeholder">
+                   <i class="fa-solid fa-camera"></i>
+                   <span>Screenshot à venir</span>
+               </div>
+           </div>`
+            : `<div class="ob-image-zone">
+               <img src="${step.image}" alt="Illustration étape ${obCurrentStep + 1}" loading="lazy">
+           </div>`;
+
+        document.getElementById('ob-body').innerHTML = `
+        <div class="ob-step-content slide-in-${direction}">
+            <h2 class="ob-title">${step.title}</h2>
+            <div class="ob-text">${step.html}</div>
+            ${imageHTML}
+        </div>
+    `;
+
+        document.getElementById('ob-body').scrollTop = 0;
+
+        document.getElementById('ob-progress-fill').style.width =
+            ((obCurrentStep + 1) / OB_TOTAL * 100) + '%';
+        document.getElementById('ob-step-label').textContent =
+            `Étape ${obCurrentStep + 1} / ${OB_TOTAL}`;
+
+        const dotsEl = document.getElementById('ob-dots');
+        dotsEl.innerHTML = '';
+        for (let i = 0; i < OB_TOTAL; i++) {
+            const d = document.createElement('span');
+            d.className = 'ob-dot' + (i === obCurrentStep ? ' active' : '');
+            dotsEl.appendChild(d);
+        }
+
+        const prev = document.getElementById('ob-prev-btn');
+        const next = document.getElementById('ob-next-btn');
+        prev.disabled = obCurrentStep === 0;
+        if (obCurrentStep === OB_TOTAL - 1) {
+            next.innerHTML = `C'est parti ! <i class="fa-solid fa-check"></i>`;
+            next.classList.add('ob-final');
+        } else {
+            next.innerHTML = `Suivant <i class="fa-solid fa-arrow-right"></i>`;
+            next.classList.remove('ob-final');
+        }
+    }
+
+    function obNext() {
+        if (obAnimating) return;
+        if (obCurrentStep === OB_TOTAL - 1) { closeOnboarding(); return; }
+        obAnimating = true;
+        obCurrentStep++;
+        obRender('right');
+        setTimeout(() => { obAnimating = false; }, 380);
+    }
+
+    function obPrev() {
+        if (obAnimating || obCurrentStep === 0) return;
+        obAnimating = true;
+        obCurrentStep--;
+        obRender('left');
+        setTimeout(() => { obAnimating = false; }, 380);
+    }
+
+    function openOnboarding(forceStep = 0) {
+        obCurrentStep = forceStep;
+        obRender('right');
+        document.getElementById('onboardingModal').classList.add('visible');
         document.body.style.overflow = 'hidden';
     }
 
-    function closeNotice() {
-        document.getElementById('noticeModal').style.display = 'none';
-        // Réactive le scroll
-        document.body.style.overflow = 'auto';
+    function closeOnboarding() {
+        document.getElementById('onboardingModal').classList.remove('visible');
+        document.body.style.overflow = '';
+        localStorage.setItem('guoba_onboarding_done', '1');
     }
 
-    // Fermeture avec la touche Échap
-    document.addEventListener('keydown', function(event) {
-        if (event.key === "Escape") {
-            closeNotice();
+    document.addEventListener('DOMContentLoaded', () => {
+        if (!localStorage.getItem('guoba_onboarding_done')) {
+            setTimeout(() => openOnboarding(), 400);
         }
     });
+
+    document.addEventListener('keydown', (e) => {
+        if (!document.getElementById('onboardingModal').classList.contains('visible')) return;
+        if (e.key === 'Escape') closeOnboarding();
+        if (e.key === 'ArrowRight') obNext();
+        if (e.key === 'ArrowLeft') obPrev();
+    });
+
+    function openNotice() { openOnboarding(0); }
+    function closeNotice() { closeOnboarding(); }
 </script>
 
 <script defer src="data.js"></script>

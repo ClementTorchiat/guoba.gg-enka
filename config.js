@@ -11678,6 +11678,7 @@ const CHARACTER_CONFIG = {
                 buffs: [
                     {
                         label: "1 Allié Géo (+15% DEF)",
+                        active: false,
                         stats: { def_: 0.15 }
                     },
                     {
@@ -11687,6 +11688,7 @@ const CHARACTER_CONFIG = {
                     },
                     {
                         label: "3 Alliés Géo (+45% DEF)",
+                        active: false,
                         stats: { def_: 0.45 }
                     }
                 ]
@@ -11703,10 +11705,12 @@ const CHARACTER_CONFIG = {
                     },
                     {
                         label: "2 Alliés Hydro (+120 EM)",
+                        active: false,
                         stats: { eleMas: 120 }
                     },
                     {
                         label: "3 Alliés Hydro (+180 EM)",
+                        active: false,
                         stats: { eleMas: 180 }
                     }
                 ]
@@ -11832,18 +11836,21 @@ const CHARACTER_CONFIG = {
                     },
                     {
                         label: "A1 : Équipe avec Hydro",
+                        active: false,
                         stats: {
                             elemental_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 },
                             hydro_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 }                        }
                     },
                     {
                         label: "A1 : Équipe avec Electro",
+                        active: false,
                         stats: {
                             elemental_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 },
                             electro_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 }                        }
                     },
                     {
                         label: "A1 : Équipe avec Cryo",
+                        active: false,
                         stats: {
                             elemental_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 },
                             cryo_dmg_bonus_scaling: { source: "atk", percent: 0.01, max: 25 }                        }
@@ -11856,21 +11863,25 @@ const CHARACTER_CONFIG = {
                 buffs: [
                     {
                         label: "C4 : Dispersion Pyro (+20% Anémo/Pyro)",
+                        active: true,
                         cons: 4,
                         stats: { anemo_dmg_: 0.20, pyro_dmg_: 0.20 }
                     },
                     {
                         label: "C4 : Dispersion Hydro (+20% Anémo/Hydro)",
+                        active: false,
                         cons: 4,
                         stats: { anemo_dmg_: 0.20, hydro_dmg_: 0.20 }
                     },
                     {
                         label: "C4 : Dispersion Électro (+20% Anémo/Électro)",
+                        active: false,
                         cons: 4,
                         stats: { anemo_dmg_: 0.20, electro_dmg_: 0.20 }
                     },
                     {
                         label: "C4 : Dispersion Cryo (+20% Anémo/Cryo)",
+                        active: false,
                         cons: 4,
                         stats: { anemo_dmg_: 0.20, cryo_dmg_: 0.20 }
                     },

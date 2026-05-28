@@ -1,13 +1,6 @@
-/* =========================================
-   SCRIPT PRINCIPAL (Version Finale : Set Trap & Level 90)
-   ========================================= */
-
-// --- 1. CONFIGURATION DES SVG ---
 const ICON_BASE_PATH = "./assets/simulator/icons/";
 
-// Associe la clé interne (ex: "hp_") au nom de ton fichier PNG
 const ICON_MAP = {
-    // Stats de base
     "hp": "icon_hp.png",
     "hp_": "icon_hp_percent.png",
     "atk": "icon_atk.png",
@@ -15,14 +8,12 @@ const ICON_MAP = {
     "def": "icon_def.png",
     "def_": "icon_def_percent.png",
 
-    // Stats avancées
     "eleMas": "icon_em.png",
     "enerRech_": "icon_er.png",
     "critRate_": "icon_crit_rate.png",
     "critDMG_": "icon_crit_dmg.png",
     "heal_": "icon_heal_bonus.png",
 
-    // Éléments
     "pyro_dmg_": "icon_pyro.png",
     "hydro_dmg_": "icon_hydro.png",
     "cryo_dmg_": "icon_cryo.png",
@@ -32,17 +23,14 @@ const ICON_MAP = {
     "dendro_dmg_": "icon_dendro.png",
     "physical_dmg_": "icon_physical.png",
 
-    // Types d'armes
-    "sword": "icon_sword.png",       // Épée à une main
-    "claymore": "icon_claymore.png", // Épée à deux mains
-    "pole": "icon_polearm.png",      // Arme d'hast
-    "bow": "icon_bow.png",           // Arc
-    "catalyst": "icon_catalyst.png", // Catalyseur
+    "sword": "icon_sword.png",
+    "claymore": "icon_claymore.png",
+    "pole": "icon_polearm.png",
+    "bow": "icon_bow.png",
+    "catalyst": "icon_catalyst.png",
 
-    // Score
     "score": "icon_score.png",
 
-    // Fallback (image par défaut si inconnu)
     "unknown": "icon_unknown.png"
 };
 
@@ -51,7 +39,6 @@ function createIcon(key) {
     return `<img src="${ICON_BASE_PATH}${filename}" class="stat-icon" alt="${key}">`;
 }
 
-// Fonction ultime : Trouve le nombre ET la valeur de chaque roll
 const KEY_TO_FIGHT_PROP = {
     'hp': 'FIGHT_PROP_HP',
     'hp_': 'FIGHT_PROP_HP_PERCENT',
@@ -65,11 +52,9 @@ const KEY_TO_FIGHT_PROP = {
     'eleMas': 'FIGHT_PROP_ELEMENT_MASTERY'
 };
 
-// Stats plate (pas de ×100)
 const FLAT_STATS = new Set(['hp', 'atk', 'def', 'eleMas']);
 
 function getRollDetails(key, value, rarity = 5) {
-    // Sélection des bonnes valeurs de référence selon la rareté
     const baseRollsDef = rarity === 4
         ? (window.BASE_ROLLS_4 || BASE_ROLLS_4)
         : (window.BASE_ROLLS || BASE_ROLLS);
@@ -109,7 +94,6 @@ function getRollCount(key, value, rarity = 5) {
 }
 
 
-// 2. MAPPINGS & DATA
 const ELEMENT_DATA = {
     "Fire": {id: 40, key: "pyro_dmg_"},
     "Water": {id: 42, key: "hydro_dmg_"},
@@ -127,7 +111,6 @@ const SUBSTAT_RANGES = {
     "atk": {min: 14, max: 19}, "hp": {min: 209, max: 299}, "def": {min: 16, max: 23}
 };
 
-// TAUX DE DROP MAINSTATS (Wiki Genshin)
 const MAINSTAT_DROP_RATES = {
     "EQUIP_SHOES": {"hp_": 26.68, "atk_": 26.66, "def_": 26.66, "enerRech_": 10.0, "eleMas": 10.0},
     "EQUIP_RING": {
@@ -571,9 +554,6 @@ const SLOT_POSSIBLE_MAIN_STATS = {
 
 let globalPersoData = [];
 
-// --- TRI DE LA SIDEBAR ---
-// column : 'original' | 'name' | 'score'
-// direction : 'desc' (ordre par défaut/décroissant) | 'asc' (inversé/croissant)
 let sidebarSortState = {column: 'original', direction: 'desc'};
 
 function setSidebarSort(column) {
@@ -583,7 +563,6 @@ function setSidebarSort(column) {
         sidebarSortState.column = column;
         sidebarSortState.direction = 'desc';
     }
-    // On récupère l'index original du perso actif pour le conserver après le tri
     const activeCard = document.querySelector('#sidebar-list .char-card.active');
     const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : 0;
     renderSidebar(activeOriginalIndex);
@@ -595,9 +574,7 @@ function updateSortArrows() {
         const section = document.getElementById(`sort-col-${col}`);
         if (!arrow || !section) return;
         const isActive = sidebarSortState.column === col;
-        // Opacité de la colonne
         section.style.opacity = isActive ? '1' : '0.4';
-        // Rotation de la flèche : vers le haut = 'asc', vers le bas = 'desc'
         arrow.style.transition = 'transform 0.2s ease';
         arrow.style.transform = (isActive && sidebarSortState.direction === 'asc') ? 'rotate(180deg)' : 'rotate(0deg)';
         arrow.style.opacity = isActive ? '1' : '0.4';
@@ -608,18 +585,26 @@ let charData = {};
 let locData = {};
 const apiSessionCache = {};
 
-// ==========================================
-// GESTION DU LOCALSTORAGE (Profils Récents)
-// ==========================================
 
-// 1. Lire l'historique
 function getRecentProfiles() {
     const data = localStorage.getItem('guoba_recent_profiles');
     return data ? JSON.parse(data) : [];
 }
 
-// 2. Sauvegarder un profil (Appelé à chaque recherche réussie)
-// 2. Sauvegarder un profil complet
+function getFavoriteUid() {
+    return localStorage.getItem('guoba_favorite_uid') || null;
+}
+function setFavoriteUid(uid) {
+    if (uid) localStorage.setItem('guoba_favorite_uid', uid);
+    else localStorage.removeItem('guoba_favorite_uid');
+}
+function toggleFavoriteProfile(uid, event) {
+    if (event) event.stopPropagation();
+    const current = getFavoriteUid();
+    setFavoriteUid(current === uid ? null : uid);
+    renderHome();
+}
+
 function saveRecentProfile(uid, playerInfo, profilePicUrl, bannerUrl) {
     let profiles = getRecentProfiles();
     profiles = profiles.filter(p => p.uid !== uid);
@@ -639,21 +624,25 @@ function saveRecentProfile(uid, playerInfo, profilePicUrl, bannerUrl) {
         timestamp: Date.now()
     });
 
-    if (profiles.length > 12) profiles.pop();
+    if (profiles.length > 12) {
+        const favUid = getFavoriteUid();
+        const removeIdx = profiles.map((p, i) => i).reverse().find(i => profiles[i].uid !== favUid);
+        if (removeIdx !== undefined) profiles.splice(removeIdx, 1);
+        else profiles.pop();
+    }
     localStorage.setItem('guoba_recent_profiles', JSON.stringify(profiles));
 }
 
-// 3. Supprimer un profil
 function deleteRecentProfile(uid, event) {
-    if (event) event.stopPropagation(); // Empêche de lancer la recherche quand on clique sur la croix
+    if (event) event.stopPropagation();
+    if (getFavoriteUid() === uid) setFavoriteUid(null);
     let profiles = getRecentProfiles();
     profiles = profiles.filter(p => p.uid !== uid);
     localStorage.setItem('guoba_recent_profiles', JSON.stringify(profiles));
-    renderHome(); // On rafraîchit l'affichage
+    renderHome();
 }
 
 function showSkeletonCard() {
-    // ── 1. SIDEBAR : 12 faux char-cards ───────────────────────────────────
     const sidebarList = document.getElementById('sidebar-list');
     if (sidebarList) {
         sidebarList.innerHTML = Array(12).fill(0).map(() => `
@@ -667,7 +656,6 @@ function showSkeletonCard() {
         `).join('');
     }
 
-    // ── 2. TOP HEADER AREA (global-evaluation + player-profile) ──────────
     let topHeader = document.getElementById('top-header-area');
     const pp = document.getElementById('player-profile');
     if (!topHeader && pp) {
@@ -696,7 +684,6 @@ function showSkeletonCard() {
         `;
     }
 
-    // ── 3. TOOLBAR CONTROLS (dropdown build + équipe + ER) ───────────────
     const toolbar = document.getElementById('toolbar-controls');
     const menu = document.querySelector('.main-content-menu');
     if (menu) menu.style.display = 'flex';
@@ -712,11 +699,9 @@ function showSkeletonCard() {
         `;
     }
 
-    // ── 4. MAIN CONTAINER : la .top-row (856px) ───────────────────────────
     const container = document.getElementById('main-container');
     if (!container) return;
 
-    // 9 lignes de stats (colonne milieu, panel stats de base)
     const statRows = Array(9).fill(0).map(() => `
         <div style="display:flex; align-items:center; gap:8px; height:20px;">
             <div class="sk" style="width:18px; height:18px; border-radius:50%;"></div>
@@ -725,7 +710,6 @@ function showSkeletonCard() {
         </div>
     `).join('');
 
-    // 5 lignes de stats combat
     const combatRows = Array(5).fill(0).map(() => `
         <div style="display:flex; align-items:center; gap:8px; height:18px;">
             <div class="sk" style="width:18px; height:18px; border-radius:50%;"></div>
@@ -734,7 +718,6 @@ function showSkeletonCard() {
         </div>
     `).join('');
 
-    // 5 cartes artéfacts (240×280, grille 2 colonnes)
     const artifactCards = Array(5).fill(0).map(() => `
         <div style="width:240px; min-width:240px; height:280px; border:1px solid #2d3342; border-radius:8px; padding:12px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
             <div style="display:flex; gap:12px; align-items:center; height:50px;">
@@ -770,7 +753,6 @@ function showSkeletonCard() {
         </div>
     `).join('');
 
-    // 1 carte buffs (240×280)
     const buffsCard = `
         <div style="width:240px; min-width:240px; height:280px; border:1px solid #2d3342; border-radius:8px; padding:12px; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;">
             <div class="sk" style="height:14px; width:60%;"></div>
@@ -948,80 +930,59 @@ async function loadGameData() {
     }
 }
 
-// ==========================================
-// GESTION DE LA BARRE DE RECHERCHE (Loupe / Croix)
-// ==========================================
 function toggleSearchIcon(isLoaded) {
     const searchBtn = document.getElementById('searchBtn');
     if (!searchBtn) return;
 
     if (isLoaded) {
-        // Mode "CROIX" (On a chargé un compte)
         searchBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
         searchBtn.onclick = clearSearch;
     } else {
-        // Mode "LOUPE" (État de base)
         searchBtn.innerHTML = `<img src="assets/simulator/icons/icon_search_white.svg" alt="Valider" style="width: 20px; height: 20px;">`;
         searchBtn.onclick = () => fetchUserData();
     }
 }
 
 function clearSearch() {
-    // 1. Vider le champ de texte
     const uidInput = document.getElementById('uidInput');
     if (uidInput) uidInput.value = '';
-
-    // 2. Nettoyer l'URL (On retire le ?uid=... de la barre d'adresse)
     window.history.pushState({}, '', window.location.pathname);
-
-    // 3. Vider la barre latérale des personnages
     globalPersoData = [];
     sidebarSortState = {column: 'original', direction: 'desc'};
     const sidebar = document.getElementById('sidebar-list');
     if (sidebar) sidebar.innerHTML = '';
     updateSortArrows();
 
-    // 4. Vider le profil du joueur en haut à droite
     const playerProfile = document.getElementById('player-profile');
     if (playerProfile) playerProfile.innerHTML = '';
 
-    // --- NOUVEAU : Cacher l'évaluation globale ---
     const evalContainer = document.getElementById('global-evaluation');
     if (evalContainer) evalContainer.style.display = 'none';
 
     const topHeader = document.getElementById('top-header-area');
     if (topHeader) topHeader.style.display = 'none';
-    // ----------------------------------------------
 
-    // 5. Remettre l'icône de loupe
     toggleSearchIcon(false);
 
-    // 6. Afficher la page d'accueil (les comptes récents)
     renderHome();
 }
 
 async function fetchUserData(optionalUid) {
-    // 1. On prend l'UID passé en paramètre (via l'URL) ou dans l'input
     const uid = (optionalUid || document.getElementById('uidInput').value).trim();
     if (!uid) return alert("UID manquant");
 
-    // Validation du format UID (9 ou 10 chiffres)
     if (!/^\d{9,10}$/.test(uid)) {
         return alert("L'UID doit être un nombre de 9 ou 10 chiffres.\nVérifiez votre identifiant en jeu (Menu Paimon > Profil).");
     }
 
-    // Bloquer si les données de jeu ne sont pas encore prêtes
     if (!gameDataReady) {
         return alert("Les données du jeu sont encore en cours de chargement.\nPatientez quelques secondes puis réessayez.");
     }
 
-    // 2. On met à jour l'URL silencieusement
     window.history.pushState({}, '', `?uid=${uid}`);
 
     const loader = document.getElementById('loading-msg');
 
-    // --- NOUVEAU : SYSTÈME DE CACHE LOCAL ---
-    // Si on a déjà chargé cet UID il y a moins de 5 minutes (300 000 ms)
     if (apiSessionCache[uid] && (Date.now() - apiSessionCache[uid].timestamp < 180000)) {
         console.log("⚡ Chargement instantané depuis le cache !");
         const cachedData = apiSessionCache[uid].data;
@@ -1029,12 +990,11 @@ async function fetchUserData(optionalUid) {
         renderPlayerProfile(cachedData.playerInfo, uid);
         renderGlobalEvaluation(cachedData.playerInfo);
         toggleSearchIcon(true);
-        return; // On arrête la fonction ici, pas besoin du réseau !
+        return;
     }
 
     showSkeletonCard();
 
-    // ----------------------------------------
 
     if (loader) loader.innerText = "Récupération...";
 
@@ -1058,7 +1018,6 @@ async function fetchUserData(optionalUid) {
 
         const data = await res.json();
 
-        //Sécurité vitrine vide
         if (!data.avatarInfoList || data.avatarInfoList.length === 0) {
             alert("La vitrine de ce compte est vide ou privée !\nVeuillez ajouter des personnages et activer l'option 'Afficher les détails des personnages' en jeu.");
 
@@ -1070,19 +1029,17 @@ async function fetchUserData(optionalUid) {
             return;
         }
 
-        // --- NOUVEAU : ON SAUVEGARDE EN CACHE ---
         apiSessionCache[uid] = {
             data: data,
             timestamp: Date.now()
         };
-        // ----------------------------------------
 
         processData(data);
         renderPlayerProfile(data.playerInfo, uid);
 
         renderGlobalEvaluation(data.playerInfo);
 
-        if (loader) loader.innerText = ""; // Succès
+        if (loader) loader.innerText = "";
         toggleSearchIcon(true);
 
     } catch (e) {
@@ -1108,13 +1065,11 @@ function renderPlayerProfile(playerInfo, uid) {
     const container = document.getElementById('player-profile');
     if (!container || !playerInfo) return;
 
-    // --- Bannière ---
     const namecardsData = window.namecardsData || {};
     const namecard = namecardsData[String(playerInfo.nameCardId)];
     let bannerUrl = '';
     if (namecard && namecard.Icon) bannerUrl = `https://enka.network${namecard.Icon}`;
 
-    // --- Photo de profil (pfps.json > charData fallback) ---
     let profilePicUrl = 'https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png';
     const pp = playerInfo.profilePicture || {};
     if (pp.id) {
@@ -1134,7 +1089,6 @@ function renderPlayerProfile(playerInfo, uid) {
         }
     }
 
-    // --- Serveur depuis le premier chiffre de l'UID ---
     const serverMap = {
         '1': 'CN',
         '2': 'CN',
@@ -1148,7 +1102,6 @@ function renderPlayerProfile(playerInfo, uid) {
     };
     const server = serverMap[String(uid)[0]] || 'CN';
 
-    // --- Stats (noms de champs confirmés via Discord Enka) ---
     const nickname = playerInfo.nickname || 'Joueur inconnu';
     const signature = playerInfo.signature || '';
     const ar = playerInfo.level || 0;
@@ -1159,12 +1112,10 @@ function renderPlayerProfile(playerInfo, uid) {
     const stygianSec = (playerInfo.stygianSeconds > 0) ? playerInfo.stygianSeconds : null;
 
     saveRecentProfile(uid, playerInfo, profilePicUrl, bannerUrl);
-    // --- Icône Stygian dynamique ---
     const ICON = './assets/simulator/icons/';
 
     function stygianIcon() {
         if (stygianIndex === null) return '';
-        // Cas spécial : index 6 ET temps < 180s
         if (stygianIndex === 6 && stygianSec !== null && stygianSec < 180) {
             return `<img src="${ICON}stygian_difficulty_6_minus_180.webp" class="pp-icon" alt="stygian">`;
         }
@@ -1174,7 +1125,6 @@ function renderPlayerProfile(playerInfo, uid) {
         return '';
     }
 
-    // --- Ligne 1 : infos générales (toujours visible) ---
     const row1 = [
         `<span class="pp-badge pp-badge-server">${server}</span>`,
         achievements !== null
@@ -1183,7 +1133,6 @@ function renderPlayerProfile(playerInfo, uid) {
         ar ? `<span class="pp-badge pp-badge-ar">AR${ar}</span>` : '',
     ].filter(Boolean).join('');
 
-    // --- Ligne 2 : activités (omise si aucun champ présent) ---
     const row2Items = [
         stygianSec !== null
             ? `<span class="pp-badge pp-badge-stygian">${stygianIcon()}${stygianSec}s</span>`
@@ -1239,12 +1188,10 @@ function formatValueDisplay(key, val) {
 }
 
 function formatStat(propId, value) {
-    // 1. Mapping de la clé (inchangé)
     let key = STAT_MAPPING[propId];
     if (!key && (STAT_LABELS[propId] || propId === 'dmgBonus')) key = propId;
     if (!key) return {key: "unknown", value: value, label: propId, icon: createIcon("unknown")};
 
-    // 2. Gestion des pourcentages (inchangé)
     let val = value;
     let isPercent = false;
     if (key.endsWith('_') || ['critRate_', 'critDMG_', 'enerRech_', 'heal_'].includes(key)) {
@@ -1252,7 +1199,6 @@ function formatStat(propId, value) {
         if (val < 1.0) val = val * 100;
     }
 
-    // 3. Génération de l'image (NOUVEAU)
     const iconHtml = createIcon(key);
 
     const label = STAT_LABELS[key] || key;
@@ -1261,13 +1207,11 @@ function formatStat(propId, value) {
         key,
         value: val,
         label,
-        icon: iconHtml, // Contient maintenant la balise <img>
+        icon: iconHtml,
         isPercent
     };
 }
 
-// --- LOGIQUE CALCUL BONUS ---
-// --- LOGIQUE CALCUL BONUS ---
 function calculateBuffedStats(baseStats, currentStats, buffsList) {
     let buffed = {...currentStats};
     buffsList.forEach(buff => {
@@ -1346,78 +1290,61 @@ function toggleBuff(charIndex, buffIndex) {
     const p = globalPersoData[charIndex];
     if (!p) return;
 
-    // 1. Sauvegarde du scroll (inchangé)
     let currentScroll = 0;
-    const scrollContainer = document.querySelector('.card-buff-list-container');
+    const scrollContainer = document.querySelector('.equipment-area .card-buff-list-container');
     if (scrollContainer) currentScroll = scrollContainer.scrollTop;
 
-    // --- NOUVELLE LOGIQUE ---
     const targetBuff = p.buffs[buffIndex];
     const mode = targetBuff.selectMode || 'standard';
 
-    // On calcule le futur état désiré (si c'était un simple toggle)
     const willBeActive = !targetBuff.active;
 
     if (mode === 'exclusive') {
-        // Mode EXCLUSIF (Radio) : Si on active, on désactive les autres du même groupe
         if (willBeActive) {
             p.buffs.forEach(b => {
                 if (b.category === targetBuff.category) b.active = false;
             });
             targetBuff.active = true;
         } else {
-            // Optionnel : permettre de tout décocher (toggle) ou forcer un choix (radio pur).
-            // Ici je laisse la possibilité de décocher (toggle).
             targetBuff.active = false;
         }
     } else if (mode === 'cumulative') {
-        // Mode CUMULATIF (Escalier)
-        // On récupère tous les buffs de ce set pour trouver l'ordre
         const groupBuffs = p.buffs.filter(b => b.category === targetBuff.category);
         const targetIndexInGroup = groupBuffs.indexOf(targetBuff);
 
         if (willBeActive) {
-            // Si j'active le niveau 3, je force l'activation du 1 et 2
             groupBuffs.forEach((b, idx) => {
                 if (idx <= targetIndexInGroup) b.active = true;
             });
         } else {
-            // Si je désactive le niveau 1, je force la désactivation du 2 et 3
             groupBuffs.forEach((b, idx) => {
                 if (idx >= targetIndexInGroup) b.active = false;
             });
         }
     } else {
-        // Mode STANDARD (Comportement actuel)
         targetBuff.active = willBeActive;
     }
-    // -------------------------
 
     p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
     renderShowcase(charIndex);
 
-    // Restauration du scroll (inchangé)
     setTimeout(() => {
-        const newContainer = document.querySelector('.card-buff-list-container');
+        const newContainer = document.querySelector('.equipment-area .card-buff-list-container');
         if (newContainer) newContainer.scrollTop = currentScroll;
     }, 0);
 }
 
-// --- FONCTIONS COACHING ---
 function generateScoreBar(totalRolls, currentGrade, maxPossibleRolls = 45) {
     if (maxPossibleRolls <= 0) maxPossibleRolls = 45;
-    // 1. Sécurité : On récupère le plafond dynamique (ex: 42 ou 38)
     const maxScale = maxPossibleRolls || 45;
     const percent = Math.min((totalRolls / maxScale) * 100, 100);
 
-    // 2. La liste de tous tes rangs (NOUVEAU : ARCHON affiche sa valeur dynamiquement !)
     const labels = [
         "F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+",
         "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", `ARCHON (${maxScale})`
     ];
 
-    // 3. Calcul proportionnel
-    const steps = labels.length - 1; // 18 intervalles
+    const steps = labels.length - 1;
     const interval = maxScale / steps;
 
     let markers = labels.map((label, index) => ({
@@ -1425,7 +1352,6 @@ function generateScoreBar(totalRolls, currentGrade, maxPossibleRolls = 45) {
         label: label
     }));
 
-    // 4. Génération HTML des marqueurs
     let markersHtml = "";
     markers.forEach(m => {
         const left = (m.val / maxScale) * 100;
@@ -1454,7 +1380,6 @@ function calculateMaxTheoreticalScore(persoObj, config) {
 
     const forbiddenSubStats = ["heal_", "physical_dmg_"];
 
-    // 1. On trie les poids uniquement pour les SUBSTATS
     const sortedSubWeights = Object.entries(config.weights)
         .filter(([key, w]) => w > 0 && !key.includes("_dmg_") && !forbiddenSubStats.includes(key))
         .sort((a, b) => b[1] - a[1]);
@@ -1463,22 +1388,18 @@ function calculateMaxTheoreticalScore(persoObj, config) {
 
     let maxTotalRolls = 0;
 
-    // 2. On génère les 5 artéfacts ABSOLUS
     let perfectArtefacts = persoObj.artefacts.map(art => {
 
-        let idealMainStatKey = art.mainStat.key; // Fallback par défaut
+        let idealMainStatKey = art.mainStat.key;
 
         if (art.type === "EQUIP_BRACER") {
-            idealMainStatKey = "hp"; // Fleur
+            idealMainStatKey = "hp";
         } else if (art.type === "EQUIP_NECKLACE") {
-            idealMainStatKey = "atk"; // Plume
+            idealMainStatKey = "atk";
         } else {
-            // NOUVEAU : On lit les instructions claires du Game Designer !
             if (config.idealMainStats && config.idealMainStats[art.type] && config.idealMainStats[art.type].length > 0) {
-                // On prend le Graal absolu (le premier élément du tableau)
                 idealMainStatKey = config.idealMainStats[art.type][0];
             } else {
-                // Filet de sécurité si tu as oublié de définir idealMainStats
                 const possibleMains = SLOT_POSSIBLE_MAIN_STATS[art.type] || [];
                 let bestW = -1;
                 possibleMains.forEach(stat => {
@@ -1495,14 +1416,12 @@ function calculateMaxTheoreticalScore(persoObj, config) {
 
         const perfectMainStat = {
             key: idealMainStatKey,
-            value: 0, // Inutile, scoring.js n'utilise que la clé et le weight pour la mainstat
+            value: 0,
             label: STAT_LABELS[idealMainStatKey] || idealMainStatKey
         };
 
-        // RÈGLE 1 : Exclusion de la Main Stat Parfaite des substats
         const availableStats = sortedSubWeights.filter(sw => sw[0] !== perfectMainStat.key);
 
-        // RÈGLE 2 & 3 : 4 Substats max, 6 procs sur la meilleure dispo
         const topStats = availableStats.slice(0, 4);
         let fakeSubStats = [];
 
@@ -1514,7 +1433,6 @@ function calculateMaxTheoreticalScore(persoObj, config) {
             });
             maxTotalRolls += 6;
 
-            // RÈGLE 4 : 1 proc sur les autres
             for (let i = 1; i < topStats.length; i++) {
                 fakeSubStats.push({
                     key: topStats[i][0],
@@ -1527,7 +1445,6 @@ function calculateMaxTheoreticalScore(persoObj, config) {
         return {...art, subStats: fakeSubStats, mainStat: perfectMainStat};
     });
 
-    // 3. On calcule le score de ce set divin via ton propre moteur de calcul
     let fakePerso = {...persoObj, artefacts: perfectArtefacts, isSimulation: true};
     let simulation = calculateCharacterScore(fakePerso, config);
 
@@ -1597,12 +1514,10 @@ function getSetRecommendation(activeSets, config) {
     return {type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.`};
 }
 
-// CONSEIL MAINSTAT
 function getMainStatAdvice(persoObj, config) {
     const slotsToCheck = ["EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
     let warnings = [];
 
-    // Sécurité : si tu as oublié de configurer idealMainStats, on ne dit rien pour éviter de planter
     if (!config.idealMainStats) return null;
 
     persoObj.artefacts.forEach(art => {
@@ -1611,11 +1526,9 @@ function getMainStatAdvice(persoObj, config) {
         const currentKey = art.mainStat.key;
         const allowedMainStats = config.idealMainStats[art.type] || [];
 
-        // Si la stat actuelle de la pièce n'est pas dans la liste des stats idéales de ton JSON
         if (!allowedMainStats.includes(currentKey)) {
             const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
 
-            // On traduit les clés (ex: "atk_") en textes propres ("ATQ %")
             const cleanList = allowedMainStats.map(statKey => STAT_LABELS[statKey] || statKey).join(" / ");
 
             warnings.push({
@@ -1626,7 +1539,6 @@ function getMainStatAdvice(persoObj, config) {
         }
     });
 
-    // RETOUR
     if (warnings.length > 0) {
         return {
             type: "critical",
@@ -1642,50 +1554,40 @@ function getMainStatAdvice(persoObj, config) {
     }
 }
 
-// Calcul Difficulté Farming
 function getFarmDifficulty(pieceType, mainStatKey) {
-    // Si c'est Fleur ou Plume -> Facile (Stat fixe)
     if (pieceType === "EQUIP_BRACER" || pieceType === "EQUIP_NECKLACE") {
-        return {label: "Facile", color: "#3b82f6"}; // Vert
+        return {label: "Facile", color: "#3b82f6"};
     }
 
     const rates = MAINSTAT_DROP_RATES[pieceType];
-    if (!rates || !rates[mainStatKey]) return {label: "Relativement difficile", color: "#eab308"}; // Default
+    if (!rates || !rates[mainStatKey]) return {label: "Relativement difficile", color: "#eab308"};
 
     const probability = rates[mainStatKey];
 
-    if (probability >= 19) return {label: "Relativement facile", color: "#22c55e"}; // Vert (>20%)
-    if (probability >= 10) return {label: "Relativement difficile", color: "#eab308"}; // Jaune (10-20%)
-    if (probability >= 5) return {label: "Difficile", color: "#f97316"}; // Orange (5-10%)
-    return {label: "Très difficile", color: "#ef4444"}; // Rouge (<5%)
+    if (probability >= 19) return {label: "Relativement facile", color: "#22c55e"};
+    if (probability >= 10) return {label: "Relativement difficile", color: "#eab308"};
+    if (probability >= 5) return {label: "Difficile", color: "#f97316"};
+    return {label: "Très difficile", color: "#ef4444"};
 }
 
-// ANALYSE OFF-PIECE (Avec nom de la pièce)
 function getOffPieceAdvice(persoObj) {
-    // --- CAS 4 : DÉTECTION DU 5 PIÈCES (FULL SET) ---
     const fullSetKey = Object.keys(persoObj.setsCounter).find(key => persoObj.setsCounter[key] === 5);
 
     if (fullSetKey) {
-        // 1. On récupère les 5 pièces
         const setPieces = persoObj.artefacts.filter(art => art.setKey === fullSetKey);
         setPieces.sort((a, b) => (a.score || 0) - (b.score || 0));
         const worstPiece = setPieces[0];
 
-        // 2. Nom de la pièce (ex: Sablier)
         const rawName = ARTIFACT_TYPE_MAPPING[worstPiece.type] || "Pièce";
 
-        // 3. TRADUCTION DU NOM DU SET (La nouveauté)
-        // On cherche la clé Française qui a pour valeur 'fullSetKey' dans ton mapping global
         const setNameFR = Object.keys(SET_NAME_MAPPING).find(k => SET_NAME_MAPPING[k] === fullSetKey) || fullSetKey;
 
         return {
             type: "info",
-            // On utilise setNameFR ici au lieu de fullSetKey
             msg: `Vous utilisez 5 pièces du set <b>${setNameFR}</b>. Votre <b style="color: #aaa;">${rawName}</b> étant statistiquement la plus faible (Score: ${Math.round(worstPiece.score || 0)}), vous devriez la remplacer par une meilleure pièce hors-set.`
         };
     }
 
-    // --- LOGIQUE ORIGINALE ---
     let offPiece = null;
     let setPiecesScores = [];
 
@@ -1723,7 +1625,6 @@ function getOffPieceAdvice(persoObj) {
     }
 }
 
-// CONSEIL TALENTS
 function getTalentAdvice(persoObj, config) {
     if (!config.talents) return null;
     const target = config.talents;
@@ -1770,12 +1671,9 @@ function getTalentAdvice(persoObj, config) {
     return advices;
 }
 
-// NOUVEAU : Détection Forçage de Set
-// 4. FORÇAGE DE SET (Mis à jour : Détection "Aime le 2p/2p")
-function getSetForcingAdvice(persoObj, config) { // <-- Ajout de config ici
+function getSetForcingAdvice(persoObj, config) {
     let active4pSet = null;
 
-    // Vérifie si le perso a un build 2p/2p dans ses "bestSets" (contient ":2")
     const charLikes2p2p = config.bestSets && config.bestSets.some(setStr => setStr.includes(":2"));
 
     for (const [setKey, count] of Object.entries(persoObj.setsCounter)) {
@@ -1785,7 +1683,6 @@ function getSetForcingAdvice(persoObj, config) { // <-- Ajout de config ici
         }
     }
 
-    // Cas 1 : Pas de set 4p (Le joueur est en 2p/2p ou Rainbow)
     if (!active4pSet) {
         if (charLikes2p2p) {
             return {
@@ -1801,7 +1698,6 @@ function getSetForcingAdvice(persoObj, config) { // <-- Ajout de config ici
         };
     }
 
-    // Cas 2 : Set 4p actif -> On vérifie la qualité
     const setPieces = persoObj.artefacts.filter(a => a.setKey === active4pSet);
     const totalScore = setPieces.reduce((sum, art) => sum + art.score, 0);
     const avgScore = totalScore / setPieces.length;
@@ -1827,12 +1723,9 @@ function getSetForcingAdvice(persoObj, config) { // <-- Ajout de config ici
     }
 }
 
-// 5. CONSEIL MÉTA SET (Best in Slot)
-// 5. CONSEIL MÉTA SET (Best vs Good vs Bad)
 function getMetaSetAdvice(persoObj, config) {
     if (!config.bestSets || config.bestSets.length === 0) return null;
 
-    // Helper pour vérifier si un set de la liste est équipé
     const isSetEquipped = (setList) => {
         if (!setList) return false;
         return setList.some(setStr => {
@@ -1841,7 +1734,6 @@ function getMetaSetAdvice(persoObj, config) {
         });
     };
 
-    // 1. CAS : BEST SET (Le joueur a un des meilleurs sets)
     if (isSetEquipped(config.bestSets)) {
         return {
             type: "success",
@@ -1850,23 +1742,20 @@ function getMetaSetAdvice(persoObj, config) {
         };
     }
 
-    // Préparation du nom du set recommandé (Le Top 1 des bestSets)
     const [recKey, recCount] = config.bestSets[0].split(":");
     const recNameFR = Object.keys(SET_NAME_MAPPING).find(k => SET_NAME_MAPPING[k] === recKey) || recKey;
     const recommendationStr = `<b>${recNameFR} (${recCount} pièces)</b>`;
 
-    // 2. CAS : GOOD SET (Le joueur a un set alternatif viable)
     if (isSetEquipped(config.goodSets)) {
         return {
-            type: "info", // Bleu
+            type: "info",
             title: "Optimisation du set d'artéfacts",
             msg: `Votre set actuel est correct, mais pour maximiser le build, le set d'artéfacts recommandé est : ${recommendationStr}.`
         };
     }
 
-    // 3. CAS : MAUVAIS SET (Ni Best, Ni Good)
     return {
-        type: "warning", // Jaune/Orange
+        type: "warning",
         title: "Problème de set d'artéfacts",
         msg: `Votre set d'artéfacts actuel ne correspond pas aux standards du personnage. Vous devriez opter pour le set d'artéfacts ${recommendationStr}.`
     };
@@ -1877,13 +1766,13 @@ function getWeaponAdvice(persoObj) {
 
     if (persoObj.weapon.level < 90) {
         return {
-            type: "warning", // Orange/Rouge
+            type: "warning",
             title: "Niveau de l'arme",
             msg: `Améliorez votre arme au niveau 90 pour maximiser son ATQ de base et sa statistique additionnelle.`
         };
     } else {
         return {
-            type: "success", // Vert
+            type: "success",
             title: "Niveau de l'arme",
             msg: `Votre arme est au niveau maximum.`
         };
@@ -1891,7 +1780,6 @@ function getWeaponAdvice(persoObj) {
 }
 
 function getERAdvice(currentER, targetER) {
-    // On tolère un écart de +/- 10% comme étant "Parfait"
     const diff = currentER - targetER;
 
     if (diff >= -10 && diff <= 15) {
@@ -1904,7 +1792,7 @@ function getERAdvice(currentER, targetER) {
 
     if (diff < -10) {
         return {
-            type: "warning", // Ou 'critical' si diff < -30
+            type: "warning",
             title: "Manque de Recharge d'Énergie",
             msg: `Vous avez ${currentER.toFixed(0)}% d'ER, mais cet archétype demande environ <b>${targetER}%</b>. Vos rotations risquent de bloquer.`
         };
@@ -1919,17 +1807,16 @@ function getERAdvice(currentER, targetER) {
     }
 }
 
-// NOUVEAU : Conseil Niveau 90
 function getLevelAdvice(persoObj) {
     if (persoObj.level < 90) {
         return {
-            type: "info", // Bleu/Info
+            type: "info",
             title: "Niveau du Personnage",
             msg: `Améliorez votre personnage au niveau 90 pour maximiser ses statistiques.`
         };
     } else {
         return {
-            type: "success", // Vert
+            type: "success",
             title: "Niveau du Personnage",
             msg: `Votre personnage est au niveau maximum.`
         };
@@ -1943,7 +1830,6 @@ function calculateRollDistribution(persoObj, config) {
     let usefulCount = 0;
     let deadCount = 0;
 
-    // Objets pour compter chaque type de stat individuellement
     let usefulMap = {};
     let deadMap = {};
 
@@ -1954,7 +1840,6 @@ function calculateRollDistribution(persoObj, config) {
 
             const rolls = getRollCount(sub.key, sub.value, art.stars || 5);
 
-            // On ignore les stats qui n'ont aucun roll (ce qui ne devrait pas arriver avec getRollCount mais sécurité)
             if (rolls > 0) {
                 if (w && w > 0) {
                     usefulCount += rolls;
@@ -1967,7 +1852,6 @@ function calculateRollDistribution(persoObj, config) {
         });
     });
 
-    // Helper pour transformer la Map en Tableau trié par nombre de rolls décroissant
     const toSortedArray = (map) => {
         return Object.entries(map)
             .map(([key, count]) => ({
@@ -2009,7 +1893,6 @@ function calculateDeadRolls(persoObj, config) {
     return {count: deadRolls, details: details};
 }
 
-// DÉTECTEUR DE VOL D'ARTÉFACTS (Cross-Check)
 function getAllCrossCheckAdvice(charIndex) {
     const SLOT_ORDER = ["EQUIP_BRACER", "EQUIP_NECKLACE", "EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
     const currChar = globalPersoData[charIndex];
@@ -2033,14 +1916,12 @@ function getAllCrossCheckAdvice(charIndex) {
             otherChar.artefacts.forEach(otherArt => {
                 if (otherArt.type !== slotType) return;
 
-                // Sécurité 1 : stat principale utile pour ce perso
                 let mWeight = scoringConfig.weights[otherArt.mainStat.key];
                 if (mWeight === undefined && otherArt.mainStat.key.includes("_dmg_")) {
                     mWeight = scoringConfig.weights["elemental_dmg_"];
                 }
                 if (!mWeight || mWeight < 1) return;
 
-                // Sécurité 2 : protection du set 4 pièces
                 if (active4pSet) {
                     const isCurrArtSetPiece = (currArt.setKey === active4pSet);
                     if (isCurrArtSetPiece && active4pCount === 4) {
@@ -2048,7 +1929,6 @@ function getAllCrossCheckAdvice(charIndex) {
                     }
                 }
 
-                // Simulation du score avec la nouvelle pièce
                 const clonedOtherArt = JSON.parse(JSON.stringify(otherArt));
                 const fakeArtefacts = currChar.artefacts.map(a => ({...a}));
                 fakeArtefacts[currArtIndex] = clonedOtherArt;
@@ -2062,7 +1942,6 @@ function getAllCrossCheckAdvice(charIndex) {
 
                     maxDiff = diff;
 
-                    // Simulation pour le personnage donneur
                     const otherScoringConfig = {...otherChar.charConfig, ...(otherChar.activeBuild || {})};
                     const fakeOtherArtefacts = otherChar.artefacts.map(a => ({...a}));
                     const otherArtIndex = otherChar.artefacts.findIndex(a => a.type === slotType);
@@ -2070,7 +1949,6 @@ function getAllCrossCheckAdvice(charIndex) {
                     const fakeOtherPerso = {...otherChar, artefacts: fakeOtherArtefacts};
                     const newOtherEval = calculateCharacterScore(fakeOtherPerso, otherScoringConfig);
 
-                    // Deltas de sous-stats
                     const currSubMap = {};
                     currArt.subStats.forEach(s => {
                         currSubMap[s.key] = s.value;
@@ -2110,53 +1988,41 @@ function getAllCrossCheckAdvice(charIndex) {
     });
 }
 
-// CALCUL DU COÛT EN RÉSINE ET EN TEMPS
 function getResinCostEstimate(pieceType, mainStatKey, currentScore) {
-    // 1. Probabilité d'obtenir la bonne pièce (Fleur, Plume, etc.) = 20% (0.2)
-    // Probabilité d'obtenir le bon set = 50% (0.5) (Sans compter la synthèse pour simplifier)
     const pSetAndPiece = 0.5 * 0.2;
 
-    // 2. Probabilité d'obtenir la bonne stat principale
-    let pMainStat = 1.0; // 100% pour Fleur et Plume
+    let pMainStat = 1.0;
     if (pieceType !== "EQUIP_BRACER" && pieceType !== "EQUIP_NECKLACE") {
         const rates = MAINSTAT_DROP_RATES[pieceType];
         if (rates && rates[mainStatKey]) {
-            pMainStat = rates[mainStatKey] / 100; // Conversion % en décimale
+            pMainStat = rates[mainStatKey] / 100;
         } else {
-            pMainStat = 0.05; // Fallback générique à 5% si introuvable
+            pMainStat = 0.05;
         }
     }
 
-    // 3. Calcul du nombre d'artéfacts 5★ nécessaires EN MOYENNE pour avoir la base
     const expectedArtifacts = 1 / (pSetAndPiece * pMainStat);
 
-    // 4. Coût en résine de base (1 artéfact 5★ garanti = 20 résines environ)
     let baseResin = expectedArtifacts * 20;
 
-    // 5. Multiplicateur d'exigence (Courbe exponentielle selon le score à battre)
-    // Plus le score actuel est haut, plus il faut relancer les dés pour faire MIEUX.
-    // Un score de 20 est notre "normale" (multiplicateur x1)
-    let safeScore = Math.max(10, currentScore); // On cap à 10 minimum pour éviter les coûts à 0
+    let safeScore = Math.max(10, currentScore);
     let difficultyMultiplier = Math.pow(safeScore / 20, 2.5);
 
-    // 6. Calcul final
     const totalResin = Math.round(baseResin * difficultyMultiplier);
-    const daysOfFarm = Math.ceil(totalResin / 180); // 180 résines par jour
+    const daysOfFarm = Math.ceil(totalResin / 180);
 
-    // 7. Formatage de l'affichage (ex: 1.2k, 15k)
     let formattedResin = totalResin > 1000 ? (totalResin / 1000).toFixed(1) + 'k' : totalResin;
 
     return {
         resin: formattedResin,
         days: daysOfFarm,
-        rawResin: totalResin // Utile pour du tri si besoin
+        rawResin: totalResin
     };
 }
 
 function getPriorities(persoObj) {
     if (!persoObj.artefacts || persoObj.artefacts.length === 0) return [];
 
-    // 1. On identifie les Sets Actifs (ceux qui ont au moins 2 pièces équipées)
     const activeSets = Object.keys(persoObj.setsCounter || {}).filter(key => persoObj.setsCounter[key] >= 2);
 
     const sorted = [...persoObj.artefacts].sort((a, b) => a.score - b.score);
@@ -2164,7 +2030,6 @@ function getPriorities(persoObj) {
     return sorted.slice(0, 3).map(art => {
         const typeName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
 
-        // 2. Si le set de l'artéfact n'est pas dans les sets actifs, c'est un Off-Set
         const isOffPiece = !activeSets.includes(art.setKey);
 
         return {
@@ -2176,7 +2041,7 @@ function getPriorities(persoObj) {
             mainKey: art.mainStat.key,
             setName: art.setName,
             mainLabel: art.mainStat.label,
-            isOffPiece: isOffPiece // <--- On ajoute l'info ici
+            isOffPiece: isOffPiece
         };
     });
 }
@@ -2206,7 +2071,6 @@ function calculateRNGQuality(persoObj, config) {
     return count > 0 ? (totalPct / count) * 100 : 0;
 }
 
-// --- FONCTION CORRIGÉE : SIMULATION POTENTIEL CACHÉ ---
 function simulateDeadStatReplacements(persoObj, config) {
     if (!config || !config.weights) return [];
     let suggestions = [];
@@ -2215,16 +2079,13 @@ function simulateDeadStatReplacements(persoObj, config) {
         let deadStats = [];
         let presentStats = new Set();
 
-        // 1. Identifier les stats mortes et les stats présentes
         art.subStats.forEach(sub => {
             presentStats.add(sub.key);
             let w = config.weights[sub.key];
             if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
 
-            // Si le poids est 0 ou indéfini, c'est une stat morte
             if (!w || w === 0) {
                 const rolls = getRollCount(sub.key, sub.value, art.stars || 5);
-                // On ne simule que s'il y a eu au moins un roll dedans (sinon c'est juste une stat de base)
                 if (rolls > 0) {
                     deadStats.push({
                         key: sub.key,
@@ -2237,23 +2098,21 @@ function simulateDeadStatReplacements(persoObj, config) {
 
         if (deadStats.length === 0) return;
 
-        // 2. Identifier les stats cibles (CORRECTION ICI : On prend tout ce qui est utile > 0)
         const desiredStats = Object.entries(config.weights)
-            .filter(([key, w]) => w > 0) // Avant c'était w > 0.5, maintenant c'est n'importe quel gain positif
-            .sort((a, b) => b[1] - a[1]) // On trie par importance (Poids le plus haut en premier)
+            .filter(([key, w]) => w > 0)
+            .sort((a, b) => b[1] - a[1])
             .map(([key]) => key);
 
-        deadStats.sort((a, b) => b.rolls - a.rolls); // On traite les plus gros gâchis en premier
+        deadStats.sort((a, b) => b.rolls - a.rolls);
 
         let replacements = [];
         let usedTargets = new Set(presentStats);
 
         deadStats.forEach(dead => {
-            // Trouver la meilleure stat utile qui n'est pas déjà sur l'artéfact
             let targetKey = desiredStats.find(k =>
                 !usedTargets.has(k) &&
-                !k.includes("_dmg_") && // Pas de bonus dégâts en substat
-                k !== art.mainStat.key // Pas la même que la mainstat
+                !k.includes("_dmg_") &&
+                k !== art.mainStat.key
             );
 
             if (targetKey && SUBSTAT_RANGES[targetKey]) {
@@ -2297,7 +2156,6 @@ function simulateDeadStatReplacements(persoObj, config) {
     return suggestions;
 }
 
-// CALCULATEUR REROLL (VERSION DUST OF ENLIGHTENMENT 5.X)
 function calculateRerollMetrics(artifact, config) {
     if (!config || !config.weights || !window.MAX_ROLLS) return null;
 
@@ -2340,7 +2198,6 @@ function calculateRerollMetrics(artifact, config) {
     let upgradeTokens = [];
     let maxWeightOnArtifact = 0;
 
-    // 1. EXTRACTION DES DONNÉES (Inchangée)
     artifact.subStats.forEach(sub => {
         const rolls = getRollCount(sub.key, sub.value, artifact.stars || 5);
         totalRolls += rolls;
@@ -2362,55 +2219,44 @@ function calculateRerollMetrics(artifact, config) {
     const totalTokensAvailable = Math.max(4, totalRolls - 4);
     const currentUpgradeValue = upgradeTokens.reduce((a, b) => a + b, 0);
 
-    // --- 2. LOGIQUE "DUST OF ENLIGHTENMENT" ---
-    // Le joueur n'est pas bête : il va sélectionner les 2 meilleures stats de l'artéfact.
     const sortedTerrain = [...terrainWeights].sort((a, b) => b - a);
     const top2Avg = (sortedTerrain[0] + sortedTerrain[1]) / 2;
     const bot2Avg = (sortedTerrain[2] + sortedTerrain[3]) / 2;
 
-    // Calcul de l'espérance mathématique (Expected Value)
-    // Règle du jeu : 2 procs sont GARANTIS de tomber dans le Top 2. Le reste est aléatoire (réparti sur les 4).
     const guaranteedTokens = Math.min(2, totalTokensAvailable);
     const rngTokens = totalTokensAvailable - guaranteedTokens;
 
     const expectedValue = (guaranteedTokens * top2Avg) + (rngTokens * ((top2Avg + bot2Avg) / 2));
 
-    // --- 3. POTENTIEL & RISQUE ---
     const maxTheoreticalGain = totalTokensAvailable * maxWeightOnArtifact;
 
-    // POTENTIEL : Le gain moyen attendu par rapport à l'état actuel de l'artéfact.
     let potential = 0;
     if (maxTheoreticalGain > 0) {
         const valueGain = expectedValue - currentUpgradeValue;
         if (valueGain > 0) {
-            // Multiplicateur *2 pour l'échelle UI (0 à 100%) afin que ça soit lisible
             potential = (valueGain / maxTheoreticalGain) * 100 * 2.0;
         }
     }
 
-    // RISQUE : La probabilité de gâcher une Poussière d'illumination pour rien.
-    // Si l'artéfact est déjà proche de la perfection (saturation), le risque de gaspiller la Poussière est immense.
     let saturation = (maxTheoreticalGain > 0) ? (currentUpgradeValue / maxTheoreticalGain) : 0;
     let risk = Math.pow(saturation, 3.5) * 100;
 
-    // Sécurités d'affichage
     if (potential > 100) potential = 100;
     if (risk > 99) risk = 99;
     if (risk < 1) risk = 1;
 
-    // --- 4. BADGES (Ajustés au contexte de l'objet) ---
     let badge = {text: "Neutre", color: "#9ca3af"};
 
     if (sortedTerrain[0] === 0 && sortedTerrain[1] === 0) {
-        badge = {text: "Poubelle (Ne pas reroll)", color: "#4b5563"}; // Même le Top 2 est inutile
+        badge = {text: "Poubelle (Ne pas reroll)", color: "#4b5563"};
     } else if (risk > 75) {
-        badge = {text: "Trop risqué (Garder)", color: "#ef4444"}; // Artéfact déjà trop bon, ne gâchez pas la poussière
+        badge = {text: "Trop risqué (Garder)", color: "#ef4444"};
     } else if (potential > 40 && risk < 35) {
-        badge = {text: "Poussière Recommandée", color: "#22c55e"}; // Beaucoup de stats mortes à recycler
+        badge = {text: "Poussière Recommandée", color: "#22c55e"};
     } else if (potential > 15) {
         badge = {text: "Optimisable", color: "#3b82f6"};
     } else {
-        badge = {text: "Peu rentable", color: "#f97316"}; // Le gain espéré est plus faible que l'état actuel
+        badge = {text: "Peu rentable", color: "#f97316"};
     }
 
     return {
@@ -2420,9 +2266,6 @@ function calculateRerollMetrics(artifact, config) {
     };
 }
 
-// Fonction pour calculer la valeur selon le rang (R1 à R5)
-// Si val est un nombre (0.2), on le garde.
-// Si val est un tableau [0.2, 0.05], on calcule : Base + (Rang-1)*Step
 function getRefinedValue(val, rank) {
     if (Array.isArray(val) && val.length === 2 && typeof val[0] === 'number') {
         return val[0] + (rank - 1) * val[1];
@@ -2430,8 +2273,6 @@ function getRefinedValue(val, rank) {
     return val;
 }
 
-// --- PROCESS ---
-// --- PROCESS ---
 function processData(data) {
     if (!data.avatarInfoList) return;
     globalPersoData = [];
@@ -2445,9 +2286,7 @@ function processData(data) {
         const id = perso.avatarId;
         const getKey = (obj, key) => {
             if (!obj) return undefined;
-            // 1. Cherche la clé exacte
             if (obj[key] !== undefined) return obj[key];
-            // 2. Cherche la version minuscule (camelCase)
             const lowerKey = key.charAt(0).toLowerCase() + key.slice(1);
             if (obj[lowerKey] !== undefined) return obj[lowerKey];
             return undefined;
@@ -2492,42 +2331,30 @@ function processData(data) {
         const wTypeRaw = getKey(info, "WeaponType");
         const charWeaponKey = WEAPON_TYPE_MAP[wTypeRaw] || "unknown";
 
-        // --- 2. GESTION DES IMAGES (Compatible Nouveau Format Enka) ---
 
-        // A. Valeurs par défaut
         let sideIconUrl = "https://enka.network/ui/UI_AvatarIcon_Side_Unknown.png";
         let splashUrl = "https://enka.network/ui/UI_Gacha_AvatarImg_Unknown.png";
 
-        // B. On cherche la clé d'image
 
-        // C. Traitement
         if (iconNameRaw && typeof iconNameRaw === 'string') {
 
-            // CAS 1 : C'est le nouveau format (commence par /ui/)
-            // Ex: "/ui/UI_AvatarIcon_Side_Ayaka.png"
             if (iconNameRaw.startsWith("/ui/")) {
-                // L'URL de l'icone est simple : on colle juste le domaine devant
                 sideIconUrl = `https://enka.network${iconNameRaw}`;
 
-                // Pour le Splash, on doit extraire le nom "Ayaka" du chemin
-                // On retire "/ui/", ".png", "UI_AvatarIcon_Side_"
                 let cleanName = iconNameRaw
                     .replace("/ui/", "")
                     .replace(/\.png$/i, "")
                     .replace("UI_AvatarIcon_Side_", "")
-                    .replace("UI_AvatarIcon_", ""); // Au cas où
+                    .replace("UI_AvatarIcon_", "");
 
                 splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.png`;
             }
-                // CAS 2 : C'est l'ancien format (juste le nom de fichier)
-            // Ex: "UI_AvatarIcon_Side_Ayaka"
             else {
                 let cleanName = iconNameRaw
                     .replace(/\.png$/i, "")
                     .replace(/^UI_AvatarIcon_Side_/, "")
                     .replace(/^UI_AvatarIcon_/, "");
 
-                // Sécurité anti-slash pour l'ancien format
                 if (!cleanName.includes("/")) {
                     sideIconUrl = `https://enka.network/ui/UI_AvatarIcon_Side_${cleanName}.png`;
                     splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.png`;
@@ -2544,27 +2371,19 @@ function processData(data) {
                 splashUrl   = `https://enka.network${costume.Art}`;
         }
 
-        // --- FIN GESTION IMAGES ---
-
-        // --- FIN ADAPTATEUR ---
-
         const talents = [];
         const skillOrder = getKey(info, "SkillOrder");
         const skillsMap = getKey(info, "Skills");
 
-        // Correction pour les Talents (Skills)
         if (skillOrder) {
             skillOrder.forEach(skillId => {
                 let lvl = perso.skillLevelMap[skillId] || 0;
-                // On récupère le nom brut
                 let iconName = skillsMap && skillsMap[skillId] ? skillsMap[skillId] : "Skill_A_01";
 
                 let talentUrl = "";
-                // Si ça commence par /ui/, on ajoute juste le domaine
                 if (iconName.startsWith("/ui/")) {
                     talentUrl = `https://enka.network${iconName}`;
                 } else {
-                    // Sinon ancien format
                     talentUrl = `https://enka.network/ui/${iconName}.png`;
                 }
 
@@ -2606,22 +2425,17 @@ function processData(data) {
                 };
             }
             if (flat.itemType === "ITEM_RELIQUARY") {
-                // 1. Hash par défaut (vieux)
                 let targetHash = flat.setNameTextMapHash;
 
-                // 2. CORRECTION PAR ICÔNE (Imparable)
-                // flat.icon contient ex: "UI_RelicIcon_10001_4"
                 if (window.iconToNameHash && flat.icon) {
                     const newHash = window.iconToNameHash[flat.icon];
                     if (newHash) {
-                        targetHash = newHash; // On remplace par le hash V2 trouvé dans notre index
+                        targetHash = newHash;
                     }
                 }
 
-                // 3. Traduction
                 const nomSetFR = getText(targetHash);
 
-                // --- Le reste de ton code ne change pas ---
                 const setKey = SET_NAME_MAPPING[nomSetFR] || "UnknownSet";
                 setsCounter[setKey] = (setsCounter[setKey] || 0) + 1;
 
@@ -2647,7 +2461,6 @@ function processData(data) {
 
         let buffs = [];
 
-        // Fonction interne pour ajouter des buffs
         const addBuffs = (sourceName, category, configData, selectMode = 'standard', weaponRank = 1) => {
             const resolveStats = (statsObj) => {
                 const resolved = {};
@@ -2714,25 +2527,21 @@ function processData(data) {
 
         if (rawConfig.builds) {
             let bestBuildKey = null;
-            let maxEfficiency = -1; // On cherche désormais le meilleur pourcentage, pas le meilleur score brut !
+            let maxEfficiency = -1;
 
             Object.entries(rawConfig.builds).forEach(([key, build]) => {
                 const tempConfig = {...rawConfig, ...build};
 
-                // 1. Calcul du score actuel avec ce build
                 const clonedArtefacts = artefacts.map(a => ({...a}));
                 const simulation = calculateCharacterScore({artefacts: clonedArtefacts}, tempConfig);
 
-                // 2. Calcul du potentiel maximum (le plafond) de ce build avec ces artéfacts
                 const potential = calculateMaxTheoreticalScore({artefacts: artefacts}, tempConfig);
 
-                // 3. Calcul de l'Efficacité (Ratio)
                 let efficiency = 0;
                 if (potential && potential.score > 0) {
                     efficiency = simulation.score / potential.score;
                 }
 
-                // 4. On compare les pourcentages !
                 if (efficiency > maxEfficiency) {
                     maxEfficiency = efficiency;
                     bestBuildKey = key;
@@ -2766,7 +2575,6 @@ function processData(data) {
             }
         }
 
-        // --- GESTION DES BUFFS (Correction data/buffs) ---
         if (scoringConfig.buffs) {
             scoringConfig.buffs.forEach(group => {
                 const list = group.data || group.buffs;
@@ -2792,7 +2600,7 @@ function processData(data) {
             charWeapon: charWeaponKey,
             charConfig: rawConfig,
             activeBuild: activeBuild,
-            costumeId: costumeId,                                                              // ← AJOUT
+            costumeId: costumeId,
             friendship: (perso.fetterInfo && perso.fetterInfo.expLevel) ? perso.fetterInfo.expLevel : 0
         };
 
@@ -2811,21 +2619,17 @@ function processData(data) {
     if (globalPersoData.length > 0) renderShowcase(0);
 }
 
-// ... (RENDER SIDEBAR Identique) ...
 function renderSidebar(activeOriginalIndex = 0) {
     const list = document.getElementById('sidebar-list');
     if (!list) return;
     list.innerHTML = "";
     const targetIndex = parseInt(activeOriginalIndex, 10);
 
-    // Construction d'un tableau { p, originalIndex } pour le tri
     let entries = globalPersoData.map((p, i) => ({p, originalIndex: i}));
 
-    // Application du tri selon l'état courant
     const {column, direction} = sidebarSortState;
     if (column === 'original') {
         if (direction === 'asc') entries.reverse();
-        // direction 'desc' = ordre vitrine original, rien à faire
     } else if (column === 'name') {
         entries.sort((a, b) => {
             const cmp = a.p.nom.localeCompare(b.p.nom, 'fr', {sensitivity: 'base'});
@@ -2841,7 +2645,6 @@ function renderSidebar(activeOriginalIndex = 0) {
     entries.forEach(({p, originalIndex}) => {
         const div = document.createElement('div');
         div.className = `char-card ${originalIndex === targetIndex ? 'active' : ''}`;
-        // On stocke l'index original pour que renderShowcase reste correct
         div.dataset.originalIndex = originalIndex;
         div.onclick = () => {
             document.querySelectorAll('.char-card').forEach(c => c.classList.remove('active'));
@@ -2862,13 +2665,11 @@ function renderSidebar(activeOriginalIndex = 0) {
     updateSortArrows();
 }
 
-// --- FONCTION PRINCIPALE DE LA TOOLBAR ---
 function renderToolbar(index) {
     const p = globalPersoData[index];
     const container = document.getElementById('toolbar-controls');
     if (!container) return;
 
-    // Si le perso n'a pas de builds configurés, on vide la toolbar
     if (!p.charConfig.builds) {
         container.innerHTML = '<span class="main-content-menu-team" style="padding-top: 17px; padding-bottom: 14px;">Aucun archétype disponible</span>';
         return;
@@ -2877,11 +2678,9 @@ function renderToolbar(index) {
     const currentBuildKey = p.activeBuild ? p.activeBuild.key : Object.keys(p.charConfig.builds)[0];
     const builds = p.charConfig.builds;
 
-    // 1. DROPDOWN ARCHÉTYPE (Avec calcul d'efficacité en temps réel)
     let buildOptions = Object.entries(builds).map(([key, build]) => {
         const tempConfig = {...p.charConfig, ...build};
 
-        // On recalcule rapidement le ratio pour l'affichage
         const clonedArtefacts = p.artefacts.map(a => ({...a}));
         const simulation = calculateCharacterScore({artefacts: clonedArtefacts}, tempConfig);
         const potential = calculateMaxTheoreticalScore({artefacts: p.artefacts}, tempConfig);
@@ -2891,36 +2690,30 @@ function renderToolbar(index) {
             efficiency = (simulation.score / potential.score) * 100;
         }
 
-        // On formate le texte (ex: "Main DPS (Surcharge) - 87.5%")
         const effText = efficiency > 0 ? ` - ${efficiency.toFixed(1)}%` : '';
 
         return `<option value="${key}" ${key === currentBuildKey ? 'selected' : ''}>${build.name}${effText}</option>`;
     }).join('');
 
-    // 2. ÉQUIPE (ICÔNES AVEC FONDS ÉLÉMENTAIRES)
     let teamHtml = '';
     if (p.activeBuild && p.activeBuild.team) {
 
-        // A. Personnage Actif : On détecte son élément via sa stat de dégâts
         const charElement = p.combatStats.dmgBonusKey.replace('_dmg_', '');
         const charBg = ELEMENT_COLORS[charElement] || '#333';
 
-        // On ajoute "background:${charBg}" dans le style
         const charIcon = `<img src="${p.image.replace('Side_', '')}" style="width:40px; height:40px; border-radius:5px; border:1px solid rgba(255,255,255,0.5); box-shadow:0 0 5px rgba(0,0,0,0.5); object-fit:cover; background:${charBg};" title="${p.nom}">`;
 
         const matesHtml = p.activeBuild.team.map(mate => {
-            // 1. Correction Fallback : On gère le cas où elem est vide
             const getIconUrl = (name, elem) => {
                 if (name) return `https://enka.network/ui/UI_AvatarIcon_${name}.png`;
                 if (elem) return `${ICON_BASE_PATH}icon_${elem}.png`;
-                return `${ICON_BASE_PATH}icon_unknown.png`; // <--- Le voilà le fallback !
+                return `${ICON_BASE_PATH}icon_unknown.png`;
             };
 
             const isDual = Array.isArray(mate.element) || Array.isArray(mate.name);
             const names = Array.isArray(mate.name) ? mate.name : (mate.name ? [mate.name] : [null]);
             const elems = Array.isArray(mate.element) ? mate.element : [mate.element];
 
-            // ... (Calcul du bgStyle inchangé, le #333 par défaut est très bien) ...
             let bgStyle = '';
             if (isDual && elems.length >= 2) {
                 const c1 = ELEMENT_COLORS[elems[0]] || '#333';
@@ -2933,9 +2726,7 @@ function renderToolbar(index) {
             let innerHtml = '';
 
             if (!isDual) {
-                // 2. Correction Fallback image de secours (onerror)
                 const url = getIconUrl(names[0], elems[0]);
-                // Si l'élément est défini, on tente son icône, sinon icon_unknown
                 const fallback = elems[0]
                     ? `${ICON_BASE_PATH}icon_${elems[0]}.png`
                     : `${ICON_BASE_PATH}icon_unknown.png`;
@@ -2947,7 +2738,6 @@ function renderToolbar(index) {
                          title="${mate.role}: ${names[0] || elems[0] || 'Inconnu'}">
                 `;
             } else {
-                // ... (Code Dual inchangé, applique juste getIconUrl corrigé au dessus) ...
                 const url1 = getIconUrl(names[0], elems[0]);
                 const fb1 = elems[0] ? `${ICON_BASE_PATH}icon_${elems[0]}.png` : `${ICON_BASE_PATH}icon_unknown.png`;
 
@@ -2975,15 +2765,12 @@ function renderToolbar(index) {
         teamHtml = `<div style="display:flex; color: #ffffff; border: none; border-radius: 8px; padding: 5px; flex-direction: row; align-items:center; gap: 5px; background: #2C2D32; ">${charIcon}${matesHtml}</div>`;
     }
 
-    // 3. DROPDOWN ER TARGET
     const currentERReq = p.activeBuild.er_req || 100;
-    // On génère les options de 100 à 300 par pas de 10
     let erOptions = '';
     for (let i = 100; i <= 300; i += 10) {
         erOptions += `<option value="${i}" ${i === currentERReq ? 'selected' : ''}>${i}% ER</option>`;
     }
 
-    // --- INJECTION HTML ---
     container.innerHTML = `
         <div style="display:flex; flex-direction:column; gap:2px;">
             <select onchange="switchBuild(${index}, this.value)" class="main-content-menu-team">
@@ -3001,62 +2788,45 @@ function renderToolbar(index) {
     `;
 }
 
-// --- LOGIQUE DE CHANGEMENT DE BUILD ---
 function switchBuild(charIndex, buildKey) {
-    // SÉCURITÉ : On convertit l'index reçu (qui peut venir du HTML en string) en nombre
     const idx = parseInt(charIndex, 10);
 
     const p = globalPersoData[idx];
-    if (!p) return; // Protection supplémentaire
+    if (!p) return;
 
     const newBuild = p.charConfig.builds[buildKey];
     if (!newBuild) return;
 
-    // 1. Mise à jour du Build
     p.activeBuild = newBuild;
     p.activeBuild.key = buildKey;
 
-    // 2. Fusion Config
     const newScoringConfig = {...p.charConfig, ...newBuild};
     p.weights = newScoringConfig.weights;
 
-    // 3. Résonances
     updateResonanceBuffs(p, newBuild.team);
 
-    // 4. Recalcul Score (MODIFIÉ)
     const potentialMax = calculateMaxTheoreticalScore(p, newScoringConfig);
     p.evaluation = calculateCharacterScore(p, newScoringConfig, potentialMax.totalRolls);
-    // ...
 
-    // 5. Rafraîchissement UI
-    renderSidebar(idx); // On passe l'index nettoyé
+    renderSidebar(idx);
     renderShowcase(idx);
 }
 
-// --- LOGIQUE DE RÉSONANCE (Compatible Flex Slots) ---
 function updateResonanceBuffs(p, teamData) {
     if (!teamData) return;
 
-    // 1. Nettoyage des anciennes résonances
     p.buffs = p.buffs.filter(b => b.category !== "Résonance");
 
-    // 2. Comptage des éléments
-    // Guaranteed = Sûr à 100% (ex: Perso fixe)
-    // Potential = Peut-être (ex: Flex slot)
     const guaranteed = {};
     const potential = {};
 
-    // A. On compte le perso actif
     const charElement = p.combatStats.dmgBonusKey ? p.combatStats.dmgBonusKey.replace('_dmg_', '') : null;
     if (charElement) guaranteed[charElement] = 1;
 
-    // B. On compte les coéquipiers
     teamData.forEach(mate => {
-        // Cas 1 : Élément fixe (String) -> "hydro"
         if (typeof mate.element === 'string') {
             guaranteed[mate.element] = (guaranteed[mate.element] || 0) + 1;
         }
-        // Cas 2 : Élément flexible (Array) -> ["hydro", "cryo"]
         else if (Array.isArray(mate.element)) {
             mate.element.forEach(el => {
                 potential[el] = (potential[el] || 0) + 1;
@@ -3064,18 +2834,13 @@ function updateResonanceBuffs(p, teamData) {
         }
     });
 
-    // 3. Ajout des Buffs
     Object.keys(RESONANCE_DATA).forEach(elem => {
         const countG = guaranteed[elem] || 0;
         const countP = potential[elem] || 0;
         const total = countG + countP;
 
-        // Condition : Il faut au moins 2 persos potentiels pour faire une résonance
         if (total >= 2) {
             const resData = RESONANCE_DATA[elem];
-
-            // CORRECTION ICI : On lit la valeur 'active' du dictionnaire en priorité.
-            // Si elle n'existe pas, on retombe sur la logique "2 persos garantis = true"
             const isActive = resData.active !== undefined ? resData.active : (countG >= 2);
 
             p.buffs.push({
@@ -3089,27 +2854,21 @@ function updateResonanceBuffs(p, teamData) {
         }
     });
 
-    // 4. Recalcul des stats buffées
     p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
 }
 
 function updateERTarget(index, val) {
-    // Juste pour stocker la valeur si on veut l'utiliser plus tard dans l'analyse
     const p = globalPersoData[index];
     if (p.activeBuild) {
         p.activeBuild.er_req = parseInt(val);
-        renderShowcase(index); // Pour mettre à jour l'analyse ER (future étape)
+        renderShowcase(index);
     }
 }
 
-// ==========================================
-// AFFICHAGE DE LA PAGE D'ACCUEIL
-// ==========================================
 function renderHome() {
     const container = document.getElementById('main-container');
     const profiles = getRecentProfiles();
 
-    // On cache le menu latéral
     const menu = document.querySelector('.main-content-menu') || document.getElementById('main-content-menu');
     if (menu) menu.style.display = 'none';
 
@@ -3139,10 +2898,17 @@ function renderHome() {
     };
     const ICON = './assets/simulator/icons/';
 
-    let cardsHtml = profiles.map(p => {
+    const favUid = getFavoriteUid();
+
+    const sortedProfiles = [
+        ...profiles.filter(p => p.uid === favUid),
+        ...profiles.filter(p => p.uid !== favUid)
+    ];
+
+    let cardsHtml = sortedProfiles.map(p => {
+        const isFav = p.uid === favUid;
         const server = serverMap[String(p.uid)[0]] || 'CN';
 
-        // Reconstruction des icônes Stygian
         function stygianIcon() {
             if (p.stygianIndex === null) return '';
             if (p.stygianIndex === 6 && p.stygianSec !== null && p.stygianSec < 180) {
@@ -3154,7 +2920,6 @@ function renderHome() {
             return '';
         }
 
-        // Ligne 1 : AR + Succès (Sécurisé contre les vieux profils 'undefined')
         const row1 = [
             `<span class="pp-badge pp-badge-server">${server}</span>`,
             p.achievements != null
@@ -3163,7 +2928,6 @@ function renderHome() {
             p.ar ? `<span class="pp-badge pp-badge-ar">AR${p.ar}</span>` : '',
         ].filter(Boolean).join('');
 
-        // Ligne 2 : End-Game (Sécurisé)
         const row2Items = [
             p.stygianSec != null
                 ? `<span class="pp-badge pp-badge-stygian">${stygianIcon()}${p.stygianSec}s</span>`
@@ -3177,13 +2941,21 @@ function renderHome() {
         ].filter(Boolean);
         const row2 = row2Items.join('');
 
-        // Le HTML final identique à ta carte
         return `
         <div onclick="document.getElementById('uidInput').value = '${p.uid}'; fetchUserData();" 
-             style="width: 480px; height: 82px; position: relative; cursor: pointer; transition: transform 0.2s;"
-             onmouseover="this.style.transform='scale(1.02)';"
-             onmouseout="this.style.transform='scale(1)';">
+            style="width: 480px; height: 82px; position: relative; cursor: pointer; transition: transform 0.2s;"             
+            onmouseover="this.style.transform='scale(1.02)';"
+            onmouseout="this.style.transform='scale(1)';">
              
+            <!-- Bouton Favori -->
+            <div onclick="toggleFavoriteProfile('${p.uid}', event)"
+                 title="${isFav ? 'Retirer des favoris' : 'Épingler ce compte'}"
+                 style="position: absolute; top: -6px; left: -6px; width: 22px; height: 22px; display: ${isFav || !favUid ? 'flex' : 'none'}; align-items: center; justify-content: center; border-radius: 50%; background: ${isFav ? 'rgba(255,177,59,0.95)' : 'rgba(60,62,70,0.92)'}; color: ${isFav ? '#fff' : '#9ca3af'}; font-size: 11px; z-index: 50; box-shadow: 0 2px 4px rgba(0,0,0,0.5); transition: 0.2s; cursor: pointer;"
+                 onmouseover="this.style.background='${isFav ? 'rgba(220,140,0,1)' : 'rgba(90,92,100,1)'}'; this.style.transform='scale(1.15)';"
+                 onmouseout="this.style.background='${isFav ? 'rgba(255,177,59,0.95)' : 'rgba(60,62,70,0.92)'}'; this.style.transform='scale(1)';">
+                 ${isFav ? '★' : '☆'}
+            </div>
+
             <!-- Bouton Supprimer -->
             <div onclick="deleteRecentProfile('${p.uid}', event)" 
                  style="position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(239, 68, 68, 0.9); color: #fff; font-size: 12px; z-index: 50; box-shadow: 0 2px 4px rgba(0,0,0,0.5); transition: 0.2s;"
@@ -3226,27 +2998,25 @@ function renderHome() {
                 Tous les contenus et actifs liés aux jeux sont la propriété exclusive de HoYoverse. <br><br>
                 Ce projet s'appuie sur l'API fournie par 
                 <a href="https://enka.network" style="color: inherit; text-decoration: underline;">Enka.Network</a>, 
-                que nous remercions chaleureusement pour leur contribution indispensable à la communauté.
+                que nous remercions chaleureusement pour leur contribution indispensable à la communauté. <br>
+                Design de la fiche personnage inspiré par Fribbels HSR Optimizer.
             </p>      
-            <div class="links" style="display: flex; flex-direction: row; margin-bottom: 48px; gap: 8px;">
+            <div class="links" style="display: flex; flex-direction: row; margin-bottom: 48px; gap: 8px; align-items: center;">
                 <a class="link-button" href="https://discord.gg/CZ5qxVqBVJ" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i>Discord</a>
-            </div>  
+                <a href="https://ko-fi.com/guobagg" target="_blank" rel="noopener noreferrer" style="height: 36px; display: inline-flex; transition: transform 0.2s;">
+                    <img height="36" style="border:0px; height:36px;" src="https://storage.ko-fi.com/cdn/kofi2.png?v=3" alt="Soutenir sur Ko-fi" />
+                </a>
+            </div>
         </div>
     `;
 }
 
-// ==========================================
-// SYSTÈME DE TOOLTIP GLOBAL
-// ==========================================
-
-// 1. Création de la bulle unique au chargement
 if (!document.getElementById('global-tooltip')) {
     const tooltip = document.createElement('div');
     tooltip.id = 'global-tooltip';
     document.body.appendChild(tooltip);
 }
 
-// 2. Fonction pour l'afficher à la bonne position
 window.showGlobalTooltip = function (element, text, color) {
     const tooltip = document.getElementById('global-tooltip');
     tooltip.innerHTML = text;
@@ -3255,14 +3025,12 @@ window.showGlobalTooltip = function (element, text, color) {
     const rect = element.getBoundingClientRect();
 
     tooltip.style.left = (rect.left + rect.width / 2) + 'px';
-    // MODIFIÉ : On s'ancre sur le bas du badge au lieu du haut
     tooltip.style.top = rect.bottom + 'px';
 
     tooltip.style.visibility = 'visible';
     tooltip.style.opacity = '1';
 };
 
-// 3. Fonction pour le cacher
 window.hideGlobalTooltip = function () {
     const tooltip = document.getElementById('global-tooltip');
     if (tooltip) {
@@ -3271,9 +3039,6 @@ window.hideGlobalTooltip = function () {
     }
 };
 
-// ==========================================
-// ÉVALUATION GLOBALE & GAMIFICATION
-// ==========================================
 function renderGlobalEvaluation(playerInfo) {
     let topHeader = document.getElementById('top-header-area');
     if (!topHeader) {
@@ -3297,38 +3062,29 @@ function renderGlobalEvaluation(playerInfo) {
     }
     evalContainer.style.display = 'flex';
 
-    // 1. Récupération de la bannière du profil
     const namecardsData = window.namecardsData || {};
     const namecard = namecardsData[String(playerInfo.nameCardId)];
     let bannerUrl = namecard && namecard.Icon ? `https://enka.network${namecard.Icon}` : '';
 
-    // 2. Calculs des Moyennes & Cumuls
     let totalScore = 0, totalEfficiency = 0, totalRNG = 0, validChars = 0;
 
-    // NOUVEAU : Tes deux paniers pour la note globale (La méthode "Total Rolls")
     let totalCurrentRolls = 0;
     let totalMaxRolls = 0;
 
     globalPersoData.forEach(p => {
-        // On vérifie que le perso a bien été évalué
         if (p.evaluation && p.evaluation.score) {
 
-            // On récupère la configuration du build actif
             const config = {...p.charConfig, ...(p.activeBuild || {})};
 
-            // On calcule le plafond pour récupérer le MAX Rolls de ce perso
             const pot = calculateMaxTheoreticalScore(p, config);
             const maxRolls = (pot && pot.totalRolls > 0) ? pot.totalRolls : 45;
 
-            // SÉCURITÉ : parseFloat() empêche le bug du texte qui se concatène !
             const currentRolls = parseFloat(p.evaluation.totalRolls) || 0;
             const currentScore = parseFloat(p.evaluation.score) || 0;
 
-            // 1. On remplit les paniers pour la note géante
             totalCurrentRolls += currentRolls;
             totalMaxRolls += parseFloat(maxRolls);
 
-            // 2. On remplit les stats classiques (Efficacité, RNG, Score)
             totalScore += currentScore;
             if (pot && pot.score > 0) {
                 totalEfficiency += (currentScore / pot.score) * 100;
@@ -3339,12 +3095,10 @@ function renderGlobalEvaluation(playerInfo) {
         }
     });
 
-    // Statistiques d'affichage (Efficacité %, RNG %, Score brut)
     const avgScore = validChars > 0 ? (totalScore / validChars) : 0;
     const avgEff = validChars > 0 ? (totalEfficiency / validChars) : 0;
     const avgRNG = validChars > 0 ? (totalRNG / validChars) : 0;
 
-    // 3. Conversion en Lettre Géante (Synchronisée avec tes fiches personnages)
     let globalGrade = {letter: "F", color: getGradeColor("F")};
 
     if (validChars > 0 && totalMaxRolls > 0) {
@@ -3353,36 +3107,25 @@ function renderGlobalEvaluation(playerInfo) {
             "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"
         ];
 
-        const steps = labels.length - 1; // 18 paliers
+        const steps = labels.length - 1;
 
-        // C'est exactement TA formule `getGlobalGrade`, mais appliquée à l'échelle du compte
         const globalInterval = totalMaxRolls / steps;
 
         for (let i = steps; i >= 0; i--) {
             const threshold = i * globalInterval;
 
-            // La marge de tolérance de 0.05 est logiquement multipliée par le nombre de personnages
             if (totalCurrentRolls >= threshold - (0.05 * validChars)) {
                 globalGrade = {letter: labels[i], color: getGradeColor(labels[i])};
-                break; // On a trouvé le bon palier, on arrête de chercher !
+                break;
             }
         }
     }
 
-    // 4. GÉNÉRATION DES BADGES
-    const badges = [];
+    const badgesData = [];
     const addBadge = (icon, name, desc, bgRgba, tooltipColor = "rgba(255, 255, 255, 0.4)") => {
-        const safeDesc = desc.replace(/'/g, "\\'");
-        badges.push(`
-            <div class="guoba-badge" style="background: ${bgRgba};"
-                 onmouseenter="showGlobalTooltip(this, '${safeDesc}', '${tooltipColor}')"
-                 onmouseleave="hideGlobalTooltip()">
-                <span class="guoba-badge-icon">${icon}</span> ${name}
-            </div>
-        `);
+        badgesData.push({ icon, name, desc, bgRgba, tooltipColor });
     };
 
-    // A. Hauts Faits Liés au Compte Joueur
     const isAbyss = playerInfo.towerStarIndex >= 36;
     const isTheater = playerInfo.theaterStarIndex >= 8;
     const isStygian = playerInfo.stygianIndex >= 5;
@@ -3418,7 +3161,6 @@ function renderGlobalEvaluation(playerInfo) {
     if (avgRNG > 80) addBadge("🍀", "Touché par la Grâce", `RNG moyenne exceptionnelle (${avgRNG.toFixed(1)}%). Le jeu vous aime.`, "rgba(61, 160, 97, 0.6)");
     else if (avgRNG < 40 && validChars > 0) addBadge("🌧️", "Maudit par la RNG", `RNG moyenne catastrophique (${avgRNG.toFixed(1)}%).`, "rgba(107, 114, 128, 0.6)");
 
-    // E. Extrêmes de Gameplay & Compo
     let holyGrail = false, level89Syndrome = false, level67EasterEgg = false;
     let highER = false, asthmatic = false, casino = false, alchemist = false, allInCrit = false;
     let bruteForce = false, surgicalPrec = false, hospital = false, brickWall = false;
@@ -3427,17 +3169,15 @@ function renderGlobalEvaluation(playerInfo) {
     let fourStarCount = 0, maxFriendshipCount = 0;
     let archonCount = 0, favoniusCount = 0, aloyFound = false, internFound = false;
     let elementCount = {};
-    let akashamaxxing = false; // <-- NOUVELLE VARIABLE ICI
+    let akashamaxxing = false;
 
     const archonNames = ["Venti", "Zhongli", "Raiden", "Nahida", "Furina", "Mavuika"];
 
     globalPersoData.forEach(p => {
 
-        // --- NOUVEAUX TROLLS & EASTER EGGS ---
         if (p.level === 89) level89Syndrome = true;
         if (p.level === 67) level67EasterEgg = true;
 
-        // Vérification du Saint Graal (CV >= 50 sur une seule pièce)
         if (p.artefacts) {
             p.artefacts.forEach(art => {
                 let cv = 0;
@@ -3448,7 +3188,6 @@ function renderGlobalEvaluation(playerInfo) {
                 if (cv >= 50) holyGrail = true;
             });
         }
-        // Stats
         if (p.combatStats) {
             if (p.combatStats.er > 200) highER = true;
             if (Math.round(p.combatStats.er) === 100) asthmatic = true;
@@ -3461,41 +3200,34 @@ function renderGlobalEvaluation(playerInfo) {
 
             const em = p.combatStats.em || p.combatStats.eleMas || 0;
             if (em > 1000) alchemist = true;
-            if (p.level === 90 && em === 0) p.analphabet = true; // Flagged for later
+            if (p.level === 90 && em === 0) p.analphabet = true;
 
             if (p.weights && p.weights['critRate_'] > 0.5 && p.weights['critDMG_'] > 0.5) {
                 if (p.combatStats.cr < 40 && p.combatStats.cd > 200) casino = true;
             }
 
-            // --- NOUVEAU : DÉTECTION AKASHAMAXXING ---
             if (p.weights) {
-                // On vérifie que le CRIT n'a absolument aucune valeur pour ce build (poids à 0)
                 const noCritNeeded = (!p.weights['critRate_'] || p.weights['critRate_'] === 0) && (!p.weights['critDMG_'] || p.weights['critDMG_'] === 0);
-                // On vérifie que le joueur en a quand même bourré dans ses stats
                 const tooMuchCrit = (p.combatStats.cr >= 40 || p.combatStats.cd >= 100);
 
                 if (noCritNeeded && tooMuchCrit) {
                     akashamaxxing = true;
                 }
             }
-            // ------------------------------------------
 
             const elem = p.combatStats.dmgBonusKey ? p.combatStats.dmgBonusKey.replace('_dmg_', '') : null;
             if (elem) elementCount[elem] = (elementCount[elem] || 0) + 1;
         }
 
-        // Rareté & Cast
         if (p.rarity === 4 || p.stars === 4) fourStarCount++;
         if (archonNames.includes(p.nom)) archonCount++;
         if (p.nom === "Aloy") aloyFound = true;
         if (p.level <= 20) internFound = true;
 
-        // Affinité (Robuste)
         if (p.friendship >= 10) {
             maxFriendshipCount++;
         }
 
-        // Talents
         if (p.talents && p.talents.length >= 3) {
             const t1 = p.talents[0].level || 0;
             const t2 = p.talents[1].level || 0;
@@ -3503,7 +3235,6 @@ function renderGlobalEvaluation(playerInfo) {
             if (t1 >= 10 && t2 >= 10 && t3 >= 10) tripleCrown = true;
         }
 
-        // Armes
         if (p.weapon) {
             const weaponRarity = p.weapon.stars || p.weapon.rarity || 1;
             const weaponRefinement = p.weapon.rank || p.weapon.refinement || p.weapon.affixLevel || 1;
@@ -3546,7 +3277,6 @@ function renderGlobalEvaluation(playerInfo) {
         }
     });
 
-    // Ajout des badges détectés
     if (archonCount >= 4) addBadge("🏛️", "Réunion Divine", "Votre vitrine rassemble au moins 4 Archons. Le Mont Olympe vous envie.", "linear-gradient(135deg, rgba(255,215,0,0.6), rgba(255,255,255,0.4))");
     if (tripleCrown) addBadge("👑", "Triple Couronne", "Vous avez investi 3 couronnes sur un même personnage. Dévouement royal.", "linear-gradient(135deg, rgba(251,191,36,0.8), rgba(245,158,11,0.8), rgba(217,119,6,0.8))");
     if (leviathan) addBadge("🔱", "Léviathan", "Personnage 5★ C6 avec arme 5★ R5 détecté. Merci de financer le jeu !", "linear-gradient(135deg, rgba(6,182,212,0.8), rgba(59,130,246,0.8), rgba(30,58,138,0.8))");
@@ -3566,14 +3296,10 @@ function renderGlobalEvaluation(playerInfo) {
     if (aloyFound) addBadge("⏳", "Voyageur Temporel", "Aloy détectée. Vous êtes l'un des 12 derniers joueurs à vous souvenir d'elle.", "rgba(107, 114, 128, 0.6)");
     if (globalPersoData.some(p => p.ghettoKing)) addBadge("🪵", "Tiers-Monde", "Un personnage niveau 90 avec une arme 3★. Si c'est bête mais que ça marche...", "rgba(139, 69, 19, 0.6)");
 
-    // --- NOUVEAU BADGE ICI ---
     if (akashamaxxing) addBadge("📈", "Akashamaxxing", "Vous avez bourré les stats critiques sur un personnage qui n'en a pas besoin. Tout pour le Top 1%, rien pour l'équipe.", "linear-gradient(135deg, rgba(236,72,153,0.7), rgba(168,85,247,0.7))");
-    // -------------------------
 
-    // Le badge Premium
     if (holyGrail) addBadge("🏆", "Le Saint Graal", "Possède un artéfact dépassant les 50 de Valeur Critique (CV). Une véritable relique divine.", "linear-gradient(135deg, rgba(255,215,0,0.8), rgba(255,255,255,0.7), rgba(255,215,0,0.8))");
 
-    // Les Trolls & Easter Egg
     if (level89Syndrome) addBadge("🪙", "89 Enjoyer", "On économise les leçons du héros jusqu'au bout !", "rgba(107, 114, 128, 0.6)");
     if (level67EasterEgg) addBadge("👀", "67", "SIX SEVEEEEN", "rgba(168, 85, 247, 0.6)");
 
@@ -3606,7 +3332,25 @@ function renderGlobalEvaluation(playerInfo) {
         }
     });
 
-    // 5. Injection HTML
+    const getBadgePriority = (bg) => {
+        if (bg.includes('linear-gradient')) return 1;
+        if (bg.includes('107, 114, 128')) return 3;
+        return 2;
+    };
+
+    badgesData.sort((a, b) => getBadgePriority(a.bgRgba) - getBadgePriority(b.bgRgba));
+
+    const badges = badgesData.map(b => {
+        const safeDesc = b.desc.replace(/'/g, "\\'");
+        return `
+            <div class="guoba-badge" style="background: ${b.bgRgba};"
+                 onmouseenter="showGlobalTooltip(this, '${safeDesc}', '${b.tooltipColor}')"
+                 onmouseleave="hideGlobalTooltip()">
+                <span class="guoba-badge-icon">${b.icon}</span> ${b.name}
+            </div>
+        `;
+    });
+
     evalContainer.innerHTML = `
         <div class="player-profile-bg" ${bannerUrl ? `style="background-image:url('${bannerUrl}')"` : ''}></div>
         
@@ -3640,10 +3384,8 @@ function renderShowcase(index) {
     const container = document.getElementById('main-container');
     if (!container) return;
 
-    // --- DÉBUT CODE B : MAJ du personnage dans l'URL ---
     const currentUid = new URLSearchParams(window.location.search).get('uid') || document.getElementById('uidInput').value;
     window.history.pushState({}, '', `?uid=${currentUid}&char=${encodeURIComponent(p.nom)}`);
-    // --- FIN CODE B ---
 
     document.querySelectorAll('#sidebar-list .char-card').forEach((card) => {
         if (parseInt(card.dataset.originalIndex) === parseInt(index)) {
@@ -3679,7 +3421,6 @@ function renderShowcase(index) {
     container.style.setProperty('--char-hex', charColor);
 
 
-    // Template des aptitudes
     let talentsHtml = `<div style="display:flex; justify-content:space-between; margin-left: 3px; margin-right: 3px;">`;
     p.talents.forEach(t => {
         talentsHtml += `
@@ -3691,7 +3432,6 @@ function renderShowcase(index) {
     talentsHtml += `</div>`;
 
 
-    // Template de ligne de stat
     const statLine = (svg, label, val, isHighlight = false) => `
         <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
             ${svg}
@@ -3868,10 +3608,8 @@ function renderShowcase(index) {
             html += statLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1) + '%', isDmgBuffed);
         }
 
-        // --- DÉBUT ÉTAPE 3 : STATS SPÉCIFIQUES FORCÉES ---
         if (p.activeBuild && p.activeBuild.showUIStats) {
             p.activeBuild.showUIStats.forEach(forcedKey => {
-                // Si la clé demandée est un élément ET que ce n'est pas déjà son élément principal
                 if (forcedKey.endsWith('_dmg_') && forcedKey !== b.dmgBonusKey && forcedKey !== 'elemental_dmg_') {
                     const val = b[forcedKey] || 0;
                     const oldVal = s[forcedKey] || 0;
@@ -3881,8 +3619,6 @@ function renderShowcase(index) {
                 }
             });
         }
-        // --- FIN ÉTAPE 3 ---
-
         return html;
     })()}
                     </div>
@@ -3978,8 +3714,6 @@ function renderShowcase(index) {
     if (p.buffs && p.buffs.length > 0) {
         let buffListHtml = "";
 
-        // 1. ÉTAPE DE GROUPAGE : On range les buffs par catégorie
-        // On stocke aussi l'index original (bIndex) pour que le bouton switch fonctionne
         const groupedBuffs = {};
         p.buffs.forEach((buff, bIndex) => {
             if (!groupedBuffs[buff.category]) {
@@ -3988,22 +3722,16 @@ function renderShowcase(index) {
             groupedBuffs[buff.category].push({buff: buff, originalIndex: bIndex});
         });
 
-        // 2. GÉNÉRATION HTML : On crée une DIV par groupe
         Object.keys(groupedBuffs).forEach(category => {
-            // Début du conteneur GLOBAL pour la catégorie
-            buffListHtml += `<div>`; // Correction de la coquille ici
+            buffListHtml += `<div>`;
 
-            // Titre de la catégorie
             buffListHtml += `
                 <div style="font-size:12px; margin-bottom:6px; color:#FFFFFF;">
                     ${category}
                 </div>`;
 
-            // --- NOUVEAU : On ouvre un conteneur pour la LISTE des buffs ---
-            // C'est ici qu'on gère l'espacement (gap: 4px) entre les pilules
             buffListHtml += `<div style="display: flex; flex-direction: column; gap: 6px;">`;
 
-            // Boucle sur les buffs de ce groupe
             groupedBuffs[category].forEach(item => {
                 const buff = item.buff;
                 const bIndex = item.originalIndex;
@@ -4013,7 +3741,6 @@ function renderShowcase(index) {
                 const knobColor = buff.active ? '#FFFFFF' : 'rgba(255, 255, 255, 0.6)';
                 const knobTransform = buff.active ? 'transform:translateX(14px);' : '';
 
-                // Note : J'ai ajouté des propriétés critiques sur le <p> et le <label>
                 buffListHtml += `
                     <div style="display:flex; flex-direction: row; gap: 8px; align-items:center; justify-content:space-between; padding:6px 8px; background:rgba(0,0,0,0.2); border-radius:8px; box-sizing: border-box;">
                         
@@ -4028,10 +3755,8 @@ function renderShowcase(index) {
                 `;
             });
 
-            // --- Fin du conteneur de liste ---
             buffListHtml += `</div>`;
 
-            // Fin du conteneur global
             buffListHtml += `</div>`;
         });
 
@@ -4041,7 +3766,7 @@ function renderShowcase(index) {
                     
                     <div style="font-size:14px; flex-shrink: 0;">
                         <p style="margin-bottom: 2px;">Buffs actifs</p>
-                        <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4);">Cochez pour appliquer les passifs et buffs (scroll pour tout voir). Dans les meilleurs scénarios, tous les buffs sont actifs.</p>
+                        <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4);">Cochez pour appliquer les passifs et buffs (scroll pour tout voir).</p>
                     </div>
                     
                     <div class="card-divider" style="flex-shrink: 0; margin: 9px 0px; display: flex; clear: both; width: 100%; min-width: 100%; box-sizing: border-box; color: rgba(255, 255, 255, 0.25); border-width: 1px 0 0; border-color: rgba(255, 255, 255, 0.25); border-block-start: 1px solid rgba(255, 255, 255, 0.25);"></div>
@@ -4054,10 +3779,9 @@ function renderShowcase(index) {
         `;
     }
 
-    html += `</div></div>`; // Fin equipment-area et top-row
+    html += `</div></div>`;
 
 
-    // --- 3. COACHING SECTION (Bas - Full Width - Structuré par Familles) ---
     html += `
         <div class="coaching-row" style="margin-top:64px; width:100%;">
             ${(() => {
@@ -4078,7 +3802,6 @@ function renderShowcase(index) {
         const deadSims = simulateDeadStatReplacements(p, config);
         const mainStatAdvices = getMainStatAdvice(p, config);
 
-        // APPELS NOUVELLES FONCTIONS
         const offPieceAdvice = getOffPieceAdvice(p);
         const talentAdvices = getTalentAdvice(p, config);
         const setForcingAdvice = getSetForcingAdvice(p, config);
@@ -4132,9 +3855,8 @@ function renderShowcase(index) {
                                     <p style="font-size:16px; color:#fff;">${critAdvice.msg}</p>
                                 </div>
                                 ${(() => {
-            // On récupère la cible définie dans le build actif (ou 100 par défaut)
             const targetER = (p.activeBuild && p.activeBuild.er_req) ? p.activeBuild.er_req : 100;
-            const currentER = b.er; // b = buffedStats
+            const currentER = b.er; 
 
             const adv = getERAdvice(currentER, targetER);
             if (!adv) return '';
@@ -4334,7 +4056,7 @@ function renderShowcase(index) {
                                     <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Top 3 des artéfacts à changer par ordre de priorité</p>
                                     ${priorities.length > 0 ? priorities.map((p, i) => {
             const difficulty = getFarmDifficulty(p.type, p.mainKey);
-            const estimate = getResinCostEstimate(p.type, p.mainKey, p.score); // NOUVEAU
+            const estimate = getResinCostEstimate(p.type, p.mainKey, p.score); 
 
             return `
                                         <div style="display:flex; justify-content:space-between; align-items:center; font-size:16px; margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
@@ -4393,7 +4115,6 @@ function renderShowcase(index) {
                                 ${p.artefacts.map(art => {
             const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
 
-            // ✅ Artéfact < 4★ : bloc simplifié sans analyse
             if ((art.stars || 5) < 4) {
                 return `
 <div style="width: 100%; background:#2C2D32; padding:10px 12px; border-radius:8px; opacity:0.5;">
@@ -4406,7 +4127,6 @@ function renderShowcase(index) {
     </div>
 </div>`;
             }
-            // Génération des lignes de substats
             let subsDetailsHtml = art.subStats.map((sub, idx) => {
                 const details = getRollDetails(sub.key, sub.value, art.stars || 5);
                 const baseRolls = (art.stars === 4 ? window.BASE_ROLLS_4 : window.BASE_ROLLS)?.[sub.key] || [];
@@ -4420,7 +4140,6 @@ function renderShowcase(index) {
                     return `<span style="color:${color}; font-weight:bold;">${displayVal}</span>${plusSign}`;
                 }).join('');
 
-                // Le design sans boîte : juste du texte bien aligné et un pointillé de séparation
                 return `
         <div style="padding: 4px 0; ${idx < art.subStats.length - 1 ? 'border-bottom: 1px dashed rgba(255,255,255,0.08);' : ''}">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2px;">
@@ -4475,15 +4194,12 @@ function renderShowcase(index) {
                         
                             <div style="display:flex; flex-direction: row; justify-content: space-between; gap:15px;">
                                 ${p.artefacts.map(art => {
-            // --- Logique JavaScript ---
             const metrics = calculateRerollMetrics(art, config);
 
-            // Si pas de métriques, on n'affiche rien
             if (!metrics) return '';
 
             const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
 
-            // --- Template HTML ---
             return `
                                     <div style="width: 100%; background:#2C2D32; padding:12px; border-radius:8px; border-left: 3px solid ${metrics.badge.color}">
                                         
@@ -4534,33 +4250,25 @@ function renderShowcase(index) {
                 `;
     })()}
         </div>
-    `; // Fin html
+    `;
 
     container.innerHTML = html;
     renderToolbar(index);
 }
 
-/* =========================================
-   INITIALISATION & ÉVÉNEMENTS
-   ========================================= */
-loadGameData(); // On charge les données du jeu (personnages, noms...)
+loadGameData();
 
-// Gestion de la touche "Entrée" dans le champ de texte
 const uidInput = document.getElementById('uidInput');
 if (uidInput) {
     uidInput.focus();
     uidInput.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
-            event.preventDefault(); // Empêche le rechargement de page indésirable
-            fetchUserData();        // Lance la recherche
+            event.preventDefault();
+            fetchUserData();
         }
     });
 }
 
-
-/* =========================================
-   EXPORT IMAGE (dom-to-image) - VERSION WSRV + UID
-   ========================================= */
 window.exportBuildAsImage = async function () {
     const element = document.querySelector('.top-row');
     if (!element) return alert("Aucun build affiché !");
@@ -4569,11 +4277,9 @@ window.exportBuildAsImage = async function () {
     const originalContent = btn ? btn.innerHTML : 'Exporter';
     if (btn) btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Traitement...';
 
-    // On sauvegarde le style original
     const bgDiv = element.querySelector('.background-splash-art');
     let originalBgImage = "";
 
-    // --- ÉTAPE 1 : RÉCUPÉRATION DU FOND VIA WSRV.NL ---
     if (bgDiv) {
         try {
             const computedStyle = window.getComputedStyle(bgDiv);
@@ -4583,7 +4289,6 @@ window.exportBuildAsImage = async function () {
                 const imgUrl = bgUrlMatch[1];
                 originalBgImage = bgDiv.style.backgroundImage;
 
-                // Utilisation de wsrv.nl (Ultra robuste pour les images + CORS)
                 const proxyUrl = 'https://wsrv.nl/?url=' + encodeURIComponent(imgUrl) + '&output=png';
 
                 const res = await fetch(proxyUrl);
@@ -4607,7 +4312,6 @@ window.exportBuildAsImage = async function () {
         }
     }
 
-    // --- ÉTAPE 2 : GÉNÉRATION ---
     await new Promise(r => setTimeout(r, 50));
 
     domtoimage.toPng(element, {
@@ -4616,16 +4320,12 @@ window.exportBuildAsImage = async function () {
         filter: (node) => true
     })
         .then(function (dataUrl) {
-            // 1. Récupération du Nom
             const nameEl = document.querySelector('.showcase-area-base-stats h2');
             const charName = nameEl ? nameEl.innerText.trim() : 'Genshin_Build';
 
-            // 2. Récupération de l'UID (NOUVEAU)
             const uidInput = document.getElementById('uidInput');
             const uid = uidInput ? uidInput.value.trim() : '';
 
-            // 3. Construction du nom de fichier
-            // Exemple : Build_Nilou_704449686.png
             const fileName = uid ? `Build_${charName}_${uid}.png` : `Build_${charName}.png`;
 
             const link = document.createElement('a');
@@ -4638,7 +4338,6 @@ window.exportBuildAsImage = async function () {
             alert('Erreur lors de la création de l\'image.');
         })
         .finally(function () {
-            // --- NETTOYAGE ---
             if (bgDiv && originalBgImage) {
                 bgDiv.style.backgroundImage = originalBgImage;
             }
@@ -4646,31 +4345,23 @@ window.exportBuildAsImage = async function () {
         });
 };
 
-// GESTION DES LIENS DE PARTAGE (À l'ouverture de la page)
 window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const urlUid = urlParams.get('uid');
     const urlChar = urlParams.get('char');
 
     if (urlUid) {
-        // 1. On remplit le champ input visuellement
         const uidInput = document.getElementById('uidInput');
         if (uidInput) uidInput.value = urlUid;
 
-        // 2. On lance la recherche automatiquement avec l'UID de l'URL
         fetchUserData(urlUid).then(() => {
 
-            // --- NOUVEAU : On met la croix si l'URL a bien chargé un compte ---
             toggleSearchIcon(true);
-            // ------------------------------------------------------------------
 
-            // 3. Si un perso est spécifié et que les données sont chargées
             if (urlChar && globalPersoData && globalPersoData.length > 0) {
-                // On cherche l'index du perso dans la vitrine
                 const targetIndex = globalPersoData.findIndex(p => p.nom.toLowerCase() === urlChar.toLowerCase());
 
                 if (targetIndex !== -1) {
-                    // On simule le clic sur l'onglet de ce perso
                     renderShowcase(targetIndex);
                 }
             }
@@ -4691,7 +4382,6 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         });
     } else {
-        // S'il n'y a pas d'UID dans l'URL, on affiche l'accueil !
         renderHome();
     }
 });
