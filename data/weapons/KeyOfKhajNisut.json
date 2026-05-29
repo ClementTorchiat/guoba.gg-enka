@@ -1,0 +1,41 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "1 Stack (PV% en Maîtrise élémentaire)",
+      "stats": {
+        "eleMas_bonus_scaling": {
+          "source": "hp",
+          "percent": [
+            0.0012,
+            0.0003
+          ]
+        }
+      }
+    },
+    {
+      "label": "2 Stacks (PV% en Maîtrise élémentaire)",
+      "stats": {
+        "eleMas_bonus_scaling": {
+          "source": "hp",
+          "percent": [
+            0.0024,
+            0.0006
+          ]
+        }
+      }
+    },
+    {
+      "label": "3 Stacks (PV% en Maîtrise élémentaire)",
+      "stats": {
+        "eleMas_bonus_scaling": {
+          "source": "hp",
+          "percent": [
+            0.0056,
+            0.0014
+          ]
+        }
+      }
+    }
+  ]
+}

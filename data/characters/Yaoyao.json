@@ -1,0 +1,258 @@
+{
+  "color": "#54701f",
+  "portraitOffset": -36,
+  "skins": {
+    "207701": {
+      "color": "#6ed3ea",
+      "portraitOffset": -38
+    }
+  },
+  "talents": {
+    "auto": 1,
+    "skill": 10,
+    "burst": 9
+  },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C1 : Tutelle",
+          "cons": 1,
+          "active": true,
+          "stats": {
+            "elemental_dmg_": 0.15
+          }
+        },
+        {
+          "label": "C4 : Attrait",
+          "cons": 4,
+          "active": true,
+          "stats": {
+            "eleMas_bonus_scaling": {
+              "source": "hp",
+              "percent": 0.003,
+              "max": 120
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Healeuse universelle": {
+      "name": "Healeuse universelle",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 1,
+        "hp": 0.8,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 1
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_",
+          "hp_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "hp_",
+          "heal_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "DeepwoodMemories:4",
+        "MaidenBeloved:4"
+      ],
+      "goodSets": [
+        "MaidenBeloved:2",
+        "OceanHuedClam:2",
+        "SongOfDaysPast:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2"
+      ],
+      "er_req": 220,
+      "team": [
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        }
+      ]
+    },
+    "Sub-DPS propagation": {
+      "name": "Sub-DPS propagation",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0.4,
+        "hp": 0.1,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.8,
+        "enerRech_": 0.6,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 1,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "dendro_dmg_",
+          "eleMas"
+        ],
+        "EQUIP_DRESS": [
+          "eleMas",
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "DeepwoodMemories:4",
+        "Instructor:4",
+        "GildedDreams:4"
+      ],
+      "goodSets": [
+        "DeepwoodMemories:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2"
+      ],
+      "er_req": 160,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Alhatham",
+          "element": "dendro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Fischl",
+          "element": "electro"
+        },
+        {
+          "role": "Support",
+          "name": "Kazuha",
+          "element": "anemo"
+        }
+      ]
+    },
+    "Sub-DPS fleurissement": {
+      "name": "Sub-DPS fleurissement",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0.4,
+        "hp": 0.1,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 1,
+        "enerRech_": 0.6,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 1,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "eleMas"
+        ],
+        "EQUIP_DRESS": [
+          "eleMas"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "DeepwoodMemories:4",
+        "Instructor:4",
+        "GildedDreams:4",
+        "FlowerOfParadiseLost:4"
+      ],
+      "goodSets": [
+        "DeepwoodMemories:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 160,
+      "team": [
+        {
+          "role": "Support",
+          "name": "Nilou",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Lauma",
+          "element": "dendro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Columbina",
+          "element": "hydro"
+        }
+      ]
+    }
+  }
+}

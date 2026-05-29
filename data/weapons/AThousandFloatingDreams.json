@@ -1,0 +1,49 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "3 Alliés du même élément que le porteur (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          96,
+          24
+        ]
+      }
+    },
+    {
+      "label": "2 Alliés du même élément que le porteur et 1 Différent (Maîtrise élémentaire et DGTs Élémentaires)",
+      "stats": {
+        "eleMas": [
+          64,
+          16
+        ],
+        "elemental_dmg_": [
+          0.1,
+          0.04
+        ]
+      }
+    },
+    {
+      "label": "1 Alliés du même élément que le porteur et 2 Différents (Maîtrise élémentaire et DGTs Élémentaires)",
+      "stats": {
+        "eleMas": [
+          32,
+          8
+        ],
+        "elemental_dmg_": [
+          0.2,
+          0.08
+        ]
+      }
+    },
+    {
+      "label": "3 Alliés d'un élément différent de celui du porteur (DGTs Élémentaires)",
+      "stats": {
+        "elemental_dmg_": [
+          0.3,
+          0.12
+        ]
+      }
+    }
+  ]
+}

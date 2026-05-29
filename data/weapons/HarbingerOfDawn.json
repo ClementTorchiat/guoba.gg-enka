@@ -1,0 +1,14 @@
+{
+  "buffs": [
+    {
+      "label": "Si les PV sont supérieurs à 90% (Taux CRIT)",
+      "active": false,
+      "stats": {
+        "critRate_": [
+          0.14,
+          0.035
+        ]
+      }
+    }
+  ]
+}

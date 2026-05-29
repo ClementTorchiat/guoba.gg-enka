@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une réaction liée à l'élément Hydro a lieu (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.2,
+          0.05
+        ]
+      }
+    }
+  ]
+}

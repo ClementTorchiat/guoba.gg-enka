@@ -1,0 +1,33 @@
+{
+  "4": [
+    {
+      "label": "Quand une 1ère attaque Géo touche ou qu'1s est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+      "stats": {
+        "def_": 0.06,
+        "geo_dmg_": 0.06
+      }
+    },
+    {
+      "label": "Quand une 2ème attaque Géo touche ou qu'1s de plus est passée non-déployé (12% DÉF et 12% Bonus de DGT Géo)",
+      "stats": {
+        "def_": 0.06,
+        "geo_dmg_": 0.06
+      }
+    },
+    {
+      "label": "Quand une 3ème attaque Géo touche ou qu'1s de plus est passée non-déployé (18% DÉF et 18% Bonus de DGT Géo)",
+      "stats": {
+        "def_": 0.06,
+        "geo_dmg_": 0.06
+      }
+    },
+    {
+      "label": "Quand une 4ème attaque Géo touche ou qu'1s de plus est passée non-déployé (24% DÉF et 24% Bonus de DGT Géo)",
+      "stats": {
+        "def_": 0.06,
+        "geo_dmg_": 0.06
+      }
+    }
+  ],
+  "selectMode": "cumulative"
+}

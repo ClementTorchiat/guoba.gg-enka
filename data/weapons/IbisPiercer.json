@@ -1,0 +1,23 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "Si une 1ère attaque chargée touche un ennemi (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          40,
+          10
+        ]
+      }
+    },
+    {
+      "label": "Si une 2ème attaque chargée touche un ennemi (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          40,
+          10
+        ]
+      }
+    }
+  ]
+}

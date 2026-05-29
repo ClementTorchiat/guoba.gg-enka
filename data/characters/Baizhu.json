@@ -1,0 +1,117 @@
+{
+  "color": "#297c81",
+  "portraitOffset": -36,
+  "talents": {
+    "auto": 1,
+    "skill": 9,
+    "burst": 10
+  },
+  "buffs": [
+    {
+      "category": "A1 : Cinq fortunes perpétuelles",
+      "selectMode": "exclusive",
+      "buffs": [
+        {
+          "label": "PV > 50%",
+          "active": true,
+          "stats": {
+            "elemental_dmg_": 0.25
+          }
+        },
+        {
+          "label": "PV < 50%",
+          "active": false,
+          "stats": {
+            "heal_": 0.2
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C4 : Perception ancienne",
+          "cons": 4,
+          "stats": {
+            "eleMas": 80
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Healer et applicateur général": {
+      "name": "Healer et applicateur général",
+      "weights": {
+        "critRate_": 0,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 1,
+        "hp": 0.8,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 1
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "hp_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "hp_",
+          "heal_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "DeepwoodMemories:4",
+        "Instructor:4"
+      ],
+      "goodSets": [
+        "OceanHuedClam:4",
+        "NoblesseOblige:4",
+        "MaidenBeloved:4",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "MaidenBeloved:2",
+        "OceanHuedClam:2",
+        "SongOfDaysPast:2"
+      ],
+      "er_req": 180,
+      "team": [
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        }
+      ]
+    }
+  }
+}

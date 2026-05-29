@@ -1,0 +1,123 @@
+{
+  "color": "#7a4e28",
+  "portraitOffset": -37,
+  "talents": {
+    "auto": 1,
+    "skill": 10,
+    "burst": 6
+  },
+  "buffs": [
+    {
+      "category": "Passifs",
+      "buffs": [
+        {
+          "label": "A1 : Nonchalance du vent et de la pluie",
+          "active": true,
+          "stats": {
+            "def_": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellations",
+      "selectMode": "exclusive",
+      "buffs": [
+        {
+          "label": "C6 : Vaillance de la bête (1 Géo / Pied ferme)",
+          "cons": 6,
+          "active": false,
+          "stats": {
+            "critDMG_": 0.1
+          }
+        },
+        {
+          "label": "C6 : Vaillance de la bête (2 Géo / Imprenabilité)",
+          "cons": 6,
+          "active": false,
+          "stats": {
+            "critDMG_": 0.2
+          }
+        },
+        {
+          "label": "C6 : Vaillance de la bête (3 Géo+ / Fracas)",
+          "cons": 6,
+          "active": true,
+          "stats": {
+            "critDMG_": 0.4
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Support Géo": {
+      "name": "Support Géo",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0.4,
+        "def": 0.1,
+        "eleMas": 0,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "def_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "def_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "ScrollOfTheHeroOfCinderCity:4",
+        "TheExile:4"
+      ],
+      "goodSets": [
+        "NoblesseOblige:4",
+        "Instructor:4",
+        "SilkenMoonsSerenade:4",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2"
+      ],
+      "er_req": 220,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Itto",
+          "element": "geo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Chiori",
+          "element": "geo"
+        },
+        {
+          "role": "Support",
+          "name": "Zhongli",
+          "element": "geo"
+        }
+      ]
+    }
+  }
+}

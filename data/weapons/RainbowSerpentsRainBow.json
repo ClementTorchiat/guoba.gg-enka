@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une attaque touche un ennemi et que le porteur est hors du terrain (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.28,
+          0.07
+        ]
+      }
+    }
+  ]
+}

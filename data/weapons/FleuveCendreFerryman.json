@@ -1,0 +1,23 @@
+{
+  "buffs": [
+    {
+      "label": "Buff passif de Taux CRIT (ne concerne que la compétence élémentaire)",
+      "active": false,
+      "stats": {
+        "critRate_": [
+          0.08,
+          0.02
+        ]
+      }
+    },
+    {
+      "label": "Si une compétence élémentaire est utilisée (Recharge d'énergie)",
+      "stats": {
+        "enerRech_": [
+          0.16,
+          0.04
+        ]
+      }
+    }
+  ]
+}

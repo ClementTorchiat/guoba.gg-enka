@@ -1,0 +1,375 @@
+{
+  "color": "#a43347",
+  "portraitOffset": -32,
+  "talents": {
+    "auto": 10,
+    "skill": 8,
+    "burst": 9
+  },
+  "buffs": [
+    {
+      "category": "Passifs",
+      "buffs": [
+        {
+          "category": "A1 - Dispositions supplémentaires",
+          "selectMode": "cumulative",
+          "buffs": [
+            {
+              "label": "1 Sceau consommé (+5% DGT Pyro)",
+              "stats": {
+                "pyro_dmg_": 0.05
+              }
+            },
+            {
+              "label": "2 Sceaux consommés (+10% DGT Pyro)",
+              "stats": {
+                "pyro_dmg_": 0.05
+              }
+            },
+            {
+              "label": "3 Sceaux consommés (Max de base)",
+              "stats": {
+                "pyro_dmg_": 0.05
+              }
+            },
+            {
+              "label": "4 Sceaux consommés (Max C6)",
+              "active": true,
+              "stats": {
+                "pyro_dmg_": 0.05
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C2 : Verdict final (PV ennemi < 50% et uniquement attaques chargées)",
+          "cons": 2,
+          "active": false,
+          "stats": {
+            "critRate_": 0.2
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "DPS Évaporation": {
+      "name": "DPS Évaporation",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.6,
+        "enerRech_": 0.6,
+        "pyro_dmg_": 1,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_",
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "pyro_dmg_",
+          "atk_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "CrimsonWitchOfFlames:4",
+        "MarechausseeHunter:4",
+        "WanderersTroupe:4"
+      ],
+      "goodSets": [
+        "GildedDreams:4",
+        "ShimenawasReminiscence:4",
+        "Lavawalker:4",
+        "MarechausseeHunter:2",
+        "CrimsonWitchOfFlames:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2"
+      ],
+      "er_req": 120,
+      "team": [
+        {
+          "role": "Sub-DPS",
+          "name": "Furina",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Yelan",
+          "element": "hydro"
+        },
+        {
+          "role": "Support",
+          "name": "Bennett",
+          "element": "pyro"
+        }
+      ]
+    },
+    "DPS Fonte": {
+      "name": "DPS Fonte",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.6,
+        "enerRech_": 0.6,
+        "pyro_dmg_": 1,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_",
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "pyro_dmg_",
+          "atk_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "CrimsonWitchOfFlames:4",
+        "WanderersTroupe:4"
+      ],
+      "goodSets": [
+        "GildedDreams:4",
+        "ShimenawasReminiscence:4",
+        "Lavawalker:4",
+        "MarechausseeHunter:2",
+        "CrimsonWitchOfFlames:2",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 120,
+      "team": [
+        {
+          "role": "Support",
+          "name": "Citlali",
+          "element": "cryo"
+        },
+        {
+          "role": "Support",
+          "name": "Xilonen",
+          "element": "geo"
+        },
+        {
+          "role": "Support",
+          "name": "Bennett",
+          "element": "pyro"
+        }
+      ]
+    },
+    "DPS Surcharge": {
+      "name": "DPS Surcharge",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0.6,
+        "pyro_dmg_": 1,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_"
+        ],
+        "EQUIP_RING": [
+          "pyro_dmg_",
+          "atk_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "CrimsonWitchOfFlames:4",
+        "WanderersTroupe:4"
+      ],
+      "goodSets": [
+        "GildedDreams:4",
+        "ShimenawasReminiscence:4",
+        "Lavawalker:4",
+        "MarechausseeHunter:2",
+        "CrimsonWitchOfFlames:2",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2"
+      ],
+      "er_req": 120,
+      "team": [
+        {
+          "role": "Sub-DPS",
+          "name": "Fischl",
+          "element": "electro"
+        },
+        {
+          "role": "Support",
+          "name": "Chevreuse",
+          "element": "pyro"
+        },
+        {
+          "role": "Support",
+          "name": "Bennett",
+          "element": "pyro"
+        }
+      ]
+    },
+    "DPS Bourgeonnement": {
+      "name": "DPS Bourgeonnement",
+      "weights": {
+        "critRate_": 0,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 1,
+        "enerRech_": 0.6,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "eleMas"
+        ],
+        "EQUIP_DRESS": [
+          "eleMas"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [
+        "atk"
+      ],
+      "bestSets": [
+        "GildedDreams:4",
+        "FlowerOfParadiseLost:4"
+      ],
+      "goodSets": [
+        "CrimsonWitchOfFlames:4",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 120,
+      "team": [
+        {
+          "role": "Sub-DPS",
+          "name": "Nahida",
+          "element": "dendro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Xingqiu",
+          "element": "hydro"
+        },
+        {
+          "role": "Support",
+          "name": "Kokomi",
+          "element": "hydro"
+        }
+      ]
+    }
+  }
+}

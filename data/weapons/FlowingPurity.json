@@ -1,0 +1,71 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "Si une compétence élémentaire est utilisée (DGTs Élémentaires)",
+      "stats": {
+        "pyro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "hydro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "cryo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "electro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "anemo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "geo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "dendro_dmg_": [
+          0.08,
+          0.02
+        ]
+      }
+    },
+    {
+      "label": "Si un Engagement Vital est dissipé (DGTs Élémentaires)",
+      "stats": {
+        "pyro_dmg_": [
+          0.12,
+          0.03
+        ],
+        "hydro_dmg_": [
+          0.12,
+          0.03
+        ],
+        "cryo_dmg_": [
+          0.12,
+          0.03
+        ],
+        "electro_dmg_": [
+          0.12,
+          0.03
+        ],
+        "anemo_dmg_": [
+          0.12,
+          0.03
+        ],
+        "geo_dmg_": [
+          0.12,
+          0.03
+        ],
+        "dendro_dmg_": [
+          0.12,
+          0.03
+        ]
+      }
+    }
+  ]
+}

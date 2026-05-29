@@ -1,0 +1,18 @@
+{
+  "4": [
+    {
+      "label": "Si une 1ère compétence élémentaire touche un ennemi (9% ATK)",
+      "stats": {
+        "atk_": 0.09
+      }
+    },
+    {
+      "label": "Si une 2ème compétence élémentaire touche un ennemi (18% ATK et 25% Bonus de DGT Physique)",
+      "stats": {
+        "atk_": 0.09,
+        "physical_dmg_": 0.25
+      }
+    }
+  ],
+  "selectMode": "cumulative"
+}

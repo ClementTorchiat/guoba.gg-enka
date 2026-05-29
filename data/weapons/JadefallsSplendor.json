@@ -1,0 +1,58 @@
+{
+  "buffs": [
+    {
+      "label": "Si un déchaînement élémentaire est utilisé ou qu'un bouclier est créé (DGTs Élémentaires en fonction des PV)",
+      "stats": {
+        "pyro_dmg_bonus_scaling": {
+          "source": "hp",
+          "percent": [
+            0.0003,
+            0.0002
+          ]
+        },
+        "hydro_dmg_bonus_scaling": {
+          "source": "hp",
+          "percent": [
+            0.0003,
+            0.0002
+          ]
+        },
+        "cryo_dmg_bonus_scaling": {
+          "source": "hp",
+          "percent": [
+            0.0003,
+            0.0002
+          ]
+        },
+        "electro_dmg_bonus_scaling": {
+          "source": "hp",
+          "percent": [
+            0.0003,
+            0.0002
+          ]
+        },
+        "anemo_dmg_bonus_scaling": {
+          "source": "hp",
+          "percent": [
+            0.0003,
+            0.0002
+          ]
+        },
+        "geo_dmg_bonus_scaling": {
+          "source": "hp",
+          "percent": [
+            0.0003,
+            0.0002
+          ]
+        },
+        "dendro_dmg_bonus_scaling": {
+          "source": "hp",
+          "percent": [
+            0.0003,
+            0.0002
+          ]
+        }
+      }
+    }
+  ]
+}

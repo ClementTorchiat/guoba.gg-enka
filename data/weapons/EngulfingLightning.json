@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si un déchaînement élémentaire est utilisé (Recharge d'énergie)",
+      "stats": {
+        "enerRech_": [
+          0.3,
+          0.05
+        ]
+      }
+    }
+  ]
+}

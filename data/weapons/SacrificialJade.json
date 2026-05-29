@@ -1,0 +1,17 @@
+{
+  "buffs": [
+    {
+      "label": "Si le porteur est hors du terrain pendant 5s (PV% et Maîtrise élémentaire)",
+      "stats": {
+        "hp_": [
+          0.32,
+          0.08
+        ],
+        "eleMas": [
+          40,
+          10
+        ]
+      }
+    }
+  ]
+}

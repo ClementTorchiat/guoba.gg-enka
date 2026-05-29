@@ -1,0 +1,56 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "Récital (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.6,
+          0.15
+        ]
+      }
+    },
+    {
+      "label": "Aria (DGTs Élémentaires)",
+      "stats": {
+        "pyro_dmg_": [
+          0.48,
+          0.12
+        ],
+        "hydro_dmg_": [
+          0.48,
+          0.12
+        ],
+        "cryo_dmg_": [
+          0.48,
+          0.12
+        ],
+        "electro_dmg_": [
+          0.48,
+          0.12
+        ],
+        "anemo_dmg_": [
+          0.48,
+          0.12
+        ],
+        "geo_dmg_": [
+          0.48,
+          0.12
+        ],
+        "dendro_dmg_": [
+          0.48,
+          0.12
+        ]
+      }
+    },
+    {
+      "label": "Interlude (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          240,
+          60
+        ]
+      }
+    }
+  ]
+}

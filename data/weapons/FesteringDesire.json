@@ -1,0 +1,14 @@
+{
+  "buffs": [
+    {
+      "label": "Amélioration de Taux CRIT sur la compétence seulement",
+      "active": false,
+      "stats": {
+        "critRate_": [
+          0.06,
+          0.015
+        ]
+      }
+    }
+  ]
+}

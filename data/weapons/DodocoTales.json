@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une attaque chargée touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.08,
+          0.02
+        ]
+      }
+    }
+  ]
+}

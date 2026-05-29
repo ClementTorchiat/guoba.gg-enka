@@ -1,0 +1,41 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "1 Stack (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.1,
+          0.025
+        ]
+      }
+    },
+    {
+      "label": "2 Stacks (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.2,
+          0.05
+        ]
+      }
+    },
+    {
+      "label": "3 Stacks (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.3,
+          0.075
+        ]
+      }
+    },
+    {
+      "label": "4 Stacks (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.48,
+          0.12
+        ]
+      }
+    }
+  ]
+}

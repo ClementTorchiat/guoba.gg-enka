@@ -1,0 +1,55 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+      "active": false,
+      "stats": {
+        "critRate_": [
+          0.08,
+          0.02
+        ]
+      }
+    },
+    {
+      "label": "Si des dégâts sont infligés une 2ème fois (Taux CRIT)",
+      "active": false,
+      "stats": {
+        "critRate_": [
+          0.08,
+          0.02
+        ]
+      }
+    },
+    {
+      "label": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+      "active": false,
+      "stats": {
+        "critRate_": [
+          0.08,
+          0.02
+        ]
+      }
+    },
+    {
+      "label": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+      "active": false,
+      "stats": {
+        "critRate_": [
+          0.08,
+          0.02
+        ]
+      }
+    },
+    {
+      "label": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+      "active": false,
+      "stats": {
+        "critRate_": [
+          0.08,
+          0.02
+        ]
+      }
+    }
+  ]
+}

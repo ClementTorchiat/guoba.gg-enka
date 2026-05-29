@@ -1,0 +1,31 @@
+{
+  "buffs": [
+    {
+      "label": "Si une compétence élémentaire touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.2,
+          0.05
+        ]
+      }
+    },
+    {
+      "label": "Si le personnage subit des dégâts (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.2,
+          0.05
+        ]
+      }
+    },
+    {
+      "label": "Si le personnage n'est pas protégé par un bouclier (PV%)",
+      "stats": {
+        "hp_": [
+          0.32,
+          0.08
+        ]
+      }
+    }
+  ]
+}

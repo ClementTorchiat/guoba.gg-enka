@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si un ennemi a été vaincu (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.12,
+          0.02
+        ]
+      }
+    }
+  ]
+}

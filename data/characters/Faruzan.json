@@ -1,0 +1,100 @@
+{
+  "color": "#5591a0",
+  "portraitOffset": -37,
+  "talents": {
+    "auto": 1,
+    "skill": 8,
+    "burst": 10
+  },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C6 : Merveilleux chemin de la vérité (dans le déchaînement)",
+          "cons": 6,
+          "stats": {
+            "critDMG_": 0.4
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Support Anémo": {
+      "name": "Support Anémo",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 1,
+        "atk": 0.8,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_",
+          "atk_"
+        ],
+        "EQUIP_RING": [
+          "atk_"
+        ],
+        "EQUIP_DRESS": [
+          "atk_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "TenacityOfTheMillelith:4",
+        "NoblesseOblige:4",
+        "ViridescentVenerer:4"
+      ],
+      "goodSets": [
+        "GoldenTroupe:4",
+        "TheExile:4",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2"
+      ],
+      "er_req": 220,
+      "team": [
+        {
+          "role": "Flex",
+          "name": [
+            "Xiao",
+            "Wanderer"
+          ],
+          "element": [
+            "anemo",
+            "anemo"
+          ]
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        }
+      ]
+    }
+  }
+}

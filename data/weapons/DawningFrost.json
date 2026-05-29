@@ -1,0 +1,22 @@
+{
+  "buffs": [
+    {
+      "label": "Si une attaque chargée touche un ennemi (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          72,
+          18
+        ]
+      }
+    },
+    {
+      "label": "Si une compétence élémentaire touche un ennemi (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          48,
+          12
+        ]
+      }
+    }
+  ]
+}

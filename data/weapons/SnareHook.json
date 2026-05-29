@@ -1,0 +1,23 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          60,
+          15
+        ]
+      }
+    },
+    {
+      "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          120,
+          30
+        ]
+      }
+    }
+  ]
+}

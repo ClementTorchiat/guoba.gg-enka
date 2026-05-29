@@ -1,0 +1,475 @@
+{
+  "color": "#1D849A",
+  "portraitOffset": -38,
+  "talents": {
+    "auto": 6,
+    "skill": 10,
+    "burst": 8
+  },
+  "buffs": [
+    {
+      "category": "Passifs",
+      "selectMode": "exclusive",
+      "buffs": [
+        {
+          "label": "A1 : Équipe avec Pyro",
+          "active": true,
+          "stats": {
+            "elemental_dmg_bonus_scaling": {
+              "source": "atk",
+              "percent": 0.01,
+              "max": 25
+            },
+            "pyro_dmg_bonus_scaling": {
+              "source": "atk",
+              "percent": 0.01,
+              "max": 25
+            }
+          }
+        },
+        {
+          "label": "A1 : Équipe avec Hydro",
+          "active": false,
+          "stats": {
+            "elemental_dmg_bonus_scaling": {
+              "source": "atk",
+              "percent": 0.01,
+              "max": 25
+            },
+            "hydro_dmg_bonus_scaling": {
+              "source": "atk",
+              "percent": 0.01,
+              "max": 25
+            }
+          }
+        },
+        {
+          "label": "A1 : Équipe avec Electro",
+          "active": false,
+          "stats": {
+            "elemental_dmg_bonus_scaling": {
+              "source": "atk",
+              "percent": 0.01,
+              "max": 25
+            },
+            "electro_dmg_bonus_scaling": {
+              "source": "atk",
+              "percent": 0.01,
+              "max": 25
+            }
+          }
+        },
+        {
+          "label": "A1 : Équipe avec Cryo",
+          "active": false,
+          "stats": {
+            "elemental_dmg_bonus_scaling": {
+              "source": "atk",
+              "percent": 0.01,
+              "max": 25
+            },
+            "cryo_dmg_bonus_scaling": {
+              "source": "atk",
+              "percent": 0.01,
+              "max": 25
+            }
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellation 4",
+      "selectMode": "exclusive",
+      "buffs": [
+        {
+          "label": "C4 : Dispersion Pyro (+20% Anémo/Pyro)",
+          "active": true,
+          "cons": 4,
+          "stats": {
+            "anemo_dmg_": 0.2,
+            "pyro_dmg_": 0.2
+          }
+        },
+        {
+          "label": "C4 : Dispersion Hydro (+20% Anémo/Hydro)",
+          "active": false,
+          "cons": 4,
+          "stats": {
+            "anemo_dmg_": 0.2,
+            "hydro_dmg_": 0.2
+          }
+        },
+        {
+          "label": "C4 : Dispersion Électro (+20% Anémo/Électro)",
+          "active": false,
+          "cons": 4,
+          "stats": {
+            "anemo_dmg_": 0.2,
+            "electro_dmg_": 0.2
+          }
+        },
+        {
+          "label": "C4 : Dispersion Cryo (+20% Anémo/Cryo)",
+          "active": false,
+          "cons": 4,
+          "stats": {
+            "anemo_dmg_": 0.2,
+            "cryo_dmg_": 0.2
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellation 6",
+      "buffs": [
+        {
+          "label": "C6",
+          "cons": 6,
+          "stats": {
+            "critDMG_": 0.8
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Anémo/Pyro": {
+      "name": "Anémo/Pyro",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0,
+        "pyro_dmg_": 1,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_"
+        ],
+        "EQUIP_RING": [
+          "pyro_dmg_",
+          "atk_"
+        ],
+        "EQUIP_DRESS": [
+          "critDMG_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [
+        "heal_"
+      ],
+      "showUIStats": [
+        "pyro_dmg_"
+      ],
+      "bestSets": [
+        "ADayCarvedFromRisingWinds:4"
+      ],
+      "goodSets": [
+        "DesertPavilionChronicle:4",
+        "GladiatorsFinale:4",
+        "ViridescentVenerer:2",
+        "DesertPavilionChronicle:2",
+        "EchoesOfAnOffering:4",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "CrimsonWitchOfFlames:2"
+      ],
+      "er_req": 100,
+      "team": [
+        {
+          "role": "Flex",
+          "name": [
+            "Venti",
+            "Prune"
+          ],
+          "element": "anemo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Durin",
+          "element": "pyro"
+        },
+        {
+          "role": "Support",
+          "name": "Nicole",
+          "element": "pyro"
+        }
+      ]
+    },
+    "Anémo/Cryo": {
+      "name": "Anémo/Cryo",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 1,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_"
+        ],
+        "EQUIP_RING": [
+          "cryo_dmg_",
+          "atk_"
+        ],
+        "EQUIP_DRESS": [
+          "critDMG_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [
+        "heal_"
+      ],
+      "showUIStats": [
+        "cryo_dmg_"
+      ],
+      "bestSets": [
+        "ADayCarvedFromRisingWinds:4"
+      ],
+      "goodSets": [
+        "DesertPavilionChronicle:4",
+        "GladiatorsFinale:4",
+        "ViridescentVenerer:2",
+        "DesertPavilionChronicle:2",
+        "EchoesOfAnOffering:4",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "BlizzardStrayer:2",
+        "FinaleOfTheDeepGalleries:2"
+      ],
+      "er_req": 100,
+      "team": [
+        {
+          "role": "Flex",
+          "name": [
+            "Venti",
+            "Prune"
+          ],
+          "element": "anemo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Escoffier",
+          "element": "cryo"
+        },
+        {
+          "role": "Support",
+          "name": "Shenhe",
+          "element": "cryo"
+        }
+      ]
+    },
+    "Anémo/Electro": {
+      "name": "Anémo/Electro",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 1,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_"
+        ],
+        "EQUIP_RING": [
+          "electro_dmg_",
+          "atk_"
+        ],
+        "EQUIP_DRESS": [
+          "critDMG_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [
+        "heal_"
+      ],
+      "showUIStats": [
+        "electro_dmg_"
+      ],
+      "bestSets": [
+        "ADayCarvedFromRisingWinds:4"
+      ],
+      "goodSets": [
+        "DesertPavilionChronicle:4",
+        "ViridescentVenerer:2",
+        "DesertPavilionChronicle:2",
+        "GladiatorsFinale:4",
+        "EchoesOfAnOffering:4",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "ThunderingFury:2"
+      ],
+      "er_req": 100,
+      "team": [
+        {
+          "role": "Flex",
+          "name": [
+            "Venti",
+            "Prune"
+          ],
+          "element": "anemo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Fischl",
+          "element": "electro"
+        },
+        {
+          "role": "Support",
+          "name": "Iansan",
+          "element": "electro"
+        }
+      ]
+    },
+    "Anémo/Hydro": {
+      "name": "Anémo/Hydro",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 1,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_"
+        ],
+        "EQUIP_RING": [
+          "hydro_dmg_",
+          "atk_"
+        ],
+        "EQUIP_DRESS": [
+          "critDMG_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [
+        "heal_"
+      ],
+      "showUIStats": [
+        "hydro_dmg_"
+      ],
+      "bestSets": [
+        "ADayCarvedFromRisingWinds:4"
+      ],
+      "goodSets": [
+        "DesertPavilionChronicle:4",
+        "GladiatorsFinale:4",
+        "EchoesOfAnOffering:4",
+        "ViridescentVenerer:2",
+        "DesertPavilionChronicle:2",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "HeartOfDepth:2",
+        "NymphsDream:2"
+      ],
+      "er_req": 100,
+      "team": [
+        {
+          "role": "Flex",
+          "name": [
+            "Venti",
+            "Prune"
+          ],
+          "element": "anemo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Yelan",
+          "element": "hydro"
+        },
+        {
+          "role": "Support",
+          "name": "Mona",
+          "element": "hydro"
+        }
+      ]
+    }
+  }
+}

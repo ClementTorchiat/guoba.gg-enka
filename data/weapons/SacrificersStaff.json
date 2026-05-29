@@ -1,0 +1,44 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "Si une compétence élémentaire touche un ennemi une 1ère fois (ATQ% et Recharge d'énergie)",
+      "stats": {
+        "atk_": [
+          0.08,
+          0.02
+        ],
+        "enerRech_": [
+          0.06,
+          0.015
+        ]
+      }
+    },
+    {
+      "label": "Si une compétence élémentaire touche un ennemi une 2ème fois (ATQ% et Recharge d'énergie)",
+      "stats": {
+        "atk_": [
+          0.08,
+          0.02
+        ],
+        "enerRech_": [
+          0.06,
+          0.015
+        ]
+      }
+    },
+    {
+      "label": "Si une compétence élémentaire touche un ennemi une 3ème fois (ATQ% et Recharge d'énergie)",
+      "stats": {
+        "atk_": [
+          0.08,
+          0.02
+        ],
+        "enerRech_": [
+          0.06,
+          0.015
+        ]
+      }
+    }
+  ]
+}

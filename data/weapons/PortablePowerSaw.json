@@ -1,0 +1,32 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "1 Symbole consommé (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          40,
+          10
+        ]
+      }
+    },
+    {
+      "label": "2 Symboles consommés (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          80,
+          20
+        ]
+      }
+    },
+    {
+      "label": "3 Symboles consommés (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          120,
+          30
+        ]
+      }
+    }
+  ]
+}

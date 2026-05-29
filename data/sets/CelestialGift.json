@@ -1,0 +1,17 @@
+{
+  "4": [
+    {
+      "label": "Si le personnage a terminé son devoir de la sorcière et a utilisé une compétence élémentaire (20% DGT Élémentaires)",
+      "stats": {
+        "elemental_dmg_": 0.2
+      }
+    },
+    {
+      "label": "Si l'équipe compte deux personnages Hexerei (40% DGT Élémentaires)",
+      "stats": {
+        "elemental_dmg_": 0.4
+      }
+    }
+  ],
+  "selectMode": "exclusive"
+}

@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si un point faible est touché en mode visée (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.36,
+          0.09
+        ]
+      }
+    }
+  ]
+}

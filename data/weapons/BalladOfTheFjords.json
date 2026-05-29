@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si l'équipe est composée de 3 éléments différents (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          120,
+          30
+        ]
+      }
+    }
+  ]
+}

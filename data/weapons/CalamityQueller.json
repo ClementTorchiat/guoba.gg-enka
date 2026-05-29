@@ -1,0 +1,23 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "Max Stacks sur le terrain (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.192,
+          0.048
+        ]
+      }
+    },
+    {
+      "label": "Max Stacks hors du terrain (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.384,
+          0.096
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,357 @@
+{
+  "color": "#1d65ff",
+  "portraitOffset": -37,
+  "talents": {
+    "auto": 6,
+    "skill": 8,
+    "burst": 8
+  },
+  "buffs": [
+    {
+      "category": "Passifs",
+      "selectMode": "exclusive",
+      "data": [
+        {
+          "label": "A1 : Appel de la lune (1 stack)",
+          "active": false,
+          "stats": {
+            "critRate_": 0.05
+          }
+        },
+        {
+          "label": "A1 : Appel de la lune (2 stacks)",
+          "active": false,
+          "stats": {
+            "critRate_": 0.1
+          }
+        },
+        {
+          "label": "A1 : Appel de la lune (3 stacks)",
+          "active": true,
+          "stats": {
+            "critRate_": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C2 : Nuit en splendeur, jamais solitaire",
+          "cons": 2,
+          "stats": {
+            "hp_": 0.4
+          }
+        },
+        {
+          "label": "C6 : Nuit lugubre, lune à travers (uniquement sur un élément)",
+          "cons": 6,
+          "stats": {
+            "critDMG_": "0.80"
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Support sélénofleurissement": {
+      "name": "Support sélénofleurissement",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0.9,
+        "hp": 0.1,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.4,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_",
+          "hp_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "bestSets": [
+        "SilkenMoonsSerenade:4",
+        "AubadeOfMorningstarAndMoon:4"
+      ],
+      "goodSets": [
+        "TenacityOfTheMillelith:4",
+        "Instructor:4",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2"
+      ],
+      "er_req": 180,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Nefer",
+          "element": "dendro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Lauma",
+          "element": "dendro"
+        },
+        {
+          "role": "Flex",
+          "name": [
+            "Nahida",
+            "Nilou"
+          ],
+          "element": [
+            "dendro",
+            "hydro"
+          ]
+        }
+      ]
+    },
+    "Driver sélénofleurissement": {
+      "name": "Driver sélénofleurissement",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0.9,
+        "hp": 0.1,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.4,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_",
+          "hp_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "critDMG_",
+          "critRate_"
+        ]
+      },
+      "bestSets": [
+        "NightOfTheSkysUnveiling:4"
+      ],
+      "goodSets": [
+        "AubadeOfMorningstarAndMoon:4",
+        "SilkenMoonsSerenade:4",
+        "Instructor:4",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2"
+      ],
+      "er_req": 180,
+      "team": [
+        {
+          "role": "Support",
+          "name": "Nilou",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Lauma",
+          "element": "dendro"
+        },
+        {
+          "role": "Support",
+          "name": "Nahida",
+          "element": "dendro"
+        }
+      ]
+    },
+    "Support sélénocution": {
+      "name": "Support sélénocution",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0.9,
+        "hp": 0.1,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.4,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_",
+          "hp_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "bestSets": [
+        "AubadeOfMorningstarAndMoon:4",
+        "SilkenMoonsSerenade:4"
+      ],
+      "goodSets": [
+        "TenacityOfTheMillelith:4",
+        "Instructor:4",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2"
+      ],
+      "er_req": 180,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Flins",
+          "element": "electro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Ineffa",
+          "element": "electro"
+        },
+        {
+          "role": "Support",
+          "name": "Sucrose",
+          "element": "anemo"
+        }
+      ]
+    },
+    "Support sélénocristallisation": {
+      "name": "Support sélénocristallisation",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0.9,
+        "hp": 0.1,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.4,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_",
+          "hp_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "bestSets": [
+        "AubadeOfMorningstarAndMoon:4",
+        "SilkenMoonsSerenade:4"
+      ],
+      "goodSets": [
+        "TenacityOfTheMillelith:4",
+        "Instructor:4",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2"
+      ],
+      "er_req": 180,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Zibai",
+          "element": "geo"
+        },
+        {
+          "role": "Support",
+          "name": "Illuga",
+          "element": "geo"
+        },
+        {
+          "role": "Support",
+          "name": "Linnea",
+          "element": "geo"
+        }
+      ]
+    }
+  }
+}

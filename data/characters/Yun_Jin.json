@@ -1,0 +1,94 @@
+{
+  "color": "#48308d",
+  "portraitOffset": -36,
+  "talents": {
+    "auto": 1,
+    "skill": 1,
+    "burst": 10
+  },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C4 : Le tranchant d'une fleur",
+          "cons": 4,
+          "stats": {
+            "def_": 0.2
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Support universel": {
+      "name": "Support universel",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 1,
+        "def": 0.8,
+        "eleMas": 0,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "def_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "def_"
+        ],
+        "EQUIP_DRESS": [
+          "def_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "HuskOfOpulentDreams:4",
+        "NoblesseOblige:4"
+      ],
+      "goodSets": [
+        "ArchaicPetra:4",
+        "ScrollOfTheHeroOfCinderCity:4",
+        "HuskOfOpulentDreams:2",
+        "ScrollOfTheHeroOfCinderCity:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2"
+      ],
+      "er_req": 200,
+      "team": [
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "1 Stack (DGTs Élémentaires)",
+      "stats": {
+        "pyro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "hydro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "cryo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "electro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "anemo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "geo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "dendro_dmg_": [
+          0.08,
+          0.02
+        ]
+      }
+    },
+    {
+      "label": "2 Stacks (DGTs Élémentaires)",
+      "stats": {
+        "pyro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "hydro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "cryo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "electro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "anemo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "geo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "dendro_dmg_": [
+          0.08,
+          0.02
+        ]
+      }
+    },
+    {
+      "label": "3 Stacks (DGTs Élémentaires)",
+      "stats": {
+        "pyro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "hydro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "cryo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "electro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "anemo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "geo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "dendro_dmg_": [
+          0.08,
+          0.02
+        ]
+      }
+    },
+    {
+      "label": "4 Stacks (DGTs Élémentaires)",
+      "stats": {
+        "pyro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "hydro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "cryo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "electro_dmg_": [
+          0.08,
+          0.02
+        ],
+        "anemo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "geo_dmg_": [
+          0.08,
+          0.02
+        ],
+        "dendro_dmg_": [
+          0.08,
+          0.02
+        ]
+      }
+    }
+  ]
+}

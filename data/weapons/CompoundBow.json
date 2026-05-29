@@ -1,0 +1,41 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "1 cumul (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.04,
+          0.01
+        ]
+      }
+    },
+    {
+      "label": "2 cumuls (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.04,
+          0.01
+        ]
+      }
+    },
+    {
+      "label": "3 cumuls (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.04,
+          0.01
+        ]
+      }
+    },
+    {
+      "label": "4 cumuls (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.04,
+          0.01
+        ]
+      }
+    }
+  ]
+}

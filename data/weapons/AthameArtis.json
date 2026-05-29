@@ -1,0 +1,23 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "Si un déchaînement élémentaire touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.2,
+          0.05
+        ]
+      }
+    },
+    {
+      "label": "Si l'équipe est composée de deux membre de l'Hexerei (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.35,
+          0.0875
+        ]
+      }
+    }
+  ]
+}

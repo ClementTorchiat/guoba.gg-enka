@@ -1,0 +1,156 @@
+{
+  "color": "#922533",
+  "portraitOffset": -36,
+  "talents": {
+    "auto": 1,
+    "skill": 9,
+    "burst": 9
+  },
+  "builds": {
+    "Shielder général": {
+      "name": "Shielder général",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 1,
+        "hp": 0.8,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "hp_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "hp_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "NoblesseOblige:4"
+      ],
+      "goodSets": [
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2"
+      ],
+      "er_req": 200,
+      "team": [
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        }
+      ]
+    },
+    "Sub-DPS bourgeonnement": {
+      "name": "Sub-DPS bourgeonnement",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0.4,
+        "hp": 0.1,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 1,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas",
+          "hp_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "eleMas",
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "eleMas",
+          "hp_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "FlowerOfParadiseLost:4",
+        "GildedDreams:4"
+      ],
+      "goodSets": [
+        "CrimsonWitchOfFlames:4",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2"
+      ],
+      "er_req": 200,
+      "team": [
+        {
+          "role": "Support",
+          "name": "Baizhuer",
+          "element": "dendro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Yelan",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Xingqiu",
+          "element": "hydro"
+        }
+      ]
+    }
+  }
+}

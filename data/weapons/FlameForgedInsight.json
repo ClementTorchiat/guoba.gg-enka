@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une réaction Sélène est déclenchée (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          60,
+          15
+        ]
+      }
+    }
+  ]
+}

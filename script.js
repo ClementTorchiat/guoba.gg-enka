@@ -1,37 +1,37 @@
 const ICON_BASE_PATH = "./assets/simulator/icons/";
 
 const ICON_MAP = {
-    "hp": "icon_hp.png",
-    "hp_": "icon_hp_percent.png",
-    "atk": "icon_atk.png",
-    "atk_": "icon_atk_percent.png",
-    "def": "icon_def.png",
-    "def_": "icon_def_percent.png",
+    "hp": "icon_hp.webp",
+    "hp_": "icon_hp_percent.webp",
+    "atk": "icon_atk.webp",
+    "atk_": "icon_atk_percent.webp",
+    "def": "icon_def.webp",
+    "def_": "icon_def_percent.webp",
 
-    "eleMas": "icon_em.png",
-    "enerRech_": "icon_er.png",
-    "critRate_": "icon_crit_rate.png",
-    "critDMG_": "icon_crit_dmg.png",
-    "heal_": "icon_heal_bonus.png",
+    "eleMas": "icon_em.webp",
+    "enerRech_": "icon_er.webp",
+    "critRate_": "icon_crit_rate.webp",
+    "critDMG_": "icon_crit_dmg.webp",
+    "heal_": "icon_heal_bonus.webp",
 
-    "pyro_dmg_": "icon_pyro.png",
-    "hydro_dmg_": "icon_hydro.png",
-    "cryo_dmg_": "icon_cryo.png",
-    "electro_dmg_": "icon_electro.png",
-    "anemo_dmg_": "icon_anemo.png",
-    "geo_dmg_": "icon_geo.png",
-    "dendro_dmg_": "icon_dendro.png",
-    "physical_dmg_": "icon_physical.png",
+    "pyro_dmg_": "icon_pyro.webp",
+    "hydro_dmg_": "icon_hydro.webp",
+    "cryo_dmg_": "icon_cryo.webp",
+    "electro_dmg_": "icon_electro.webp",
+    "anemo_dmg_": "icon_anemo.webp",
+    "geo_dmg_": "icon_geo.webp",
+    "dendro_dmg_": "icon_dendro.webp",
+    "physical_dmg_": "icon_physical.webp",
 
-    "sword": "icon_sword.png",
-    "claymore": "icon_claymore.png",
-    "pole": "icon_polearm.png",
-    "bow": "icon_bow.png",
-    "catalyst": "icon_catalyst.png",
+    "sword": "icon_sword.webp",
+    "claymore": "icon_claymore.webp",
+    "pole": "icon_polearm.webp",
+    "bow": "icon_bow.webp",
+    "catalyst": "icon_catalyst.webp",
 
-    "score": "icon_score.png",
+    "score": "icon_score.webp",
 
-    "unknown": "icon_unknown.png"
+    "unknown": "icon_unknown.webp"
 };
 
 function createIcon(key) {
@@ -1128,7 +1128,7 @@ function renderPlayerProfile(playerInfo, uid) {
     const row1 = [
         `<span class="pp-badge pp-badge-server">${server}</span>`,
         achievements !== null
-            ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.png" class="pp-icon" alt="succès">${achievements.toLocaleString()}</span>`
+            ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="succès">${achievements.toLocaleString()}</span>`
             : '',
         ar ? `<span class="pp-badge pp-badge-ar">AR${ar}</span>` : '',
     ].filter(Boolean).join('');
@@ -1138,10 +1138,10 @@ function renderPlayerProfile(playerInfo, uid) {
             ? `<span class="pp-badge pp-badge-stygian">${stygianIcon()}${stygianSec}s</span>`
             : '',
         theaterStars !== null
-            ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.png" class="pp-icon" alt="théâtre">${theaterStars}</span>`
+            ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.webp" class="pp-icon" alt="théâtre">${theaterStars}</span>`
             : '',
         abyssStars !== null
-            ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.png" class="pp-icon" alt="abysses">${abyssStars}</span>`
+            ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.webp" class="pp-icon" alt="abysses">${abyssStars}</span>`
             : '',
     ].filter(Boolean);
     const row2 = row2Items.join('');
@@ -2706,8 +2706,8 @@ function renderToolbar(index) {
         const matesHtml = p.activeBuild.team.map(mate => {
             const getIconUrl = (name, elem) => {
                 if (name) return `https://enka.network/ui/UI_AvatarIcon_${name}.png`;
-                if (elem) return `${ICON_BASE_PATH}icon_${elem}.png`;
-                return `${ICON_BASE_PATH}icon_unknown.png`;
+                if (elem) return `${ICON_BASE_PATH}icon_${elem}.webp`;
+                return `${ICON_BASE_PATH}icon_unknown.webp`;
             };
 
             const isDual = Array.isArray(mate.element) || Array.isArray(mate.name);
@@ -2728,8 +2728,8 @@ function renderToolbar(index) {
             if (!isDual) {
                 const url = getIconUrl(names[0], elems[0]);
                 const fallback = elems[0]
-                    ? `${ICON_BASE_PATH}icon_${elems[0]}.png`
-                    : `${ICON_BASE_PATH}icon_unknown.png`;
+                    ? `${ICON_BASE_PATH}icon_${elems[0]}.webp`
+                    : `${ICON_BASE_PATH}icon_unknown.webp`;
 
                 innerHtml = `
                     <img src="${url}" 
@@ -2739,10 +2739,10 @@ function renderToolbar(index) {
                 `;
             } else {
                 const url1 = getIconUrl(names[0], elems[0]);
-                const fb1 = elems[0] ? `${ICON_BASE_PATH}icon_${elems[0]}.png` : `${ICON_BASE_PATH}icon_unknown.png`;
+                const fb1 = elems[0] ? `${ICON_BASE_PATH}icon_${elems[0]}.png` : `${ICON_BASE_PATH}icon_unknown.webp`;
 
                 const url2 = getIconUrl(names[1] || names[0], elems[1] || elems[0]);
-                const fb2 = (elems[1] || elems[0]) ? `${ICON_BASE_PATH}icon_${elems[1] || elems[0]}.png` : `${ICON_BASE_PATH}icon_unknown.png`;
+                const fb2 = (elems[1] || elems[0]) ? `${ICON_BASE_PATH}icon_${elems[1] || elems[0]}.webp` : `${ICON_BASE_PATH}icon_unknown.webp`;
 
                 innerHtml = `
                     <div style="position:absolute; inset:0; clip-path: polygon(0 0, 100% 0, 0 100%); z-index:2;">
@@ -2877,7 +2877,7 @@ function renderHome() {
     if (profiles.length === 0) {
         container.innerHTML = `
             <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0.5;">
-                <img src="${ICON_BASE_PATH}icon_score.png" style="width: 64px; height: 64px; margin-bottom: 20px; filter: grayscale(100%);">
+                <img src="${ICON_BASE_PATH}icon_score.webp" style="width: 64px; height: 64px; margin-bottom: 20px; filter: grayscale(100%);">
                 <h2 style="color: #fff; font-size: 24px; margin-bottom: 8px;">Aucun compte chargé</h2>
                 <p style="color: #aaa; font-size: 14px;">Entrez un UID Genshin Impact dans la barre latérale pour commencer l'analyse.</p>
             </div>
@@ -2923,7 +2923,7 @@ function renderHome() {
         const row1 = [
             `<span class="pp-badge pp-badge-server">${server}</span>`,
             p.achievements != null
-                ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.png" class="pp-icon" alt="succès">${p.achievements.toLocaleString()}</span>`
+                ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="succès">${p.achievements.toLocaleString()}</span>`
                 : '',
             p.ar ? `<span class="pp-badge pp-badge-ar">AR${p.ar}</span>` : '',
         ].filter(Boolean).join('');
@@ -2933,10 +2933,10 @@ function renderHome() {
                 ? `<span class="pp-badge pp-badge-stygian">${stygianIcon()}${p.stygianSec}s</span>`
                 : '',
             p.theaterStars != null
-                ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.png" class="pp-icon" alt="théâtre">${p.theaterStars}</span>`
+                ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.webp" class="pp-icon" alt="théâtre">${p.theaterStars}</span>`
                 : '',
             p.abyssStars != null
-                ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.png" class="pp-icon" alt="abysses">${p.abyssStars}</span>`
+                ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.webp" class="pp-icon" alt="abysses">${p.abyssStars}</span>`
                 : '',
         ].filter(Boolean);
         const row2 = row2Items.join('');
@@ -3003,9 +3003,9 @@ function renderHome() {
             </p>      
             <div class="links" style="display: flex; flex-direction: row; margin-bottom: 48px; gap: 8px; align-items: center;">
                 <a class="link-button" href="https://discord.gg/CZ5qxVqBVJ" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i>Discord</a>
-                <a href="https://ko-fi.com/guobagg" target="_blank" rel="noopener noreferrer" style="height: 36px; display: inline-flex; transition: transform 0.2s;">
-                    <img height="36" style="border:0px; height:36px;" src="https://storage.ko-fi.com/cdn/kofi2.png?v=3" alt="Soutenir sur Ko-fi" />
-                </a>
+                <a class="link-button-coffee" href="https://ko-fi.com/guobagg" target="_blank" rel="noopener noreferrer">
+                  <img src="https://cdn.prod.website-files.com/5c14e387dab576fe667689cf/670f5a01229bf8a18f97a3c1_favion.png" alt="Icône Discord" width="20" height="20">Buy me a coffee
+                </a>                
             </div>
         </div>
     `;
@@ -3532,7 +3532,7 @@ function renderShowcase(index) {
                 <!-- 1.3.2 Score et note personnage -->
                 <div class="showcase-area-score" style="display: flex; flex-direction: column; gap: 6px; border-radius: 8px; transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; padding: 10px 10px 8px 7px;box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 2px solid ${ev.grade.color}; box-sizing: border-box;">
                     <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
-                        <img src="assets/simulator/icons/icon_score_white.png" alt="Score" style="width: 19px; height: 19px; margin-bottom: 2px; margin-right: 5px;">
+                        <img src="assets/simulator/icons/icon_score_white.webp" alt="Score" style="width: 19px; height: 19px; margin-bottom: 2px; margin-right: 5px;">
                         <p>Score</p>
                         <div class="dotted-line"></div> 
                         <div style="display: flex; flex-direction: row; gap: 4px;">
@@ -3698,7 +3698,7 @@ function renderShowcase(index) {
                     
                     <div style="font-size: 12px; align-items: center;" class="art-score-footer">
                         <div style="display:flex; align-items:center; gap: 5px;">
-                            <img src="/assets/simulator/icons/icon_score_white.png" style="width: 19px; height: 19px; margin-bottom: 2px;" alt="Score">
+                            <img src="/assets/simulator/icons/icon_score_white.webp" style="width: 19px; height: 19px; margin-bottom: 2px;" alt="Score">
                             <p>Score</p>
                         </div>
                         <div style="display: flex; flex-direction: row; gap: 4px;">

@@ -1,0 +1,17 @@
+{
+  "buffs": [
+    {
+      "label": "Si une compétence élémentaire est utilisée (ATQ%)",
+      "stats": {
+        "atk_": 0.24
+      }
+    },
+    {
+      "label": "Si le porteur a 0 énergie (ATQ% et DGT CRIT)",
+      "stats": {
+        "atk_": 0.24,
+        "critDMG_": 0.4
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "Si un 1er ennemi a été vaincu (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.12,
+          0.03
+        ]
+      }
+    },
+    {
+      "label": "Si un 2ème ennemi a été vaincu (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.12,
+          0.03
+        ]
+      }
+    },
+    {
+      "label": "Si un 3ème ennemi a été vaincu (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.12,
+          0.03
+        ]
+      }
+    }
+  ]
+}

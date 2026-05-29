@@ -1,0 +1,32 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "Si des soins sont reçus ou envoyés une 1ère fois (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          40,
+          10
+        ]
+      }
+    },
+    {
+      "label": "Si des soins sont reçus ou envoyés une 2ème fois (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          40,
+          10
+        ]
+      }
+    },
+    {
+      "label": "Si des soins sont reçus ou envoyés une 3ème fois (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          40,
+          10
+        ]
+      }
+    }
+  ]
+}

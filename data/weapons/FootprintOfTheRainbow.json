@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une compétence élémentaire est utilisée (DÉF%)",
+      "stats": {
+        "def_": [
+          0.16,
+          0.04
+        ]
+      }
+    }
+  ]
+}

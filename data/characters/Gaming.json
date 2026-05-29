@@ -1,0 +1,289 @@
+{
+  "color": "#d96155",
+  "portraitOffset": -36,
+  "talents": {
+    "auto": 8,
+    "skill": 10,
+    "burst": 9
+  },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C2 : Sur les fleurs de prunier",
+          "cons": 2,
+          "active": true,
+          "stats": {
+            "atk_": 0.2
+          }
+        },
+        {
+          "label": "C6 : En apprivoisant les bêtes (uniquement l'attaque plongée de la compétence)",
+          "cons": 6,
+          "active": false,
+          "stats": {
+            "critRate_": 0.2,
+            "critDMG_": 0.4
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "DPS évaporation": {
+      "name": "DPS évaporation",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.6,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 1,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas",
+          "atk_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "pyro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "CrimsonWitchOfFlames:4",
+        "MarechausseeHunter:4",
+        "LongNightsOath:4"
+      ],
+      "goodSets": [
+        "GildedDreams:4",
+        "VermillionHereafter:4",
+        "LongNightsOath:2",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "CrimsonWitchOfFlames:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 150,
+      "team": [
+        {
+          "role": "Sub-DPS",
+          "name": "Furina",
+          "element": "hydro"
+        },
+        {
+          "role": "Support",
+          "name": "Liuyun",
+          "element": "anemo"
+        },
+        {
+          "role": "Support",
+          "name": "Bennett",
+          "element": "pyro"
+        }
+      ]
+    },
+    "DPS fonte": {
+      "name": "DPS fonte",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.6,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 1,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas",
+          "atk_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "pyro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "CrimsonWitchOfFlames:4",
+        "LongNightsOath:4"
+      ],
+      "goodSets": [
+        "GildedDreams:4",
+        "VermillionHereafter:4",
+        "LongNightsOath:2",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "CrimsonWitchOfFlames:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 150,
+      "team": [
+        {
+          "role": "Support",
+          "name": "Citlali",
+          "element": "cryo"
+        },
+        {
+          "role": "Support",
+          "name": "Liuyun",
+          "element": "anemo"
+        },
+        {
+          "role": "Support",
+          "name": "Bennett",
+          "element": "pyro"
+        }
+      ]
+    },
+    "DPS surcharge": {
+      "name": "DPS surcharge",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 1,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "pyro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "CrimsonWitchOfFlames:4",
+        "LongNightsOath:4"
+      ],
+      "goodSets": [
+        "VermillionHereafter:4",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "CrimsonWitchOfFlames:2"
+      ],
+      "er_req": 150,
+      "team": [
+        {
+          "role": "Support",
+          "name": "Chevreuse",
+          "element": "pyro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Fischl",
+          "element": "electro"
+        },
+        {
+          "role": "Support",
+          "name": [
+            "Bennett",
+            "Iansan"
+          ],
+          "element": [
+            "pyro",
+            "electro"
+          ]
+        }
+      ]
+    }
+  }
+}

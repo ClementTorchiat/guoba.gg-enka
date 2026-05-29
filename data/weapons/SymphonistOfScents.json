@@ -1,0 +1,22 @@
+{
+  "buffs": [
+    {
+      "label": "Si le porteur est hors du terrain (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.12,
+          0.03
+        ]
+      }
+    },
+    {
+      "label": "Si le porteur soigne un allié (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.32,
+          0.08
+        ]
+      }
+    }
+  ]
+}

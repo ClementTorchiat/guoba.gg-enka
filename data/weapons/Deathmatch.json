@@ -1,0 +1,27 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "S'il y a deux ennemis ou plus aux alentours (ATQ% et DÉF%)",
+      "stats": {
+        "atk_": [
+          0.16,
+          0.04
+        ],
+        "def_": [
+          0.16,
+          0.04
+        ]
+      }
+    },
+    {
+      "label": "S'il y a plus de deux ennemis aux alentours (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.24,
+          0.04
+        ]
+      }
+    }
+  ]
+}

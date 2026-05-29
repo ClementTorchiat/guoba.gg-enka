@@ -1,0 +1,17 @@
+{
+  "buffs": [
+    {
+      "label": "Si une réaction Sélène est déclenchée ou inflige des dégâts (PV% et DGT CRIT uniquement pour les réactions Sélène)",
+      "stats": {
+        "hp_": [
+          0.14,
+          0.02
+        ],
+        "critDMG_": [
+          0.6,
+          0.2
+        ]
+      }
+    }
+  ]
+}

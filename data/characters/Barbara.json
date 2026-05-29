@@ -1,0 +1,98 @@
+{
+  "color": "#3a54a5",
+  "portraitOffset": -37,
+  "skins": {
+    "201401": {
+      "color": "#8499fb",
+      "portraitOffset": -37
+    }
+  },
+  "talents": {
+    "auto": 1,
+    "skill": 10,
+    "burst": 10
+  },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C2 : Éclat de vitalité",
+          "cons": 2,
+          "stats": {
+            "elemental_dmg_": 0.15
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Healeuse générale": {
+      "name": "Healeuse générale",
+      "weights": {
+        "critRate_": 0,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 1,
+        "hp": 0.8,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0.1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 1
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "hp_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "heal_",
+          "hp_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "MaidenBeloved:4",
+        "OceanHuedClam:4"
+      ],
+      "goodSets": [
+        "MaidenBeloved:2",
+        "OceanHuedClam:2",
+        "SongOfDaysPast:2",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2"
+      ],
+      "er_req": 100,
+      "team": [
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        }
+      ]
+    }
+  }
+}

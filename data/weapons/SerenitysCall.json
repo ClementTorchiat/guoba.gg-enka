@@ -1,0 +1,23 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (PV%)",
+      "stats": {
+        "hp_": [
+          0.16,
+          0.04
+        ]
+      }
+    },
+    {
+      "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (PV%)",
+      "stats": {
+        "hp_": [
+          0.32,
+          0.08
+        ]
+      }
+    }
+  ]
+}

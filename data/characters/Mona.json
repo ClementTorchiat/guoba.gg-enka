@@ -1,0 +1,207 @@
+{
+  "color": "#524fb6",
+  "portraitOffset": -37,
+  "talents": {
+    "auto": 1,
+    "skill": 8,
+    "burst": 10
+  },
+  "buffs": [
+    {
+      "category": "Passifs",
+      "buffs": [
+        {
+          "label": "A4 : Que le destin décide",
+          "stats": {
+            "elemental_dmg_bonus_scaling": {
+              "source": "enerRech_",
+              "percent": 0.2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellation 2 : Chaîne lunaire",
+      "buffs": [
+        {
+          "label": "Buff Hexerei",
+          "cons": 2,
+          "stats": {
+            "eleMas": 80
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellation 4 : Prophétie de la fin",
+      "buffs": [
+        {
+          "label": "Si l'ennemi attaqué est marqué par un présage",
+          "active": false,
+          "cons": 4,
+          "stats": {
+            "critRate_": 0.15
+          }
+        },
+        {
+          "label": "Si le personnage est un Hexerei",
+          "cons": 4,
+          "stats": {
+            "critDMG_": 0.15
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Support Hexerei": {
+      "name": "Support Hexerei",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0.4,
+        "atk_": 0.4,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 1,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "hydro_dmg_",
+          "atk_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "NoblesseOblige:4",
+        "TenacityOfTheMillelith:4"
+      ],
+      "goodSets": [
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "NoblesseOblige:2",
+        "EmblemOfSeveredFate:4"
+      ],
+      "er_req": 220,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Mualani",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Mavuika",
+          "element": "pyro"
+        },
+        {
+          "role": "Support",
+          "name": "Sucrose",
+          "element": "anemo"
+        }
+      ]
+    },
+    "Nuke Évaporation": {
+      "name": "Nuke Évaporation",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.6,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 1,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_",
+          "enerRech_",
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "hydro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "EmblemOfSeveredFate:4",
+        "NoblesseOblige:2"
+      ],
+      "goodSets": [
+        "HeartOfDepth:2",
+        "NymphsDream:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2"
+      ],
+      "er_req": 160,
+      "team": [
+        {
+          "role": "Support",
+          "name": "Bennett",
+          "element": "pyro"
+        },
+        {
+          "role": "Support",
+          "name": "Kazuha",
+          "element": "anemo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Durin",
+          "element": "pyro"
+        }
+      ]
+    }
+  }
+}

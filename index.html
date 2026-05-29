@@ -8,7 +8,24 @@
     <link rel="icon" type="image/png" href="assets/global/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="tdm-reservation" content="1">
+    <meta property="og:locale" content="fr_FR">
+    <meta name="robots" content="noindex, nofollow">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image-more/2.9.5/dom-to-image-more.min.js" defer></script>
+
+    <meta name="description" content="guoba.gg est un outil d'analyse de builds et de statistiques pour Genshin Impact. Évaluez vos artéfacts, optimisez vos personnages et générez des vitrines à partir de votre UID.">
+    <meta name="keywords" content="Genshin Impact, build, simulateur, artéfacts, enka network, UID, statistiques, optimisation">
+    <meta name="author" content="clem">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://guoba.clement-torchiat.fr/"> <meta property="og:title" content="guoba.gg - Simulateur Genshin Impact">
+    <meta property="og:description" content="guoba.gg est un outil d'analyse de builds et de statistiques pour Genshin Impact. Évaluez vos artéfacts, optimisez vos personnages et générez des vitrines à partir de votre UID.">
+    <meta property="og:image" content="https://guoba.clement-torchiat.fr/assets/global/banner.png"> <meta property="og:site_name" content="guoba.gg">
+
+    <meta name="twitter:card" content="summary_large_image"> <meta name="twitter:title" content="guoba.gg - Simulateur Genshin Impact">
+    <meta name="twitter:description" content="guoba.gg est un outil d'analyse de builds et de statistiques pour Genshin Impact. Évaluez vos artéfacts, optimisez vos personnages et générez des vitrines à partir de votre UID.">
+    <meta name="twitter:image" content="https://guoba.clement-torchiat.fr/assets/global/banner.png">
+    <meta name="theme-color" content="#1e2024">
+
+    <link rel="apple-touch-icon" href="assets/global/favicon.png">
 
     <style>
         button[title="Mode d'emploi"],
@@ -104,8 +121,6 @@
             display: flex;
         }
 
-
-        /* SIDEBAR */
         .sidebar {
             gap: 8px;
             box-sizing: border-box;
@@ -193,7 +208,6 @@
             cursor: pointer;
         }
 
-        /* CHARACTER LIST */
         .sidebar-characters {
             min-width: 240px;
             box-sizing: border-box;
@@ -264,7 +278,6 @@
             margin-right: 8px;
         }
 
-        /* TRI SIDEBAR */
         .sort-col {
             cursor: pointer;
             transition: opacity 0.15s ease;
@@ -348,7 +361,7 @@
             font-size: 14px;
         }
 
-        /* SHOWCASE AREA */
+
         .main-content {
             display: flex;
             gap: 8px;
@@ -466,7 +479,6 @@
             background-color: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765);
         }
 
-        /* STATS PANEL */
         .stat-row {
             font-size: 14px;
         }
@@ -497,7 +509,6 @@
             clear: both;
         }
 
-        /* GLOBAL SCORE CARD */
         .global-score-card {
             background: linear-gradient(135deg, #1e2024 0%, #141414 100%);
             border: 1px solid var(--accent-gold);
@@ -509,7 +520,6 @@
             margin: 20px 0;
         }
 
-        /* EQUIPMENT GRID */
         .equipment-area {
             display: grid;
             grid-template-columns: 240px 240px;
@@ -606,12 +616,12 @@
             height: 12px;
             width: 100%;
             background: linear-gradient(90deg,
-            #ff4d4d 0%,   /* F - Rouge */
-            #ffb13b 25%,  /* B - Orange/Or */
-            #eab308 50%,  /* S - Jaune */
-            #22c55e 75%,  /* SS - Vert */
-            #a855f7 90%,  /* WTF - Violet */
-            #3b82f6 100%  /* ARCHON - Bleu/Cyan */
+            #ff4d4d 0%,
+            #ffb13b 25%,
+            #eab308 50%,
+            #22c55e 75%,
+            #a855f7 90%,
+            #3b82f6 100%
             );
             border-radius: 6px;
             position: relative;
@@ -620,7 +630,7 @@
 
         .score-marker {
             position: absolute;
-            top: 14px; /* Juste sous la barre */
+            top: 14px;
             transform: translateX(-50%);
             font-size: 0.65rem;
             color: #6b7280;
@@ -636,13 +646,13 @@
             background: rgba(255,255,255,0.2);
             margin-bottom: 2px;
             position: absolute;
-            top: -10px; /* Monte dans la barre */
+            top: -10px;
         }
 
         .score-cursor {
             position: absolute;
-            top: -4px; /* Dépasse un peu en haut */
-            bottom: -4px; /* Dépasse un peu en bas */
+            top: -4px;
+            bottom: -4px;
             width: 2px;
             background: #fff;
             box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.8);
@@ -675,7 +685,6 @@
         }
 
         .card {
-            /* Ta formule magique */
             background-color: rgb(
                     from var(--char-hex)
                     calc(r / 3.5)
@@ -686,30 +695,25 @@
         }
 
         .stat-icon {
-            width: 19px;       /* Taille de l'icône */
+            width: 19px;
             height: 19px;
-            object-fit: contain; /* Empêche l'image d'être déformée */
-            vertical-align: middle; /* Aligne l'icône verticalement avec le texte */
-            margin-right: 5px;  /* Petit espace entre l'icône et le texte */
+            object-fit: contain;
+            vertical-align: middle;
+            margin-right: 5px;
             display: inline-block;
             margin-bottom: 2px;
         }
 
-
-
-
-
-        /* --- STYLE DU POPUP (MODAL) --- */
         .modal-overlay {
-            display: none; /* Caché par défaut */
+            display: none;
             position: fixed;
-            z-index: 1000; /* Au-dessus de tout */
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* Fond sombre */
-            backdrop-filter: blur(5px); /* Petit flou sympa */
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
             animation: fadeIn 0.3s ease;
@@ -721,15 +725,14 @@
             border-radius: 12px;
             width: 90%;
             max-width: 800px;
-            max-height: 85vh; /* Max 85% de la hauteur de l'écran */
-            overflow-y: auto; /* Scroll si trop long */
+            max-height: 85vh;
+            overflow-y: auto;
             padding: 30px;
             position: relative;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             animation: slideUp 0.3s ease;
         }
 
-        /* Scrollbar personnalisée pour le popup */
         .modal-content::-webkit-scrollbar { width: 8px; }
         .modal-content::-webkit-scrollbar-track { background: #111; }
         .modal-content::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
@@ -747,11 +750,9 @@
         }
         .close-btn:hover { color: #fff; transform: scale(1.1); }
 
-        /* Animations */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* PLAYER PROFILE */
         #player-profile {
             align-self: flex-end;
             width: fit-content;
@@ -846,12 +847,11 @@
             text-shadow: 0 0 5px #000;
         }
 
-        /* Badges stats — 2 lignes de 3 */
         .player-profile-stats {
             display: flex;
             flex-direction: column;
             gap: 4px;
-            align-items: stretch; /* CHANGÉ : force les lignes (.pp-row) à prendre toute la largeur disponible */
+            align-items: stretch;
             flex-shrink: 0;
         }
 
@@ -863,8 +863,8 @@
 
         .pp-badge {
             display: inline-flex;
-            flex: 1; /* NOUVEAU : force les badges à s'étirer et à se partager l'espace de la ligne équitablement */
-            justify-content: center; /* NOUVEAU : centre l'icône et le texte à l'intérieur du badge une fois étiré */
+            flex: 1;
+            justify-content: center;
             align-items: center;
             gap: 4px;
             padding: 2px 6px;
@@ -872,13 +872,11 @@
             font-size: 12px;
             white-space: nowrap;
             height: 22px;
-            /* width: 100%;  <-- SUPPRIMÉ : remplacé par flex: 1 qui est plus adapté ici */
             margin: 0;
             line-height: 1;
             box-sizing: border-box;
         }
 
-        /* Icônes custom dans les badges */
         .pp-icon {
             width: 16px;
             height: 16px;
@@ -886,7 +884,6 @@
             flex-shrink: 0;
         }
 
-        /* Couleurs par type */
         .pp-badge-server       { background: #FFB13B; color: #1a1000; }
         .pp-badge-achievements { background: #2e8492; color: #ffffff; }
         .pp-badge-ar           { background: #FFB13B; color: #160e00; }
@@ -894,16 +891,13 @@
         .pp-badge-theater      { background: rgba(82, 42, 138, 0.6); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.4);}
         .pp-badge-abyss        { background: rgba(37, 51, 85, 0.6); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.4);}
 
-        /* ========================================= */
-        /* BADGES & ÉVALUATION GLOBALE               */
-        /* ========================================= */
         #top-header-area {
             display: flex;
             justify-content: space-between;
             align-items: stretch;
             gap: 8px;
             width: 100%;
-            height: 76px; /* Hauteur MAX stricte identique au PlayerProfile */
+            height: 76px;
         }
 
         #global-evaluation {
@@ -915,7 +909,6 @@
             box-sizing: border-box;
         }
 
-        /* Style reprenant tes pp-badge */
         .guoba-badge {
             position: relative;
             display: inline-flex;
@@ -942,9 +935,6 @@
             margin-right: 4px;
         }
 
-        /* ========================================= */
-        /* TOOLTIP GLOBAL (Par-dessus tout)          */
-        /* ========================================= */
         #global-tooltip {
             position: fixed;
             visibility: hidden;
@@ -960,20 +950,17 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.8);
             pointer-events: none;
             border: 1px solid var(--tooltip-color, var(--accent-gold));
-            /* MODIFIÉ : On décale vers le bas de 10px au lieu de tirer vers le haut */
             transform: translate(-50%, 10px);
         }
 
         #global-tooltip::after {
             content: '';
             position: absolute;
-            /* MODIFIÉ : On place la flèche en haut de la bulle */
             bottom: 100%;
             left: 50%;
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
-            /* MODIFIÉ : On inverse les couleurs pour que la flèche pointe vers le haut */
             border-color: transparent transparent var(--tooltip-color, var(--accent-gold)) transparent;
         }
 
@@ -981,7 +968,6 @@
             opacity: 1;
         }
 
-        /* Mini-scrollbar dédiée uniquement au bloc des badges de l'évaluation */
         #global-evaluation .badges-scroll::-webkit-scrollbar {
             width: 3px;
         }
@@ -996,7 +982,7 @@
             background: transparent;
         }
 
-        .link-button {
+        .link-button, .link-button-coffee {
             color: white;
             text-decoration: none;
             display: flex;
@@ -1013,18 +999,19 @@
             background-color: #2C2D32;
         }
 
-        /* =========================================
-   BLOCAGE MOBILE
-   ========================================= */
+        .link-button-coffee:hover {
+            background-color: #5EA1F1;
+        }
+
         #mobile-block-overlay {
-            display: none; /* Caché par défaut sur les grands écrans */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #1e2024; /* Couleur de fond de ton site */
-            z-index: 999999; /* S'assure d'être au-dessus de TOUT le reste */
+            background-color: #1e2024;
+            z-index: 999999;
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             justify-content: center;
@@ -1043,18 +1030,15 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* Si l'écran est inférieur ou égal à 1024px (Mobiles et la plupart des tablettes en portrait) */
         @media (max-width: 1024px) {
             #mobile-block-overlay {
-                display: flex !important; /* Affiche le message */
+                display: flex !important;
             }
 
-            /* Cache tout le reste du contenu de la page pour éviter le défilement (scroll) */
             body > *:not(#mobile-block-overlay) {
                 display: none !important;
             }
 
-            /* Optionnel : bloque le défilement sur le body */
             body {
                 overflow: hidden !important;
                 background-color: #1e2024;
@@ -1074,7 +1058,6 @@
         }
         .ob-overlay.visible { display: flex; }
 
-        /* Hauteur fixe = footer immobile entre les étapes */
         .ob-card {
             position: relative;
             width: 100%; max-width: 580px;
@@ -1108,7 +1091,6 @@
             color: #FFB13B;
         }
 
-        /* Zone de contenu : flex: 1 + overflow scroll */
         .ob-body {
             padding: 18px 28px 0;
             flex: 1; overflow-y: auto; overflow-x: hidden;
@@ -1174,7 +1156,6 @@
         .ob-metric-body strong { display: block; color: #e8ecf4; font-size: 13px; margin-bottom: 2px; }
         .ob-metric-body span { color: #8a93a8; font-size: 12.5px; line-height: 1.5; display: block; }
 
-        /* Grille 2×2 pour l'étape Analyse */
         .ob-grid-2x2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1207,7 +1188,6 @@
         .ob-image-placeholder i { font-size: 24px; }
         .ob-image-placeholder span { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
 
-        /* Footer fixe en bas, jamais déplacé */
         .ob-footer {
             padding: 14px 28px 18px;
             display: flex; align-items: center; justify-content: space-between;
@@ -1265,7 +1245,7 @@
                         <img src="assets/global/favicon.png" alt="Simulateur" style="border-radius: 100%;">
                         <h2>guoba.gg</h2>
                     </div>
-                    <p class="sidebar-text">Ver. 1.1.1 - Bêta Build (GI Ver. 6.6)</p>
+                    <p class="sidebar-text">Ver. 1.1.2 - Bêta Build (GI Ver. 6.6)</p>
                 </div>
                 <div class="sidebar-search">
                     <div class="search-container">
@@ -1275,7 +1255,7 @@
                 <div class="sidebar-characters">
                     <div class="character-header">
                         <div class="character-header-section-1 sort-col" id="sort-col-original" onclick="setSidebarSort('original')" title="Ordre vitrine">
-                            <img src="assets/simulator/icons/icon_face.png" alt="Portrait">
+                            <img src="assets/simulator/icons/icon_face.webp" alt="Portrait">
                             <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="Flèche" class="sort-arrow" id="arrow-original">
                         </div>
                         <div class="character-header-section-2 sort-col" id="sort-col-name" onclick="setSidebarSort('name')" title="Trier par nom">
@@ -1600,7 +1580,7 @@
 
 <script defer src="data.js"></script>
 <script defer src="scoring.js"></script>
-<script defer src="config.js"></script>
+<script src="config.generated.js" defer></script>
 <script defer src="script.js"></script>
 </body>
 </html>

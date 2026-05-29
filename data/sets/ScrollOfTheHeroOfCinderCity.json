@@ -1,0 +1,29 @@
+{
+  "4": [
+    {
+      "label": "Si une réaction élémentaire est déclenchée (12% Bonus de DGT Élémentaire)",
+      "stats": {
+        "pyro_dmg_": 0.12,
+        "hydro_dmg_": 0.12,
+        "cryo_dmg_": 0.12,
+        "electro_dmg_": 0.12,
+        "dendro_dmg_": 0.12,
+        "anemo_dmg_": 0.12,
+        "geo_dmg_": 0.12
+      }
+    },
+    {
+      "label": "Si le personnage est sous une Bénédiction noctâme (40% Bonus de DGT Élémentaire)",
+      "stats": {
+        "pyro_dmg_": 0.28,
+        "hydro_dmg_": 0.28,
+        "cryo_dmg_": 0.28,
+        "electro_dmg_": 0.28,
+        "dendro_dmg_": 0.28,
+        "anemo_dmg_": 0.28,
+        "geo_dmg_": 0.28
+      }
+    }
+  ],
+  "selectMode": "cumulative"
+}

@@ -1,0 +1,16 @@
+{
+  "4": [
+    {
+      "label": "Si des ennemis sont touchés (25% ATQ)",
+      "stats": {
+        "atk_": 0.25
+      }
+    },
+    {
+      "label": "Si le personnage a terminé son devoir de la sorcière (20% Taux CRIT)",
+      "stats": {
+        "critRate_": 0.2
+      }
+    }
+  ]
+}

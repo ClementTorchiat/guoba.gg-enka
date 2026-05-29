@@ -1,0 +1,268 @@
+{
+  "color": "#92417E",
+  "portraitOffset": -37,
+  "skins": {
+    "212301": {
+      "color": "#ff5f75",
+      "portraitOffset": -37
+    }
+  },
+  "talents": {
+    "auto": 1,
+    "skill": 8,
+    "burst": 8
+  },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C2 : Visions sans fond",
+          "cons": 2,
+          "stats": {
+            "pyro_dmg_": 0.5
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Sub-DPS Surcharge": {
+      "name": "Sub-DPS Surcharge",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 1,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "atk_",
+          "pyro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "critDMG_",
+          "critRate_"
+        ]
+      },
+      "bestSets": [
+        "ADayCarvedFromRisingWinds:4"
+      ],
+      "goodSets": [
+        "NoblesseOblige:4",
+        "NoblesseOblige:2",
+        "EmblemOfSeveredFate:4",
+        "Instructor:4",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2"
+      ],
+      "er_req": 130,
+      "team": [
+        {
+          "role": "DPS",
+          "name": [
+            "Arlecchino",
+            "Varesa"
+          ],
+          "element": [
+            "pyro",
+            "electro"
+          ]
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Fischl",
+          "element": "electro"
+        },
+        {
+          "role": "Support",
+          "name": "Chevreuse",
+          "element": "pyro"
+        }
+      ]
+    },
+    "Sub-DPS Brûlure": {
+      "name": "Sub-DPS Brûlure",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 1,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "atk_",
+          "pyro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "critDMG_",
+          "critRate_"
+        ]
+      },
+      "bestSets": [
+        "ADayCarvedFromRisingWinds:4"
+      ],
+      "goodSets": [
+        "NoblesseOblige:4",
+        "NoblesseOblige:2",
+        "EmblemOfSeveredFate:4",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "Instructor:4"
+      ],
+      "er_req": 130,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Kinich",
+          "element": "dendro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Emilie",
+          "element": "dendro"
+        },
+        {
+          "role": "Support",
+          "name": "Bennett",
+          "element": "pyro"
+        }
+      ]
+    },
+    "Sub-DPS général": {
+      "name": "Sub-DPS général",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 1,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "atk_",
+          "pyro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "critDMG_",
+          "critRate_"
+        ]
+      },
+      "bestSets": [
+        "ADayCarvedFromRisingWinds:4"
+      ],
+      "goodSets": [
+        "NoblesseOblige:4",
+        "NoblesseOblige:2",
+        "EmblemOfSeveredFate:4",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "Instructor:4"
+      ],
+      "er_req": 150,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Chasca",
+          "element": "anemo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Furina",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Fischl",
+          "element": "electro"
+        }
+      ]
+    }
+  }
+}

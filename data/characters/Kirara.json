@@ -1,0 +1,111 @@
+{
+  "color": "#3a748c",
+  "portraitOffset": -36,
+  "skins": {
+    "206101": {
+      "color": "#2765be",
+      "portraitOffset": -36
+    }
+  },
+  "talents": {
+    "auto": 1,
+    "skill": 10,
+    "burst": 9
+  },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C6 : Myriade de curiosités en chemin",
+          "cons": 6,
+          "stats": {
+            "elemental_dmg_": 0.12
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Shieldeuse générale": {
+      "name": "Shieldeuse générale",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 1,
+        "hp": 0.8,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.4,
+        "enerRech_": 0.6,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "hp_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "hp_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "TenacityOfTheMillelith:4",
+        "Instructor:4",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2"
+      ],
+      "goodSets": [
+        "DeepwoodMemories:4",
+        "NoblesseOblige:4",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 140,
+      "team": [
+        {
+          "role": "Flex",
+          "name": "",
+          "element": [
+            "electro",
+            "hydro"
+          ]
+        },
+        {
+          "role": "Flex",
+          "name": "",
+          "element": [
+            "electro",
+            "hydro"
+          ]
+        },
+        {
+          "role": "Flex",
+          "name": "",
+          "element": "dendro"
+        }
+      ]
+    }
+  }
+}

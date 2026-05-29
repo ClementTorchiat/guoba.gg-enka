@@ -1,0 +1,17 @@
+{
+  "4": [
+    {
+      "label": "Si une réaction Sélène est déclenchée et que l'équipe est sous le signe Lueur Naissante (15% Taux CRIT)",
+      "stats": {
+        "critRate_": 0.15
+      }
+    },
+    {
+      "label": "Si une réaction Sélène est déclenchée et que l'équipe est sous le signe Lueur Ascendante (30% Taux CRIT)",
+      "stats": {
+        "critRate_": 0.3
+      }
+    }
+  ],
+  "selectMode": "exclusive"
+}

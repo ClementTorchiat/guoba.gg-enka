@@ -1,0 +1,31 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ% et DGT CRIT)",
+      "stats": {
+        "atk_": [
+          0.28,
+          0.07
+        ],
+        "critDMG_": [
+          0.2,
+          0.05
+        ]
+      }
+    },
+    {
+      "label": "Si le personnage est sous une Bénédiction noctâme (+75% d'efficacité)",
+      "stats": {
+        "atk_": [
+          0.21,
+          0.0525
+        ],
+        "critDMG_": [
+          0.15,
+          0.0375
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,316 @@
+{
+  "color": "#e6ff89",
+  "portraitOffset": -37,
+  "talents": {
+    "auto": 6,
+    "skill": 10,
+    "burst": 9
+  },
+  "buffs": [
+    {
+      "category": "Passifs",
+      "buffs": [
+        {
+          "label": "A1 : Compassion illuminée (Nahida On-field)",
+          "stats": {
+            "eleMas_bonus_scaling": {
+              "source": "eleMas",
+              "percent": 0.25,
+              "baseline": 0,
+              "max": 250
+            }
+          }
+        },
+        {
+          "label": "A4 : Éveil élucidé",
+          "stats": {
+            "critRate__bonus_scaling": {
+              "source": "eleMas",
+              "percent": 0.03,
+              "baseline": 200,
+              "max": 24
+            }
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellation 2 : Racine de toute plénitude",
+      "buffs": [
+        {
+          "label": "Sélénofleurissement",
+          "cons": 2,
+          "active": false,
+          "stats": {
+            "critRate_": 0.1,
+            "critDMG_": 0.2
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellation 4 : Tige d'inférence manifeste",
+      "selectMode": "exclusive",
+      "buffs": [
+        {
+          "label": "1 ennemi affecté par la compétence élémentaire",
+          "cons": 4,
+          "stats": {
+            "eleMas": 100
+          }
+        },
+        {
+          "label": "2 ennemis affectés par la compétence élémentaire",
+          "cons": 4,
+          "stats": {
+            "eleMas": 120
+          }
+        },
+        {
+          "label": "3 ennemis affectés par la compétence élémentaire",
+          "cons": 4,
+          "stats": {
+            "eleMas": 140
+          }
+        },
+        {
+          "label": "4 ennemis affectés par la compétence élémentaire",
+          "cons": 4,
+          "stats": {
+            "eleMas": 160
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Sub-DPS Propagation": {
+      "name": "Sub-DPS Propagation",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 1,
+        "enerRech_": 0.6,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 1,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "eleMas",
+          "dendro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "eleMas",
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [
+        "atk"
+      ],
+      "bestSets": [
+        "DeepwoodMemories:4",
+        "ScrollOfTheHeroOfCinderCity:4"
+      ],
+      "goodSets": [
+        "TenacityOfTheMillelith:4",
+        "GoldenTroupe:4",
+        "GildedDreams:4",
+        "Instructor:4",
+        "DeepwoodMemories:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 120,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Alhatham",
+          "element": "dendro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Yae",
+          "element": "electro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Shinobu",
+          "element": "electro"
+        }
+      ]
+    },
+    "Sub-DPS Exubérance": {
+      "name": "Sub-DPS Exubérance",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 1,
+        "enerRech_": 0.6,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 1,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "eleMas",
+          "dendro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "eleMas",
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [
+        "atk"
+      ],
+      "bestSets": [
+        "DeepwoodMemories:4",
+        "ScrollOfTheHeroOfCinderCity:4"
+      ],
+      "goodSets": [
+        "TenacityOfTheMillelith:4",
+        "GoldenTroupe:4",
+        "GildedDreams:4",
+        "Instructor:4",
+        "DeepwoodMemories:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 140,
+      "team": [
+        {
+          "role": "Sub-DPS",
+          "name": "Yelan",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Xingqiu",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Shinobu",
+          "element": "electro"
+        }
+      ]
+    },
+    "Sub-DPS Fleurissement": {
+      "name": "Sub-DPS Fleurissement",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 1,
+        "enerRech_": 0.6,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 1,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "eleMas",
+          "dendro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "eleMas",
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [
+        "atk"
+      ],
+      "bestSets": [
+        "DeepwoodMemories:4",
+        "ScrollOfTheHeroOfCinderCity:4"
+      ],
+      "goodSets": [
+        "TenacityOfTheMillelith:4",
+        "GoldenTroupe:4",
+        "GildedDreams:4",
+        "Instructor:4",
+        "DeepwoodMemories:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 120,
+      "team": [
+        {
+          "role": "Support",
+          "name": "Nilou",
+          "element": "hydro"
+        },
+        {
+          "role": "Support",
+          "name": "Kokomi",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Collei",
+          "element": "dendro"
+        }
+      ]
+    }
+  }
+}

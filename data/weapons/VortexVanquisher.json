@@ -1,0 +1,50 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "Si une 1ère attaque touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.04,
+          0.01
+        ]
+      }
+    },
+    {
+      "label": "Si une 2ème attaque touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.04,
+          0.01
+        ]
+      }
+    },
+    {
+      "label": "Si une 3ème attaque touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.04,
+          0.01
+        ]
+      }
+    },
+    {
+      "label": "Si une 4ème attaque touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.04,
+          0.01
+        ]
+      }
+    },
+    {
+      "label": "Si une 5ème attaque touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.04,
+          0.01
+        ]
+      }
+    }
+  ]
+}

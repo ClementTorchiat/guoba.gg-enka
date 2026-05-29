@@ -1,0 +1,16 @@
+{
+  "buffs": [
+    {
+      "label": "Bonus selon la Maîtrise élémentaire (ATQ%)",
+      "stats": {
+        "atk_bonus_scaling": {
+          "source": "eleMas",
+          "percent": [
+            0.24,
+            0.06
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "4": [
+    {
+      "label": "Si les PV sont inférieurs à 70% (24% Taux CRIT)",
+      "stats": {
+        "critRate_": 0.24
+      }
+    }
+  ]
+}

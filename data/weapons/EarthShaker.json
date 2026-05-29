@@ -1,0 +1,49 @@
+{
+  "selectMode": "ChainBreaker",
+  "buffs": [
+    {
+      "label": "Si l'équipe est composée d'1 personnage de Natlan ou d'un élément différent du porteur (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.048,
+          0.012
+        ]
+      }
+    },
+    {
+      "label": "Si l'équipe est composée de 2 personnages de Natlan ou d'un élément différent du porteur (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.096,
+          0.024
+        ]
+      }
+    },
+    {
+      "label": "Si l'équipe est composée de 3 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
+      "stats": {
+        "atk_": [
+          0.144,
+          0.036
+        ],
+        "eleMas": [
+          24,
+          6
+        ]
+      }
+    },
+    {
+      "label": "Si l'équipe est composée de 4 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
+      "stats": {
+        "atk_": [
+          0.192,
+          0.048
+        ],
+        "eleMas": [
+          24,
+          6
+        ]
+      }
+    }
+  ]
+}

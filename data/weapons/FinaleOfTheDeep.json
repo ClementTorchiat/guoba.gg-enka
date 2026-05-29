@@ -1,0 +1,22 @@
+{
+  "buffs": [
+    {
+      "label": "Si une compétence élémentaire est utilisée (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.12,
+          0.03
+        ]
+      }
+    },
+    {
+      "label": "Si l'Engagement Vital est dissipé (ATQ)",
+      "stats": {
+        "atk": [
+          150,
+          37.5
+        ]
+      }
+    }
+  ]
+}

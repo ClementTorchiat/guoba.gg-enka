@@ -1,0 +1,96 @@
+{
+  "color": "#252572",
+  "portraitOffset": -36,
+  "talents": {
+    "auto": 1,
+    "skill": 10,
+    "burst": 8
+  },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C6 : Dernière tournée (PV > 50%)",
+          "cons": 6,
+          "stats": {
+            "eleMas": 200
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Shieldeuse générale": {
+      "name": "Shieldeuse générale",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 1,
+        "hp": 0.8,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 0.6,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 1
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "hp_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "heal_",
+          "hp_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "NoblesseOblige:4",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2",
+        "MaidenBeloved:2",
+        "OceanHuedClam:2",
+        "SongOfDaysPast:2"
+      ],
+      "goodSets": [
+        "TenacityOfTheMillelith:4",
+        "Instructor:4",
+        "DeepwoodMemories:4"
+      ],
+      "er_req": 100,
+      "team": [
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        }
+      ]
+    }
+  }
+}

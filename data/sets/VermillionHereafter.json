@@ -1,0 +1,35 @@
+{
+  "4": [
+    {
+      "label": "Si un déchaînement élémentaire est utilisé (8% ATQ)",
+      "stats": {
+        "atk_": 0.08
+      }
+    },
+    {
+      "label": "Si des PV sont perdus une 1ère fois (10% ATQ)",
+      "stats": {
+        "atk_": 0.1
+      }
+    },
+    {
+      "label": "Si des PV sont perdus une 2ème fois (20% ATQ)",
+      "stats": {
+        "atk_": 0.1
+      }
+    },
+    {
+      "label": "Si des PV sont perdus une 3ème fois (30% ATQ)",
+      "stats": {
+        "atk_": 0.1
+      }
+    },
+    {
+      "label": "Si des PV sont perdus une 4ème fois (40% ATQ)",
+      "stats": {
+        "atk_": 0.1
+      }
+    }
+  ],
+  "selectMode": "cumulative"
+}

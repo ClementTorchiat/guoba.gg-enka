@@ -1,0 +1,43 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "Hymne des quatre vents (1 stacks)",
+      "stats": {
+        "critDMG_": [
+          0.075,
+          0.02
+        ]
+      }
+    },
+    {
+      "label": "Hymne des quatre vents (2 stacks)",
+      "stats": {
+        "critDMG_": [
+          0,
+          15,
+          0.04
+        ]
+      }
+    },
+    {
+      "label": "Hymne des quatre vents (3 stacks)",
+      "stats": {
+        "critDMG_": [
+          0.225,
+          0.06
+        ]
+      }
+    },
+    {
+      "label": "Hymne des quatre vents (4 stacks)",
+      "active": true,
+      "stats": {
+        "critDMG_": [
+          0.3,
+          0.08
+        ]
+      }
+    }
+  ]
+}

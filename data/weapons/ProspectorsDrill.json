@@ -1,0 +1,116 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "Si le personnage soigne ou reçoit de soins une 1ère fois (ATQ% et DGTs Élémentaires)",
+      "stats": {
+        "atk_": [
+          0.03,
+          0.01
+        ],
+        "pyro_dmg_": [
+          0.07,
+          0.015
+        ],
+        "hydro_dmg_": [
+          0.07,
+          0.015
+        ],
+        "cryo_dmg_": [
+          0.07,
+          0.015
+        ],
+        "electro_dmg_": [
+          0.07,
+          0.015
+        ],
+        "anemo_dmg_": [
+          0.07,
+          0.015
+        ],
+        "geo_dmg_": [
+          0.07,
+          0.015
+        ],
+        "dendro_dmg_": [
+          0.07,
+          0.015
+        ]
+      }
+    },
+    {
+      "label": "Si le personnage soigne ou reçoit de soins une 2ème fois (ATQ% et DGTs Élémentaires)",
+      "stats": {
+        "atk_": [
+          0.06,
+          0.02
+        ],
+        "pyro_dmg_": [
+          0.14,
+          0.03
+        ],
+        "hydro_dmg_": [
+          0.14,
+          0.03
+        ],
+        "cryo_dmg_": [
+          0.14,
+          0.03
+        ],
+        "electro_dmg_": [
+          0.14,
+          0.03
+        ],
+        "anemo_dmg_": [
+          0.14,
+          0.03
+        ],
+        "geo_dmg_": [
+          0.14,
+          0.03
+        ],
+        "dendro_dmg_": [
+          0.14,
+          0.03
+        ]
+      }
+    },
+    {
+      "label": "Si le personnage soigne ou reçoit de soins une 3ème fois (ATQ% et DGTs Élémentaires)",
+      "stats": {
+        "atk_": [
+          0.09,
+          0.03
+        ],
+        "pyro_dmg_": [
+          0.21,
+          0.045
+        ],
+        "hydro_dmg_": [
+          0.21,
+          0.045
+        ],
+        "cryo_dmg_": [
+          0.21,
+          0.045
+        ],
+        "electro_dmg_": [
+          0.21,
+          0.045
+        ],
+        "anemo_dmg_": [
+          0.21,
+          0.045
+        ],
+        "geo_dmg_": [
+          0.21,
+          0.045
+        ],
+        "dendro_dmg_": [
+          0.21,
+          0.045
+        ]
+      }
+    }
+  ]
+}

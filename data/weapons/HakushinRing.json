@@ -1,0 +1,37 @@
+{
+  "buffs": [
+    {
+      "label": "Si une réaction élémentaire en lien avec Électro est déclenchée (DGTs Élémentaires)",
+      "stats": {
+        "pyro_dmg_": [
+          0.1,
+          0.025
+        ],
+        "hydro_dmg_": [
+          0.1,
+          0.025
+        ],
+        "cryo_dmg_": [
+          0.1,
+          0.025
+        ],
+        "electro_dmg_": [
+          0.1,
+          0.025
+        ],
+        "anemo_dmg_": [
+          0.1,
+          0.025
+        ],
+        "geo_dmg_": [
+          0.1,
+          0.025
+        ],
+        "dendro_dmg_": [
+          0.1,
+          0.025
+        ]
+      }
+    }
+  ]
+}

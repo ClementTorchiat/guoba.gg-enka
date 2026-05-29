@@ -1,0 +1,118 @@
+{
+  "color": "#80B7E2",
+  "portraitOffset": -36.5,
+  "skins": {
+    "207001": {
+      "color": "#2d65bd",
+      "portraitOffset": -38
+    }
+  },
+  "talents": {
+    "auto": 1,
+    "skill": 8,
+    "burst": 8
+  },
+  "buffs": [
+    {
+      "category": "Passifs",
+      "buffs": [
+        {
+          "label": "A1 : Cour des pétales dansants",
+          "active": true,
+          "stats": {
+            "eleMas": 100
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C6 : Mélodie du brise-givre",
+          "cons": 6,
+          "active": false,
+          "stats": {
+            "critRate__bonus_scaling": {
+              "source": "hp",
+              "percent": 0.0006,
+              "max": 30
+            },
+            "critDMG__bonus_scaling": {
+              "source": "hp",
+              "percent": 0.0012,
+              "max": 60
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Enabler Fleurissement": {
+      "name": "Enabler Fleurissement",
+      "weights": {
+        "critRate_": 0,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 1,
+        "hp": 0.8,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.5,
+        "enerRech_": 0.3,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "hp_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "hp_"
+        ]
+      },
+      "bestSets": [
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2"
+      ],
+      "goodSets": [
+        "FlowerOfParadiseLost:4",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 130,
+      "team": [
+        {
+          "role": "Driver",
+          "name": "Columbina",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Lauma",
+          "element": "dendro"
+        },
+        {
+          "role": "Support",
+          "name": "Nahida",
+          "element": "dendro"
+        }
+      ]
+    }
+  }
+}

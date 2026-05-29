@@ -1,0 +1,32 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "Si une compétence élémentaire est utilisée (PV%)",
+      "stats": {
+        "hp_": [
+          0.2,
+          0.05
+        ]
+      }
+    },
+    {
+      "label": "S'il y a 1 personnage Hydro dans l'équipe (PV%)",
+      "stats": {
+        "hp_": [
+          0.12,
+          0.03
+        ]
+      }
+    },
+    {
+      "label": "S'il y a 2 personnages Hydro dans l'équipe (PV%)",
+      "stats": {
+        "hp_": [
+          0.12,
+          0.03
+        ]
+      }
+    }
+  ]
+}

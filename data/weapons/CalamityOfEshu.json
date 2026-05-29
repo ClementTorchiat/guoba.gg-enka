@@ -1,0 +1,14 @@
+{
+  "buffs": [
+    {
+      "label": "Buff de Taux CRIT si le personnage est protégé par un bouclier (ne concerne que les attaques normales et chargées)",
+      "active": false,
+      "stats": {
+        "critRate_": [
+          0.08,
+          0.02
+        ]
+      }
+    }
+  ]
+}

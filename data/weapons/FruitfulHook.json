@@ -1,0 +1,14 @@
+{
+  "buffs": [
+    {
+      "label": "Bonus de Taux CRIT (Uniquement pour les attaques plongées)",
+      "active": false,
+      "stats": {
+        "critRate_": [
+          0.16,
+          0.04
+        ]
+      }
+    }
+  ]
+}

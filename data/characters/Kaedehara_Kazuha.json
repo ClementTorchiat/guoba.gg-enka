@@ -1,0 +1,112 @@
+{
+  "color": "#2c9c7f",
+  "portraitOffset": -36,
+  "talents": {
+    "auto": 1,
+    "skill": 6,
+    "burst": 8
+  },
+  "buffs": [
+    {
+      "category": "Passifs",
+      "buffs": [
+        {
+          "label": "A4 : Haïku de la brise",
+          "stats": {
+            "elemental_dmg_bonus_scaling": {
+              "source": "eleMas",
+              "percent": 0.04
+            }
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C2 : Zanshin des montagnes cruelles",
+          "cons": 2,
+          "stats": {
+            "eleMas": 200
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Support général": {
+      "name": "Support général",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0.4,
+        "atk_": 0.4,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 1,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "eleMas"
+        ],
+        "EQUIP_DRESS": [
+          "eleMas"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "ViridescentVenerer:4"
+      ],
+      "goodSets": [
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2"
+      ],
+      "er_req": 200,
+      "team": [
+        {
+          "role": "Flex",
+          "name": [],
+          "element": [
+            "pyro",
+            "cryo"
+          ]
+        },
+        {
+          "role": "Flex",
+          "name": [],
+          "element": [
+            "electro",
+            "hydro"
+          ]
+        },
+        {
+          "role": "Flex"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "4": [
+    {
+      "label": "Si une compétence élémentaire est utilisée (20% Bonus de DGT Géo)",
+      "stats": {
+        "geo_dmg_": 0.2
+      }
+    },
+    {
+      "label": "Si le personnage est sous un bouclier de Cristallisation (50% Bonus de DGT Géo)",
+      "stats": {
+        "geo_dmg_": 0.3
+      }
+    }
+  ]
+}

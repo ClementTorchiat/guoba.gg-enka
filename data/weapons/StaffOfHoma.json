@@ -1,0 +1,16 @@
+{
+  "buffs": [
+    {
+      "label": "Si les PV sont inférieurs à 50% (ATQ% en fonction des PV%)",
+      "stats": {
+        "atk_bonus_scaling": {
+          "source": "hp",
+          "percent": [
+            0.01,
+            0.002
+          ]
+        }
+      }
+    }
+  ]
+}

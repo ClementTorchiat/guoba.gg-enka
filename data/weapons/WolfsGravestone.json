@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une attaque touche un ennemi ayant moins de 30% de ses PV (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.4,
+          0.1
+        ]
+      }
+    }
+  ]
+}

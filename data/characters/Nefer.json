@@ -1,0 +1,115 @@
+{
+  "color": "#257224",
+  "portraitOffset": -37,
+  "talents": {
+    "auto": 6,
+    "skill": 8,
+    "burst": 6
+  },
+  "buffs": [
+    {
+      "category": "Passifs",
+      "buffs": [
+        {
+          "label": "A1 : Pari au clair de lune",
+          "active": true,
+          "stats": {
+            "eleMas": 100
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C2 : L'observation nourrit la stratégie",
+          "cons": 2,
+          "stats": {
+            "eleMas": 200
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "DPS Sélénofleurissement": {
+      "name": "DPS Sélénofleurissement",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 1,
+        "enerRech_": 0.2,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "eleMas"
+        ],
+        "EQUIP_DRESS": [
+          "critDMG_",
+          "critRate_",
+          "eleMas"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [
+        "atk"
+      ],
+      "bestSets": [
+        "NightOfTheSkysUnveiling:4"
+      ],
+      "goodSets": [
+        "DeepwoodMemories:4",
+        "GildedDreams:4",
+        "Instructor:4",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 100,
+      "team": [
+        {
+          "role": "Support",
+          "name": "Columbina",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Lauma",
+          "element": "dendro"
+        },
+        {
+          "role": "Flex",
+          "name": [
+            "Nahida",
+            "Sucrose"
+          ],
+          "element": [
+            "dendro",
+            "anemo"
+          ]
+        }
+      ]
+    }
+  }
+}

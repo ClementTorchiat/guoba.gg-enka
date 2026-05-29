@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si 2 réactions élémentaires sont déclenchées (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.2,
+          0.05
+        ]
+      }
+    }
+  ]
+}

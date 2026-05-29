@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si le personnage actif inflige des dégâts Géo (DÉF%)",
+      "stats": {
+        "def_": [
+          0.2,
+          0.05
+        ]
+      }
+    }
+  ]
+}

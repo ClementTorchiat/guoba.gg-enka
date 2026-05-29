@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.24,
+          0.06
+        ]
+      }
+    }
+  ]
+}

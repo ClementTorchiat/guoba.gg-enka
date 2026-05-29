@@ -1,0 +1,96 @@
+{
+  "color": "#4e9eff",
+  "portraitOffset": -37,
+  "talents": {
+    "auto": 1,
+    "skill": 8,
+    "burst": 10
+  },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C2 : « Comme la plume au vent, femme est volage » (Bonus Max)",
+          "cons": 2,
+          "stats": {
+            "hp_": 1.4
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Support et sub-DPS universel": {
+      "name": "Support et sub-DPS universel",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 1,
+        "hp": 0.1,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 1,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_",
+          "hp_"
+        ],
+        "EQUIP_RING": [
+          "hp_",
+          "hydro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "bestSets": [
+        "GoldenTroupe:4",
+        "TenacityOfTheMillelith:4"
+      ],
+      "goodSets": [
+        "OceanHuedClam:4",
+        "NoblesseOblige:4",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "HeartOfDepth:2",
+        "NymphsDream:2",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2"
+      ],
+      "er_req": 180,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Neuvillette",
+          "element": "hydro"
+        },
+        {
+          "role": "Support",
+          "name": "Xilonen",
+          "element": "geo"
+        },
+        {
+          "role": "Support",
+          "name": "Kazuha",
+          "element": "anemo"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "buffs": [
+    {
+      "label": "Si une attaque plongée est utilisée (DGT CRIT uniquement pour les attaques plongées)",
+      "stats": {
+        "critDMG_": [
+          0.28,
+          0.07
+        ]
+      }
+    },
+    {
+      "label": "Si une compétence ou un déchaînement élémentaire est utilisé (DGT CRIT uniquement pour les attaques plongées)",
+      "stats": {
+        "critDMG_": [
+          0.4,
+          0.1
+        ]
+      }
+    }
+  ]
+}

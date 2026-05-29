@@ -1,0 +1,116 @@
+{
+  "color": "#cb8fc3",
+  "portraitOffset": -35,
+  "talents": {
+    "auto": 1,
+    "skill": 6,
+    "burst": 8
+  },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C1 : Théorie de l'équilibre cendres–champs",
+          "cons": 1,
+          "stats": {
+            "eleMas": 80
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Support sélène": {
+      "name": "Support sélène",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.4,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 1,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_",
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "eleMas",
+          "hydro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "eleMas",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [
+        "atk"
+      ],
+      "bestSets": [
+        "SilkenMoonsSerenade:4",
+        "Instructor:4"
+      ],
+      "goodSets": [
+        "NoblesseOblige:4",
+        "ScrollOfTheHeroOfCinderCity:4",
+        "DeepwoodMemories:4",
+        "GildedDreams:4",
+        "FlowerOfParadiseLost:4",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2"
+      ],
+      "er_req": 220,
+      "team": [
+        {
+          "role": "Flex",
+          "name": [
+            "Nefer",
+            "Flins"
+          ],
+          "element": [
+            "dendro",
+            "electro"
+          ]
+        },
+        {
+          "role": "Flex",
+          "name": [
+            "Lauma",
+            "Ineffa"
+          ],
+          "element": [
+            "dendro",
+            "electro"
+          ]
+        },
+        {
+          "role": "Support",
+          "name": "Sucrose",
+          "element": "anemo"
+        }
+      ]
+    }
+  }
+}

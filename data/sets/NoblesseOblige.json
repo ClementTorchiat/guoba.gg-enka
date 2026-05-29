@@ -1,0 +1,10 @@
+{
+  "4": [
+    {
+      "label": "Si un déchaînement élémentaire est utilisé (20% ATK)",
+      "stats": {
+        "atk_": 0.2
+      }
+    }
+  ]
+}

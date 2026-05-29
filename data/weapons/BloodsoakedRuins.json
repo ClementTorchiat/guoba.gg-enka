@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une réaction Sélène est déclenchée (DGT CRIT)",
+      "stats": {
+        "critDMG_": [
+          0.28,
+          0.07
+        ]
+      }
+    }
+  ]
+}

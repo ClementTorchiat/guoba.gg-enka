@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une réaction élémentaire est déclenchée (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          24,
+          3
+        ]
+      }
+    }
+  ]
+}

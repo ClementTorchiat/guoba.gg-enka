@@ -1,0 +1,86 @@
+{
+  "color": "#826351",
+  "portraitOffset": -35,
+  "talents": {
+    "auto": 1,
+    "skill": 1,
+    "burst": 10
+  },
+  "builds": {
+    "Buffer sélénocristallisation": {
+      "name": "Buffer sélénocristallisation",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0.4,
+        "def": 0.1,
+        "eleMas": 1,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "eleMas",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "eleMas"
+        ],
+        "EQUIP_DRESS": [
+          "eleMas",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "SilkenMoonsSerenade:4",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2"
+      ],
+      "goodSets": [
+        "Instructor:4",
+        "ScrollOfTheHeroOfCinderCity:4",
+        "NoblesseOblige:4",
+        "TheExile:4",
+        "TenacityOfTheMillelith:4"
+      ],
+      "er_req": 150,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Zibai",
+          "element": "geo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Columbina",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Linnea",
+          "element": "geo"
+        }
+      ]
+    }
+  }
+}

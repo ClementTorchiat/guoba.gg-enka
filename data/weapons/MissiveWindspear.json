@@ -1,0 +1,17 @@
+{
+  "buffs": [
+    {
+      "label": "Si une réaction élémentaire est déclenchée (ATQ% et Maîtrise élémentaire)",
+      "stats": {
+        "atk_": [
+          0.12,
+          0.03
+        ],
+        "eleMas": [
+          48,
+          12
+        ]
+      }
+    }
+  ]
+}

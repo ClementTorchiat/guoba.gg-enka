@@ -1,0 +1,23 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "Si des alliés subissent une modification de PV une 1ère fois (PV%)",
+      "stats": {
+        "hp_": [
+          0.14,
+          0.035
+        ]
+      }
+    },
+    {
+      "label": "Si des alliés subissent une modification de PV une 2ème fois (PV%)",
+      "stats": {
+        "hp_": [
+          0.28,
+          0.07
+        ]
+      }
+    }
+  ]
+}

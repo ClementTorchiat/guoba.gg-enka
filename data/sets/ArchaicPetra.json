@@ -1,0 +1,29 @@
+{
+  "4": [
+    {
+      "label": "Cristal Pyro ramassé (35% Bonus de Dgt Pyro)",
+      "stats": {
+        "pyro_dmg_": 0.35
+      }
+    },
+    {
+      "label": "Cristal Hydro ramassé (35% Bonus de Dgt Hydro)",
+      "stats": {
+        "hydro_dmg_": 0.35
+      }
+    },
+    {
+      "label": "Cristal Cryo ramassé (35% Bonus de Dgt Cryo)",
+      "stats": {
+        "cryo_dmg_": 0.35
+      }
+    },
+    {
+      "label": "Cristal Électro ramassé (35% Bonus de Dgt Électro)",
+      "stats": {
+        "electro_dmg_": 0.35
+      }
+    }
+  ],
+  "selectMode": "exclusive"
+}

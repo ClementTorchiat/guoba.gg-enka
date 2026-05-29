@@ -1,0 +1,160 @@
+{
+  "color": "#a64d6d",
+  "portraitOffset": -37,
+  "talents": {
+    "auto": 1,
+    "skill": 1,
+    "burst": 10
+  },
+  "buffs": [
+    {
+      "category": "A4 : Enquête de diversité",
+      "selectMode": "exclusive",
+      "buffs": [
+        {
+          "label": "3 alliés de Fontaine (+15% Soins)",
+          "active": true,
+          "stats": {
+            "heal_": 0.15
+          }
+        },
+        {
+          "label": "2 Fontaine / 1 Autre (+10% Soins, +5% DGT Cryo)",
+          "active": false,
+          "stats": {
+            "heal_": 0.1,
+            "cryo_dmg_": 0.05
+          }
+        },
+        {
+          "label": "1 Fontaine / 2 Autres (+5% Soins, +10% DGT Cryo)",
+          "active": false,
+          "stats": {
+            "heal_": 0.05,
+            "cryo_dmg_": 0.1
+          }
+        },
+        {
+          "label": "3 alliés d'autres régions (+15% DGT Cryo)",
+          "active": false,
+          "stats": {
+            "cryo_dmg_": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "category": "C2 : Une poursuite de la vérité",
+      "selectMode": "exclusive",
+      "buffs": [
+        {
+          "label": "1 ennemi touché",
+          "cons": 2,
+          "active": false,
+          "stats": {
+            "atk_": 0.1
+          }
+        },
+        {
+          "label": "2 ennemis touchés",
+          "cons": 2,
+          "active": false,
+          "stats": {
+            "atk_": 0.2
+          }
+        },
+        {
+          "label": "3 ennemis touchés ou +",
+          "cons": 2,
+          "active": true,
+          "stats": {
+            "atk_": 0.3
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Healer universel": {
+      "name": "Healer universel",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 1,
+        "atk": 0.8,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 1
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_",
+          "atk_"
+        ],
+        "EQUIP_RING": [
+          "atk_"
+        ],
+        "EQUIP_DRESS": [
+          "heal_",
+          "atk_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "NoblesseOblige:4",
+        "TenacityOfTheMillelith:4",
+        "OceanHuedClam:4"
+      ],
+      "goodSets": [
+        "MaidenBeloved:4",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "MaidenBeloved:2",
+        "OceanHuedClam:2",
+        "SongOfDaysPast:2"
+      ],
+      "er_req": 200,
+      "team": [
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        },
+        {
+          "role": "",
+          "name": "",
+          "element": ""
+        }
+      ]
+    }
+  }
+}

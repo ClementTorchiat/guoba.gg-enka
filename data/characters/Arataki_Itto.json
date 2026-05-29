@@ -1,0 +1,171 @@
+{
+  "color": "#7F473A",
+  "portraitOffset": -39,
+  "talents": {
+    "auto": 10,
+    "skill": 8,
+    "burst": 9
+  },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C4 : Au pain sec et à l'eau !",
+          "cons": 4,
+          "active": true,
+          "stats": {
+            "def_": 0.2,
+            "atk_": 0.2
+          }
+        },
+        {
+          "label": "C6 : Arataki Itto, présent !",
+          "cons": 6,
+          "active": true,
+          "stats": {
+            "critDMG_": 0.7
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "DPS Géo": {
+      "name": "DPS Géo",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0.8,
+        "def": 0.1,
+        "eleMas": 0,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 1,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "def_"
+        ],
+        "EQUIP_RING": [
+          "geo_dmg_",
+          "def_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "HuskOfOpulentDreams:4"
+      ],
+      "goodSets": [
+        "RetracingBolide:4",
+        "HuskOfOpulentDreams:2",
+        "ArchaicPetra:2"
+      ],
+      "er_req": 140,
+      "team": [
+        {
+          "role": "Sub-DPS",
+          "name": "Albedo",
+          "element": "geo"
+        },
+        {
+          "role": "Support",
+          "name": "Gorou",
+          "element": "geo"
+        },
+        {
+          "role": "Support",
+          "name": "Zhongli",
+          "element": "geo"
+        }
+      ]
+    },
+    "DPS Sélénocristallisation": {
+      "name": "DPS Sélénocristallisation",
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0.8,
+        "def": 0.1,
+        "eleMas": 0.5,
+        "enerRech_": 0.8,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 1,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "def_"
+        ],
+        "EQUIP_RING": [
+          "geo_dmg_",
+          "def_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "HuskOfOpulentDreams:4",
+        "NightOfTheSkysUnveiling:4"
+      ],
+      "goodSets": [
+        "RetracingBolide:4",
+        "HuskOfOpulentDreams:2",
+        "ArchaicPetra:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
+      ],
+      "er_req": 140,
+      "team": [
+        {
+          "role": "Sub-DPS",
+          "name": "Columbina",
+          "element": "hydro"
+        },
+        {
+          "role": "Support",
+          "name": "Gorou",
+          "element": "geo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Linnea",
+          "element": "geo"
+        }
+      ]
+    }
+  }
+}

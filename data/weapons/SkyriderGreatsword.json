@@ -1,0 +1,41 @@
+{
+  "selectMode": "cumulative",
+  "buffs": [
+    {
+      "label": "Si une 1ère attaque normale ou chargée touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.06,
+          0.01
+        ]
+      }
+    },
+    {
+      "label": "Si une 2ème attaque normale ou chargée touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.06,
+          0.01
+        ]
+      }
+    },
+    {
+      "label": "Si une 3ème attaque normale ou chargée touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.06,
+          0.01
+        ]
+      }
+    },
+    {
+      "label": "Si une 4ème attaque normale ou chargée touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.06,
+          0.01
+        ]
+      }
+    }
+  ]
+}

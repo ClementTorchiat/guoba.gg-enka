@@ -1,0 +1,36 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          80,
+          20
+        ]
+      }
+    },
+    {
+      "label": "Si des dégâts de Sélénofleurissment sont infligés (DGT CRIT)",
+      "stats": {
+        "critDMG_": [
+          0.24,
+          0.06
+        ]
+      }
+    },
+    {
+      "label": "Si les deux effets précédents sont actifs en même temps (Maîtrise élémentaire et DGT CRIT)",
+      "stats": {
+        "eleMas": [
+          120,
+          30
+        ],
+        "critDMG_": [
+          0.36,
+          0.09
+        ]
+      }
+    }
+  ]
+}

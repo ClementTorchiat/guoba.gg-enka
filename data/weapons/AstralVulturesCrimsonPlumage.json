@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une réaction élémentaire Dispersion est déclenchée (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.24,
+          0.06
+        ]
+      }
+    }
+  ]
+}

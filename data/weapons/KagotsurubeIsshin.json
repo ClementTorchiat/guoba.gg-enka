@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une attaque normale, chargée ou plongeante touche un ennemi (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.15,
+          0
+        ]
+      }
+    }
+  ]
+}

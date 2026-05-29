@@ -1,0 +1,22 @@
+{
+  "buffs": [
+    {
+      "label": "Si une compétence élémentaire inflige des DGT Hydro ou Dendro (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          60,
+          15
+        ]
+      }
+    },
+    {
+      "label": "Si une réaction de Sélénofleurissement est déclenchée (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          60,
+          15
+        ]
+      }
+    }
+  ]
+}

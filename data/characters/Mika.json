@@ -1,0 +1,141 @@
+{
+  "color": "#353f76",
+  "portraitOffset": -39,
+  "talents": {
+    "auto": 1,
+    "skill": 9,
+    "burst": 10
+  },
+  "buffs": [
+    {
+      "category": "Passifs & Cumuls",
+      "selectMode": "cumulative",
+      "buffs": [
+        {
+          "label": "Effet Localisation (1 cumul)",
+          "stats": {
+            "physical_dmg_": 0.1
+          }
+        },
+        {
+          "label": "Effet Localisation (2 cumuls)",
+          "stats": {
+            "physical_dmg_": 0.1
+          }
+        },
+        {
+          "label": "Effet Localisation (3 cumuls - Max A1)",
+          "stats": {
+            "physical_dmg_": 0.1
+          }
+        },
+        {
+          "label": "Effet Localisation (4 cumuls - Max A4)",
+          "stats": {
+            "physical_dmg_": 0.1
+          }
+        },
+        {
+          "label": "Effet Localisation (5 cumuls - Max C6)",
+          "cons": 6,
+          "stats": {
+            "physical_dmg_": 0.1
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": "C6 : Conseil du compagnon",
+          "cons": 6,
+          "active": false,
+          "stats": {
+            "critDMG_": 0.6
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Buffer physique": {
+      "name": "Buffer physique",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 1,
+        "hp": 0.8,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 1
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "hp_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "hp_",
+          "heal_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [
+        "eleMas"
+      ],
+      "showUIStats": [
+        "physical_dmg_"
+      ],
+      "bestSets": [
+        "NoblesseOblige:4"
+      ],
+      "goodSets": [
+        "OceanHuedClam:4",
+        "SongOfDaysPast:4",
+        "TheExile:4",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2",
+        "MaidenBeloved:2",
+        "OceanHuedClam:2",
+        "SongOfDaysPast:2"
+      ],
+      "er_req": 200,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "Eula",
+          "element": "cryo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Furina",
+          "element": "hydro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Shougun",
+          "element": "electro"
+        }
+      ]
+    }
+  }
+}

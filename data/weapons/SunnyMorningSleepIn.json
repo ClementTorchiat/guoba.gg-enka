@@ -1,0 +1,31 @@
+{
+  "buffs": [
+    {
+      "label": "Si une réaction de Dispersion est déclenchée (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          120,
+          30
+        ]
+      }
+    },
+    {
+      "label": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          96,
+          24
+        ]
+      }
+    },
+    {
+      "label": "Si un déchaînement élémentaire est utilisé (Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": [
+          32,
+          8
+        ]
+      }
+    }
+  ]
+}

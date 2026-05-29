@@ -1,0 +1,23 @@
+{
+  "4": [
+    {
+      "label": "Si les PV diminuent une 1ère fois (12% Taux CRIT)",
+      "stats": {
+        "critRate_": 0.12
+      }
+    },
+    {
+      "label": "Si les PV diminuent une 2ème fois (24% Taux CRIT)",
+      "stats": {
+        "critRate_": 0.12
+      }
+    },
+    {
+      "label": "Si les PV diminuent une 3ème fois (36% Taux CRIT)",
+      "stats": {
+        "critRate_": 0.12
+      }
+    }
+  ],
+  "selectMode": "cumulative"
+}

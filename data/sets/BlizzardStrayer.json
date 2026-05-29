@@ -1,0 +1,17 @@
+{
+  "4": [
+    {
+      "label": "Si l'ennemi est affecté par Cryo (20% Taux CRIT)",
+      "stats": {
+        "critRate_": 0.2
+      }
+    },
+    {
+      "label": "Si l'ennemi est gelé (40% Taux CRIT)",
+      "stats": {
+        "critRate_": 0.2
+      }
+    }
+  ],
+  "selectMode": "cumulative"
+}

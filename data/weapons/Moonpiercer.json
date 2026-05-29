@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si une réaction en lien avec l'élément Dendro est déclenchée (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.16,
+          0.04
+        ]
+      }
+    }
+  ]
+}

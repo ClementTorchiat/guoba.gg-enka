@@ -1,0 +1,17 @@
+{
+  "4": [
+    {
+      "label": "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Naissante (60 Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": 60
+      }
+    },
+    {
+      "label": "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Ascendante (120 Maîtrise élémentaire)",
+      "stats": {
+        "eleMas": 120
+      }
+    }
+  ],
+  "selectMode": "exclusive"
+}

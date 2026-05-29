@@ -1,0 +1,14 @@
+{
+  "buffs": [
+    {
+      "label": "Bonus de Taux CRIT (Uniquement pour le déchaînement élémentaire)",
+      "active": false,
+      "stats": {
+        "critRate_": [
+          0.06,
+          0.015
+        ]
+      }
+    }
+  ]
+}

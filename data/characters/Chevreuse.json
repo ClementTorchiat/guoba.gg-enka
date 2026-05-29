@@ -1,0 +1,136 @@
+{
+  "color": "#c7445d",
+  "portraitOffset": -36,
+  "talents": {
+    "auto": 1,
+    "skill": 10,
+    "burst": 6
+  },
+  "buffs": [
+    {
+      "category": "Passifs",
+      "buffs": [
+        {
+          "label": "A4 : Manœuvre de coordination tactique",
+          "active": true,
+          "stats": {
+            "atk_bonus_scaling": {
+              "source": "hp",
+              "percent": 0.00001,
+              "max": 0.4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "category": "Constellations",
+      "selectMode": "cumulative",
+      "buffs": [
+        {
+          "label": "C6 : Poursuite de l'anéantissement du mal (1 stack)",
+          "cons": 6,
+          "stats": {
+            "elemental_dmg_": 0.2,
+            "electro_dmg_": 0.2
+          }
+        },
+        {
+          "label": "C6 : Poursuite de l'anéantissement du mal (2 stacks)",
+          "cons": 6,
+          "stats": {
+            "elemental_dmg_": 0.2,
+            "electro_dmg_": 0.2
+          }
+        },
+        {
+          "label": "C6 : Poursuite de l'anéantissement du mal (3 stacks)",
+          "cons": 6,
+          "stats": {
+            "elemental_dmg_": 0.2,
+            "electro_dmg_": 0.2
+          }
+        }
+      ]
+    }
+  ],
+  "builds": {
+    "Buffer surcharge": {
+      "name": "Buffer surcharge",
+      "weights": {
+        "critRate_": 0.4,
+        "critDMG_": 0,
+        "atk_": 0,
+        "atk": 0,
+        "hp_": 1,
+        "hp": 0.8,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 1
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_",
+          "hp_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "heal_",
+          "hp_",
+          "critRate_"
+        ]
+      },
+      "hideUIStats": [
+        "critDMG_",
+        "eleMas"
+      ],
+      "showUIStats": [
+        "atk",
+        "electro_dmg_"
+      ],
+      "bestSets": [
+        "NoblesseOblige:4"
+      ],
+      "goodSets": [
+        "SongOfDaysPast:4",
+        "ScrollOfTheHeroOfCinderCity:4",
+        "TenacityOfTheMillelith:4",
+        "TenacityOfTheMillelith:2",
+        "VourukashasGlow:2",
+        "MaidenBeloved:2",
+        "OceanHuedClam:2",
+        "SongOfDaysPast:2"
+      ],
+      "er_req": 170,
+      "team": [
+        {
+          "role": "Flex",
+          "name": "",
+          "element": "pyro"
+        },
+        {
+          "role": "Flex",
+          "name": "",
+          "element": "electro"
+        },
+        {
+          "role": "Flex",
+          "name": "",
+          "element": "electro"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "buffs": [
+    {
+      "label": "Bonus selon la Maîtrise élémentaire (Recharge d'énergie)",
+      "stats": {
+        "enerRech_bonus_scaling": {
+          "source": "eleMas",
+          "percent": [
+            0.036,
+            0.009
+          ]
+        }
+      }
+    }
+  ]
+}

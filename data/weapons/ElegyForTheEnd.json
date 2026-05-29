@@ -1,0 +1,17 @@
+{
+  "buffs": [
+    {
+      "label": "Si 4 compétences ou déchaînements élémentaires ont touché un ennemi (Maîtrise élémentaire et ATQ%)",
+      "stats": {
+        "atk_": [
+          0.2,
+          0.05
+        ],
+        "eleMas": [
+          100,
+          25
+        ]
+      }
+    }
+  ]
+}

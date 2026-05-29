@@ -1,0 +1,32 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": "1 Allié du même élément que le porteur (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.16,
+          0.04
+        ]
+      }
+    },
+    {
+      "label": "2 Alliés du même élément que le porteur (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.32,
+          0.08
+        ]
+      }
+    },
+    {
+      "label": "3 Alliés du même élément que le porteur (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.48,
+          0.12
+        ]
+      }
+    }
+  ]
+}

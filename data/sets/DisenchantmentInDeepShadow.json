@@ -1,0 +1,11 @@
+{
+  "4": [
+    {
+      "label": "Si l'adversaire est affecté par Supraconduction (16% Taux Critique uniquement sur cette attaque)",
+      "stats": {
+        "critRate_": 0.16
+      },
+      "active": false
+    }
+  ]
+}

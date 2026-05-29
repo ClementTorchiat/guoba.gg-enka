@@ -1,0 +1,10 @@
+{
+  "4": [
+    {
+      "label": "Si le personnage consomme des points Noctâme (40% Taux CRIT)",
+      "stats": {
+        "critRate_": 0.4
+      }
+    }
+  ]
+}

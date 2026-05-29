@@ -1,0 +1,13 @@
+{
+  "buffs": [
+    {
+      "label": "Si le porteur reçoit des soins (ATQ%)",
+      "stats": {
+        "atk_": [
+          0.24,
+          0.06
+        ]
+      }
+    }
+  ]
+}

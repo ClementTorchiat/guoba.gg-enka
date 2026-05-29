@@ -1,0 +1,40 @@
+{
+  "4": [
+    {
+      "label": "Si un 1er allié est du même élément (14% ATQ)",
+      "stats": {
+        "atk_": 0.14
+      }
+    },
+    {
+      "label": "Si un 2ème allié est du même élément (14% ATQ)",
+      "stats": {
+        "atk_": 0.14
+      }
+    },
+    {
+      "label": "Si un 3ème allié est du même élément (14% ATQ)",
+      "stats": {
+        "atk_": 0.14
+      }
+    },
+    {
+      "label": "Si un 1er allié est d'un élément différent (50 EM)",
+      "stats": {
+        "eleMas": 50
+      }
+    },
+    {
+      "label": "Si un 2ème allié est d'un élément différent (50 EM)",
+      "stats": {
+        "eleMas": 50
+      }
+    },
+    {
+      "label": "Si un 3ème allié est d'un élément différent (50 EM)",
+      "stats": {
+        "eleMas": 50
+      }
+    }
+  ]
+}
