@@ -1,7 +1,8 @@
 /* =========================================================
    config.generated.js — FICHIER AUTO-GÉNÉRÉ
-   Généré le : 2026-05-28T14:57:41.571Z
+   Généré le : 2026-06-03T19:15:56.078Z
    115 personnages | 111 armes | 21 sets
+
    ========================================================= */
 
 window.DEFAULT_CONFIG   = {
@@ -12188,9 +12189,9 @@ window.CHARACTER_CONFIG = {
     "color": "#257224",
     "portraitOffset": -37,
     "talents": {
-      "auto": 6,
-      "skill": 8,
-      "burst": 6
+      "auto": 1,
+      "skill": 10,
+      "burst": 8
     },
     "buffs": [
       {

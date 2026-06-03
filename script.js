@@ -3448,7 +3448,7 @@ function renderShowcase(index) {
 
     // 1.1 Image de background
     html += `
-        <div class="background-splash-art" style="background-image: url('${p.splashArt}'); background-position: center center;background-repeat: no-repeat;background-size: 300%; position: absolute;inset: 0px;z-index: 0;filter: blur(10px) brightness(0.7) saturate(0.8);"></div>
+        <div class="background-splash-art" style="background-image: url('${p.splashArt}'); background-position: center center;background-repeat: no-repeat;background-size: 300%; position: absolute;inset: 0px;z-index: 0;filter: blur(10px) brightness(0.7) saturate(0.8); max-width: 1153px; clip-path: inset(0);"></div>
     `;
 
     // 1.2 Section gauche (splash art + arme)
@@ -3930,7 +3930,7 @@ function renderShowcase(index) {
                             ${(() => {
             const crossChecks = getAllCrossCheckAdvice(index);
             const hasAnySwap = crossChecks.some(s => s !== null);
-            if (!hasAnySwap) return '<div style="grid-column:1/-1; color:#666; font-size:13px; font-style:italic;">Aucun échange avantageux entre personnages de la vitrine.</div>';
+            if (!hasAnySwap) return '';
 
             const cards = crossChecks.map(swap => {
                 if (!swap) {

@@ -61,8 +61,10 @@
         .skeleton-col-right  { display: flex; flex-direction: column; gap: 8px; flex: 1; }
 
         @font-face {
-            font-family: 'OTBrut-Regular';
-            src: url("./assets/global/typo/ShinShin.ttf");
+            font-family: 'ShinShin';
+            src: url("./assets/global/typo/ShinShin.ttf") format('truetype');
+            font-weight: normal;
+            font-style: normal;
         }
 
         :root {
@@ -88,7 +90,8 @@
             -moz-osx-font-smoothing: grayscale;
             height: 100vh;
             display: flex;
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: hidden;
         }
 
         main {
@@ -97,7 +100,7 @@
             min-height: 280px;
             overflow: initial;
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             width: 100%;
             background: #323338;
             box-sizing: border-box;
@@ -108,14 +111,16 @@
         .layout-flex {
             width: 100%;
             box-sizing: border-box;
-            justify-content: space-around;
+            justify-content: center;
             display: flex;
         }
 
         .layout-content {
             height: 100%;
             margin-bottom: 200px;
-            width: 1454px;
+            width: 100%;
+            max-width: 1800px;
+            min-width: 1100px;
             gap: 8px;
             box-sizing: border-box;
             display: flex;
@@ -368,7 +373,8 @@
             overflow-y: auto;
             position: relative;
             flex-direction: column;
-            width: 100%;
+            flex: 1;
+            min-width: 0;
         }
 
         .main-content::-webkit-scrollbar {
@@ -394,7 +400,8 @@
         }
 
         .main-content-menu {
-
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .main-content-menu-container {
@@ -465,10 +472,22 @@
             height: 856px;
             background: #323338;
             background-blend-mode: screen;
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: hidden;
             border-radius: 7px;
             transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s;
             gap: 8px;
+        }
+
+        .top-row::-webkit-scrollbar {
+            height: 4px;
+        }
+        .top-row::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+        }
+        .top-row::-webkit-scrollbar-track {
+            background: transparent;
         }
 
         .character-portrait-container {
@@ -1081,6 +1100,7 @@
             padding: 20px 28px 0;
             display: flex; align-items: center; justify-content: space-between;
             flex-shrink: 0;
+            padding-right: 54px;
         }
         .ob-logo-row { display: flex; align-items: center; gap: 8px; opacity: 0.5; }
         .ob-logo-img { width: 20px; height: 20px; }
@@ -1100,6 +1120,27 @@
         .ob-body::-webkit-scrollbar { width: 4px; }
         .ob-body::-webkit-scrollbar-track { background: transparent; }
         .ob-body::-webkit-scrollbar-thumb { background: #2d3342; border-radius: 2px; }
+
+        .ob-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.2s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ob-close-btn:hover {
+            color: #ffffff;
+            transform: scale(1.1);
+        }
 
         .ob-step-content { width: 100%; }
         .ob-step-content.slide-in-right {
@@ -1232,7 +1273,7 @@
             Une version mobile du site est actuellement en cours de création.
         </p>
         <p style="font-weight: bold; color: #fff; margin-top: 24px;">
-            Pour l'instant, veuillez y accéder depuis un PC ou un Mac.
+            Pour l'instant, veuillez y accéder depuis un ordinateur.
         </p>
     </div>
 </div>
@@ -1245,7 +1286,7 @@
                         <img src="assets/global/favicon.png" alt="Simulateur" style="border-radius: 100%;">
                         <h2>guoba.gg</h2>
                     </div>
-                    <p class="sidebar-text">Ver. 1.1.2 - Bêta Build (GI Ver. 6.6)</p>
+                    <p class="sidebar-text">Ver. 1.1.3 - Bêta Build (GI Ver. 6.6)</p>
                 </div>
                 <div class="sidebar-search">
                     <div class="search-container">
@@ -1293,7 +1334,7 @@
                     </div>
                     -->
 
-                    <div class="leaderboards-container" style="max-width:240px;display: flex; justify-content: space-between; padding-left: 15px; padding-right: 16px; align-items: center; width: 100%; height: 50px; background: #2C2D32; color: #fff;border: none;border-radius: 8px;">
+                    <div class="leaderboards-container" style="display: flex; justify-content: space-between; padding-left: 15px; padding-right: 16px; align-items: center; width: 100%; height: 50px; background: #2C2D32; color: #fff;border: none;border-radius: 8px;">
                         <div class="leaderboards-left" style="display: flex;">
                             <i class="fa-solid fa-ranking-star"></i>
                             <div class="leaderboards-placeholder" style="font-size: 14px; margin-left: 12px;">
@@ -1302,7 +1343,7 @@
                         </div>
                     </div>
 
-                    <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; max-width: 240px; width: 100%;">
+                    <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; max-width: 240px; width: 100%; min-width: 240px;">
                         <button onclick="openOnboarding()" title="Mode d'emploi" style="
                             background: #2C2D32;
                             border: none;
@@ -1346,6 +1387,9 @@
 </main>
 <div id="onboardingModal" class="ob-overlay">
     <div class="ob-card">
+        <button class="ob-close-btn" onclick="closeOnboarding()" title="Fermer le tutoriel">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
         <div class="ob-progress-bar">
             <div class="ob-progress-fill" id="ob-progress-fill" style="width:20%"></div>
         </div>
