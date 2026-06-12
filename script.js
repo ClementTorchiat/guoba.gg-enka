@@ -947,6 +947,8 @@ function clearSearch() {
     const uidInput = document.getElementById('uidInput');
     if (uidInput) uidInput.value = '';
     window.history.pushState({}, '', window.location.pathname);
+    document.title = "guoba.gg - Simulateur Genshin Impact";
+    window.currentPlayerNickname = null;
     globalPersoData = [];
     sidebarSortState = {column: 'original', direction: 'desc'};
     const sidebar = document.getElementById('sidebar-list');
@@ -986,6 +988,7 @@ async function fetchUserData(optionalUid) {
     if (apiSessionCache[uid] && (Date.now() - apiSessionCache[uid].timestamp < 180000)) {
         console.log("⚡ Chargement instantané depuis le cache !");
         const cachedData = apiSessionCache[uid].data;
+        window.currentPlayerNickname = cachedData.playerInfo.nickname || 'Joueur inconnu';
         processData(cachedData);
         renderPlayerProfile(cachedData.playerInfo, uid);
         renderGlobalEvaluation(cachedData.playerInfo);
@@ -1033,6 +1036,8 @@ async function fetchUserData(optionalUid) {
             data: data,
             timestamp: Date.now()
         };
+
+        window.currentPlayerNickname = data.playerInfo.nickname || 'Joueur inconnu';
 
         processData(data);
         renderPlayerProfile(data.playerInfo, uid);
@@ -3384,9 +3389,14 @@ function renderShowcase(index) {
     const container = document.getElementById('main-container');
     if (!container) return;
 
-    const currentUid = new URLSearchParams(window.location.search).get('uid') || document.getElementById('uidInput').value;
-    window.history.pushState({}, '', `?uid=${currentUid}&char=${encodeURIComponent(p.nom)}`);
+    if (window.currentPlayerNickname) {
+        document.title = `${p.nom} de ${window.currentPlayerNickname} - guoba.gg`;
+    }
 
+    const currentUid = new URLSearchParams(window.location.search).get('uid') || document.getElementById('uidInput').value;
+    if (!window._isPopstate) {
+        window.history.pushState({}, '', `?uid=${currentUid}&char=${encodeURIComponent(p.nom)}`);
+    }
     document.querySelectorAll('#sidebar-list .char-card').forEach((card) => {
         if (parseInt(card.dataset.originalIndex) === parseInt(index)) {
             card.classList.add('active');
@@ -3927,55 +3937,10 @@ function renderShowcase(index) {
                             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
                             
                             
-                            ${(() => {
-            const crossChecks = getAllCrossCheckAdvice(index);
-            const hasAnySwap = crossChecks.some(s => s !== null);
-            if (!hasAnySwap) return '';
-
-            const cards = crossChecks.map(swap => {
-                if (!swap) {
-                    return `
-        <div style="flex: 1; min-width: 200px; background:#2C2D32; border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid #3a3b42; box-sizing:border-box; opacity:0.4; align-items:center; justify-content:center; min-height:160px;">
-            <div style="font-size:22px; color:#444;">✗</div>
-            <p style="font-size:11px; color:#888; text-align:center; line-height:1.5;">Aucun échange<br>avantageux détecté</p>
-        </div>`;
-                }
-
-                const deltasHtml = swap.deltas.map(d => `
-    <div style="display:flex; align-items:center; gap:5px; font-size:11px; color:${d.delta > 0 ? '#4ade80' : '#f87171'};">
-        <div style="width:6px; height:6px; border-radius:50%; flex-shrink:0; background:${d.delta > 0 ? '#4ade80' : '#f87171'};"></div>
-        ${d.formatted}
-    </div>`).join('');
-
-                const scoreDiff = Math.round(swap.currEvalNew.score - swap.currEvalOld.score);
-
-                return `
-    <div style="flex: 1; min-width: 200px; background:#2C2D32; border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid var(--accent-gold); box-sizing:border-box;">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
-            <div style="position:relative; flex-shrink:0;">
-                <img src="${swap.currArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);">
-                <img src="${swap.currCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid #2C2D32;">
-            </div>
-            <span style="color:var(--accent-gold); font-size:16px;">⇒</span>
-            <div style="position:relative; flex-shrink:0;">
-                <img src="${swap.newArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);">
-                <img src="${swap.otherCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid #2C2D32;">
-            </div>
-        </div>
-        <div style="width:100%; height:1px; background:rgba(255,255,255,0.06);"></div>
-        <div style="display:flex; flex-direction:column; gap:4px;">${deltasHtml}</div>
-        <div style="width:100%; height:1px; background:rgba(255,255,255,0.06);"></div>
-        <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
-            <span style="font-size:13px; font-weight:bold; color:${swap.currEvalOld.grade.color};">${swap.currEvalOld.score}</span>
-            <span style="font-size:12px; color:#666;">→</span>
-            <span style="font-size:13px; font-weight:bold; color:${swap.currEvalNew.grade.color};">${swap.currEvalNew.score} <span style="font-size:11px; color:#c8a96e; font-weight:normal;">(${scoreDiff > 0 ? '+' : ''}${scoreDiff} pts)</span></span>
-        </div>
-    </div>`;
-            });
-
-            return `<div style="grid-column:1/-1; width:100%; box-sizing:border-box; display:flex; flex-wrap:nowrap; gap:20px; overflow-x:auto;">${cards.join('')}</div>`;
-        })()}
-                        
+                         
+                        <div style="grid-column: 1 / -1; margin-top: 10px; margin-bottom: -5px;">
+                                    <p style="font-size:12px; color:#aaa; text-transform:uppercase; letter-spacing:0.05em;">Conseils généraux</p>
+                                </div>
                                 ${(() => {
             const adv = getLevelAdvice(p);
             const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
@@ -4086,24 +4051,554 @@ function renderShowcase(index) {
         }).join('') : '<p style="color:#22c55e;">Rien à signaler, excellent travail.</p>'}
                                 </div>
                             </div>
+                            
+                            ${(() => {
+            const SLOT_ORDER_WTL = ["EQUIP_BRACER", "EQUIP_NECKLACE", "EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
+            const FIXED_MAIN = {
+                "EQUIP_BRACER":   { key: "hp",  label: "PV" },
+                "EQUIP_NECKLACE": { key: "atk", label: "ATQ" }
+            };
+
+            const VALID_SUBSTATS = ["critRate_", "critDMG_", "atk_", "atk", "hp_", "hp", "def_", "def", "eleMas", "enerRech_"];
+
+            let targetSets = [];
+            if (config.bestSets && config.bestSets.length > 0) {
+                const parts1 = config.bestSets[0].split(":");
+                targetSets.push({ key: parts1[0], count: parseInt(parts1[1]) || 4 });
+
+                if (targetSets[0].count === 2 && config.bestSets.length > 1) {
+                    const parts2 = config.bestSets[1].split(":");
+                    if (parts2[1] === "2") {
+                        targetSets.push({ key: parts2[0], count: 2 });
+                    }
+                }
+            }
+
+            const slotSetMap = {};
+            if (targetSets.length === 1 && targetSets[0].count >= 4) {
+                slotSetMap["EQUIP_BRACER"] = targetSets[0].key;
+                slotSetMap["EQUIP_NECKLACE"] = targetSets[0].key;
+                slotSetMap["EQUIP_SHOES"] = targetSets[0].key;
+                slotSetMap["EQUIP_DRESS"] = targetSets[0].key;
+                slotSetMap["EQUIP_RING"] = "Hors-Set";
+            } else if (targetSets.length === 2 && targetSets[0].count === 2 && targetSets[1].count === 2) {
+                slotSetMap["EQUIP_BRACER"] = targetSets[0].key;
+                slotSetMap["EQUIP_NECKLACE"] = targetSets[0].key;
+                slotSetMap["EQUIP_SHOES"] = targetSets[1].key;
+                slotSetMap["EQUIP_DRESS"] = targetSets[1].key;
+                slotSetMap["EQUIP_RING"] = "Hors-Set";
+            } else {
+                SLOT_ORDER_WTL.forEach(s => slotSetMap[s] = (s === "EQUIP_RING" ? "Hors-Set" : (targetSets[0]?.key || "Au choix")));
+            }
+
+            function getSetNameFR(setKey) {
+                if (setKey === "Hors-Set") return "Pièce Hors-Set";
+                if (setKey === "Au choix") return "Set au choix";
+                const frName = Object.keys(SET_NAME_MAPPING).find(k => SET_NAME_MAPPING[k] === setKey);
+                return frName || setKey;
+            }
+
+            function getArtifactIcon(setKey, setNameFR, slotType) {
+                // Si c'est au choix, on garde l'icône mystère
+                if (setKey === "Au choix") return ICON_BASE_PATH + "icon_unknown.webp";
+
+                // CORRECTION : Si c'est Hors-Set, on force la recherche sur le set Rideau du Gladiateur
+                let lookupSetKey = setKey;
+                let lookupNameFR = setNameFR;
+                if (setKey === "Hors-Set") {
+                    lookupSetKey = "GladiatorsFinale";
+                    lookupNameFR = Object.keys(SET_NAME_MAPPING).find(k => SET_NAME_MAPPING[k] === "GladiatorsFinale") || "Rideau du Gladiateur";
+                }
+
+                let targetHash = null;
+                const lang = locData["fr"] ? "fr" : (locData["en"] ? "en" : Object.keys(locData)[0]);
+                const locDict = locData[lang] || {};
+
+                for (const [hash, name] of Object.entries(locDict)) {
+                    if (name.replace(/<[^>]*>/g, "") === lookupNameFR) {
+                        targetHash = hash;
+                        break;
+                    }
+                }
+
+                let baseIconStr = null;
+                if (targetHash && window.iconToNameHash) {
+                    for (const [icon, hash] of Object.entries(window.iconToNameHash)) {
+                        if (String(hash) === String(targetHash)) {
+                            baseIconStr = icon.substring(0, icon.lastIndexOf('_'));
+                            break;
+                        }
+                    }
+                }
+
+                if (baseIconStr) {
+                    const pieceMap = {
+                        "EQUIP_BRACER": "4",
+                        "EQUIP_NECKLACE": "2",
+                        "EQUIP_SHOES": "5",
+                        "EQUIP_RING": "1",
+                        "EQUIP_DRESS": "3"
+                    };
+                    return `https://enka.network/ui/${baseIconStr}_${pieceMap[slotType]}.png`;
+                }
+
+                for (const char of globalPersoData) {
+                    const found = char.artefacts.find(a => a.setKey === lookupSetKey && a.type === slotType);
+                    if (found) return found.icon;
+                }
+                return ICON_BASE_PATH + "icon_unknown.webp";
+            }
+
+            const cards = SLOT_ORDER_WTL.map(slotType => {
+                const pieceName = ARTIFACT_TYPE_MAPPING[slotType] || slotType;
+                const targetSetKey = slotSetMap[slotType];
+                const setNameFR = getSetNameFR(targetSetKey);
+                const iconUrl = getArtifactIcon(targetSetKey, setNameFR, slotType);
+
+                let mainStats;
+                let isFixedSlot = false;
+                if (FIXED_MAIN[slotType]) {
+                    mainStats = [FIXED_MAIN[slotType]];
+                    isFixedSlot = true;
+                } else {
+                    const ideal = (config.idealMainStats && config.idealMainStats[slotType]) || [];
+                    if (ideal.length > 0) {
+                        mainStats = ideal.map(k => ({ key: k, label: STAT_LABELS[k] || k }));
+                    } else {
+                        const possible = SLOT_POSSIBLE_MAIN_STATS[slotType] || [];
+                        const best = possible
+                            .map(k => ({ key: k, w: config.weights[k] || (k.includes("_dmg_") ? (config.weights["elemental_dmg_"] || 0) : 0) }))
+                            .sort((a, b) => b.w - a.w)[0];
+                        mainStats = best ? [{ key: best.key, label: STAT_LABELS[best.key] || best.key }] : [{ key: "unknown", label: "Au choix" }];
+                    }
+                }
+
+                const hasSingleMainStatTarget = isFixedSlot || mainStats.length === 1;
+                const overlapKeys = hasSingleMainStatTarget
+                    ? []
+                    : mainStats.map(m => m.key).filter(k => VALID_SUBSTATS.includes(k) && config.weights[k] > 0);
+
+                const excludedKeys = new Set(hasSingleMainStatTarget ? mainStats.map(m => m.key) : overlapKeys);
+
+                const pureSubs = VALID_SUBSTATS
+                    .map(k => ({ key: k, w: config.weights[k] || 0, label: STAT_LABELS[k] || k }))
+                    .filter(s => s.w > 0 && !excludedKeys.has(s.key))
+                    .sort((a, b) => b.w - a.w);
+
+                const subSlots = [];
+                let slotsUsed = 0;
+
+                if (overlapKeys.length >= 2) {
+                    if (overlapKeys.length === 2) {
+                        subSlots.push({
+                            type: 'or',
+                            keys: overlapKeys.map(k => ({ key: k, label: STAT_LABELS[k] || k }))
+                        });
+                        slotsUsed += 1;
+                    } else {
+                        const countRequired = overlapKeys.length - 1;
+                        subSlots.push({
+                            type: 'pool',
+                            count: countRequired,
+                            keys: overlapKeys.map(k => ({ key: k, label: STAT_LABELS[k] || k }))
+                        });
+                        slotsUsed += countRequired;
+                    }
+
+                    while (slotsUsed < 4 && pureSubs.length > 0) {
+                        const sub = pureSubs.shift();
+                        subSlots.push({ type: 'normal', key: sub.key, label: sub.label });
+                        slotsUsed += 1;
+                    }
+                }
+                else if (overlapKeys.length === 1) {
+                    const conditionalKey = overlapKeys[0];
+                    const slotsLeft = 4 - slotsUsed;
+
+                    for (let i = 0; i < slotsLeft - 1; i++) {
+                        if (pureSubs.length > 0) {
+                            const sub = pureSubs.shift();
+                            subSlots.push({ type: 'normal', key: sub.key, label: sub.label });
+                            slotsUsed += 1;
+                        }
+                    }
+
+                    if (pureSubs.length > 0) {
+                        const fallbackSub = pureSubs.shift();
+                        subSlots.push({
+                            type: 'or',
+                            keys: [
+                                { key: conditionalKey, label: STAT_LABELS[conditionalKey] || conditionalKey },
+                                { key: fallbackSub.key, label: fallbackSub.label }
+                            ]
+                        });
+                        slotsUsed += 1;
+                    } else {
+                        subSlots.push({
+                            type: 'or_any',
+                            key1: { key: conditionalKey, label: STAT_LABELS[conditionalKey] || conditionalKey }
+                        });
+                        slotsUsed += 1;
+                    }
+                }
+                else if (overlapKeys.length === 0) {
+                    while (slotsUsed < 4 && pureSubs.length > 0) {
+                        const sub = pureSubs.shift();
+                        subSlots.push({ type: 'normal', key: sub.key, label: sub.label });
+                        slotsUsed += 1;
+                    }
+                }
+
+                while (slotsUsed < 4) {
+                    subSlots.push({ type: 'any', label: "Au choix" });
+                    slotsUsed += 1;
+                }
+
+                return { slotType, pieceName, targetSetKey, setNameFR, iconUrl, mainStats, subSlots };
+            });
+
+            const cardHtml = cards.map(card => {
+                const isOffSet = card.targetSetKey === 'Hors-Set';
+
+                const mainHtml = card.mainStats.map((m, idx) => {
+                    if (idx === 0) {
+                        return `
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="display:flex; flex-direction:row; align-items:center; gap:5px;">
+                        <img src="${ICON_BASE_PATH}${ICON_MAP[m.key] || ICON_MAP['unknown']}" style="width:15px; height:15px;" alt="">
+                        <p style="font-size:11px; color: #ffffff; font-weight:bold;">${m.label}</p>
+                    </div>
+                </div>`;
+                    } else {
+                        return `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">
+                    <div style="display:flex; flex-direction:row; align-items:center; gap:4px;">
+                        <span style="color:#aaa; font-size:10px; padding-left:2px;">↳ ou</span>
+                        <img src="${ICON_BASE_PATH}${ICON_MAP[m.key] || ICON_MAP['unknown']}" style="width:15px; height:15px; flex-shrink:0;" alt="">
+                        <p style="font-size:11px; color: #ffffff;">${m.label}</p>
+                    </div>
+                </div>`;
+                    }
+                }).join('');
+
+                const subHtml = card.subSlots.map((sub, idx) => {
+                    const divider = idx < card.subSlots.length - 1 ? 'margin-bottom: 12px;' : '';
+
+                    if (sub.type === 'or') {
+                        const html = sub.keys.map((k, kIdx) => {
+                            if (kIdx === 0) {
+                                return `
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="display:flex; flex-direction:row; align-items:center; gap:5px;">
+                                <img src="${ICON_BASE_PATH}${ICON_MAP[k.key] || ICON_MAP['unknown']}" style="width:15px; height:15px;" alt="">
+                                <p style="font-size:11px; color: #ffffff;">${k.label}</p>
+                            </div>
+                        </div>`;
+                            } else {
+                                return `
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">
+                            <div style="display:flex; flex-direction:row; align-items:center; gap:4px;">
+                                <span style="color:#aaa; font-size:10px; padding-left:2px;">↳ ou</span>
+                                <img src="${ICON_BASE_PATH}${ICON_MAP[k.key] || ICON_MAP['unknown']}" style="width:15px; height:15px; flex-shrink:0;" alt="">
+                                <p style="font-size:11px; color: #ffffff;">${k.label}</p>
+                            </div>
+                        </div>`;
+                            }
+                        }).join('');
+                        return `<div style="${divider}">${html}</div>`;
+                    }
+
+                    if (sub.type === 'or_any') {
+                        return `
+                <div style="${divider}">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; flex-direction:row; align-items:center; gap:5px;">
+                            <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key1.key] || ICON_MAP['unknown']}" style="width:15px; height:15px;" alt="">
+                            <p style="font-size:11px; color:#fff;">${sub.key1.label}</p>
+                        </div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">
+                        <div style="display:flex; flex-direction:row; align-items:center; gap:4px; opacity:0.6;">
+                            <span style="color:#aaa; font-size:10px; padding-left:2px;">↳ ou</span>
+                            <div style="width:15px; height:15px; border-radius:3px; border:1px dashed rgba(255,255,255,0.3); flex-shrink:0;"></div>
+                            <p style="font-size:11px; font-style:italic;">Au choix</p>
+                        </div>
+                    </div>
+                </div>`;
+                    }
+
+                    if (sub.type === 'pool') {
+                        return `
+                <div style="${divider}">
+                    <p style="font-size:10px; color:#c8a96e; margin-bottom:5px;">${sub.count} au choix parmi :</p>
+                    <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+                        ${sub.keys.map(k => `
+                            <div style="display:flex; align-items:center; gap:3px; background:rgba(255,255,255,0.05); padding:2px 4px; border-radius:4px; border:1px solid rgba(255,255,255,0.1);">
+                                <img src="${ICON_BASE_PATH}${ICON_MAP[k.key] || ICON_MAP['unknown']}" style="width:12px; height:12px;" alt="">
+                                <span style="font-size:10px; color:#ddd;">${k.label}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+                    }
+
+                    if (sub.type === 'any') {
+                        return `
+                <div style="${divider}">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; flex-direction:row; align-items:center; gap:5px; opacity:0.4;">
+                            <div style="width:15px; height:15px; border-radius:3px; border:1px solid rgba(255,255,255,0.3); flex-shrink:0;"></div>
+                            <p style="font-size:11px; font-style:italic;">Au choix</p>
+                        </div>
+                    </div>
+                </div>`;
+                    }
+
+                    return `
+            <div style="${divider}">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="display:flex; flex-direction:row; align-items:center; gap:5px;">
+                        <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width:15px; height:15px;" alt="">
+                        <p style="font-size:11px; color:#fff;">${sub.label}</p>
+                    </div>
+                </div>
+            </div>`;
+                }).join('');
+
+                return `
+        <div style="flex:1; min-width:0; background:#2C2D32; padding:10px 12px; border-radius:8px; box-sizing:border-box; display:flex; flex-direction:column; gap:0;">
+            
+            <div style="display:flex; align-items:center; gap:10px; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.1);">
+                <div style="position:relative; display:inline-block; flex-shrink:0;">
+                    <img src="${card.iconUrl}" style="width:38px; height:38px; border-radius:8px; border:2px solid ${isOffSet ? '#FFB13B' : '#FFB13B'};" alt="">
+                    <p style="position:absolute; bottom:7px; right:1px; background:rgba(0,0,0,0.4); color:rgba(255,255,255,0.8); font-size:10px; padding:1px 4px; border-radius:8px;">+20</p>
+                </div>
+                <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center; gap:1px; min-width:0;">
+                    <p style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:12px; font-weight:bold;">${card.pieceName}</p>
+                    <p style="font-size:11px; color:${isOffSet ? 'var(--accent-gold)' : 'var(--accent-gold)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${card.setNameFR}</p>
+                    <p style="font-size:10px; color:rgba(255,255,255,0.4);">5★</p>
+                </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; padding-top:12px; gap:0;">
+                <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px; margin-bottom: 12px;">
+                    ${mainHtml}
+                </div>
+
+                <div>
+                    <div style="display:flex; flex-direction:column; gap:0;">
+                        ${subHtml}
+                    </div>
+                </div>
+            </div>
+            
+        </div>`;
+            }).join('');
+
+            return `
+            <div style="margin-top:24px;">
+                <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:12px; letter-spacing:0.05em;">Ce qu'il faut viser</p>
+                <div style="display:flex; flex-direction:row; justify-content:space-between; gap:15px;">
+                    ${cardHtml}
+                </div>
+            </div>`;
+        })()}
+                            ${(() => {
+            const crossChecks = getAllCrossCheckAdvice(index);
+            const hasAnySwap = crossChecks.some(s => s !== null);
+            if (!hasAnySwap) return '';
+
+            const SLOT_NAMES = [
+                "la fleur",
+                "la plume",
+                "le sablier",
+                "la coupe",
+                "le diadème"
+            ];
+
+            const cards = crossChecks.map((swap, idx) => {
+                if (!swap) {
+                    return `
+        <div style="flex: 1; min-width: 200px; background:#2C2D32; border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid #3a3b42; box-sizing:border-box; opacity:0.4; align-items:center; justify-content:center; min-height:160px;">
+            <div style="font-size:22px; color:#444;">✗</div>
+            <p style="font-size:11px; color:#888; text-align:center; line-height:1.5;">Aucun échange<br>avantageux détecté<br>sur ${SLOT_NAMES[idx]}</p>
+        </div>`;
+                }
+
+                const deltasHtml = swap.deltas.map(d => `
+    <div style="display:flex; align-items:center; gap:5px; font-size:11px; color:${d.delta > 0 ? '#4ade80' : '#f87171'};">
+        <div style="width:6px; height:6px; border-radius:50%; flex-shrink:0; background:${d.delta > 0 ? '#4ade80' : '#f87171'};"></div>
+        ${d.formatted}
+    </div>`).join('');
+
+                const scoreDiff = Math.round(swap.currEvalNew.score - swap.currEvalOld.score);
+
+                return `
+    <div style="flex: 1; min-width: 200px; background:#2C2D32; border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid var(--accent-gold); box-sizing:border-box;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
+            <div style="position:relative; flex-shrink:0;">
+                <img src="${swap.currArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);">
+                <img src="${swap.currCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid #2C2D32;">
+            </div>
+            <span style="color:var(--accent-gold); font-size:16px;">⇒</span>
+            <div style="position:relative; flex-shrink:0;">
+                <img src="${swap.newArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);">
+                <img src="${swap.otherCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid #2C2D32;">
+            </div>
+        </div>
+        <div style="width:100%; height:1px; background:rgba(255,255,255,0.06);"></div>
+        <div style="display:flex; flex-direction:column; gap:4px;">${deltasHtml}</div>
+        <div style="width:100%; height:1px; background:rgba(255,255,255,0.06);"></div>
+        <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+            <span style="font-size:13px; font-weight:bold; color:${swap.currEvalOld.grade.color};">${swap.currEvalOld.score}</span>
+            <span style="font-size:12px; color:#666;">→</span>
+            <span style="font-size:13px; font-weight:bold; color:${swap.currEvalNew.grade.color};">${swap.currEvalNew.score} <span style="font-size:11px; color:#c8a96e; font-weight:normal;">(${scoreDiff > 0 ? '+' : ''}${scoreDiff} pts)</span></span>
+        </div>
+    </div>`;
+            });
+
+            const warningHtml = `
+            <div style="grid-column:1/-1; display:flex; flex-direction:column; gap:12px; margin-top: 24px; margin-bottom: 20px;">
+                <p style="font-size:12px; color:#aaa; text-transform:uppercase; letter-spacing:0.05em; margin:0;">Échange avantageux</p>
+                <p style="font-size: 14px; color:#ccc; line-height: 1.5;">Ce système repère les artéfacts équipés sur vos autres personnages qui amélioreraient celui que vous regardez actuellement. Attention : procéder à cet échange optimisera ce personnage au maximum, mais cela réduira inévitablement les statistiques du personnage qui se fait emprunter sa pièce !</p>
+            </div>`;
+
+            return warningHtml + `<div style="grid-column:1/-1; width:100%; box-sizing:border-box; display:flex; flex-wrap:nowrap; gap:20px; overflow-x:auto;">${cards.join('')}</div>`;
+
+            return `<div style="grid-column:1/-1; width:100%; box-sizing:border-box; display:flex; flex-wrap:nowrap; gap:20px; overflow-x:auto;">${cards.join('')}</div>`;
+        })()}
                         </div>
                         
                         <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
-                        ${deadSims.length > 0 ? `
                         <div>
                             <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">4. Projection idéale</h3>
-                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Visualisez les statistiques que vous pourriez obtenir si vos statistiques inutiles étaient converties en statistiques optimales.</p>
-                            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
-                            ${deadSims.map(sim => `
-                                <div style="background:#2C2D32; padding:12px; border-radius:6px; border-left:3px solid #FFB13B;">
-                                    <p style="font-size:12px; text-transform: uppercase; color:#aaa; margin-bottom:8px;">${sim.pieceName}</p>
-                                    <p style="font-size:14px; color:#ffffff; margin-bottom: 12px;">${sim.text}</p>
-                                    <div style="font-size:16px; color:var(--accent-gold); display: flex; flex-direction: column; gap: 4px;">${sim.gainHtml}</div>
-                                </div>
-                            `).join('')}
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Visualisez vos artéfacts tels qu'ils seraient si vos statistiques inutiles étaient converties en statistiques optimales.</p>
+
+                            <div style="display:flex; flex-direction:row; justify-content:space-between; gap:15px;">
+                            ${p.artefacts.map(art => {
+            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+
+            if ((art.stars || 5) < 4) {
+                return `
+<div style="width:100%; background:#2C2D32; padding:10px 12px; border-radius:8px; opacity:0.5;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+        <img src="${art.icon}" style="width:38px; height:38px; border-radius:8px;" alt="">
+        <div>
+            <p style="font-size:12px; color:#fff; font-weight:bold;">${pieceName}</p>
+            <p style="font-size:11px; color:#6b7280;">Artéfact ${art.stars}★ — Analyse indisponible</p>
+        </div>
+    </div>
+</div>`;
+            }
+
+            const presentStats = new Set(art.subStats.map(s => s.key));
+            const deadStats = [];
+            art.subStats.forEach(sub => {
+                let w = config.weights[sub.key];
+                if (w === undefined && sub.key.includes("_dmg_")) w = config.weights["elemental_dmg_"];
+                if (!w || w === 0) {
+                    const rolls = getRollCount(sub.key, sub.value, art.stars || 5);
+                    if (rolls > 0) deadStats.push({ key: sub.key, rolls });
+                }
+            });
+
+            const desiredStats = Object.entries(config.weights)
+                .filter(([k, w]) => w > 0)
+                .sort((a, b) => b[1] - a[1])
+                .map(([k]) => k);
+
+            const replacementMap = {};
+            const usedTargets = new Set(presentStats);
+            deadStats.forEach(dead => {
+                const targetKey = desiredStats.find(k =>
+                    !usedTargets.has(k) &&
+                    !k.includes("_dmg_") &&
+                    k !== art.mainStat.key &&
+                    SUBSTAT_RANGES[k]
+                );
+                if (targetKey) {
+                    usedTargets.add(targetKey);
+                    const range = SUBSTAT_RANGES[targetKey];
+                    const minVal = (range.min * dead.rolls).toFixed(1);
+                    const maxVal = (range.max * dead.rolls).toFixed(1);
+                    const suffix = ['hp','atk','def','eleMas'].includes(targetKey) ? '' : '%';
+                    replacementMap[dead.key] = {
+                        key: targetKey,
+                        label: STAT_LABELS[targetKey] || targetKey,
+                        minVal, maxVal, suffix
+                    };
+                }
+            });
+
+            const hasDead = Object.keys(replacementMap).length > 0;
+
+            const subsHtml = art.subStats.map((sub, idx) => {
+                const replacement = replacementMap[sub.key];
+                const isDead = !!replacement;
+                const divider = idx < art.subStats.length - 1
+                    ? 'border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 12px; margin-bottom: 12px;'
+                    : '';
+
+                if (isDead) {
+                    return `
+<div style="${divider}">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; flex-direction:row; align-items:center; gap:4px; opacity:0.4; text-decoration:line-through;">
+            <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width:15px; height:15px; flex-shrink:0;" alt="">
+            <p style="font-size:11px; white-space:nowrap;">${sub.label}</p>
+        </div>
+        <p style="font-size:11px; opacity:0.4; text-decoration:line-through; flex-shrink:0; margin-left:4px;">${formatValueDisplay(sub.key, sub.value)}</p>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">
+        <div style="display:flex; flex-direction:row; align-items:center; gap:4px;">
+            <span style="color:#aaa; font-size:10px; padding-left:2px;">↳</span>
+            <img src="${ICON_BASE_PATH}${ICON_MAP[replacement.key] || ICON_MAP['unknown']}" style="width:15px; height:15px; flex-shrink:0;" alt="">
+            <p style="font-size:11px; color:var(--accent-gold);">${replacement.label}</p>
+        </div>
+        <p style="font-size:11px; color:var(--accent-gold); flex-shrink:0; margin-left:4px;">${replacement.minVal}–${replacement.maxVal}${replacement.suffix}</p>
+    </div>
+</div>`;
+                } else {
+                    const rolls = getRollCount(sub.key, sub.value, art.stars || 5);
+                    return `
+<div style="display:flex; justify-content:space-between; align-items:center; ${divider}">
+    <div style="display:flex; flex-direction:row; align-items:center; gap:5px;">
+        <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width:15px; height:15px;" alt="">
+        <p style="font-size:11px; color:#fff;">${sub.label}</p>
+    </div>
+    <p style="font-size:11px; color:#fff;">${formatValueDisplay(sub.key, sub.value)}</p>
+</div>`;
+                }
+            }).join('');
+
+            return `
+<div style="flex:1; min-width:0; background:#2C2D32; padding:10px 12px; border-radius:8px; box-sizing:border-box; display:flex; flex-direction:column; gap:0; ${!hasDead ? 'opacity:0.6;' : ''}">
+
+    <div style="display:flex; align-items:center; gap:10px; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.1);">
+        <div style="position:relative; display:inline-block; flex-shrink:0;">
+            <img src="${art.icon}" style="width:38px; height:38px; border-radius:8px; border:2px solid ${art.stars === 5 ? '#FFB13B' : art.stars === 4 ? '#a855f7' : '#6b7280'};" alt="">
+            <p style="position:absolute; bottom:7px; right:1px; background:rgba(0,0,0,0.4); color:rgba(255,255,255,0.8); font-size:10px; padding:1px 4px; border-radius:8px;">+${art.level}</p>
+        </div>
+        <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center; gap:1px; min-width:0;">
+            <p style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:12px; font-weight:bold;">${pieceName}</p>
+            <p style="font-size:11px; color:var(--accent-gold); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${art.setName}</p>
+            <p style="font-size:10px; color:rgba(255,255,255,0.4);">${art.stars}★</p>
+        </div>
+    </div>
+
+    
+
+    <div style="display:flex; flex-direction:column; padding-top:12px; gap:0;">
+        ${subsHtml}
+    </div>
+    
+    ${!hasDead ? `<p style="margin-top:10px; text-align:center; background:#22c55e20; color:#22c55e; padding:4px; border-radius:4px; font-size:12px; border:1px solid #22c55e40;">✓ Déjà optimal</p>` : ''}
+
+</div>`;
+        }).join('')}
                             </div>
-                        </div>` : ''}
+                        </div>
                         
                         <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
@@ -4383,5 +4878,27 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     } else {
         renderHome();
+    }
+});
+
+window.addEventListener('popstate', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const uid = urlParams.get('uid');
+    const char = urlParams.get('char');
+
+    if (!uid) {
+        clearSearch();
+        return;
+    }
+
+    if (char && globalPersoData.length > 0) {
+        const targetIndex = globalPersoData.findIndex(
+            p => p.nom.toLowerCase() === char.toLowerCase()
+        );
+        if (targetIndex !== -1) {
+            window._isPopstate = true;
+            renderShowcase(targetIndex);
+            window._isPopstate = false;
+        }
     }
 });

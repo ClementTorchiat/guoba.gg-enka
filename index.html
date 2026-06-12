@@ -2,6 +2,13 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <script>
+        (function () {
+            const W = window.screen.width;
+            if      (W >= 3840) document.documentElement.style.zoom = "1.5";
+            else if (W >= 2560) document.documentElement.style.zoom = "1.25";
+        })();
+    </script>
     <title>guoba.gg - Simulateur Genshin Impact</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -84,7 +91,7 @@
         }
         body {
             font-family: 'ShinShin', 'Inter', sans-serif;
-            background: var(--bg-body);
+            background: #323338;
             color: var(--text-main);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -375,6 +382,8 @@
             flex-direction: column;
             flex: 1;
             min-width: 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
         .main-content::-webkit-scrollbar {
@@ -1286,7 +1295,7 @@
                         <img src="assets/global/favicon.png" alt="Simulateur" style="border-radius: 100%;">
                         <h2>guoba.gg</h2>
                     </div>
-                    <p class="sidebar-text">Ver. 1.1.3 - Bêta Build (GI Ver. 6.6)</p>
+                    <p class="sidebar-text">Ver. 1.1.4 - Bêta Build (GI Ver. 6.6)</p>
                 </div>
                 <div class="sidebar-search">
                     <div class="search-container">
