@@ -3845,6 +3845,7 @@ function renderShowcase(index) {
         const talentAdvices = getTalentAdvice(p, config);
         const setForcingAdvice = getSetForcingAdvice(p, config);
         const levelAdvice = getLevelAdvice(p);
+        let s4TotalGains = {};
 
         return `
                 <div style="padding:20px;">
@@ -4549,6 +4550,8 @@ function renderShowcase(index) {
                         label: STAT_LABELS[targetKey] || targetKey,
                         minVal, maxVal, suffix
                     };
+                    if (!s4TotalGains[targetKey]) s4TotalGains[targetKey] = 0;
+                    s4TotalGains[targetKey] += dead.rolls;
                 }
             });
 
@@ -4613,19 +4616,51 @@ function renderShowcase(index) {
     <div style="display:flex; flex-direction:column; padding-top:12px; gap:0;">
         ${subsHtml}
     </div>
-    
     ${!hasDead ? `<p style="margin-top:10px; text-align:center; background:#22c55e20; color:#22c55e; padding:4px; border-radius:4px; font-size:12px; border:1px solid #22c55e40;">${t('analysis.s4.optimal')}</p>` : ''}
 
 </div>`;
         }).join('')}
                             </div>
-                        </div>
+                            
+                            ${(() => {
+                const gainKeys = Object.keys(s4TotalGains);
+                if (gainKeys.length === 0) return '';
+
+                let summaryHtml = `
+                                <div style="margin-top: 20px; background: #2C2D32; padding: 15px; border-radius: 8px;">
+                                    <p style="font-size: 12px; color: #aaa; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.05em;">${t('analysis.s4.totalGains')}</p>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">`;
+
+                gainKeys.sort((a, b) => s4TotalGains[b] - s4TotalGains[a]).forEach(key => {
+                    const rolls = s4TotalGains[key];
+                    const range = SUBSTAT_RANGES[key];
+                    const minVal = (range.min * rolls).toFixed(1);
+                    const maxVal = (range.max * rolls).toFixed(1);
+                    const suffix = ['hp', 'atk', 'def', 'eleMas'].includes(key) ? '' : '%';
+                    const label = STAT_LABELS[key] || key;
+                    const icon = ICON_BASE_PATH + (ICON_MAP[key] || ICON_MAP['unknown']);
+
+                    summaryHtml += `
+                                        <div style="display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.1); padding: 8px 12px; border-radius: 6px;">
+                                            <img src="${icon}" style="width: 18px; height: 18px;" alt="">
+                                            <div style="display: flex; flex-direction: column;">
+                                                <span style="font-size: 11px; color: #aaa;">${label}</span>
+                                                <span style="font-size: 13px; color: var(--accent-gold); font-weight: bold;">+${minVal} ${t('sim.range')} ${maxVal}${suffix}</span>
+                                            </div>
+                                        </div>
+                                    `;
+                });
+
+                summaryHtml += `</div></div>`;
+                return summaryHtml;
+            })()}
+                            </div>
                         
                         <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
                         <div>
                             <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">${t('analysis.s5.title')}</h3>
-                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">${t('analysis.s5.desc')}</p>
+    <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">${t('analysis.s5.desc')}</p>
                             
                             <div style="display:flex; flex-direction: row; justify-content: space-between; gap:15px;">
                                 ${p.artefacts.map(art => {

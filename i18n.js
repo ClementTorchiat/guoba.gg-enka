@@ -181,6 +181,7 @@
             "analysis.s4.desc":    "Visualisez les statistiques que vous pourriez obtenir si vos statistiques inutiles étaient converties en statistiques optimales.",
             "analysis.s4.replace": (dead, target) => `Remplacer ${dead} par ${target} :`,
             "analysis.s4.optimal": "Déjà optimal",
+            "analysis.s4.totalGains": "Résumé des gains potentiels",
 
             "analysis.s5.title":   "5. Détails des rolls",
             "analysis.s5.desc":    "Lisez dans le code source du jeu et découvrez exactement quelle qualité de statistiques vous avez obtenue.",
@@ -680,6 +681,7 @@
             "analysis.s4.desc":    "Visualize the stats you could obtain if your wasted stats were converted into optimal ones.",
             "analysis.s4.replace": (dead, target) => `Replace ${dead} with ${target}:`,
             "analysis.s4.optimal": "Already optimal",
+            "analysis.s4.totalGains": "Potential gains summary",
 
             "analysis.s5.title":   "5. Roll details",
             "analysis.s5.desc":    "Read directly from the game's source code and discover the exact quality of each stat roll.",
