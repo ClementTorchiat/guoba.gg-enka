@@ -44,6 +44,19 @@
         "physical_dmg_": 0,
         "heal_": 0
       },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_",
+          "enerRech_"
+        ],
+        "EQUIP_RING": [
+          "cryo_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
       "bestSets": [
         "GoldenTroupe:4"
       ],

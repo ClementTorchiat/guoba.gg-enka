@@ -1274,16 +1274,10 @@
 <body>
 <div id="mobile-block-overlay">
     <div class="mobile-block-content">
-        <h2 style="margin: 0 0 10px 0;">Version Mobile Non Disponible</h2>
-        <p style="color: #a0a5b1; margin-bottom: 20px;">
-            L'interface de ce simulateur a été conçue exclusivement pour les ordinateurs afin de garantir la meilleure expérience possible et d'afficher toutes les statistiques correctement.
-        </p>
-        <p style="font-weight: bold; color: #fff;">
-            Une version mobile du site est actuellement en cours de création.
-        </p>
-        <p style="font-weight: bold; color: #fff; margin-top: 24px;">
-            Pour l'instant, veuillez y accéder depuis un ordinateur.
-        </p>
+        <h2 style="margin: 0 0 10px 0;" data-i18n="mobile.title"></h2>
+        <p style="color: #a0a5b1; margin-bottom: 20px;" data-i18n="mobile.body"></p>
+        <p style="font-weight: bold; color: #fff;" data-i18n="mobile.wip"></p>
+        <p style="font-weight: bold; color: #fff; margin-top: 24px;" data-i18n="mobile.hint"></p>
     </div>
 </div>
 <main>
@@ -1292,29 +1286,29 @@
             <aside class="sidebar">
                 <div class="sidebar-title">
                     <div class="sidebar-title-container" onclick="clearSearch()" style="cursor: pointer;">
-                        <img src="assets/global/favicon.png" alt="Simulateur" style="border-radius: 100%;">
+                        <img src="assets/global/favicon.png" alt="" style="border-radius: 100%;">
                         <h2>guoba.gg</h2>
                     </div>
-                    <p class="sidebar-text">Ver. 1.1.4 - Bêta Build (GI Ver. 6.6)</p>
+                    <p class="sidebar-text">Ver. -- - Bêta Build (GI Ver. --)</p>
                 </div>
                 <div class="sidebar-search">
                     <div class="search-container">
-                        <input type="text" id="uidInput" class="search-input" placeholder="Entrez votre UID...">
-                        <button id="searchBtn" onclick="fetchUserData()" class="search-btn"><img src="assets/simulator/icons/icon_search_white.svg" alt="Valider" style="width: 20px; height: 20px;"></button>                    </div>
+                        <input type="text" id="uidInput" class="search-input" data-i18n-placeholder="ui.search.placeholder">
+                        <button id="searchBtn" onclick="fetchUserData()" class="search-btn"><img src="assets/simulator/icons/icon_search_white.svg" alt="" style="width: 20px; height: 20px;"></button>                    </div>
                 </div>
                 <div class="sidebar-characters">
                     <div class="character-header">
-                        <div class="character-header-section-1 sort-col" id="sort-col-original" onclick="setSidebarSort('original')" title="Ordre vitrine">
-                            <img src="assets/simulator/icons/icon_face.webp" alt="Portrait">
-                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="Flèche" class="sort-arrow" id="arrow-original">
+                        <div class="character-header-section-1 sort-col" id="sort-col-original" onclick="setSidebarSort('original')" data-i18n-title="ui.col.portrait">
+                            <img src="assets/simulator/icons/icon_face.webp" alt="">
+                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original">
                         </div>
-                        <div class="character-header-section-2 sort-col" id="sort-col-name" onclick="setSidebarSort('name')" title="Trier par nom">
-                            <p>Nom</p>
-                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="Flèche" class="sort-arrow" id="arrow-name">
+                        <div class="character-header-section-2 sort-col" id="sort-col-name" onclick="setSidebarSort('name')" data-i18n-title="ui.col.sortByName">
+                            <p data-i18n="ui.col.name"></p>
+                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-name">
                         </div>
-                        <div class="character-header-section-3 sort-col" id="sort-col-score" onclick="setSidebarSort('score')" title="Trier par score">
-                            <p>Score</p>
-                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="Flèche" class="sort-arrow" id="arrow-score">
+                        <div class="character-header-section-3 sort-col" id="sort-col-score" onclick="setSidebarSort('score')" data-i18n-title="ui.col.sortByScore">
+                            <p data-i18n="ui.col.score"></p>
+                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-score">
                         </div>
                     </div>
                     <div id="sidebar-list" class="char-list">
@@ -1322,11 +1316,9 @@
                 </div>
             </aside>
             <div class="main-content">
-                <!-- <div id="placeholder-msg">Entrez un UID et sélectionnez un personnage.</div> -->
                 <div id="player-profile"></div>
                 <div class="main-content-menu" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 8px;">
                     <div class="main-content-menu-container">
-                        <!--<p class="main-content-menu-title">Équipe :</p>-->
                         <div id="toolbar-controls" style="display: flex; align-items: center; gap: 8px; flex: 1;"></div>
                         <div class="menu-actions" style="display:flex; gap:10px;"></div>
                     </div>
@@ -1353,7 +1345,7 @@
                     </div>
 
                     <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; max-width: 240px; width: 100%; min-width: 240px;">
-                        <button onclick="openOnboarding()" title="Mode d'emploi" style="
+                        <button onclick="openOnboarding()" data-i18n-title="ui.helpBtn" style="
                             background: #2C2D32;
                             border: none;
                             border-radius: 8px;
@@ -1383,7 +1375,7 @@
                             min-width: 0;
                             ">
                             <i class="fa-solid fa-camera"></i>
-                            <span style="white-space: nowrap;">Exporter image</span>
+                            <span style="white-space: nowrap;" data-i18n="ui.exportBtn"></span>
                         </button>
                     </div>
                 </div>
@@ -1396,7 +1388,7 @@
 </main>
 <div id="onboardingModal" class="ob-overlay">
     <div class="ob-card">
-        <button class="ob-close-btn" onclick="closeOnboarding()" title="Fermer le tutoriel">
+        <button class="ob-close-btn" onclick="closeOnboarding()" data-i18n-title="ob.close">
             <i class="fa-solid fa-xmark"></i>
         </button>
         <div class="ob-progress-bar">
@@ -1407,129 +1399,31 @@
                 <img src="assets/global/favicon.png" alt="guoba" class="ob-logo-img">
                 <span class="ob-logo-text">guoba.gg</span>
             </div>
-            <span class="ob-step-label" id="ob-step-label">Étape 1 / 5</span>
+            <span class="ob-step-label" id="ob-step-label"></span>
         </div>
-        <div class="ob-body" id="ob-body"><!-- rempli par JS --></div>
+        <div class="ob-body" id="ob-body"></div>
         <div class="ob-footer">
             <div class="ob-dots" id="ob-dots"></div>
             <div class="ob-nav-btns">
                 <button class="ob-btn ob-btn-prev" id="ob-prev-btn" onclick="obPrev()" disabled>
-                    <i class="fa-solid fa-arrow-left"></i> Précédent
+                    <i class="fa-solid fa-arrow-left"></i> <span data-i18n="ob.prev"></span>
                 </button>
                 <button class="ob-btn ob-btn-next" id="ob-next-btn" onclick="obNext()">
-                    Suivant <i class="fa-solid fa-arrow-right"></i>
+                    <span data-i18n="ob.next"></span> <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </div>
         </div>
     </div>
 </div>
 
+<script src="i18n.js"></script>
+<script defer src="data.js"></script>
+<script defer src="scoring.js"></script>
+<script src="config.generated.js" defer></script>
+<script defer src="script.js"></script>
+
 <script>
-    const OB_STEPS = [
-        {
-            title: "Préparez votre vitrine",
-            html: `
-            <p>Bienvenue sur <strong>guoba.gg</strong> !</p>
-            <p class="ob-note-blue">guoba.gg est un outil d'analyse de builds pour Genshin Impact. Il évalue la qualité de vos artéfacts, note vos personnages et vous aide à prioriser votre farm — le tout automatiquement, à partir de votre vitrine en jeu.</p>
-            <p>Le site récupère vos données via <strong>Enka.Network</strong>. Voici comment préparer votre compte en jeu :</p>
-            <ul>
-                <li>Menu Paimon → <strong>Modifier le profil</strong></li>
-                <li>Activez <strong>"Afficher les détails des personnages"</strong></li>
-                <li>Placez vos personnages dans votre <strong>Vitrine</strong></li>
-                <li>Attendez ~5 min après déconnexion</li>
-            </ul>
-            <p>Ensuite, entrez votre <strong>UID</strong> dans la barre de recherche à gauche — et c'est parti !</p>
-        `,
-            image: "assets/onboarding/step1.gif",
-            placeholder: false
-        },
-        {
-            title: "Score & Grade : deux lectures",
-            html: `
-            <p>Chaque build est évalué avec <strong>deux métriques complémentaires</strong> :</p>
-            <div class="ob-metric">
-                <div class="ob-metric-icon">🎯</div>
-                <div class="ob-metric-body">
-                    <strong>Le Score — votre puissance réelle</strong>
-                    <span>Tient compte des substats, de la mainstat et du set — pondérés selon l'utilité de chaque stat pour <em>ce personnage précis</em>.</span>
-                </div>
-            </div>
-            <div class="ob-metric">
-                <div class="ob-metric-icon">🎲</div>
-                <div class="ob-metric-body">
-                    <strong>Le Grade (F → ARCHON) — votre chance au RNG</strong>
-                    <span>Mesure combien de vos améliorations sont tombées sur de bonnes stats, et à quelle valeur.</span>
-                </div>
-            </div>
-            <div class="ob-note-blue">💡 Un Grade élevé avec un Score moyen ? Vous avez eu de la chance, mais les pièces ne sont pas optimales. L'inverse ? Bon build, RNG difficile. Les deux ensemble ? C'est le Saint-Graal.</div>
-        `,
-            image: "assets/onboarding/step2.png",
-            placeholder: false
-        },
-        {
-            title: "Lisez votre build d'un coup d'œil",
-            html: `
-            <p>Une fois votre UID chargé, vos personnages apparaissent dans la <strong>liste à gauche</strong>. Cliquez sur l'un d'eux pour afficher son build complet.</p>
-            <ul>
-                <li>Chaque artéfact affiche son <strong>grade individuel</strong> et met en valeur les substats selon leur poids</li>
-                <li>La liste latérale permet de <strong>comparer vos personnages</strong>.</li>
-                <li>Le bouton <strong>Exporter image</strong> génère un récap visuel à partager avec vos amis !</li>
-            </ul>
-        `,
-            image: "assets/onboarding/step3.png",
-            placeholder: false
-        },
-        {
-            title: "Vérifiez vos Buffs Actifs",
-            html: `
-            <p>Avant de passer à la partie <strong>conseils</strong>, vérifiez la carte <strong>Buffs Actifs</strong>, en bas à droite de la fiche personnage.</p>
-            <p>Certains personnages bénéficient de buffs situationnels — constellation, résonance d'équipe, passifs conditionnels — qui peuvent faire varier les conseils et les stats de combat de façon significative.</p>
-            <div class="ob-note-blue">⚠️ Votre score peut être impacté par un overcap de Taux Critique. Ce malus restera même si vous désactivez les buffs liés au Taux Critique.</div>
-        `,
-            image: "assets/onboarding/step4.png",
-            placeholder: false
-        },
-        {
-            title: "La section Analyse & Conseils",
-            html: `
-        <p>Accessible depuis la fiche de chaque personnage, cette section se décompose en <strong>6 parties</strong> :</p>
-        <div class="ob-grid-2x2">
-            <div class="ob-grid-card">
-                <span class="ob-gc-icon">📊</span>
-                <span class="ob-gc-title">1. Vue d'ensemble</span>
-                <span class="ob-gc-desc">Efficacité du build, facteur chance RNG et score potentiel maximum.</span>
-            </div>
-            <div class="ob-grid-card">
-                <span class="ob-gc-icon">🔍</span>
-                <span class="ob-gc-title">2. Analyse stratégique</span>
-                <span class="ob-gc-desc">Taux critique, recharge d'énergie, rolls utiles/morts et pièce hors-set.</span>
-            </div>
-            <div class="ob-grid-card">
-                <span class="ob-gc-icon">🗺️</span>
-                <span class="ob-gc-title">3. Plan d'action</span>
-                <span class="ob-gc-desc">Feuille de route : échanges entre persos, niveau, arme, aptitudes et mainstat.</span>
-            </div>
-            <div class="ob-grid-card">
-                <span class="ob-gc-icon">✨</span>
-                <span class="ob-gc-title">4. Projection idéale</span>
-                <span class="ob-gc-desc">Simulez ce que vos artéfacts donneraient si vos stats inutiles devenaient optimales.</span>
-            </div>
-            <div class="ob-grid-card">
-                <span class="ob-gc-icon">🎲</span>
-                <span class="ob-gc-title">5. Détails des rolls</span>
-                <span class="ob-gc-desc">La qualité exacte de chaque roll par artéfact, lue dans le code source du jeu.</span>
-            </div>
-            <div class="ob-grid-card">
-                <span class="ob-gc-icon">♻️</span>
-                <span class="ob-gc-title">6. Simulateur de reroll</span>
-                <span class="ob-gc-desc">Estimez si passer une pièce à l'Offrande Mystique vaut vraiment le risque.</span>
-            </div>
-        </div>
-    `,
-            image: "assets/onboarding/step5.png",
-            placeholder: false
-        }
-    ];
+    const OB_STEPS = t('ob.steps');
 
     let obCurrentStep = 0;
     let obAnimating = false;
@@ -1542,11 +1436,11 @@
             ? `<div class="ob-image-zone">
                <div class="ob-image-placeholder">
                    <i class="fa-solid fa-camera"></i>
-                   <span>Screenshot à venir</span>
+                   <span>${t('ob.screenshot')}</span>
                </div>
            </div>`
             : `<div class="ob-image-zone">
-               <img src="${step.image}" alt="Illustration étape ${obCurrentStep + 1}" loading="lazy">
+               <img src="${step.image}" alt="Step ${obCurrentStep + 1}" loading="lazy">
            </div>`;
 
         document.getElementById('ob-body').innerHTML = `
@@ -1562,7 +1456,7 @@
         document.getElementById('ob-progress-fill').style.width =
             ((obCurrentStep + 1) / OB_TOTAL * 100) + '%';
         document.getElementById('ob-step-label').textContent =
-            `Étape ${obCurrentStep + 1} / ${OB_TOTAL}`;
+            t('ob.step', obCurrentStep + 1, OB_TOTAL);
 
         const dotsEl = document.getElementById('ob-dots');
         dotsEl.innerHTML = '';
@@ -1576,10 +1470,10 @@
         const next = document.getElementById('ob-next-btn');
         prev.disabled = obCurrentStep === 0;
         if (obCurrentStep === OB_TOTAL - 1) {
-            next.innerHTML = `C'est parti ! <i class="fa-solid fa-check"></i>`;
+            next.innerHTML = `${t('ob.finish')} <i class="fa-solid fa-check"></i>`;
             next.classList.add('ob-final');
         } else {
-            next.innerHTML = `Suivant <i class="fa-solid fa-arrow-right"></i>`;
+            next.innerHTML = `${t('ob.next')} <i class="fa-solid fa-arrow-right"></i>`;
             next.classList.remove('ob-final');
         }
     }
@@ -1630,10 +1524,5 @@
     function openNotice() { openOnboarding(0); }
     function closeNotice() { closeOnboarding(); }
 </script>
-
-<script defer src="data.js"></script>
-<script defer src="scoring.js"></script>
-<script src="config.generated.js" defer></script>
-<script defer src="script.js"></script>
 </body>
 </html>

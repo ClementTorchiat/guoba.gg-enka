@@ -1,6 +1,6 @@
 /* =========================================================
    config.generated.js — FICHIER AUTO-GÉNÉRÉ
-   Généré le : 2026-06-03T19:15:56.078Z
+   Généré le : 2026-06-13T13:05:28.970Z
    115 personnages | 111 armes | 21 sets
 
    ========================================================= */
@@ -5135,6 +5135,19 @@ window.CHARACTER_CONFIG = {
           "dendro_dmg_": 0,
           "physical_dmg_": 0,
           "heal_": 0
+        },
+        "idealMainStats": {
+          "EQUIP_SHOES": [
+            "atk_",
+            "enerRech_"
+          ],
+          "EQUIP_RING": [
+            "cryo_dmg_"
+          ],
+          "EQUIP_DRESS": [
+            "critRate_",
+            "critDMG_"
+          ]
         },
         "bestSets": [
           "GoldenTroupe:4"

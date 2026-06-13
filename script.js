@@ -161,35 +161,35 @@ const STAT_MAPPING = {
 };
 
 const STAT_LABELS = {
-    "hp": "PV",
-    "hp_": "PV %",
-    "atk": "ATQ",
-    "atk_": "ATQ %",
-    "def": "DÉF",
-    "def_": "DÉF %",
-    "eleMas": "Maîtrise élémentaire",
-    "enerRech_": "Recharge d'énergie",
-    "critRate_": "Taux CRIT",
-    "critDMG_": "DGT CRIT",
-    "heal_": "Bonus de Soins",
-    "pyro_dmg_": "Bonus de DGT Pyro",
-    "hydro_dmg_": "Bonus de DGT Hydro",
-    "cryo_dmg_": "Bonus de DGT Cryo",
-    "electro_dmg_": "Bonus de DGT Électro",
-    "anemo_dmg_": "Bonus de DGT Anémo",
-    "geo_dmg_": "Bonus de DGT Géo",
-    "dendro_dmg_": "Bonus de DGT Dendro",
-    "physical_dmg_": "Bonus de DGT Physiques"
+    get "hp"()           { return t('stat.hp'); },
+    get "hp_"()          { return t('stat.hp_'); },
+    get "atk"()          { return t('stat.atk'); },
+    get "atk_"()         { return t('stat.atk_'); },
+    get "def"()          { return t('stat.def'); },
+    get "def_"()         { return t('stat.def_'); },
+    get "eleMas"()       { return t('stat.eleMas'); },
+    get "enerRech_"()    { return t('stat.enerRech_'); },
+    get "critRate_"()    { return t('stat.critRate_'); },
+    get "critDMG_"()     { return t('stat.critDMG_'); },
+    get "heal_"()        { return t('stat.heal_'); },
+    get "pyro_dmg_"()    { return t('stat.pyro_dmg_'); },
+    get "hydro_dmg_"()   { return t('stat.hydro_dmg_'); },
+    get "cryo_dmg_"()    { return t('stat.cryo_dmg_'); },
+    get "electro_dmg_"() { return t('stat.electro_dmg_'); },
+    get "anemo_dmg_"()   { return t('stat.anemo_dmg_'); },
+    get "geo_dmg_"()     { return t('stat.geo_dmg_'); },
+    get "dendro_dmg_"()  { return t('stat.dendro_dmg_'); },
+    get "physical_dmg_"(){ return t('stat.physical_dmg_'); }
 };
 
 const RESONANCE_DATA = {
-    "pyro": {name: "Flammes de la ferveur (Pyro)", active: false, stats: {atk_: 0.25}},
-    "hydro": {name: "Eau médicinale (Hydro)", active: false, stats: {hp_: 0.25}},
-    "dendro": {name: "Liane de la sagesse (Dendro)", active: false, stats: {eleMas: 50}},
-    "electro": {name: "Tonnerre puissant (Électro)", active: false, stats: {}},
-    "cryo": {name: "Glace brisée (Cryo)", active: false, stats: {critRate_: 0.15}},
-    "geo": {name: "Roc inamovible (Géo)", active: false, stats: {}},
-    "anemo": {name: "Vents de la célérité (Anémo)", active: false, stats: {}}
+    "pyro":    { get name() { return t('resonance.pyro'); },    active: false, stats: {atk_: 0.25} },
+    "hydro":   { get name() { return t('resonance.hydro'); },   active: false, stats: {hp_: 0.25} },
+    "dendro":  { get name() { return t('resonance.dendro'); },  active: false, stats: {eleMas: 50} },
+    "electro": { get name() { return t('resonance.electro'); }, active: false, stats: {} },
+    "cryo":    { get name() { return t('resonance.cryo'); },    active: false, stats: {critRate_: 0.15} },
+    "geo":     { get name() { return t('resonance.geo'); },     active: false, stats: {} },
+    "anemo":   { get name() { return t('resonance.anemo'); },   active: false, stats: {} }
 };
 
 const ELEMENT_COLORS = {
@@ -539,11 +539,11 @@ const SET_NAME_MAPPING = {
 };
 
 const ARTIFACT_TYPE_MAPPING = {
-    "EQUIP_BRACER": "Fleur de la vie",
-    "EQUIP_NECKLACE": "Plume de la mort",
-    "EQUIP_SHOES": "Sables du temps",
-    "EQUIP_RING": "Coupe d'éonothème",
-    "EQUIP_DRESS": "Diadème de Logos"
+    get "EQUIP_BRACER"()   { return t('artifact.EQUIP_BRACER'); },
+    get "EQUIP_NECKLACE"() { return t('artifact.EQUIP_NECKLACE'); },
+    get "EQUIP_SHOES"()    { return t('artifact.EQUIP_SHOES'); },
+    get "EQUIP_RING"()     { return t('artifact.EQUIP_RING'); },
+    get "EQUIP_DRESS"()    { return t('artifact.EQUIP_DRESS'); }
 };
 
 const SLOT_POSSIBLE_MAIN_STATS = {
@@ -611,7 +611,7 @@ function saveRecentProfile(uid, playerInfo, profilePicUrl, bannerUrl) {
 
     profiles.unshift({
         uid: uid,
-        nickname: playerInfo.nickname || 'Joueur inconnu',
+        nickname: playerInfo.nickname || t('data.unknownPlayer'),
         signature: playerInfo.signature || '',
         ar: playerInfo.level || 0,
         achievements: playerInfo.finishAchievementNum ?? null,
@@ -841,7 +841,7 @@ let gameDataReady = false;
 
 async function loadGameData() {
     const loader = document.getElementById('loading-msg');
-    if (loader) loader.innerText = "Chargement V2 (Indexation)...";
+    if (loader) loader.innerText = t('error.loadingV2');
     window.iconToNameHash = {};
     const CACHE_KEY = 'guoba_gamedata_v2';
     const CACHE_TTL = 24 * 60 * 60 * 1000;
@@ -850,14 +850,13 @@ async function loadGameData() {
         const searchBtn = document.getElementById('searchBtn');
         if (uidInput) {
             uidInput.disabled = true;
-            uidInput.placeholder = "Chargement des données…";
+            uidInput.placeholder = uidInput.placeholder = t('ui.search.loading');
         }
         if (searchBtn) {
             searchBtn.disabled = true;
         }
         const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
         if (cached && (Date.now() - cached.ts < CACHE_TTL)) {
-            console.log("⚡ Données jeu chargées depuis le cache local !");
             charData = cached.chars;
             locData = cached.locs;
             window.namecardsData = cached.namecards;
@@ -865,9 +864,10 @@ async function loadGameData() {
             window.iconToNameHash = cached.iconToNameHash;
             window.ROLL_TABLE = cached.rollTable;
             gameDataReady = true;
+            buildHashToKey();
             if (uidInput) {
                 uidInput.disabled = false;
-                uidInput.placeholder = "Entrez votre UID...";
+                uidInput.placeholder = t('ui.search.placeholder');
             }
             if (searchBtn) {
                 searchBtn.disabled = false;
@@ -908,25 +908,24 @@ async function loadGameData() {
         }));
         if (loader) loader.innerText = "";
         gameDataReady = true;
+        buildHashToKey();
         if (uidInput) {
             uidInput.disabled = false;
-            uidInput.placeholder = "Entrez votre UID...";
+            uidInput.placeholder = t('ui.search.placeholder');
         }
         if (searchBtn) {
             searchBtn.disabled = false;
         }
-        console.log(`API V2 Chargée : ${Object.keys(window.iconToNameHash).length} artéfacts indexés.`);
     } catch (e) {
-        console.error("Erreur chargement :", e);
-        if (loader) loader.innerText = "Erreur Fichiers.";
+        if (loader) loader.innerText = t('error.filesErr');
         if (uidInput) {
-            uidInput.placeholder = "Erreur de chargement — rechargez la page";
+            uidInput.placeholder = t('ui.search.error');
             uidInput.style.color = "#ef4444";
         }
         if (searchBtn) {
             searchBtn.disabled = false;
         }
-        alert("Impossible de charger les données du jeu (GitHub ou réseau indisponible).\nVeuillez recharger la page.");
+        alert(t('error.gameData'))
     }
 }
 
@@ -947,7 +946,7 @@ function clearSearch() {
     const uidInput = document.getElementById('uidInput');
     if (uidInput) uidInput.value = '';
     window.history.pushState({}, '', window.location.pathname);
-    document.title = "guoba.gg - Simulateur Genshin Impact";
+    document.title = t('page.title.default');
     window.currentPlayerNickname = null;
     globalPersoData = [];
     sidebarSortState = {column: 'original', direction: 'desc'};
@@ -971,14 +970,14 @@ function clearSearch() {
 
 async function fetchUserData(optionalUid) {
     const uid = (optionalUid || document.getElementById('uidInput').value).trim();
-    if (!uid) return alert("UID manquant");
+    if (!uid) return alert(t('error.noUid'));
 
     if (!/^\d{9,10}$/.test(uid)) {
-        return alert("L'UID doit être un nombre de 9 ou 10 chiffres.\nVérifiez votre identifiant en jeu (Menu Paimon > Profil).");
+        return alert(t('error.invalidUid'));
     }
 
     if (!gameDataReady) {
-        return alert("Les données du jeu sont encore en cours de chargement.\nPatientez quelques secondes puis réessayez.");
+        return alert(t('error.dataLoading'));
     }
 
     window.history.pushState({}, '', `?uid=${uid}`);
@@ -986,9 +985,9 @@ async function fetchUserData(optionalUid) {
     const loader = document.getElementById('loading-msg');
 
     if (apiSessionCache[uid] && (Date.now() - apiSessionCache[uid].timestamp < 180000)) {
-        console.log("⚡ Chargement instantané depuis le cache !");
+        console.log("⚡ Instant load from cache!");
         const cachedData = apiSessionCache[uid].data;
-        window.currentPlayerNickname = cachedData.playerInfo.nickname || 'Joueur inconnu';
+        window.currentPlayerNickname = cachedData.playerInfo.nickname || t('data.unknownPlayer');
         processData(cachedData);
         renderPlayerProfile(cachedData.playerInfo, uid);
         renderGlobalEvaluation(cachedData.playerInfo);
@@ -999,13 +998,13 @@ async function fetchUserData(optionalUid) {
     showSkeletonCard();
 
 
-    if (loader) loader.innerText = "Récupération...";
+    if (loader) loader.innerText = t('export.processing');
 
-    // 3. Ancien proxy
+    // Ancien proxy
     // const urlCible = `https://enka.network/api/uid/${uid}?t=${Date.now()}`;
     // const proxy = `https://corsproxy.io/?${encodeURIComponent(urlCible)}`;
 
-    //3. Nouveau proxy
+    // Nouveau proxy
     const proxy = `https://guobagg.clement-torchiat.workers.dev/?uid=${uid}`;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 30000);
@@ -1022,8 +1021,7 @@ async function fetchUserData(optionalUid) {
         const data = await res.json();
 
         if (!data.avatarInfoList || data.avatarInfoList.length === 0) {
-            alert("La vitrine de ce compte est vide ou privée !\nVeuillez ajouter des personnages et activer l'option 'Afficher les détails des personnages' en jeu.");
-
+            alert(t('error.emptyShowcase'));
             clearSearch();
 
             const loader = document.getElementById('loading-msg');
@@ -1037,7 +1035,7 @@ async function fetchUserData(optionalUid) {
             timestamp: Date.now()
         };
 
-        window.currentPlayerNickname = data.playerInfo.nickname || 'Joueur inconnu';
+        window.currentPlayerNickname = data.playerInfo.nickname || t('data.unknownPlayer');
 
         processData(data);
         renderPlayerProfile(data.playerInfo, uid);
@@ -1049,19 +1047,18 @@ async function fetchUserData(optionalUid) {
 
     } catch (e) {
         clearTimeout(timeoutId);
-        console.error("Erreur de récupération :", e);
-        if (loader) loader.innerText = "Erreur.";
+        if (loader) loader.innerText = t('error.generic');
 
         if (e.name === 'AbortError') {
-            alert("La requête a expiré (délai de 30 s dépassé).\nEnka Network ou le proxy est peut-être surchargé. Réessayez dans quelques instants.");
+            alert(t('error.timeout'));
         } else if (e.message === '404') {
-            alert("Aucun compte trouvé pour cet UID (404).\nVérifiez que l'identifiant est correct.");
+            alert(t('error.notFound'));
         } else if (e.message === '429') {
-            alert("Trop de requêtes envoyées (429 — Rate Limit).\nPatientez quelques secondes avant de réessayer.");
+            alert(t('error.rateLimit'));
         } else if (e.message === 'SERVER') {
-            alert("Le serveur Enka ou le proxy est temporairement indisponible.\nRéessayez dans quelques minutes.");
+            alert(t('error.serverDown'));
         } else {
-            alert("Impossible de récupérer les données.\nVérifiez votre connexion ou réessayez plus tard.");
+            alert(t('error.generic'));
         }
     }
 }
@@ -1107,7 +1104,7 @@ function renderPlayerProfile(playerInfo, uid) {
     };
     const server = serverMap[String(uid)[0]] || 'CN';
 
-    const nickname = playerInfo.nickname || 'Joueur inconnu';
+    const nickname = playerInfo.nickname || t('data.unknownPlayer');
     const signature = playerInfo.signature || '';
     const ar = playerInfo.level || 0;
     const achievements = playerInfo.finishAchievementNum ?? null;
@@ -1122,10 +1119,10 @@ function renderPlayerProfile(playerInfo, uid) {
     function stygianIcon() {
         if (stygianIndex === null) return '';
         if (stygianIndex === 6 && stygianSec !== null && stygianSec < 180) {
-            return `<img src="${ICON}stygian_difficulty_6_minus_180.webp" class="pp-icon" alt="stygian">`;
+            return `<img src="${ICON}stygian_difficulty_6_minus_180.webp" class="pp-icon" alt="${t('ui.alt.stygian')}">`;
         }
         if (stygianIndex >= 1 && stygianIndex <= 6) {
-            return `<img src="${ICON}stygian_difficulty_${stygianIndex}.webp" class="pp-icon" alt="stygian">`;
+            return `<img src="${ICON}stygian_difficulty_${stygianIndex}.webp" class="pp-icon" alt="${t('ui.alt.stygian')}">`;
         }
         return '';
     }
@@ -1133,7 +1130,7 @@ function renderPlayerProfile(playerInfo, uid) {
     const row1 = [
         `<span class="pp-badge pp-badge-server">${server}</span>`,
         achievements !== null
-            ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="succès">${achievements.toLocaleString()}</span>`
+            ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="${t('ui.alt.achievements')}">${achievements.toLocaleString(window.GUOBA_LANG)}</span>`
             : '',
         ar ? `<span class="pp-badge pp-badge-ar">AR${ar}</span>` : '',
     ].filter(Boolean).join('');
@@ -1143,10 +1140,10 @@ function renderPlayerProfile(playerInfo, uid) {
             ? `<span class="pp-badge pp-badge-stygian">${stygianIcon()}${stygianSec}s</span>`
             : '',
         theaterStars !== null
-            ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.webp" class="pp-icon" alt="théâtre">${theaterStars}</span>`
+            ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.webp" class="pp-icon" alt="${t('ui.alt.theater')}">${theaterStars}</span>`
             : '',
         abyssStars !== null
-            ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.webp" class="pp-icon" alt="abysses">${abyssStars}</span>`
+            ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.webp" class="pp-icon" alt="${t('ui.alt.abyss')}">${abyssStars}</span>`
             : '',
     ].filter(Boolean);
     const row2 = row2Items.join('');
@@ -1176,15 +1173,28 @@ function renderPlayerProfile(playerInfo, uid) {
 }
 
 function getText(hash) {
-    if (!hash) return "Inconnu";
-    if (!locData) return "Chargement...";
-    const lang = locData["fr"] ? "fr" : (locData["en"] ? "en" : Object.keys(locData)[0]);
+    if (!hash) return t('data.unknown');
+    if (!locData) return t('data.loading');
+    const lang = locData[window.GUOBA_LANG] ? window.GUOBA_LANG
+        : locData["fr"] ? "fr"
+            : locData["en"] ? "en"
+                : Object.keys(locData)[0];
     const key = String(hash);
     const val = locData[lang] ? locData[lang][key] : null;
     if (val) {
         return val.replace(/<[^>]*>/g, "");
     }
-    return "Inconnu";
+    return t('data.unknown');
+}
+
+function buildHashToKey() {
+    const dict = {};
+    const frDict = locData["fr"] || {};
+    for (const [hash, nom] of Object.entries(frDict)) {
+        if (WEAPON_NAME_MAPPING[nom]) dict[hash] = WEAPON_NAME_MAPPING[nom];
+        if (SET_NAME_MAPPING[nom])    dict[hash] = SET_NAME_MAPPING[nom];
+    }
+    window.HASH_TO_KEY = dict;
 }
 
 function formatValueDisplay(key, val) {
@@ -1463,7 +1473,7 @@ function getCritAdvice(cr, cd, config) {
     const crWeight = (config && config.weights && config.weights['critRate_']) || 0;
 
     if (crWeight < 1) {
-        return {color: '#888', msg: "Ce personnage ne dépend pas des statistiques critiques."};
+        return {color: '#888', msg: t('advice.crit.noCrit')};
     }
 
     const roundedCR = Math.round(cr * 10) / 10;
@@ -1471,52 +1481,52 @@ function getCritAdvice(cr, cd, config) {
 
     if (roundedCR > 100) return {
         color: '#ef4444',
-        msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Le surplus a été déduit de votre score global.`
+        msg: t('advice.crit.overcap', cr.toFixed(1))
     };
 
-    if (roundedCR === 100) return {color: '#00FFFF', msg: `Taux CRIT parfait. Misez absolument tout sur les DGT CRIT.`};
+    if (roundedCR === 100) return {color: '#00FFFF', msg: t('advice.crit.perfect100')};
 
     if (roundedCR >= 90) {
         if (roundedCD < 160) return {
             color: '#eab308',
-            msg: `Taux CRIT excellent (${roundedCR}%), mais vos DGT CRIT (${roundedCD}%) sont trop faibles. Rééquilibrez !`
+            msg: t('advice.crit.highCDLowCR', roundedCR, roundedCD)
         };
-        return {color: '#22c55e', msg: "Taux CRIT largement suffisant (plus de 90%). Cherchez un maximum de DGT CRIT."};
+        return {color: '#22c55e', msg: t('advice.crit.above90')};
     }
 
     if (roundedCR >= 80) return {
         color: '#22c55e',
-        msg: "Taux CRIT suffisant (plus de 80%). En obtenir plus est utile, mais le DGT CRIT devient prioritaire."
+        msg: t('advice.crit.above80')
     };
 
     if (roundedCR >= 70) {
         if (roundedCD > 200) return {
             color: '#f97316',
-            msg: `Vous avez beaucoup de DGT CRIT (${roundedCD}%) mais votre Taux CRIT (${roundedCR}%) est trop bas pour en profiter !`
+            msg: t('advice.crit.highCDLowCR2', roundedCD, roundedCR)
         };
-        return {color: '#eab308', msg: "Taux CRIT passable (plus de 70%). Essayez de vous rapprocher des 80%."};
+        return {color: '#eab308', msg: t('advice.crit.above70')};
     }
 
     if (roundedCR >= 60) return {
         color: '#f97316',
-        msg: "Taux CRIT insuffisant (plus de 60%). Vos grosses attaques rateront trop souvent leur coup critique."
+        msg: t('advice.crit.above60')
     };
 
     return {
         color: '#ef4444',
-        msg: "Taux CRIT largement insuffisant (moins de 60%). Fixez ce problème d'urgence avant de chercher d'autres stats."
+        msg: t('advice.crit.below60')
     };
 }
 
 function getSetRecommendation(activeSets, config) {
     if (!config || !config.bestSets || config.bestSets.length === 0) return null;
     const hasBest = activeSets.some(s => config.bestSets.includes(s));
-    if (hasBest) return {type: 'success', msg: "Vous utilisez le meilleur set recommandé !"};
+    if (hasBest) return {type: 'success', msg: t('advice.set.best')};
     const hasGood = config.goodSets && activeSets.some(s => config.goodSets.includes(s));
     const recommended = config.bestSets[0].split(':')[0];
     const recName = Object.keys(SET_NAME_MAPPING).find(key => SET_NAME_MAPPING[key] === recommended) || recommended;
-    if (hasGood) return {type: 'info', msg: `Set correct, mais <b>${recName} (4p)</b> serait optimal.`};
-    return {type: 'warning', msg: `Set non optimal. Visez <b>${recName} (4p)</b> pour maximiser les dégâts.`};
+    if (hasGood) return {type: 'info', msg: t('advice.set.good', recName)};
+    return {type: 'warning', msg: t('advice.set.bad', recName)};
 }
 
 function getMainStatAdvice(persoObj, config) {
@@ -1532,7 +1542,7 @@ function getMainStatAdvice(persoObj, config) {
         const allowedMainStats = config.idealMainStats[art.type] || [];
 
         if (!allowedMainStats.includes(currentKey)) {
-            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+            const pieceName = t('artifact.' + art.type);
 
             const cleanList = allowedMainStats.map(statKey => STAT_LABELS[statKey] || statKey).join(" / ");
 
@@ -1547,32 +1557,32 @@ function getMainStatAdvice(persoObj, config) {
     if (warnings.length > 0) {
         return {
             type: "critical",
-            title: "Problème Statistique Principale",
+            title: t('advice.mainStat.title.problem'),
             details: warnings
         };
     } else {
         return {
             type: "success",
-            title: "Statistiques Principales",
-            msg: "Votre sablier, votre coupe et votre diadème ont tous les trois une statistique principale optimale."
+            title: t('advice.mainStat.title.ok'),
+            msg: t('advice.mainStat.ok')
         };
     }
 }
 
 function getFarmDifficulty(pieceType, mainStatKey) {
     if (pieceType === "EQUIP_BRACER" || pieceType === "EQUIP_NECKLACE") {
-        return {label: "Facile", color: "#3b82f6"};
+        return {label: t('farm.easy'), color: "#3b82f6"};
     }
 
     const rates = MAINSTAT_DROP_RATES[pieceType];
-    if (!rates || !rates[mainStatKey]) return {label: "Relativement difficile", color: "#eab308"};
+    if (!rates || !rates[mainStatKey]) return {label: t('farm.hard'), color: "#eab308"};
 
     const probability = rates[mainStatKey];
 
-    if (probability >= 19) return {label: "Relativement facile", color: "#22c55e"};
-    if (probability >= 10) return {label: "Relativement difficile", color: "#eab308"};
-    if (probability >= 5) return {label: "Difficile", color: "#f97316"};
-    return {label: "Très difficile", color: "#ef4444"};
+    if (probability >= 19) return {label: t('farm.medium'), color: "#22c55e"};
+    if (probability >= 10) return {label: t('farm.hard'), color: "#eab308"};
+    if (probability >= 5) return {label: t('farm.veryHard'), color: "#f97316"};
+    return {label: t('farm.extreme'), color: "#ef4444"};
 }
 
 function getOffPieceAdvice(persoObj) {
@@ -1583,13 +1593,17 @@ function getOffPieceAdvice(persoObj) {
         setPieces.sort((a, b) => (a.score || 0) - (b.score || 0));
         const worstPiece = setPieces[0];
 
-        const rawName = ARTIFACT_TYPE_MAPPING[worstPiece.type] || "Pièce";
+        const rawName = ARTIFACT_TYPE_MAPPING[worstPiece.type] || t('data.unknown');
 
         const setNameFR = Object.keys(SET_NAME_MAPPING).find(k => SET_NAME_MAPPING[k] === fullSetKey) || fullSetKey;
 
         return {
             type: "info",
-            msg: `Vous utilisez 5 pièces du set <b>${setNameFR}</b>. Votre <b style="color: #aaa;">${rawName}</b> étant statistiquement la plus faible (Score: ${Math.round(worstPiece.score || 0)}), vous devriez la remplacer par une meilleure pièce hors-set.`
+            msg: t('advice.offPiece.5of5',
+                Object.keys(SET_NAME_MAPPING).find(k => SET_NAME_MAPPING[k] === fullSetKey) || fullSetKey,
+                rawName,
+                worstPiece.score
+            )
         };
     }
 
@@ -1608,24 +1622,24 @@ function getOffPieceAdvice(persoObj) {
 
     if (!offPiece || setPiecesScores.length === 0) return null;
 
-    const rawName = ARTIFACT_TYPE_MAPPING[offPiece.type] || "Pièce";
+    const rawName = ARTIFACT_TYPE_MAPPING[offPiece.type] || t('data.unknown');
     const avgSetScore = setPiecesScores.reduce((a, b) => a + b, 0) / setPiecesScores.length;
     const isHardMainStat = offPiece.mainStat.key.includes("dmg_") || offPiece.mainStat.key.includes("crit");
 
     if (offPiece.score > avgSetScore) {
         return {
             type: "success",
-            msg: `Excellente pièce hors-set <b style="color: #aaa;">(${rawName})</b>. Cette dernière porte votre build vers le haut.`
+            msg: t('advice.offPiece.good', t('artifact.' + offPiece.type))
         };
     } else if (isHardMainStat && offPiece.score > (avgSetScore * 0.8)) {
         return {
             type: "warning",
-            msg: `Votre pièce hors-set <b style="color: #aaa;">(${rawName})</b> suffit pour l'instant en vue de la rareté de sa stat principale.`
+            msg: t('advice.offPiece.ok', t('artifact.' + offPiece.type))
         };
     } else {
         return {
             type: "error",
-            msg: `Votre pièce hors-set <b style="color: #aaa;">(${rawName})</b> est moins bonne que le reste. Vous devriez en chercher une autre dans votre inventaire ou permettre à une autre pièce d'être hors-set.`
+            msg: t('advice.offPiece.bad', t('artifact.' + offPiece.type))
         };
     }
 }
@@ -1654,23 +1668,23 @@ function getTalentAdvice(persoObj, config) {
             isPerfect = false;
             advices.push({
                 type: "critical",
-                msg: `Améliorer votre <b style="color: #aaa;">${label}</b> au niv ${goal} est important pour ce personnage.`
+                msg: t('advice.talent.critical', label, goal)
             });
         } else if (diff >= 1) {
             isPerfect = false;
             advices.push({
                 type: "info",
-                msg: `Améliorer votre <b style="color: #aaa;">${label}</b> au niveau ${goal} est recommandé pour ce personnage.`
+                msg: t('advice.talent.info', label, goal)
             });
         }
     };
 
-    check('auto', 'Attaque Normale');
-    check('skill', 'Compétence');
-    check('burst', 'Déchaînement');
+    check('auto', t('advice.talent.auto'));
+    check('skill', t('advice.talent.skill'));
+    check('burst', t('advice.talent.burst'));
 
     if (isPerfect && advices.length === 0) {
-        return [{type: "success", msg: "Vos aptitudes sont au niveau recommandé."}];
+        return [{type: "success", msg: t('advice.talent.ok')}];
     }
 
     return advices;
@@ -1692,14 +1706,14 @@ function getSetForcingAdvice(persoObj, config) {
         if (charLikes2p2p) {
             return {
                 type: "success",
-                title: "Pas de forçage de set d'artéfacts",
-                msg: "Set d'artéfacts 2 pièces / 2 pièces optimal et de bonne qualité."
+                title: t('advice.setForce.title.ok'),
+                msg: t('advice.setForce.ok2p2p')
             };
         }
         return {
             type: "success",
-            title: "Pas de forçage de set d'artéfacts",
-            msg: "Vous utilisez un build arc-en-ciel."
+            title: t('advice.setForce.title.ok'),
+            msg: t('advice.setForce.okRainbow')
         };
     }
 
@@ -1708,22 +1722,21 @@ function getSetForcingAdvice(persoObj, config) {
     const avgScore = totalScore / setPieces.length;
 
     if (avgScore < 25) {
-        let warningMsg = `Vous forcez un set d'artéfacts de 4 pièces avec des artéfacts faibles. Vous devriez essayer une alternative.`;
-
+        let warningMsg = t('advice.setForce.weak');
         if (charLikes2p2p) {
-            warningMsg += `Ce personnage fonctionne très bien en set d'artéfacts 2 pièces / 2 pièces, n'hésitez pas à casser votre set d'artéfacts actuel pour de meilleures stats.`;
+            warningMsg += ' ' + t('advice.setForce.weakHint2p');
         }
 
         return {
             type: "warning",
-            title: "Forçage de set d'artéfacts",
+            title: t('advice.setForce.title.warning'),
             msg: warningMsg
         };
     } else {
         return {
             type: "success",
-            title: "Pas de forçage de set d'artéfacts",
-            msg: `Set d'artéfacts optimal et de bonne qualité.`
+            title: t('advice.setForce.title.ok'),
+            msg: t('advice.setForce.okQuality')
         };
     }
 }
@@ -1742,27 +1755,27 @@ function getMetaSetAdvice(persoObj, config) {
     if (isSetEquipped(config.bestSets)) {
         return {
             type: "success",
-            title: "Choix du set d'artéfacts",
-            msg: "Vous utilisez l'un des meilleurs sets d'artéfacts recommandés pour ce personnage."
+            title: t('advice.metaSet.title.ok'),
+            msg: t('advice.metaSet.ok')
         };
     }
 
     const [recKey, recCount] = config.bestSets[0].split(":");
     const recNameFR = Object.keys(SET_NAME_MAPPING).find(k => SET_NAME_MAPPING[k] === recKey) || recKey;
-    const recommendationStr = `<b>${recNameFR} (${recCount} pièces)</b>`;
+    const recommendationStr = `<b>${recNameFR} (${t('ui.setPieces', recCount)})</b>`;
 
     if (isSetEquipped(config.goodSets)) {
         return {
             type: "info",
-            title: "Optimisation du set d'artéfacts",
-            msg: `Votre set actuel est correct, mais pour maximiser le build, le set d'artéfacts recommandé est : ${recommendationStr}.`
+            title: t('advice.metaSet.title.optimize'),
+            msg: t('advice.metaSet.good', recommendationStr)
         };
     }
 
     return {
         type: "warning",
-        title: "Problème de set d'artéfacts",
-        msg: `Votre set d'artéfacts actuel ne correspond pas aux standards du personnage. Vous devriez opter pour le set d'artéfacts ${recommendationStr}.`
+        title: t('advice.metaSet.title.problem'),
+        msg: t('advice.metaSet.bad', recommendationStr)
     };
 }
 
@@ -1772,14 +1785,14 @@ function getWeaponAdvice(persoObj) {
     if (persoObj.weapon.level < 90) {
         return {
             type: "warning",
-            title: "Niveau de l'arme",
-            msg: `Améliorez votre arme au niveau 90 pour maximiser son ATQ de base et sa statistique additionnelle.`
+            title: t('advice.weapon.title'),
+            msg: t('advice.weapon.low')
         };
     } else {
         return {
             type: "success",
-            title: "Niveau de l'arme",
-            msg: `Votre arme est au niveau maximum.`
+            title: t('advice.weapon.title'),
+            msg: t('advice.weapon.ok')
         };
     }
 }
@@ -1790,24 +1803,24 @@ function getERAdvice(currentER, targetER) {
     if (diff >= -10 && diff <= 15) {
         return {
             type: "success",
-            title: "Recharge d'Énergie",
-            msg: `Votre ER (${currentER.toFixed(0)}%) est idéale pour cet archétype (Cible : ${targetER}%).`
+            title: t('advice.er.title.ok'),
+            msg: t('advice.er.ok', currentER.toFixed(0), targetER)
         };
     }
 
     if (diff < -10) {
         return {
             type: "warning",
-            title: "Manque de Recharge d'Énergie",
-            msg: `Vous avez ${currentER.toFixed(0)}% d'ER, mais cet archétype demande environ <b>${targetER}%</b>. Vos rotations risquent de bloquer.`
+            title: t('advice.er.title.low'),
+            msg: t('advice.er.low', currentER.toFixed(0), targetER)
         };
     }
 
     if (diff > 15) {
         return {
             type: "info",
-            title: "Excès de Recharge d'Énergie",
-            msg: `Vous avez ${currentER.toFixed(0)}% d'ER, ce qui est bien au-dessus du nécessaire (${targetER}%). Essayez de troquer de l'ER contre des stats offensives.`
+            title: t('advice.er.title.excess'),
+            msg: t('advice.er.excess', currentER.toFixed(0), targetER)
         };
     }
 }
@@ -1816,14 +1829,14 @@ function getLevelAdvice(persoObj) {
     if (persoObj.level < 90) {
         return {
             type: "info",
-            title: "Niveau du Personnage",
-            msg: `Améliorez votre personnage au niveau 90 pour maximiser ses statistiques.`
+            title: t('advice.level.title'),
+            msg: t('advice.level.low')
         };
     } else {
         return {
             type: "success",
-            title: "Niveau du Personnage",
-            msg: `Votre personnage est au niveau maximum.`
+            title: t('advice.level.title'),
+            msg: t('advice.level.ok')
         };
     }
 }
@@ -2132,15 +2145,15 @@ function simulateDeadStatReplacements(persoObj, config) {
                 replacements.push({
                     dead: `${dead.label} (${dead.rolls})`,
                     target: `${targetLabel} (${dead.rolls})`,
-                    gain: `+${minVal} <span style="color:#fff; opacity:0.8; padding:0 2px;">à</span> ${maxVal}${suffix} ${targetLabel}`
+                    gain: `+${minVal} <span style="color:#fff; opacity:0.8; padding:0 2px;">${t('sim.range')}</span> ${maxVal}${suffix} ${targetLabel}`
                 });
             }
         });
 
         if (replacements.length > 0) {
-            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
-            const deadText = replacements.map(r => `<span style="color:#ff6b6b">${r.dead}</span>`).join(' et ');
-            const targetText = replacements.map(r => `<span style="color:var(--accent-gold)">${r.target}</span>`).join(' et ');
+            const pieceName = t('artifact.' + art.type);
+            const deadText = replacements.map(r => `<span style="color:#ff6b6b">${r.dead}</span>`).join(t('ui.and'));
+            const targetText = replacements.map(r => `<span style="color:var(--accent-gold)">${r.target}</span>`).join(t('ui.and'));
             const gainText = replacements.map(r => `
                 <div style="display: flex; flex-direction: row; align-items: center; color: var(--accent-gold); ">
                     <p style=" color: #ffffff; margin-right: 6px;">•</p>
@@ -2150,7 +2163,7 @@ function simulateDeadStatReplacements(persoObj, config) {
 
             suggestions.push({
                 pieceName: pieceName,
-                text: `Remplacer ${deadText} par ${targetText} :`,
+                text: t('sim.replace', deadText, targetText),
                 gainHtml: gainText,
                 totalDeadRolls: deadStats.reduce((acc, curr) => acc + curr.rolls, 0)
             });
@@ -2169,7 +2182,7 @@ function calculateRerollMetrics(artifact, config) {
             potential: 0,
             risk: 0,
             badge: {
-                text: `Artéfact ${artifact.stars ?? '?'}★ — Non applicable`,
+                text: t('reroll.na.stars', artifact.stars ?? '?'),
                 color: "#6b7280"
             }
         };
@@ -2181,7 +2194,7 @@ function calculateRerollMetrics(artifact, config) {
             potential: 0,
             risk: 0,
             badge: {
-                text: "Artéfact 4★ — Non applicable",
+                text: t('reroll.na.stars', 4),
                 color: "#6b7280"
             }
         };
@@ -2192,7 +2205,7 @@ function calculateRerollMetrics(artifact, config) {
             potential: 0,
             risk: 0,
             badge: {
-                text: `Niveau ${artifact.level ?? 0}/20 — Montez l'artéfact avant d'analyser`,
+                text: t('reroll.na.level', artifact.level ?? 0),
                 color: "#6b7280"
             }
         };
@@ -2250,18 +2263,18 @@ function calculateRerollMetrics(artifact, config) {
     if (risk > 99) risk = 99;
     if (risk < 1) risk = 1;
 
-    let badge = {text: "Neutre", color: "#9ca3af"};
+    let badge = { text: t('reroll.neutral'), color: "#9ca3af" };
 
     if (sortedTerrain[0] === 0 && sortedTerrain[1] === 0) {
-        badge = {text: "Poubelle (Ne pas reroll)", color: "#4b5563"};
+        badge = {text: t("reroll.trash"), color: "#4b5563"};
     } else if (risk > 75) {
-        badge = {text: "Trop risqué (Garder)", color: "#ef4444"};
+        badge = {text: t("reroll.tooRisky"), color: "#ef4444"};
     } else if (potential > 40 && risk < 35) {
-        badge = {text: "Poussière Recommandée", color: "#22c55e"};
+        badge = {text: t("reroll.recommended"), color: "#22c55e"};
     } else if (potential > 15) {
-        badge = {text: "Optimisable", color: "#3b82f6"};
+        badge = {text: t("reroll.optimizable"), color: "#3b82f6"};
     } else {
-        badge = {text: "Peu rentable", color: "#f97316"};
+        badge = {text: t("reroll.notWorth"), color: "#f97316"};
     }
 
     return {
@@ -2310,13 +2323,13 @@ function processData(data) {
             || getKey(info, "iconName")
             || getKey(info, "icon");
 
-        if (!nom || nom === "Inconnu") {
+        if (!nom || nom === t('data.unknown')) {
             if (iconNameRaw) {
                 const clean = iconNameRaw.replace(/\.png$/i, "");
                 nom = clean.split('_').pop();
-                if (nom.includes("Player")) nom = "Voyageur";
+                if (nom.includes("Player")) nom = t('data.traveler');
             } else {
-                nom = "Inconnu";
+                nom = t('data.unknown');
             }
         }
         const qualityType = getKey(info, "QualityType");
@@ -2415,11 +2428,13 @@ function processData(data) {
             if (item.weapon) {
                 const main = flat.weaponStats && flat.weaponStats[0] ? formatStat(flat.weaponStats[0].appendPropId, flat.weaponStats[0].statValue) : null;
                 const sub = flat.weaponStats && flat.weaponStats[1] ? formatStat(flat.weaponStats[1].appendPropId, flat.weaponStats[1].statValue) : null;
-                const weaponNameFR = getText(flat.nameTextMapHash);
-                const weaponKey = WEAPON_NAME_MAPPING[weaponNameFR] || weaponNameFR;
+                //const weaponNameFR = getText(flat.nameTextMapHash);
+                //const weaponKey = WEAPON_NAME_MAPPING[weaponNameFR] || weaponNameFR;
+                const weaponKey = (window.HASH_TO_KEY && window.HASH_TO_KEY[flat.nameTextMapHash]) || flat.nameTextMapHash;
 
                 weapon = {
-                    name: weaponNameFR,
+                    //name: weaponNameFR,
+                    name: getText(flat.nameTextMapHash),
                     key: weaponKey,
                     level: item.weapon.level,
                     rank: (item.weapon.affixMap ? Object.values(item.weapon.affixMap)[0] : 0) + 1,
@@ -2439,9 +2454,9 @@ function processData(data) {
                     }
                 }
 
-                const nomSetFR = getText(targetHash);
-
-                const setKey = SET_NAME_MAPPING[nomSetFR] || "UnknownSet";
+                //const nomSetFR = getText(targetHash);
+                //const setKey = SET_NAME_MAPPING[nomSetFR] || "UnknownSet";
+                const setKey = (window.HASH_TO_KEY && window.HASH_TO_KEY[targetHash]) || "UnknownSet";
                 setsCounter[setKey] = (setsCounter[setKey] || 0) + 1;
 
                 const subs = [];
@@ -2454,7 +2469,8 @@ function processData(data) {
                 artefacts.push({
                     type: flat.equipType,
                     setKey: setKey,
-                    setName: nomSetFR,
+                    //setName: nomSetFR,
+                    setName: getText(targetHash),
                     icon: `https://enka.network/ui/${flat.icon}.png`,
                     mainStat: formatStat(flat.reliquaryMainstat.mainPropId, flat.reliquaryMainstat.statValue),
                     subStats: subs,
@@ -2564,7 +2580,7 @@ function processData(data) {
             const isAdvanced = wConfig.buffs && Array.isArray(wConfig.buffs);
             const wMode = isAdvanced ? (wConfig.selectMode || 'standard') : 'standard';
             const wData = isAdvanced ? wConfig.buffs : wConfig;
-            addBuffs(weapon.key, `${weapon.name} (Arme)`, wData, wMode, weapon.rank);
+            addBuffs(weapon.key, `${weapon.name} ${t('ui.buff.weapon')}`, wData, wMode, weapon.rank);
         }
 
         if (G_SET_PASSIVES) {
@@ -2572,7 +2588,7 @@ function processData(data) {
                 if (G_SET_PASSIVES[setKey]) {
                     const setBonuses = G_SET_PASSIVES[setKey];
                     const setName = artefacts.find(a => a.setKey === setKey)?.setName || setKey;
-                    const setCategory = `${setName} (Set)`;
+                    const setCategory = `${setName} ${t('ui.buff.set')}`;
                     const mode = setBonuses.selectMode || 'standard';
                     if (count >= 2 && setBonuses[2]) addBuffs(setName, setCategory, setBonuses[2], mode);
                     if (count >= 4 && setBonuses[4]) addBuffs(setName, setCategory, setBonuses[4], mode);
@@ -2676,7 +2692,7 @@ function renderToolbar(index) {
     if (!container) return;
 
     if (!p.charConfig.builds) {
-        container.innerHTML = '<span class="main-content-menu-team" style="padding-top: 17px; padding-bottom: 14px;">Aucun archétype disponible</span>';
+        container.innerHTML = `<span class="main-content-menu-team" style="padding-top: 17px; padding-bottom: 14px;">${t('ui.noArchetype')}</span>`;
         return;
     }
 
@@ -2740,7 +2756,7 @@ function renderToolbar(index) {
                     <img src="${url}" 
                          style="width:100%; height:100%; object-fit:cover;"
                          onerror="this.src='${fallback}'" 
-                         title="${mate.role}: ${names[0] || elems[0] || 'Inconnu'}">
+                         title="${mate.role}: ${names[0] || elems[0] || t('data.unknown')}">
                 `;
             } else {
                 const url1 = getIconUrl(names[0], elems[0]);
@@ -2820,7 +2836,7 @@ function switchBuild(charIndex, buildKey) {
 function updateResonanceBuffs(p, teamData) {
     if (!teamData) return;
 
-    p.buffs = p.buffs.filter(b => b.category !== "Résonance");
+    p.buffs = p.buffs.filter(b => b.category !== t('buff.category.resonance'));
 
     const guaranteed = {};
     const potential = {};
@@ -2850,7 +2866,7 @@ function updateResonanceBuffs(p, teamData) {
 
             p.buffs.push({
                 id: `res_${elem}`,
-                category: "Résonance",
+                category: t('buff.category.resonance'),
                 name: resData.name,
                 bonuses: resData.stats,
                 active: isActive,
@@ -2883,8 +2899,8 @@ function renderHome() {
         container.innerHTML = `
             <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0.5;">
                 <img src="${ICON_BASE_PATH}icon_score.webp" style="width: 64px; height: 64px; margin-bottom: 20px; filter: grayscale(100%);">
-                <h2 style="color: #fff; font-size: 24px; margin-bottom: 8px;">Aucun compte chargé</h2>
-                <p style="color: #aaa; font-size: 14px;">Entrez un UID Genshin Impact dans la barre latérale pour commencer l'analyse.</p>
+                <h2 style="color: #fff; font-size: 24px; margin-bottom: 8px;">${t('home.empty')}</h2>
+                <p style="color: #aaa; font-size: 14px;">${t('home.emptyHint')}</p>
             </div>
         `;
         return;
@@ -2917,10 +2933,10 @@ function renderHome() {
         function stygianIcon() {
             if (p.stygianIndex === null) return '';
             if (p.stygianIndex === 6 && p.stygianSec !== null && p.stygianSec < 180) {
-                return `<img src="${ICON}stygian_difficulty_6_minus_180.webp" class="pp-icon" alt="stygian">`;
+                return `<img src="${ICON}stygian_difficulty_6_minus_180.webp" class="pp-icon" alt="${t('ui.alt.stygian')}">`;
             }
             if (p.stygianIndex >= 1 && p.stygianIndex <= 6) {
-                return `<img src="${ICON}stygian_difficulty_${p.stygianIndex}.webp" class="pp-icon" alt="stygian">`;
+                return `<img src="${ICON}stygian_difficulty_${p.stygianIndex}.webp" class="pp-icon" alt="${t('ui.alt.stygian')}">`;
             }
             return '';
         }
@@ -2928,7 +2944,7 @@ function renderHome() {
         const row1 = [
             `<span class="pp-badge pp-badge-server">${server}</span>`,
             p.achievements != null
-                ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="succès">${p.achievements.toLocaleString()}</span>`
+                ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="${t('ui.alt.achievements')}">${p.achievements.toLocaleString(window.GUOBA_LANG)}</span>`
                 : '',
             p.ar ? `<span class="pp-badge pp-badge-ar">AR${p.ar}</span>` : '',
         ].filter(Boolean).join('');
@@ -2938,10 +2954,10 @@ function renderHome() {
                 ? `<span class="pp-badge pp-badge-stygian">${stygianIcon()}${p.stygianSec}s</span>`
                 : '',
             p.theaterStars != null
-                ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.webp" class="pp-icon" alt="théâtre">${p.theaterStars}</span>`
+                ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.webp" class="pp-icon" alt="${t('ui.alt.theater')}">${p.theaterStars}</span>`
                 : '',
             p.abyssStars != null
-                ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.webp" class="pp-icon" alt="abysses">${p.abyssStars}</span>`
+                ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.webp" class="pp-icon" alt="${t('ui.alt.abyss')}">${p.abyssStars}</span>`
                 : '',
         ].filter(Boolean);
         const row2 = row2Items.join('');
@@ -2954,7 +2970,7 @@ function renderHome() {
              
             <!-- Bouton Favori -->
             <div onclick="toggleFavoriteProfile('${p.uid}', event)"
-                 title="${isFav ? 'Retirer des favoris' : 'Épingler ce compte'}"
+                 title="${isFav ? t('home.unpinAccount') : t('home.pinAccount')}"
                  style="position: absolute; top: -6px; left: -6px; width: 22px; height: 22px; display: ${isFav || !favUid ? 'flex' : 'none'}; align-items: center; justify-content: center; border-radius: 50%; background: ${isFav ? 'rgba(255,177,59,0.95)' : 'rgba(60,62,70,0.92)'}; color: ${isFav ? '#fff' : '#9ca3af'}; font-size: 11px; z-index: 50; box-shadow: 0 2px 4px rgba(0,0,0,0.5); transition: 0.2s; cursor: pointer;"
                  onmouseover="this.style.background='${isFav ? 'rgba(220,140,0,1)' : 'rgba(90,92,100,1)'}'; this.style.transform='scale(1.15)';"
                  onmouseout="this.style.background='${isFav ? 'rgba(255,177,59,0.95)' : 'rgba(60,62,70,0.92)'}'; this.style.transform='scale(1)';">
@@ -2993,24 +3009,25 @@ function renderHome() {
 
     container.innerHTML = `
         <div style="padding-left: 40px; padding-top: 12px;">
-            <h2 style="color: #fff; font-size: 28px; margin-bottom: 10px;">Comptes récents</h2>
-            <p style="color: #aaa; font-size: 14px; margin-bottom: 30px;">Sélectionnez un compte précédemment analysé pour le recharger instantanément (jusqu'à 12 comptes à la fois).</p>
+            <h2 style="color: #fff; font-size: 28px; margin-bottom: 10px;">${t('home.title')}</h2>
+            <p style="max-width:980px; color: #aaa; font-size: 14px; margin-bottom: 30px;">${t('home.subtitle')}</p>
             <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                 ${cardsHtml}
             </div>
             <p style="color: #aaa; font-size: 12px; margin-bottom: 30px; margin-top: 32px; margin-left: 12px;">
-                Ce site est un projet de fan indépendant et n'est en aucun cas affilié à, parrainé ou approuvé par HoYoverse. <br>
-                Tous les contenus et actifs liés aux jeux sont la propriété exclusive de HoYoverse. <br><br>
-                Ce projet s'appuie sur l'API fournie par 
-                <a href="https://enka.network" style="color: inherit; text-decoration: underline;">Enka.Network</a>, 
-                que nous remercions chaleureusement pour leur contribution indispensable à la communauté. <br>
-                Design de la fiche personnage inspiré par Fribbels HSR Optimizer.
-            </p>      
-            <div class="links" style="display: flex; flex-direction: row; margin-bottom: 48px; gap: 8px; align-items: center;">
+                ${t('home.legal')} <br><br>
+                ${t('home.enkaCredit')} <br>
+                ${t('home.designCredit')}
+            </p>    
+            <div class="links" style="max-width:980px;display: flex; flex-direction: row; margin-bottom: 48px; gap: 8px; align-items: center;">
                 <a class="link-button" href="https://discord.gg/CZ5qxVqBVJ" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i>Discord</a>
                 <a class="link-button-coffee" href="https://ko-fi.com/guobagg" target="_blank" rel="noopener noreferrer">
                   <img src="https://cdn.prod.website-files.com/5c14e387dab576fe667689cf/670f5a01229bf8a18f97a3c1_favion.png" alt="Icône Discord" width="20" height="20">Buy me a coffee
-                </a>                
+                </a>          
+                <select onchange="guobaSetLang(this.value)" class="link-button" style="border:none;border-right: 12px solid transparent; background: #2C2D32; color: #ffffff; padding: 0 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; outline: none; height: 38px;margin-left: auto;">
+                    <option value="fr" ${window.GUOBA_LANG === 'fr' ? 'selected' : ''}>FR</option>
+                    <option value="en" ${window.GUOBA_LANG === 'en' ? 'selected' : ''}>EN</option>
+                </select>
             </div>
         </div>
     `;
@@ -3138,33 +3155,33 @@ function renderGlobalEvaluation(playerInfo) {
     const stygianSec = (playerInfo.stygianSeconds > 0) ? playerInfo.stygianSeconds : null;
 
     if (isAbyss && isTheater && isStygian) {
-        addBadge("👑", "Maître de l'Endgame", "A conquis les Abysses, le Théâtre et le Carnage. Respect absolu.", "linear-gradient(135deg, rgba(230,190,255,0.7), rgba(154,204,255,0.7), rgba(255,204,229,0.7), rgba(253,245,169,0.7))");
+        addBadge("👑", t('badge.masterEndgame.name'), t('badge.masterEndgame.desc'), "linear-gradient(135deg, rgba(230,190,255,0.7), rgba(154,204,255,0.7), rgba(255,204,229,0.7), rgba(253,245,169,0.7))");
     } else {
-        if (isAbyss) addBadge("🏆", "Archon des Abysses", "A obtenu 36 étoiles dans les Profondeurs spiralées.", "rgba(37, 51, 85, 0.6)");
-        if (isTheater) addBadge("🎭", "Étoile du Théâtre", "A brillé dans le Théâtre de l'Imaginarium.", "rgba(82, 42, 138, 0.6)");
+        if (isAbyss) addBadge("🏆", t('badge.abyssArchon.name'), t('badge.abyssArchon.desc'), "rgba(37, 51, 85, 0.6)");
+        if (isTheater) addBadge("🎭", t('badge.theaterStar.name'), t('badge.theaterStar.desc'), "rgba(82, 42, 138, 0.6)");
         if (isStygian && !isStygianDiff6) {
-            addBadge("🐉", "Roi du Carnage", "A vaincu les pires horreurs du Carnage Chtonien.", "rgba(139, 45, 139, 0.6)");
+            addBadge("🐉", t('badge.carnageKing.name'), t('badge.carnageKing.desc'), "rgba(139, 45, 139, 0.6)");
         }
     }
 
     if (isStygianDiff6 && stygianSec !== null && stygianSec <= 180) {
-        addBadge("🌌", "Mythe Vivant", "Carnage Chtonien Difficulté 6 complété en moins de 180s. Vous avez officiellement 'fini' le jeu.", "linear-gradient(135deg, rgba(30,27,75,0.8), rgba(109,40,217,0.7), rgba(250,204,21,0.6))");
+        addBadge("🌌", t('badge.legend.name'), t('badge.legend.desc'), "linear-gradient(135deg, rgba(30,27,75,0.8), rgba(109,40,217,0.7), rgba(250,204,21,0.6))");
     } else if (isStygianDiff6) {
-        addBadge("🩸", "Fléau du Carnage", "Difficulté 6 du Carnage Chtonien complétée. Les monstres vous craignent.", "linear-gradient(135deg, rgba(153,27,27,0.7), rgba(220,38,38,0.7))");
+        addBadge("🩸", t('badge.carnagePlague.name'), t('badge.carnagePlague.desc'), "linear-gradient(135deg, rgba(153,27,27,0.7), rgba(220,38,38,0.7))");
     }
 
-    if (playerInfo.level === 60) addBadge("🏅", "Vétéran Endurci", "Niveau d'aventure 60 atteint. Il est temps d'aller toucher de l'herbe.", "rgba(207, 156, 79, 0.6)");
-    if (avgEff >= 95) addBadge("🌟", "Perfection Inatteignable", "Plus de 95% d'efficacité moyenne. Vos artéfacts n'ont aucun défaut.", "linear-gradient(135deg, rgba(255,215,0,0.7), rgba(255,255,255,0.6))");
+    if (playerInfo.level === 60) addBadge("🏅", t('badge.veteran.name'), t('badge.veteran.desc'), "rgba(207, 156, 79, 0.6)");
+    if (avgEff >= 95) addBadge("🌟", t('badge.perfection.name'), t('badge.perfection.desc'), "linear-gradient(135deg, rgba(255,215,0,0.7), rgba(255,255,255,0.6))");
 
-    if (globalPersoData.length === 1) addBadge("🃏", `${globalPersoData[0].nom} One Trick`, `Votre vitrine entière est dédiée à ${globalPersoData[0].nom}.`, "rgba(107, 114, 128, 0.6)");
-    else if (globalPersoData.length < 12) addBadge("🥷", "Collection Cachée", "Moins de 12 personnages exposés. Vous gardez vos secrets.", "rgba(107, 114, 128, 0.6)");
+    if (globalPersoData.length === 1) addBadge("🃏", t('badge.oneTrick.name', globalPersoData[0].nom), t('badge.oneTrick.desc', globalPersoData[0].nom), "rgba(107, 114, 128, 0.6)");
+    else if (globalPersoData.length < 12) addBadge("🥷", t('badge.hiddenCollection.name'), t('badge.hiddenCollection.desc'), "rgba(107, 114, 128, 0.6)");
 
     const c6FiveStars = globalPersoData.filter(p => p.rarity === 5 && p.cons === 6).length;
-    if (c6FiveStars > 1) addBadge("🐋", "Le Narval", "Plusieurs personnages 5 étoiles C6 détectés.", "rgba(59, 130, 246, 0.6)");
-    else if (c6FiveStars === 1) addBadge("🐳", "Baleine", "Un personnage 5 étoiles C6 détecté.", "rgba(59, 172, 197, 0.6)");
+    if (c6FiveStars > 1) addBadge("🐋", t('badge.narval.name'), t('badge.narval.desc'), "rgba(59, 130, 246, 0.6)");
+    else if (c6FiveStars === 1) addBadge("🐳", t('badge.whale.name'), t('badge.whale.desc'), "rgba(59, 172, 197, 0.6)");
 
-    if (avgRNG > 80) addBadge("🍀", "Touché par la Grâce", `RNG moyenne exceptionnelle (${avgRNG.toFixed(1)}%). Le jeu vous aime.`, "rgba(61, 160, 97, 0.6)");
-    else if (avgRNG < 40 && validChars > 0) addBadge("🌧️", "Maudit par la RNG", `RNG moyenne catastrophique (${avgRNG.toFixed(1)}%).`, "rgba(107, 114, 128, 0.6)");
+    if (avgRNG > 80) addBadge("🍀", t('badge.lucky.name'), t('badge.lucky.desc', avgRNG.toFixed(1)), "rgba(61, 160, 97, 0.6)");
+    else if (avgRNG < 40 && validChars > 0) addBadge("🌧️", t('badge.cursed.name'), t('badge.cursed.desc', avgRNG.toFixed(1)), "rgba(107, 114, 128, 0.6)");
 
     let holyGrail = false, level89Syndrome = false, level67EasterEgg = false;
     let highER = false, asthmatic = false, casino = false, alchemist = false, allInCrit = false;
@@ -3282,59 +3299,58 @@ function renderGlobalEvaluation(playerInfo) {
         }
     });
 
-    if (archonCount >= 4) addBadge("🏛️", "Réunion Divine", "Votre vitrine rassemble au moins 4 Archons. Le Mont Olympe vous envie.", "linear-gradient(135deg, rgba(255,215,0,0.6), rgba(255,255,255,0.4))");
-    if (tripleCrown) addBadge("👑", "Triple Couronne", "Vous avez investi 3 couronnes sur un même personnage. Dévouement royal.", "linear-gradient(135deg, rgba(251,191,36,0.8), rgba(245,158,11,0.8), rgba(217,119,6,0.8))");
-    if (leviathan) addBadge("🔱", "Léviathan", "Personnage 5★ C6 avec arme 5★ R5 détecté. Merci de financer le jeu !", "linear-gradient(135deg, rgba(6,182,212,0.8), rgba(59,130,246,0.8), rgba(30,58,138,0.8))");
-    if (allInCrit) addBadge("🎯", "All-in Crit", "Plus de 300% de DGT CRIT détecté. Si ça critique, ça désintègre.", "linear-gradient(135deg, rgba(220,38,38,0.8), rgba(249,115,22,0.8))");
-    if (surgicalPrec) addBadge("🎯", "Précision Chirurgicale", "100% de Taux Critique atteint. Vous ne laissez aucune place au hasard.", "rgba(220, 38, 38, 0.6)");
+    if (archonCount >= 4) addBadge("🏛️", t('badge.divine.name'), t('badge.divine.desc'), "linear-gradient(135deg, rgba(255,215,0,0.6), rgba(255,255,255,0.4))");
+    if (tripleCrown) addBadge("👑", t('badge.tripleCrown.name'), t('badge.tripleCrown.desc'), "linear-gradient(135deg, rgba(251,191,36,0.8), rgba(245,158,11,0.8), rgba(217,119,6,0.8))");
+    if (leviathan) addBadge("🔱", t('badge.leviathan.name'), t('badge.leviathan.desc'), "linear-gradient(135deg, rgba(6,182,212,0.8), rgba(59,130,246,0.8), rgba(30,58,138,0.8))");
+    if (allInCrit) addBadge("🎯", t('badge.allInCrit.name'), t('badge.allInCrit.desc'), "linear-gradient(135deg, rgba(220,38,38,0.8), rgba(249,115,22,0.8))");
+    if (surgicalPrec) addBadge("🎯", t('badge.surgical.name'), t('badge.surgical.desc'), "rgba(220, 38, 38, 0.6)");
 
-    if (highER) addBadge("⚡", "Centrale Électrique", "Au moins un perso dépasse les 200% d'ER. Déchaînement infini !", "rgba(207, 156, 79, 0.6)");
-    if (asthmatic) addBadge("😮‍💨", "Asthmatique", "Exactement 100% d'ER sur un perso. Vous courez après les particules.", "rgba(107, 114, 128, 0.6)");
-    if (alchemist) addBadge("🧪", "Alchimiste", "Plus de 1000 de ME détecté. Les réactions sont votre religion.", "rgba(61, 160, 97, 0.6)");
-    if (casino) addBadge("🎰", "Casino Impact", "Ratio Crit extrême sur un DPS (<40% TC / >200% DC).", "rgba(184, 63, 63, 0.6)");
-    if (hpSack) addBadge("🛡️", "Increvable", "Au moins un personnage dépasse les 60 000 PV !", "rgba(207, 156, 79, 0.6)");
+    if (highER) addBadge("⚡",  t('badge.powerPlant.name'), t('badge.powerPlant.desc'), "rgba(207, 156, 79, 0.6)");
+    if (asthmatic) addBadge("😮‍💨", t('badge.asthmatic.name'), t('badge.asthmatic.desc'), "rgba(107, 114, 128, 0.6)");
+    if (alchemist) addBadge("🧪", t('badge.alchemist.name'), t('badge.alchemist.desc'), "rgba(61, 160, 97, 0.6)");
+    if (casino) addBadge("🎰", t('badge.casino.name'), t('badge.casino.desc'), "rgba(184, 63, 63, 0.6)");
+    if (hpSack) addBadge("🛡️", t('badge.hpTank.name'), t('badge.hpTank.desc'), "rgba(207, 156, 79, 0.6)");
 
-    if (impostor) addBadge("🤡", "Imposteur", "Une de vos pièces d'artéfact a une stat principale totalement inadaptée.", "rgba(184, 63, 63, 0.6)");
-    if (qiqiCurse) addBadge("🧟‍♀️", "Malédiction de la Perma", "Personnage de la bannière permanente C6 détecté. On respecte la douleur des 50/50 perdus.", "rgba(107, 114, 128, 0.6)");
-    if (nudist) addBadge("🩳", "En Grève", "Ce personnage HL refuse de travailler tant qu'il n'aura pas d'artéfacts.", "rgba(107, 114, 128, 0.6)");
-    if (internFound) addBadge("👶", "Le Stagiaire", "Ce personnage de bas niveau s'est perdu dans votre vitrine.", "rgba(107, 114, 128, 0.6)");
-    if (aloyFound) addBadge("⏳", "Voyageur Temporel", "Aloy détectée. Vous êtes l'un des 12 derniers joueurs à vous souvenir d'elle.", "rgba(107, 114, 128, 0.6)");
-    if (globalPersoData.some(p => p.ghettoKing)) addBadge("🪵", "Tiers-Monde", "Un personnage niveau 90 avec une arme 3★. Si c'est bête mais que ça marche...", "rgba(139, 69, 19, 0.6)");
+    if (impostor) addBadge("🤡", t('badge.impostor.name'), t('badge.impostor.desc'), "rgba(184, 63, 63, 0.6)");
+    if (qiqiCurse) addBadge("🧟‍♀️", t('badge.qiqiCurse.name'), t('badge.qiqiCurse.desc'), "rgba(107, 114, 128, 0.6)");
+    if (nudist) addBadge("🩳", t('badge.nudist.name'), t('badge.nudist.desc'), "rgba(107, 114, 128, 0.6)");
+    if (internFound) addBadge("👶", t('badge.intern.name'), t('badge.intern.desc'), "rgba(107, 114, 128, 0.6)");
+    if (aloyFound) addBadge("⏳", t('badge.aloy.name'), t('badge.aloy.desc'), "rgba(107, 114, 128, 0.6)");
+    if (globalPersoData.some(p => p.ghettoKing)) addBadge("🪵", t('badge.tiersMonde.name'), t('badge.tiersMonde.desc'), "rgba(139, 69, 19, 0.6)");
 
-    if (akashamaxxing) addBadge("📈", "Akashamaxxing", "Vous avez bourré les stats critiques sur un personnage qui n'en a pas besoin. Tout pour le Top 1%, rien pour l'équipe.", "linear-gradient(135deg, rgba(236,72,153,0.7), rgba(168,85,247,0.7))");
+    if (akashamaxxing) addBadge("📈", t('badge.akasha.name'), t('badge.akasha.desc'), "linear-gradient(135deg, rgba(236,72,153,0.7), rgba(168,85,247,0.7))");
 
-    if (holyGrail) addBadge("🏆", "Le Saint Graal", "Possède un artéfact dépassant les 50 de Valeur Critique (CV). Une véritable relique divine.", "linear-gradient(135deg, rgba(255,215,0,0.8), rgba(255,255,255,0.7), rgba(255,215,0,0.8))");
+    if (holyGrail) addBadge("🏆", t('badge.holyGrail.name'), t('badge.holyGrail.desc'), "linear-gradient(135deg, rgba(255,215,0,0.8), rgba(255,255,255,0.7), rgba(255,215,0,0.8))");
 
-    if (level89Syndrome) addBadge("🪙", "89 Enjoyer", "On économise les leçons du héros jusqu'au bout !", "rgba(107, 114, 128, 0.6)");
+    if (level89Syndrome) addBadge("🪙", t('badge.89.name'), t('badge.89.desc'), "rgba(107, 114, 128, 0.6)");
     if (level67EasterEgg) addBadge("👀", "67", "SIX SEVEEEEN", "rgba(168, 85, 247, 0.6)");
 
-    if (emblemFan >= 3) addBadge("👘", "Accro à l'Emblème", "Vous passez trop de temps dans le donjon de Momiji.", "rgba(168, 85, 247, 0.6)");
-    if (favoniusCount >= 3) addBadge("🗡️", "Secte de Favonius", "La moitié de l'équipe a une arme de Favonius. Bonjour les particules blanches !", "rgba(107, 114, 128, 0.6)");
+    if (emblemFan >= 3) addBadge("👘", t('badge.emblemFan.name'), t('badge.emblemFan.desc'), "rgba(168, 85, 247, 0.6)");
+    if (favoniusCount >= 3) addBadge("🗡️", t('badge.favSect.name'), t('badge.favSect.desc'), "rgba(107, 114, 128, 0.6)");
 
     if (rainbowFan > globalPersoData.length / 2 && globalPersoData.length >= 4) {
-        addBadge("🌈", "Artiste Arc-en-ciel", "La majorité de votre vitrine n'a aucun bonus 4 pièces.", "linear-gradient(90deg, rgba(255,0,0,0.4), rgba(255,165,0,0.4), rgba(255,255,0,0.4), rgba(0,128,0,0.4), rgba(0,0,255,0.4), rgba(75,0,130,0.4), rgba(238,130,238,0.4))");
+        addBadge("🌈", t('badge.rainbow.name'), t('badge.rainbow.desc'), "linear-gradient(90deg, rgba(255,0,0,0.4), rgba(255,165,0,0.4), rgba(255,255,0,0.4), rgba(0,128,0,0.4), rgba(0,0,255,0.4), rgba(75,0,130,0.4), rgba(238,130,238,0.4))");
     }
 
-    if (pacifist) addBadge("🕊️", "Pacifiste", "Un personnage haut niveau mais avec des aptitudes utiles non montées.", "rgba(107, 114, 128, 0.6)");
+    if (pacifist) addBadge("🕊️", t('badge.pacifist.name'), t('badge.pacifist.desc'), "rgba(107, 114, 128, 0.6)");
 
     if (globalPersoData.length >= 4 && fourStarCount > globalPersoData.length / 2) {
-        addBadge("🧑‍🌾", "F2P By The Way", "La majorité de votre vitrine est composée de 4 étoiles.", "rgba(107, 114, 128, 0.6)");
+        addBadge("🧑‍🌾", t('badge.f2p.name'), t('badge.f2p.desc'), "rgba(107, 114, 128, 0.6)");
     }
     if (globalPersoData.length >= 8 && fourStarCount === 0) {
-        addBadge("💎", "Ligue des Champions", "Aucun 4 étoiles. Seule l'élite a le droit de figurer sur votre profil.", "rgba(59, 130, 246, 0.6)");
+        addBadge("💎", t('badge.champLeague.name'), t('badge.champLeague.desc'), "rgba(59, 130, 246, 0.6)");
     }
     if (globalPersoData.length >= 4 && maxFriendshipCount === globalPersoData.length) {
-        addBadge("🤝", "Lien Indéfectible", "Niveau d'affinité 10 sur toute la vitrine. Vous aimez vraiment vos persos.", "rgba(238, 130, 238, 0.6)");
+        addBadge("🤝", t('badge.bondUnbreakable.name'), t('badge.bondUnbreakable.desc'), "rgba(238, 130, 238, 0.6)");
     }
 
     let monopolyElem = null;
     Object.entries(elementCount).forEach(([elem, count]) => {
         if (count === globalPersoData.length && globalPersoData.length >= 4) {
             monopolyElem = elem;
-            addBadge("🔮", `Monopole ${elem.charAt(0).toUpperCase() + elem.slice(1)}`, "Vitrine 100% mono-élément. Les autres éléments n'existent pas pour vous.", "linear-gradient(135deg, rgba(37,51,85,0.8), rgba(168,85,247,0.7))");
+            addBadge("🔮", t('badge.monopoly.name', elem.charAt(0).toUpperCase() + elem.slice(1)), t('badge.monopoly.desc'), "linear-gradient(135deg, rgba(37,51,85,0.8), rgba(168,85,247,0.7))");
         } else if (count > Math.ceil(globalPersoData.length / 2) && globalPersoData.length >= 4 && !monopolyElem) {
-            addBadge("👑", `Suprématie ${elem.charAt(0).toUpperCase() + elem.slice(1)}`, "La majorité de votre vitrine partage cet élément.", "rgba(61, 160, 97, 0.6)");
-        }
+            addBadge("👑", t('badge.supremacy.name', elem.charAt(0).toUpperCase() + elem.slice(1)), t('badge.supremacy.desc'), "rgba(61, 160, 97, 0.6)");        }
     });
 
     const getBadgePriority = (bg) => {
@@ -3361,23 +3377,23 @@ function renderGlobalEvaluation(playerInfo) {
         
         <div style="position: relative; z-index: 2; display: flex; width: 100%; height: 100%; align-items: center; gap: 15px;">
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-right: 15px; padding-left: 15px; gap: 4px; border-right: 1px solid rgba(255,255,255,0.2); height: 100%;">
-                <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 0px;">Note Globale</p>
+                <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 0px;">${t('ui.eval.globalGrade')}</p>
                 <p style="font-size: 42px; font-weight: 800; color: ${globalGrade.color}; line-height: 1; text-shadow: 0 0 10px ${globalGrade.color}40;">${globalGrade.letter}</p>
             </div>
             <div style="display: flex; flex-direction: column; text-align: center; justify-content: center; gap: 2px; padding-right: 15px; border-right: 1px solid rgba(255,255,255,0.2); height: 100%;">
                 <div>
-                    <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6);">Efficacité</p>
+                    <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6);">${t('ui.eval.efficiency')}</p>
                     <p style="font-size: 14px; font-weight: bold; color: #fff;">${avgEff.toFixed(1)}%</p>
                 </div>
                 <div>
-                    <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6);">Score</p>
+                    <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6);">${t('ui.eval.score')}</p>
                     <p style="font-size: 14px; font-weight: bold; color: #fff;">${avgScore.toFixed(1)}</p>
                 </div>
             </div>
             <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 2px 12px 2px 0;">
-                <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 2px; flex-shrink: 0; margin-top: 4px;">Badges et titres</p>
+                <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 2px; flex-shrink: 0; margin-top: 4px;">${t('ui.eval.badges')}</p>
                 <div class="card-buff-list-container badges-scroll" style="display: flex; flex-wrap: wrap; gap: 4px; overflow-y: auto; overflow-x: hidden; padding-right: 8px; max-height: 100%; padding-bottom: 4px;">
-                    ${badges.length > 0 ? badges.join('') : '<p style="color: rgba(255,255,255,0.5); font-size: 11px; font-style: italic;">Aucun fait marquant détecté...</p>'}
+                    ${badges.length > 0 ? badges.join('') : `<p style="color: rgba(255,255,255,0.5); font-size: 11px; font-style: italic;">${t('ui.eval.noBadge')}</p>`}
                 </div>
             </div>
         </div>
@@ -3390,7 +3406,20 @@ function renderShowcase(index) {
     if (!container) return;
 
     if (window.currentPlayerNickname) {
-        document.title = `${p.nom} de ${window.currentPlayerNickname} - guoba.gg`;
+        document.title = t('page.title.char', p.nom, window.currentPlayerNickname);
+
+        const ogTitle = t('meta.og.title.char', p.nom, window.currentPlayerNickname);
+        const ogDesc = t('meta.og.description.char', p.nom);
+
+        const updateMeta = (selector, val) => {
+            const el = document.querySelector(selector);
+            if (el) el.setAttribute('content', val);
+        };
+
+        updateMeta('meta[property="og:title"]', ogTitle);
+        updateMeta('meta[property="og:description"]', ogDesc);
+        updateMeta('meta[name="twitter:title"]', ogTitle);
+        updateMeta('meta[name="twitter:description"]', ogDesc);
     }
 
     const currentUid = new URLSearchParams(window.location.search).get('uid') || document.getElementById('uidInput').value;
@@ -3432,12 +3461,12 @@ function renderShowcase(index) {
 
 
     let talentsHtml = `<div style="display:flex; justify-content:space-between; margin-left: 3px; margin-right: 3px;">`;
-    p.talents.forEach(t => {
+    p.talents.forEach(talent => {
         talentsHtml += `
-            <div style="width:64px; height:64px; background-color: rgba(0, 0, 0, 0.2); border-radius:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; border:1px solid rgba(255, 255, 255, 0.4); margin-bottom: 11px;">
-                <img src="${t.icon}" style="width:60px; height:60px;" alt="Aptitude">
-                <div style="position:absolute; bottom:-10px; background-color: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5)); padding:2px 6px; border-radius:100%; font-size:10px;">${t.level}</div>
-            </div>`;
+        <div style="width:64px; height:64px; background-color: rgba(0, 0, 0, 0.2); border-radius:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; border:1px solid rgba(255, 255, 255, 0.4); margin-bottom: 11px;">
+            <img src="${talent.icon}" style="width:60px; height:60px;" alt="${t('ui.char.skills')}">
+            <div style="position:absolute; bottom:-10px; background-color: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5)); padding:2px 6px; border-radius:100%; font-size:10px;">${talent.level}</div>
+        </div>`;
     });
     talentsHtml += `</div>`;
 
@@ -3481,11 +3510,11 @@ function renderShowcase(index) {
                 <img src="${p.weapon.icon}" class="item-img" style="width: auto; height:100%; border-radius: 8px; border:2px solid ${p.weapon.stars === 5 ? '#eab308' : '#9C74B6'}" alt="${p.weapon.name}">
                 <div style="flex:1; display: flex; flex-direction: column; overflow: hidden;">
                     <div style="font-size:16px; color: #FFFFFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.weapon.name}</div>
-                    <div style="color: #FFFFFF; font-size:14px; margin-bottom:5px;">Niv. ${p.weapon.level} • R${p.weapon.rank}</div>
+                    <div style="color: #FFFFFF; font-size:14px; margin-bottom:5px;">${t('ui.char.level', p.weapon.level)} • R${p.weapon.rank}</div>
                     <div style="display:flex; gap:12px; margin-top:5px; background:rgba(0,0,0,0.2); padding:5px; border-radius:8px; overflow: hidden;">
                         ${p.weapon.baseAtk ? `
                         <div style="overflow: hidden; padding-left: 2px;">
-                            <p style="font-size:12px; color: rgba(255, 255, 255, 0.4); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ATQ de base</p>
+                            <p style="font-size:12px; color: rgba(255, 255, 255, 0.4); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${t('ui.art.baseAtk')}</p>
                             <p style="font-size:16px; text-align: left; margin-top: 2px;">${p.weapon.baseAtk.value}</p>
                         </div>` : ''}
                         ${p.weapon.subStat ? `
@@ -3511,11 +3540,11 @@ function renderShowcase(index) {
                     <div style="align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box; margin-bottom: 6px;">
                         <div style="height: 40px; margin-top: 8px; margin-bottom: 5px; display: flex; flex-direction: row; justify-content: space-between; margin-left: 10px; margin-right: 10px;">
                             <div class="showcase-element-weapon" style="display: flex; flex-direction: row;">
-                                <img src="${ICON_BASE_PATH}${ICON_MAP[s.dmgBonusKey]}" style="width: 25px; height: 25px; margin-top: 2px;" alt="Element">
-                                <img src="${ICON_BASE_PATH}${ICON_MAP[p.charWeapon]}" style="width: 29px; height: 29px;" alt="Type Arme">
+                                <img src="${ICON_BASE_PATH}${ICON_MAP[s.dmgBonusKey]}" style="width: 25px; height: 25px; margin-top: 2px;" alt="">
+                                <img src="${ICON_BASE_PATH}${ICON_MAP[p.charWeapon]}" style="width: 29px; height: 29px;" alt="">
                             </div>
                             <div class="showcase-level-const" style="display: flex; flex-direction: column; text-align: right;">
-                                <p style="font-size: 14px;">Niv. ${p.level}</p>
+                                <p style="font-size: 14px;">${t('ui.char.level', p.level)}</p>
                                 <p style="font-size: 14px;">C${p.cons}</p>
                             </div>
                         </div>
@@ -3524,16 +3553,16 @@ function renderShowcase(index) {
                         </div>
                     </div>
                     <div>
-                        <p style="margin-left: 10px; margin-right: 10px; margin-bottom: 9px; font-size: 14px;">Statistiques de base</p>
+                        <p style="margin-left: 10px; margin-right: 10px; margin-bottom: 9px; font-size: 14px;">${t('ui.char.baseStats')}</p>
                         <div class="showcase-base-stats-container" style="display: flex; flex-direction: column; gap: 9px; margin-left: 7px; margin-right: 10px; margin-bottom: 9px;">
-                            ${statLine(createIcon('hp'), "PV max", Math.round(s.hp))}
-                            ${statLine(createIcon('atk'), "ATQ", Math.round(s.atk))}
-                            ${statLine(createIcon('def'), "DÉF", Math.round(s.def))}
-                            ${statLine(createIcon('eleMas'), "Maîtrise élémentaire", Math.round(s.em))}
-                            ${statLine(createIcon('critRate_'), "Taux CRIT", s.cr.toFixed(1) + '%')}
-                            ${statLine(createIcon('critDMG_'), "DGT CRIT", s.cd.toFixed(1) + '%')}
-                            ${statLine(createIcon('enerRech_'), "Recharge d'énergie", s.er.toFixed(1) + '%')}
-                            ${statLine(createIcon('heal_'), "Bonus de soins", (s.hb || 0).toFixed(1) + '%')}
+                            ${statLine(createIcon('hp'), t('stat.hp'), Math.round(s.hp))}
+                            ${statLine(createIcon('atk'), t('stat.atk'), Math.round(s.atk))}
+                            ${statLine(createIcon('def'), t('stat.def'), Math.round(s.def))}
+                            ${statLine(createIcon('eleMas'), t('stat.eleMas'), Math.round(s.em))}
+                            ${statLine(createIcon('critRate_'), t('stat.critRate_'), s.cr.toFixed(1) + '%')}
+                            ${statLine(createIcon('critDMG_'), t('stat.critDMG_'), s.cd.toFixed(1) + '%')}
+                            ${statLine(createIcon('enerRech_'), t('stat.enerRech_'), s.er.toFixed(1) + '%')}
+                            ${statLine(createIcon('heal_'), t('stat.heal_'), (s.hb || 0).toFixed(1) + '%')}
                             ${statLine(formatStat(s.dmgBonusKey, s.dmgBonus / 100).icon, formatStat(s.dmgBonusKey, s.dmgBonus / 100).label, s.dmgBonus.toFixed(1) + '%')}
                         </div>
                     </div>
@@ -3543,7 +3572,7 @@ function renderShowcase(index) {
                 <div class="showcase-area-score" style="display: flex; flex-direction: column; gap: 6px; border-radius: 8px; transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; padding: 10px 10px 8px 7px;box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 2px solid ${ev.grade.color}; box-sizing: border-box;">
                     <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
                         <img src="assets/simulator/icons/icon_score_white.webp" alt="Score" style="width: 19px; height: 19px; margin-bottom: 2px; margin-right: 5px;">
-                        <p>Score</p>
+                        <p>${t('ui.char.score')}</p>
                         <div class="dotted-line"></div> 
                         <div style="display: flex; flex-direction: row; gap: 4px;">
                             <p style="color: ${ev.grade.color};">${ev.score}</p>
@@ -3551,7 +3580,7 @@ function renderShowcase(index) {
                         </div>
                     </div>
                     <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
-                        <p style="margin-left: 24px;">Rolls totaux</p>
+                        <p style="margin-left: 24px;">${t('ui.char.totalRolls')}</p>
                         <div class="dotted-line"></div> 
                         <p>${ev.totalRolls}</p>
                     </div>
@@ -3559,20 +3588,20 @@ function renderShowcase(index) {
                 
                 <!-- 1.3.3 Aptitudes -->
                 <div class="showcase-area-skills" style="border-radius: 8px; transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; padding: 10px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 1px solid rgba(255, 255, 255, 0.4); box-sizing: border-box;">
-                    <p style="margin-bottom: 9px; font-size: 14px;">Aptitudes</p>
+                    <p style="margin-bottom: 9px; font-size: 14px;">${t('ui.char.skills')}</p>
                     ${talentsHtml}
                 </div>
                 
                 <!-- 1.3.4 Statistiques de combat -->
                 <div class="showcase-area-combat-stats" style="border-radius: 8px; transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; padding-left: 2px; padding-right: 2px; padding-bottom: 3px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 1px solid rgba(255, 255, 255, 0.4); box-sizing: border-box;">
-                    <p style="margin-left: 10px; margin-right: 10px; margin-bottom: 9px; margin-top: 10px; font-size: 14px;">Statistiques de combat</p>
+                    <p style="margin-left: 10px; margin-right: 10px; margin-bottom: 9px; margin-top: 10px; font-size: 14px;">${t('ui.char.combatStats')}</p>
                     <div style="display: flex; flex-direction: column; gap: 9px; margin-left: 7px; margin-right: 10px; margin-bottom: 4px;">
                         ${(() => {
         let html = "";
         const dynamicDefs = [
-            {wKey: 'hp', sKey: 'hp', icon: 'hp', label: 'PV max', isPct: false},
-            {wKey: 'atk', sKey: 'atk', icon: 'atk', label: 'ATQ', isPct: false},
-            {wKey: 'def', sKey: 'def', icon: 'def', label: 'DÉF', isPct: false}
+            {wKey: 'hp', sKey: 'hp', icon: 'hp', label: t('stat.hp'), isPct: false},
+            {wKey: 'atk', sKey: 'atk', icon: 'atk', label: t('stat.atk'), isPct: false},
+            {wKey: 'def', sKey: 'def', icon: 'def', label: t('stat.def'), isPct: false}
         ];
 
         dynamicDefs.forEach(def => {
@@ -3588,10 +3617,10 @@ function renderShowcase(index) {
         });
 
         const fixedDefs = [
-            {wKey: 'eleMas', sKey: 'em', icon: 'eleMas', label: 'Maîtrise élémentaire', isPct: false},
-            {wKey: 'critRate_', sKey: 'cr', icon: 'critRate_', label: 'Taux CRIT', isPct: true},
-            {wKey: 'critDMG_', sKey: 'cd', icon: 'critDMG_', label: 'DGT CRIT', isPct: true},
-            {wKey: 'enerRech_', sKey: 'er', icon: 'enerRech_', label: "Recharge d'énergie", isPct: true}
+            {wKey: 'eleMas', sKey: 'em', icon: 'eleMas', label: t('stat.eleMas'), isPct: false},
+            {wKey: 'critRate_', sKey: 'cr', icon: 'critRate_', label: t('stat.critRate_'), isPct: true},
+            {wKey: 'critDMG_', sKey: 'cd', icon: 'critDMG_', label: t('stat.critDMG_'), isPct: true},
+            {wKey: 'enerRech_', sKey: 'er', icon: 'enerRech_', label: t('stat.enerRech_'), isPct: true}
         ];
 
         fixedDefs.forEach(def => {
@@ -3608,7 +3637,7 @@ function renderShowcase(index) {
         const isHealHidden = p.activeBuild && p.activeBuild.hideUIStats && p.activeBuild.hideUIStats.includes("heal_");
         if (!isHealHidden) {
             const healVal = s.hb || 0;
-            html += statLine(createIcon('heal_'), "Bonus de soins", healVal.toFixed(1) + '%', false);
+            html += statLine(createIcon('heal_'), t('stat.heal_'), healVal.toFixed(1) + '%', false);
         }
 
         const isDmgHidden = p.activeBuild && p.activeBuild.hideUIStats && p.activeBuild.hideUIStats.includes("elemental_dmg_");
@@ -3671,7 +3700,7 @@ function renderShowcase(index) {
             `;
         });
 
-        const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+        const pieceName = t('artifact.' + art.type);
         html += `
             <div class="card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid rgba(255, 255, 255, 0.4); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset;">
                 <div class="card-container" style="padding-top: 12px; padding-left: 12px; padding-right: 12px; padding-bottom: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; align-items: stretch;">
@@ -3709,7 +3738,7 @@ function renderShowcase(index) {
                     <div style="font-size: 12px; align-items: center;" class="art-score-footer">
                         <div style="display:flex; align-items:center; gap: 5px;">
                             <img src="/assets/simulator/icons/icon_score_white.webp" style="width: 19px; height: 19px; margin-bottom: 2px;" alt="Score">
-                            <p>Score</p>
+                            <p>${t('ui.char.score')}</p>
                         </div>
                         <div style="display: flex; flex-direction: row; gap: 4px;">
                             <p>${(art.stars || 5) < 4 ? '—' : art.score}</p>
@@ -3775,8 +3804,8 @@ function renderShowcase(index) {
                 <div class="card-container" style="height: 100%; padding: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;">
                     
                     <div style="font-size:14px; flex-shrink: 0;">
-                        <p style="margin-bottom: 2px;">Buffs actifs</p>
-                        <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4);">Cochez pour appliquer les passifs et buffs (scroll pour tout voir).</p>
+                        <p style="margin-bottom: 2px;">${t('ui.char.buffsTitle')}</p>
+                        <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4);">${t('ui.char.buffsHint')}</p>
                     </div>
                     
                     <div class="card-divider" style="flex-shrink: 0; margin: 9px 0px; display: flex; clear: both; width: 100%; min-width: 100%; box-sizing: border-box; color: rgba(255, 255, 255, 0.25); border-width: 1px 0 0; border-color: rgba(255, 255, 255, 0.25); border-block-start: 1px solid rgba(255, 255, 255, 0.25);"></div>
@@ -3819,28 +3848,27 @@ function renderShowcase(index) {
 
         return `
                 <div style="padding:20px;">
-                    <h2 style="color:#fff; margin-bottom:25px; font-size:32px; border-bottom:2px solid #FFFFFF; padding-bottom:10px; display:flex; align-items:center; gap:10px;">${p.nom} - Analyse & conseils</h2>
-                    
+                    <h2 style="color:#fff; margin-bottom:25px; font-size:32px; border-bottom:2px solid #FFFFFF; padding-bottom:10px; display:flex; align-items:center; gap:10px;">${t('analysis.title', p.nom)}</h2>                    
                     <div style="display:flex; flex-direction:column; gap:64px;">
                         
                         <div style="">
-                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">1. Vue d'ensemble</h3>
-                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Évaluez la qualité de vos sous-stats et ayez un aperçu réel du potentiel de vos artéfacts actuels.</p>
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">${t('analysis.s1.title')}</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">${t('analysis.s1.desc')}</p>
                             ${generateScoreBar(ev.totalRolls, ev.grade.letter, potential.totalRolls)}
                             
                             <div style="background:#2C2D32; padding:16px; border-radius:8px;">   
                                 <div style="display:flex; justify-content:space-around; align-items:center; flex-wrap:wrap; gap:32px;">
                                     <div style="text-align:left;">
-                                        <p style="font-size:12px; text-transform: uppercase; color:#aaa; margin-bottom: 8px;">Efficacité du Build</p>
+                                        <p style="font-size:12px; text-transform: uppercase; color:#aaa; margin-bottom: 8px;">${t('analysis.s1.buildEff')}</p>
                                         <p style="font-size:40px; line-height: 1; color:${effColor};">${efficiency}%</p>
                                     </div>
                                     <div style="text-align:left;">
-                                        <p style="font-size:12px; text-transform: uppercase; color:#aaa; margin-bottom: 8px;">Facteur Chance (RNG)</p>
+                                        <p style="font-size:12px; text-transform: uppercase; color:#aaa; margin-bottom: 8px;">${t('analysis.s1.rngFactor')}</p>
                                         <p style="font-size:40px; line-height: 1; color:${rngQuality > 85 ? '#22c55e' : (rngQuality > 75 ? '#eab308' : '#ff4d4d')}">${rngQuality}%</p>
                                     </div>
                                     <div style="flex:1; min-width:200px;">
                                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.8rem;">
-                                            <span style="color:#aaa; font-size: 12px; text-transform: uppercase;">Score Potentiel Max</span>
+                                            <span style="color:#aaa; font-size: 12px; text-transform: uppercase;">${t('analysis.s1.maxScore')}</span>
                                             <span style="font-weight:bold; color:var(--accent-gold);">${potential.score} <span style="color:#22c55e; font-size:0.7rem;">(+${gain})</span></span>
                                         </div>
                                         <div style="width:100%; background:#333; height:40px; border-radius:8px; position:relative;">
@@ -3855,13 +3883,13 @@ function renderShowcase(index) {
                        <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
                                 
                         <div>
-                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">2. Analyse stratégique</h3>
-                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Identifiez les déséquilibres majeurs de votre build et assurez-vous que votre pièce hors-set apporte un vrai bonus.</p>
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">${t('analysis.s2.title')}</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">${t('analysis.s2.desc')}</p>
                             
                             <div style="display:flex; gap:20px; align-items:stretch;">
                                 
                                 <div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${critAdvice.color};">
-                                    <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Analyse de taux critique</p>
+                                    <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">${t('analysis.s2.critAnalysis')}</p>
                                     <p style="font-size:16px; color:#fff;">${critAdvice.msg}</p>
                                 </div>
                                 ${(() => {
@@ -3882,10 +3910,10 @@ function renderShowcase(index) {
                                 <div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px; display:flex; flex-direction:column; justify-content:space-between;">
                                     <div style="margin-bottom:12px;">
                                         <div style="color:#aaa; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:flex-end;">
-                                            <p style="font-size:12px;">Répartition des Rolls</p>
+                                            <p style="font-size:12px;">${t('analysis.s2.rollDist')}</p>
                                             <div style="font-size:11px;">
-                                                <span style="color:#22c55e;">${rollStats.usefulCount} Utiles</span> / 
-                                                <span style="color:#ff4d4d;">${rollStats.deadCount} Morts</span>
+                                                <span style="color:#22c55e;">${t('analysis.s2.usefulRolls', rollStats.usefulCount)}</span> / 
+                                                <span style="color:#ff4d4d;">${t('analysis.s2.deadRolls', rollStats.deadCount)}</span>
                                             </div>
                                         </div>
                                         
@@ -3896,7 +3924,7 @@ function renderShowcase(index) {
                                     </div>
                                 
                                     <div style="margin-bottom:10px;">
-                                        <p style="font-size:11px; color:#aaa; margin-bottom:4px;">Stats Utiles</p>
+                                        <p style="font-size:11px; color:#aaa; margin-bottom:4px;">${t('analysis.s2.usefulStats')}</p>
                                         <div style="display:flex; flex-wrap:wrap; gap:5px;">
                                             ${rollStats.usefulDetails.map(d =>
             `<span style="background:rgba(34, 197, 94, 0.15); color:#86efac; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(34, 197, 94, 0.2);">
@@ -3907,21 +3935,20 @@ function renderShowcase(index) {
                                     </div>
                                 
                                     <div>
-                                        <p style="font-size:11px; color:#aaa; margin-bottom:4px;">Stats Inutiles</p>
+                                        <p style="font-size:11px; color:#aaa; margin-bottom:4px;">${t('analysis.s2.deadStats')}</p>
                                         <div style="display:flex; flex-wrap:wrap; gap:5px;">
                                             ${rollStats.deadDetails.length > 0 ? rollStats.deadDetails.map(d =>
             `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.75rem; padding:2px 6px; border-radius:4px; border:1px solid rgba(255, 77, 77, 0.2);">
                                                     ${d.label} (${d.count})
                                                 </span>`
-        ).join('') : '<span style="color:#22c55e; font-size:0.75rem;">Aucune !</span>'}
-                                        </div>
+        ).join('') : `<span style="color:#22c55e; font-size:0.75rem;">${t('analysis.s2.noDeadStats')}</span>`}                                        </div>
                                     </div>
                                 
                                 </div>
                                 
                                 ${offPieceAdvice ? `
                                 <div style="flex:1; background:#2C2D32; padding:15px; border-radius:8px; border: 1px solid rgba(255, 255, 255, 0.05); border-left:3px solid ${offPieceAdvice.type === 'success' ? '#22c55e' : (offPieceAdvice.type === 'warning' ? '#eab308' : '#ef4444')};">
-                                    <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Analyse Pièce Hors-Set</p>
+                                    <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">${t('analysis.s2.offPiece')}</p>
                                     <p style="font-size:16px; color:#fff;">${offPieceAdvice.msg}</p>
                                 </div>` : ''}
                                 
@@ -3931,16 +3958,12 @@ function renderShowcase(index) {
                        <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
                         <div>
-                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">3. Plan d'action</h3>
-                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Votre feuille de route prioritaire avec les corrections urgentes à appliquer et les artéfacts à remplacer.</p>
-                            
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">${t('analysis.s3.title')}</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">${t('analysis.s3.desc')}</p>
                             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
-                            
-                            
-                         
-                        <div style="grid-column: 1 / -1; margin-top: 10px; margin-bottom: -5px;">
-                                    <p style="font-size:12px; color:#aaa; text-transform:uppercase; letter-spacing:0.05em;">Conseils généraux</p>
-                                </div>
+                            <div style="grid-column: 1 / -1; margin-top: 10px; margin-bottom: -5px;">
+                            <p style="font-size:12px; color:#aaa; text-transform:uppercase; letter-spacing:0.05em;">${t('analysis.s3.p1.title')}</p>
+                            </div>
                                 ${(() => {
             const adv = getLevelAdvice(p);
             const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
@@ -3963,7 +3986,7 @@ function renderShowcase(index) {
                         
                                 ${talentAdvices && talentAdvices.length > 0 ? `
                                     <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid ${talentAdvices[0].type === 'success' ? '#22c55e' : (talentAdvices.some(a => a.type === 'critical') ? '#ef4444' : '#ef4444')};">
-                                        <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">Priorité des Aptitudes</p>
+                                        <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">${t('analysis.s3.talentPriority')}</p>
                                         ${talentAdvices.map(adv => `
                                             <p style="font-size: 16px; color:#fff;">${adv.msg}</p>
                                         `).join('')}
@@ -3981,7 +4004,7 @@ function renderShowcase(index) {
                 ? `<p style="font-size:16px; color:#fff;">${adv.msg}</p>`
                 : adv.details.map(d => `
                                             <p style="font-size:16px; color:#fff;">
-                                                Sur <b style="color: #aaa;">${d.piece}</b>, visez <span style="color:var(--accent-gold); font-weight:bold;">${d.better}</span> (Actuellement : <span style="color:var(--accent-gold);">${d.current}</span>).
+                                                ${t('analysis.s3.mainStatDetail', d.piece, d.better, d.current)}
                                             </p>
                                         `).join('')}
                                     </div>`;
@@ -4018,7 +4041,7 @@ function renderShowcase(index) {
         })()}
                         
                                 <div style="background:#2C2D32; padding:15px; border-radius:8px; grid-column: 1 / -1;">
-                                    <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">Top 3 des artéfacts à changer par ordre de priorité</p>
+                                    <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">${t('analysis.s3.top3')}</p>
                                     ${priorities.length > 0 ? priorities.map((p, i) => {
             const difficulty = getFarmDifficulty(p.type, p.mainKey);
             const estimate = getResinCostEstimate(p.type, p.mainKey, p.score); 
@@ -4028,7 +4051,7 @@ function renderShowcase(index) {
                                             <div style="display:flex; flex-direction:column;">
                                                 <div style="display:flex; align-items:center; gap:6px;">
                                                     <p style="font-size: 16px; color:#ddd;">${i + 1}. ${p.piece}</p>
-                                                    ${p.isOffPiece ? '<p style="font-size:0.7rem; color:rgba(34, 198, 94, 1); background:rgba(34, 198, 94, 0.15); padding:1px 4px; border-radius:4px;">Off-Set</p>' : ''}
+                                                    ${p.isOffPiece ? `<p style="font-size:0.7rem; color:rgba(34, 198, 94, 1); background:rgba(34, 198, 94, 0.15); padding:1px 4px; border-radius:4px;">${t('ui.art.offPiece')}</p>` : ''}
                                                 </div>
                                                 
                                                 <p style="font-size:12px; color:#9ca3af; margin-left: 16px; margin-top:1px;">${p.setName} • <span style="color:#fff;">${p.mainLabel}</span></p>
@@ -4037,7 +4060,7 @@ function renderShowcase(index) {
                                                     <p style="font-size:12px; color:${difficulty.color};">${difficulty.label}</p>
                                                     <div style="width: 4px; height: 4px; border-radius: 50%; background-color: rgba(255,255,255,0.2);"></div>
                                                     <p style="font-size:12px; color:#aaa; font-family: ShinShin, sans-serif;">
-                                                        <span style="color:#fff;">~${estimate.resin}</span> Résines (<span style="color:#fff;">${estimate.days} jours</span>)
+                                                        <span style="color:#fff;">${t('analysis.s3.resinEst', estimate.resin, estimate.days)}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -4048,15 +4071,15 @@ function renderShowcase(index) {
                                             </div>
                                         </div>
                                     `
-        }).join('') : '<p style="color:#22c55e;">Rien à signaler, excellent travail.</p>'}
+        }).join('') : `<p style="color:#22c55e;">${t('analysis.s3.noPriority')}</p>`}
                                 </div>
                             </div>
                             
                             ${(() => {
             const SLOT_ORDER_WTL = ["EQUIP_BRACER", "EQUIP_NECKLACE", "EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
             const FIXED_MAIN = {
-                "EQUIP_BRACER":   { key: "hp",  label: "PV" },
-                "EQUIP_NECKLACE": { key: "atk", label: "ATQ" }
+                "EQUIP_BRACER":   { key: "hp",  get label() { return t('stat.hp'); } },
+                "EQUIP_NECKLACE": { key: "atk", get label() { return t('stat.atk'); } }
             };
 
             const VALID_SUBSTATS = ["critRate_", "critDMG_", "atk_", "atk", "hp_", "hp", "def_", "def", "eleMas", "enerRech_"];
@@ -4092,17 +4115,15 @@ function renderShowcase(index) {
             }
 
             function getSetNameFR(setKey) {
-                if (setKey === "Hors-Set") return "Pièce Hors-Set";
-                if (setKey === "Au choix") return "Set au choix";
+                if (setKey === "Hors-Set") return t('wtl.offSetPiece');
+                if (setKey === "Au choix") return t('wtl.anySet');
                 const frName = Object.keys(SET_NAME_MAPPING).find(k => SET_NAME_MAPPING[k] === setKey);
                 return frName || setKey;
             }
 
             function getArtifactIcon(setKey, setNameFR, slotType) {
-                // Si c'est au choix, on garde l'icône mystère
                 if (setKey === "Au choix") return ICON_BASE_PATH + "icon_unknown.webp";
 
-                // CORRECTION : Si c'est Hors-Set, on force la recherche sur le set Rideau du Gladiateur
                 let lookupSetKey = setKey;
                 let lookupNameFR = setNameFR;
                 if (setKey === "Hors-Set") {
@@ -4111,7 +4132,10 @@ function renderShowcase(index) {
                 }
 
                 let targetHash = null;
-                const lang = locData["fr"] ? "fr" : (locData["en"] ? "en" : Object.keys(locData)[0]);
+                const lang = locData[window.GUOBA_LANG] ? window.GUOBA_LANG
+                    : locData["fr"] ? "fr"
+                        : locData["en"] ? "en"
+                            : Object.keys(locData)[0];
                 const locDict = locData[lang] || {};
 
                 for (const [hash, name] of Object.entries(locDict)) {
@@ -4169,8 +4193,7 @@ function renderShowcase(index) {
                         const best = possible
                             .map(k => ({ key: k, w: config.weights[k] || (k.includes("_dmg_") ? (config.weights["elemental_dmg_"] || 0) : 0) }))
                             .sort((a, b) => b.w - a.w)[0];
-                        mainStats = best ? [{ key: best.key, label: STAT_LABELS[best.key] || best.key }] : [{ key: "unknown", label: "Au choix" }];
-                    }
+                        mainStats = best ? [{ key: best.key, label: STAT_LABELS[best.key] || best.key }] : [{ key: "unknown", label: t('wtl.anyChoice') }];                    }
                 }
 
                 const hasSingleMainStatTarget = isFixedSlot || mainStats.length === 1;
@@ -4250,7 +4273,7 @@ function renderShowcase(index) {
                 }
 
                 while (slotsUsed < 4) {
-                    subSlots.push({ type: 'any', label: "Au choix" });
+                    subSlots.push({ type: 'any', label: t('wtl.anyChoice') });
                     slotsUsed += 1;
                 }
 
@@ -4273,7 +4296,7 @@ function renderShowcase(index) {
                         return `
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">
                     <div style="display:flex; flex-direction:row; align-items:center; gap:4px;">
-                        <span style="color:#aaa; font-size:10px; padding-left:2px;">↳ ou</span>
+                        <span style="color:#aaa; font-size:10px; padding-left:2px;">↳ ${t('wtl.or')}</span>
                         <img src="${ICON_BASE_PATH}${ICON_MAP[m.key] || ICON_MAP['unknown']}" style="width:15px; height:15px; flex-shrink:0;" alt="">
                         <p style="font-size:11px; color: #ffffff;">${m.label}</p>
                     </div>
@@ -4298,7 +4321,7 @@ function renderShowcase(index) {
                                 return `
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">
                             <div style="display:flex; flex-direction:row; align-items:center; gap:4px;">
-                                <span style="color:#aaa; font-size:10px; padding-left:2px;">↳ ou</span>
+                                <span style="color:#aaa; font-size:10px; padding-left:2px;">↳ ${t('wtl.or')}</span>
                                 <img src="${ICON_BASE_PATH}${ICON_MAP[k.key] || ICON_MAP['unknown']}" style="width:15px; height:15px; flex-shrink:0;" alt="">
                                 <p style="font-size:11px; color: #ffffff;">${k.label}</p>
                             </div>
@@ -4319,10 +4342,9 @@ function renderShowcase(index) {
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">
                         <div style="display:flex; flex-direction:row; align-items:center; gap:4px; opacity:0.6;">
-                            <span style="color:#aaa; font-size:10px; padding-left:2px;">↳ ou</span>
+                            <span style="color:#aaa; font-size:10px; padding-left:2px;">↳ ${t('wtl.or')}</span>
                             <div style="width:15px; height:15px; border-radius:3px; border:1px dashed rgba(255,255,255,0.3); flex-shrink:0;"></div>
-                            <p style="font-size:11px; font-style:italic;">Au choix</p>
-                        </div>
+                            <p style="font-size:11px; font-style:italic;">${t('wtl.anyChoice')}</p>                        </div>
                     </div>
                 </div>`;
                     }
@@ -4330,7 +4352,7 @@ function renderShowcase(index) {
                     if (sub.type === 'pool') {
                         return `
                 <div style="${divider}">
-                    <p style="font-size:10px; color:#c8a96e; margin-bottom:5px;">${sub.count} au choix parmi :</p>
+                    <p style="font-size:10px; color:#c8a96e; margin-bottom:5px;">${t('wtl.chooseAmong', sub.count)}</p>
                     <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
                         ${sub.keys.map(k => `
                             <div style="display:flex; align-items:center; gap:3px; background:rgba(255,255,255,0.05); padding:2px 4px; border-radius:4px; border:1px solid rgba(255,255,255,0.1);">
@@ -4348,8 +4370,7 @@ function renderShowcase(index) {
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div style="display:flex; flex-direction:row; align-items:center; gap:5px; opacity:0.4;">
                             <div style="width:15px; height:15px; border-radius:3px; border:1px solid rgba(255,255,255,0.3); flex-shrink:0;"></div>
-                            <p style="font-size:11px; font-style:italic;">Au choix</p>
-                        </div>
+                            <p style="font-size:11px; font-style:italic;">${t('wtl.anyChoice')}</p>                        </div>
                     </div>
                 </div>`;
                     }
@@ -4397,7 +4418,7 @@ function renderShowcase(index) {
 
             return `
             <div style="margin-top:24px;">
-                <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:12px; letter-spacing:0.05em;">Ce qu'il faut viser</p>
+                <p style="font-size:12px; color:#aaa; text-transform:uppercase; margin-bottom:12px; letter-spacing:0.05em;">${t('analysis.s3.p2.title')}</p>
                 <div style="display:flex; flex-direction:row; justify-content:space-between; gap:15px;">
                     ${cardHtml}
                 </div>
@@ -4409,11 +4430,11 @@ function renderShowcase(index) {
             if (!hasAnySwap) return '';
 
             const SLOT_NAMES = [
-                "la fleur",
-                "la plume",
-                "le sablier",
-                "la coupe",
-                "le diadème"
+                t('artifact.EQUIP_BRACER'),
+                t('artifact.EQUIP_NECKLACE'),
+                t('artifact.EQUIP_SHOES'),
+                t('artifact.EQUIP_RING'),
+                t('artifact.EQUIP_DRESS')
             ];
 
             const cards = crossChecks.map((swap, idx) => {
@@ -4421,7 +4442,7 @@ function renderShowcase(index) {
                     return `
         <div style="flex: 1; min-width: 200px; background:#2C2D32; border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid #3a3b42; box-sizing:border-box; opacity:0.4; align-items:center; justify-content:center; min-height:160px;">
             <div style="font-size:22px; color:#444;">✗</div>
-            <p style="font-size:11px; color:#888; text-align:center; line-height:1.5;">Aucun échange<br>avantageux détecté<br>sur ${SLOT_NAMES[idx]}</p>
+            <p style="font-size:11px; color:#888; text-align:center; line-height:1.5;">${t('analysis.s3.noSwapOn', SLOT_NAMES[idx])}</p>
         </div>`;
                 }
 
@@ -4459,8 +4480,8 @@ function renderShowcase(index) {
 
             const warningHtml = `
             <div style="grid-column:1/-1; display:flex; flex-direction:column; gap:12px; margin-top: 24px; margin-bottom: 20px;">
-                <p style="font-size:12px; color:#aaa; text-transform:uppercase; letter-spacing:0.05em; margin:0;">Échange avantageux</p>
-                <p style="font-size: 14px; color:#ccc; line-height: 1.5;">Ce système repère les artéfacts équipés sur vos autres personnages qui amélioreraient celui que vous regardez actuellement. Attention : procéder à cet échange optimisera ce personnage au maximum, mais cela réduira inévitablement les statistiques du personnage qui se fait emprunter sa pièce !</p>
+                <p style="font-size:12px; color:#aaa; text-transform:uppercase; letter-spacing:0.05em; margin:0;">${t('analysis.s3.p3.title')}</p>
+                <p style="font-size: 14px; color:#ccc; line-height: 1.5;">${t('analysis.s3.swap.desc')}</p>
             </div>`;
 
             return warningHtml + `<div style="grid-column:1/-1; width:100%; box-sizing:border-box; display:flex; flex-wrap:nowrap; gap:20px; overflow-x:auto;">${cards.join('')}</div>`;
@@ -4472,12 +4493,12 @@ function renderShowcase(index) {
                         <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
                         <div>
-                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">4. Projection idéale</h3>
-                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Visualisez vos artéfacts tels qu'ils seraient si vos statistiques inutiles étaient converties en statistiques optimales.</p>
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">${t('analysis.s4.title')}</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">${t('analysis.s4.desc')}</p>
 
                             <div style="display:flex; flex-direction:row; justify-content:space-between; gap:15px;">
                             ${p.artefacts.map(art => {
-            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+            const pieceName = t('artifact.' + art.type);
 
             if ((art.stars || 5) < 4) {
                 return `
@@ -4486,7 +4507,7 @@ function renderShowcase(index) {
         <img src="${art.icon}" style="width:38px; height:38px; border-radius:8px;" alt="">
         <div>
             <p style="font-size:12px; color:#fff; font-weight:bold;">${pieceName}</p>
-            <p style="font-size:11px; color:#6b7280;">Artéfact ${art.stars}★ — Analyse indisponible</p>
+            <p style="font-size:11px; color:#6b7280;">${t('analysis.s5.unavailable', art.stars)}</p>
         </div>
     </div>
 </div>`;
@@ -4593,7 +4614,7 @@ function renderShowcase(index) {
         ${subsHtml}
     </div>
     
-    ${!hasDead ? `<p style="margin-top:10px; text-align:center; background:#22c55e20; color:#22c55e; padding:4px; border-radius:4px; font-size:12px; border:1px solid #22c55e40;">✓ Déjà optimal</p>` : ''}
+    ${!hasDead ? `<p style="margin-top:10px; text-align:center; background:#22c55e20; color:#22c55e; padding:4px; border-radius:4px; font-size:12px; border:1px solid #22c55e40;">${t('analysis.s4.optimal')}</p>` : ''}
 
 </div>`;
         }).join('')}
@@ -4603,12 +4624,12 @@ function renderShowcase(index) {
                         <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
                         <div>
-                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">5. Détails des rolls</h3>
-                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Lisez dans le code source du jeu et découvrez exactement quelle qualité de statistiques vous avez obtenue.</p>
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">${t('analysis.s5.title')}</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">${t('analysis.s5.desc')}</p>
                             
                             <div style="display:flex; flex-direction: row; justify-content: space-between; gap:15px;">
                                 ${p.artefacts.map(art => {
-            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+            const pieceName = t('artifact.' + art.type);
 
             if ((art.stars || 5) < 4) {
                 return `
@@ -4617,7 +4638,7 @@ function renderShowcase(index) {
         <img src="${art.icon}" style="width:38px; height:38px; border-radius:8px;" alt="">
         <div>
             <p style="font-size:12px; color:#fff; font-weight:bold;">${pieceName}</p>
-            <p style="font-size:11px; color:#6b7280;">Artéfact ${art.stars}★ — Analyse indisponible</p>
+            <p style="font-size:11px; color:#6b7280;">${t('analysis.s5.unavailable', art.stars)}</p>
         </div>
     </div>
 </div>`;
@@ -4674,18 +4695,18 @@ function renderShowcase(index) {
                             </div>
                             
                             <div style="display:flex; justify-content:center; gap:15px; margin-top:15px; font-size:11px; color:#aaa; background:#2C2D32; padding: 8px; border-radius: 6px;">
-                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#6CED75;"></span> Jet faible</span>
-                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#00E497;"></span> Jet moyen</span>
-                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#00BFE9;"></span> Jet fort</span>
-                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#EE72F7;"></span> Jet parfait</span>
+                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#6CED75;"></span>${t('analysis.s5.rollWeak')}</span>
+                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#00E497;"></span>${t('analysis.s5.rollMed')}</span>
+                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#00BFE9;"></span>${t('analysis.s5.rollStrong')}</span>
+                                <span style="display:flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#EE72F7;"></span>${t('analysis.s5.rollPerfect')}</span>
                             </div>
                         </div>
                         
                         <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
                         <div>
-                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">6. Simulateur de reroll</h3>
-                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Évaluez s'il est rentable de redistribuer les valeurs des statistiques de vos artéfacts vers de meilleures valeurs.</p>
+                            <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">${t('analysis.s6.title')}</h3>
+                            <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">${t('analysis.s6.desc')}</p>
                         
                             <div style="display:flex; flex-direction: row; justify-content: space-between; gap:15px;">
                                 ${p.artefacts.map(art => {
@@ -4693,7 +4714,7 @@ function renderShowcase(index) {
 
             if (!metrics) return '';
 
-            const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
+            const pieceName = t('artifact.' + art.type);
 
             return `
                                     <div style="width: 100%; background:#2C2D32; padding:12px; border-radius:8px; border-left: 3px solid ${metrics.badge.color}">
@@ -4712,7 +4733,7 @@ function renderShowcase(index) {
                                         
                                         <div style="margin-bottom:8px;">
                                             <div style="display:flex; justify-content:space-between; font-size:12px; color:#aaa; margin-bottom: 4px;">
-                                                <p>Potentiel de gain</p>
+                                                <p>${t('analysis.s6.gainPotential')}</p>
                                                 <p style="color:${metrics.potential > 60 ? '#22c55e' : '#ccc'}">${metrics.potential}%</p>
                                             </div>
                                             <div style="width:100%; height:4px; background:#333; border-radius:2px;">
@@ -4722,7 +4743,7 @@ function renderShowcase(index) {
                         
                                         <div style="margin-bottom:12px;">
                                             <div style="display:flex; justify-content:space-between; font-size:12px; color:#aaa; margin-bottom: 4px;">
-                                                <p>Risque de perte</p>
+                                                <p>${t('analysis.s6.lossRisk')}</p>
                                                 <p style="color:${metrics.risk > 60 ? '#ff4d4d' : '#ccc'}">${metrics.risk}%</p>
                                             </div>
                                             <div style="width:100%; height:4px; background:#333; border-radius:2px;">
@@ -4766,11 +4787,11 @@ if (uidInput) {
 
 window.exportBuildAsImage = async function () {
     const element = document.querySelector('.top-row');
-    if (!element) return alert("Aucun build affiché !");
+    if (!element) return alert(t('error.noBuild'));
 
     const btn = document.querySelector('button[onclick="exportBuildAsImage()"]');
-    const originalContent = btn ? btn.innerHTML : 'Exporter';
-    if (btn) btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Traitement...';
+    const originalContent = btn ? btn.innerHTML : t('ui.exportBtn');
+    if (btn) btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${t('export.processing')}`;
 
     const bgDiv = element.querySelector('.background-splash-art');
     let originalBgImage = "";
@@ -4830,7 +4851,7 @@ window.exportBuildAsImage = async function () {
         })
         .catch(function (error) {
             console.error('Erreur export dom-to-image :', error);
-            alert('Erreur lors de la création de l\'image.');
+            alert(t('error.exportFail'));
         })
         .finally(function () {
             if (bgDiv && originalBgImage) {
@@ -4868,7 +4889,7 @@ window.addEventListener('DOMContentLoaded', () => {
             renderHome();
             const loader = document.getElementById('loading-msg');
             if (loader) {
-                loader.innerText = "Lien invalide ou compte introuvable.";
+                loader.innerText = t('error.invalidLink');
                 loader.style.color = "#ef4444";
                 setTimeout(() => {
                     loader.innerText = "";
