@@ -1,7 +1,10 @@
 {
   "4": [
     {
-      "label": "Si les PV sont inférieurs à 70% (24% Taux CRIT)",
+      "label": {
+        "fr": "Si les PV sont inférieurs à 70% (24% Taux CRIT)",
+        "en": "If HP are below 70% (24% Crit Rate)"
+      },
       "stats": {
         "critRate_": 0.24
       }

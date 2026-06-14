@@ -92,6 +92,9 @@
             "ui.char.buffsHint":   "Cochez pour appliquer les passifs et buffs (scroll pour tout voir).",
             "ui.buff.weapon": "(Arme)",
             "ui.buff.set":    "(Set)",
+            "buff.category.Passifs":        "Passifs",
+            "buff.category.Constellations": "Constellations",
+            "buff.category.Résonance":      "Résonance",
 
             // ── Artéfacts ─────────────────────────────────────
             "ui.art.baseAtk":      "ATQ de base",
@@ -592,6 +595,9 @@
             "ui.char.buffsHint":   "Toggle to apply passives and buffs (scroll to see all).",
             "ui.buff.weapon": "(Weapon)",
             "ui.buff.set":    "(Set)",
+            "buff.category.Passifs":        "Passives",
+            "buff.category.Constellations": "Constellations",
+            "buff.category.Résonance":      "Resonance",
 
             // ── Artifacts ─────────────────────────────────────
             "ui.art.baseAtk":      "Base ATK",
@@ -1042,7 +1048,7 @@
         updateMeta('meta[property="og:locale"]', window.t('meta.locale'));
         const versionEl = document.querySelector('.sidebar-text');
         if (versionEl) {
-            versionEl.textContent = window.t('ui.version', '1.1.5', '6.6');
+            versionEl.textContent = window.t('ui.version', '1.1.6', '6.6');
         }
     });
 

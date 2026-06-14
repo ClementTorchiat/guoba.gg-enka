@@ -1,13 +1,19 @@
 {
   "4": [
     {
-      "label": "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Naissante (60 Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Naissante (60 Maîtrise élémentaire)",
+        "en": "If elemental damage is dealt and the team's Moonsign is Nascent Gleam (60 EM)"
+      },
       "stats": {
         "eleMas": 60
       }
     },
     {
-      "label": "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Ascendante (120 Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Ascendante (120 Maîtrise élémentaire)",
+        "en": "If elemental damage is dealt and the team's Moonsign is Ascendant Gleam (120 EM)"
+      },
       "stats": {
         "eleMas": 120
       }

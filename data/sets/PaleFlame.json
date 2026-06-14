@@ -1,13 +1,19 @@
 {
   "4": [
     {
-      "label": "Si une 1ère compétence élémentaire touche un ennemi (9% ATK)",
+      "label": {
+        "fr": "Si une 1ère compétence élémentaire touche un ennemi (9% ATK)",
+        "en": "If 1 elemental skill hits (9% ATK)"
+      },
       "stats": {
         "atk_": 0.09
       }
     },
     {
-      "label": "Si une 2ème compétence élémentaire touche un ennemi (18% ATK et 25% Bonus de DGT Physique)",
+      "label": {
+        "fr": "Si une 2ème compétence élémentaire touche un ennemi (18% ATK et 25% Bonus de DGT Physique)",
+        "en": "If 2 elemental skills hit (18% ATK & 25% Physical DMG Bonus)"
+      },
       "stats": {
         "atk_": 0.09,
         "physical_dmg_": 0.25

@@ -1,21 +1,30 @@
 {
   "4": [
     {
-      "label": "Si une 1ère attaque de tout type touche (7% ATQ et 4% Bonus de DGT Hydro)",
+      "label": {
+        "fr": "Si une 1ère attaque de tout type touche (7% ATQ et 4% Bonus de DGT Hydro)",
+        "en": "If 1 attack hits (7% ATK & 4% Hydro DMG Bonus)"
+      },
       "stats": {
         "atk_": 0.07,
         "hydro_dmg_": 0.04
       }
     },
     {
-      "label": "Si une 2ème attaque de tout type touche (16% ATQ et 9% Bonus de DGT Hydro)",
+      "label": {
+        "fr": "Si une 2ème attaque de tout type touche (16% ATQ et 9% Bonus de DGT Hydro)",
+        "en": "If 2 attacks hit (16% ATK & 9% Hydro DMG Bonus)"
+      },
       "stats": {
         "atk_": 0.09,
         "hydro_dmg_": 0.05
       }
     },
     {
-      "label": "Si une 3ème attaque de tout type touche (25% ATQ et 15% Bonus de DGT Hydro)",
+      "label": {
+        "fr": "Si une 3ème attaque de tout type touche (25% ATQ et 15% Bonus de DGT Hydro)",
+        "en": "If 3 attacks hit (25% ATK & 15% Hydro DMG Bonus)"
+      },
       "stats": {
         "atk_": 0.09,
         "hydro_dmg_": 0.06

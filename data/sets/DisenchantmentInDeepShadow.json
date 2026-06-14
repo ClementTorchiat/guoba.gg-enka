@@ -1,7 +1,10 @@
 {
   "4": [
     {
-      "label": "Si l'adversaire est affecté par Supraconduction (16% Taux Critique uniquement sur cette attaque)",
+      "label": {
+        "fr": "Si l'adversaire est affecté par Supraconduction (16% Taux Critique uniquement sur cette attaque)",
+        "en": "If the enemy is affected by Superconduct (16% Crit Rate on this attack only)"
+      },
       "stats": {
         "critRate_": 0.16
       },

@@ -1,6 +1,6 @@
 /* =========================================================
    config.generated.js — FICHIER AUTO-GÉNÉRÉ
-   Généré le : 2026-06-13T13:05:28.970Z
+   Généré le : 2026-06-14T16:11:12.159Z
    115 personnages | 111 armes | 21 sets
 
    ========================================================= */
@@ -21385,7 +21385,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "1 Stack (PV% en Maîtrise élémentaire)",
+        "label": {
+          "fr": "1 Stack (PV% en Maîtrise élémentaire)",
+          "en": "1 Stack (HP% to EM)"
+        },
         "stats": {
           "eleMas_bonus_scaling": {
             "source": "hp",
@@ -21397,7 +21400,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 Stacks (PV% en Maîtrise élémentaire)",
+        "label": {
+          "fr": "2 Stacks (PV% en Maîtrise élémentaire)",
+          "en": "2 Stacks (HP% to EM)"
+        },
         "stats": {
           "eleMas_bonus_scaling": {
             "source": "hp",
@@ -21409,7 +21415,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 Stacks (PV% en Maîtrise élémentaire)",
+        "label": {
+          "fr": "3 Stacks (PV% en Maîtrise élémentaire)",
+          "en": "3 Stacks (HP% to EM)"
+        },
         "stats": {
           "eleMas_bonus_scaling": {
             "source": "hp",
@@ -23914,13 +23923,19 @@ window.SET_PASSIVES     = {
   "ADayCarvedFromRisingWinds": {
     "4": [
       {
-        "label": "Si des ennemis sont touchés (25% ATQ)",
+        "label": {
+          "fr": "Si des ennemis sont touchés (25% ATQ)",
+          "en": "If ennemies are hit (25% ATK)"
+        },
         "stats": {
           "atk_": 0.25
         }
       },
       {
-        "label": "Si le personnage a terminé son devoir de la sorcière (20% Taux CRIT)",
+        "label": {
+          "fr": "Si le personnage a terminé son devoir de la sorcière (20% Taux CRIT)",
+          "en": "If the character has completed Witch's Homework (20% Crit Rate)"
+        },
         "stats": {
           "critRate_": 0.2
         }
@@ -23930,25 +23945,37 @@ window.SET_PASSIVES     = {
   "ArchaicPetra": {
     "4": [
       {
-        "label": "Cristal Pyro ramassé (35% Bonus de Dgt Pyro)",
+        "label": {
+          "fr": "Cristal Pyro ramassé (35% Bonus de Dgt Pyro)",
+          "en": "Pyro shard picked up (35% Pyro damage bonus)"
+        },
         "stats": {
           "pyro_dmg_": 0.35
         }
       },
       {
-        "label": "Cristal Hydro ramassé (35% Bonus de Dgt Hydro)",
+        "label": {
+          "fr": "Cristal Hydro ramassé (35% Bonus de DGT Hydro)",
+          "en": "Hydro shard picked up (35% Hydro DMG bonus)"
+        },
         "stats": {
           "hydro_dmg_": 0.35
         }
       },
       {
-        "label": "Cristal Cryo ramassé (35% Bonus de Dgt Cryo)",
+        "label": {
+          "fr": "Cristal Cryo ramassé (35% Bonus de DGT Cryo)",
+          "en": "Cryo shard picked up (35% Cryo DMG bonus)"
+        },
         "stats": {
           "cryo_dmg_": 0.35
         }
       },
       {
-        "label": "Cristal Électro ramassé (35% Bonus de Dgt Électro)",
+        "label": {
+          "fr": "Cristal Électro ramassé (35% Bonus de DGT Électro)",
+          "en": "Electro shard picked up (35% Electro DMG bonus)"
+        },
         "stats": {
           "electro_dmg_": 0.35
         }
@@ -23959,7 +23986,10 @@ window.SET_PASSIVES     = {
   "Berserker": {
     "4": [
       {
-        "label": "Si les PV sont inférieurs à 70% (24% Taux CRIT)",
+        "label": {
+          "fr": "Si les PV sont inférieurs à 70% (24% Taux CRIT)",
+          "en": "If HP are below 70% (24% Crit Rate)"
+        },
         "stats": {
           "critRate_": 0.24
         }
@@ -23969,30 +23999,41 @@ window.SET_PASSIVES     = {
   "BlizzardStrayer": {
     "4": [
       {
-        "label": "Si l'ennemi est affecté par Cryo (20% Taux CRIT)",
+        "label": {
+          "fr": "Si l'ennemi est affecté par Cryo (20% Taux CRIT)",
+          "en": "If the enemy is affected by Cryo (20% Crit Rate)"
+        },
         "stats": {
           "critRate_": 0.2
         }
       },
       {
-        "label": "Si l'ennemi est gelé (40% Taux CRIT)",
+        "label": {
+          "fr": "Si l'ennemi est gelé (20% Taux CRIT)",
+          "en": "If the enemy is frozen (20% Crit Rate)"
+        },
         "stats": {
           "critRate_": 0.2
         }
       }
-    ],
-    "selectMode": "cumulative"
+    ]
   },
   "CelestialGift": {
     "4": [
       {
-        "label": "Si le personnage a terminé son devoir de la sorcière et a utilisé une compétence élémentaire (20% DGT Élémentaires)",
+        "label": {
+          "fr": "Si le personnage a terminé son devoir de la sorcière et a utilisé une compétence élémentaire (20% DGT Élémentaires)",
+          "en": "If the character has completed Witch's Homework and has used an elemental skill (20% Elemental DMG)"
+        },
         "stats": {
           "elemental_dmg_": 0.2
         }
       },
       {
-        "label": "Si l'équipe compte deux personnages Hexerei (40% DGT Élémentaires)",
+        "label": {
+          "fr": "Si l'équipe compte deux personnages Hexerei (40% DGT Élémentaires)",
+          "en": "If two Hexerei characters are in the team (40% Elemental DMG)"
+        },
         "stats": {
           "elemental_dmg_": 0.4
         }
@@ -24003,19 +24044,28 @@ window.SET_PASSIVES     = {
   "CrimsonWitchOfFlames": {
     "4": [
       {
-        "label": "Si une 1ère compétence élémentaire est utilisée (7.5% Bonus de DGT Pyro)",
+        "label": {
+          "fr": "Si une 1ère compétence élémentaire est utilisée (7.5% Bonus de DGT Pyro)",
+          "en": "If 1 elemental skill is used (7.5% Pyro DMG Bonus)"
+        },
         "stats": {
           "pyro_dmg_": 0.075
         }
       },
       {
-        "label": "Si une 2ème compétence élémentaire est utilisée (15% Bonus de DGT Pyro)",
+        "label": {
+          "fr": "Si une 2ème compétence élémentaire est utilisée (15% Bonus de DGT Pyro)",
+          "en": "If 2 elemental skills are used (15% Pyro DMG Bonus)"
+        },
         "stats": {
           "pyro_dmg_": 0.075
         }
       },
       {
-        "label": "Si une 3ème compétence élémentaire est utilisée (22.5% Bonus de DGT Pyro)",
+        "label": {
+          "fr": "Si une 3ème compétence élémentaire est utilisée (22.5% Bonus de DGT Pyro)",
+          "en": "If 3 elemental skills are used (22.5% Pyro DMG Bonus)"
+        },
         "stats": {
           "pyro_dmg_": 0.075
         }
@@ -24026,7 +24076,10 @@ window.SET_PASSIVES     = {
   "DisenchantmentInDeepShadow": {
     "4": [
       {
-        "label": "Si l'adversaire est affecté par Supraconduction (16% Taux Critique uniquement sur cette attaque)",
+        "label": {
+          "fr": "Si l'adversaire est affecté par Supraconduction (16% Taux Critique uniquement sur cette attaque)",
+          "en": "If the enemy is affected by Superconduct (16% Crit Rate on this attack only)"
+        },
         "stats": {
           "critRate_": 0.16
         },
@@ -24037,68 +24090,87 @@ window.SET_PASSIVES     = {
   "GildedDreams": {
     "4": [
       {
-        "label": "Si un 1er allié est du même élément (14% ATQ)",
+        "label": {
+          "fr": "Si 3 alliés sont du même élément que le porteur (42% ATQ)",
+          "en": "If 3 allies are of the same element as the wearer (42% ATK)"
+        },
+        "active": false,
         "stats": {
-          "atk_": 0.14
+          "atk_": 0.42
         }
       },
       {
-        "label": "Si un 2ème allié est du même élément (14% ATQ)",
+        "label": {
+          "fr": "Si 2 alliés sont du même élément et 1 d'un élément différent (28% ATQ, 50 EM)",
+          "en": "If 2 allies are of the same element and 1 of a different element (28% ATK, 50 EM)"
+        },
+        "active": false,
         "stats": {
-          "atk_": 0.14
-        }
-      },
-      {
-        "label": "Si un 3ème allié est du même élément (14% ATQ)",
-        "stats": {
-          "atk_": 0.14
-        }
-      },
-      {
-        "label": "Si un 1er allié est d'un élément différent (50 EM)",
-        "stats": {
+          "atk_": 0.28,
           "eleMas": 50
         }
       },
       {
-        "label": "Si un 2ème allié est d'un élément différent (50 EM)",
+        "label": {
+          "fr": "Si 1 allié est du même élément et 2 d'un élément différent (14% ATQ, 100 EM)",
+          "en": "If 1 ally is of the same element and 2 of a different element (14% ATK, 100 EM)"
+        },
+        "active": true,
         "stats": {
-          "eleMas": 50
+          "atk_": 0.14,
+          "eleMas": 100
         }
       },
       {
-        "label": "Si un 3ème allié est d'un élément différent (50 EM)",
+        "label": {
+          "fr": "Si 3 alliés sont d'un élément différent du porteur (150 EM)",
+          "en": "If 3 allies are of a different element from the wearer (150 EM)"
+        },
+        "active": false,
         "stats": {
-          "eleMas": 50
+          "eleMas": 150
         }
       }
-    ]
+    ],
+    "selectMode": "exclusive"
   },
   "HuskOfOpulentDreams": {
     "4": [
       {
-        "label": "Quand une 1ère attaque Géo touche ou qu'1s est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+        "label": {
+          "fr": "Quand une 1ère attaque Géo touche ou qu'1s est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+          "en": "When 1 Geo attack hits or 1 second has passed while off-field (6% DEF & 6% Geo DMG Bonus)"
+        },
         "stats": {
           "def_": 0.06,
           "geo_dmg_": 0.06
         }
       },
       {
-        "label": "Quand une 2ème attaque Géo touche ou qu'1s de plus est passée non-déployé (12% DÉF et 12% Bonus de DGT Géo)",
+        "label": {
+          "fr": "Quand une 2ème attaque Géo touche ou qu'1s de plus est passée non-déployé (12% DÉF et 12% Bonus de DGT Géo)",
+          "en": "When 2 Geo attacks hit or 2 seconds have passed while off-field (12% DEF & 12% Geo DMG Bonus)"
+        },
         "stats": {
           "def_": 0.06,
           "geo_dmg_": 0.06
         }
       },
       {
-        "label": "Quand une 3ème attaque Géo touche ou qu'1s de plus est passée non-déployé (18% DÉF et 18% Bonus de DGT Géo)",
+        "label": {
+          "fr": "Quand une 3ème attaque Géo touche ou qu'1s de plus est passée non-déployé (18% DÉF et 18% Bonus de DGT Géo)",
+          "en": "When 3 Geo attacks hit or 3 seconds have passed while off-field (18% DEF & 18% Geo DMG Bonus)"
+        },
         "stats": {
           "def_": 0.06,
           "geo_dmg_": 0.06
         }
       },
       {
-        "label": "Quand une 4ème attaque Géo touche ou qu'1s de plus est passée non-déployé (24% DÉF et 24% Bonus de DGT Géo)",
+        "label": {
+          "fr": "Quand une 4ème attaque Géo touche ou qu'1s de plus est passée non-déployé (24% DÉF et 24% Bonus de DGT Géo)",
+          "en": "When 4 Geo attacks hit or 4 seconds have passed while off-field (24% DEF & 24% Geo DMG Bonus)"
+        },
         "stats": {
           "def_": 0.06,
           "geo_dmg_": 0.06
@@ -24110,7 +24182,10 @@ window.SET_PASSIVES     = {
   "Instructor": {
     "4": [
       {
-        "label": "Si une réaction élémentaire est déclenchée (120 Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction élémentaire est déclenchée (120 Maîtrise élémentaire)",
+          "en": "If an elemental reaction is triggered (120 EM)"
+        },
         "stats": {
           "eleMas": 120
         }
@@ -24120,19 +24195,28 @@ window.SET_PASSIVES     = {
   "MarechausseeHunter": {
     "4": [
       {
-        "label": "Si les PV diminuent une 1ère fois (12% Taux CRIT)",
+        "label": {
+          "fr": "Si les PV diminuent ou augmentent une 1ère fois (12% Taux CRIT)",
+          "en": "If HP decreases or increases 1 time (12% Crit Rate)"
+        },
         "stats": {
           "critRate_": 0.12
         }
       },
       {
-        "label": "Si les PV diminuent une 2ème fois (24% Taux CRIT)",
+        "label": {
+          "fr": "Si les PV diminuent une 2ème fois (24% Taux CRIT)",
+          "en": "If HP decreases or increases 2 times (24% Crit Rate)"
+        },
         "stats": {
           "critRate_": 0.12
         }
       },
       {
-        "label": "Si les PV diminuent une 3ème fois (36% Taux CRIT)",
+        "label": {
+          "fr": "Si les PV diminuent une 3ème fois (36% Taux CRIT)",
+          "en": "If HP decreases or increases 3 times (36% Crit Rate)"
+        },
         "stats": {
           "critRate_": 0.12
         }
@@ -24143,13 +24227,19 @@ window.SET_PASSIVES     = {
   "NightOfTheSkysUnveiling": {
     "4": [
       {
-        "label": "Si une réaction Sélène est déclenchée et que l'équipe est sous le signe Lueur Naissante (15% Taux CRIT)",
+        "label": {
+          "fr": "Si une réaction Sélène est déclenchée et que l'équipe est sous le signe Lueur Naissante (15% Taux CRIT)",
+          "en": "If a Lunar reaction is triggered and the team's Moonsign is Nascent Gleam (15% Crit Rate)"
+        },
         "stats": {
           "critRate_": 0.15
         }
       },
       {
-        "label": "Si une réaction Sélène est déclenchée et que l'équipe est sous le signe Lueur Ascendante (30% Taux CRIT)",
+        "label": {
+          "fr": "Si une réaction Sélène est déclenchée et que l'équipe est sous le signe Lueur Ascendante (30% Taux CRIT)",
+          "en": "If a Lunar reaction is triggered and the team's Moonsign is Ascendant Gleam (30% Crit Rate)"
+        },
         "stats": {
           "critRate_": 0.3
         }
@@ -24160,13 +24250,19 @@ window.SET_PASSIVES     = {
   "NighttimeWhispersInTheEchoingWoods": {
     "4": [
       {
-        "label": "Si une compétence élémentaire est utilisée (20% Bonus de DGT Géo)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (20% Bonus de DGT Géo)",
+          "en": "If an elemental skill is used (20% Geo DMG Bonus)"
+        },
         "stats": {
           "geo_dmg_": 0.2
         }
       },
       {
-        "label": "Si le personnage est sous un bouclier de Cristallisation (50% Bonus de DGT Géo)",
+        "label": {
+          "fr": "Si le personnage est sous un bouclier de Cristallisation (50% Bonus de DGT Géo)",
+          "en": "If the character is under a shield granted by Crystallize (50% Geo DMG Bonus)"
+        },
         "stats": {
           "geo_dmg_": 0.3
         }
@@ -24176,7 +24272,10 @@ window.SET_PASSIVES     = {
   "NoblesseOblige": {
     "4": [
       {
-        "label": "Si un déchaînement élémentaire est utilisé (20% ATK)",
+        "label": {
+          "fr": "Si un déchaînement élémentaire est utilisé (20% ATQ)",
+          "en": "If an elemental burst is used (20% ATK)"
+        },
         "stats": {
           "atk_": 0.2
         }
@@ -24186,21 +24285,30 @@ window.SET_PASSIVES     = {
   "NymphsDream": {
     "4": [
       {
-        "label": "Si une 1ère attaque de tout type touche (7% ATQ et 4% Bonus de DGT Hydro)",
+        "label": {
+          "fr": "Si une 1ère attaque de tout type touche (7% ATQ et 4% Bonus de DGT Hydro)",
+          "en": "If 1 attack hits (7% ATK & 4% Hydro DMG Bonus)"
+        },
         "stats": {
           "atk_": 0.07,
           "hydro_dmg_": 0.04
         }
       },
       {
-        "label": "Si une 2ème attaque de tout type touche (16% ATQ et 9% Bonus de DGT Hydro)",
+        "label": {
+          "fr": "Si une 2ème attaque de tout type touche (16% ATQ et 9% Bonus de DGT Hydro)",
+          "en": "If 2 attacks hit (16% ATK & 9% Hydro DMG Bonus)"
+        },
         "stats": {
           "atk_": 0.09,
           "hydro_dmg_": 0.05
         }
       },
       {
-        "label": "Si une 3ème attaque de tout type touche (25% ATQ et 15% Bonus de DGT Hydro)",
+        "label": {
+          "fr": "Si une 3ème attaque de tout type touche (25% ATQ et 15% Bonus de DGT Hydro)",
+          "en": "If 3 attacks hit (25% ATK & 15% Hydro DMG Bonus)"
+        },
         "stats": {
           "atk_": 0.09,
           "hydro_dmg_": 0.06
@@ -24212,7 +24320,10 @@ window.SET_PASSIVES     = {
   "ObsidianCodex": {
     "4": [
       {
-        "label": "Si le personnage consomme des points Noctâme (40% Taux CRIT)",
+        "label": {
+          "fr": "Si le personnage consomme des points Noctâme (40% Taux CRIT)",
+          "en": "If the character consumes Nightsoul points (40% Crit Rate)"
+        },
         "stats": {
           "critRate_": 0.4
         }
@@ -24222,13 +24333,19 @@ window.SET_PASSIVES     = {
   "PaleFlame": {
     "4": [
       {
-        "label": "Si une 1ère compétence élémentaire touche un ennemi (9% ATK)",
+        "label": {
+          "fr": "Si une 1ère compétence élémentaire touche un ennemi (9% ATK)",
+          "en": "If 1 elemental skill hits (9% ATK)"
+        },
         "stats": {
           "atk_": 0.09
         }
       },
       {
-        "label": "Si une 2ème compétence élémentaire touche un ennemi (18% ATK et 25% Bonus de DGT Physique)",
+        "label": {
+          "fr": "Si une 2ème compétence élémentaire touche un ennemi (18% ATK et 25% Bonus de DGT Physique)",
+          "en": "If 2 elemental skills hit (18% ATK & 25% Physical DMG Bonus)"
+        },
         "stats": {
           "atk_": 0.09,
           "physical_dmg_": 0.25
@@ -24240,7 +24357,10 @@ window.SET_PASSIVES     = {
   "ScrollOfTheHeroOfCinderCity": {
     "4": [
       {
-        "label": "Si une réaction élémentaire est déclenchée (12% Bonus de DGT Élémentaire)",
+        "label": {
+          "fr": "Si une réaction élémentaire est déclenchée (12% Bonus de DGT Élémentaire)",
+          "en": "If an elemental reaction is triggered (12% Elemental DMG Bonus)"
+        },
         "stats": {
           "pyro_dmg_": 0.12,
           "hydro_dmg_": 0.12,
@@ -24252,7 +24372,10 @@ window.SET_PASSIVES     = {
         }
       },
       {
-        "label": "Si le personnage est sous une Bénédiction noctâme (40% Bonus de DGT Élémentaire)",
+        "label": {
+          "fr": "Si le personnage est sous une Bénédiction Noctâme (40% Bonus de DGT Élémentaire)",
+          "en": "If the character is in a Nightsoul Blessing state (40M Elemental DMG Bonus)"
+        },
         "stats": {
           "pyro_dmg_": 0.28,
           "hydro_dmg_": 0.28,
@@ -24269,13 +24392,19 @@ window.SET_PASSIVES     = {
   "SilkenMoonsSerenade": {
     "4": [
       {
-        "label": "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Naissante (60 Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Naissante (60 Maîtrise élémentaire)",
+          "en": "If elemental damage is dealt and the team's Moonsign is Nascent Gleam (60 EM)"
+        },
         "stats": {
           "eleMas": 60
         }
       },
       {
-        "label": "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Ascendante (120 Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si des dégâts élémentaires sont infligés et que l'équipe est sous le signe Lueur Ascendante (120 Maîtrise élémentaire)",
+          "en": "If elemental damage is dealt and the team's Moonsign is Ascendant Gleam (120 EM)"
+        },
         "stats": {
           "eleMas": 120
         }
@@ -24286,7 +24415,10 @@ window.SET_PASSIVES     = {
   "TenacityOfTheMillelith": {
     "4": [
       {
-        "label": "Si une compétence élémentaire touche un ennemi (20% ATK)",
+        "label": {
+          "fr": "Si une compétence élémentaire touche un ennemi (20% ATQ)",
+          "en": "If an elemental skill hits (20% ATK)"
+        },
         "stats": {
           "atk_": 0.2
         }
@@ -24296,31 +24428,46 @@ window.SET_PASSIVES     = {
   "VermillionHereafter": {
     "4": [
       {
-        "label": "Si un déchaînement élémentaire est utilisé (8% ATQ)",
+        "label": {
+          "fr": "Si un déchaînement élémentaire est utilisé (8% ATQ)",
+          "en": "If an elemental burst is used (8% ATK)"
+        },
         "stats": {
           "atk_": 0.08
         }
       },
       {
-        "label": "Si des PV sont perdus une 1ère fois (10% ATQ)",
+        "label": {
+          "fr": "Si des PV sont perdus une 1ère fois (10% ATQ)",
+          "en": "If HPs are lost 1 time (10% ATK)"
+        },
         "stats": {
           "atk_": 0.1
         }
       },
       {
-        "label": "Si des PV sont perdus une 2ème fois (20% ATQ)",
+        "label": {
+          "fr": "Si des PV sont perdus une 2ème fois (20% ATQ)",
+          "en": "If HPs are lost 2 times (20% ATK)"
+        },
         "stats": {
           "atk_": 0.1
         }
       },
       {
-        "label": "Si des PV sont perdus une 3ème fois (30% ATQ)",
+        "label": {
+          "fr": "Si des PV sont perdus une 3ème fois (30% ATQ)",
+          "en": "If HPs are lost 3 times (30% ATK)"
+        },
         "stats": {
           "atk_": 0.1
         }
       },
       {
-        "label": "Si des PV sont perdus une 4ème fois (40% ATQ)",
+        "label": {
+          "fr": "Si des PV sont perdus une 4ème fois (40% ATQ)",
+          "en": "If HPs are lost 4 times (40% ATK)"
+        },
         "stats": {
           "atk_": 0.1
         }

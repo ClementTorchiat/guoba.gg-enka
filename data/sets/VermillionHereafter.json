@@ -1,31 +1,46 @@
 {
   "4": [
     {
-      "label": "Si un déchaînement élémentaire est utilisé (8% ATQ)",
+      "label": {
+        "fr": "Si un déchaînement élémentaire est utilisé (8% ATQ)",
+        "en": "If an elemental burst is used (8% ATK)"
+      },
       "stats": {
         "atk_": 0.08
       }
     },
     {
-      "label": "Si des PV sont perdus une 1ère fois (10% ATQ)",
+      "label": {
+        "fr": "Si des PV sont perdus une 1ère fois (10% ATQ)",
+        "en": "If HPs are lost 1 time (10% ATK)"
+      },
       "stats": {
         "atk_": 0.1
       }
     },
     {
-      "label": "Si des PV sont perdus une 2ème fois (20% ATQ)",
+      "label": {
+        "fr": "Si des PV sont perdus une 2ème fois (20% ATQ)",
+        "en": "If HPs are lost 2 times (20% ATK)"
+      },
       "stats": {
         "atk_": 0.1
       }
     },
     {
-      "label": "Si des PV sont perdus une 3ème fois (30% ATQ)",
+      "label": {
+        "fr": "Si des PV sont perdus une 3ème fois (30% ATQ)",
+        "en": "If HPs are lost 3 times (30% ATK)"
+      },
       "stats": {
         "atk_": 0.1
       }
     },
     {
-      "label": "Si des PV sont perdus une 4ème fois (40% ATQ)",
+      "label": {
+        "fr": "Si des PV sont perdus une 4ème fois (40% ATQ)",
+        "en": "If HPs are lost 4 times (40% ATK)"
+      },
       "stats": {
         "atk_": 0.1
       }

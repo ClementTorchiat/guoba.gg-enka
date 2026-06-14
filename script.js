@@ -1187,6 +1187,17 @@ function getText(hash) {
     return t('data.unknown');
 }
 
+function getLabel(label, fallbackIndex) {
+    if (label === undefined || label === null) {
+        return fallbackIndex !== undefined ? `Buff ${fallbackIndex + 1}` : '';
+    }
+    if (typeof label === 'string') return label;
+    if (typeof label === 'object') {
+        return label[window.GUOBA_LANG] ?? label.fr ?? label.en ?? Object.values(label)[0] ?? '';
+    }
+    return String(label);
+}
+
 function buildHashToKey() {
     const dict = {};
     const frDict = locData["fr"] || {};
@@ -2500,7 +2511,7 @@ function processData(data) {
                 configData.forEach((item, idx) => {
                     if (!item) return;
                     const finalStats = resolveStats(item.stats);
-                    let name = item.label || `Buff ${idx + 1}`;
+                    let name = getLabel(item.label, idx);
                     let isActive = item.active !== undefined ? item.active : true;
                     if (selectMode === 'exclusive' && item.active === undefined) {
                         isActive = (idx === configData.length - 1);
@@ -2713,7 +2724,7 @@ function renderToolbar(index) {
 
         const effText = efficiency > 0 ? ` - ${efficiency.toFixed(1)}%` : '';
 
-        return `<option value="${key}" ${key === currentBuildKey ? 'selected' : ''}>${build.name}${effText}</option>`;
+        return `<option value="${key}" ${key === currentBuildKey ? 'selected' : ''}>${getLabel(build.name)}${effText}</option>`;
     }).join('');
 
     let teamHtml = '';
@@ -3763,10 +3774,12 @@ function renderShowcase(index) {
 
         Object.keys(groupedBuffs).forEach(category => {
             buffListHtml += `<div>`;
+            let translatedCat = t('buff.category.' + category);
+            let displayCategory = (translatedCat === 'buff.category.' + category) ? category : translatedCat;
 
             buffListHtml += `
                 <div style="font-size:12px; margin-bottom:6px; color:#FFFFFF;">
-                    ${category}
+                    ${displayCategory}
                 </div>`;
 
             buffListHtml += `<div style="display: flex; flex-direction: column; gap: 6px;">`;

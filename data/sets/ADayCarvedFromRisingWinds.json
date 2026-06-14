@@ -1,13 +1,19 @@
 {
   "4": [
     {
-      "label": "Si des ennemis sont touchés (25% ATQ)",
+      "label": {
+        "fr": "Si des ennemis sont touchés (25% ATQ)",
+        "en": "If ennemies are hit (25% ATK)"
+      },
       "stats": {
         "atk_": 0.25
       }
     },
     {
-      "label": "Si le personnage a terminé son devoir de la sorcière (20% Taux CRIT)",
+      "label": {
+        "fr": "Si le personnage a terminé son devoir de la sorcière (20% Taux CRIT)",
+        "en": "If the character has completed Witch's Homework (20% Crit Rate)"
+      },
       "stats": {
         "critRate_": 0.2
       }

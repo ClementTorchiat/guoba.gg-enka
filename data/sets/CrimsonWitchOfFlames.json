@@ -1,19 +1,28 @@
 {
   "4": [
     {
-      "label": "Si une 1ère compétence élémentaire est utilisée (7.5% Bonus de DGT Pyro)",
+      "label": {
+        "fr": "Si une 1ère compétence élémentaire est utilisée (7.5% Bonus de DGT Pyro)",
+        "en": "If 1 elemental skill is used (7.5% Pyro DMG Bonus)"
+      },
       "stats": {
         "pyro_dmg_": 0.075
       }
     },
     {
-      "label": "Si une 2ème compétence élémentaire est utilisée (15% Bonus de DGT Pyro)",
+      "label": {
+        "fr": "Si une 2ème compétence élémentaire est utilisée (15% Bonus de DGT Pyro)",
+        "en": "If 2 elemental skills are used (15% Pyro DMG Bonus)"
+      },
       "stats": {
         "pyro_dmg_": 0.075
       }
     },
     {
-      "label": "Si une 3ème compétence élémentaire est utilisée (22.5% Bonus de DGT Pyro)",
+      "label": {
+        "fr": "Si une 3ème compétence élémentaire est utilisée (22.5% Bonus de DGT Pyro)",
+        "en": "If 3 elemental skills are used (22.5% Pyro DMG Bonus)"
+      },
       "stats": {
         "pyro_dmg_": 0.075
       }

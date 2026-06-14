@@ -1,28 +1,40 @@
 {
   "4": [
     {
-      "label": "Quand une 1ère attaque Géo touche ou qu'1s est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+      "label": {
+        "fr": "Quand une 1ère attaque Géo touche ou qu'1s est passée non-déployé (6% DÉF et 6% Bonus de DGT Géo)",
+        "en": "When 1 Geo attack hits or 1 second has passed while off-field (6% DEF & 6% Geo DMG Bonus)"
+      },
       "stats": {
         "def_": 0.06,
         "geo_dmg_": 0.06
       }
     },
     {
-      "label": "Quand une 2ème attaque Géo touche ou qu'1s de plus est passée non-déployé (12% DÉF et 12% Bonus de DGT Géo)",
+      "label": {
+        "fr": "Quand une 2ème attaque Géo touche ou qu'1s de plus est passée non-déployé (12% DÉF et 12% Bonus de DGT Géo)",
+        "en": "When 2 Geo attacks hit or 2 seconds have passed while off-field (12% DEF & 12% Geo DMG Bonus)"
+      },
       "stats": {
         "def_": 0.06,
         "geo_dmg_": 0.06
       }
     },
     {
-      "label": "Quand une 3ème attaque Géo touche ou qu'1s de plus est passée non-déployé (18% DÉF et 18% Bonus de DGT Géo)",
+      "label": {
+        "fr": "Quand une 3ème attaque Géo touche ou qu'1s de plus est passée non-déployé (18% DÉF et 18% Bonus de DGT Géo)",
+        "en": "When 3 Geo attacks hit or 3 seconds have passed while off-field (18% DEF & 18% Geo DMG Bonus)"
+      },
       "stats": {
         "def_": 0.06,
         "geo_dmg_": 0.06
       }
     },
     {
-      "label": "Quand une 4ème attaque Géo touche ou qu'1s de plus est passée non-déployé (24% DÉF et 24% Bonus de DGT Géo)",
+      "label": {
+        "fr": "Quand une 4ème attaque Géo touche ou qu'1s de plus est passée non-déployé (24% DÉF et 24% Bonus de DGT Géo)",
+        "en": "When 4 Geo attacks hit or 4 seconds have passed while off-field (24% DEF & 24% Geo DMG Bonus)"
+      },
       "stats": {
         "def_": 0.06,
         "geo_dmg_": 0.06

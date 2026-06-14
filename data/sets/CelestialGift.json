@@ -1,13 +1,19 @@
 {
   "4": [
     {
-      "label": "Si le personnage a terminé son devoir de la sorcière et a utilisé une compétence élémentaire (20% DGT Élémentaires)",
+      "label": {
+        "fr": "Si le personnage a terminé son devoir de la sorcière et a utilisé une compétence élémentaire (20% DGT Élémentaires)",
+        "en": "If the character has completed Witch's Homework and has used an elemental skill (20% Elemental DMG)"
+      },
       "stats": {
         "elemental_dmg_": 0.2
       }
     },
     {
-      "label": "Si l'équipe compte deux personnages Hexerei (40% DGT Élémentaires)",
+      "label": {
+        "fr": "Si l'équipe compte deux personnages Hexerei (40% DGT Élémentaires)",
+        "en": "If two Hexerei characters are in the team (40% Elemental DMG)"
+      },
       "stats": {
         "elemental_dmg_": 0.4
       }

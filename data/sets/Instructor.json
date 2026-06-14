@@ -1,7 +1,10 @@
 {
   "4": [
     {
-      "label": "Si une réaction élémentaire est déclenchée (120 Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une réaction élémentaire est déclenchée (120 Maîtrise élémentaire)",
+        "en": "If an elemental reaction is triggered (120 EM)"
+      },
       "stats": {
         "eleMas": 120
       }

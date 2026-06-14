@@ -1,25 +1,37 @@
 {
   "4": [
     {
-      "label": "Cristal Pyro ramassé (35% Bonus de Dgt Pyro)",
+      "label": {
+        "fr": "Cristal Pyro ramassé (35% Bonus de Dgt Pyro)",
+        "en": "Pyro shard picked up (35% Pyro damage bonus)"
+      },
       "stats": {
         "pyro_dmg_": 0.35
       }
     },
     {
-      "label": "Cristal Hydro ramassé (35% Bonus de Dgt Hydro)",
+      "label": {
+        "fr": "Cristal Hydro ramassé (35% Bonus de DGT Hydro)",
+        "en": "Hydro shard picked up (35% Hydro DMG bonus)"
+      },
       "stats": {
         "hydro_dmg_": 0.35
       }
     },
     {
-      "label": "Cristal Cryo ramassé (35% Bonus de Dgt Cryo)",
+      "label": {
+        "fr": "Cristal Cryo ramassé (35% Bonus de DGT Cryo)",
+        "en": "Cryo shard picked up (35% Cryo DMG bonus)"
+      },
       "stats": {
         "cryo_dmg_": 0.35
       }
     },
     {
-      "label": "Cristal Électro ramassé (35% Bonus de Dgt Électro)",
+      "label": {
+        "fr": "Cristal Électro ramassé (35% Bonus de DGT Électro)",
+        "en": "Electro shard picked up (35% Electro DMG bonus)"
+      },
       "stats": {
         "electro_dmg_": 0.35
       }

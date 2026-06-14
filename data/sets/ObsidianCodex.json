@@ -1,7 +1,10 @@
 {
   "4": [
     {
-      "label": "Si le personnage consomme des points Noctâme (40% Taux CRIT)",
+      "label": {
+        "fr": "Si le personnage consomme des points Noctâme (40% Taux CRIT)",
+        "en": "If the character consumes Nightsoul points (40% Crit Rate)"
+      },
       "stats": {
         "critRate_": 0.4
       }

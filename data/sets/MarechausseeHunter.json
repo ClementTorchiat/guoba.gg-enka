@@ -1,19 +1,28 @@
 {
   "4": [
     {
-      "label": "Si les PV diminuent une 1ère fois (12% Taux CRIT)",
+      "label": {
+        "fr": "Si les PV diminuent ou augmentent une 1ère fois (12% Taux CRIT)",
+        "en": "If HP decreases or increases 1 time (12% Crit Rate)"
+      },
       "stats": {
         "critRate_": 0.12
       }
     },
     {
-      "label": "Si les PV diminuent une 2ème fois (24% Taux CRIT)",
+      "label": {
+        "fr": "Si les PV diminuent une 2ème fois (24% Taux CRIT)",
+        "en": "If HP decreases or increases 2 times (24% Crit Rate)"
+      },
       "stats": {
         "critRate_": 0.12
       }
     },
     {
-      "label": "Si les PV diminuent une 3ème fois (36% Taux CRIT)",
+      "label": {
+        "fr": "Si les PV diminuent une 3ème fois (36% Taux CRIT)",
+        "en": "If HP decreases or increases 3 times (36% Crit Rate)"
+      },
       "stats": {
         "critRate_": 0.12
       }

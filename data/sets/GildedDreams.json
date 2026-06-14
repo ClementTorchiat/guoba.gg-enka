@@ -1,39 +1,46 @@
 {
+  "selectMode": "exclusive",
   "4": [
     {
-      "label": "Si un 1er allié est du même élément (14% ATQ)",
+      "label": {
+        "fr": "Si 3 alliés sont du même élément que le porteur (42% ATQ)",
+        "en": "If 3 allies are of the same element as the wearer (42% ATK)"
+      },
+      "active": false,
       "stats": {
-        "atk_": 0.14
+        "atk_": 0.42
       }
     },
     {
-      "label": "Si un 2ème allié est du même élément (14% ATQ)",
+      "label": {
+        "fr": "Si 2 alliés sont du même élément et 1 d'un élément différent (28% ATQ, 50 EM)",
+        "en": "If 2 allies are of the same element and 1 of a different element (28% ATK, 50 EM)"
+      },
+      "active": false,
       "stats": {
-        "atk_": 0.14
-      }
-    },
-    {
-      "label": "Si un 3ème allié est du même élément (14% ATQ)",
-      "stats": {
-        "atk_": 0.14
-      }
-    },
-    {
-      "label": "Si un 1er allié est d'un élément différent (50 EM)",
-      "stats": {
+        "atk_": 0.28,
         "eleMas": 50
       }
     },
     {
-      "label": "Si un 2ème allié est d'un élément différent (50 EM)",
+      "label": {
+        "fr": "Si 1 allié est du même élément et 2 d'un élément différent (14% ATQ, 100 EM)",
+        "en": "If 1 ally is of the same element and 2 of a different element (14% ATK, 100 EM)"
+      },
+      "active": true,
       "stats": {
-        "eleMas": 50
+        "atk_": 0.14,
+        "eleMas": 100
       }
     },
     {
-      "label": "Si un 3ème allié est d'un élément différent (50 EM)",
+      "label": {
+        "fr": "Si 3 alliés sont d'un élément différent du porteur (150 EM)",
+        "en": "If 3 allies are of a different element from the wearer (150 EM)"
+      },
+      "active": false,
       "stats": {
-        "eleMas": 50
+        "eleMas": 150
       }
     }
   ]
