@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si les PV sont supérieurs à 90% (Taux CRIT)",
+      "label": {
+        "fr": "Si les PV sont supérieurs à 90% (Taux CRIT)",
+        "en": "If HP is above 90% (Crit Rate)"
+      },
       "active": false,
       "stats": {
         "critRate_": [

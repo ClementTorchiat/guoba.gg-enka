@@ -1,6 +1,6 @@
 /* =========================================================
    config.generated.js — FICHIER AUTO-GÉNÉRÉ
-   Généré le : 2026-06-14T16:11:12.159Z
+   Généré le : 2026-06-16T14:26:58.952Z
    115 personnages | 111 armes | 21 sets
 
    ========================================================= */
@@ -20294,7 +20294,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ% et DGT CRIT)",
+        "label": {
+          "fr": "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ% et DGT Crit)",
+          "en": "If an elemental skill or burst is used (ATK% & Crit DMG)"
+        },
         "stats": {
           "atk_": [
             0.28,
@@ -20307,7 +20310,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si le personnage est sous une Bénédiction noctâme (+75% d'efficacité)",
+        "label": {
+          "fr": "Si le personnage est sous une Bénédiction Noctâme (ATQ% et DGT Crit)",
+          "en": "If the character is in a Nightsoul Blessing state (ATK% & Crit DMG)"
+        },
         "stats": {
           "atk_": [
             0.21,
@@ -20325,7 +20331,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "3 Alliés du même élément que le porteur (Maîtrise élémentaire)",
+        "label": {
+          "fr": "3 Alliés du même élément que le porteur (Maîtrise élémentaire)",
+          "en": "3 allies from the same element as the wearer (EM)"
+        },
         "stats": {
           "eleMas": [
             96,
@@ -20334,7 +20343,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 Alliés du même élément que le porteur et 1 Différent (Maîtrise élémentaire et DGTs Élémentaires)",
+        "label": {
+          "fr": "2 Alliés du même élément que le porteur et 1 Différent (Maîtrise élémentaire et DGTs Élémentaires)",
+          "en": "2 allies from the same element as the wearer and 1 from a different element (EM & Elemental DMG)"
+        },
         "stats": {
           "eleMas": [
             64,
@@ -20347,7 +20359,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "1 Alliés du même élément que le porteur et 2 Différents (Maîtrise élémentaire et DGTs Élémentaires)",
+        "label": {
+          "fr": "1 Allié du même élément que le porteur et 2 Différents (Maîtrise élémentaire et DGTs Élémentaires)",
+          "en": "1 ally from the same element as the wearer and 2 from a different element (EM & Elemental DMG)"
+        },
         "stats": {
           "eleMas": [
             32,
@@ -20360,7 +20375,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 Alliés d'un élément différent de celui du porteur (DGTs Élémentaires)",
+        "label": {
+          "fr": "3 Alliés d'un élément différent de celui du porteur (DGTs Élémentaires)",
+          "en": "3 allies from a different element of the wearer (Elemental DMG)"
+        },
         "stats": {
           "elemental_dmg_": [
             0.3,
@@ -20373,7 +20391,10 @@ window.WEAPON_PASSIVES  = {
   "AstralVulturesCrimsonPlumage": {
     "buffs": [
       {
-        "label": "Si une réaction élémentaire Dispersion est déclenchée (ATQ%)",
+        "label": {
+          "fr": "Si une réaction élémentaire Dispersion est déclenchée (ATQ%)",
+          "en": "If a swirl elemental reaction is triggered (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.24,
@@ -20387,7 +20408,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Si un déchaînement élémentaire touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si un déchaînement élémentaire touche un ennemi (ATQ%)",
+          "en": "If an elemental burst hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.2,
@@ -20396,7 +20420,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si l'équipe est composée de deux membre de l'Hexerei (ATQ%)",
+        "label": {
+          "fr": "Si l'équipe est composée de deux membre de l'Hexerei (ATQ%)",
+          "en": "If 2 Hexerei characters are in the party (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.35,
@@ -20409,13 +20436,19 @@ window.WEAPON_PASSIVES  = {
   "Azurelight": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire est utilisée (ATQ%)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (ATQ%)",
+          "en": "If an elemental skill is used (ATK%)"
+        },
         "stats": {
           "atk_": 0.24
         }
       },
       {
-        "label": "Si le porteur a 0 énergie (ATQ% et DGT CRIT)",
+        "label": {
+          "fr": "Si le porteur a 0 énergie (ATQ% et DGT CRIT)",
+          "en": "If the wearer has 0 energy (ATK% & Crit DMG)"
+        },
         "stats": {
           "atk_": 0.24,
           "critDMG_": 0.4
@@ -20426,7 +20459,10 @@ window.WEAPON_PASSIVES  = {
   "BalladOfTheFjords": {
     "buffs": [
       {
-        "label": "Si l'équipe est composée de 3 éléments différents (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si l'équipe est composée de 3 éléments différents (Maîtrise élémentaire)",
+          "en": "If the party includes characters of 3 different elements (EM)"
+        },
         "stats": {
           "eleMas": [
             120,
@@ -20439,7 +20475,10 @@ window.WEAPON_PASSIVES  = {
   "BeaconOfTheReedSea": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une compétence élémentaire touche un ennemi (ATQ%)",
+          "en": "If an elemental skill hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.2,
@@ -20448,7 +20487,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si le personnage subit des dégâts (ATQ%)",
+        "label": {
+          "fr": "Si le personnage subit des dégâts (ATQ%)",
+          "en": "If the character takes damage (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.2,
@@ -20457,7 +20499,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si le personnage n'est pas protégé par un bouclier (PV%)",
+        "label": {
+          "fr": "Si le personnage n'est pas protégé par un bouclier (PV%)",
+          "en": "If the character is not protected by a shield (HP%)"
+        },
         "stats": {
           "hp_": [
             0.32,
@@ -20471,7 +20516,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si un 1er ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 1er ennemi a été vaincu (ATQ%)",
+          "en": "If 1 enemy is defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20480,7 +20528,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un 2ème ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 2ème ennemi a été vaincu (ATQ%)",
+          "en": "If 2 enemies are defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20489,7 +20540,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un 3ème ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 3ème ennemi a été vaincu (ATQ%)",
+          "en": "If 3 enemies are defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20503,7 +20557,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si un 1er ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 1er ennemi a été vaincu (ATQ%)",
+          "en": "If 1 enemy is defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20512,7 +20569,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un 2ème ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 2ème ennemi a été vaincu (ATQ%)",
+          "en": "If 2 enemies are defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20521,7 +20581,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un 3ème ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 3ème ennemi a été vaincu (ATQ%)",
+          "en": "If 3 enemies are defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20535,7 +20598,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si un 1er ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 1er ennemi a été vaincu (ATQ%)",
+          "en": "If 1 enemy is defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20544,7 +20610,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un 2ème ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 2ème ennemi a été vaincu (ATQ%)",
+          "en": "If 2 enemies are defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20553,7 +20622,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un 3ème ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 3ème ennemi a été vaincu (ATQ%)",
+          "en": "If 3 enemies are defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20567,7 +20639,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si un 1er ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 1er ennemi a été vaincu (ATQ%)",
+          "en": "If 1 enemy is defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20576,7 +20651,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un 2ème ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 2ème ennemi a été vaincu (ATQ%)",
+          "en": "If 2 enemies are defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20585,7 +20663,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un 3ème ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 3ème ennemi a été vaincu (ATQ%)",
+          "en": "If 3 enemies are defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20599,7 +20680,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si un 1er ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 1er ennemi a été vaincu (ATQ%)",
+          "en": "If 1 enemy is defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20608,7 +20692,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un 2ème ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 2ème ennemi a été vaincu (ATQ%)",
+          "en": "If 2 enemies are defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20617,7 +20704,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un 3ème ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un 3ème ennemi a été vaincu (ATQ%)",
+          "en": "If 3 enemies are defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20630,7 +20720,10 @@ window.WEAPON_PASSIVES  = {
   "BloodsoakedRuins": {
     "buffs": [
       {
-        "label": "Si une réaction Sélène est déclenchée (DGT CRIT)",
+        "label": {
+          "fr": "Si une réaction Sélène est déclenchée (DGT Crit)",
+          "en": "If a Lunar Reaction is triggered (Crit DMG)"
+        },
         "stats": {
           "critDMG_": [
             0.28,
@@ -20643,7 +20736,10 @@ window.WEAPON_PASSIVES  = {
   "CalamityOfEshu": {
     "buffs": [
       {
-        "label": "Buff de Taux CRIT si le personnage est protégé par un bouclier (ne concerne que les attaques normales et chargées)",
+        "label": {
+          "fr": "Buff de Taux CRIT si le personnage est protégé par un bouclier (ne concerne que les attaques normales et chargées)",
+          "en": "Crit Rate buff if the character is protected by a shield (only applies to normal and charged attacks)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -20658,7 +20754,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Max Stacks sur le terrain (ATQ%)",
+        "label": {
+          "fr": "Max Stacks sur le terrain (ATQ%)",
+          "en": "On-field max stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.192,
@@ -20667,7 +20766,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Max Stacks hors du terrain (ATQ%)",
+        "label": {
+          "fr": "Max Stacks hors du terrain (ATQ%)",
+          "en": "Off-field max stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.384,
@@ -20681,7 +20783,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si l'énergie du porteur diminue une 1ère fois (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si l'énergie du porteur diminue une 1ère fois (Maîtrise élémentaire)",
+          "en": "If the wearer's energy decreases 1 time (EM)"
+        },
         "stats": {
           "eleMas": [
             40,
@@ -20690,7 +20795,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si l'énergie du porteur diminue une 2ème fois (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si l'énergie du porteur diminue une 2ème fois (Maîtrise élémentaire)",
+          "en": "If the wearer's energy decreases 2 times (EM)"
+        },
         "stats": {
           "eleMas": [
             40,
@@ -20704,7 +20812,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "1 cumul (ATQ%)",
+        "label": {
+          "fr": "1 stack (ATQ%)",
+          "en": "1 stack (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -20713,7 +20824,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 cumuls (ATQ%)",
+        "label": {
+          "fr": "2 stacks (ATQ%)",
+          "en": "2 stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -20722,7 +20836,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 cumuls (ATQ%)",
+        "label": {
+          "fr": "3 stacks (ATQ%)",
+          "en": "3 stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -20731,7 +20848,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "4 cumuls (ATQ%)",
+        "label": {
+          "fr": "4 stacks (ATQ%)",
+          "en": "4 stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -20744,7 +20864,10 @@ window.WEAPON_PASSIVES  = {
   "DarkIronSword": {
     "buffs": [
       {
-        "label": "Si une réaction liée à l'élément Électro a lieu (ATQ%)",
+        "label": {
+          "fr": "Si une réaction élémentaire liée à l'élément Électro est déclenchée (ATQ%)",
+          "en": "If an elemental reaction related to Electro is triggered (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.2,
@@ -20757,7 +20880,10 @@ window.WEAPON_PASSIVES  = {
   "DawningFrost": {
     "buffs": [
       {
-        "label": "Si une attaque chargée touche un ennemi (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une attaque chargée touche un ennemi (Maîtrise élémentaire)",
+          "en": "If a charged attack hits an enemy (EM)"
+        },
         "stats": {
           "eleMas": [
             72,
@@ -20766,7 +20892,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une compétence élémentaire touche un ennemi (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une compétence élémentaire touche un ennemi (Maîtrise élémentaire)",
+          "en": "If an elemental skill hits an enemy (EM)"
+        },
         "stats": {
           "eleMas": [
             48,
@@ -20780,7 +20909,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "S'il y a deux ennemis ou plus aux alentours (ATQ% et DÉF%)",
+        "label": {
+          "fr": "S'il y a 2 ennemis ou plus aux alentours (ATQ% et DÉF%)",
+          "en": "If there are 2 enemies or more nearby (ATK% & DEF%)"
+        },
         "stats": {
           "atk_": [
             0.16,
@@ -20793,7 +20925,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "S'il y a plus de deux ennemis aux alentours (ATQ%)",
+        "label": {
+          "fr": "S'il y a moins de 2 ennemis aux alentours (ATQ%)",
+          "en": "If there are less than 2 enemies nearby (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.24,
@@ -20806,7 +20941,10 @@ window.WEAPON_PASSIVES  = {
   "DodocoTales": {
     "buffs": [
       {
-        "label": "Si une attaque chargée touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une attaque chargée touche un ennemi (ATQ%)",
+          "en": "If a charged attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.08,
@@ -20820,7 +20958,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "ChainBreaker",
     "buffs": [
       {
-        "label": "Si l'équipe est composée d'1 personnage de Natlan ou d'un élément différent du porteur (ATQ%)",
+        "label": {
+          "fr": "Si l'équipe est composée d'1 personnage de Natlan ou d'un élément différent du porteur (ATQ%)",
+          "en": "If the party includes 1 character from Natlan or of a different element than the wearer (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.048,
@@ -20829,7 +20970,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si l'équipe est composée de 2 personnages de Natlan ou d'un élément différent du porteur (ATQ%)",
+        "label": {
+          "fr": "Si l'équipe est composée de 2 personnages de Natlan ou d'un élément différent du porteur (ATQ%)",
+          "en": "If the party includes 2 characters from Natlan or of a different element than the wearer (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.096,
@@ -20838,7 +20982,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si l'équipe est composée de 3 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si l'équipe est composée de 3 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
+          "en": "If the party includes 3 characters from Natlan or of a different element than the wearer (ATK% & EM)"
+        },
         "stats": {
           "atk_": [
             0.144,
@@ -20851,7 +20998,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si l'équipe est composée de 4 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si l'équipe est composée de 4 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
+          "en": "If the party includes 4 characters from Natlan or of a different element than the wearer (ATK% & EM)"
+        },
         "stats": {
           "atk_": [
             0.192,
@@ -20868,7 +21018,10 @@ window.WEAPON_PASSIVES  = {
   "ElegyForTheEnd": {
     "buffs": [
       {
-        "label": "Si 4 compétences ou déchaînements élémentaires ont touché un ennemi (Maîtrise élémentaire et ATQ%)",
+        "label": {
+          "fr": "Si 4 compétences ou déchaînements élémentaires ont touché un ennemi (Maîtrise élémentaire et ATQ%)",
+          "en": "If 4 elemental skills or bursts hit an enemy (EM & ATK%)"
+        },
         "stats": {
           "atk_": [
             0.2,
@@ -20885,7 +21038,10 @@ window.WEAPON_PASSIVES  = {
   "EmeraldOrb": {
     "buffs": [
       {
-        "label": "Si une réaction liée à l'élément Hydro a lieu (ATQ%)",
+        "label": {
+          "fr": "Si une réaction liée à l'élément Hydro a lieu (ATQ%)",
+          "en": "If a Hydro reaction is triggered (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.2,
@@ -20898,7 +21054,10 @@ window.WEAPON_PASSIVES  = {
   "EngulfingLightning": {
     "buffs": [
       {
-        "label": "Si un déchaînement élémentaire est utilisé (Recharge d'énergie)",
+        "label": {
+          "fr": "Si un déchaînement élémentaire est utilisé (Recharge d'énergie)",
+          "en": "If an elemental burst is used (ER)"
+        },
         "stats": {
           "enerRech_": [
             0.3,
@@ -20911,7 +21070,10 @@ window.WEAPON_PASSIVES  = {
   "EtherlightSpindlelute": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+          "en": "If an elemental skill is used (EM)"
+        },
         "stats": {
           "eleMas": [
             100,
@@ -20924,7 +21086,10 @@ window.WEAPON_PASSIVES  = {
   "FesteringDesire": {
     "buffs": [
       {
-        "label": "Amélioration de Taux CRIT sur la compétence seulement",
+        "label": {
+          "fr": "Amélioration de Taux CRIT sur la compétence seulement",
+          "en": "Crit Rate buff on the elemental skill only"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -20938,7 +21103,10 @@ window.WEAPON_PASSIVES  = {
   "FinaleOfTheDeep": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire est utilisée (ATQ%)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (ATQ%)",
+          "en": "If an elemental skill is used (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -20947,7 +21115,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si l'Engagement Vital est dissipé (ATQ)",
+        "label": {
+          "fr": "Si l'Engagement Vital est dissipé (ATQ)",
+          "en": "If the Bond of Life is cleared (ATK%)"
+        },
         "stats": {
           "atk": [
             150,
@@ -20960,7 +21131,10 @@ window.WEAPON_PASSIVES  = {
   "FlameForgedInsight": {
     "buffs": [
       {
-        "label": "Si une réaction Sélène est déclenchée (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction Sélène est déclenchée (Maîtrise élémentaire)",
+          "en": "If a Lunar Reaction is triggered (EM)"
+        },
         "stats": {
           "eleMas": [
             60,
@@ -20973,7 +21147,10 @@ window.WEAPON_PASSIVES  = {
   "FleuveCendreFerryman": {
     "buffs": [
       {
-        "label": "Buff passif de Taux CRIT (ne concerne que la compétence élémentaire)",
+        "label": {
+          "fr": "Buff passif de Taux CRIT (ne concerne que la compétence élémentaire)",
+          "en": "Passive Crit Rate buff (only for the elemental skill)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -20983,7 +21160,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une compétence élémentaire est utilisée (Recharge d'énergie)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (Recharge d'énergie)",
+          "en": "If an elemental skill is used (ER)"
+        },
         "stats": {
           "enerRech_": [
             0.16,
@@ -20997,7 +21177,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une compétence élémentaire est utilisée (DGTs Élémentaires)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (DGTs Élémentaires)",
+          "en": "If an elemental skill is used (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.08,
@@ -21030,7 +21213,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un Engagement Vital est dissipé (DGTs Élémentaires)",
+        "label": {
+          "fr": "Si un Engagement Vital est dissipé (DGTs Élémentaires)",
+          "en": "If a Bond of Life is cleared (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.12,
@@ -21067,7 +21253,10 @@ window.WEAPON_PASSIVES  = {
   "FluteOfEzpitzal": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire est utilisée (DÉF)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (DÉF%)",
+          "en": "If an elemental skill is used (DEF%)"
+        },
         "stats": {
           "def_": [
             0.16,
@@ -21080,7 +21269,10 @@ window.WEAPON_PASSIVES  = {
   "FootprintOfTheRainbow": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire est utilisée (DÉF%)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (DÉF%)",
+          "en": "If an elemental skill is used (DEF%)"
+        },
         "stats": {
           "def_": [
             0.16,
@@ -21093,7 +21285,10 @@ window.WEAPON_PASSIVES  = {
   "ForestRegalia": {
     "buffs": [
       {
-        "label": "Si une réaction liée à l'élément Dendro est déclenchée (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction liée à l'élément Dendro est déclenchée (Maîtrise élémentaire)",
+          "en": "If a Dendro reaction is triggered (EM)"
+        },
         "stats": {
           "eleMas": [
             60,
@@ -21106,7 +21301,10 @@ window.WEAPON_PASSIVES  = {
   "FracturedHalo": {
     "buffs": [
       {
-        "label": "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ%)",
+        "label": {
+          "fr": "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ%)",
+          "en": "If an elemental skill or burst is used (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.24,
@@ -21119,7 +21317,10 @@ window.WEAPON_PASSIVES  = {
   "FreedomSworn": {
     "buffs": [
       {
-        "label": "Si 2 réactions élémentaires sont déclenchées (ATQ%)",
+        "label": {
+          "fr": "Si 2 réactions élémentaires sont déclenchées (ATQ%)",
+          "en": "If 2 elemental reactions are triggered (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.2,
@@ -21132,7 +21333,10 @@ window.WEAPON_PASSIVES  = {
   "FruitOfFulfillment": {
     "buffs": [
       {
-        "label": "Si une réaction élémentaire est déclenchée (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction élémentaire est déclenchée (Maîtrise élémentaire)",
+          "en": "If an elemental reaction is triggered (EM)"
+        },
         "stats": {
           "eleMas": [
             24,
@@ -21145,7 +21349,10 @@ window.WEAPON_PASSIVES  = {
   "FruitfulHook": {
     "buffs": [
       {
-        "label": "Bonus de Taux CRIT (Uniquement pour les attaques plongées)",
+        "label": {
+          "fr": "Bonus de Taux CRIT (Uniquement pour les attaques plongées)",
+          "en": "Crit Rate buff (for plunge attacks only)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -21160,7 +21367,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Hymne des quatre vents (1 stacks)",
+        "label": {
+          "fr": "Hymne des quatre vents (1 stacks)",
+          "en": "Four Winds' Hymn (1 stack)"
+        },
         "stats": {
           "critDMG_": [
             0.075,
@@ -21169,7 +21379,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Hymne des quatre vents (2 stacks)",
+        "label": {
+          "fr": "Hymne des quatre vents (2 stacks)",
+          "en": "Four Winds' Hymn (2 stacks)"
+        },
         "stats": {
           "critDMG_": [
             0,
@@ -21179,7 +21392,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Hymne des quatre vents (3 stacks)",
+        "label": {
+          "fr": "Hymne des quatre vents (3 stacks)",
+          "en": "Four Winds' Hymn (3 stacks)"
+        },
         "stats": {
           "critDMG_": [
             0.225,
@@ -21188,7 +21404,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Hymne des quatre vents (4 stacks)",
+        "label": {
+          "fr": "Hymne des quatre vents (4 stacks)",
+          "en": "Four Winds' Hymn (4 stacks)"
+        },
         "active": true,
         "stats": {
           "critDMG_": [
@@ -21202,7 +21421,10 @@ window.WEAPON_PASSIVES  = {
   "HakushinRing": {
     "buffs": [
       {
-        "label": "Si une réaction élémentaire en lien avec Électro est déclenchée (DGTs Élémentaires)",
+        "label": {
+          "fr": "Si une réaction élémentaire en lien avec Électro est déclenchée (DGTs Élémentaires)",
+          "en": "If an Electro elemental reaction is triggered (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.1,
@@ -21239,7 +21461,10 @@ window.WEAPON_PASSIVES  = {
   "HarbingerOfDawn": {
     "buffs": [
       {
-        "label": "Si les PV sont supérieurs à 90% (Taux CRIT)",
+        "label": {
+          "fr": "Si les PV sont supérieurs à 90% (Taux CRIT)",
+          "en": "If HP is above 90% (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -21254,7 +21479,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une 1ère attaque chargée touche un ennemi (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une 1ère attaque chargée touche un ennemi (Maîtrise élémentaire)",
+          "en": "If 1 charged attack hits an enemy (EM)"
+        },
         "stats": {
           "eleMas": [
             40,
@@ -21263,7 +21491,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 2ème attaque chargée touche un ennemi (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une 2ème attaque chargée touche un ennemi (Maîtrise élémentaire)",
+          "en": "If 2 charged attacks hit an enemy (EM)"
+        },
         "stats": {
           "eleMas": [
             40,
@@ -21276,7 +21507,10 @@ window.WEAPON_PASSIVES  = {
   "JadefallsSplendor": {
     "buffs": [
       {
-        "label": "Si un déchaînement élémentaire est utilisé ou qu'un bouclier est créé (DGTs Élémentaires en fonction des PV)",
+        "label": {
+          "fr": "Si un déchaînement élémentaire est utilisé ou qu'un bouclier est créé (DGTs Élémentaires en fonction des PV)",
+          "en": "If an elemental burst is used or a shield is created (Elemental DMG based on HP)"
+        },
         "stats": {
           "pyro_dmg_bonus_scaling": {
             "source": "hp",
@@ -21334,7 +21568,10 @@ window.WEAPON_PASSIVES  = {
   "KagotsurubeIsshin": {
     "buffs": [
       {
-        "label": "Si une attaque normale, chargée ou plongeante touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une attaque normale, chargée ou plongeante touche un ennemi (ATQ%)",
+          "en": "If a normal, charged or plunging attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.15,
@@ -21347,7 +21584,10 @@ window.WEAPON_PASSIVES  = {
   "KagurasVerity": {
     "buffs": [
       {
-        "label": "Si 3 compétences élémentaires sont utilisées (DGTs Élémentaires)",
+        "label": {
+          "fr": "Si 3 compétences élémentaires sont utilisées (DGTs Élémentaires)",
+          "en": "If 3 elemental skills ares used (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.12,
@@ -21434,7 +21674,10 @@ window.WEAPON_PASSIVES  = {
   "KingsSquire": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire ou un déchaînement élémentaire est utilisé (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une compétence ou un déchaînement élémentaire est utilisé (Maîtrise élémentaire)",
+          "en": "If an elemental skill or burst is used (EM)"
+        },
         "stats": {
           "eleMas": [
             60,
@@ -21448,7 +21691,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Si 1 personnage de Liyue est dans l'équipe (ATQ% et Taux CRIT)",
+        "label": {
+          "fr": "Si 1 personnage de Liyue est dans l'équipe (ATQ% et Taux CRIT)",
+          "en": "If 1 character from Liyue is in the party (ATK% & Crit Rate)"
+        },
         "active": false,
         "stats": {
           "atk_": [
@@ -21462,7 +21708,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si 2 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+        "label": {
+          "fr": "Si 2 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+          "en": "If 2 characters from Liyue are in the party (ATK% & Crit Rate)"
+        },
         "active": false,
         "stats": {
           "atk_": [
@@ -21476,7 +21725,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si 3 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+        "label": {
+          "fr": "Si 3 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+          "en": "If 3 characters from Liyue are in the party (ATK% & Crit Rate)"
+        },
         "active": false,
         "stats": {
           "atk_": [
@@ -21490,7 +21742,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si 4 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+        "label": {
+          "fr": "Si 4 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+          "en": "If 4 characters from Liyue are in the party (ATK% & Crit Rate)"
+        },
         "active": false,
         "stats": {
           "atk_": [
@@ -21509,7 +21764,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Si 1 personnage de Liyue est dans l'équipe (ATQ% et Taux CRIT)",
+        "label": {
+          "fr": "Si 1 personnage de Liyue est dans l'équipe (ATQ% et Taux CRIT)",
+          "en": "If 1 character from Liyue is in the party (ATK% & Crit Rate)"
+        },
         "active": false,
         "stats": {
           "atk_": [
@@ -21523,7 +21781,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si 2 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+        "label": {
+          "fr": "Si 2 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+          "en": "If 2 characters from Liyue are in the party (ATK% & Crit Rate)"
+        },
         "active": false,
         "stats": {
           "atk_": [
@@ -21537,7 +21798,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si 3 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+        "label": {
+          "fr": "Si 3 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+          "en": "If 3 characters from Liyue are in the party (ATK% & Crit Rate)"
+        },
         "active": false,
         "stats": {
           "atk_": [
@@ -21551,7 +21815,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si 4 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+        "label": {
+          "fr": "Si 4 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+          "en": "If 4 characters from Liyue are in the party (ATK% & Crit Rate)"
+        },
         "active": false,
         "stats": {
           "atk_": [
@@ -21570,7 +21837,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "1 Stack (DGTs Élémentaires)",
+        "label": {
+          "fr": "1 Stack (DGTs Élémentaires)",
+          "en": "1 Stack (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.08,
@@ -21603,7 +21873,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 Stacks (DGTs Élémentaires)",
+        "label": {
+          "fr": "2 Stacks (DGTs Élémentaires)",
+          "en": "2 Stacks (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.08,
@@ -21636,7 +21909,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 Stacks (DGTs Élémentaires)",
+        "label": {
+          "fr": "3 Stacks (DGTs Élémentaires)",
+          "en": "3 Stacks (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.08,
@@ -21669,7 +21945,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "4 Stacks (DGTs Élémentaires)",
+        "label": {
+          "fr": "4 Stacks (DGTs Élémentaires)",
+          "en": "4 Stacks (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.08,
@@ -21706,7 +21985,10 @@ window.WEAPON_PASSIVES  = {
   "MailedFlower": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire touche un ennemi ou qu'une réaction élémentaire est déclenchée (ATQ% et Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une compétence élémentaire touche un ennemi ou qu'une réaction élémentaire est déclenchée (ATQ% et Maîtrise élémentaire)",
+          "en": "If an elemental skill hits an enemy or if an elemental reaction is triggered (ATK% & EM)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -21723,7 +22005,10 @@ window.WEAPON_PASSIVES  = {
   "MakhairaAquamarine": {
     "buffs": [
       {
-        "label": "Bonus selon la Maîtrise élémentaire (ATQ%)",
+        "label": {
+          "fr": "Bonus selon la Maîtrise élémentaire (ATQ%)",
+          "en": "Passive buff based on EM (ATK%)"
+        },
         "stats": {
           "atk_bonus_scaling": {
             "source": "eleMas",
@@ -21740,7 +22025,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une 1ère réaction élémentaire est déclenchée (DGTs Élémentaires)",
+        "label": {
+          "fr": "Si une 1ère réaction élémentaire est déclenchée (DGTs Élémentaires)",
+          "en": "If 1 elemental reaction is triggered (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.08,
@@ -21773,7 +22061,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 2ème réaction élémentaire est déclenchée (DGTs Élémentaires)",
+        "label": {
+          "fr": "Si une 2ème réaction élémentaire est déclenchée (DGTs Élémentaires)",
+          "en": "If 2 elemental reactions are triggered (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.08,
@@ -21811,7 +22102,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (Maîtrise élémentaire)",
+          "en": "If an elemental reaction is triggered and the party's Moonsign is Nascent Gleam (EM)"
+        },
         "stats": {
           "eleMas": [
             60,
@@ -21820,7 +22114,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (Maîtrise élémentaire)",
+          "en": "If an elemental reaction is triggered and the party's Moonsigne is Ascendant Gleam (EM)"
+        },
         "stats": {
           "eleMas": [
             120,
@@ -21834,7 +22131,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une 1ère attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 1ère attaque touche un ennemi (ATQ%)",
+          "en": "Si 1 attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -21843,7 +22143,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 2ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 2ème attaque touche un ennemi (ATQ%)",
+          "en": "If 2 attacks hit an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -21852,7 +22155,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 3ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 3ème attaque touche un ennemi (ATQ%)",
+          "en": "If 3 attacks hit an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -21861,7 +22167,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 4ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 4ème attaque touche un ennemi (ATQ%)",
+          "en": "If 4 attacks hit an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -21870,7 +22179,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 5ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 5ème attaque touche un ennemi (ATQ%)",
+          "en": "If 5 attacks hit an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -21883,7 +22195,10 @@ window.WEAPON_PASSIVES  = {
   "MissiveWindspear": {
     "buffs": [
       {
-        "label": "Si une réaction élémentaire est déclenchée (ATQ% et Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction élémentaire est déclenchée (ATQ% et Maîtrise élémentaire)",
+          "en": "If an elemental reaction is triggered (ATK% & EM)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -21901,7 +22216,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "1 Emblème (DGTs Élémentaires)",
+        "label": {
+          "fr": "1 Emblème (DGTs Élémentaires)",
+          "en": "1 Emblem (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.08,
@@ -21934,7 +22252,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 Emblèmes (DGTs Élémentaires)",
+        "label": {
+          "fr": "2 Emblèmes (DGTs Élémentaires)",
+          "en": "2 Emblems (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.16,
@@ -21967,7 +22288,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 Emblèmes (DGTs Élémentaires)",
+        "label": {
+          "fr": "3 Emblèmes (DGTs Élémentaires)",
+          "en": "3 Emblems (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.28,
@@ -22004,7 +22328,10 @@ window.WEAPON_PASSIVES  = {
   "Moonpiercer": {
     "buffs": [
       {
-        "label": "Si une réaction en lien avec l'élément Dendro est déclenchée (ATQ%)",
+        "label": {
+          "fr": "Si une réaction en lien avec l'élément Dendro est déclenchée (ATQ%)",
+          "en": "If a Dendro elemental reaction is triggered (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.16,
@@ -22017,7 +22344,10 @@ window.WEAPON_PASSIVES  = {
   "NightweaversLookingGlass": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire inflige des DGT Hydro ou Dendro (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une compétence élémentaire inflige des DGT Hydro ou Dendro (Maîtrise élémentaire)",
+          "en": "If an elemental skill deals Hydro or Dendro DMG (EM)"
+        },
         "stats": {
           "eleMas": [
             60,
@@ -22026,7 +22356,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une réaction de Sélénofleurissement est déclenchée (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction de Sélénofleurissement est déclenchée (Maîtrise élémentaire)",
+          "en": "If a Lunar-Bloom elemental reaction is triggered (EM)"
+        },
         "stats": {
           "eleMas": [
             60,
@@ -22039,7 +22372,10 @@ window.WEAPON_PASSIVES  = {
   "NocturnesCurtainCall": {
     "buffs": [
       {
-        "label": "Si une réaction Sélène est déclenchée ou inflige des dégâts (PV% et DGT CRIT uniquement pour les réactions Sélène)",
+        "label": {
+          "fr": "Si une réaction Sélène est déclenchée ou inflige des dégâts (PV% et DGT CRIT uniquement pour les réactions Sélène)",
+          "en": "If a Lunar reaction is triggered or deals damage (HP% & Crit DMG only for Lunar reactions)"
+        },
         "stats": {
           "hp_": [
             0.14,
@@ -22056,7 +22392,10 @@ window.WEAPON_PASSIVES  = {
   "OathswornEye": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire est utilisée (Recharge d'énergie)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (Recharge d'énergie)",
+          "en": "If an elemental skill is used (ER)"
+        },
         "stats": {
           "enerRech_": [
             0.24,
@@ -22070,7 +22409,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Si une attaque normale ou plongée touche un ennemi une 1ère fois (DÉF% et DGTs Élémentaires)",
+        "label": {
+          "fr": "Si une attaque normale ou plongée touche un ennemi une 1ère fois (DÉF% et DGTs Élémentaires)",
+          "en": "If a normal or plunging attack hits an enemy a 1st time (DEF% & Elemental DMG)"
+        },
         "stats": {
           "def_": [
             0.08,
@@ -22107,7 +22449,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une attaque normale ou plongée touche un ennemi une 2ème fois (DÉF% et DGTs Élémentaires)",
+        "label": {
+          "fr": "Si une attaque normale ou plongée touche un ennemi une 2ème fois (DÉF% et DGTs Élémentaires)",
+          "en": "If a normal or plunging attack hits an enemy a 2nd time (DEF% & Elemental DMG)"
+        },
         "stats": {
           "def_": [
             0.16,
@@ -22174,7 +22519,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "1 Stack (ATQ%)",
+        "label": {
+          "fr": "1 Stack (ATQ%)",
+          "en": "1 Stack (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.1,
@@ -22183,7 +22531,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 Stacks (ATQ%)",
+        "label": {
+          "fr": "2 Stacks (ATQ%)",
+          "en": "2 Stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.2,
@@ -22192,7 +22543,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 Stacks (ATQ%)",
+        "label": {
+          "fr": "3 Stacks (ATQ%)",
+          "en": "3 Stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.3,
@@ -22201,7 +22555,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "4 Stacks (ATQ%)",
+        "label": {
+          "fr": "4 Stacks (ATQ%)",
+          "en": "4 Stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.48,
@@ -22215,7 +22572,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "1 Symbole consommé (Maîtrise élémentaire)",
+        "label": {
+          "fr": "1 Symbole consommé (Maîtrise élémentaire)",
+          "en": "1 Symbol consumed (EM)"
+        },
         "stats": {
           "eleMas": [
             40,
@@ -22224,7 +22584,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 Symboles consommés (Maîtrise élémentaire)",
+        "label": {
+          "fr": "2 Symboles consommés (Maîtrise élémentaire)",
+          "en": "2 Symbols consumed (EM)"
+        },
         "stats": {
           "eleMas": [
             80,
@@ -22233,7 +22596,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 Symboles consommés (Maîtrise élémentaire)",
+        "label": {
+          "fr": "3 Symboles consommés (Maîtrise élémentaire)",
+          "en": "3 Symbols consumed (EM)"
+        },
         "stats": {
           "eleMas": [
             120,
@@ -22247,7 +22613,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "1 Stack (ATQ%)",
+        "label": {
+          "fr": "1 Stack (ATQ%)",
+          "en": "1 Stack (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.032,
@@ -22256,7 +22625,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 Stacks (ATQ%)",
+        "label": {
+          "fr": "2 Stacks (ATQ%)",
+          "en": "2 Stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.064,
@@ -22265,7 +22637,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 Stacks (ATQ%)",
+        "label": {
+          "fr": "3 Stacks (ATQ%)",
+          "en": "3 Stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.096,
@@ -22274,7 +22649,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "4 Stacks (ATQ%)",
+        "label": {
+          "fr": "4 Stacks (ATQ%)",
+          "en": "4 Stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.128,
@@ -22283,7 +22661,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "5 Stacks (ATQ%)",
+        "label": {
+          "fr": "5 Stacks (ATQ%)",
+          "en": "5 Stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.16,
@@ -22292,7 +22673,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "6 Stacks (ATQ%)",
+        "label": {
+          "fr": "6 Stacks (ATQ%)",
+          "en": "6 Stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.192,
@@ -22301,7 +22685,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "7 Stacks (ATQ%)",
+        "label": {
+          "fr": "7 Stacks (ATQ%)",
+          "en": "7 Stacks (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.224,
@@ -22315,7 +22702,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Si le personnage soigne ou reçoit de soins une 1ère fois (ATQ% et DGTs Élémentaires)",
+        "label": {
+          "fr": "Si le personnage soigne ou reçoit de soins une 1ère fois (ATQ% et DGTs Élémentaires)",
+          "en": "If the character heals or is healed 1 time (ATK% & Elemental DMG)"
+        },
         "stats": {
           "atk_": [
             0.03,
@@ -22352,7 +22742,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si le personnage soigne ou reçoit de soins une 2ème fois (ATQ% et DGTs Élémentaires)",
+        "label": {
+          "fr": "Si le personnage soigne ou reçoit de soins une 2ème fois (ATQ% et DGTs Élémentaires)",
+          "en": "If the characters heals or is healed 2 times (ATK% & Elemental DMG)"
+        },
         "stats": {
           "atk_": [
             0.06,
@@ -22389,7 +22782,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si le personnage soigne ou reçoit de soins une 3ème fois (ATQ% et DGTs Élémentaires)",
+        "label": {
+          "fr": "Si le personnage soigne ou reçoit de soins une 3ème fois (ATQ% et DGTs Élémentaires)",
+          "en": "If the character heals or is healed 3 times (ATK% & Elemental DMG)"
+        },
         "stats": {
           "atk_": [
             0.09,
@@ -22430,7 +22826,10 @@ window.WEAPON_PASSIVES  = {
   "PrototypeCrescent": {
     "buffs": [
       {
-        "label": "Si un point faible est touché en mode visée (ATQ%)",
+        "label": {
+          "fr": "Si un point faible est touché en mode visée (ATQ%)",
+          "en": "If a weak point is hit while aiming (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.36,
@@ -22444,7 +22843,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une attaque normale ou chargée touche un ennemi une 1ère fois (ATQ% et DÉF)",
+        "label": {
+          "fr": "Si une attaque normale ou chargée touche un ennemi une 1ère fois (ATQ% et DÉF%)",
+          "en": "If a normal or charged attack hits an enemy 1 time (ATK% & DEF%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -22457,7 +22859,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une attaque normale ou chargée touche un ennemi une 2ème fois (ATQ% et DÉF)",
+        "label": {
+          "fr": "Si une attaque normale ou chargée touche un ennemi une 2ème fois (ATQ% et DÉF%)",
+          "en": "If a normal or charged attack hits an enemy 2 times (ATK% & DEF%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -22470,7 +22875,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une attaque normale ou chargée touche un ennemi une 3ème fois (ATQ% et DÉF)",
+        "label": {
+          "fr": "Si une attaque normale ou chargée touche un ennemi une 3ème fois (ATQ% et DÉF)",
+          "en": "If a normal or charged attack hits an enemy 3 times (ATK% & DEF%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -22483,7 +22891,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une attaque normale ou chargée touche un ennemi une 4ème fois (ATQ% et DÉF)",
+        "label": {
+          "fr": "Si une attaque normale ou chargée touche un ennemi une 4ème fois (ATQ% et DÉF)",
+          "en": "If a normal or charged attack hits an enemy 4 times (ATK% & DEF%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -22496,7 +22907,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une attaque normale ou chargée touche un ennemi une 5ème fois (ATQ% et DÉF)",
+        "label": {
+          "fr": "Si une attaque normale ou chargée touche un ennemi une 5ème fois (ATQ% et DÉF)",
+          "en": "If a normal or charged attack hits an enemy 5 times (ATK% & DEF%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -22513,7 +22927,10 @@ window.WEAPON_PASSIVES  = {
   "RainbowSerpentsRainBow": {
     "buffs": [
       {
-        "label": "Si une attaque touche un ennemi et que le porteur est hors du terrain (ATQ%)",
+        "label": {
+          "fr": "Si une attaque touche un ennemi et que le porteur est hors du terrain (ATQ%)",
+          "en": "If an attack hits an enemy and the character is off-field (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.28,
@@ -22527,7 +22944,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Si le personnage soigne ou reçoit de soins une 1ère fois (ATQ% et DGTs Élémentaires)",
+        "label": {
+          "fr": "Si le personnage soigne ou reçoit de soins une 1ère fois (ATQ% et DGTs Élémentaires)",
+          "en": "If the character heals or is healed 1 time (ATK% & Elemental DMG)"
+        },
         "stats": {
           "atk_": [
             0.03,
@@ -22564,7 +22984,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si le personnage soigne ou reçoit de soins une 2ème fois (ATQ% et DGTs Élémentaires)",
+        "label": {
+          "fr": "Si le personnage soigne ou reçoit de soins une 2ème fois (ATQ% et DGTs Élémentaires)",
+          "en": "If the character heals or is healed 2 times (ATK% & Elemental DMG)"
+        },
         "stats": {
           "atk_": [
             0.06,
@@ -22601,7 +23024,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si le personnage soigne ou reçoit de soins une 3ème fois (ATQ% et DGTs Élémentaires)",
+        "label": {
+          "fr": "Si le personnage soigne ou reçoit de soins une 3ème fois (ATQ% et DGTs Élémentaires)",
+          "en": "If the character heals or is healed 3 times (ATK% & Elemental DMG)"
+        },
         "stats": {
           "atk_": [
             0.09,
@@ -22643,7 +23069,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+          "en": "If an elemental skill is used (EM)"
+        },
         "stats": {
           "eleMas": [
             80,
@@ -22652,7 +23081,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts de Sélénofleurissment sont infligés (DGT CRIT)",
+        "label": {
+          "fr": "Si des dégâts de Sélénofleurissment sont infligés (DGT CRIT)",
+          "en": "If Lunar-Bloom damage is dealt (Crit DMG)"
+        },
         "stats": {
           "critDMG_": [
             0.24,
@@ -22661,7 +23093,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si les deux effets précédents sont actifs en même temps (Maîtrise élémentaire et DGT CRIT)",
+        "label": {
+          "fr": "Si les deux effets précédents sont actifs en même temps (Maîtrise élémentaire et DGT CRIT)",
+          "en": "If both previous effects are active at the same time (EM & Crit DMG)"
+        },
         "stats": {
           "eleMas": [
             120,
@@ -22679,7 +23114,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+          "en": "When damaging an opponent 1 time (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22689,7 +23127,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 2ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 1ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 2 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22699,7 +23140,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 3 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22709,7 +23153,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 4 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22719,7 +23166,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 5 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22734,7 +23184,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+          "en": "When damaging an opponent 1 time (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22744,7 +23197,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 2ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 1ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 2 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22754,7 +23210,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 3 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22764,7 +23223,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 4 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22774,7 +23236,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 5 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22789,7 +23254,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+          "en": "When damaging an opponent 1 time (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22799,7 +23267,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 2ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 1ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 2 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22809,7 +23280,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 3 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22819,7 +23293,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 4 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22829,7 +23306,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 5 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22844,7 +23324,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+          "en": "When damaging an opponent 1 time (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22854,7 +23337,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 2ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 1ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 2 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22864,7 +23350,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 3 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22874,7 +23363,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 4 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22884,7 +23376,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 5 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22899,7 +23394,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+          "en": "When damaging an opponent 1 time (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22909,7 +23407,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 2ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 1ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 2 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22919,7 +23420,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 3 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22929,7 +23433,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 4 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22939,7 +23446,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+        "label": {
+          "fr": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+          "en": "When damaging an opponent 5 times (Crit Rate)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -22954,7 +23464,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une compétence élémentaire touche un ennemi une 1ère fois (ATQ% et Recharge d'énergie)",
+        "label": {
+          "fr": "Si une compétence élémentaire touche un ennemi une 1ère fois (ATQ% et Recharge d'énergie)",
+          "en": "If an elemental skill hits an enemy a 1st time (ATK% & ER)"
+        },
         "stats": {
           "atk_": [
             0.08,
@@ -22967,7 +23480,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une compétence élémentaire touche un ennemi une 2ème fois (ATQ% et Recharge d'énergie)",
+        "label": {
+          "fr": "Si une compétence élémentaire touche un ennemi une 2ème fois (ATQ% et Recharge d'énergie)",
+          "en": "If an elemental skill hits an enemy a 2nd time (ATK% & ER)"
+        },
         "stats": {
           "atk_": [
             0.08,
@@ -22980,7 +23496,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une compétence élémentaire touche un ennemi une 3ème fois (ATQ% et Recharge d'énergie)",
+        "label": {
+          "fr": "Si une compétence élémentaire touche un ennemi une 3ème fois (ATQ% et Recharge d'énergie)",
+          "en": "If an elemental skill hits an enemy a 3rd time (ATK% & ER)"
+        },
         "stats": {
           "atk_": [
             0.08,
@@ -22997,7 +23516,10 @@ window.WEAPON_PASSIVES  = {
   "SacrificialJade": {
     "buffs": [
       {
-        "label": "Si le porteur est hors du terrain pendant 5s (PV% et Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si le porteur est hors du terrain pendant 5s (PV% et Maîtrise élémentaire)",
+          "en": "If the wearer is off-field for 5 seconds (HP% & EM)"
+        },
         "stats": {
           "hp_": [
             0.32,
@@ -23014,7 +23536,10 @@ window.WEAPON_PASSIVES  = {
   "SapwoodBlade": {
     "buffs": [
       {
-        "label": "Si une réaction liée à l'élément Dendro est déclenchée (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction liée à l'élément Dendro est déclenchée (Maîtrise élémentaire)",
+          "en": "If a Dendro elemental reaction is triggered (EM)"
+        },
         "stats": {
           "eleMas": [
             60,
@@ -23028,7 +23553,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (PV%)",
+        "label": {
+          "fr": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (PV%)",
+          "en": "If an elemental reaction is triggered and the party's Moonsign is Nascent Gleam (HP%)"
+        },
         "stats": {
           "hp_": [
             0.16,
@@ -23037,7 +23565,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (PV%)",
+        "label": {
+          "fr": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (PV%)",
+          "en": "If an elemental reaction is triggered and the party's Moonsign is Ascendant Gleam (HP%)"
+        },
         "stats": {
           "hp_": [
             0.32,
@@ -23051,7 +23582,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "1 Stack (PV%)",
+        "label": {
+          "fr": "1 Stack (PV%)",
+          "en": "1 Stack (HP%)"
+        },
         "stats": {
           "hp_": [
             0.12,
@@ -23060,7 +23594,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 Stacks (PV%)",
+        "label": {
+          "fr": "2 Stacks (PV%)",
+          "en": "2 Stacks (HP%)"
+        },
         "stats": {
           "atk_": [
             0.24,
@@ -23069,7 +23606,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 Stacks (PV% et Taux CRIT uniquement pour le déchaînement élémentaire)",
+        "label": {
+          "fr": "3 Stacks (PV% et Taux CRIT uniquement pour le déchaînement élémentaire)",
+          "en": "3 Stacks (HP% & Crit Rate only for the elemental burst)"
+        },
         "active": false,
         "stats": {
           "atk_": [
@@ -23088,7 +23628,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une 1ère attaque normale ou chargée touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 1ère attaque normale ou chargée touche un ennemi (ATQ%)",
+          "en": "If a normal or charged attack hits an enemy 1 time (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.06,
@@ -23097,7 +23640,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 2ème attaque normale ou chargée touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 2ème attaque normale ou chargée touche un ennemi (ATQ%)",
+          "en": "If a normal or charged attack hits an enemy 2 times (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.06,
@@ -23106,7 +23652,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 3ème attaque normale ou chargée touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 3ème attaque normale ou chargée touche un ennemi (ATQ%)",
+          "en": "If a normal or charged attack hits an enemy 3 times (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.06,
@@ -23115,7 +23664,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 4ème attaque normale ou chargée touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 4ème attaque normale ou chargée touche un ennemi (ATQ%)",
+          "en": "If a normal or charged attack hits an enemy 4 times (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.06,
@@ -23128,7 +23680,10 @@ window.WEAPON_PASSIVES  = {
   "SkyriderSword": {
     "buffs": [
       {
-        "label": "Si un déchaînement élémentaire est utilisé (ATQ%)",
+        "label": {
+          "fr": "Si un déchaînement élémentaire est utilisé (ATQ%)",
+          "en": "If an elemental burst is used (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -23142,7 +23697,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (Maîtrise élémentaire)",
+          "en": "If an elemental reaction is triggered and the party's Moonsign is Nascent Gleam (EM)"
+        },
         "stats": {
           "eleMas": [
             60,
@@ -23151,7 +23709,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (Maîtrise élémentaire)",
+          "en": "If an elemental reaction is triggered and the party's Moonsign is Ascendant Gleam (EM)"
+        },
         "stats": {
           "eleMas": [
             120,
@@ -23164,7 +23725,10 @@ window.WEAPON_PASSIVES  = {
   "SongOfBrokenPines": {
     "buffs": [
       {
-        "label": "Si 4 attaques normales ou chargées touchent un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si 4 attaques normales ou chargées touchent un ennemi (ATQ%)",
+          "en": "If 4 normal or charged attacks hit an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.2,
@@ -23178,7 +23742,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Si des alliés subissent une modification de PV une 1ère fois (PV%)",
+        "label": {
+          "fr": "Si des alliés subissent une modification de PV une 1ère fois (PV%)",
+          "en": "If allies' HP increases or decreases for the 1st time (HP%)"
+        },
         "stats": {
           "hp_": [
             0.14,
@@ -23187,7 +23754,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des alliés subissent une modification de PV une 2ème fois (PV%)",
+        "label": {
+          "fr": "Si des alliés subissent une modification de PV une 2ème fois (PV%)",
+          "en": "If allies' HP increases or decreases for the 2nd time (HP%)"
+        },
         "stats": {
           "hp_": [
             0.28,
@@ -23200,7 +23770,10 @@ window.WEAPON_PASSIVES  = {
   "StaffOfHoma": {
     "buffs": [
       {
-        "label": "Si les PV sont inférieurs à 50% (ATQ% en fonction des PV%)",
+        "label": {
+          "fr": "Si les PV sont inférieurs à 50% (ATQ% en fonction des PV%)",
+          "en": "If the wielder's HP is less than 50% (ATK% based on HP%)"
+        },
         "stats": {
           "atk_bonus_scaling": {
             "source": "hp",
@@ -23217,7 +23790,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "1 Stack (ATQ% en fonction de la Maîtrise élémentaire)",
+        "label": {
+          "fr": "1 Stack (ATQ% en fonction de la Maîtrise élémentaire)",
+          "en": "1 Stack (ATK% based on EM)"
+        },
         "stats": {
           "atk_bonus_scaling": {
             "source": "eleMas",
@@ -23229,7 +23805,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
+        "label": {
+          "fr": "2 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
+          "en": "2 Stacks (ATK% based on EM)"
+        },
         "stats": {
           "atk_bonus_scaling": {
             "source": "eleMas",
@@ -23241,7 +23820,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
+        "label": {
+          "fr": "3 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
+          "en": "3 Stacks (ATK% based on EM)"
+        },
         "stats": {
           "atk_bonus_scaling": {
             "source": "eleMas",
@@ -23258,7 +23840,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une 1ère attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 1ère attaque touche un ennemi (ATQ%)",
+          "en": "If a 1st attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23267,7 +23852,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 2ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 2ème attaque touche un ennemi (ATQ%)",
+          "en": "If a 2nd attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23276,7 +23864,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 3ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 3ème attaque touche un ennemi (ATQ%)",
+          "en": "If a 3rd attack hits enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23285,7 +23876,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 4ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 4ème attaque touche un ennemi (ATQ%)",
+          "en": "If a 4th attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23294,7 +23888,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 5ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 5ème attaque touche un ennemi (ATQ%)",
+          "en": "If a 5th attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23307,7 +23904,10 @@ window.WEAPON_PASSIVES  = {
   "SunnyMorningSleepIn": {
     "buffs": [
       {
-        "label": "Si une réaction de Dispersion est déclenchée (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une réaction de Dispersion est déclenchée (Maîtrise élémentaire)",
+          "en": "If a Swirl elemental reaction is triggered (EM)"
+        },
         "stats": {
           "eleMas": [
             120,
@@ -23316,7 +23916,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+          "en": "If an elemental skill is used (EM)"
+        },
         "stats": {
           "eleMas": [
             96,
@@ -23325,7 +23928,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si un déchaînement élémentaire est utilisé (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si un déchaînement élémentaire est utilisé (Maîtrise élémentaire)",
+          "en": "If an elemental burst is used (EM)"
+        },
         "stats": {
           "eleMas": [
             32,
@@ -23338,7 +23944,10 @@ window.WEAPON_PASSIVES  = {
   "SymphonistOfScents": {
     "buffs": [
       {
-        "label": "Si le porteur est hors du terrain (ATQ%)",
+        "label": {
+          "fr": "Si le porteur est hors du terrain (ATQ%)",
+          "en": "If the wielder is off-field (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -23347,7 +23956,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si le porteur soigne un allié (ATQ%)",
+        "label": {
+          "fr": "Si le porteur soigne un allié (ATQ%)",
+          "en": "If the wielder heals an ally (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.32,
@@ -23361,7 +23973,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si le porteur est affecté par l'élément Pyro (ATQ%)",
+        "label": {
+          "fr": "Si le porteur est affecté par l'élément Pyro (ATQ%)",
+          "en": "If the wielder is affected by Pyro (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.16,
@@ -23370,7 +23985,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si le porteur est affecté par l'élément Hydro/Cryo/Électro/Dendro (DGTs Élémentaires)",
+        "label": {
+          "fr": "Si le porteur est affecté par l'élément Hydro/Cryo/Électro/Dendro (DGTs Élémentaires)",
+          "en": "If the wearer is affected by Hydro/Cryo/Electro/Dendro (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.12,
@@ -23407,7 +24025,10 @@ window.WEAPON_PASSIVES  = {
   "TamayurateiNoOhanashi": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire est utilisée (ATQ%)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (ATQ%)",
+          "en": "If an elemental skill is used (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.2,
@@ -23420,7 +24041,10 @@ window.WEAPON_PASSIVES  = {
   "TheCatch": {
     "buffs": [
       {
-        "label": "Bonus de Taux CRIT (Uniquement pour le déchaînement élémentaire)",
+        "label": {
+          "fr": "Bonus de Taux CRIT (Uniquement pour le déchaînement élémentaire)",
+          "en": "Crit Rate bonus (only for the elemental burst)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -23435,7 +24059,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si des soins sont reçus ou envoyés une 1ère fois (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si des soins sont reçus ou envoyés une 1ère fois (Maîtrise élémentaire)",
+          "en": "If the character heals or is healed a 1st time (EM)"
+        },
         "stats": {
           "eleMas": [
             40,
@@ -23444,7 +24071,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des soins sont reçus ou envoyés une 2ème fois (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si des soins sont reçus ou envoyés une 2ème fois (Maîtrise élémentaire)",
+          "en": "If the character heals or is healed a 2nd time (EM)"
+        },
         "stats": {
           "eleMas": [
             40,
@@ -23453,7 +24083,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si des soins sont reçus ou envoyés une 3ème fois (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Si des soins sont reçus ou envoyés une 3ème fois (Maîtrise élémentaire)",
+          "en": "If the character heals or is healed a 3rd time (EM)"
+        },
         "stats": {
           "eleMas": [
             40,
@@ -23467,7 +24100,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "1 Allié du même élément que le porteur (ATQ%)",
+        "label": {
+          "fr": "1 Allié du même élément que le porteur (ATQ%)",
+          "en": "1 ally of the same element as the wearer (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.16,
@@ -23476,7 +24112,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 Alliés du même élément que le porteur (ATQ%)",
+        "label": {
+          "fr": "2 Alliés du même élément que le porteur (ATQ%)",
+          "en": "2 allies of the same element as the wearer (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.32,
@@ -23485,7 +24124,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 Alliés du même élément que le porteur (ATQ%)",
+        "label": {
+          "fr": "3 Alliés du même élément que le porteur (ATQ%)",
+          "en": "3 allies of the same element as the wearer (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.48,
@@ -23499,7 +24141,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une 1ère attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 1ère attaque touche un ennemi (ATQ%)",
+          "en": "If a 1st attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23508,7 +24153,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 2ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 2ème attaque touche un ennemi (ATQ%)",
+          "en": "If a 2nd attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23517,7 +24165,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 3ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 3ème attaque touche un ennemi (ATQ%)",
+          "en": "If a 3rd attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23526,7 +24177,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 4ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 4ème attaque touche un ennemi (ATQ%)",
+          "en": "If a 4th attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23535,7 +24189,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 5ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 5ème attaque touche un ennemi (ATQ%)",
+          "en": "If a 5th attack hits an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23549,7 +24206,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "Récital (ATQ%)",
+        "label": {
+          "fr": "Récital (ATQ%)",
+          "en": "Recitative (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.6,
@@ -23558,7 +24218,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Aria (DGTs Élémentaires)",
+        "label": {
+          "fr": "Aria (DGTs Élémentaires)",
+          "en": "Aria (Elemental DMG)"
+        },
         "stats": {
           "pyro_dmg_": [
             0.48,
@@ -23591,7 +24254,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Interlude (Maîtrise élémentaire)",
+        "label": {
+          "fr": "Interlude (Maîtrise élémentaire)",
+          "en": "Interlude (EM)"
+        },
         "stats": {
           "eleMas": [
             240,
@@ -23604,7 +24270,10 @@ window.WEAPON_PASSIVES  = {
   "TidalShadow": {
     "buffs": [
       {
-        "label": "Si le porteur reçoit des soins (ATQ%)",
+        "label": {
+          "fr": "Si le porteur reçoit des soins (ATQ%)",
+          "en": "If the wielder is healed (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.24,
@@ -23617,7 +24286,10 @@ window.WEAPON_PASSIVES  = {
   "TwinNephrite": {
     "buffs": [
       {
-        "label": "Si un ennemi a été vaincu (ATQ%)",
+        "label": {
+          "fr": "Si un ennemi a été vaincu (ATQ%)",
+          "en": "If an enemy is defeated (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.12,
@@ -23630,7 +24302,10 @@ window.WEAPON_PASSIVES  = {
   "UrakuMisugiri": {
     "buffs": [
       {
-        "label": "Si le personnage actif inflige des dégâts Géo (DÉF%)",
+        "label": {
+          "fr": "Si le personnage actif inflige des dégâts Géo (DÉF%)",
+          "en": "If the active character deals Geo damage (DEF%)"
+        },
         "stats": {
           "def_": [
             0.2,
@@ -23643,7 +24318,10 @@ window.WEAPON_PASSIVES  = {
   "VividNotions": {
     "buffs": [
       {
-        "label": "Si une attaque plongée est utilisée (DGT CRIT uniquement pour les attaques plongées)",
+        "label": {
+          "fr": "Si une attaque plongée est utilisée (DGT CRIT uniquement pour les attaques plongées)",
+          "en": "If a plunging attack is used (Crit DMG only for plunging attacks)"
+        },
         "stats": {
           "critDMG_": [
             0.28,
@@ -23652,7 +24330,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une compétence ou un déchaînement élémentaire est utilisé (DGT CRIT uniquement pour les attaques plongées)",
+        "label": {
+          "fr": "Si une compétence ou un déchaînement élémentaire est utilisé (DGT CRIT uniquement pour les attaques plongées)",
+          "en": "If an elemental skill or burst is used (Crit DMG only for plunging attacks)"
+        },
         "stats": {
           "critDMG_": [
             0.4,
@@ -23666,7 +24347,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une 1ère attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 1ère attaque touche un ennemi (ATQ%)",
+          "en": "On 1st attack hitting an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23675,7 +24359,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 2ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 2ème attaque touche un ennemi (ATQ%)",
+          "en": "On 2nd attack hitting an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23684,7 +24371,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 3ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 3ème attaque touche un ennemi (ATQ%)",
+          "en": "On 3rd attack hitting an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23693,7 +24383,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 4ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 4ème attaque touche un ennemi (ATQ%)",
+          "en": "On 4th attack hitting an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23702,7 +24395,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une 5ème attaque touche un ennemi (ATQ%)",
+        "label": {
+          "fr": "Si une 5ème attaque touche un ennemi (ATQ%)",
+          "en": "On 5th attack hitting an enemy (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.04,
@@ -23715,7 +24411,10 @@ window.WEAPON_PASSIVES  = {
   "WanderingEvenstar": {
     "buffs": [
       {
-        "label": "Bonus selon la Maîtrise élémentaire (ATQ%)",
+        "label": {
+          "fr": "Bonus selon la Maîtrise élémentaire (ATQ%)",
+          "en": "Buff based on EM (ATK%)"
+        },
         "stats": {
           "atk_bonus_scaling": {
             "source": "eleMas",
@@ -23732,7 +24431,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une compétence élémentaire est utilisée (PV%)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (PV%)",
+          "en": "If an elemental skill is used (HP%)"
+        },
         "stats": {
           "hp_": [
             0.2,
@@ -23741,7 +24443,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "S'il y a 1 personnage Hydro dans l'équipe (PV%)",
+        "label": {
+          "fr": "S'il y a 1 personnage Hydro dans l'équipe (PV%)",
+          "en": "If there is 1 Hydro character in the party (HP%)"
+        },
         "stats": {
           "hp_": [
             0.12,
@@ -23750,7 +24455,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "S'il y a 2 personnages Hydro dans l'équipe (PV%)",
+        "label": {
+          "fr": "S'il y a 2 personnages Hydro dans l'équipe (PV%)",
+          "en": "If there are 2 Hydro characters in the party (HP%)"
+        },
         "stats": {
           "hp_": [
             0.12,
@@ -23764,7 +24472,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "cumulative",
     "buffs": [
       {
-        "label": "Si une attaque normale ou chargée touche un ennemi une 1ère fois (ATQ% et DÉF)",
+        "label": {
+          "fr": "Si une attaque normale ou chargée touche un ennemi une 1ère fois (ATQ% et DÉF%)",
+          "en": "If a normal or charged attack hits an enemy a 1st time (ATK% & DEF%)"
+        },
         "stats": {
           "atk_": [
             0.06,
@@ -23777,7 +24488,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une attaque normale ou chargée touche un ennemi une 2ème fois (ATQ% et DÉF)",
+        "label": {
+          "fr": "Si une attaque normale ou chargée touche un ennemi une 2ème fois (ATQ% et DÉF%)",
+          "en": "If a normal or charged attack hits an enemy a 2nd time (ATK% & DEF%)"
+        },
         "stats": {
           "atk_": [
             0.06,
@@ -23790,7 +24504,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une attaque normale ou chargée touche un ennemi une 3ème fois (ATQ% et DÉF)",
+        "label": {
+          "fr": "Si une attaque normale ou chargée touche un ennemi une 3ème fois (ATQ% et DÉF%)",
+          "en": "If a normal or charged attack hits an enemy a 3rd time (ATK% & DEF%)"
+        },
         "stats": {
           "atk_": [
             0.06,
@@ -23803,7 +24520,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "Si une attaque normale ou chargée touche un ennemi une 4ème fois (ATQ% et DÉF)",
+        "label": {
+          "fr": "Si une attaque normale ou chargée touche un ennemi une 4ème fois (ATQ% et DÉF%)",
+          "en": "If a normal or charged attack hits an enemy a 4th time (ATK% & DEF%)"
+        },
         "stats": {
           "atk_": [
             0.06,
@@ -23820,7 +24540,10 @@ window.WEAPON_PASSIVES  = {
   "WindblumeOde": {
     "buffs": [
       {
-        "label": "Si une compétence élémentaire est utilisée (ATQ%)",
+        "label": {
+          "fr": "Si une compétence élémentaire est utilisée (ATQ%)",
+          "en": "If an elemental skill is used (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.16,
@@ -23833,7 +24556,10 @@ window.WEAPON_PASSIVES  = {
   "WineAndSong": {
     "buffs": [
       {
-        "label": "Si le personnage sprint après avoir utilisé une compétence élémentaire (ATQ%)",
+        "label": {
+          "fr": "Si le personnage sprint après avoir utilisé une compétence élémentaire (ATQ%)",
+          "en": "If the character sprints after using an elemental skill (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.2,
@@ -23847,7 +24573,10 @@ window.WEAPON_PASSIVES  = {
     "selectMode": "exclusive",
     "buffs": [
       {
-        "label": "1 stack de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+        "label": {
+          "fr": "1 stack de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+          "en": "1 Crit Rate stack (only for skills and bursts)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -23857,7 +24586,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "2 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+        "label": {
+          "fr": "2 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+          "en": "2 Crit Rate stacks (only for skills and bursts)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -23867,7 +24599,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "3 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+        "label": {
+          "fr": "3 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+          "en": "3 Crit Rate stacks (only for skills and bursts)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -23877,7 +24612,10 @@ window.WEAPON_PASSIVES  = {
         }
       },
       {
-        "label": "4 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+        "label": {
+          "fr": "4 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+          "en": "4 Crit Rate stacks (only for skills and bursts)"
+        },
         "active": false,
         "stats": {
           "critRate_": [
@@ -23891,7 +24629,10 @@ window.WEAPON_PASSIVES  = {
   "WolfsGravestone": {
     "buffs": [
       {
-        "label": "Si une attaque touche un ennemi ayant moins de 30% de ses PV (ATQ%)",
+        "label": {
+          "fr": "Si une attaque touche un ennemi ayant moins de 30% de ses PV (ATQ%)",
+          "en": "If an attack hits an enemy whose HP is below 30% (ATK%)"
+        },
         "stats": {
           "atk_": [
             0.4,
@@ -23904,7 +24645,10 @@ window.WEAPON_PASSIVES  = {
   "XiphosMoonlight": {
     "buffs": [
       {
-        "label": "Bonus selon la Maîtrise élémentaire (Recharge d'énergie)",
+        "label": {
+          "fr": "Bonus selon la Maîtrise élémentaire (Recharge d'énergie)",
+          "en": "Bonus based on EM (ER)"
+        },
         "stats": {
           "enerRech_bonus_scaling": {
             "source": "eleMas",

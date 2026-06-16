@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une compétence élémentaire inflige des DGT Hydro ou Dendro (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une compétence élémentaire inflige des DGT Hydro ou Dendro (Maîtrise élémentaire)",
+        "en": "If an elemental skill deals Hydro or Dendro DMG (EM)"
+      },
       "stats": {
         "eleMas": [
           60,
@@ -10,7 +13,10 @@
       }
     },
     {
-      "label": "Si une réaction de Sélénofleurissement est déclenchée (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une réaction de Sélénofleurissement est déclenchée (Maîtrise élémentaire)",
+        "en": "If a Lunar-Bloom elemental reaction is triggered (EM)"
+      },
       "stats": {
         "eleMas": [
           60,

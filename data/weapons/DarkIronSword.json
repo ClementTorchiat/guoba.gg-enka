@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une réaction liée à l'élément Électro a lieu (ATQ%)",
+      "label": {
+        "fr": "Si une réaction élémentaire liée à l'élément Électro est déclenchée (ATQ%)",
+        "en": "If an elemental reaction related to Electro is triggered (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.2,

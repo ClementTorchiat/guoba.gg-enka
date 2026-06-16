@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Amélioration de Taux CRIT sur la compétence seulement",
+      "label": {
+        "fr": "Amélioration de Taux CRIT sur la compétence seulement",
+        "en": "Crit Rate buff on the elemental skill only"
+      },
       "active": false,
       "stats": {
         "critRate_": [

@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "1 Stack (PV%)",
+      "label": {
+        "fr": "1 Stack (PV%)",
+        "en": "1 Stack (HP%)"
+      },
       "stats": {
         "hp_": [
           0.12,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "2 Stacks (PV%)",
+      "label": {
+        "fr": "2 Stacks (PV%)",
+        "en": "2 Stacks (HP%)"
+      },
       "stats": {
         "atk_": [
           0.24,
@@ -20,7 +26,10 @@
       }
     },
     {
-      "label": "3 Stacks (PV% et Taux CRIT uniquement pour le déchaînement élémentaire)",
+      "label": {
+        "fr": "3 Stacks (PV% et Taux CRIT uniquement pour le déchaînement élémentaire)",
+        "en": "3 Stacks (HP% & Crit Rate only for the elemental burst)"
+      },
       "active": false,
       "stats": {
         "atk_": [

@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Bonus selon la Maîtrise élémentaire (ATQ%)",
+      "label": {
+        "fr": "Bonus selon la Maîtrise élémentaire (ATQ%)",
+        "en": "Buff based on EM (ATK%)"
+      },
       "stats": {
         "atk_bonus_scaling": {
           "source": "eleMas",

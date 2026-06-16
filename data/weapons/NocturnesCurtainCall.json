@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une réaction Sélène est déclenchée ou inflige des dégâts (PV% et DGT CRIT uniquement pour les réactions Sélène)",
+      "label": {
+        "fr": "Si une réaction Sélène est déclenchée ou inflige des dégâts (PV% et DGT CRIT uniquement pour les réactions Sélène)",
+        "en": "If a Lunar reaction is triggered or deals damage (HP% & Crit DMG only for Lunar reactions)"
+      },
       "stats": {
         "hp_": [
           0.14,

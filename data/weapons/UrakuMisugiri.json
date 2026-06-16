@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si le personnage actif inflige des dégâts Géo (DÉF%)",
+      "label": {
+        "fr": "Si le personnage actif inflige des dégâts Géo (DÉF%)",
+        "en": "If the active character deals Geo damage (DEF%)"
+      },
       "stats": {
         "def_": [
           0.2,

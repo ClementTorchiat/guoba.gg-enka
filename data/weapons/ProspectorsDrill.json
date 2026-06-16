@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "Si le personnage soigne ou reçoit de soins une 1ère fois (ATQ% et DGTs Élémentaires)",
+      "label": {
+        "fr": "Si le personnage soigne ou reçoit de soins une 1ère fois (ATQ% et DGTs Élémentaires)",
+        "en": "If the character heals or is healed 1 time (ATK% & Elemental DMG)"
+      },
       "stats": {
         "atk_": [
           0.03,
@@ -39,7 +42,10 @@
       }
     },
     {
-      "label": "Si le personnage soigne ou reçoit de soins une 2ème fois (ATQ% et DGTs Élémentaires)",
+      "label": {
+        "fr": "Si le personnage soigne ou reçoit de soins une 2ème fois (ATQ% et DGTs Élémentaires)",
+        "en": "If the characters heals or is healed 2 times (ATK% & Elemental DMG)"
+      },
       "stats": {
         "atk_": [
           0.06,
@@ -76,7 +82,10 @@
       }
     },
     {
-      "label": "Si le personnage soigne ou reçoit de soins une 3ème fois (ATQ% et DGTs Élémentaires)",
+      "label": {
+        "fr": "Si le personnage soigne ou reçoit de soins une 3ème fois (ATQ% et DGTs Élémentaires)",
+        "en": "If the character heals or is healed 3 times (ATK% & Elemental DMG)"
+      },
       "stats": {
         "atk_": [
           0.09,

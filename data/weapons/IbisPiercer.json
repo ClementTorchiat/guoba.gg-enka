@@ -2,7 +2,10 @@
   "selectMode": "cumulative",
   "buffs": [
     {
-      "label": "Si une 1ère attaque chargée touche un ennemi (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une 1ère attaque chargée touche un ennemi (Maîtrise élémentaire)",
+        "en": "If 1 charged attack hits an enemy (EM)"
+      },
       "stats": {
         "eleMas": [
           40,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Si une 2ème attaque chargée touche un ennemi (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une 2ème attaque chargée touche un ennemi (Maîtrise élémentaire)",
+        "en": "If 2 charged attacks hit an enemy (EM)"
+      },
       "stats": {
         "eleMas": [
           40,

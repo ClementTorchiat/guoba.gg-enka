@@ -2,7 +2,10 @@
   "selectMode": "cumulative",
   "buffs": [
     {
-      "label": "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ% et DGT CRIT)",
+      "label": {
+        "fr": "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ% et DGT Crit)",
+        "en": "If an elemental skill or burst is used (ATK% & Crit DMG)"
+      },
       "stats": {
         "atk_": [
           0.28,
@@ -15,7 +18,10 @@
       }
     },
     {
-      "label": "Si le personnage est sous une Bénédiction noctâme (+75% d'efficacité)",
+      "label": {
+        "fr": "Si le personnage est sous une Bénédiction Noctâme (ATQ% et DGT Crit)",
+        "en": "If the character is in a Nightsoul Blessing state (ATK% & Crit DMG)"
+      },
       "stats": {
         "atk_": [
           0.21,

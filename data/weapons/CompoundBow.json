@@ -2,7 +2,10 @@
   "selectMode": "cumulative",
   "buffs": [
     {
-      "label": "1 cumul (ATQ%)",
+      "label": {
+        "fr": "1 stack (ATQ%)",
+        "en": "1 stack (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.04,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "2 cumuls (ATQ%)",
+      "label": {
+        "fr": "2 stacks (ATQ%)",
+        "en": "2 stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.04,
@@ -20,7 +26,10 @@
       }
     },
     {
-      "label": "3 cumuls (ATQ%)",
+      "label": {
+        "fr": "3 stacks (ATQ%)",
+        "en": "3 stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.04,
@@ -29,7 +38,10 @@
       }
     },
     {
-      "label": "4 cumuls (ATQ%)",
+      "label": {
+        "fr": "4 stacks (ATQ%)",
+        "en": "4 stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.04,

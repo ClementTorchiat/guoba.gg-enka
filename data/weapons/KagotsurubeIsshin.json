@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une attaque normale, chargée ou plongeante touche un ennemi (ATQ%)",
+      "label": {
+        "fr": "Si une attaque normale, chargée ou plongeante touche un ennemi (ATQ%)",
+        "en": "If a normal, charged or plunging attack hits an enemy (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.15,

@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "S'il y a deux ennemis ou plus aux alentours (ATQ% et DÉF%)",
+      "label": {
+        "fr": "S'il y a 2 ennemis ou plus aux alentours (ATQ% et DÉF%)",
+        "en": "If there are 2 enemies or more nearby (ATK% & DEF%)"
+      },
       "stats": {
         "atk_": [
           0.16,
@@ -15,7 +18,10 @@
       }
     },
     {
-      "label": "S'il y a plus de deux ennemis aux alentours (ATQ%)",
+      "label": {
+        "fr": "S'il y a moins de 2 ennemis aux alentours (ATQ%)",
+        "en": "If there are less than 2 enemies nearby (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.24,

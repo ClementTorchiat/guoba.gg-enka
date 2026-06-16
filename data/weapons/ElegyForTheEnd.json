@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si 4 compétences ou déchaînements élémentaires ont touché un ennemi (Maîtrise élémentaire et ATQ%)",
+      "label": {
+        "fr": "Si 4 compétences ou déchaînements élémentaires ont touché un ennemi (Maîtrise élémentaire et ATQ%)",
+        "en": "If 4 elemental skills or bursts hit an enemy (EM & ATK%)"
+      },
       "stats": {
         "atk_": [
           0.2,

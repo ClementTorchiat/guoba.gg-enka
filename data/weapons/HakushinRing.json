@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une réaction élémentaire en lien avec Électro est déclenchée (DGTs Élémentaires)",
+      "label": {
+        "fr": "Si une réaction élémentaire en lien avec Électro est déclenchée (DGTs Élémentaires)",
+        "en": "If an Electro elemental reaction is triggered (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.1,

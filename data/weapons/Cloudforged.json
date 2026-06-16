@@ -2,7 +2,10 @@
   "selectMode": "cumulative",
   "buffs": [
     {
-      "label": "Si l'énergie du porteur diminue une 1ère fois (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si l'énergie du porteur diminue une 1ère fois (Maîtrise élémentaire)",
+        "en": "If the wearer's energy decreases 1 time (EM)"
+      },
       "stats": {
         "eleMas": [
           40,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Si l'énergie du porteur diminue une 2ème fois (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si l'énergie du porteur diminue une 2ème fois (Maîtrise élémentaire)",
+        "en": "If the wearer's energy decreases 2 times (EM)"
+      },
       "stats": {
         "eleMas": [
           40,

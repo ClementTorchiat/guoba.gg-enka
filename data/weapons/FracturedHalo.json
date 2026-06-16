@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ%)",
+      "label": {
+        "fr": "Si une compétence ou un déchaînement élémentaire est utilisé (ATQ%)",
+        "en": "If an elemental skill or burst is used (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.24,

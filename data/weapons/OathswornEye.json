@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une compétence élémentaire est utilisée (Recharge d'énergie)",
+      "label": {
+        "fr": "Si une compétence élémentaire est utilisée (Recharge d'énergie)",
+        "en": "If an elemental skill is used (ER)"
+      },
       "stats": {
         "enerRech_": [
           0.24,

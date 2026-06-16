@@ -2,7 +2,10 @@
   "selectMode": "cumulative",
   "buffs": [
     {
-      "label": "Si une compétence élémentaire est utilisée (DGTs Élémentaires)",
+      "label": {
+        "fr": "Si une compétence élémentaire est utilisée (DGTs Élémentaires)",
+        "en": "If an elemental skill is used (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.08,
@@ -35,7 +38,10 @@
       }
     },
     {
-      "label": "Si un Engagement Vital est dissipé (DGTs Élémentaires)",
+      "label": {
+        "fr": "Si un Engagement Vital est dissipé (DGTs Élémentaires)",
+        "en": "If a Bond of Life is cleared (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.12,

@@ -2,7 +2,10 @@
   "selectMode": "ChainBreaker",
   "buffs": [
     {
-      "label": "Si l'équipe est composée d'1 personnage de Natlan ou d'un élément différent du porteur (ATQ%)",
+      "label": {
+        "fr": "Si l'équipe est composée d'1 personnage de Natlan ou d'un élément différent du porteur (ATQ%)",
+        "en": "If the party includes 1 character from Natlan or of a different element than the wearer (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.048,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Si l'équipe est composée de 2 personnages de Natlan ou d'un élément différent du porteur (ATQ%)",
+      "label": {
+        "fr": "Si l'équipe est composée de 2 personnages de Natlan ou d'un élément différent du porteur (ATQ%)",
+        "en": "If the party includes 2 characters from Natlan or of a different element than the wearer (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.096,
@@ -20,7 +26,10 @@
       }
     },
     {
-      "label": "Si l'équipe est composée de 3 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si l'équipe est composée de 3 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
+        "en": "If the party includes 3 characters from Natlan or of a different element than the wearer (ATK% & EM)"
+      },
       "stats": {
         "atk_": [
           0.144,
@@ -33,7 +42,10 @@
       }
     },
     {
-      "label": "Si l'équipe est composée de 4 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si l'équipe est composée de 4 personnages de Natlan ou d'un élément différent du porteur (ATQ% et Maîtrise élémentaire)",
+        "en": "If the party includes 4 characters from Natlan or of a different element than the wearer (ATK% & EM)"
+      },
       "stats": {
         "atk_": [
           0.192,

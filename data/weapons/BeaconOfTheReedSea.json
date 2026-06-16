@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une compétence élémentaire touche un ennemi (ATQ%)",
+      "label": {
+        "fr": "Si une compétence élémentaire touche un ennemi (ATQ%)",
+        "en": "If an elemental skill hits an enemy (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.2,
@@ -10,7 +13,10 @@
       }
     },
     {
-      "label": "Si le personnage subit des dégâts (ATQ%)",
+      "label": {
+        "fr": "Si le personnage subit des dégâts (ATQ%)",
+        "en": "If the character takes damage (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.2,
@@ -19,7 +25,10 @@
       }
     },
     {
-      "label": "Si le personnage n'est pas protégé par un bouclier (PV%)",
+      "label": {
+        "fr": "Si le personnage n'est pas protégé par un bouclier (PV%)",
+        "en": "If the character is not protected by a shield (HP%)"
+      },
       "stats": {
         "hp_": [
           0.32,

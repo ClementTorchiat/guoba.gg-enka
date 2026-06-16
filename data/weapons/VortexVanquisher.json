@@ -2,7 +2,10 @@
   "selectMode": "cumulative",
   "buffs": [
     {
-      "label": "Si une 1ère attaque touche un ennemi (ATQ%)",
+      "label": {
+        "fr": "Si une 1ère attaque touche un ennemi (ATQ%)",
+        "en": "On 1st attack hitting an enemy (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.04,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Si une 2ème attaque touche un ennemi (ATQ%)",
+      "label": {
+        "fr": "Si une 2ème attaque touche un ennemi (ATQ%)",
+        "en": "On 2nd attack hitting an enemy (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.04,
@@ -20,7 +26,10 @@
       }
     },
     {
-      "label": "Si une 3ème attaque touche un ennemi (ATQ%)",
+      "label": {
+        "fr": "Si une 3ème attaque touche un ennemi (ATQ%)",
+        "en": "On 3rd attack hitting an enemy (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.04,
@@ -29,7 +38,10 @@
       }
     },
     {
-      "label": "Si une 4ème attaque touche un ennemi (ATQ%)",
+      "label": {
+        "fr": "Si une 4ème attaque touche un ennemi (ATQ%)",
+        "en": "On 4th attack hitting an enemy (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.04,
@@ -38,7 +50,10 @@
       }
     },
     {
-      "label": "Si une 5ème attaque touche un ennemi (ATQ%)",
+      "label": {
+        "fr": "Si une 5ème attaque touche un ennemi (ATQ%)",
+        "en": "On 5th attack hitting an enemy (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.04,

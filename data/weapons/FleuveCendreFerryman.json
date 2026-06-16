@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Buff passif de Taux CRIT (ne concerne que la compétence élémentaire)",
+      "label": {
+        "fr": "Buff passif de Taux CRIT (ne concerne que la compétence élémentaire)",
+        "en": "Passive Crit Rate buff (only for the elemental skill)"
+      },
       "active": false,
       "stats": {
         "critRate_": [
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Si une compétence élémentaire est utilisée (Recharge d'énergie)",
+      "label": {
+        "fr": "Si une compétence élémentaire est utilisée (Recharge d'énergie)",
+        "en": "If an elemental skill is used (ER)"
+      },
       "stats": {
         "enerRech_": [
           0.16,

@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une réaction Sélène est déclenchée (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une réaction Sélène est déclenchée (Maîtrise élémentaire)",
+        "en": "If a Lunar Reaction is triggered (EM)"
+      },
       "stats": {
         "eleMas": [
           60,

@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si un déchaînement élémentaire est utilisé (Recharge d'énergie)",
+      "label": {
+        "fr": "Si un déchaînement élémentaire est utilisé (Recharge d'énergie)",
+        "en": "If an elemental burst is used (ER)"
+      },
       "stats": {
         "enerRech_": [
           0.3,

@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si un déchaînement élémentaire est utilisé ou qu'un bouclier est créé (DGTs Élémentaires en fonction des PV)",
+      "label": {
+        "fr": "Si un déchaînement élémentaire est utilisé ou qu'un bouclier est créé (DGTs Élémentaires en fonction des PV)",
+        "en": "If an elemental burst is used or a shield is created (Elemental DMG based on HP)"
+      },
       "stats": {
         "pyro_dmg_bonus_scaling": {
           "source": "hp",

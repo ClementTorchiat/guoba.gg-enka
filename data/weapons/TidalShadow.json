@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si le porteur reçoit des soins (ATQ%)",
+      "label": {
+        "fr": "Si le porteur reçoit des soins (ATQ%)",
+        "en": "If the wielder is healed (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.24,

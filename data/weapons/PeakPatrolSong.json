@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "Si une attaque normale ou plongée touche un ennemi une 1ère fois (DÉF% et DGTs Élémentaires)",
+      "label": {
+        "fr": "Si une attaque normale ou plongée touche un ennemi une 1ère fois (DÉF% et DGTs Élémentaires)",
+        "en": "If a normal or plunging attack hits an enemy a 1st time (DEF% & Elemental DMG)"
+      },
       "stats": {
         "def_": [
           0.08,
@@ -39,7 +42,10 @@
       }
     },
     {
-      "label": "Si une attaque normale ou plongée touche un ennemi une 2ème fois (DÉF% et DGTs Élémentaires)",
+      "label": {
+        "fr": "Si une attaque normale ou plongée touche un ennemi une 2ème fois (DÉF% et DGTs Élémentaires)",
+        "en": "If a normal or plunging attack hits an enemy a 2nd time (DEF% & Elemental DMG)"
+      },
       "stats": {
         "def_": [
           0.16,

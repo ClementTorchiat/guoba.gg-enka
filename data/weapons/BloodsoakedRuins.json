@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une réaction Sélène est déclenchée (DGT CRIT)",
+      "label": {
+        "fr": "Si une réaction Sélène est déclenchée (DGT Crit)",
+        "en": "If a Lunar Reaction is triggered (Crit DMG)"
+      },
       "stats": {
         "critDMG_": [
           0.28,

@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (PV%)",
+      "label": {
+        "fr": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Naissante (PV%)",
+        "en": "If an elemental reaction is triggered and the party's Moonsign is Nascent Gleam (HP%)"
+      },
       "stats": {
         "hp_": [
           0.16,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (PV%)",
+      "label": {
+        "fr": "Si une réaction élémentaire est déclenchée et que l'équipe est sous le signe Lueur Ascendante (PV%)",
+        "en": "If an elemental reaction is triggered and the party's Moonsign is Ascendant Gleam (HP%)"
+      },
       "stats": {
         "hp_": [
           0.32,

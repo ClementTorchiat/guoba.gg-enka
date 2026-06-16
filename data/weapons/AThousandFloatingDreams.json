@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "3 Alliés du même élément que le porteur (Maîtrise élémentaire)",
+      "label": {
+        "fr": "3 Alliés du même élément que le porteur (Maîtrise élémentaire)",
+        "en": "3 allies from the same element as the wearer (EM)"
+      },
       "stats": {
         "eleMas": [
           96,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "2 Alliés du même élément que le porteur et 1 Différent (Maîtrise élémentaire et DGTs Élémentaires)",
+      "label": {
+        "fr": "2 Alliés du même élément que le porteur et 1 Différent (Maîtrise élémentaire et DGTs Élémentaires)",
+        "en": "2 allies from the same element as the wearer and 1 from a different element (EM & Elemental DMG)"
+      },
       "stats": {
         "eleMas": [
           64,
@@ -24,7 +30,10 @@
       }
     },
     {
-      "label": "1 Alliés du même élément que le porteur et 2 Différents (Maîtrise élémentaire et DGTs Élémentaires)",
+      "label": {
+        "fr": "1 Allié du même élément que le porteur et 2 Différents (Maîtrise élémentaire et DGTs Élémentaires)",
+        "en": "1 ally from the same element as the wearer and 2 from a different element (EM & Elemental DMG)"
+      },
       "stats": {
         "eleMas": [
           32,
@@ -37,7 +46,10 @@
       }
     },
     {
-      "label": "3 Alliés d'un élément différent de celui du porteur (DGTs Élémentaires)",
+      "label": {
+        "fr": "3 Alliés d'un élément différent de celui du porteur (DGTs Élémentaires)",
+        "en": "3 allies from a different element of the wearer (Elemental DMG)"
+      },
       "stats": {
         "elemental_dmg_": [
           0.3,

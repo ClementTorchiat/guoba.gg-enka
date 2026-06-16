@@ -2,7 +2,10 @@
   "selectMode": "cumulative",
   "buffs": [
     {
-      "label": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+      "label": {
+        "fr": "Si des dégâts sont infligés une 1ère fois (Taux CRIT)",
+        "en": "When damaging an opponent 1 time (Crit Rate)"
+      },
       "active": false,
       "stats": {
         "critRate_": [
@@ -12,7 +15,10 @@
       }
     },
     {
-      "label": "Si des dégâts sont infligés une 2ème fois (Taux CRIT)",
+      "label": {
+        "fr": "Si des dégâts sont infligés une 1ème fois (Taux CRIT)",
+        "en": "When damaging an opponent 2 times (Crit Rate)"
+      },
       "active": false,
       "stats": {
         "critRate_": [
@@ -22,7 +28,10 @@
       }
     },
     {
-      "label": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+      "label": {
+        "fr": "Si des dégâts sont infligés une 3ème fois (Taux CRIT)",
+        "en": "When damaging an opponent 3 times (Crit Rate)"
+      },
       "active": false,
       "stats": {
         "critRate_": [
@@ -32,7 +41,10 @@
       }
     },
     {
-      "label": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+      "label": {
+        "fr": "Si des dégâts sont infligés une 4ème fois (Taux CRIT)",
+        "en": "When damaging an opponent 4 times (Crit Rate)"
+      },
       "active": false,
       "stats": {
         "critRate_": [
@@ -42,7 +54,10 @@
       }
     },
     {
-      "label": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+      "label": {
+        "fr": "Si des dégâts sont infligés une 5ème fois (Taux CRIT)",
+        "en": "When damaging an opponent 5 times (Crit Rate)"
+      },
       "active": false,
       "stats": {
         "critRate_": [

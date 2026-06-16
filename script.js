@@ -3165,35 +3165,6 @@ function renderGlobalEvaluation(playerInfo) {
     const isStygianDiff6 = playerInfo.stygianIndex >= 6;
     const stygianSec = (playerInfo.stygianSeconds > 0) ? playerInfo.stygianSeconds : null;
 
-    if (isAbyss && isTheater && isStygian) {
-        addBadge("👑", t('badge.masterEndgame.name'), t('badge.masterEndgame.desc'), "linear-gradient(135deg, rgba(230,190,255,0.7), rgba(154,204,255,0.7), rgba(255,204,229,0.7), rgba(253,245,169,0.7))");
-    } else {
-        if (isAbyss) addBadge("🏆", t('badge.abyssArchon.name'), t('badge.abyssArchon.desc'), "rgba(37, 51, 85, 0.6)");
-        if (isTheater) addBadge("🎭", t('badge.theaterStar.name'), t('badge.theaterStar.desc'), "rgba(82, 42, 138, 0.6)");
-        if (isStygian && !isStygianDiff6) {
-            addBadge("🐉", t('badge.carnageKing.name'), t('badge.carnageKing.desc'), "rgba(139, 45, 139, 0.6)");
-        }
-    }
-
-    if (isStygianDiff6 && stygianSec !== null && stygianSec <= 180) {
-        addBadge("🌌", t('badge.legend.name'), t('badge.legend.desc'), "linear-gradient(135deg, rgba(30,27,75,0.8), rgba(109,40,217,0.7), rgba(250,204,21,0.6))");
-    } else if (isStygianDiff6) {
-        addBadge("🩸", t('badge.carnagePlague.name'), t('badge.carnagePlague.desc'), "linear-gradient(135deg, rgba(153,27,27,0.7), rgba(220,38,38,0.7))");
-    }
-
-    if (playerInfo.level === 60) addBadge("🏅", t('badge.veteran.name'), t('badge.veteran.desc'), "rgba(207, 156, 79, 0.6)");
-    if (avgEff >= 95) addBadge("🌟", t('badge.perfection.name'), t('badge.perfection.desc'), "linear-gradient(135deg, rgba(255,215,0,0.7), rgba(255,255,255,0.6))");
-
-    if (globalPersoData.length === 1) addBadge("🃏", t('badge.oneTrick.name', globalPersoData[0].nom), t('badge.oneTrick.desc', globalPersoData[0].nom), "rgba(107, 114, 128, 0.6)");
-    else if (globalPersoData.length < 12) addBadge("🥷", t('badge.hiddenCollection.name'), t('badge.hiddenCollection.desc'), "rgba(107, 114, 128, 0.6)");
-
-    const c6FiveStars = globalPersoData.filter(p => p.rarity === 5 && p.cons === 6).length;
-    if (c6FiveStars > 1) addBadge("🐋", t('badge.narval.name'), t('badge.narval.desc'), "rgba(59, 130, 246, 0.6)");
-    else if (c6FiveStars === 1) addBadge("🐳", t('badge.whale.name'), t('badge.whale.desc'), "rgba(59, 172, 197, 0.6)");
-
-    if (avgRNG > 80) addBadge("🍀", t('badge.lucky.name'), t('badge.lucky.desc', avgRNG.toFixed(1)), "rgba(61, 160, 97, 0.6)");
-    else if (avgRNG < 40 && validChars > 0) addBadge("🌧️", t('badge.cursed.name'), t('badge.cursed.desc', avgRNG.toFixed(1)), "rgba(107, 114, 128, 0.6)");
-
     let holyGrail = false, level89Syndrome = false, level67EasterEgg = false;
     let highER = false, asthmatic = false, casino = false, alchemist = false, allInCrit = false;
     let bruteForce = false, surgicalPrec = false, hospital = false, brickWall = false;
@@ -3203,8 +3174,38 @@ function renderGlobalEvaluation(playerInfo) {
     let archonCount = 0, favoniusCount = 0, aloyFound = false, internFound = false;
     let elementCount = {};
     let akashamaxxing = false;
-
+    let fatuiCount = 0;
+    let healerCount = 0;
+    let eluDeCelestia = false;
+    let anomalieOffensive = false;
+    const fatuiNames = ["Tartaglia", "Nomade", "Wanderer", "Arlecchino", "Sandrone"];
+    const healerNames = [
+        "Barbara", "Qiqi", "Sangonomiya Kokomi", "Baizhu",
+        "Sigewinne", "Yaoyao", "Charlotte", "Diona", "Jean", "Mika", "Chevreuse", "Xianyun"
+    ];
+    const currentUidStr = document.getElementById('uidInput') ? document.getElementById('uidInput').value.trim() : '';
     const archonNames = ["Venti", "Zhongli", "Raiden", "Nahida", "Furina", "Mavuika"];
+    let starterPackNames = ["Amber", "Kaeya", "Lisa"];
+    let starterCount = 0;
+    let hasNilou = false;
+    let hasFurinaWithPipe = false;
+    const creatorUIDs = ["704449686"];
+    const contributorUIDs = ["741928446"];
+    const bestieUIDs = ["741928446", "735710141"];
+    let hasRaidenCatch = false;
+    let hasZhongliTassel = false;
+    const hearthNames = ["Arlecchino", "Lyney", "Lynette", "Fréminet", "Freminet"];
+    const kamisatoNames = ["Kamisato Ayato", "Kamisato Ayaka", "Thoma", "Thomas"];
+    const aratakiNames = ["Arataki Itto", "Kuki Shinobu"];
+    const adeptiNames = ["Xiao", "Ganyu", "Shenhe", "Xianyun", "Yanfei", "Zhongli", "Zibai"];
+    const sumeruNames = ["Alhaitham", "Kaveh", "Tighnari", "Cyno"];
+    const mermoniaNames = ["Neuvillette", "Furina", "Clorinde"];
+    let mermoniaCount = 0;
+    let hearthCount = 0;
+    let kamisatoCount = 0;
+    let aratakiCount = 0;
+    let adeptiCount = 0;
+    let sumeruCount = 0;
 
     globalPersoData.forEach(p => {
 
@@ -3308,11 +3309,178 @@ function renderGlobalEvaluation(playerInfo) {
         } else {
             rainbowFan++;
         }
+
+        if (fatuiNames.includes(p.nom)) fatuiCount++;
+        if (healerNames.includes(p.nom)) healerCount++;
+
+        const charConfig = {...p.charConfig, ...(p.activeBuild || {})};
+        const rollStats = calculateRollDistribution(p, charConfig);
+        if (rollStats.total > 0 && rollStats.deadCount === 0) {
+            eluDeCelestia = true;
+        }
+
+        if (p.combatStats && p.artefacts) {
+            const em = p.combatStats.em || p.combatStats.eleMas || 0;
+            const er = Math.round(p.combatStats.er || 0);
+
+            const artsPlus20 = p.artefacts.filter(art => art.level === 20).length;
+
+            if (em === 0 && er === 100 && artsPlus20 === 5) {
+                anomalieOffensive = true;
+            }
+        }
+
+        if (starterPackNames.includes(p.nom)) starterCount++;
+        if (p.nom === "Nilou") hasNilou = true;
+
+        if (p.nom === "Furina" && p.weapon && p.weapon.key === "FleuveCendreFerryman") {
+            hasFurinaWithPipe = true;
+        }
+        if (p.nom.includes("Raiden") && p.weapon && p.weapon.key === "TheCatch") {
+            hasRaidenCatch = true;
+        }
+        if (p.nom === "Zhongli" && p.weapon && p.weapon.key === "BlackTassel") {
+            hasZhongliTassel = true;
+        }
+        if (hearthNames.includes(p.nom)) hearthCount++;
+        if (kamisatoNames.includes(p.nom)) kamisatoCount++;
+        if (aratakiNames.includes(p.nom)) aratakiCount++;
+        if (adeptiNames.includes(p.nom)) adeptiCount++;
+        if (sumeruNames.includes(p.nom)) sumeruCount++;
+        if (mermoniaNames.includes(p.nom)) mermoniaCount++;
     });
 
-    if (archonCount >= 4) addBadge("🏛️", t('badge.divine.name'), t('badge.divine.desc'), "linear-gradient(135deg, rgba(255,215,0,0.6), rgba(255,255,255,0.4))");
-    if (tripleCrown) addBadge("👑", t('badge.tripleCrown.name'), t('badge.tripleCrown.desc'), "linear-gradient(135deg, rgba(251,191,36,0.8), rgba(245,158,11,0.8), rgba(217,119,6,0.8))");
+    if (creatorUIDs.includes(currentUidStr)) {
+        addBadge(
+            "👑",
+            t('badge.creator.name'),
+            t('badge.creator.desc'),
+            "linear-gradient(135deg, rgba(248, 250, 252, 0.7) 0%, rgba(56, 189, 248, 0.7) 50%, rgba(248, 250, 252, 0.7) 100%)"
+        );
+    }
+
+    if (contributorUIDs.includes(currentUidStr)) {
+        addBadge("🛠️", t('badge.contributor.name'), t('badge.contributor.desc'), "linear-gradient(135deg, #334155, #94a3b8)");
+    }
+
+    if (bestieUIDs.includes(currentUidStr)) {
+        addBadge("💖", t('badge.bestie.name'), t('badge.bestie.desc'), "linear-gradient(135deg, #fbcfe8, #e879f9, #be185d)");
+    }
+
+    if (eluDeCelestia) {
+        addBadge("🕊️", t('badge.celestia.name'), t('badge.celestia.desc'), "linear-gradient(135deg, rgba(250, 214, 32, 0.7) 0%, rgba(255, 255, 255, 0.7) 40%, rgba(56, 189, 248, 0.7) 100%)");
+    }
+
+    if (hasNilou) {
+        addBadge("🌸", t('badge.nilou.name'), t('badge.nilou.desc'), "linear-gradient(135deg, rgba(251, 207, 232, 0.7), rgba(244, 114, 182, 0.7), rgba(251, 191, 36, 0.7))");
+    }
+
+    if (isAbyss && isTheater && isStygian) {
+        addBadge("👑", t('badge.masterEndgame.name'), t('badge.masterEndgame.desc'), "linear-gradient(135deg, rgba(230,190,255,0.7), rgba(154,204,255,0.7), rgba(255,204,229,0.7), rgba(253,245,169,0.7))");
+    } else {
+        if (isAbyss) addBadge("🏆", t('badge.abyssArchon.name'), t('badge.abyssArchon.desc'), "rgba(37, 51, 85, 0.6)");
+        if (isTheater) addBadge("🎭", t('badge.theaterStar.name'), t('badge.theaterStar.desc'), "rgba(82, 42, 138, 0.6)");
+        if (isStygian && !isStygianDiff6) {
+            addBadge("🐉", t('badge.carnageKing.name'), t('badge.carnageKing.desc'), "rgba(139, 45, 139, 0.6)");
+        }
+    }
+
+    if (isStygianDiff6 && stygianSec !== null && stygianSec <= 180) {
+        addBadge("🌌", t('badge.legend.name'), t('badge.legend.desc'), "linear-gradient(135deg, rgba(30,27,75,0.8), rgba(109,40,217,0.7), rgba(250,204,21,0.6))");
+    } else if (isStygianDiff6) {
+        addBadge("🩸", t('badge.carnagePlague.name'), t('badge.carnagePlague.desc'), "linear-gradient(135deg, rgba(153,27,27,0.7), rgba(220,38,38,0.7))");
+    }
+
+    if (playerInfo.finishAchievementNum >= 1700) {
+        addBadge("📜", t('badge.archivist.name'), t('badge.archivist.desc'), "linear-gradient(135deg, rgba(6, 78, 59, 0.95), rgba(16, 185, 129, 0.85), rgba(253, 224, 71, 0.85))");
+    }
+
+    if (playerInfo.level === 60) addBadge("🏅", t('badge.veteran.name'), t('badge.veteran.desc'), "rgba(207, 156, 79, 0.6)");
+    if (avgEff >= 95) addBadge("🌟", t('badge.perfection.name'), t('badge.perfection.desc'), "linear-gradient(135deg, rgba(255,215,0,0.7), rgba(255,255,255,0.6))");
+
+    if (globalPersoData.length === 1) addBadge("🃏", t('badge.oneTrick.name', globalPersoData[0].nom), t('badge.oneTrick.desc', globalPersoData[0].nom), "rgba(107, 114, 128, 0.6)");
+    else if (globalPersoData.length < 12) addBadge("🥷", t('badge.hiddenCollection.name'), t('badge.hiddenCollection.desc'), "rgba(107, 114, 128, 0.6)");
+
+    const c6FiveStars = globalPersoData.filter(p => p.rarity === 5 && p.cons === 6).length;
+    if (c6FiveStars > 1) addBadge("🐋", t('badge.narval.name'), t('badge.narval.desc'), "linear-gradient(135deg, rgba(30, 58, 138, 0.9), rgba(49, 46, 129, 0.9), rgba(167, 139, 250, 0.8))");
+    else if (c6FiveStars === 1) addBadge("🐳", t('badge.whale.name'), t('badge.whale.desc'), "rgba(59, 172, 197, 0.6)");
+    if (avgRNG > 80) addBadge("🍀", t('badge.lucky.name'), t('badge.lucky.desc', avgRNG.toFixed(1)), "rgba(61, 160, 97, 0.6)");
+    else if (avgRNG < 40 && validChars > 0) addBadge("🌧️", t('badge.cursed.name'), t('badge.cursed.desc', avgRNG.toFixed(1)), "rgba(107, 114, 128, 0.6)");
+
+    if (currentUidStr.length === 9 && currentUidStr.substring(1, 3) === "00") {
+        addBadge(
+            "🕰️",
+            t('badge.og.name'),
+            t('badge.og.desc'),
+            "linear-gradient(135deg, rgba(120, 113, 108, 0.9), rgba(63, 63, 70, 0.9), rgba(212, 175, 55, 0.7))"
+        );
+    }
+
     if (leviathan) addBadge("🔱", t('badge.leviathan.name'), t('badge.leviathan.desc'), "linear-gradient(135deg, rgba(6,182,212,0.8), rgba(59,130,246,0.8), rgba(30,58,138,0.8))");
+
+    if (holyGrail) addBadge("🏆", t('badge.holyGrail.name'), t('badge.holyGrail.desc'), "linear-gradient(135deg, #a16207 0%, #facc15 50%, #a16207 100%)");
+
+    if (tripleCrown) addBadge("👑", t('badge.tripleCrown.name'), t('badge.tripleCrown.desc'), "linear-gradient(135deg, rgba(251,191,36,0.8), rgba(245,158,11,0.8), rgba(217,119,6,0.8))");
+
+    if (akashamaxxing) addBadge("📈", t('badge.akasha.name'), t('badge.akasha.desc'), "linear-gradient(135deg, rgba(236,72,153,0.7), rgba(168,85,247,0.7))");
+
+    if (hasFurinaWithPipe) {
+        addBadge("🪠", t('badge.plombier.name'), t('badge.plombier.desc'), "linear-gradient(135deg, #1e3a8a, #d97706)");
+    }
+
+    if (hasRaidenCatch) {
+        addBadge("🐟", t('badge.raidenCatch.name'), t('badge.raidenCatch.desc'), "linear-gradient(135deg, #7c3aed, #0ea5e9)");
+    }
+
+    if (hasZhongliTassel) {
+        addBadge("🪨", t('badge.zhongliTassel.name'), t('badge.zhongliTassel.desc'), "linear-gradient(135deg, #ca8a04, #475569)");
+    }
+
+    if (fatuiCount >= 3) {
+        addBadge("❄️", t('badge.fatui.name'), t('badge.fatui.desc'), "linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(22, 78, 99, 0.9), rgba(8, 145, 178, 0.8))");
+    }
+
+    if (mermoniaCount >= 3) {
+        addBadge("⚖️", t('badge.mermonia.name'), t('badge.mermonia.desc'), "linear-gradient(135deg, rgba(20, 83, 101, 0.9) 0%, rgba(139, 131, 118, 0.95) 100%)");
+    }
+
+    if (hearthCount >= 3) {
+        addBadge("🎩", t('badge.hearth.name'), t('badge.hearth.desc'), "linear-gradient(135deg, #7f1d1d, #1c1917, #f5f5f4)");
+    }
+
+    if (kamisatoCount >= 3) {
+        addBadge("🪭", t('badge.kamisato.name'), t('badge.kamisato.desc'), "linear-gradient(135deg, #e0f2fe, #1e3a8a, #991b1b)");
+    }
+
+    if (aratakiCount >= 2) {
+        addBadge("🎸", t('badge.arataki.name'), t('badge.arataki.desc'), "linear-gradient(135deg, #ca8a04, #7e22ce)");
+    }
+
+    if (adeptiCount >= 3) {
+        addBadge("🏔️", t('badge.adepti.name'), t('badge.adepti.desc'), "linear-gradient(135deg, #0f766e, #064e3b, #b45309)");
+    }
+
+    if (sumeruCount === 4) {
+        addBadge("🏛️", t('badge.sumeru.name'), t('badge.sumeru.desc'), "linear-gradient(135deg, #064e3b, #10b981, #b45309)");
+    }
+
+    if (healerCount >= 3) {
+        addBadge("🏥", t('badge.hospital.name'), t('badge.hospital.desc'), "linear-gradient(135deg, rgba(6, 78, 59, 0.9), rgba(5, 150, 105, 0.8))");
+    }
+
+    if (playerInfo.level >= 55 && playerInfo.finishAchievementNum !== null && playerInfo.finishAchievementNum < 1000) {
+        addBadge("📸", t('badge.tourist.name'), t('badge.tourist.desc'), "linear-gradient(135deg, rgba(180, 83, 9, 0.9), rgba(3, 105, 161, 0.9))");
+    }
+
+    if (anomalieOffensive) {
+        addBadge("💥", t('badge.offensiveAnomaly.name'), t('badge.offensiveAnomaly.desc'), "linear-gradient(135deg, rgba(153, 27, 27, 0.8), rgba(38, 38, 38, 0.9), rgba(220, 38, 38, 0.8))");
+    }
+
+    if (starterCount === 3) {
+        addBadge("👶", t('badge.starter.name'), t('badge.starter.desc'), "linear-gradient(135deg, #a7f3d0, #3b82f6)");
+    }
+
+    if (archonCount >= 4) addBadge("🏛️", t('badge.divine.name'), t('badge.divine.desc'), "linear-gradient(135deg, rgba(255,215,0,0.6), rgba(255,255,255,0.4))");
     if (allInCrit) addBadge("🎯", t('badge.allInCrit.name'), t('badge.allInCrit.desc'), "linear-gradient(135deg, rgba(220,38,38,0.8), rgba(249,115,22,0.8))");
     if (surgicalPrec) addBadge("🎯", t('badge.surgical.name'), t('badge.surgical.desc'), "rgba(220, 38, 38, 0.6)");
 
@@ -3329,17 +3497,13 @@ function renderGlobalEvaluation(playerInfo) {
     if (aloyFound) addBadge("⏳", t('badge.aloy.name'), t('badge.aloy.desc'), "rgba(107, 114, 128, 0.6)");
     if (globalPersoData.some(p => p.ghettoKing)) addBadge("🪵", t('badge.tiersMonde.name'), t('badge.tiersMonde.desc'), "rgba(139, 69, 19, 0.6)");
 
-    if (akashamaxxing) addBadge("📈", t('badge.akasha.name'), t('badge.akasha.desc'), "linear-gradient(135deg, rgba(236,72,153,0.7), rgba(168,85,247,0.7))");
-
-    if (holyGrail) addBadge("🏆", t('badge.holyGrail.name'), t('badge.holyGrail.desc'), "linear-gradient(135deg, rgba(255,215,0,0.8), rgba(255,255,255,0.7), rgba(255,215,0,0.8))");
-
     if (level89Syndrome) addBadge("🪙", t('badge.89.name'), t('badge.89.desc'), "rgba(107, 114, 128, 0.6)");
     if (level67EasterEgg) addBadge("👀", "67", "SIX SEVEEEEN", "rgba(168, 85, 247, 0.6)");
 
     if (emblemFan >= 3) addBadge("👘", t('badge.emblemFan.name'), t('badge.emblemFan.desc'), "rgba(168, 85, 247, 0.6)");
     if (favoniusCount >= 3) addBadge("🗡️", t('badge.favSect.name'), t('badge.favSect.desc'), "rgba(107, 114, 128, 0.6)");
 
-    if (rainbowFan > globalPersoData.length / 2 && globalPersoData.length >= 4) {
+    if (rainbowFan >= globalPersoData.length / 3 && globalPersoData.length >= 3) {
         addBadge("🌈", t('badge.rainbow.name'), t('badge.rainbow.desc'), "linear-gradient(90deg, rgba(255,0,0,0.4), rgba(255,165,0,0.4), rgba(255,255,0,0.4), rgba(0,128,0,0.4), rgba(0,0,255,0.4), rgba(75,0,130,0.4), rgba(238,130,238,0.4))");
     }
 

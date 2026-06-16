@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une réaction élémentaire est déclenchée (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une réaction élémentaire est déclenchée (Maîtrise élémentaire)",
+        "en": "If an elemental reaction is triggered (EM)"
+      },
       "stats": {
         "eleMas": [
           24,

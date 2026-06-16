@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si le porteur est hors du terrain (ATQ%)",
+      "label": {
+        "fr": "Si le porteur est hors du terrain (ATQ%)",
+        "en": "If the wielder is off-field (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.12,
@@ -10,7 +13,10 @@
       }
     },
     {
-      "label": "Si le porteur soigne un allié (ATQ%)",
+      "label": {
+        "fr": "Si le porteur soigne un allié (ATQ%)",
+        "en": "If the wielder heals an ally (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.32,

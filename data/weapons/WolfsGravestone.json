@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une attaque touche un ennemi ayant moins de 30% de ses PV (ATQ%)",
+      "label": {
+        "fr": "Si une attaque touche un ennemi ayant moins de 30% de ses PV (ATQ%)",
+        "en": "If an attack hits an enemy whose HP is below 30% (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.4,

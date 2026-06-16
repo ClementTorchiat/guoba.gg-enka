@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "1 Allié du même élément que le porteur (ATQ%)",
+      "label": {
+        "fr": "1 Allié du même élément que le porteur (ATQ%)",
+        "en": "1 ally of the same element as the wearer (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.16,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "2 Alliés du même élément que le porteur (ATQ%)",
+      "label": {
+        "fr": "2 Alliés du même élément que le porteur (ATQ%)",
+        "en": "2 allies of the same element as the wearer (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.32,
@@ -20,7 +26,10 @@
       }
     },
     {
-      "label": "3 Alliés du même élément que le porteur (ATQ%)",
+      "label": {
+        "fr": "3 Alliés du même élément que le porteur (ATQ%)",
+        "en": "3 allies of the same element as the wearer (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.48,

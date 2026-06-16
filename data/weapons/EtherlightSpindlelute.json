@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+        "en": "If an elemental skill is used (EM)"
+      },
       "stats": {
         "eleMas": [
           100,

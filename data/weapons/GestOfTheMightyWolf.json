@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "Hymne des quatre vents (1 stacks)",
+      "label": {
+        "fr": "Hymne des quatre vents (1 stacks)",
+        "en": "Four Winds' Hymn (1 stack)"
+      },
       "stats": {
         "critDMG_": [
           0.075,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Hymne des quatre vents (2 stacks)",
+      "label": {
+        "fr": "Hymne des quatre vents (2 stacks)",
+        "en": "Four Winds' Hymn (2 stacks)"
+      },
       "stats": {
         "critDMG_": [
           0,
@@ -21,7 +27,10 @@
       }
     },
     {
-      "label": "Hymne des quatre vents (3 stacks)",
+      "label": {
+        "fr": "Hymne des quatre vents (3 stacks)",
+        "en": "Four Winds' Hymn (3 stacks)"
+      },
       "stats": {
         "critDMG_": [
           0.225,
@@ -30,7 +39,10 @@
       }
     },
     {
-      "label": "Hymne des quatre vents (4 stacks)",
+      "label": {
+        "fr": "Hymne des quatre vents (4 stacks)",
+        "en": "Four Winds' Hymn (4 stacks)"
+      },
       "active": true,
       "stats": {
         "critDMG_": [

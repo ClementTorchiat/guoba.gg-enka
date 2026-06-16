@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si un ennemi a été vaincu (ATQ%)",
+      "label": {
+        "fr": "Si un ennemi a été vaincu (ATQ%)",
+        "en": "If an enemy is defeated (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.12,

@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "1 Symbole consommé (Maîtrise élémentaire)",
+      "label": {
+        "fr": "1 Symbole consommé (Maîtrise élémentaire)",
+        "en": "1 Symbol consumed (EM)"
+      },
       "stats": {
         "eleMas": [
           40,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "2 Symboles consommés (Maîtrise élémentaire)",
+      "label": {
+        "fr": "2 Symboles consommés (Maîtrise élémentaire)",
+        "en": "2 Symbols consumed (EM)"
+      },
       "stats": {
         "eleMas": [
           80,
@@ -20,7 +26,10 @@
       }
     },
     {
-      "label": "3 Symboles consommés (Maîtrise élémentaire)",
+      "label": {
+        "fr": "3 Symboles consommés (Maîtrise élémentaire)",
+        "en": "3 Symbols consumed (EM)"
+      },
       "stats": {
         "eleMas": [
           120,

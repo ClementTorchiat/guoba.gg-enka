@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+        "en": "If an elemental skill is used (EM)"
+      },
       "stats": {
         "eleMas": [
           80,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Si des dégâts de Sélénofleurissment sont infligés (DGT CRIT)",
+      "label": {
+        "fr": "Si des dégâts de Sélénofleurissment sont infligés (DGT CRIT)",
+        "en": "If Lunar-Bloom damage is dealt (Crit DMG)"
+      },
       "stats": {
         "critDMG_": [
           0.24,
@@ -20,7 +26,10 @@
       }
     },
     {
-      "label": "Si les deux effets précédents sont actifs en même temps (Maîtrise élémentaire et DGT CRIT)",
+      "label": {
+        "fr": "Si les deux effets précédents sont actifs en même temps (Maîtrise élémentaire et DGT CRIT)",
+        "en": "If both previous effects are active at the same time (EM & Crit DMG)"
+      },
       "stats": {
         "eleMas": [
           120,

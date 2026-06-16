@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une attaque plongée est utilisée (DGT CRIT uniquement pour les attaques plongées)",
+      "label": {
+        "fr": "Si une attaque plongée est utilisée (DGT CRIT uniquement pour les attaques plongées)",
+        "en": "If a plunging attack is used (Crit DMG only for plunging attacks)"
+      },
       "stats": {
         "critDMG_": [
           0.28,
@@ -10,7 +13,10 @@
       }
     },
     {
-      "label": "Si une compétence ou un déchaînement élémentaire est utilisé (DGT CRIT uniquement pour les attaques plongées)",
+      "label": {
+        "fr": "Si une compétence ou un déchaînement élémentaire est utilisé (DGT CRIT uniquement pour les attaques plongées)",
+        "en": "If an elemental skill or burst is used (Crit DMG only for plunging attacks)"
+      },
       "stats": {
         "critDMG_": [
           0.4,

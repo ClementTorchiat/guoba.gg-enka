@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une réaction de Dispersion est déclenchée (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une réaction de Dispersion est déclenchée (Maîtrise élémentaire)",
+        "en": "If a Swirl elemental reaction is triggered (EM)"
+      },
       "stats": {
         "eleMas": [
           120,
@@ -10,7 +13,10 @@
       }
     },
     {
-      "label": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une compétence élémentaire est utilisée (Maîtrise élémentaire)",
+        "en": "If an elemental skill is used (EM)"
+      },
       "stats": {
         "eleMas": [
           96,
@@ -19,7 +25,10 @@
       }
     },
     {
-      "label": "Si un déchaînement élémentaire est utilisé (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si un déchaînement élémentaire est utilisé (Maîtrise élémentaire)",
+        "en": "If an elemental burst is used (EM)"
+      },
       "stats": {
         "eleMas": [
           32,

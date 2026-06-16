@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si 3 compétences élémentaires sont utilisées (DGTs Élémentaires)",
+      "label": {
+        "fr": "Si 3 compétences élémentaires sont utilisées (DGTs Élémentaires)",
+        "en": "If 3 elemental skills ares used (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.12,

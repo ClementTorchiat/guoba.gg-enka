@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si le personnage sprint après avoir utilisé une compétence élémentaire (ATQ%)",
+      "label": {
+        "fr": "Si le personnage sprint après avoir utilisé une compétence élémentaire (ATQ%)",
+        "en": "If the character sprints after using an elemental skill (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.2,

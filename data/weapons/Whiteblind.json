@@ -2,7 +2,10 @@
   "selectMode": "cumulative",
   "buffs": [
     {
-      "label": "Si une attaque normale ou chargée touche un ennemi une 1ère fois (ATQ% et DÉF)",
+      "label": {
+        "fr": "Si une attaque normale ou chargée touche un ennemi une 1ère fois (ATQ% et DÉF%)",
+        "en": "If a normal or charged attack hits an enemy a 1st time (ATK% & DEF%)"
+      },
       "stats": {
         "atk_": [
           0.06,
@@ -15,7 +18,10 @@
       }
     },
     {
-      "label": "Si une attaque normale ou chargée touche un ennemi une 2ème fois (ATQ% et DÉF)",
+      "label": {
+        "fr": "Si une attaque normale ou chargée touche un ennemi une 2ème fois (ATQ% et DÉF%)",
+        "en": "If a normal or charged attack hits an enemy a 2nd time (ATK% & DEF%)"
+      },
       "stats": {
         "atk_": [
           0.06,
@@ -28,7 +34,10 @@
       }
     },
     {
-      "label": "Si une attaque normale ou chargée touche un ennemi une 3ème fois (ATQ% et DÉF)",
+      "label": {
+        "fr": "Si une attaque normale ou chargée touche un ennemi une 3ème fois (ATQ% et DÉF%)",
+        "en": "If a normal or charged attack hits an enemy a 3rd time (ATK% & DEF%)"
+      },
       "stats": {
         "atk_": [
           0.06,
@@ -41,7 +50,10 @@
       }
     },
     {
-      "label": "Si une attaque normale ou chargée touche un ennemi une 4ème fois (ATQ% et DÉF)",
+      "label": {
+        "fr": "Si une attaque normale ou chargée touche un ennemi une 4ème fois (ATQ% et DÉF%)",
+        "en": "If a normal or charged attack hits an enemy a 4th time (ATK% & DEF%)"
+      },
       "stats": {
         "atk_": [
           0.06,

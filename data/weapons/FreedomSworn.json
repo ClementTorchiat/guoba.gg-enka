@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si 2 réactions élémentaires sont déclenchées (ATQ%)",
+      "label": {
+        "fr": "Si 2 réactions élémentaires sont déclenchées (ATQ%)",
+        "en": "If 2 elemental reactions are triggered (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.2,

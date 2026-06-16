@@ -1,13 +1,19 @@
 {
   "buffs": [
     {
-      "label": "Si une compétence élémentaire est utilisée (ATQ%)",
+      "label": {
+        "fr": "Si une compétence élémentaire est utilisée (ATQ%)",
+        "en": "If an elemental skill is used (ATK%)"
+      },
       "stats": {
         "atk_": 0.24
       }
     },
     {
-      "label": "Si le porteur a 0 énergie (ATQ% et DGT CRIT)",
+      "label": {
+        "fr": "Si le porteur a 0 énergie (ATQ% et DGT CRIT)",
+        "en": "If the wearer has 0 energy (ATK% & Crit DMG)"
+      },
       "stats": {
         "atk_": 0.24,
         "critDMG_": 0.4

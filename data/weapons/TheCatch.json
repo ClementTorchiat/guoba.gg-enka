@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Bonus de Taux CRIT (Uniquement pour le déchaînement élémentaire)",
+      "label": {
+        "fr": "Bonus de Taux CRIT (Uniquement pour le déchaînement élémentaire)",
+        "en": "Crit Rate bonus (only for the elemental burst)"
+      },
       "active": false,
       "stats": {
         "critRate_": [

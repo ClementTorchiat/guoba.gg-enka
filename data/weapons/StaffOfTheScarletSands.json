@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "1 Stack (ATQ% en fonction de la Maîtrise élémentaire)",
+      "label": {
+        "fr": "1 Stack (ATQ% en fonction de la Maîtrise élémentaire)",
+        "en": "1 Stack (ATK% based on EM)"
+      },
       "stats": {
         "atk_bonus_scaling": {
           "source": "eleMas",
@@ -14,7 +17,10 @@
       }
     },
     {
-      "label": "2 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
+      "label": {
+        "fr": "2 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
+        "en": "2 Stacks (ATK% based on EM)"
+      },
       "stats": {
         "atk_bonus_scaling": {
           "source": "eleMas",
@@ -26,7 +32,10 @@
       }
     },
     {
-      "label": "3 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
+      "label": {
+        "fr": "3 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
+        "en": "3 Stacks (ATK% based on EM)"
+      },
       "stats": {
         "atk_bonus_scaling": {
           "source": "eleMas",

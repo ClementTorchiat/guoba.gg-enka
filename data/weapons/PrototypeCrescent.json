@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si un point faible est touché en mode visée (ATQ%)",
+      "label": {
+        "fr": "Si un point faible est touché en mode visée (ATQ%)",
+        "en": "If a weak point is hit while aiming (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.36,

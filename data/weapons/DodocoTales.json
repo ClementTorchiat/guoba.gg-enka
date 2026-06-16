@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une attaque chargée touche un ennemi (ATQ%)",
+      "label": {
+        "fr": "Si une attaque chargée touche un ennemi (ATQ%)",
+        "en": "If a charged attack hits an enemy (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.08,

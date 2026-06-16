@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Bonus de Taux CRIT (Uniquement pour les attaques plongées)",
+      "label": {
+        "fr": "Bonus de Taux CRIT (Uniquement pour les attaques plongées)",
+        "en": "Crit Rate buff (for plunge attacks only)"
+      },
       "active": false,
       "stats": {
         "critRate_": [

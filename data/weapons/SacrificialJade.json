@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si le porteur est hors du terrain pendant 5s (PV% et Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si le porteur est hors du terrain pendant 5s (PV% et Maîtrise élémentaire)",
+        "en": "If the wearer is off-field for 5 seconds (HP% & EM)"
+      },
       "stats": {
         "hp_": [
           0.32,

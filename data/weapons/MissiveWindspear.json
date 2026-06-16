@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une réaction élémentaire est déclenchée (ATQ% et Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une réaction élémentaire est déclenchée (ATQ% et Maîtrise élémentaire)",
+        "en": "If an elemental reaction is triggered (ATK% & EM)"
+      },
       "stats": {
         "atk_": [
           0.12,

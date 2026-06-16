@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "Si des alliés subissent une modification de PV une 1ère fois (PV%)",
+      "label": {
+        "fr": "Si des alliés subissent une modification de PV une 1ère fois (PV%)",
+        "en": "If allies' HP increases or decreases for the 1st time (HP%)"
+      },
       "stats": {
         "hp_": [
           0.14,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Si des alliés subissent une modification de PV une 2ème fois (PV%)",
+      "label": {
+        "fr": "Si des alliés subissent une modification de PV une 2ème fois (PV%)",
+        "en": "If allies' HP increases or decreases for the 2nd time (HP%)"
+      },
       "stats": {
         "hp_": [
           0.28,

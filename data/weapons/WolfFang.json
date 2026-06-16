@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "1 stack de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+      "label": {
+        "fr": "1 stack de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+        "en": "1 Crit Rate stack (only for skills and bursts)"
+      },
       "active": false,
       "stats": {
         "critRate_": [
@@ -12,7 +15,10 @@
       }
     },
     {
-      "label": "2 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+      "label": {
+        "fr": "2 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+        "en": "2 Crit Rate stacks (only for skills and bursts)"
+      },
       "active": false,
       "stats": {
         "critRate_": [
@@ -22,7 +28,10 @@
       }
     },
     {
-      "label": "3 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+      "label": {
+        "fr": "3 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+        "en": "3 Crit Rate stacks (only for skills and bursts)"
+      },
       "active": false,
       "stats": {
         "critRate_": [
@@ -32,7 +41,10 @@
       }
     },
     {
-      "label": "4 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+      "label": {
+        "fr": "4 stacks de Taux CRIT (ne s'applique qu'aux compétences et déchaînements)",
+        "en": "4 Crit Rate stacks (only for skills and bursts)"
+      },
       "active": false,
       "stats": {
         "critRate_": [

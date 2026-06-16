@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "1 Emblème (DGTs Élémentaires)",
+      "label": {
+        "fr": "1 Emblème (DGTs Élémentaires)",
+        "en": "1 Emblem (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.08,
@@ -35,7 +38,10 @@
       }
     },
     {
-      "label": "2 Emblèmes (DGTs Élémentaires)",
+      "label": {
+        "fr": "2 Emblèmes (DGTs Élémentaires)",
+        "en": "2 Emblems (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.16,
@@ -68,7 +74,10 @@
       }
     },
     {
-      "label": "3 Emblèmes (DGTs Élémentaires)",
+      "label": {
+        "fr": "3 Emblèmes (DGTs Élémentaires)",
+        "en": "3 Emblems (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.28,

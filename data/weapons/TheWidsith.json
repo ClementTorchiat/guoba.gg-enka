@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "Récital (ATQ%)",
+      "label": {
+        "fr": "Récital (ATQ%)",
+        "en": "Recitative (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.6,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Aria (DGTs Élémentaires)",
+      "label": {
+        "fr": "Aria (DGTs Élémentaires)",
+        "en": "Aria (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.48,
@@ -44,7 +50,10 @@
       }
     },
     {
-      "label": "Interlude (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Interlude (Maîtrise élémentaire)",
+        "en": "Interlude (EM)"
+      },
       "stats": {
         "eleMas": [
           240,

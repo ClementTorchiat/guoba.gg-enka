@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "1 Stack (ATQ%)",
+      "label": {
+        "fr": "1 Stack (ATQ%)",
+        "en": "1 Stack (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.1,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "2 Stacks (ATQ%)",
+      "label": {
+        "fr": "2 Stacks (ATQ%)",
+        "en": "2 Stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.2,
@@ -20,7 +26,10 @@
       }
     },
     {
-      "label": "3 Stacks (ATQ%)",
+      "label": {
+        "fr": "3 Stacks (ATQ%)",
+        "en": "3 Stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.3,
@@ -29,7 +38,10 @@
       }
     },
     {
-      "label": "4 Stacks (ATQ%)",
+      "label": {
+        "fr": "4 Stacks (ATQ%)",
+        "en": "4 Stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.48,

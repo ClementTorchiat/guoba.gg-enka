@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "Si un déchaînement élémentaire touche un ennemi (ATQ%)",
+      "label": {
+        "fr": "Si un déchaînement élémentaire touche un ennemi (ATQ%)",
+        "en": "If an elemental burst hits an enemy (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.2,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Si l'équipe est composée de deux membre de l'Hexerei (ATQ%)",
+      "label": {
+        "fr": "Si l'équipe est composée de deux membre de l'Hexerei (ATQ%)",
+        "en": "If 2 Hexerei characters are in the party (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.35,

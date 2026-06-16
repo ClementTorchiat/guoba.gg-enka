@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "Si 1 personnage de Liyue est dans l'équipe (ATQ% et Taux CRIT)",
+      "label": {
+        "fr": "Si 1 personnage de Liyue est dans l'équipe (ATQ% et Taux CRIT)",
+        "en": "If 1 character from Liyue is in the party (ATK% & Crit Rate)"
+      },
       "active": false,
       "stats": {
         "atk_": [
@@ -16,7 +19,10 @@
       }
     },
     {
-      "label": "Si 2 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+      "label": {
+        "fr": "Si 2 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+        "en": "If 2 characters from Liyue are in the party (ATK% & Crit Rate)"
+      },
       "active": false,
       "stats": {
         "atk_": [
@@ -30,7 +36,10 @@
       }
     },
     {
-      "label": "Si 3 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+      "label": {
+        "fr": "Si 3 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+        "en": "If 3 characters from Liyue are in the party (ATK% & Crit Rate)"
+      },
       "active": false,
       "stats": {
         "atk_": [
@@ -44,7 +53,10 @@
       }
     },
     {
-      "label": "Si 4 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+      "label": {
+        "fr": "Si 4 personnages de Liyue sont dans l'équipe (ATQ% et Taux CRIT)",
+        "en": "If 4 characters from Liyue are in the party (ATK% & Crit Rate)"
+      },
       "active": false,
       "stats": {
         "atk_": [

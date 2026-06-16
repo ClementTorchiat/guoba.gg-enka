@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si 4 attaques normales ou chargées touchent un ennemi (ATQ%)",
+      "label": {
+        "fr": "Si 4 attaques normales ou chargées touchent un ennemi (ATQ%)",
+        "en": "If 4 normal or charged attacks hit an enemy (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.2,

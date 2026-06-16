@@ -2,7 +2,10 @@
   "selectMode": "cumulative",
   "buffs": [
     {
-      "label": "1 Stack (DGTs Élémentaires)",
+      "label": {
+        "fr": "1 Stack (DGTs Élémentaires)",
+        "en": "1 Stack (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.08,
@@ -35,7 +38,10 @@
       }
     },
     {
-      "label": "2 Stacks (DGTs Élémentaires)",
+      "label": {
+        "fr": "2 Stacks (DGTs Élémentaires)",
+        "en": "2 Stacks (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.08,
@@ -68,7 +74,10 @@
       }
     },
     {
-      "label": "3 Stacks (DGTs Élémentaires)",
+      "label": {
+        "fr": "3 Stacks (DGTs Élémentaires)",
+        "en": "3 Stacks (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.08,
@@ -101,7 +110,10 @@
       }
     },
     {
-      "label": "4 Stacks (DGTs Élémentaires)",
+      "label": {
+        "fr": "4 Stacks (DGTs Élémentaires)",
+        "en": "4 Stacks (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.08,

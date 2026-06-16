@@ -2,7 +2,10 @@
   "selectMode": "cumulative",
   "buffs": [
     {
-      "label": "Si le porteur est affecté par l'élément Pyro (ATQ%)",
+      "label": {
+        "fr": "Si le porteur est affecté par l'élément Pyro (ATQ%)",
+        "en": "If the wielder is affected by Pyro (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.16,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Si le porteur est affecté par l'élément Hydro/Cryo/Électro/Dendro (DGTs Élémentaires)",
+      "label": {
+        "fr": "Si le porteur est affecté par l'élément Hydro/Cryo/Électro/Dendro (DGTs Élémentaires)",
+        "en": "If the wearer is affected by Hydro/Cryo/Electro/Dendro (Elemental DMG)"
+      },
       "stats": {
         "pyro_dmg_": [
           0.12,

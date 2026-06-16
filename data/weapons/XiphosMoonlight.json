@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Bonus selon la Maîtrise élémentaire (Recharge d'énergie)",
+      "label": {
+        "fr": "Bonus selon la Maîtrise élémentaire (Recharge d'énergie)",
+        "en": "Bonus based on EM (ER)"
+      },
       "stats": {
         "enerRech_bonus_scaling": {
           "source": "eleMas",

@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une compétence élémentaire est utilisée (DÉF%)",
+      "label": {
+        "fr": "Si une compétence élémentaire est utilisée (DÉF%)",
+        "en": "If an elemental skill is used (DEF%)"
+      },
       "stats": {
         "def_": [
           0.16,

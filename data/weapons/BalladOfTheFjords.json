@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si l'équipe est composée de 3 éléments différents (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si l'équipe est composée de 3 éléments différents (Maîtrise élémentaire)",
+        "en": "If the party includes characters of 3 different elements (EM)"
+      },
       "stats": {
         "eleMas": [
           120,

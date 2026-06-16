@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une compétence élémentaire est utilisée (ATQ%)",
+      "label": {
+        "fr": "Si une compétence élémentaire est utilisée (ATQ%)",
+        "en": "If an elemental skill is used (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.12,
@@ -10,7 +13,10 @@
       }
     },
     {
-      "label": "Si l'Engagement Vital est dissipé (ATQ)",
+      "label": {
+        "fr": "Si l'Engagement Vital est dissipé (ATQ)",
+        "en": "If the Bond of Life is cleared (ATK%)"
+      },
       "stats": {
         "atk": [
           150,

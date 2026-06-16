@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "Max Stacks sur le terrain (ATQ%)",
+      "label": {
+        "fr": "Max Stacks sur le terrain (ATQ%)",
+        "en": "On-field max stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.192,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Max Stacks hors du terrain (ATQ%)",
+      "label": {
+        "fr": "Max Stacks hors du terrain (ATQ%)",
+        "en": "Off-field max stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.384,

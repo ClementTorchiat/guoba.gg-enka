@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Buff de Taux CRIT si le personnage est protégé par un bouclier (ne concerne que les attaques normales et chargées)",
+      "label": {
+        "fr": "Buff de Taux CRIT si le personnage est protégé par un bouclier (ne concerne que les attaques normales et chargées)",
+        "en": "Crit Rate buff if the character is protected by a shield (only applies to normal and charged attacks)"
+      },
       "active": false,
       "stats": {
         "critRate_": [

@@ -2,7 +2,10 @@
   "selectMode": "cumulative",
   "buffs": [
     {
-      "label": "Si un 1er ennemi a été vaincu (ATQ%)",
+      "label": {
+        "fr": "Si un 1er ennemi a été vaincu (ATQ%)",
+        "en": "If 1 enemy is defeated (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.12,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "Si un 2ème ennemi a été vaincu (ATQ%)",
+      "label": {
+        "fr": "Si un 2ème ennemi a été vaincu (ATQ%)",
+        "en": "If 2 enemies are defeated (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.12,
@@ -20,7 +26,10 @@
       }
     },
     {
-      "label": "Si un 3ème ennemi a été vaincu (ATQ%)",
+      "label": {
+        "fr": "Si un 3ème ennemi a été vaincu (ATQ%)",
+        "en": "If 3 enemies are defeated (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.12,

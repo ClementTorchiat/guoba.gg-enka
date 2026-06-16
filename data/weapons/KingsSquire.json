@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une compétence élémentaire ou un déchaînement élémentaire est utilisé (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une compétence ou un déchaînement élémentaire est utilisé (Maîtrise élémentaire)",
+        "en": "If an elemental skill or burst is used (EM)"
+      },
       "stats": {
         "eleMas": [
           60,

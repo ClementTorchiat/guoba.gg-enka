@@ -1,7 +1,10 @@
 {
   "buffs": [
     {
-      "label": "Si une réaction liée à l'élément Dendro est déclenchée (Maîtrise élémentaire)",
+      "label": {
+        "fr": "Si une réaction liée à l'élément Dendro est déclenchée (Maîtrise élémentaire)",
+        "en": "If a Dendro reaction is triggered (EM)"
+      },
       "stats": {
         "eleMas": [
           60,

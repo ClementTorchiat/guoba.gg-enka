@@ -2,7 +2,10 @@
   "selectMode": "exclusive",
   "buffs": [
     {
-      "label": "1 Stack (ATQ%)",
+      "label": {
+        "fr": "1 Stack (ATQ%)",
+        "en": "1 Stack (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.032,
@@ -11,7 +14,10 @@
       }
     },
     {
-      "label": "2 Stacks (ATQ%)",
+      "label": {
+        "fr": "2 Stacks (ATQ%)",
+        "en": "2 Stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.064,
@@ -20,7 +26,10 @@
       }
     },
     {
-      "label": "3 Stacks (ATQ%)",
+      "label": {
+        "fr": "3 Stacks (ATQ%)",
+        "en": "3 Stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.096,
@@ -29,7 +38,10 @@
       }
     },
     {
-      "label": "4 Stacks (ATQ%)",
+      "label": {
+        "fr": "4 Stacks (ATQ%)",
+        "en": "4 Stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.128,
@@ -38,7 +50,10 @@
       }
     },
     {
-      "label": "5 Stacks (ATQ%)",
+      "label": {
+        "fr": "5 Stacks (ATQ%)",
+        "en": "5 Stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.16,
@@ -47,7 +62,10 @@
       }
     },
     {
-      "label": "6 Stacks (ATQ%)",
+      "label": {
+        "fr": "6 Stacks (ATQ%)",
+        "en": "6 Stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.192,
@@ -56,7 +74,10 @@
       }
     },
     {
-      "label": "7 Stacks (ATQ%)",
+      "label": {
+        "fr": "7 Stacks (ATQ%)",
+        "en": "7 Stacks (ATK%)"
+      },
       "stats": {
         "atk_": [
           0.224,
