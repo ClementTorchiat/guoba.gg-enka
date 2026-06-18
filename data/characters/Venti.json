@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C4 : Vent glacial de liberté (Hexerei)",
+          "label": {
+            "fr": "C4 : Vent glacial de liberté (Hexerei - DGTs Anémo)",
+            "en": "C4: Hurricane of freedom (Hexerei - Anemo DMG)"
+          },
           "cons": 4,
           "active": true,
           "stats": {
@@ -19,7 +22,10 @@
           }
         },
         {
-          "label": "C6 : Tempête de résistance (Hexerei)",
+          "label": {
+            "fr": "C6 : Tempête de résistance (Hexerei - DGT Crit)",
+            "en": "C6: Storm of defiance (Hexerei - Crit DMG)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -30,8 +36,11 @@
     }
   ],
   "builds": {
-    "Support off-field": {
-      "name": "Support off-field",
+    "Support Dispersion off-field": {
+      "name": {
+        "fr": "Support Dispersion off-field",
+        "en": "Off-field Swirl Support"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -105,7 +114,10 @@
       ]
     },
     "DPS Anémo": {
-      "name": "DPS Anémo",
+      "name": {
+        "fr": "DPS Anémo",
+        "en": "Anemo DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

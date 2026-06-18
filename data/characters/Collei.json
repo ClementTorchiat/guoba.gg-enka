@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C1 : Patrouille sylvestre (off-field)",
+          "label": {
+            "fr": "C1 : Patrouille sylvestre (off-field - Recharge d'énergie)",
+            "en": "C1: Deepwood patrol (off-field - ER)"
+          },
           "cons": 1,
           "active": true,
           "stats": {
@@ -22,8 +25,11 @@
     }
   ],
   "builds": {
-    "Sub-DPS général": {
-      "name": "Sub-DPS général",
+    "Sub-DPS universelle": {
+      "name": {
+        "fr": "Sub-DPS universelle",
+        "en": "Universal Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -108,7 +114,10 @@
       ]
     },
     "Driver fleurissement": {
-      "name": "Driver fleurissement",
+      "name": {
+        "fr": "Driver Fleurissement",
+        "en": "Bloom Driver"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

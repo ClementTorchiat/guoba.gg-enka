@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C1 : Danse pour les papilles gustatives",
+          "label": {
+            "fr": "C1 : Danse pour les papilles gustatives (DGT Crit)",
+            "en": "C1: Pre-dinner dance for your taste buds (Crit DMG)"
+          },
           "cons": 1,
           "stats": {
             "critDMG_": 0.6
@@ -21,8 +24,11 @@
     }
   ],
   "builds": {
-    "Gel": {
-      "name": "Gel",
+    "Sub-DPS Gel": {
+      "name": {
+        "fr": "Sub-DPS Gel",
+        "en": "Freeze Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

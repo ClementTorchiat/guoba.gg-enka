@@ -17,7 +17,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Trésor de l'Alioth (après déchaînement élémentaire)",
+          "label": {
+            "fr": "A4 : Trésor de l'Alioth (après déchaînement - Taux Crit, Recharge d'énergie)",
+            "en": "A4: Aristocratic dignity (after the burst - Crit Rate, ER)"
+          },
           "active": false,
           "stats": {
             "critRate_": 0.15,
@@ -27,10 +30,16 @@
       ]
     },
     {
-      "category": "Constellation 4 : Syntonie",
+      "category": {
+        "fr": "Constellation 4 : Syntonie (ATQ%)",
+        "en": "Constellation4 : Attunement (ATK%)"
+      },
       "buffs": [
         {
-          "label": "Après réaction électro",
+          "label": {
+            "fr": "Après réaction Électro",
+            "en": "After Electro reaction"
+          },
           "cons": 4,
           "stats": {
             "atk_": 0.25
@@ -39,32 +48,47 @@
       ]
     },
     {
-      "category": "Constellation 6 : Étoile tenace",
+      "category": {
+        "fr": "Constellation 6 : Étoile tenace (DGTs Électro)",
+        "en": "Constellation 6: Tenacious star (Electro DMG)"
+      },
       "selectMode": "Cumulative",
       "buffs": [
         {
-          "label": "Attaque normale",
+          "label": {
+            "fr": "Attaque normale",
+            "en": "Normal attack"
+          },
           "cons": 6,
           "stats": {
             "elemental_dmg_": 0.06
           }
         },
         {
-          "label": "Attaque chargée",
+          "label": {
+            "fr": "Attaque chargée",
+            "en": "Charged attack"
+          },
           "cons": 6,
           "stats": {
             "elemental_dmg_": 0.06
           }
         },
         {
-          "label": "Compétence élémentaire",
+          "label": {
+            "fr": "Compétence élémentaire",
+            "en": "Elemental skill"
+          },
           "cons": 6,
           "stats": {
             "elemental_dmg_": 0.06
           }
         },
         {
-          "label": "Déchaînement élémentaire",
+          "label": {
+            "fr": "Déchaînement élémentaire",
+            "en": "Elemental burst"
+          },
           "cons": 6,
           "stats": {
             "elemental_dmg_": 0.06
@@ -75,7 +99,10 @@
   ],
   "builds": {
     "DPS Suractivation": {
-      "name": "DPS Suractivation",
+      "name": {
+        "fr": "DPS Suractivation",
+        "en": "Aggravate DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -155,7 +182,10 @@
       ]
     },
     "DPS Surcharge": {
-      "name": "DPS Surcharge",
+      "name": {
+        "fr": "DPS Surcharge",
+        "en": "Overload DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -228,7 +258,10 @@
       ]
     },
     "DPS Sélénocution": {
-      "name": "DPS Sélénocution",
+      "name": {
+        "fr": "DPS Sélénocution",
+        "en": "Lunar-Charged DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

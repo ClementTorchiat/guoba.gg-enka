@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Gaine blindée portable",
+          "label": {
+            "fr": "A4 : Gaine blindée portable (DÉF%)",
+            "en": "A4: Portable armored sheath (DEF%)"
+          },
           "active": true,
           "stats": {
             "def_": 0.2
@@ -22,7 +25,10 @@
   ],
   "builds": {
     "Support universel": {
-      "name": "Support universel",
+      "name": {
+        "fr": "Support universel",
+        "en": "Universal Support"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,
@@ -89,8 +95,11 @@
         }
       ]
     },
-    "DPS": {
-      "name": "DPS",
+    "DPS Géo": {
+      "name": {
+        "fr": "DPS Géo",
+        "en": "Geo DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

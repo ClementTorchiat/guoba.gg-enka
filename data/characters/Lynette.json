@@ -8,32 +8,47 @@
   },
   "buffs": [
     {
-      "category": "A1 : Synergie ingénieuse",
+      "category": {
+        "fr": "A1 : Synergie ingénieuse (ATQ%)",
+        "en": "A1: Sophisticated synergy (ATK%)"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "1 type élémentaire",
+          "label": {
+            "fr": "1 type élémentaire",
+            "en": "1 elemental type"
+          },
           "active": false,
           "stats": {
             "atk_": 0.08
           }
         },
         {
-          "label": "2 types élémentaires",
+          "label": {
+            "fr": "2 types élémentaires",
+            "en": "2 elemental types"
+          },
           "active": false,
           "stats": {
             "atk_": 0.12
           }
         },
         {
-          "label": "3 types élémentaires",
+          "label": {
+            "fr": "3 types élémentaires",
+            "en": "3 elemental types"
+          },
           "active": true,
           "stats": {
             "atk_": 0.16
           }
         },
         {
-          "label": "4 types élémentaires",
+          "label": {
+            "fr": "4 types élémentaires",
+            "en": "4 elemental types"
+          },
           "active": false,
           "stats": {
             "atk_": 0.2
@@ -45,7 +60,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : Œil perspicace",
+          "label": {
+            "fr": "C6 : Œil perspicace (DGTs Anémo)",
+            "en": "C6: Watchful eye (Anemo DMG)"
+          },
           "cons": 6,
           "stats": {
             "elemental_dmg_": 0.2
@@ -55,8 +73,11 @@
     }
   ],
   "builds": {
-    "Support général": {
-      "name": "Support général",
+    "Support universel": {
+      "name": {
+        "fr": "Support universel",
+        "en": "Universal Support"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -11,14 +11,20 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Abîme profond",
+          "label": {
+            "fr": "C2 : Abîme profond (ATQ%)",
+            "en": "C2: Into the abyss (ATK%)"
+          },
           "cons": 2,
           "stats": {
             "atk_": 0.7
           }
         },
         {
-          "label": "C4 : Flux scindé",
+          "label": {
+            "fr": "C4 : Flux scindé (ATQ%)",
+            "en": "C4: Fractured flow (ATK%)"
+          },
           "cons": 4,
           "stats": {
             "atk_": 0.4
@@ -29,7 +35,10 @@
   ],
   "builds": {
     "DPS Gel": {
-      "name": "DPS Gel",
+      "name": {
+        "fr": "DPS Gel",
+        "en": "Freeze DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

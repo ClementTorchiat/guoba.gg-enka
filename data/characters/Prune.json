@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "Hexerei : Vœu de recherche de sorcières",
+          "label": {
+            "fr": "Hexerei : Vœu de recherche de sorcières (ATQ%)",
+            "en": "Hexerei: Witchseeker's vow (ATK%)"
+          },
           "active": true,
           "stats": {
             "atk_": 0.6
@@ -23,14 +26,20 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Bons pour nettoyer les bagages négligés sont les pouvoirs élémentaires",
+          "label": {
+            "fr": "C2 : Bons pour nettoyer les bagages négligés sont les pouvoirs élémentaires (ATQ%)",
+            "en": "C2: Useful for Cleaning Messy Baggage, Elemental Powers Are Indeed (ATK%)"
+          },
           "cons": 2,
           "stats": {
             "atk_": 0.4
           }
         },
         {
-          "label": "C6 : Et voilà l'histoire ! À partager avec vos amis !",
+          "label": {
+            "fr": "C6 : Et voilà l'histoire ! À partager avec vos amis ! (ATQ)",
+            "en": "C6: And That's the Story! Share It With Your Friends! (ATK)"
+          },
           "cons": 6,
           "stats": {
             "atk": 350
@@ -41,7 +50,10 @@
   ],
   "builds": {
     "Support Hexerei": {
-      "name": "Support Hexerei",
+      "name": {
+        "fr": "Support Hexerei",
+        "en": "Hexerei Support"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Patrouille de dévoreur de cœurs",
+          "label": {
+            "fr": "C2 : Patrouille de dévoreur de cœurs (Maîtrise Élémentaire)",
+            "en": "C2: Heart devourer's travail (EM)"
+          },
           "cons": 2,
           "stats": {
             "eleMas": 125
@@ -22,7 +25,10 @@
   ],
   "builds": {
     "Support universel (Fonte et Gel)": {
-      "name": "Support universel (Fonte et Gel)",
+      "name": {
+        "fr": "Support universel (Fonte et Gel)",
+        "en": "Universal Support (Melt & Freeze)"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Murmure de flamme",
+          "label": {
+            "fr": "A4 : Murmure de flamme (Maîtrise élémentaire)",
+            "en": "A4: Whispering flame (EM)"
+          },
           "active": true,
           "maxCons": 3,
           "stats": {
@@ -28,7 +31,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C4 : Nuit sur la montagne nue",
+          "label": {
+            "fr": "C4 : Nuit sur la montagne nue (Maîtrise élémentaire)",
+            "en": "C4: Night on bald mountain (EM)"
+          },
           "cons": 4,
           "active": true,
           "stats": {
@@ -44,7 +50,10 @@
   ],
   "builds": {
     "DPS Sélénocution": {
-      "name": "DPS Sélénocution",
+      "name": {
+        "fr": "DPS Sélénocution",
+        "en": "Lunar-Charged DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

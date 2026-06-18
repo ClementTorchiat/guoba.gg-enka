@@ -17,7 +17,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Éclat de vitalité",
+          "label": {
+            "fr": "C2 : Éclat de vitalité (DGTs Hydro)",
+            "en": "C2: Vitality burst (Hydro DMG)"
+          },
           "cons": 2,
           "stats": {
             "elemental_dmg_": 0.15
@@ -27,8 +30,11 @@
     }
   ],
   "builds": {
-    "Healeuse générale": {
-      "name": "Healeuse générale",
+    "Healeuse universelle": {
+      "name": {
+        "fr": "Healeuse universelle",
+        "en": "Universal healer"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

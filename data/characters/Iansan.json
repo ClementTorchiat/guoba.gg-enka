@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Formation de résistance améliorée",
+          "label": {
+            "fr": "A1 : Formation de résistance améliorée (ATQ%)",
+            "en": "A1: Enhanced resistance training (ATK%)"
+          },
           "active": true,
           "stats": {
             "atk_": 0.2
@@ -21,8 +24,11 @@
     }
   ],
   "builds": {
-    "Buffer universel": {
-      "name": "Buffer universel",
+    "Support universel": {
+      "name": {
+        "fr": "Support universel",
+        "en": "Universal Support"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

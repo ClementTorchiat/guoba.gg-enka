@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Pari au clair de lune",
+          "label": {
+            "fr": "A1 : Pari au clair de lune (Maîtrise élémentaire)",
+            "en": "A1: A wager of moonlight (EM)"
+          },
           "active": true,
           "stats": {
             "eleMas": 100
@@ -23,7 +26,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : L'observation nourrit la stratégie",
+          "label": {
+            "fr": "C2 : L'observation nourrit la stratégie (Maîtrise élémentaire)",
+            "en": "C2: Observation feeds strategy (EM)"
+          },
           "cons": 2,
           "stats": {
             "eleMas": 200
@@ -34,7 +40,10 @@
   ],
   "builds": {
     "DPS Sélénofleurissement": {
-      "name": "DPS Sélénofleurissement",
+      "name": {
+        "fr": "DPS Sélénofleurissement",
+        "en": "Lunar-Bloom DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

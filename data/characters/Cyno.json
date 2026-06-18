@@ -8,39 +8,57 @@
   },
   "buffs": [
     {
-      "category": "Constellation 2 : Cérémonie : Retour des esprits",
+      "category": {
+        "fr": "Constellation 2 : Cérémonie : Retour des esprits (DGTs Élémentaires)",
+        "en": "Constellation 2: Ceremony: Homecoming of spirits (Elemental DMG)"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "1 ennemi touché par l'attaque normale",
+          "label": {
+            "fr": "1 ennemi touché par l'attaque normale",
+            "en": "1 enemy hit by normal attack"
+          },
           "cons": 2,
           "stats": {
             "elemental_dmg_": 0.1
           }
         },
         {
-          "label": "2 ennemis touchés par l'attaque normale",
+          "label": {
+            "fr": "2 ennemis touchés par l'attaque normale",
+            "en": "2 enemies hit by normal attack"
+          },
           "cons": 2,
           "stats": {
             "elemental_dmg_": 0.2
           }
         },
         {
-          "label": "3 ennemis touchés par l'attaque normale",
+          "label": {
+            "fr": "3 ennemis touchés par l'attaque normale",
+            "en": "3 enemies hit by normal attack"
+          },
           "cons": 2,
           "stats": {
             "elemental_dmg_": 0.3
           }
         },
         {
-          "label": "4 ennemis touchés par l'attaque normale",
+          "label": {
+            "fr": "4 ennemis touchés par l'attaque normale",
+            "en": "4 enemies hit by normal attack"
+          },
           "cons": 2,
           "stats": {
             "elemental_dmg_": 0.4
           }
         },
         {
-          "label": "5 ennemis touchés par l'attaque normale",
+          "label": {
+            "fr": "5 ennemis touchés par l'attaque normale",
+            "en": "5 enemies hit by normal attack"
+          },
           "cons": 2,
           "stats": {
             "elemental_dmg_": 0.5
@@ -51,7 +69,10 @@
   ],
   "builds": {
     "DPS Exubérance": {
-      "name": "DPS Exubérance",
+      "name": {
+        "fr": "DPS Exubérance",
+        "en": "Hyperbloom DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -133,7 +154,10 @@
       ]
     },
     "DPS Suractivation": {
-      "name": "DPS Suractivation",
+      "name": {
+        "fr": "DPS Suractivation",
+        "en": "Aggravate DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

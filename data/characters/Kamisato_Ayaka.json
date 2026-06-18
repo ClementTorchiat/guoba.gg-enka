@@ -17,7 +17,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Bénédiction de Kanten Senmyou",
+          "label": {
+            "fr": "A4 : Bénédiction de Kanten Senmyou (DGTs Cryo)",
+            "en": "A4: Kanten Senmyou blessing (Cryo DMG)"
+          },
           "stats": {
             "elemental_dmg_": 0.18
           }
@@ -27,7 +30,10 @@
   ],
   "builds": {
     "DPS Gel": {
-      "name": "DPS Gel",
+      "name": {
+        "fr": "DPS Gel",
+        "en": "Freeze DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

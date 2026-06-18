@@ -17,7 +17,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C1 : Lignée de l'excellence (uniquement les NA et CA sur un ennemi affecté par cryo)",
+          "label": {
+            "fr": "C1 : Lignée de l'excellence (uniquement les NA et CA sur un ennemi affecté par Cryo - Taux Crit)",
+            "en": "C1: Excellent blood (only normal and charged attacks on enemies affected by Cryo - Crit Rate)"
+          },
           "cons": 1,
           "active": false,
           "stats": {
@@ -29,7 +32,10 @@
   ],
   "builds": {
     "Sub-DPS Fonte": {
-      "name": "Sub-DPS Fonte",
+      "name": {
+        "fr": "Sub-DPS Fonte",
+        "en": "Melt Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -113,7 +119,10 @@
       ]
     },
     "Sub-DPS Gel": {
-      "name": "Sub-DPS Gel",
+      "name": {
+        "fr": "Sub-DPS Gel",
+        "en": "Freeze Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

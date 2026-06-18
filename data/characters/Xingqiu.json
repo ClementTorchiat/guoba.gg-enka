@@ -13,8 +13,11 @@
     "burst": 10
   },
   "builds": {
-    "Sub-DPS évaporation": {
-      "name": "Sub-DPS évaporation",
+    "Sub-DPS Évaporation": {
+      "name": {
+        "fr": "Sub-DPS Évaporation",
+        "en": "Vape Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -95,8 +98,11 @@
         }
       ]
     },
-    "Sub-DPS gel": {
-      "name": "Sub-DPS gel",
+    "Sub-DPS Gel": {
+      "name": {
+        "fr": "Sub-DPS Gel",
+        "en": "Freeze Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -172,8 +178,11 @@
         }
       ]
     },
-    "Sub-DPS fleurissement": {
-      "name": "Sub-DPS fleurissement",
+    "Sub-DPS Fleurissement": {
+      "name": {
+        "fr": "Sub-DPS Fleurissement",
+        "en": "Bloom Sub-DPS"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -245,8 +254,11 @@
         }
       ]
     },
-    "Sub-DPS électrocution": {
-      "name": "Sub-DPS électrocution",
+    "Sub-DPS Électrocution": {
+      "name": {
+        "fr": "Sub-DPS Électrocution",
+        "en": "Electro-Charged Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

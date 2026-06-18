@@ -12,14 +12,20 @@
       "selectMode": "cumulative",
       "buffs": [
         {
-          "label": "A4 : Rémunération honorant le pacte (1 Stack)",
+          "label": {
+            "fr": "A4 : Rémunération honorant le pacte (1 Stack - Taux Crit)",
+            "en": "A4: Lawful remuneration (1 Stack - Crit Rate)"
+          },
           "active": true,
           "stats": {
             "critRate_": 0.1
           }
         },
         {
-          "label": "A4 : Rémunération honorant le pacte (2 Stacks)",
+          "label": {
+            "fr": "A4 : Rémunération honorant le pacte (2 Stacks - Taux Crit)",
+            "en": "A4: Lawful remuneration (2 Stacks - Crit Rate)"
+          },
           "active": true,
           "stats": {
             "critRate_": 0.1
@@ -31,7 +37,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : « Ainsi, je ne désespérerai jamais plus »",
+          "label": {
+            "fr": "C6 : « Ainsi, je ne désespérerai jamais plus » (Taux Crit, DGT Crit)",
+            "en": "C6: \"And so shall I never despair\" (Crit Rate, Crit DMG)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -44,7 +53,10 @@
   ],
   "builds": {
     "DPS Surcharge": {
-      "name": "DPS Surcharge",
+      "name": {
+        "fr": "DPS Surcharge",
+        "en": "Overload DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -117,8 +129,11 @@
         }
       ]
     },
-    "DPS Stimulation": {
-      "name": "DPS Stimulation",
+    "DPS Suractivation": {
+      "name": {
+        "fr": "DPS Suractivation",
+        "en": "Aggravate DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -198,7 +213,10 @@
       ]
     },
     "DPS Sélénocution": {
-      "name": "DPS Sélénocution",
+      "name": {
+        "fr": "DPS Sélénocution",
+        "en": "Lunar-Charged DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

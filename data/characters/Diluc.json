@@ -17,7 +17,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Bénédiction du phénix",
+          "label": {
+            "fr": "A4 : Bénédiction du phénix (DGTs Pyro)",
+            "en": "A4: Blessing of phoenix (Pyro DMG)"
+          },
           "active": true,
           "stats": {
             "elemental_dmg_": 0.2
@@ -26,25 +29,37 @@
       ]
     },
     {
-      "category": "C2 : Chaleur des cendres",
+      "category": {
+        "fr": "C2 : Chaleur des cendres (ATQ%)",
+        "en": "C2: Searing ember (ATK%)"
+      },
       "selectMode": "Cumulative",
       "buffs": [
         {
-          "label": "1 stack",
+          "label": {
+            "fr": "1 stack",
+            "en": "1 stack"
+          },
           "cons": 2,
           "stats": {
             "atk_": 0.1
           }
         },
         {
-          "label": "2 stacks",
+          "label": {
+            "fr": "2 stacks",
+            "en": "2 stacks"
+          },
           "cons": 2,
           "stats": {
             "atk_": 0.1
           }
         },
         {
-          "label": "3 stacks",
+          "label": {
+            "fr": "3 stacks",
+            "en": "3 stacks"
+          },
           "cons": 2,
           "stats": {
             "atk_": 0.1
@@ -55,7 +70,10 @@
   ],
   "builds": {
     "DPS Évaporation": {
-      "name": "DPS Évaporation",
+      "name": {
+        "fr": "DPS Évaporation",
+        "en": "Vape DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -135,7 +153,10 @@
       ]
     },
     "DPS Fonte": {
-      "name": "DPS Fonte",
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -214,7 +235,10 @@
       ]
     },
     "DPS Mono-pyro": {
-      "name": "DPS Mono-pyro",
+      "name": {
+        "fr": "DPS Mono-pyro",
+        "en": "Mono-pyro DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

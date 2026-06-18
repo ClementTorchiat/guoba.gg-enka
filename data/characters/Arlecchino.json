@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Masque Rouge (En combat)",
+          "label": {
+            "fr": "Passif : Seule la lune peut savoir (DGTs Pyro)",
+            "en": "Passive: The Balemoon alone may know (Pyro DMG)"
+          },
           "stats": {
             "pyro_dmg_": 0.4
           }
@@ -23,21 +26,25 @@
       "selectMode": "cumulative",
       "buffs": [
         {
-          "label": "C1 : Masque de la Mort Rouge",
-          "cons": 1,
-          "stats": {}
-        },
-        {
-          "label": "C2 : Ordre Royal",
-          "cons": 2,
-          "stats": {}
+          "label": {
+            "fr": "C6 : « Désormais, nous vivrons ensemble une nouvelle vie. » (uniquement pour l'attaque normale et le déchaînement - Taux Crit et DGT Crit)",
+            "en": "C6: \"From This Day On, We Shall Delight in New Life Together.\" (only for normal attacks and burst - Crit Rate & Crit DMG)"
+          },
+          "cons": 6,
+          "stats": {
+            "critDMG_": 0.7,
+            "critRate_": 0.1
+          }
         }
       ]
     }
   ],
   "builds": {
     "DPS Fonte": {
-      "name": "DPS Fonte",
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -115,7 +122,10 @@
       ]
     },
     "DPS Surcharge": {
-      "name": "DPS Surcharge",
+      "name": {
+        "fr": "DPS Surcharge",
+        "en": "Overload DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -187,7 +197,10 @@
       ]
     },
     "DPS mono Pyro": {
-      "name": "DPS mono Pyro",
+      "name": {
+        "fr": "DPS Mono-pyro",
+        "en": "Mono-pyro DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -208,6 +221,18 @@
         "dendro_dmg_": 0,
         "physical_dmg_": 0,
         "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_"
+        ],
+        "EQUIP_RING": [
+          "pyro_dmg_"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
       },
       "bestSets": [
         "FragmentOfHarmonicWhimsy:4",

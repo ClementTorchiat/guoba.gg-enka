@@ -12,14 +12,20 @@
       "selectMode": "exclusive",
       "data": [
         {
-          "label": "A4 : Réseau d'assistance mutuelle (1 allié Pyro/Hydro/Cryo/Électro)",
+          "label": {
+            "fr": "A4 : Réseau d'assistance mutuelle (1 allié Pyro/Hydro/Cryo/Électro - ATQ%)",
+            "en": "A4: Mutual assistance network (1 Pyro/Hydro/Cryo/Electro ally - ATK%)"
+          },
           "active": false,
           "stats": {
             "atk_": 0.2
           }
         },
         {
-          "label": "A4 : Réseau d'assistance mutuelle (2 alliés Pyro/Hydro/Cryo/Électro)",
+          "label": {
+            "fr": "A4 : Réseau d'assistance mutuelle (2 alliés Pyro/Hydro/Cryo/Électro - ATQ%)",
+            "en": "A4: Mutual assistance network (1 Pyro/Hydro/Cryo/Electro ally - ATK%)"
+          },
           "active": true,
           "stats": {
             "atk_": 0.4
@@ -31,7 +37,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Quête de victoire de la présidente (pour la compétence)",
+          "label": {
+            "fr": "C2 : Quête de victoire de la présidente (uniquement la compétence - Taux Crit)",
+            "en": "C2: The president's pursuit of victory (only the skill - Crit Rate)"
+          },
           "cons": 2,
           "active": false,
           "stats": {
@@ -39,7 +48,10 @@
           }
         },
         {
-          "label": "C6 : Finesse flexible de la présidente de la Spina (pour la compétence)",
+          "label": {
+            "fr": "C6 : Finesse flexible de la présidente de la Spina (uniquement la compétence - DGT Crit)",
+            "en": "C6: The flexible finesse of the Spina's president (only the skill - Crit DMG)"
+          },
           "cons": 6,
           "stats": {
             "critDMG_": 1.35
@@ -49,8 +61,11 @@
     }
   ],
   "builds": {
-    "DPS cristallisation": {
-      "name": "DPS cristallisation",
+    "DPS Cristallisation": {
+      "name": {
+        "fr": "DPS Cristallisation",
+        "en": "Crystallize DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -121,7 +136,10 @@
       ]
     },
     "DPS Sélénocristallisation": {
-      "name": "DPS Sélénocristallisation",
+      "name": {
+        "fr": "DPS Sélénocristallisation",
+        "en": "Lunar-Crystallize DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

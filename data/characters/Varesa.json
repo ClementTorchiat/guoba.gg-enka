@@ -12,14 +12,20 @@
       "selectMode": "exclusive",
       "data": [
         {
-          "label": "A4 : L'héroïne une nouvelle fois de retour ! (1 Stack)",
+          "label": {
+            "fr": "A4 : L'héroïne une nouvelle fois de retour ! (1 Stack - ATQ%)",
+            "en": "A4: The hero twice-returned! (1 Stack - ATK%)"
+          },
           "active": false,
           "stats": {
             "atk_": 0.35
           }
         },
         {
-          "label": "A4 : L'héroïne une nouvelle fois de retour ! (2 Stacks)",
+          "label": {
+            "fr": "A4 : L'héroïne une nouvelle fois de retour ! (2 Stacks - ATK%)",
+            "en": "A4: The hero twice-returned (2 Stacks - ATK%)"
+          },
           "active": true,
           "stats": {
             "atk_": 0.7
@@ -31,7 +37,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : Le triomphe d'une héroïne de la justice",
+          "label": {
+            "fr": "C6 : Le triomphe d'une héroïne de la justice (Taux Crit, DGT Crit)",
+            "en": "C6: A hero of justice's triumph (Crit Rate, Crit DMG)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -44,7 +53,10 @@
   ],
   "builds": {
     "DPS Surcharge": {
-      "name": "Surcharge",
+      "name": {
+        "fr": "DPS Surcharge",
+        "en": "Overload DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -120,7 +132,10 @@
       ]
     },
     "DPS Hypercarry": {
-      "name": "Hypercarry",
+      "name": {
+        "fr": "DPS Hypercarry",
+        "en": "Hypercarry DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -194,7 +209,10 @@
       ]
     },
     "DPS Suractivation": {
-      "name": "Suractivation",
+      "name": {
+        "fr": "DPS Suractivation",
+        "en": "Aggravate DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -281,7 +299,10 @@
       ]
     },
     "DPS Sélénocution": {
-      "name": "Sélénocution",
+      "name": {
+        "fr": "DPS Sélénocution",
+        "en": "Lunar-Charged DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

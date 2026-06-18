@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Que le destin décide",
+          "label": {
+            "fr": "A4 : Que le destin décide (DGTs Hydro)",
+            "en": "A4: Waterborne destiny (Hydro DMG)"
+          },
           "stats": {
             "elemental_dmg_bonus_scaling": {
               "source": "enerRech_",
@@ -22,10 +25,16 @@
       ]
     },
     {
-      "category": "Constellation 2 : Chaîne lunaire",
+      "category": {
+        "fr": "Constellation 2 : Chaîne lunaire",
+        "en": "Constellation 2: Lunar chain"
+      },
       "buffs": [
         {
-          "label": "Buff Hexerei",
+          "label": {
+            "fr": "Buff Hexerei (Maîtrise élémentaire)",
+            "en": "Hexerei buff (EM)"
+          },
           "cons": 2,
           "stats": {
             "eleMas": 80
@@ -34,10 +43,16 @@
       ]
     },
     {
-      "category": "Constellation 4 : Prophétie de la fin",
+      "category": {
+        "fr": "Constellation 4 : Prophétie de la fin",
+        "en": "Constellation 4: Prophecy of oblivion"
+      },
       "buffs": [
         {
-          "label": "Si l'ennemi attaqué est marqué par un présage",
+          "label": {
+            "fr": "Si l'ennemi attaqué est marqué par un présage (Taux Crit)",
+            "en": "If the attacked enemy is affected by an omen (Crit Rate)"
+          },
           "active": false,
           "cons": 4,
           "stats": {
@@ -45,7 +60,10 @@
           }
         },
         {
-          "label": "Si le personnage est un Hexerei",
+          "label": {
+            "fr": "Si le personnage qui attaque est Hexerei (DGT Crit)",
+            "en": "Of the attacking character is Hexerei (Crit DMG)"
+          },
           "cons": 4,
           "stats": {
             "critDMG_": 0.15
@@ -56,7 +74,10 @@
   ],
   "builds": {
     "Support Hexerei": {
-      "name": "Support Hexerei",
+      "name": {
+        "fr": "Support Hexerei",
+        "en": "Hexerei Support"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0.4,
@@ -94,6 +115,7 @@
       "hideUIStats": [],
       "showUIStats": [],
       "bestSets": [
+        "CelestialGift:4",
         "NoblesseOblige:4",
         "TenacityOfTheMillelith:4"
       ],
@@ -124,7 +146,10 @@
       ]
     },
     "Nuke Évaporation": {
-      "name": "Nuke Évaporation",
+      "name": {
+        "fr": "Nuke Évaporation",
+        "en": "Vape Nuke"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

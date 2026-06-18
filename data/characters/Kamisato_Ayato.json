@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Source du monde",
+          "label": {
+            "fr": "C2 : Source du monde (PV%)",
+            "en": "C2: World source (HP%)"
+          },
           "cons": 2,
           "stats": {
             "hp_": 0.5
@@ -22,7 +25,10 @@
   ],
   "builds": {
     "DPS Hydro": {
-      "name": "DPS Hydro",
+      "name": {
+        "fr": "DPS Hydro",
+        "en": "Hydro DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -101,7 +107,10 @@
       ]
     },
     "DPS Gel": {
-      "name": "DPS Gel",
+      "name": {
+        "fr": "DPS Gel",
+        "en": "Freeze DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -186,8 +195,11 @@
         }
       ]
     },
-    "DPS Exubérance": {
-      "name": "DPS Exubérance",
+    "Driver Exubérance": {
+      "name": {
+        "fr": "Driver Exubérance",
+        "en": "Hyperbloom Driver"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -270,7 +282,10 @@
       ]
     },
     "Driver Fleurissement": {
-      "name": "Driver Fleurissement",
+      "name": {
+        "fr": "Driver Fleurissement",
+        "en": "Bloom Driver"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,
@@ -347,7 +362,10 @@
       ]
     },
     "DPS Électrocution": {
-      "name": "DPS Électrocution",
+      "name": {
+        "fr": "DPS Électrocution",
+        "en": "Electro-Charged DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -426,7 +444,10 @@
       ]
     },
     "DPS Évaporation": {
-      "name": "DPS Évaporation",
+      "name": {
+        "fr": "DPS Évaporation",
+        "en": "Vape DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

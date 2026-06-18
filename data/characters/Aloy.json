@@ -11,14 +11,20 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Surcharge offensive",
+          "label": {
+            "fr": "A1 : Surcharge offensive (ATQ%)",
+            "en": "A1: Combat override (ATK%)"
+          },
           "active": true,
           "stats": {
             "atk_": 0.16
           }
         },
         {
-          "label": "A4 : Frappe puissante",
+          "label": {
+            "fr": "A4 : Frappe puissante (DGTs Élémentaires)",
+            "en": "A4: Strong strike (Elemental DMG)"
+          },
           "active": true,
           "stats": {
             "elemental_dmg_": 0.35
@@ -29,7 +35,10 @@
   ],
   "builds": {
     "DPS Fonte": {
-      "name": "DPS Fonte",
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -114,7 +123,10 @@
       ]
     },
     "DPS Gel": {
-      "name": "DPS Gel",
+      "name": {
+        "fr": "DPS Gel",
+        "en": "Freeze DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : « Comme la plume au vent, femme est volage » (Bonus Max)",
+          "label": {
+            "fr": "C2 : « Comme la plume au vent, femme est volage » (Bonus Max - PV%)",
+            "en": "C2: \"A Woman Adapts Like Duckweed in Water\" (Max Buff - HP%)"
+          },
           "cons": 2,
           "stats": {
             "hp_": 1.4
@@ -21,8 +24,11 @@
     }
   ],
   "builds": {
-    "Support et sub-DPS universel": {
-      "name": "Support et sub-DPS universel",
+    "Support et Sub-DPS universel": {
+      "name": {
+        "fr": "Support et Sub-DPS universel",
+        "en": "Universal Support & Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

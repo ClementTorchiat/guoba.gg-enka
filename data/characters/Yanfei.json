@@ -11,29 +11,44 @@
       "category": "Passifs",
       "buffs": [
         {
-          "category": "A1 - Dispositions supplémentaires",
+          "category": {
+            "fr": "A1 : Dispositions supplémentaires (DGTs Pyro)",
+            "en": "A1: Proviso (Pyro DMG)"
+          },
           "selectMode": "cumulative",
           "buffs": [
             {
-              "label": "1 Sceau consommé (+5% DGT Pyro)",
+              "label": {
+                "fr": "1 sceau consommé",
+                "en": "1 seal consumed"
+              },
               "stats": {
                 "pyro_dmg_": 0.05
               }
             },
             {
-              "label": "2 Sceaux consommés (+10% DGT Pyro)",
+              "label": {
+                "fr": "2 sceaux consommés",
+                "en": "2 seals consumed"
+              },
               "stats": {
                 "pyro_dmg_": 0.05
               }
             },
             {
-              "label": "3 Sceaux consommés (Max de base)",
+              "label": {
+                "fr": "3 sceaux consommés",
+                "en": "3 seals consumed"
+              },
               "stats": {
                 "pyro_dmg_": 0.05
               }
             },
             {
-              "label": "4 Sceaux consommés (Max C6)",
+              "label": {
+                "fr": "4 sceaux consommés (C6)",
+                "en": "4 seals consumed (C6)"
+              },
               "active": true,
               "stats": {
                 "pyro_dmg_": 0.05
@@ -47,7 +62,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Verdict final (PV ennemi < 50% et uniquement attaques chargées)",
+          "label": {
+            "fr": "C2 : Verdict final (PV ennemi < 50% et uniquement attaques chargées - Taux Crit)",
+            "en": "C2: Right of final interpretation (Enemy HP < 50% & only charged attacks - Crit Rate)"
+          },
           "cons": 2,
           "active": false,
           "stats": {
@@ -59,7 +77,10 @@
   ],
   "builds": {
     "DPS Évaporation": {
-      "name": "DPS Évaporation",
+      "name": {
+        "fr": "DPS Évaporation",
+        "en": "Vape DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -143,7 +164,10 @@
       ]
     },
     "DPS Fonte": {
-      "name": "DPS Fonte",
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -226,7 +250,10 @@
       ]
     },
     "DPS Surcharge": {
-      "name": "DPS Surcharge",
+      "name": {
+        "fr": "DPS Surcharge",
+        "en": "Overload DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -303,7 +330,10 @@
       ]
     },
     "DPS Bourgeonnement": {
-      "name": "DPS Bourgeonnement",
+      "name": {
+        "fr": "DPS Bourgeonnement",
+        "en": "Burgeon DPS"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

@@ -17,7 +17,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Sang bouillant",
+          "label": {
+            "fr": "A4 : Sang bouillant (PV <= 50% - DGTs Pyro)",
+            "en": "A4: Sanguine rouge (HP <= 50% - Pyro DMG)"
+          },
           "active": true,
           "stats": {
             "pyro_dmg_": 0.33
@@ -29,7 +32,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : L'envol du papillon",
+          "label": {
+            "fr": "C6 : L'envol du papillon (Si Hu Tao meurt - Taux Crit)",
+            "en": "C6: Butterfly's Embrace (If Hu Tao dies - Crit Rate)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -41,7 +47,10 @@
   ],
   "builds": {
     "DPS Évaporation": {
-      "name": "DPS Évaporation",
+      "name": {
+        "fr": "DPS Évaporation",
+        "en": "Vape DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -112,7 +121,10 @@
       ]
     },
     "DPS Fonte": {
-      "name": "DPS Fonte",
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

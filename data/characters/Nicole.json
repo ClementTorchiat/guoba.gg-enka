@@ -11,14 +11,20 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Méthexis",
+          "label": {
+            "fr": "A1 : Méthexis (ATQ)",
+            "en": "A1: Methexis (ATK)"
+          },
           "active": true,
           "stats": {
             "atk": 300
           }
         },
         {
-          "label": "A1 : Méthexis (C2)",
+          "label": {
+            "fr": "A1 : Méthexis (C2 - ATQ)",
+            "en": "A1: Methexis (C2 - ATK)"
+          },
           "active": true,
           "cons": 2,
           "stats": {
@@ -30,7 +36,10 @@
   ],
   "builds": {
     "Support Hexerei": {
-      "name": "Support Hexerei",
+      "name": {
+        "fr": "Support Hexerei",
+        "en": "Hexerei Support"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

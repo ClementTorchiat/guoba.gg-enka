@@ -17,7 +17,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Visions sans fond",
+          "label": {
+            "fr": "C2 : Visions sans fond (DGTs Pyro)",
+            "en": "C2: Unground visions (Pyro DMG)"
+          },
           "cons": 2,
           "stats": {
             "pyro_dmg_": 0.5
@@ -28,7 +31,10 @@
   ],
   "builds": {
     "Sub-DPS Surcharge": {
-      "name": "Sub-DPS Surcharge",
+      "name": {
+        "fr": "Sub-DPS Surcharge",
+        "en": "Overload Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -111,7 +117,10 @@
       ]
     },
     "Sub-DPS Brûlure": {
-      "name": "Sub-DPS Brûlure",
+      "name": {
+        "fr": "Sub-DPS Brûlure",
+        "en": "Burning Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -187,8 +196,11 @@
         }
       ]
     },
-    "Sub-DPS général": {
-      "name": "Sub-DPS général",
+    "Sub-DPS universel": {
+      "name": {
+        "fr": "Sub-DPS universel",
+        "en": "Universal Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

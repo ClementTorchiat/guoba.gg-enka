@@ -18,28 +18,40 @@
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "A1 : Contrôle stratégique (1 type élémentaire différent)",
+          "label": {
+            "fr": "A1 : Contrôle stratégique (1 type élémentaire dans l'équipe - PV%)",
+            "en": "A1: Turn control (1 party elemental type - HP%)"
+          },
           "active": false,
           "stats": {
             "hp_": 0.06
           }
         },
         {
-          "label": "A1 : Contrôle stratégique (2 types élémentaires différents)",
+          "label": {
+            "fr": "A1 : Contrôle stratégique (2 types élémentaires dans l'équipe - PV%)",
+            "en": "A1: Turn control (2 party elemental types - HP%)"
+          },
           "active": false,
           "stats": {
             "hp_": 0.12
           }
         },
         {
-          "label": "A1 : Contrôle stratégique (3 types élémentaires différents)",
+          "label": {
+            "fr": "A1 : Contrôle stratégique (3 types élémentaires dans l'équipe - PV%)",
+            "en": "A1: Turn control (3 party elemental types - HP%)"
+          },
           "active": false,
           "stats": {
             "hp_": 0.18
           }
         },
         {
-          "label": "A1 : Contrôle stratégique (4 types élémentaires différents)",
+          "label": {
+            "fr": "A1 : Contrôle stratégique (4 types élémentaires dans l'équipe - PV%)",
+            "en": "A1: Turn control (4 party elemental types - HP%)"
+          },
           "active": true,
           "stats": {
             "hp_": 0.3
@@ -51,7 +63,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C4 : Tour de passe-passe",
+          "label": {
+            "fr": "C4 : Tour de passe-passe (PV%)",
+            "en": "C4: Bait-and-switch (HP%)"
+          },
           "cons": 4,
           "stats": {
             "hp_": 0.4
@@ -62,7 +77,10 @@
   ],
   "builds": {
     "Sub-DPS Exubérance": {
-      "name": "Sub-DPS Exubérance",
+      "name": {
+        "fr": "Sub-DPS Exubérance",
+        "en": "Hyperbloom Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -138,7 +156,10 @@
       ]
     },
     "Sub-DPS Gel": {
-      "name": "Sub-DPS Gel",
+      "name": {
+        "fr": "Sub-DPS Gel",
+        "en": "Freeze Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -208,7 +229,10 @@
       ]
     },
     "Sub-DPS Évaporation": {
-      "name": "Sub-DPS Évaporation",
+      "name": {
+        "fr": "Sub-DPS Évaporation",
+        "en": "Vape Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

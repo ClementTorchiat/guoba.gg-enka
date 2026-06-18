@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Tour de passe-passe",
+          "label": {
+            "fr": "A1 : Tour de passe-passe (DGTs Pyro)",
+            "en": "A1: Tricks of the trouble-maker (Pyro DMG)"
+          },
           "active": true,
           "stats": {
             "pyro_dmg_": 0.2
@@ -23,14 +26,20 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C1 : Agate Ryuukin",
+          "label": {
+            "fr": "C1 : Agate Ryuukin (ATQ%)",
+            "en": "C1: Agate Ryuukin (ATK%)"
+          },
           "cons": 1,
           "stats": {
             "atk_": 0.2
           }
         },
         {
-          "label": "C2 : Procession de feux de joie",
+          "label": {
+            "fr": "C2 : Procession de feux de joie (DGTs Pyro)",
+            "en": "C2: A procession of bonfires (Pyro DMG)"
+          },
           "cons": 2,
           "stats": {
             "pyro_dmg_": 0.25
@@ -41,7 +50,10 @@
   ],
   "builds": {
     "DPS Évaporation": {
-      "name": "DPS Évaporation",
+      "name": {
+        "fr": "DPS Évaporation",
+        "en": "Vape DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -116,8 +128,11 @@
         }
       ]
     },
-    "Fonte": {
-      "name": "Fonte",
+    "DPS Fonte": {
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -192,8 +207,11 @@
         }
       ]
     },
-    "Surcharge": {
-      "name": "Surcharge",
+    "DPS Surcharge": {
+      "name": {
+        "fr": "DPS Surcharge",
+        "en": "Overload DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

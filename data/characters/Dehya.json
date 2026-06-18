@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : Brûlante griffe de clivage (uniquement le déchaînement)",
+          "label": {
+            "fr": "C6 : Brûlante griffe de clivage (uniquement le déchaînement - Taux Crit, DGT Crit)",
+            "en": "C6: The burning claws cleaving (only the burst - Crit Rate, Crit DMG)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -24,7 +27,10 @@
   ],
   "builds": {
     "Sub-DPS": {
-      "name": "Sub-DPS",
+      "name": {
+        "fr": "Sub-DPS",
+        "en": "Sub-DPS"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,
@@ -105,7 +111,10 @@
       ]
     },
     "DPS Évaporation": {
-      "name": "DPS Évaporation",
+      "name": {
+        "fr": "DPS Évaporation",
+        "en": "Vape DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

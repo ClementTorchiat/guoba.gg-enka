@@ -12,7 +12,10 @@
       "selectMode": "cumulative",
       "buffs": [
         {
-          "label": "C6 : Registre curieux (1 cumul - Compétence)",
+          "label": {
+            "fr": "C6 : Registre curieux (1 cumul - Compétence uniquement - Taux Crit)",
+            "en": "C6: Curious casefiles (1 stack - Skill only - Crit Rate)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -20,7 +23,10 @@
           }
         },
         {
-          "label": "C6 : Registre curieux (2 cumuls - Compétence)",
+          "label": {
+            "fr": "C6 : Registre curieux (2 cumuls - Compétence uniquement - Taux Crit)",
+            "en": "C6: Curious casefiles (2 stacks - Skill only - Crit Rate)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -28,7 +34,10 @@
           }
         },
         {
-          "label": "C6 : Registre curieux (3 cumuls - Compétence)",
+          "label": {
+            "fr": "C6 : Registre curieux (3 cumuls - Compétence uniquement - Taux Crit)",
+            "en": "C6: Curious casefiles (3 stacks - Skill only - Crit Rate)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -36,7 +45,10 @@
           }
         },
         {
-          "label": "C6 : Registre curieux (4 cumuls + Conviction)",
+          "label": {
+            "fr": "C6 : Registre curieux (4 cumuls - Compétence uniquement - Taux Crit)",
+            "en": "C6: Curious casefiles (4 stacks - Skill only - Crit Rate)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -49,7 +61,10 @@
   ],
   "builds": {
     "DPS Anémo": {
-      "name": "DPS Anémo",
+      "name": {
+        "fr": "DPS Anémo",
+        "en": "Anemo DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

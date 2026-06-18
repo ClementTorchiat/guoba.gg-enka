@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Retouche finale",
+          "label": {
+            "fr": "A4 : Retouche finale (DGTs Géo)",
+            "en": "A4: The finishing touch (Geo DMG)"
+          },
           "active": true,
           "stats": {
             "geo_dmg_": 0.2
@@ -22,7 +25,10 @@
   ],
   "builds": {
     "Sub-DPS Géo": {
-      "name": "Sub-DPS Géo",
+      "name": {
+        "fr": "Sub-DPS Géo",
+        "en": "Geo Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

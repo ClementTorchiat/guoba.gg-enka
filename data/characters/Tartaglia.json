@@ -8,7 +8,10 @@
   },
   "builds": {
     "DPS Évaporation inversée": {
-      "name": "DPS Évaporation inversée",
+      "name": {
+        "fr": "DPS Évaporation inversée",
+        "en": "Reverse Vape DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -87,7 +90,10 @@
       ]
     },
     "DPS Électrocution": {
-      "name": "DPS Électrocution",
+      "name": {
+        "fr": "DPS Électrocution",
+        "en": "Electro-Charged DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -160,7 +166,10 @@
       ]
     },
     "DPS Gel": {
-      "name": "DPS Gel",
+      "name": {
+        "fr": "DPS Gel",
+        "en": "Freeze DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

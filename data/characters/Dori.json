@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C4 : Supplément discrétionnaire (si ER < 50%)",
+          "label": {
+            "fr": "C4 : Supplément discrétionnaire (si ER < 50% - Recharge d'énergie)",
+            "en": "C4: Discretionary supplement (if ER < 50% - ER)"
+          },
           "cons": 4,
           "active": false,
           "stats": {
@@ -23,7 +26,10 @@
   ],
   "builds": {
     "Driver Suractivation": {
-      "name": "Driver Suractivation",
+      "name": {
+        "fr": "Driver Suractivation",
+        "en": "Aggravate Driver"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -110,7 +116,10 @@
       ]
     },
     "Driver Exubérance": {
-      "name": "Driver Exubérance",
+      "name": {
+        "fr": "Driver Exubérance",
+        "en": "Hyperbloom Driver"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

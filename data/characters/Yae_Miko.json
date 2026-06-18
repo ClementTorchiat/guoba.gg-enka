@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C4 : Canalisation de sakura",
+          "label": {
+            "fr": "C4 : Canalisation de sakura (DGTs Électro)",
+            "en": "C4: Sakura channeling (Electro DMG)"
+          },
           "cons": 4,
           "stats": {
             "elemental_dmg_": 0.2
@@ -22,7 +25,10 @@
   ],
   "builds": {
     "Sub-DPS Suractivation": {
-      "name": "Sub-DPS Suractivation",
+      "name": {
+        "fr": "Sub-DPS Suractivation",
+        "en": "Aggravate Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

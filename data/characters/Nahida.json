@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Compassion illuminée (Nahida On-field)",
+          "label": {
+            "fr": "A1 : Compassion illuminée (Nahida On-field - Maîtrise élémentaire)",
+            "en": "A1: Compassion illuminated (On-field Nahida - EM)"
+          },
           "stats": {
             "eleMas_bonus_scaling": {
               "source": "eleMas",
@@ -22,7 +25,10 @@
           }
         },
         {
-          "label": "A4 : Éveil élucidé",
+          "label": {
+            "fr": "A4 : Éveil élucidé (Taux Crit)",
+            "en": "A4: Awakening elucidated (Crit Rate)"
+          },
           "stats": {
             "critRate__bonus_scaling": {
               "source": "eleMas",
@@ -35,10 +41,16 @@
       ]
     },
     {
-      "category": "Constellation 2 : Racine de toute plénitude",
+      "category": {
+        "fr": "Constellation 2 : Racine de toute plénitude",
+        "en": "Constellation 2: The root of all fullness"
+      },
       "buffs": [
         {
-          "label": "Sélénofleurissement",
+          "label": {
+            "fr": "Sélénofleurissement (Taux Crit, DGT Crit)",
+            "en": "Lunar-Bloom (Crit Rate, Crit DMG)"
+          },
           "cons": 2,
           "active": false,
           "stats": {
@@ -49,32 +61,47 @@
       ]
     },
     {
-      "category": "Constellation 4 : Tige d'inférence manifeste",
+      "category": {
+        "fr": "Constellation 4 : Tige d'inférence manifeste (Maîtrise élémentaire)",
+        "en": "Constellation 4: The stem of manifest inference (EM)"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "1 ennemi affecté par la compétence élémentaire",
+          "label": {
+            "fr": "1 ennemi affecté par la compétence élémentaire",
+            "en": "1 enemy affected by the elemental skill"
+          },
           "cons": 4,
           "stats": {
             "eleMas": 100
           }
         },
         {
-          "label": "2 ennemis affectés par la compétence élémentaire",
+          "label": {
+            "fr": "2 ennemis affectés par la compétence élémentaire",
+            "en": "2 enemies affected by the elemental skill"
+          },
           "cons": 4,
           "stats": {
             "eleMas": 120
           }
         },
         {
-          "label": "3 ennemis affectés par la compétence élémentaire",
+          "label": {
+            "fr": "3 ennemis affectés par la compétence élémentaire",
+            "en": "3 enemies affected by the elemental skill"
+          },
           "cons": 4,
           "stats": {
             "eleMas": 140
           }
         },
         {
-          "label": "4 ennemis affectés par la compétence élémentaire",
+          "label": {
+            "fr": "4 ennemis affectés par la compétence élémentaire",
+            "en": "4 enemies affected by the elemental skill"
+          },
           "cons": 4,
           "stats": {
             "eleMas": 160
@@ -85,7 +112,10 @@
   ],
   "builds": {
     "Sub-DPS Propagation": {
-      "name": "Sub-DPS Propagation",
+      "name": {
+        "fr": "Sub-DPS Propagation",
+        "en": "Spread Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -161,7 +191,10 @@
       ]
     },
     "Sub-DPS Exubérance": {
-      "name": "Sub-DPS Exubérance",
+      "name": {
+        "fr": "Sub-DPS Exubérance",
+        "en": "Hyperbloom Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -237,7 +270,10 @@
       ]
     },
     "Sub-DPS Fleurissement": {
-      "name": "Sub-DPS Fleurissement",
+      "name": {
+        "fr": "Sub-DPS Fleurissement",
+        "en": "Bloom Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

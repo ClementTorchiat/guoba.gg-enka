@@ -17,14 +17,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C1 : Perspective de voyage",
-          "cons": 1,
-          "stats": {
-            "atk_": 0.2
-          }
-        },
-        {
-          "label": "C2 : Brise-désespoir (si PV inférieurs à 70%)",
+          "label": {
+            "fr": "C2 : Brise-désespoir (si PV inférieurs à 70% - Recharge d'énergie)",
+            "en": "C2: Impasse conqueror (if HP below 70% - ER)"
+          },
           "cons": 2,
           "active": false,
           "stats": {
@@ -32,7 +28,10 @@
           }
         },
         {
-          "label": "C6 : Feu et courage (si sur le terrain)",
+          "label": {
+            "fr": "C6 : Feu et courage (si sur le terrain - DGTs Pyro)",
+            "en": "C6: Fire ventures with me (if on-field - Pyro DMG)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -44,7 +43,10 @@
   ],
   "builds": {
     "Buffer universel": {
-      "name": "Buffer universel",
+      "name": {
+        "fr": "Buffer universel",
+        "en": "Universal buffer"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

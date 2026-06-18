@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Cadeau de fleurs enflammées",
+          "label": {
+            "fr": "A1 : Cadeau de fleurs enflammées (ATQ%)",
+            "en": "A1: Gift of flaming flowers (ATK%)"
+          },
           "active": true,
           "stats": {
             "atk_": 0.3
@@ -23,14 +26,20 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C1 : Confession du seigneur de la nuit",
+          "label": {
+            "fr": "C1 : Confession du seigneur de la nuit (ATQ%)",
+            "en": "C1: The Night-Lord's explication (ATK%)"
+          },
           "cons": 1,
           "stats": {
             "atk_": 0.4
           }
         },
         {
-          "label": "C2 : Prix des braises cendrées",
+          "label": {
+            "fr": "C2 : Prix des braises cendrées (ATQ)",
+            "en": "C2: The ashen price (ATK)"
+          },
           "cons": 2,
           "stats": {
             "atk": 200
@@ -41,7 +50,10 @@
   ],
   "builds": {
     "DPS Fonte": {
-      "name": "DPS Fonte",
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -120,7 +132,10 @@
       ]
     },
     "DPS Surcharge": {
-      "name": "DPS Surcharge",
+      "name": {
+        "fr": "DPS Surcharge",
+        "en": "Overload DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

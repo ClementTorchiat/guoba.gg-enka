@@ -8,18 +8,27 @@
   },
   "buffs": [
     {
-      "category": "A1 : Cinq fortunes perpétuelles",
+      "category": {
+        "fr": "A1 : Cinq fortunes perpétuelles (DGTs Élémentaires ou Soins)",
+        "en": "A1: Five fortunes forever (Elemental DMG or Heal)"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "PV > 50%",
+          "label": {
+            "fr": "PV > 50%",
+            "en": "HP > 50%"
+          },
           "active": true,
           "stats": {
             "elemental_dmg_": 0.25
           }
         },
         {
-          "label": "PV < 50%",
+          "label": {
+            "fr": "PV < 50%",
+            "en": "HP < 50%"
+          },
           "active": false,
           "stats": {
             "heal_": 0.2
@@ -31,7 +40,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C4 : Perception ancienne",
+          "label": {
+            "fr": "C4 : Perception ancienne (Maîtrise Élémentaire)",
+            "en": "C4: Ancient art of perception (EM)"
+          },
           "cons": 4,
           "stats": {
             "eleMas": 80
@@ -41,8 +53,11 @@
     }
   ],
   "builds": {
-    "Healer et applicateur général": {
-      "name": "Healer et applicateur général",
+    "Healer et applicateur universel": {
+      "name": {
+        "fr": "Healer et applicateur universel",
+        "en": "Universal healer and enabler"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

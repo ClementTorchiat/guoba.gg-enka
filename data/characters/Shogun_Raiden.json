@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : L'Illuminée",
+          "label": {
+            "fr": "A4 : L'Illuminée (DGTs Électro)",
+            "en": "A4: Enlightened one (Electro DMG)"
+          },
           "stats": {
             "elemental_dmg_bonus_scaling": {
               "source": "enerRech_",
@@ -25,7 +28,10 @@
   ],
   "builds": {
     "DPS Électro": {
-      "name": "DPS Électro",
+      "name": {
+        "fr": "DPS Électro",
+        "en": "Electro DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -102,8 +108,11 @@
         }
       ]
     },
-    "Exubérance": {
-      "name": "Exubérance",
+    "DPS Exubérance": {
+      "name": {
+        "fr": "DPS Exubérance",
+        "en": "Hyperbloom DPS"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

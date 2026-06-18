@@ -17,7 +17,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Étreinte divine",
+          "label": {
+            "fr": "A1 : Étreinte divine (DGTs Cryo)",
+            "en": "A1: Deific embrace (Cryo DMG)"
+          },
           "stats": {
             "elemental_dmg_": 0.15
           }
@@ -28,7 +31,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Esprit centré (uniquement dégâts cryo)",
+          "label": {
+            "fr": "C2 : Esprit centré (uniquement dégâts Cryo - DGT Crit)",
+            "en": "C2: Centered spirit (only Cryo damage - Crit DMG)"
+          },
           "cons": 2,
           "stats": {
             "critDMG_": 0.15
@@ -39,7 +45,10 @@
   ],
   "builds": {
     "Support Cryo": {
-      "name": "Support Cryo",
+      "name": {
+        "fr": "Support Cryo",
+        "en": "Cryo Support"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

@@ -17,14 +17,20 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Cœur indivisible (uniquement les attaques chargées)",
+          "label": {
+            "fr": "A1 : Cœur indivisible (uniquement les attaques chargées - Taux Crit)",
+            "en": "A1: Undivided Heart (only charged attacks - Crit Rate)"
+          },
           "active": false,
           "stats": {
             "critRate_": 0.2
           }
         },
         {
-          "label": "A4 : Harmonie du ciel et de la terre",
+          "label": {
+            "fr": "A4 : Harmonie du ciel et de la terre (DGT Cryo)",
+            "en": "A4: Harmony between heaven and earth (Cryo DMG)"
+          },
           "active": true,
           "stats": {
             "elemental_dmg_": 0.2
@@ -35,7 +41,10 @@
   ],
   "builds": {
     "DPS Gel": {
-      "name": "DPS Gel",
+      "name": {
+        "fr": "DPS Gel",
+        "en": "Freeze DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -112,7 +121,10 @@
       ]
     },
     "DPS Fonte": {
-      "name": "DPS Fonte",
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

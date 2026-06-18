@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C1 : Bec de perroquet (uniquement le canon)",
+          "label": {
+            "fr": "C1 : Bec de perroquet (uniquement le canon - DGT Crit)",
+            "en": "C1: Parrot's beak (only the cannon - Crit DMG)"
+          },
           "cons": 1,
           "stats": {
             "critDMG_": 1
@@ -22,7 +25,10 @@
   ],
   "builds": {
     "DPS Brûlure": {
-      "name": "DPS Brûlure",
+      "name": {
+        "fr": "DPS Brûlure",
+        "en": "Burning DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

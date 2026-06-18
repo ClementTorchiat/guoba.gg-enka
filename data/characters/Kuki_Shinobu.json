@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Désir libérateur (PV <= 50%)",
+          "label": {
+            "fr": "A1 : Désir libérateur (PV <= 50% - Soins)",
+            "en": "A1: Breaking free (HP <= 50% - Healing)"
+          },
           "active": true,
           "stats": {
             "heal_": 0.15
@@ -23,7 +26,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : Pour parer à la faiblesse (PV <= 25%)",
+          "label": {
+            "fr": "C6 : Pour parer à la faiblesse (PV <= 25% - Maîtrise élémentaire)",
+            "en": "C6: To ward weakness (HP <= 25% - EM)"
+          },
           "cons": 6,
           "stats": {
             "eleMas": 150
@@ -34,7 +40,10 @@
   ],
   "builds": {
     "Sub-DPS Exubérance": {
-      "name": "Sub-DPS Exubérance",
+      "name": {
+        "fr": "Sub-DPS Exubérance",
+        "en": "Hyperbloom Sub-DPS"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,
@@ -109,8 +118,11 @@
         }
       ]
     },
-    "Sub-DPS Propagation": {
-      "name": "Sub-DPS Propagation",
+    "Sub-DPS Suractivation": {
+      "name": {
+        "fr": "Sub-DPS Suractivation",
+        "en": "Aggravate Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

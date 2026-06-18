@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : La chance la plus petite",
+          "label": {
+            "fr": "C6 : La chance la plus petite (Taux Crit, DGT Crit)",
+            "en": "C6: The littlest luck (Crit Rate, Crit DMG)"
+          },
           "cons": 6,
           "stats": {
             "critrate_": 0.05,
@@ -22,8 +25,11 @@
     }
   ],
   "builds": {
-    "Healer sélène": {
-      "name": "Healer sélène",
+    "Healer Sélène": {
+      "name": {
+        "fr": "Healer Sélène",
+        "en": "Lunar Healer"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

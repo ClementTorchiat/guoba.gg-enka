@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Nonchalance du vent et de la pluie",
+          "label": {
+            "fr": "A1 : Nonchalance du vent et de la pluie (DÉF%)",
+            "en": "A1: Heedless of the wind and weather (DEF%)"
+          },
           "active": true,
           "stats": {
             "def_": 0.25
@@ -24,7 +27,10 @@
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "C6 : Vaillance de la bête (1 Géo / Pied ferme)",
+          "label": {
+            "fr": "C6 : Vaillance de la bête (1 Géo / Pied Ferme - DGT Crit)",
+            "en": "C6: Valiant hound: Mountainous Fealty (1 Geo / Standing Firm - Crit DMG)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -32,7 +38,10 @@
           }
         },
         {
-          "label": "C6 : Vaillance de la bête (2 Géo / Imprenabilité)",
+          "label": {
+            "fr": "C6 : Vaillance de la bête (2 Géo / Imprenabilité - DGT Crit)",
+            "en": "C6: Valiant hound: Mountainous Fealty (2 Geo / Impregnable - Crit DMG)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -40,7 +49,10 @@
           }
         },
         {
-          "label": "C6 : Vaillance de la bête (3 Géo+ / Fracas)",
+          "label": {
+            "fr": "C6 : Vaillance de la bête (3 Géo+ / Fracas - DGT Crit)",
+            "en": "C6: Valiant hound: Mountainous Fealty (3 Geo+ / Crunch - Crit DMG)"
+          },
           "cons": 6,
           "active": true,
           "stats": {
@@ -52,7 +64,10 @@
   ],
   "builds": {
     "Support Géo": {
-      "name": "Support Géo",
+      "name": {
+        "fr": "Support Géo",
+        "en": "Geo Support"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C1 : Théorie de l'équilibre cendres–champs",
+          "label": {
+            "fr": "C1 : Théorie de l'équilibre cendres–champs (EM)",
+            "en": "C1: The Theory of Ash—Field Equilibrium (EM)"
+          },
           "cons": 1,
           "stats": {
             "eleMas": 80
@@ -22,7 +25,10 @@
   ],
   "builds": {
     "Support sélène": {
-      "name": "Support sélène",
+      "name": {
+        "fr": "Support sélène",
+        "en": "Lunar support"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

@@ -8,25 +8,37 @@
   },
   "buffs": [
     {
-      "category": "C2 : Cajolerie affable",
+      "category": {
+        "fr": "C2 : Cajolerie affable (DGT Crit)",
+        "en": "C2: Loquacious cajoling (Crit DMG)"
+      },
       "selectMode": "cumulative",
       "buffs": [
         {
-          "label": "2s sur le terrain",
+          "label": {
+            "fr": "2s sur le terrain",
+            "en": "2s on the field"
+          },
           "cons": 2,
           "stats": {
             "critDMG_": 0.2
           }
         },
         {
-          "label": "4s sur le terrain",
+          "label": {
+            "fr": "4s sur le terrain",
+            "en": "4s on the field"
+          },
           "cons": 2,
           "stats": {
             "critDMG_": 0.2
           }
         },
         {
-          "label": "6s sur le terrain",
+          "label": {
+            "fr": "6s sur le terrain",
+            "en": "6s on the field"
+          },
           "cons": 2,
           "stats": {
             "critDMG_": 0.2
@@ -36,8 +48,11 @@
     }
   ],
   "builds": {
-    "DPS mono-pyro": {
-      "name": "DPS mono-pyro",
+    "DPS Mono-pyro": {
+      "name": {
+        "fr": "DPS Mono-pyro",
+        "en": "Mono-pyro DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

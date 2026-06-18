@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C1 : Chant du sanctuaire scellé (attaque chargée uniquement)",
+          "label": {
+            "fr": "C1 : Chant du sanctuaire scellé (attaque chargée uniquement - Taux Crit)",
+            "en": "C1: Sealed shrine's spiritsong (charged attack only - Crit DMG)"
+          },
           "active": false,
           "cons": 1,
           "stats": {
@@ -19,7 +22,10 @@
           }
         },
         {
-          "label": "C2 : Papyrus du secret silencieux",
+          "label": {
+            "fr": "C2 : Papyrus du secret silencieux (DGTs Électro)",
+            "en": "C2: Papyrus scripture of silent secrets (Electro DMG)"
+          },
           "active": true,
           "cons": 2,
           "stats": {
@@ -27,7 +33,10 @@
           }
         },
         {
-          "label": "C4 : Collection de la plume bienveillante",
+          "label": {
+            "fr": "C4 : Collection de la plume bienveillante (Maîtrise élémentaire)",
+            "en": "C4: Beneficient plumage (EM)"
+          },
           "active": true,
           "cons": 4,
           "stats": {
@@ -38,8 +47,11 @@
     }
   ],
   "builds": {
-    "DPS Propagation": {
-      "name": "DPS Propagation",
+    "DPS Suractivation": {
+      "name": {
+        "fr": "DPS Suractivation",
+        "en": "Aggravate DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

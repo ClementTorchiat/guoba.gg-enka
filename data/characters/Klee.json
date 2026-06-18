@@ -17,14 +17,20 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C1 : Bombardement continu (Hexerei)",
+          "label": {
+            "fr": "C1 : Bombardement continu (Hexerei - ATQ%)",
+            "en": "C1: Chained reactions (Hexerei - ATK%)"
+          },
           "cons": 1,
           "stats": {
             "atk_": 0.6
           }
         },
         {
-          "label": "C6 : À tout feu (Hexerei)",
+          "label": {
+            "fr": "C6 : À tout feu (Hexerei - DGTs Pyro)",
+            "en": "C6: Blazing delight (Hexerei - Pyro DMG)"
+          },
           "cons": 6,
           "stats": {
             "elemental_dmg_": 0.5
@@ -35,7 +41,10 @@
   ],
   "builds": {
     "DPS Surcharge Hexerei": {
-      "name": "DPS Surcharge Hexerei",
+      "name": {
+        "fr": "DPS Surcharge Hexerei",
+        "en": "Hexerei Overload DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -107,7 +116,10 @@
       ]
     },
     "DPS Évaporation Hexerei": {
-      "name": "DPS Évaporation Hexerei",
+      "name": {
+        "fr": "DPS Évaporation Hexerei",
+        "en": "Hexerei Vape DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -187,7 +199,10 @@
       ]
     },
     "DPS Mono-pyro Hexerei": {
-      "name": "DPS Mono-pyro Hexerei",
+      "name": {
+        "fr": "DPS Mono-pyro Hexerei",
+        "en": "Hexerei Mono-pyro DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

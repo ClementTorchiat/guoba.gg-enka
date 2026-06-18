@@ -17,7 +17,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Champ électromagnétique",
+          "label": {
+            "fr": "C2 : Champ électromagnétique (DÉF%)",
+            "en": "C2: Electromagnetic field (DEF%)"
+          },
           "cons": 2,
           "stats": {
             "def_": 0.25
@@ -28,7 +31,10 @@
   ],
   "builds": {
     "DPS Suractivation": {
-      "name": "DPS Suractivation",
+      "name": {
+        "fr": "DPS Suractivation",
+        "en": "Aggravate DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -107,7 +113,10 @@
       ]
     },
     "DPS Sélénocution": {
-      "name": "DPS Sélénocution",
+      "name": {
+        "fr": "DPS Sélénocution",
+        "en": "Lunar-Charged DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -187,7 +196,10 @@
       ]
     },
     "Sub-DPS Propagation": {
-      "name": "Sub-DPS Propagation",
+      "name": {
+        "fr": "Sub-DPS Propagation",
+        "en": "Spread Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

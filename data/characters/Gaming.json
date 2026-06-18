@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Sur les fleurs de prunier",
+          "label": {
+            "fr": "C2 : Sur les fleurs de prunier (ATQ%)",
+            "en": "C2: Plum blossoms underfoot (ATK%)"
+          },
           "cons": 2,
           "active": true,
           "stats": {
@@ -19,7 +22,10 @@
           }
         },
         {
-          "label": "C6 : En apprivoisant les bêtes (uniquement l'attaque plongée de la compétence)",
+          "label": {
+            "fr": "C6 : En apprivoisant les bêtes (uniquement l'attaque plongée de la compétence - Taux Crit, DGT Crit)",
+            "en": "C6: To tame all beasts (only the plunging attack from the skill - Crit Rate, Crit DMG)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -31,8 +37,11 @@
     }
   ],
   "builds": {
-    "DPS évaporation": {
-      "name": "DPS évaporation",
+    "DPS Évaporation": {
+      "name": {
+        "fr": "DPS Évaporation",
+        "en": "Vape DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -117,8 +126,11 @@
         }
       ]
     },
-    "DPS fonte": {
-      "name": "DPS fonte",
+    "DPS Fonte": {
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -202,8 +214,11 @@
         }
       ]
     },
-    "DPS surcharge": {
-      "name": "DPS surcharge",
+    "DPS Surcharge": {
+      "name": {
+        "fr": "DPS Surcharge",
+        "en": "Overload DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

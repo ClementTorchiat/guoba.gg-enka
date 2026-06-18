@@ -8,11 +8,17 @@
   },
   "buffs": [
     {
-      "category": "A2 : Archive naturaliste universelle",
+      "category": {
+        "fr": "A4 : Archive naturaliste universelle",
+        "en": "A4: Universal naturalist archive"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "Personnage non-lunaire sur le terrain",
+          "label": {
+            "fr": "Personnage non-lunaire sur le terrain (Maîtrise élémentaire)",
+            "en": "Non-lunar character on the field (EM)"
+          },
           "active": true,
           "stats": {
             "eleMas_bonus_scaling": {
@@ -27,14 +33,20 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Présage de joie et de tristesse",
+          "label": {
+            "fr": "C2 : Présage de joie et de tristesse (DGT Crit)",
+            "en": "C2: Tidings of joy and sorrow (Crit DMG)"
+          },
           "cons": 2,
           "stats": {
             "critDMG_": 0.4
           }
         },
         {
-          "label": "C4 : Instinct d'experte",
+          "label": {
+            "fr": "C4 : Instinct d'experte (DÉF%)",
+            "en": "C4: Expert instinct (DEF%)"
+          },
           "cons": 4,
           "stats": {
             "def_": 0.25
@@ -44,8 +56,11 @@
     }
   ],
   "builds": {
-    "Sub-DPS sélénocristallisation": {
-      "name": "Sub-DPS sélénocristallisation",
+    "Sub-DPS Sélénocristallisation": {
+      "name": {
+        "fr": "Sub-DPS Sélénocristallisation",
+        "en": "Lunar-Crystallize Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

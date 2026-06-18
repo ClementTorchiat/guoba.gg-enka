@@ -11,14 +11,20 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Annihilation d'éon : Fleur du kaléidoscope (off-field)",
+          "label": {
+            "fr": "C2 : Annihilation d'éon : Fleur du kaléidoscope (off-field - Recharge d'énergie)",
+            "en": "C2: Annihilation eon: Blossom of kaleidos (off-field - ER)"
+          },
           "cons": 2,
           "stats": {
             "enerRech_": 0.25
           }
         },
         {
-          "label": "C4 : Transcendance : Extinction de la souffrance (PV inférieurs à 50%)",
+          "label": {
+            "fr": "C4 : Transcendance : Extinction de la souffrance (PV < 50% - DÉF%)",
+            "en": "C4: Transcension: Extinction of suffering (HP < 50% - DEF%)"
+          },
           "cons": 4,
           "stats": {
             "def_": 1
@@ -29,7 +35,10 @@
   ],
   "builds": {
     "Hypercarry Plunge DPS": {
-      "name": "Hypercarry Plunge DPS",
+      "name": {
+        "fr": "Hypercarry Plunge DPS",
+        "en": "Hypercarry Plunge DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

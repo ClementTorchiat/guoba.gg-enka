@@ -11,14 +11,20 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Dans le mille ! (uniquement le déchaînement)",
+          "label": {
+            "fr": "A1 : Dans le mille ! (uniquement le déchaînement - Taux Crit)",
+            "en": "A1: Every arrow finds its target (only for the burst - Crit Rate)"
+          },
           "active": false,
           "stats": {
             "critRate_": 0.1
           }
         },
         {
-          "label": "A4 :Tir précis (uniquement après avoir touché un point faible)",
+          "label": {
+            "fr": "A4 : Tir précis (uniquement après avoir touché un point faible - ATQ%)",
+            "en": "A4: Precise shot (only after hitting a weak point - ATK%)"
+          },
           "active": false,
           "stats": {
             "atk_": 0.15
@@ -30,7 +36,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : Feu sauvage (après le déchaînement)",
+          "label": {
+            "fr": "C6 : Feu sauvage (après le déchaînement - ATQ%)",
+            "en": "C6: Wildfire (after using the burst - ATK%)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -42,7 +51,10 @@
   ],
   "builds": {
     "DPS Fonte": {
-      "name": "DPS Fonte",
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -126,7 +138,10 @@
       ]
     },
     "DPS Bourgeonnement": {
-      "name": "DPS Bourgeonnement",
+      "name": {
+        "fr": "DPS Bourgeonnement",
+        "en": "Burgeon DPS"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

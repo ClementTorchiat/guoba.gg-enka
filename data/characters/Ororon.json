@@ -8,32 +8,47 @@
   },
   "buffs": [
     {
-      "category": "C2 : Roi du vin nectarin",
+      "category": {
+        "fr": "C2 : Roi du vin nectarin (DGTs Électro)",
+        "en": "C2: King bee of the hidden honeyed wine (Electro DMG)"
+      },
       "selectMode": "cumulative",
       "buffs": [
         {
-          "label": "1 ennemi touché par le déchaînement",
+          "label": {
+            "fr": "1 ennemi touché par le déchaînement",
+            "en": "1 enemy hit by the burst"
+          },
           "cons": 2,
           "stats": {
             "elemental_dmg_": 0.08
           }
         },
         {
-          "label": "2 ennemis touchés par le déchaînement",
+          "label": {
+            "fr": "2 ennemis touchés par le déchaînement",
+            "en": "2 enemies hit by the burst"
+          },
           "cons": 2,
           "stats": {
             "elemental_dmg_": 0.08
           }
         },
         {
-          "label": "3 ennemis touchés par le déchaînement",
+          "label": {
+            "fr": "3 ennemis touchés par le déchaînement",
+            "en": "3 enemies hit by the burst"
+          },
           "cons": 2,
           "stats": {
             "elemental_dmg_": 0.08
           }
         },
         {
-          "label": "4 ennemis touchés par le déchaînement",
+          "label": {
+            "fr": "4 ennemis touchés par le déchaînement",
+            "en": "4 enemies hit by the burst"
+          },
           "cons": 2,
           "stats": {
             "elemental_dmg_": 0.08
@@ -43,8 +58,11 @@
     }
   ],
   "builds": {
-    "Sub-DPS électrocution": {
-      "name": "Sub-DPS électrocution",
+    "Sub-DPS Électrocution": {
+      "name": {
+        "fr": "Sub-DPS Électrocution",
+        "en": "Electro-Charged Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -121,8 +139,11 @@
         }
       ]
     },
-    "Sub-DPS surcharge": {
-      "name": "Sub-DPS surcharge",
+    "Sub-DPS Surcharge": {
+      "name": {
+        "fr": "Sub-DPS Surcharge",
+        "en": "Overload Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

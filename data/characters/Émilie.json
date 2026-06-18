@@ -8,7 +8,10 @@
   },
   "builds": {
     "Sub-DPS Brûlure": {
-      "name": "Sub-DPS Brûlure",
+      "name": {
+        "fr": "Sub-DPS Brûlure",
+        "en": "Burning Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

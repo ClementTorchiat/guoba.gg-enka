@@ -8,32 +8,47 @@
   },
   "buffs": [
     {
-      "category": "A1 : Poursuite des plumes de givre",
+      "category": {
+        "fr": "A1 : Poursuite des plumes de givre (Taux Crit)",
+        "en": "A1: Galefeather pursuit (Crit Rate)"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "1 stack (uniquement attaques plongeantes)",
+          "label": {
+            "fr": "1 stack (uniquement attaques plongeantes)",
+            "en": "1 stack (plunging attacks only)"
+          },
           "active": false,
           "stats": {
             "critRate_": 0.04
           }
         },
         {
-          "label": "2 stacks (uniquement attaques plongeantes)",
+          "label": {
+            "fr": "2 stacks (uniquement attaques plongeantes)",
+            "en": "2 stacks (plunging attacks only)"
+          },
           "active": false,
           "stats": {
             "critRate_": 0.06
           }
         },
         {
-          "label": "3 stacks (uniquement attaques plongeantes)",
+          "label": {
+            "fr": "3 stacks (uniquement attaques plongeantes)",
+            "en": "3 stacks (plunging attacks only)"
+          },
           "active": false,
           "stats": {
             "critRate_": 0.08
           }
         },
         {
-          "label": "4 stacks (uniquement attaques plongeantes)",
+          "label": {
+            "fr": "4 stacks (uniquement attaques plongeantes)",
+            "en": "4 stacks (plunging attacks only)"
+          },
           "active": false,
           "stats": {
             "critRate_": 0.1
@@ -42,10 +57,16 @@
       ]
     },
     {
-      "category": "C2 : Réclusion du monde",
+      "category": {
+        "fr": "C2 : Réclusion du monde (ATQ%)",
+        "en": "C2: Aloof from the world (ATK%)"
+      },
       "buffs": [
         {
-          "label": "Après la compétence",
+          "label": {
+            "fr": "Après la compétence",
+            "en": "After the skill"
+          },
           "cons": 2,
           "stats": {
             "atk_": 0.2
@@ -54,25 +75,37 @@
       ]
     },
     {
-      "category": "C6 : Souffle-Nuages est son nom",
+      "category": {
+        "fr": "C6 : Souffle-Nuages est son nom (DGT Crit)",
+        "en": "C6: They call her Cloud Retainer (Crit DMG)"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "1 utilisation",
+          "label": {
+            "fr": "1 utilisation",
+            "en": "1 use"
+          },
           "cons": 6,
           "stats": {
             "crit_dmg_": 0.15
           }
         },
         {
-          "label": "2 utilisations",
+          "label": {
+            "fr": "2 utilisations",
+            "en": "2 uses"
+          },
           "cons": 6,
           "stats": {
             "crit_dmg_": 0.35
           }
         },
         {
-          "label": "3 utilisations",
+          "label": {
+            "fr": "3 utilisations",
+            "en": "3 uses"
+          },
           "cons": 6,
           "stats": {
             "crit_dmg_": 0.7
@@ -83,7 +116,10 @@
   ],
   "builds": {
     "Support attaques plongeantes": {
-      "name": "Support attaques plongeantes",
+      "name": {
+        "fr": "Support attaques plongeantes",
+        "en": "Plunging attacks Support"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

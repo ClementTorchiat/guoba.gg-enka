@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Vue aiguë",
+          "label": {
+            "fr": "A1 : Vue aiguë (Maîtrise élémentaire)",
+            "en": "A1: Keen sight (EM)"
+          },
           "active": true,
           "stats": {
             "eleMas": 50
@@ -20,10 +23,16 @@
       ]
     },
     {
-      "category": "Constellation 1 : Début déterminé à la racine",
+      "category": {
+        "fr": "Constellation 1 : Début déterminé à la racine (Taux Crit)",
+        "en": "Constellation 1: Beginnings determined at the roots (Crit Rate)"
+      },
       "buffs": [
         {
-          "label": "Concerne uniquement les attaques chargées",
+          "label": {
+            "fr": "Concerne uniquement les attaques chargées",
+            "en": "Only for the charged attacks"
+          },
           "cons": 1,
           "active": false,
           "stats": {
@@ -33,10 +42,16 @@
       ]
     },
     {
-      "category": "Constellation 2 : Origine connue dans la tige",
+      "category": {
+        "fr": "Constellation 2 : Origine connue dans la tige (DGTs Dendro)",
+        "en": "Constellation 2: Origins known from the stem (Dendro DMG)"
+      },
       "buffs": [
         {
-          "label": "Lorsqu'un ennemi est dans la compétence élémentaire",
+          "label": {
+            "fr": "Lorsqu'un ennemi est dans la compétence élémentaire",
+            "en": "When an enemy is inside the elemental skill"
+          },
           "cons": 2,
           "stats": {
             "elemental_dmg_": 0.2
@@ -45,18 +60,27 @@
       ]
     },
     {
-      "category": "Constellation 4 : Flétrissement entrevu grâce aux feuilles",
+      "category": {
+        "fr": "Constellation 4 : Flétrissement entrevu grâce aux feuilles (Maîtrise élémentaire)",
+        "en": "Constellation 4: Withering glimpsed in the leaves (EM)"
+      },
       "selectMode": "cumulative",
       "buffs": [
         {
-          "label": "Lorsque le déchaînement élémentaire est utilisé",
+          "label": {
+            "fr": "Lorsque le déchaînement élémentaire est utilisé",
+            "en": "When the elemental burst is used"
+          },
           "cons": 4,
           "stats": {
             "eleMas": 60
           }
         },
         {
-          "label": "Si une réaction liée à l'élément dendro est déclenchée",
+          "label": {
+            "fr": "Si une réaction liée à l'élément Dendro est déclenchée",
+            "en": "If a Dendro elemental reaction is triggered"
+          },
           "cons": 4,
           "stats": {
             "eleMas": 60
@@ -67,7 +91,10 @@
   ],
   "builds": {
     "DPS Propagation": {
-      "name": "Propagation",
+      "name": {
+        "fr": "DPS Propagation",
+        "en": "Spread DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

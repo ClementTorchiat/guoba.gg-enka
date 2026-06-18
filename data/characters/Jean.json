@@ -13,8 +13,11 @@
     "burst": 10
   },
   "builds": {
-    "Support général": {
-      "name": "Support général",
+    "Support universel": {
+      "name": {
+        "fr": "Support universel",
+        "en": "Universal Support"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -95,7 +98,10 @@
       ]
     },
     "Sunfire": {
-      "name": "Sunfire",
+      "name": {
+        "fr": "Sunfire",
+        "en": "Sunfire"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0.4,

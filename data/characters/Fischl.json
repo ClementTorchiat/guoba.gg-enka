@@ -18,13 +18,19 @@
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "Hexerei : Nocturne fantomatique (surcharge)",
+          "label": {
+            "fr": "Hexerei : Nocturne fantomatique (Surcharge - ATQ%)",
+            "en": "Hexerei: Phantasmal nocturne (Overload - ATK%)"
+          },
           "stats": {
             "atk_": 0.225
           }
         },
         {
-          "label": "Hexerei : Nocturne fantomatique (électrocution ou sélénocution)",
+          "label": {
+            "fr": "Hexerei : Nocturne fantomatique (Électrocution ou Sélénocution - EM)",
+            "en": "Hexerei: Phantasmal nocturne (Electro-Charged or Lunar-Charged - EM)"
+          },
           "stats": {
             "eleMas": 90
           }
@@ -36,14 +42,20 @@
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "C6 Hexerei : Oiseau de la nuit éternelle (surcharge)",
+          "label": {
+            "fr": "C6 Hexerei : Oiseau de la nuit éternelle (Surcharge - ATQ%)",
+            "en": "C6 Hexerei: Evernight raven (Overload - ATK%)"
+          },
           "cons": 6,
           "stats": {
             "atk_": 0.225
           }
         },
         {
-          "label": "C6 Hexerei : Oiseau de la nuit éternelle (électrocution ou sélénocution)",
+          "label": {
+            "fr": "C6 Hexerei : Oiseau de la nuit éternelle (Électrocution ou Sélénocution - EM)",
+            "en": "C6 Hexerei: Evernight raven (Electro-Chared or Lunar-Charged - EM)"
+          },
           "cons": 6,
           "stats": {
             "eleMas": 90
@@ -53,8 +65,11 @@
     }
   ],
   "builds": {
-    "Sub-DPS surcharge Hexerei": {
-      "name": "Sub-DPS surcharge Hexerei",
+    "Sub-DPS Surcharge Hexerei": {
+      "name": {
+        "fr": "Sub-DPS Surcharge Hexerei",
+        "en": "Hexerei Overload Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -127,8 +142,11 @@
         }
       ]
     },
-    "Sub-DPS propagation": {
-      "name": "Sub-DPS propagation",
+    "Sub-DPS Suractivation": {
+      "name": {
+        "fr": "Sub-DPS Suractivation",
+        "en": "Aggravate Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

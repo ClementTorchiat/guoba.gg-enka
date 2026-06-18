@@ -12,7 +12,10 @@
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "A1 : Équipe avec Pyro",
+          "label": {
+            "fr": "A1 : Équipe avec Pyro (DGTs Anémo, DGTs Pyro)",
+            "en": "A1: Party with Pyro (Anemo DMG, Pyro DMG)"
+          },
           "active": true,
           "stats": {
             "elemental_dmg_bonus_scaling": {
@@ -28,7 +31,10 @@
           }
         },
         {
-          "label": "A1 : Équipe avec Hydro",
+          "label": {
+            "fr": "A1 : Équipe avec Hydro (DGTs Anémo, DGTs Hydro)",
+            "en": "A1: Party with Hydro (Anemo DMG, Hydro DMG)"
+          },
           "active": false,
           "stats": {
             "elemental_dmg_bonus_scaling": {
@@ -44,7 +50,10 @@
           }
         },
         {
-          "label": "A1 : Équipe avec Electro",
+          "label": {
+            "fr": "A1 : Équipe avec Électro (DGTs Anémo, DGTs Électro)",
+            "en": "A1: Party with Electro (Anemo DMG, Electro DMG)"
+          },
           "active": false,
           "stats": {
             "elemental_dmg_bonus_scaling": {
@@ -60,7 +69,10 @@
           }
         },
         {
-          "label": "A1 : Équipe avec Cryo",
+          "label": {
+            "fr": "A1 : Équipe avec Cryo (DGTs Anémo, DGTs Cryo)",
+            "en": "A1: Party with Cryo (Anemo DMG, Cryo DMG)"
+          },
           "active": false,
           "stats": {
             "elemental_dmg_bonus_scaling": {
@@ -78,11 +90,17 @@
       ]
     },
     {
-      "category": "Constellation 4",
+      "category": {
+        "fr": "Constellation 4",
+        "en": "Constellation 4: \"For None May Take From Us Our Freedom of Song\""
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "C4 : Dispersion Pyro (+20% Anémo/Pyro)",
+          "label": {
+            "fr": "Dispersion Pyro (DGTs Anémo, DGTs Pyro)",
+            "en": "Pyro Swirl (Anemo DMG, Pyro DMG)"
+          },
           "active": true,
           "cons": 4,
           "stats": {
@@ -91,7 +109,10 @@
           }
         },
         {
-          "label": "C4 : Dispersion Hydro (+20% Anémo/Hydro)",
+          "label": {
+            "fr": "Dispersion Hydro (DGTs Anémo, DGTs Hydro)",
+            "en": "Hydro Swirl (Anemo DMG, Hydro DMG)"
+          },
           "active": false,
           "cons": 4,
           "stats": {
@@ -100,7 +121,10 @@
           }
         },
         {
-          "label": "C4 : Dispersion Électro (+20% Anémo/Électro)",
+          "label": {
+            "fr": "Dispersion Électro (DGTs Anémo, DGTs Électro)",
+            "en": "Electro Swirl (Anemo DMG, Electro DMG)"
+          },
           "active": false,
           "cons": 4,
           "stats": {
@@ -109,7 +133,10 @@
           }
         },
         {
-          "label": "C4 : Dispersion Cryo (+20% Anémo/Cryo)",
+          "label": {
+            "fr": "Dispersion Cryo (DGTs Anémo, DGTs Cryo)",
+            "en": "Cryo Swirl (Anemo DMG, Cryo DMG)"
+          },
           "active": false,
           "cons": 4,
           "stats": {
@@ -120,10 +147,16 @@
       ]
     },
     {
-      "category": "Constellation 6",
+      "category": {
+        "fr": "Constellation 6",
+        "en": "Constellation 6"
+      },
       "buffs": [
         {
-          "label": "C6",
+          "label": {
+            "fr": "4 Cumuls",
+            "en": "4 Stacks"
+          },
           "cons": 6,
           "stats": {
             "critDMG_": 0.8
@@ -133,8 +166,11 @@
     }
   ],
   "builds": {
-    "Anémo/Pyro": {
-      "name": "Anémo/Pyro",
+    "DPS Anémo/Pyro": {
+      "name": {
+        "fr": "DPS Anémo/Pyro",
+        "en": "Anemo/Pyro DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -217,8 +253,11 @@
         }
       ]
     },
-    "Anémo/Cryo": {
-      "name": "Anémo/Cryo",
+    "DPS Anémo/Cryo": {
+      "name": {
+        "fr": "DPS Anémo/Cryo",
+        "en": "Anemo/Cryo DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -302,8 +341,11 @@
         }
       ]
     },
-    "Anémo/Electro": {
-      "name": "Anémo/Electro",
+    "DPS Anémo/Électro": {
+      "name": {
+        "fr": "DPS Anémo/Électro",
+        "en": "Anemo/Electro DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -386,8 +428,11 @@
         }
       ]
     },
-    "Anémo/Hydro": {
-      "name": "Anémo/Hydro",
+    "DPS Anémo/Hydro": {
+      "name": {
+        "fr": "DPS Anémo/Hydro",
+        "en": "Anemo/Hydro DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

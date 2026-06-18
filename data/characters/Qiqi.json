@@ -7,8 +7,11 @@
     "burst": 8
   },
   "builds": {
-    "Healer": {
-      "name": "Healer",
+    "Healeuse universelle": {
+      "name": {
+        "fr": "Healeuse universelle",
+        "en": "Universel Healer"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,
@@ -83,7 +86,10 @@
       ]
     },
     "DPS Physique": {
-      "name": "DPS Physique",
+      "name": {
+        "fr": "DPS Physique",
+        "en": "Physical DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

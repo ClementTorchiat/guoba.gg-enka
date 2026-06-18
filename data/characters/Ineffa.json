@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Protocole de permutation panoramique",
+          "label": {
+            "fr": "A4 : Protocole de permutation panoramique (Maîtrise élémentaire)",
+            "en": "A4: Panoramic permutation protocol (EM)"
+          },
           "active": true,
           "stats": {
             "eleMas_bonus_scaling": {
@@ -25,7 +28,10 @@
   ],
   "builds": {
     "Sub-DPS Sélénocution": {
-      "name": "Sub-DPS Sélénocution",
+      "name": {
+        "fr": "Sub-DPS Sélénocution",
+        "en": "Lunar-Charged Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

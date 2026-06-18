@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Écho de la montagne",
+          "label": {
+            "fr": "A1 : Écho de la montagne (DGTs Géo)",
+            "en": "A1: Mountain echoes (Geo DMG)"
+          },
           "active": true,
           "stats": {
             "elemental_dmg_": 0.2
@@ -20,11 +23,17 @@
       ]
     },
     {
-      "category": "C4 : Ennemis nombreux, attention redoublée",
+      "category": {
+        "fr": "C4 : Ennemis nombreux, attention redoublée (DÉF%)",
+        "en": "C4: More foes, more caution (DEF%)"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "1 ennemi",
+          "label": {
+            "fr": "1 ennemi",
+            "en": "1 enemy"
+          },
           "cons": 4,
           "active": false,
           "stats": {
@@ -32,7 +41,10 @@
           }
         },
         {
-          "label": "2 ennemis",
+          "label": {
+            "fr": "2 ennemis",
+            "en": "2 enemies"
+          },
           "cons": 4,
           "active": true,
           "stats": {
@@ -40,7 +52,10 @@
           }
         },
         {
-          "label": "3 ennemis",
+          "label": {
+            "fr": "3 ennemis",
+            "en": "3 enemies"
+          },
           "cons": 4,
           "active": false,
           "stats": {
@@ -48,7 +63,10 @@
           }
         },
         {
-          "label": "4 ennemis",
+          "label": {
+            "fr": "4 ennemis",
+            "en": "4 enemies"
+          },
           "cons": 4,
           "active": false,
           "stats": {
@@ -59,8 +77,11 @@
     }
   ],
   "builds": {
-    "Support général": {
-      "name": "Support général",
+    "Support universel": {
+      "name": {
+        "fr": "Support universel",
+        "en": "Universal Support"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

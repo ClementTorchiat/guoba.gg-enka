@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Haïku de la brise",
+          "label": {
+            "fr": "A4 : Haïku de la brise (DGTs Élémentaires)",
+            "en": "A4: Poetics of Fuubutsu (Elemental DMG)"
+          },
           "stats": {
             "elemental_dmg_bonus_scaling": {
               "source": "eleMas",
@@ -25,7 +28,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Zanshin des montagnes cruelles",
+          "label": {
+            "fr": "C2 : Zanshin des montagnes cruelles (Maîtrise élémentaire)",
+            "en": "C2: Yamaarashi tailwind (EM)"
+          },
           "cons": 2,
           "stats": {
             "eleMas": 200
@@ -35,8 +41,11 @@
     }
   ],
   "builds": {
-    "Support général": {
-      "name": "Support général",
+    "Support universel": {
+      "name": {
+        "fr": "Support universel",
+        "en": "Universal Support"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0.4,

@@ -7,8 +7,11 @@
     "burst": 9
   },
   "builds": {
-    "Burst support": {
-      "name": "Burst support",
+    "Burst Support": {
+      "name": {
+        "fr": "Burst Support",
+        "en": "Burst Support"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -95,8 +98,11 @@
         }
       ]
     },
-    "Driver dispersion": {
-      "name": "Driver dispersion",
+    "Driver Dispersion": {
+      "name": {
+        "fr": "Driver Dispersion",
+        "en": "Swirl Driver"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

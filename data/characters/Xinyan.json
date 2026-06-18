@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : « ... Ça, c'est du rock ! »",
+          "label": {
+            "fr": "A4 : « ... Ça, c'est du rock ! » (DGTs Physiques)",
+            "en": "A4: \"...Now That's Rock 'N' Roll!\" (Physical DMG)"
+          },
           "active": true,
           "stats": {
             "physical_dmg_": 0.15
@@ -23,7 +26,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : Rock infernal (uniquement les attaques chargées)",
+          "label": {
+            "fr": "C6 : Rock infernal (uniquement les attaques chargées - ATQ%)",
+            "en": "C6: Rockin' in a flaming world (only charged attacks - ATK%)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -37,8 +43,11 @@
     }
   ],
   "builds": {
-    "Shieldeuse générale": {
-      "name": "Shieldeuse générale",
+    "Shieldeuse universelle": {
+      "name": {
+        "fr": "Shieldeuse universelle",
+        "en": "Universal Shielder"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -105,8 +114,11 @@
         }
       ]
     },
-    "DPS physique": {
-      "name": "DPS physique",
+    "DPS Physique": {
+      "name": {
+        "fr": "DPS Physique",
+        "en": "Physical DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -184,8 +196,11 @@
         }
       ]
     },
-    "DPS fonte": {
-      "name": "DPS fonte",
+    "DPS Fonte": {
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

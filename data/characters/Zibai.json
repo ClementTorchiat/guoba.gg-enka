@@ -8,25 +8,37 @@
   },
   "buffs": [
     {
-      "category": "A4 : Pics stratifiés perçant les nuages (Alliés Géo)",
+      "category": {
+        "fr": "A4 : Pics stratifiés perçant les nuages (Alliés Géo - DÉF%)",
+        "en": "A4: Layered peaks pierce the clouds (Geo allies - DEF%)"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "1 Allié Géo (+15% DEF)",
+          "label": {
+            "fr": "1 Allié Géo",
+            "en": "A Geo ally"
+          },
           "active": false,
           "stats": {
             "def_": 0.15
           }
         },
         {
-          "label": "2 Alliés Géo (+30% DEF)",
+          "label": {
+            "fr": "2 Alliés Géo",
+            "en": "2 Geo allies"
+          },
           "active": true,
           "stats": {
             "def_": 0.3
           }
         },
         {
-          "label": "3 Alliés Géo (+45% DEF)",
+          "label": {
+            "fr": "3 Alliés Géo",
+            "en": "3 Geo allies"
+          },
           "active": false,
           "stats": {
             "def_": 0.45
@@ -35,25 +47,37 @@
       ]
     },
     {
-      "category": "A4 : Pics stratifiés perçant les nuages (Alliés Hydro)",
+      "category": {
+        "fr": "A4 : Pics stratifiés perçant les nuages (Alliés Hydro - Maîtrise élémentaire)",
+        "en": "A4: Layered peaks pierce the clouds (Hydro allies - EM)"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "1 Allié Hydro (+60 EM)",
+          "label": {
+            "fr": "1 Allié Hydro",
+            "en": "1 Hydro ally"
+          },
           "active": true,
           "stats": {
             "eleMas": 60
           }
         },
         {
-          "label": "2 Alliés Hydro (+120 EM)",
+          "label": {
+            "fr": "2 Alliés Hydro",
+            "en": "2 Hydro allies"
+          },
           "active": false,
           "stats": {
             "eleMas": 120
           }
         },
         {
-          "label": "3 Alliés Hydro (+180 EM)",
+          "label": {
+            "fr": "3 Alliés Hydro",
+            "en": "3 Hydro allies"
+          },
           "active": false,
           "stats": {
             "eleMas": 180
@@ -64,7 +88,10 @@
   ],
   "builds": {
     "DPS Sélénocristallisation": {
-      "name": "DPS Sélénocristallisation",
+      "name": {
+        "fr": "DPS Sélénocristallisation",
+        "en": "Lunar-Crystallize DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

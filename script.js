@@ -2617,7 +2617,7 @@ function processData(data) {
                         return true;
                     });
                     if (filteredBuffs.length > 0) {
-                        addBuffs(nom, group.category, filteredBuffs, group.selectMode);
+                        addBuffs(nom, getLabel(group.category), filteredBuffs, group.selectMode);
                     }
                 }
             });
@@ -5041,10 +5041,22 @@ window.exportBuildAsImage = async function () {
     }
 
     await new Promise(r => setTimeout(r, 50));
+    element.classList.add('export-mode');
+    const exportWidth = 1153;
+    const exportHeight = 856;
 
     domtoimage.toPng(element, {
         bgcolor: null,
         scale: 2,
+        width: exportWidth,
+        height: exportHeight,
+        style: {
+            width: `${exportWidth}px`,
+            height: `${exportHeight}px`,
+            overflow: 'visible',
+            margin: '0',
+            padding: '0'
+        },
         filter: (node) => true
     })
         .then(function (dataUrl) {
@@ -5066,6 +5078,7 @@ window.exportBuildAsImage = async function () {
             alert(t('error.exportFail'));
         })
         .finally(function () {
+            element.classList.remove('export-mode');
             if (bgDiv && originalBgImage) {
                 bgDiv.style.backgroundImage = originalBgImage;
             }

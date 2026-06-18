@@ -17,7 +17,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : Myriade de curiosités en chemin",
+          "label": {
+            "fr": "C6 : Myriade de curiosités en chemin (DGTs Élémentaires)",
+            "en": "C6: Countless lights to see (Elemental DMG)"
+          },
           "cons": 6,
           "stats": {
             "elemental_dmg_": 0.12
@@ -27,8 +30,11 @@
     }
   ],
   "builds": {
-    "Shieldeuse générale": {
-      "name": "Shieldeuse générale",
+    "Shieldeuse universelle": {
+      "name": {
+        "fr": "Shieldeuse universelle",
+        "en": "Universal Shielder"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

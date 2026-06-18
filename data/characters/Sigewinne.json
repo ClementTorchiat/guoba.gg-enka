@@ -11,13 +11,19 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Repos adéquat requis",
+          "label": {
+            "fr": "A1 : Repos adéquat requis (DGTs Hydro)",
+            "en": "A1: Requires appropriate rest (Hydro DMG)"
+          },
           "stats": {
             "elemental_dmg_": 0.08
           }
         },
         {
-          "label": "A4 : Traitement minutieux prescrit",
+          "label": {
+            "fr": "A4 : Traitement minutieux prescrit (Soins)",
+            "en": "A4: Detailed diagnosis, thorough treatment (Healing)"
+          },
           "stats": {
             "heal_": 0.3
           }
@@ -28,7 +34,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : « Le plus radieux des esprits peut-il prier pour moi ? »",
+          "label": {
+            "fr": "C6 : « Le plus radieux des esprits peut-il prier pour moi ? » (Taux Crit, DGT Crit)",
+            "en": "C6: \"Can the Most Radiant of Spirits Pray For Me?\" (Crit Rate, Crit DMG)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -48,8 +57,11 @@
     }
   ],
   "builds": {
-    "Support universel": {
-      "name": "Support universel",
+    "Healeuse universelle": {
+      "name": {
+        "fr": "Healeuse universelle",
+        "en": "Universal Healer"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,
@@ -117,7 +129,10 @@
       ]
     },
     "Sub-DPS Burst": {
-      "name": "Sub-DPS Burst",
+      "name": {
+        "fr": "Sub-DPS Burst",
+        "en": "Burst Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

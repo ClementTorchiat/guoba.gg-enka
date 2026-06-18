@@ -1,6 +1,6 @@
 /* =========================================================
    config.generated.js — FICHIER AUTO-GÉNÉRÉ
-   Généré le : 2026-06-16T14:26:58.952Z
+   Généré le : 2026-06-18T22:02:07.034Z
    115 personnages | 111 armes | 21 sets
 
    ========================================================= */
@@ -35,7 +35,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Théorie de l'équilibre cendres–champs",
+            "label": {
+              "fr": "C1 : Théorie de l'équilibre cendres–champs (EM)",
+              "en": "C1: The Theory of Ash—Field Equilibrium (EM)"
+            },
             "cons": 1,
             "stats": {
               "eleMas": 80
@@ -46,7 +49,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support sélène": {
-        "name": "Support sélène",
+        "name": {
+          "fr": "Support sélène",
+          "en": "Lunar support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -151,7 +157,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Sagesse en bouteille",
+            "label": {
+              "fr": "A4 : Sagesse en bouteille (EM)",
+              "en": "A4: Homuncular Nature (EM)"
+            },
             "active": true,
             "stats": {
               "eleMas": 125
@@ -163,7 +172,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Fleur d'Éden (Hexerei)",
+            "label": {
+              "fr": "C1 : Fleur d'Éden (Hexerei - DÉF%)",
+              "en": "C1: Flower of Eden (Hexerei - DEF%)"
+            },
             "cons": 1,
             "stats": {
               "def_": 0.5
@@ -174,7 +186,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Sub-DPS Géo": {
-        "name": "Sub-DPS Géo",
+        "name": {
+          "fr": "Sub-DPS Géo",
+          "en": "Geo Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -254,11 +269,17 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "Constellation 2 : Rhétorique",
+        "category": {
+          "fr": "Constellation 2 : Rhétorique",
+          "en": "Constellation 2: Debate"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "1 Stack",
+            "label": {
+              "fr": "1 Stack (EM)",
+              "en": "1 Stack (EM)"
+            },
             "cons": 2,
             "active": false,
             "stats": {
@@ -266,7 +287,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "2 stacks",
+            "label": {
+              "fr": "2 stacks (EM)",
+              "en": "2 stacks (EM)"
+            },
             "cons": 2,
             "active": false,
             "stats": {
@@ -274,7 +298,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "3 stacks",
+            "label": {
+              "fr": "3 stacks (EM)",
+              "en": "3 stacks (EM)"
+            },
             "cons": 2,
             "active": true,
             "stats": {
@@ -282,7 +309,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "4 stacks",
+            "label": {
+              "fr": "4 stacks (EM)",
+              "en": "4 stacks (EM)"
+            },
             "cons": 2,
             "active": false,
             "stats": {
@@ -292,11 +322,17 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 4 : Élucidation",
+        "category": {
+          "fr": "Constellation 4 : Élucidation",
+          "en": "Constellation 4: Elucidation"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "1 miroir généré",
+            "label": {
+              "fr": "1 miroir généré (DGTs Dendro)",
+              "en": "1 mirror created (Dendro DMG)"
+            },
             "cons": 4,
             "active": false,
             "stats": {
@@ -304,7 +340,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "2 miroirs générés",
+            "label": {
+              "fr": "2 miroirs générés (DGTs Dendro)",
+              "en": "2 mirrors created (Dendro DMG)"
+            },
             "cons": 4,
             "active": false,
             "stats": {
@@ -312,7 +351,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "3 miroirs générés",
+            "label": {
+              "fr": "3 miroirs générés (DGTs Dendro)",
+              "en": "3 mirrors created (Dendro DMG)"
+            },
             "cons": 4,
             "active": true,
             "stats": {
@@ -322,10 +364,16 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 6 : Structuration",
+        "category": {
+          "fr": "Constellation 6 : Structuration",
+          "en": "Constellation 6: Structuration"
+        },
         "buffs": [
           {
-            "label": "1 miroir généré si 3 existent déjà",
+            "label": {
+              "fr": "1 miroir généré si 3 existent déjà (Taux Crit et DGT Crit)",
+              "en": "1 mirror created when 3 already exist (Crit Rate & Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -338,7 +386,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Exubérance": {
-        "name": "DPS Exubérance",
+        "name": {
+          "fr": "DPS Exubérance",
+          "en": "Hyperbloom DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -426,7 +477,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Propagation": {
-        "name": "DPS Propagation",
+        "name": {
+          "fr": "DPS Propagation",
+          "en": "Spead DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -507,7 +561,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Driver Fleurissement": {
-        "name": "Driver Fleurissement",
+        "name": {
+          "fr": "Driver Fleurissement",
+          "en": "Bloom Driver"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -603,14 +660,20 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Surcharge offensive",
+            "label": {
+              "fr": "A1 : Surcharge offensive (ATQ%)",
+              "en": "A1: Combat override (ATK%)"
+            },
             "active": true,
             "stats": {
               "atk_": 0.16
             }
           },
           {
-            "label": "A4 : Frappe puissante",
+            "label": {
+              "fr": "A4 : Frappe puissante (DGTs Élémentaires)",
+              "en": "A4: Strong strike (Elemental DMG)"
+            },
             "active": true,
             "stats": {
               "elemental_dmg_": 0.35
@@ -621,7 +684,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Fonte": {
-        "name": "DPS Fonte",
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -706,7 +772,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Gel": {
-        "name": "DPS Gel",
+        "name": {
+          "fr": "DPS Gel",
+          "en": "Freeze DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -796,14 +865,20 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Dans le mille ! (uniquement le déchaînement)",
+            "label": {
+              "fr": "A1 : Dans le mille ! (uniquement le déchaînement - Taux Crit)",
+              "en": "A1: Every arrow finds its target (only for the burst - Crit Rate)"
+            },
             "active": false,
             "stats": {
               "critRate_": 0.1
             }
           },
           {
-            "label": "A4 :Tir précis (uniquement après avoir touché un point faible)",
+            "label": {
+              "fr": "A4 : Tir précis (uniquement après avoir touché un point faible - ATQ%)",
+              "en": "A4: Precise shot (only after hitting a weak point - ATK%)"
+            },
             "active": false,
             "stats": {
               "atk_": 0.15
@@ -815,7 +890,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Feu sauvage (après le déchaînement)",
+            "label": {
+              "fr": "C6 : Feu sauvage (après le déchaînement - ATQ%)",
+              "en": "C6: Wildfire (after using the burst - ATK%)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -827,7 +905,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Fonte": {
-        "name": "DPS Fonte",
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -911,7 +992,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Bourgeonnement": {
-        "name": "DPS Bourgeonnement",
+        "name": {
+          "fr": "DPS Bourgeonnement",
+          "en": "Burgeon DPS"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -993,7 +1077,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C4 : Au pain sec et à l'eau !",
+            "label": {
+              "fr": "C4 : Au pain sec et à l'eau ! (DÉF% et ATQ%)",
+              "en": "C4: Jailhouse Bread and Butter (DEF% & ATK%)"
+            },
             "cons": 4,
             "active": true,
             "stats": {
@@ -1002,7 +1089,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Arataki Itto, présent !",
+            "label": {
+              "fr": "C6 : Arataki Itto, présent ! (DGT Crit)",
+              "en": "C6: Arataki Itto, present! (Crit DMG)"
+            },
             "cons": 6,
             "active": true,
             "stats": {
@@ -1014,7 +1104,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Géo": {
-        "name": "DPS Géo",
+        "name": {
+          "fr": "DPS Géo",
+          "en": "Geo DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -1079,7 +1172,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Sélénocristallisation": {
-        "name": "DPS Sélénocristallisation",
+        "name": {
+          "fr": "DPS Sélénocristallisation",
+          "en": "Lunar-Crystallize DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -1164,7 +1260,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Masque Rouge (En combat)",
+            "label": {
+              "fr": "Passif : Seule la lune peut savoir (DGTs Pyro)",
+              "en": "Passive: The Balemoon alone may know (Pyro DMG)"
+            },
             "stats": {
               "pyro_dmg_": 0.4
             }
@@ -1176,21 +1275,25 @@ window.CHARACTER_CONFIG = {
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "C1 : Masque de la Mort Rouge",
-            "cons": 1,
-            "stats": {}
-          },
-          {
-            "label": "C2 : Ordre Royal",
-            "cons": 2,
-            "stats": {}
+            "label": {
+              "fr": "C6 : « Désormais, nous vivrons ensemble une nouvelle vie. » (uniquement pour l'attaque normale et le déchaînement - Taux Crit et DGT Crit)",
+              "en": "C6: \"From This Day On, We Shall Delight in New Life Together.\" (only for normal attacks and burst - Crit Rate & Crit DMG)"
+            },
+            "cons": 6,
+            "stats": {
+              "critDMG_": 0.7,
+              "critRate_": 0.1
+            }
           }
         ]
       }
     ],
     "builds": {
       "DPS Fonte": {
-        "name": "DPS Fonte",
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -1268,7 +1371,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Surcharge": {
-        "name": "DPS Surcharge",
+        "name": {
+          "fr": "DPS Surcharge",
+          "en": "Overload DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -1340,7 +1446,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS mono Pyro": {
-        "name": "DPS mono Pyro",
+        "name": {
+          "fr": "DPS Mono-pyro",
+          "en": "Mono-pyro DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -1361,6 +1470,18 @@ window.CHARACTER_CONFIG = {
           "dendro_dmg_": 0,
           "physical_dmg_": 0,
           "heal_": 0
+        },
+        "idealMainStats": {
+          "EQUIP_SHOES": [
+            "atk_"
+          ],
+          "EQUIP_RING": [
+            "pyro_dmg_"
+          ],
+          "EQUIP_DRESS": [
+            "critRate_",
+            "critDMG_"
+          ]
         },
         "bestSets": [
           "FragmentOfHarmonicWhimsy:4",
@@ -1410,18 +1531,27 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "A1 : Cinq fortunes perpétuelles",
+        "category": {
+          "fr": "A1 : Cinq fortunes perpétuelles (DGTs Élémentaires ou Soins)",
+          "en": "A1: Five fortunes forever (Elemental DMG or Heal)"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "PV > 50%",
+            "label": {
+              "fr": "PV > 50%",
+              "en": "HP > 50%"
+            },
             "active": true,
             "stats": {
               "elemental_dmg_": 0.25
             }
           },
           {
-            "label": "PV < 50%",
+            "label": {
+              "fr": "PV < 50%",
+              "en": "HP < 50%"
+            },
             "active": false,
             "stats": {
               "heal_": 0.2
@@ -1433,7 +1563,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C4 : Perception ancienne",
+            "label": {
+              "fr": "C4 : Perception ancienne (Maîtrise Élémentaire)",
+              "en": "C4: Ancient art of perception (EM)"
+            },
             "cons": 4,
             "stats": {
               "eleMas": 80
@@ -1443,8 +1576,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Healer et applicateur général": {
-        "name": "Healer et applicateur général",
+      "Healer et applicateur universel": {
+        "name": {
+          "fr": "Healer et applicateur universel",
+          "en": "Universal healer and enabler"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -1536,7 +1672,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Éclat de vitalité",
+            "label": {
+              "fr": "C2 : Éclat de vitalité (DGTs Hydro)",
+              "en": "C2: Vitality burst (Hydro DMG)"
+            },
             "cons": 2,
             "stats": {
               "elemental_dmg_": 0.15
@@ -1546,8 +1685,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Healeuse générale": {
-        "name": "Healeuse générale",
+      "Healeuse universelle": {
+        "name": {
+          "fr": "Healeuse universelle",
+          "en": "Universal healer"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -1624,8 +1766,11 @@ window.CHARACTER_CONFIG = {
       "burst": 10
     },
     "builds": {
-      "Sub-DPS électrocution": {
-        "name": "Sub-DPS électrocution",
+      "Sub-DPS Électrocution": {
+        "name": {
+          "fr": "Sub-DPS Électrocution",
+          "en": "Electro-Charged Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -1702,8 +1847,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS stimulation": {
-        "name": "Sub-DPS stimulation",
+      "Sub-DPS Suractivation": {
+        "name": {
+          "fr": "Sub-DPS Suractivation",
+          "en": "Aggravate Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -1808,14 +1956,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Perspective de voyage",
-            "cons": 1,
-            "stats": {
-              "atk_": 0.2
-            }
-          },
-          {
-            "label": "C2 : Brise-désespoir (si PV inférieurs à 70%)",
+            "label": {
+              "fr": "C2 : Brise-désespoir (si PV inférieurs à 70% - Recharge d'énergie)",
+              "en": "C2: Impasse conqueror (if HP below 70% - ER)"
+            },
             "cons": 2,
             "active": false,
             "stats": {
@@ -1823,7 +1967,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Feu et courage (si sur le terrain)",
+            "label": {
+              "fr": "C6 : Feu et courage (si sur le terrain - DGTs Pyro)",
+              "en": "C6: Fire ventures with me (if on-field - Pyro DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -1835,7 +1982,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Buffer universel": {
-        "name": "Buffer universel",
+        "name": {
+          "fr": "Buffer universel",
+          "en": "Universal buffer"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -1927,7 +2077,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Brillance perçant la lune",
+            "label": {
+              "fr": "C2 : Brillance perçant la lune (PV%)",
+              "en": "C2: Moon-piercing brilliance (HP%)"
+            },
             "cons": 2,
             "stats": {
               "hp_": 0.2
@@ -1938,7 +2091,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Driver fleurissement": {
-        "name": "Driver fleurissement",
+        "name": {
+          "fr": "Driver Fleurissement",
+          "en": "Bloom Driver"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -2008,7 +2164,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Support général": {
-        "name": "Support général",
+        "name": {
+          "fr": "Support universel",
+          "en": "Universal support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -2080,7 +2239,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Applicatrice évaporation": {
-        "name": "Applicatrice évaporation",
+        "name": {
+          "fr": "Applicatrice Évaporation",
+          "en": "Vape Enabler"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -2165,18 +2327,27 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "A4 : Enquête de diversité",
+        "category": {
+          "fr": "A4 : Enquête de diversité",
+          "en": "A4: Diversified investigation"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "3 alliés de Fontaine (+15% Soins)",
+            "label": {
+              "fr": "3 alliés de Fontaine (+15% Soins)",
+              "en": "3 allies from Fontaine (+15% Healing)"
+            },
             "active": true,
             "stats": {
               "heal_": 0.15
             }
           },
           {
-            "label": "2 Fontaine / 1 Autre (+10% Soins, +5% DGT Cryo)",
+            "label": {
+              "fr": "2 Fontaine / 1 Autre (+10% Soins, +5% DGT Cryo)",
+              "en": "2 allies from Fontaine / 1 Other (+10 Healing, +5% Cryo DMG)"
+            },
             "active": false,
             "stats": {
               "heal_": 0.1,
@@ -2184,7 +2355,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "1 Fontaine / 2 Autres (+5% Soins, +10% DGT Cryo)",
+            "label": {
+              "fr": "1 Fontaine / 2 Autres (+5% Soins, +10% DGT Cryo)",
+              "en": "1 ally from Fontaine / 2 Others (+5% Healing, +10% Cryo DMG)"
+            },
             "active": false,
             "stats": {
               "heal_": 0.05,
@@ -2192,7 +2366,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "3 alliés d'autres régions (+15% DGT Cryo)",
+            "label": {
+              "fr": "3 alliés d'autres régions (+15% DGT Cryo)",
+              "en": "3 allies from other regions (+15% Cryo DMG)"
+            },
             "active": false,
             "stats": {
               "cryo_dmg_": 0.15
@@ -2201,11 +2378,17 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "C2 : Une poursuite de la vérité",
+        "label": {
+          "fr": "C2 : Une poursuite de la vérité (ATQ%)",
+          "en": "C2: A duty to pursue truth (ATK%)"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "1 ennemi touché",
+            "label": {
+              "fr": "1 ennemi touché",
+              "en": "1 enemy hit"
+            },
             "cons": 2,
             "active": false,
             "stats": {
@@ -2213,7 +2396,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "2 ennemis touchés",
+            "label": {
+              "fr": "2 ennemis touchés",
+              "en": "2 enemies hit"
+            },
             "cons": 2,
             "active": false,
             "stats": {
@@ -2221,7 +2407,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "3 ennemis touchés ou +",
+            "label": {
+              "fr": "3 ennemis touchés ou +",
+              "en": "3 or more enemies hit"
+            },
             "cons": 2,
             "active": true,
             "stats": {
@@ -2233,7 +2422,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Healer universel": {
-        "name": "Healer universel",
+        "name": {
+          "fr": "Healeuse universelle",
+          "en": "Universal healer"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -2325,7 +2517,10 @@ window.CHARACTER_CONFIG = {
     },
     "builds": {
       "DPS Dispersion": {
-        "name": "DPS Dispersion",
+        "label": {
+          "fr": "DPS Dispersion",
+          "en": "Swirl DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -2409,7 +2604,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Manœuvre de coordination tactique",
+            "label": {
+              "fr": "A4 : Manœuvre de coordination tactique (ATQ% en fonction de PV%)",
+              "en": "A4 : Vertical force coordination (ATK% depending on HP%)"
+            },
             "active": true,
             "stats": {
               "atk_bonus_scaling": {
@@ -2426,7 +2624,10 @@ window.CHARACTER_CONFIG = {
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "C6 : Poursuite de l'anéantissement du mal (1 stack)",
+            "label": {
+              "fr": "C6 : Poursuite de l'anéantissement du mal (1 stack - DGTs Pyro, DGTs Électro)",
+              "en": "C6 : In pursuit of ending evil (1 stack - Pyro DMG, Electro DMG)"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.2,
@@ -2434,7 +2635,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Poursuite de l'anéantissement du mal (2 stacks)",
+            "label": {
+              "fr": "C6 : Poursuite de l'anéantissement du mal (2 stacks - DGTs Pyro, DGTs Électro)",
+              "en": "C6: In pursuit of ending evil (2 stacks - Pyro DMG, Electro DMG)"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.2,
@@ -2442,7 +2646,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Poursuite de l'anéantissement du mal (3 stacks)",
+            "label": {
+              "fr": "C6 : Poursuite de l'anéantissement du mal (3 stacks - DGTs Pyro, DGTs Électro)",
+              "en": "C6: In pursuit of ending evil (3 stacks - Pyro DMG, Electro DMG)"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.2,
@@ -2453,8 +2660,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Buffer surcharge": {
-        "name": "Buffer surcharge",
+      "Support Surcharge": {
+        "name": {
+          "fr": "Support Surcharge",
+          "en": "Overload Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -2545,7 +2755,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Retouche finale",
+            "label": {
+              "fr": "A4 : Retouche finale (DGTs Géo)",
+              "en": "A4: The finishing touch (Geo DMG)"
+            },
             "active": true,
             "stats": {
               "geo_dmg_": 0.2
@@ -2556,7 +2769,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Sub-DPS Géo": {
-        "name": "Sub-DPS Géo",
+        "name": {
+          "fr": "Sub-DPS Géo",
+          "en": "Geo Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -2636,7 +2852,10 @@ window.CHARACTER_CONFIG = {
     },
     "builds": {
       "DPS Fonte": {
-        "name": "DPS Fonte",
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -2721,7 +2940,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Gel": {
-        "name": "DPS Gel",
+        "name": {
+          "fr": "DPS Gel",
+          "en": "Freeze DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -2815,7 +3037,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Patrouille de dévoreur de cœurs",
+            "label": {
+              "fr": "C2 : Patrouille de dévoreur de cœurs (Maîtrise Élémentaire)",
+              "en": "C2: Heart devourer's travail (EM)"
+            },
             "cons": 2,
             "stats": {
               "eleMas": 125
@@ -2826,7 +3051,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support universel (Fonte et Gel)": {
-        "name": "Support universel (Fonte et Gel)",
+        "name": {
+          "fr": "Support universel (Fonte et Gel)",
+          "en": "Universal Support (Melt & Freeze)"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -2933,14 +3161,20 @@ window.CHARACTER_CONFIG = {
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "A4 : Rémunération honorant le pacte (1 Stack)",
+            "label": {
+              "fr": "A4 : Rémunération honorant le pacte (1 Stack - Taux Crit)",
+              "en": "A4: Lawful remuneration (1 Stack - Crit Rate)"
+            },
             "active": true,
             "stats": {
               "critRate_": 0.1
             }
           },
           {
-            "label": "A4 : Rémunération honorant le pacte (2 Stacks)",
+            "label": {
+              "fr": "A4 : Rémunération honorant le pacte (2 Stacks - Taux Crit)",
+              "en": "A4: Lawful remuneration (2 Stacks - Crit Rate)"
+            },
             "active": true,
             "stats": {
               "critRate_": 0.1
@@ -2952,7 +3186,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : « Ainsi, je ne désespérerai jamais plus »",
+            "label": {
+              "fr": "C6 : « Ainsi, je ne désespérerai jamais plus » (Taux Crit, DGT Crit)",
+              "en": "C6: \"And so shall I never despair\" (Crit Rate, Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -2965,7 +3202,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Surcharge": {
-        "name": "DPS Surcharge",
+        "name": {
+          "fr": "DPS Surcharge",
+          "en": "Overload DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -3038,8 +3278,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "DPS Stimulation": {
-        "name": "DPS Stimulation",
+      "DPS Suractivation": {
+        "name": {
+          "fr": "DPS Suractivation",
+          "en": "Aggravate DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -3119,7 +3362,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Sélénocution": {
-        "name": "DPS Sélénocution",
+        "name": {
+          "fr": "DPS Sélénocution",
+          "en": "Lunar-Charged DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -3213,7 +3459,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Patrouille sylvestre (off-field)",
+            "label": {
+              "fr": "C1 : Patrouille sylvestre (off-field - Recharge d'énergie)",
+              "en": "C1: Deepwood patrol (off-field - ER)"
+            },
             "cons": 1,
             "active": true,
             "stats": {
@@ -3224,8 +3473,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Sub-DPS général": {
-        "name": "Sub-DPS général",
+      "Sub-DPS universelle": {
+        "name": {
+          "fr": "Sub-DPS universelle",
+          "en": "Universal Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -3310,7 +3562,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Driver fleurissement": {
-        "name": "Driver fleurissement",
+        "name": {
+          "fr": "Driver Fleurissement",
+          "en": "Bloom Driver"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -3403,21 +3658,30 @@ window.CHARACTER_CONFIG = {
         "selectMode": "exclusive",
         "data": [
           {
-            "label": "A1 : Appel de la lune (1 stack)",
+            "label": {
+              "fr": "A1 : Appel de la lune (1 stack - Taux Crit)",
+              "en": "A1: Lunacy's lure (1 stack - Crit Rate)"
+            },
             "active": false,
             "stats": {
               "critRate_": 0.05
             }
           },
           {
-            "label": "A1 : Appel de la lune (2 stacks)",
+            "label": {
+              "fr": "A1 : Appel de la lune (2 stacks - Taux Crit)",
+              "en": "A1: Lunacy's lure (2 stacks - Crit Rate)"
+            },
             "active": false,
             "stats": {
               "critRate_": 0.1
             }
           },
           {
-            "label": "A1 : Appel de la lune (3 stacks)",
+            "label": {
+              "fr": "A1 : Appel de la lune (3 stacks - Taux Crit)",
+              "en": "A1: Lunacy's lure (3 stacks - Crit Rate)"
+            },
             "active": true,
             "stats": {
               "critRate_": 0.15
@@ -3429,14 +3693,20 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Nuit en splendeur, jamais solitaire",
+            "label": {
+              "fr": "C2 : Nuit en splendeur, jamais solitaire (PV%)",
+              "en": "C2: Not in lone splendor (HP%)"
+            },
             "cons": 2,
             "stats": {
               "hp_": 0.4
             }
           },
           {
-            "label": "C6 : Nuit lugubre, lune à travers (uniquement sur un élément)",
+            "label": {
+              "fr": "C6 : Nuit lugubre, lune à travers (uniquement sur un élément - DGT Crit)",
+              "en": "C6: Through darkness led by moonlight (only for one element - Crit DMG)"
+            },
             "cons": 6,
             "stats": {
               "critDMG_": "0.80"
@@ -3447,7 +3717,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support sélénofleurissement": {
-        "name": "Support sélénofleurissement",
+        "name": {
+          "fr": "Support Sélénofleurissement",
+          "en": "Lunar-Bloom Support"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -3526,7 +3799,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Driver sélénofleurissement": {
-        "name": "Driver sélénofleurissement",
+        "name": {
+          "fr": "Driver Sélénofleurissement",
+          "en": "Lunar-Bloom Driver"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -3599,7 +3875,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Support sélénocution": {
-        "name": "Support sélénocution",
+        "name": {
+          "fr": "Support Sélénocution",
+          "en": "Lunar-Charged Support"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -3672,7 +3951,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Support sélénocristallisation": {
-        "name": "Support sélénocristallisation",
+        "name": {
+          "fr": "Support Sélénocristallisation",
+          "en": "Lunar-Crystallize Support"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -3756,39 +4038,57 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "Constellation 2 : Cérémonie : Retour des esprits",
+        "category": {
+          "fr": "Constellation 2 : Cérémonie : Retour des esprits (DGTs Élémentaires)",
+          "en": "Constellation 2: Ceremony: Homecoming of spirits (Elemental DMG)"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "1 ennemi touché par l'attaque normale",
+            "label": {
+              "fr": "1 ennemi touché par l'attaque normale",
+              "en": "1 enemy hit by normal attack"
+            },
             "cons": 2,
             "stats": {
               "elemental_dmg_": 0.1
             }
           },
           {
-            "label": "2 ennemis touchés par l'attaque normale",
+            "label": {
+              "fr": "2 ennemis touchés par l'attaque normale",
+              "en": "2 enemies hit by normal attack"
+            },
             "cons": 2,
             "stats": {
               "elemental_dmg_": 0.2
             }
           },
           {
-            "label": "3 ennemis touchés par l'attaque normale",
+            "label": {
+              "fr": "3 ennemis touchés par l'attaque normale",
+              "en": "3 enemies hit by normal attack"
+            },
             "cons": 2,
             "stats": {
               "elemental_dmg_": 0.3
             }
           },
           {
-            "label": "4 ennemis touchés par l'attaque normale",
+            "label": {
+              "fr": "4 ennemis touchés par l'attaque normale",
+              "en": "4 enemies hit by normal attack"
+            },
             "cons": 2,
             "stats": {
               "elemental_dmg_": 0.4
             }
           },
           {
-            "label": "5 ennemis touchés par l'attaque normale",
+            "label": {
+              "fr": "5 ennemis touchés par l'attaque normale",
+              "en": "5 enemies hit by normal attack"
+            },
             "cons": 2,
             "stats": {
               "elemental_dmg_": 0.5
@@ -3799,7 +4099,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Exubérance": {
-        "name": "DPS Exubérance",
+        "name": {
+          "fr": "DPS Exubérance",
+          "en": "Hyperbloom DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -3881,7 +4184,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Suractivation": {
-        "name": "DPS Suractivation",
+        "name": {
+          "fr": "DPS Suractivation",
+          "en": "Aggravate DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -3973,7 +4279,10 @@ window.CHARACTER_CONFIG = {
     },
     "builds": {
       "Support gel": {
-        "name": "Support gel",
+        "name": {
+          "fr": "Support Gel",
+          "en": "Freeze Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -4057,7 +4366,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Brûlante griffe de clivage (uniquement le déchaînement)",
+            "label": {
+              "fr": "C6 : Brûlante griffe de clivage (uniquement le déchaînement - Taux Crit, DGT Crit)",
+              "en": "C6: The burning claws cleaving (only the burst - Crit Rate, Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -4070,7 +4382,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Sub-DPS": {
-        "name": "Sub-DPS",
+        "name": {
+          "fr": "Sub-DPS",
+          "en": "Sub-DPS"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -4151,7 +4466,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Évaporation": {
-        "name": "DPS Évaporation",
+        "name": {
+          "fr": "DPS Évaporation",
+          "en": "Vape DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -4267,7 +4585,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Bénédiction du phénix",
+            "label": {
+              "fr": "A4 : Bénédiction du phénix (DGTs Pyro)",
+              "en": "A4: Blessing of phoenix (Pyro DMG)"
+            },
             "active": true,
             "stats": {
               "elemental_dmg_": 0.2
@@ -4276,25 +4597,37 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "C2 : Chaleur des cendres",
+        "category": {
+          "fr": "C2 : Chaleur des cendres (ATQ%)",
+          "en": "C2: Searing ember (ATK%)"
+        },
         "selectMode": "Cumulative",
         "buffs": [
           {
-            "label": "1 stack",
+            "label": {
+              "fr": "1 stack",
+              "en": "1 stack"
+            },
             "cons": 2,
             "stats": {
               "atk_": 0.1
             }
           },
           {
-            "label": "2 stacks",
+            "label": {
+              "fr": "2 stacks",
+              "en": "2 stacks"
+            },
             "cons": 2,
             "stats": {
               "atk_": 0.1
             }
           },
           {
-            "label": "3 stacks",
+            "label": {
+              "fr": "3 stacks",
+              "en": "3 stacks"
+            },
             "cons": 2,
             "stats": {
               "atk_": 0.1
@@ -4305,7 +4638,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Évaporation": {
-        "name": "DPS Évaporation",
+        "name": {
+          "fr": "DPS Évaporation",
+          "en": "Vape DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -4385,7 +4721,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Fonte": {
-        "name": "DPS Fonte",
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -4464,7 +4803,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Mono-pyro": {
-        "name": "DPS Mono-pyro",
+        "name": {
+          "fr": "DPS Mono-pyro",
+          "en": "Mono-pyro DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -4551,7 +4893,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Dernière tournée (PV > 50%)",
+            "label": {
+              "fr": "C6 : Dernière tournée (PV > 50% - EM)",
+              "en": "C6: Cat's tail closing time (HP > 50% - EM)"
+            },
             "cons": 6,
             "stats": {
               "eleMas": 200
@@ -4561,8 +4906,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Shieldeuse générale": {
-        "name": "Shieldeuse générale",
+      "Shieldeuse universelle": {
+        "name": {
+          "fr": "Shieldeuse universelle",
+          "en": "Universal Shielder"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -4647,7 +4995,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C4 : Supplément discrétionnaire (si ER < 50%)",
+            "label": {
+              "fr": "C4 : Supplément discrétionnaire (si ER < 50% - Recharge d'énergie)",
+              "en": "C4: Discretionary supplement (if ER < 50% - ER)"
+            },
             "cons": 4,
             "active": false,
             "stats": {
@@ -4659,7 +5010,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Driver Suractivation": {
-        "name": "Driver Suractivation",
+        "name": {
+          "fr": "Driver Suractivation",
+          "en": "Aggravate Driver"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -4746,7 +5100,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Driver Exubérance": {
-        "name": "Driver Exubérance",
+        "name": {
+          "fr": "Driver Exubérance",
+          "en": "Hyperbloom Driver"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -4841,7 +5198,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Visions sans fond",
+            "label": {
+              "fr": "C2 : Visions sans fond (DGTs Pyro)",
+              "en": "C2: Unground visions (Pyro DMG)"
+            },
             "cons": 2,
             "stats": {
               "pyro_dmg_": 0.5
@@ -4852,7 +5212,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Sub-DPS Surcharge": {
-        "name": "Sub-DPS Surcharge",
+        "name": {
+          "fr": "Sub-DPS Surcharge",
+          "en": "Overload Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -4935,7 +5298,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Sub-DPS Brûlure": {
-        "name": "Sub-DPS Brûlure",
+        "name": {
+          "fr": "Sub-DPS Brûlure",
+          "en": "Burning Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -5011,8 +5377,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS général": {
-        "name": "Sub-DPS général",
+      "Sub-DPS universel": {
+        "name": {
+          "fr": "Sub-DPS universel",
+          "en": "Universal Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -5103,7 +5472,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Danse pour les papilles gustatives",
+            "label": {
+              "fr": "C1 : Danse pour les papilles gustatives (DGT Crit)",
+              "en": "C1: Pre-dinner dance for your taste buds (Crit DMG)"
+            },
             "cons": 1,
             "stats": {
               "critDMG_": 0.6
@@ -5113,8 +5485,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Gel": {
-        "name": "Gel",
+      "Sub-DPS Gel": {
+        "name": {
+          "fr": "Sub-DPS Gel",
+          "en": "Freeze Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -5206,7 +5581,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Illusion des marées",
+            "label": {
+              "fr": "C1 : Illusion des marées (DGTs Physiques)",
+              "en": "C1: Tidal illusion (Physical DMG)"
+            },
             "cons": 1,
             "stats": {
               "physical_dmg_": 0.3
@@ -5217,7 +5595,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Physique": {
-        "name": "DPS Physique",
+        "name": {
+          "fr": "DPS Physique",
+          "en": "Physical DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -5311,7 +5692,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Merveilleux chemin de la vérité (dans le déchaînement)",
+            "label": {
+              "fr": "C6 : Merveilleux chemin de la vérité (dans le déchaînement - DGT Crit)",
+              "en": "C6: The wondrous path of truth (in the burst - Crit DMG)"
+            },
             "cons": 6,
             "stats": {
               "critDMG_": 0.4
@@ -5322,7 +5706,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support Anémo": {
-        "name": "Support Anémo",
+        "name": {
+          "fr": "Support Anémo",
+          "en": "Anemo Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -5418,13 +5805,19 @@ window.CHARACTER_CONFIG = {
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "Hexerei : Nocturne fantomatique (surcharge)",
+            "label": {
+              "fr": "Hexerei : Nocturne fantomatique (Surcharge - ATQ%)",
+              "en": "Hexerei: Phantasmal nocturne (Overload - ATK%)"
+            },
             "stats": {
               "atk_": 0.225
             }
           },
           {
-            "label": "Hexerei : Nocturne fantomatique (électrocution ou sélénocution)",
+            "label": {
+              "fr": "Hexerei : Nocturne fantomatique (Électrocution ou Sélénocution - EM)",
+              "en": "Hexerei: Phantasmal nocturne (Electro-Charged or Lunar-Charged - EM)"
+            },
             "stats": {
               "eleMas": 90
             }
@@ -5436,14 +5829,20 @@ window.CHARACTER_CONFIG = {
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "C6 Hexerei : Oiseau de la nuit éternelle (surcharge)",
+            "label": {
+              "fr": "C6 Hexerei : Oiseau de la nuit éternelle (Surcharge - ATQ%)",
+              "en": "C6 Hexerei: Evernight raven (Overload - ATK%)"
+            },
             "cons": 6,
             "stats": {
               "atk_": 0.225
             }
           },
           {
-            "label": "C6 Hexerei : Oiseau de la nuit éternelle (électrocution ou sélénocution)",
+            "label": {
+              "fr": "C6 Hexerei : Oiseau de la nuit éternelle (Électrocution ou Sélénocution - EM)",
+              "en": "C6 Hexerei: Evernight raven (Electro-Chared or Lunar-Charged - EM)"
+            },
             "cons": 6,
             "stats": {
               "eleMas": 90
@@ -5453,8 +5852,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Sub-DPS surcharge Hexerei": {
-        "name": "Sub-DPS surcharge Hexerei",
+      "Sub-DPS Surcharge Hexerei": {
+        "name": {
+          "fr": "Sub-DPS Surcharge Hexerei",
+          "en": "Hexerei Overload Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -5527,8 +5929,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS propagation": {
-        "name": "Sub-DPS propagation",
+      "Sub-DPS Suractivation": {
+        "name": {
+          "fr": "Sub-DPS Suractivation",
+          "en": "Aggravate Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -5623,7 +6028,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Murmure de flamme",
+            "label": {
+              "fr": "A4 : Murmure de flamme (Maîtrise élémentaire)",
+              "en": "A4: Whispering flame (EM)"
+            },
             "active": true,
             "maxCons": 3,
             "stats": {
@@ -5640,7 +6048,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C4 : Nuit sur la montagne nue",
+            "label": {
+              "fr": "C4 : Nuit sur la montagne nue (Maîtrise élémentaire)",
+              "en": "C4: Night on bald mountain (EM)"
+            },
             "cons": 4,
             "active": true,
             "stats": {
@@ -5656,7 +6067,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Sélénocution": {
-        "name": "DPS Sélénocution",
+        "name": {
+          "fr": "DPS Sélénocution",
+          "en": "Lunar-Charged DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -5741,10 +6155,16 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "C1 : Rêves des profondeurs mousseuses",
+        "category": {
+          "fr": "C1 : Rêves des profondeurs mousseuses (Taux Crit)",
+          "en": "C1: Dreams of the foamy deep (Crit Rate)"
+        },
         "buffs": [
           {
-            "label": "Uniquement la compétence",
+            "label": {
+              "fr": "Uniquement la compétence",
+              "en": "Only the skill"
+            },
             "cons": 1,
             "active": false,
             "stats": {
@@ -5754,18 +6174,27 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "C4 : Danse de lune et de flûte",
+        "category": {
+          "fr": "C4 : Danse de lune et de flûte (ATQ%)",
+          "en": "C4: Dance of the snowy moon and flute (ATK%)"
+        },
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "Réaction cryo déclenchée (1 stack)",
+            "label": {
+              "fr": "Réaction Cryo déclenchée (1 stack)",
+              "en": "Cryo reaction triggered (1 stack)"
+            },
             "cons": 4,
             "stats": {
               "atk_": 0.09
             }
           },
           {
-            "label": "Réaction cryo déclenchée (2 stacks)",
+            "label": {
+              "fr": "Réaction Cryo déclenchée (2 stacks)",
+              "en": "Cryo reaction triggered (2 stacks)"
+            },
             "cons": 4,
             "stats": {
               "atk_": 0.09
@@ -5774,25 +6203,37 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "C6 : Instant d'aube et de détermination",
+        "category": {
+          "fr": "C6 : Instant d'aube et de détermination (DGT Crit)",
+          "en": "C6: Moment of waking and resolve (Crit DMG)"
+        },
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "Réaction cryo déclenchée (1 stack)",
+            "label": {
+              "fr": "Réaction Cryo déclenchée (1 stack)",
+              "en": "Cryo reaction triggered (1 stack)"
+            },
             "cons": 6,
             "stats": {
               "critDMG_": 0.12
             }
           },
           {
-            "label": "Réaction cryo déclenchée (2 stacks)",
+            "label": {
+              "fr": "Réaction Cryo déclenchée (2 stacks)",
+              "en": "Cryo reaction triggered (2 stacks)"
+            },
             "cons": 6,
             "stats": {
               "critDMG_": 0.12
             }
           },
           {
-            "label": "Réaction cryo déclenchée (3 stacks)",
+            "label": {
+              "fr": "Réaction Cryo déclenchée (3 stacks)",
+              "en": "Cryo reaction triggered (3 stacks)"
+            },
             "cons": 6,
             "stats": {
               "critDMG_": 0.12
@@ -5803,7 +6244,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Physique": {
-        "name": "DPS Physique",
+        "name": {
+          "fr": "DPS Physique",
+          "en": "Physical DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -5885,7 +6329,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Cryo": {
-        "name": "DPS Cryo",
+        "name": {
+          "fr": "DPS Cryo",
+          "en": "Cryo DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -5975,7 +6422,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : « Comme la plume au vent, femme est volage » (Bonus Max)",
+            "label": {
+              "fr": "C2 : « Comme la plume au vent, femme est volage » (Bonus Max - PV%)",
+              "en": "C2: \"A Woman Adapts Like Duckweed in Water\" (Max Buff - HP%)"
+            },
             "cons": 2,
             "stats": {
               "hp_": 1.4
@@ -5985,8 +6435,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Support et sub-DPS universel": {
-        "name": "Support et sub-DPS universel",
+      "Support et Sub-DPS universel": {
+        "name": {
+          "fr": "Support et Sub-DPS universel",
+          "en": "Universal Support & Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -6071,7 +6524,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Sur les fleurs de prunier",
+            "label": {
+              "fr": "C2 : Sur les fleurs de prunier (ATQ%)",
+              "en": "C2: Plum blossoms underfoot (ATK%)"
+            },
             "cons": 2,
             "active": true,
             "stats": {
@@ -6079,7 +6535,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : En apprivoisant les bêtes (uniquement l'attaque plongée de la compétence)",
+            "label": {
+              "fr": "C6 : En apprivoisant les bêtes (uniquement l'attaque plongée de la compétence - Taux Crit, DGT Crit)",
+              "en": "C6: To tame all beasts (only the plunging attack from the skill - Crit Rate, Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -6091,8 +6550,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "DPS évaporation": {
-        "name": "DPS évaporation",
+      "DPS Évaporation": {
+        "name": {
+          "fr": "DPS Évaporation",
+          "en": "Vape DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -6177,8 +6639,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "DPS fonte": {
-        "name": "DPS fonte",
+      "DPS Fonte": {
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -6262,8 +6727,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "DPS surcharge": {
-        "name": "DPS surcharge",
+      "DPS Surcharge": {
+        "name": {
+          "fr": "DPS Surcharge",
+          "en": "Overload DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -6366,14 +6834,20 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Cœur indivisible (uniquement les attaques chargées)",
+            "label": {
+              "fr": "A1 : Cœur indivisible (uniquement les attaques chargées - Taux Crit)",
+              "en": "A1: Undivided Heart (only charged attacks - Crit Rate)"
+            },
             "active": false,
             "stats": {
               "critRate_": 0.2
             }
           },
           {
-            "label": "A4 : Harmonie du ciel et de la terre",
+            "label": {
+              "fr": "A4 : Harmonie du ciel et de la terre (DGT Cryo)",
+              "en": "A4: Harmony between heaven and earth (Cryo DMG)"
+            },
             "active": true,
             "stats": {
               "elemental_dmg_": 0.2
@@ -6384,7 +6858,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Gel": {
-        "name": "DPS Gel",
+        "name": {
+          "fr": "DPS Gel",
+          "en": "Freeze DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -6461,7 +6938,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Fonte": {
-        "name": "DPS Fonte",
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -6558,7 +7038,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Nonchalance du vent et de la pluie",
+            "label": {
+              "fr": "A1 : Nonchalance du vent et de la pluie (DÉF%)",
+              "en": "A1: Heedless of the wind and weather (DEF%)"
+            },
             "active": true,
             "stats": {
               "def_": 0.25
@@ -6571,7 +7054,10 @@ window.CHARACTER_CONFIG = {
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "C6 : Vaillance de la bête (1 Géo / Pied ferme)",
+            "label": {
+              "fr": "C6 : Vaillance de la bête (1 Géo / Pied Ferme - DGT Crit)",
+              "en": "C6: Valiant hound: Mountainous Fealty (1 Geo / Standing Firm - Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -6579,7 +7065,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Vaillance de la bête (2 Géo / Imprenabilité)",
+            "label": {
+              "fr": "C6 : Vaillance de la bête (2 Géo / Imprenabilité - DGT Crit)",
+              "en": "C6: Valiant hound: Mountainous Fealty (2 Geo / Impregnable - Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -6587,7 +7076,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Vaillance de la bête (3 Géo+ / Fracas)",
+            "label": {
+              "fr": "C6 : Vaillance de la bête (3 Géo+ / Fracas - DGT Crit)",
+              "en": "C6: Valiant hound: Mountainous Fealty (3 Geo+ / Crunch - Crit DMG)"
+            },
             "cons": 6,
             "active": true,
             "stats": {
@@ -6599,7 +7091,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support Géo": {
-        "name": "Support Géo",
+        "name": {
+          "fr": "Support Géo",
+          "en": "Geo Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -6687,7 +7182,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Sang bouillant",
+            "label": {
+              "fr": "A4 : Sang bouillant (PV <= 50% - DGTs Pyro)",
+              "en": "A4: Sanguine rouge (HP <= 50% - Pyro DMG)"
+            },
             "active": true,
             "stats": {
               "pyro_dmg_": 0.33
@@ -6699,7 +7197,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : L'envol du papillon",
+            "label": {
+              "fr": "C6 : L'envol du papillon (Si Hu Tao meurt - Taux Crit)",
+              "en": "C6: Butterfly's Embrace (If Hu Tao dies - Crit Rate)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -6711,7 +7212,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Évaporation": {
-        "name": "DPS Évaporation",
+        "name": {
+          "fr": "DPS Évaporation",
+          "en": "Vape DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -6782,7 +7286,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Fonte": {
-        "name": "DPS Fonte",
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -6868,7 +7375,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Formation de résistance améliorée",
+            "label": {
+              "fr": "A1 : Formation de résistance améliorée (ATQ%)",
+              "en": "A1: Enhanced resistance training (ATK%)"
+            },
             "active": true,
             "stats": {
               "atk_": 0.2
@@ -6878,8 +7388,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Buffer universel": {
-        "name": "Buffer universel",
+      "Support universel": {
+        "name": {
+          "fr": "Support universel",
+          "en": "Universal Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -6968,7 +7481,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Accord d'entraide (éruption noctâme)",
+            "label": {
+              "fr": "A4 : Accord d'entraide (Éruption Noctâme - Maîtrise élémentaire)",
+              "en": "A4: Mutual aid agreement (Nightsoul Burst - EM)"
+            },
             "active": true,
             "stats": {
               "eleMas": 80
@@ -6980,7 +7496,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C4 : Permutation de vaisseau en décomposition (utilisation du déchaînement)",
+            "label": {
+              "fr": "C4 : Permutation de vaisseau en décomposition (utilisation du déchaînement - Maîtrise élémentaire)",
+              "en": "C4: Decayed vessel's permutation (when burst is used - EM)"
+            },
             "cons": 4,
             "stats": {
               "eleMas": 100
@@ -6991,7 +7510,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Driver dispersion": {
-        "name": "Driver dispersion",
+        "name": {
+          "fr": "Driver Dispersion",
+          "en": "Swirl Driver"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -7075,8 +7597,11 @@ window.CHARACTER_CONFIG = {
       "burst": 10
     },
     "builds": {
-      "Buffer sélénocristallisation": {
-        "name": "Buffer sélénocristallisation",
+      "Support Sélénocristallisation": {
+        "name": {
+          "fr": "Support Sélénocristallisation",
+          "en": "Lunar-Crystallize Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -7165,7 +7690,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Protocole de permutation panoramique",
+            "label": {
+              "fr": "A4 : Protocole de permutation panoramique (Maîtrise élémentaire)",
+              "en": "A4: Panoramic permutation protocol (EM)"
+            },
             "active": true,
             "stats": {
               "eleMas_bonus_scaling": {
@@ -7179,7 +7707,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Sub-DPS Sélénocution": {
-        "name": "Sub-DPS Sélénocution",
+        "name": {
+          "fr": "Sub-DPS Sélénocution",
+          "en": "Lunar-Charged Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -7271,7 +7802,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : La chance la plus petite",
+            "label": {
+              "fr": "C6 : La chance la plus petite (Taux Crit, DGT Crit)",
+              "en": "C6: The littlest luck (Crit Rate, Crit DMG)"
+            },
             "cons": 6,
             "stats": {
               "critrate_": 0.05,
@@ -7282,8 +7816,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Healer sélène": {
-        "name": "Healer sélène",
+      "Healer Sélène": {
+        "name": {
+          "fr": "Healer Sélène",
+          "en": "Lunar Healer"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -7378,8 +7915,11 @@ window.CHARACTER_CONFIG = {
       "burst": 10
     },
     "builds": {
-      "Support général": {
-        "name": "Support général",
+      "Support universel": {
+        "name": {
+          "fr": "Support universel",
+          "en": "Universal Support"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -7460,7 +8000,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Sunfire": {
-        "name": "Sunfire",
+        "name": {
+          "fr": "Sunfire",
+          "en": "Sunfire"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0.4,
@@ -7546,7 +8089,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Écho de la montagne",
+            "label": {
+              "fr": "A1 : Écho de la montagne (DGTs Géo)",
+              "en": "A1: Mountain echoes (Geo DMG)"
+            },
             "active": true,
             "stats": {
               "elemental_dmg_": 0.2
@@ -7555,11 +8101,17 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "C4 : Ennemis nombreux, attention redoublée",
+        "category": {
+          "fr": "C4 : Ennemis nombreux, attention redoublée (DÉF%)",
+          "en": "C4: More foes, more caution (DEF%)"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "1 ennemi",
+            "label": {
+              "fr": "1 ennemi",
+              "en": "1 enemy"
+            },
             "cons": 4,
             "active": false,
             "stats": {
@@ -7567,7 +8119,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "2 ennemis",
+            "label": {
+              "fr": "2 ennemis",
+              "en": "2 enemies"
+            },
             "cons": 4,
             "active": true,
             "stats": {
@@ -7575,7 +8130,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "3 ennemis",
+            "label": {
+              "fr": "3 ennemis",
+              "en": "3 enemies"
+            },
             "cons": 4,
             "active": false,
             "stats": {
@@ -7583,7 +8141,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "4 ennemis",
+            "label": {
+              "fr": "4 ennemis",
+              "en": "4 enemies"
+            },
             "cons": 4,
             "active": false,
             "stats": {
@@ -7594,8 +8155,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Support général": {
-        "name": "Support général",
+      "Support universel": {
+        "name": {
+          "fr": "Support universel",
+          "en": "Universal Support"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -7678,7 +8242,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Haïku de la brise",
+            "label": {
+              "fr": "A4 : Haïku de la brise (DGTs Élémentaires)",
+              "en": "A4: Poetics of Fuubutsu (Elemental DMG)"
+            },
             "stats": {
               "elemental_dmg_bonus_scaling": {
                 "source": "eleMas",
@@ -7692,7 +8259,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Zanshin des montagnes cruelles",
+            "label": {
+              "fr": "C2 : Zanshin des montagnes cruelles (Maîtrise élémentaire)",
+              "en": "C2: Yamaarashi tailwind (EM)"
+            },
             "cons": 2,
             "stats": {
               "eleMas": 200
@@ -7702,8 +8272,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Support général": {
-        "name": "Support général",
+      "Support universel": {
+        "name": {
+          "fr": "Support universel",
+          "en": "Universal Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0.4,
@@ -7796,7 +8369,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Lignée de l'excellence (uniquement les NA et CA sur un ennemi affecté par cryo)",
+            "label": {
+              "fr": "C1 : Lignée de l'excellence (uniquement les NA et CA sur un ennemi affecté par Cryo - Taux Crit)",
+              "en": "C1: Excellent blood (only normal and charged attacks on enemies affected by Cryo - Crit Rate)"
+            },
             "cons": 1,
             "active": false,
             "stats": {
@@ -7808,7 +8384,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Sub-DPS Fonte": {
-        "name": "Sub-DPS Fonte",
+        "name": {
+          "fr": "Sub-DPS Fonte",
+          "en": "Melt Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -7892,7 +8471,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Sub-DPS Gel": {
-        "name": "Sub-DPS Gel",
+        "name": {
+          "fr": "Sub-DPS Gel",
+          "en": "Freeze Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -7989,7 +8571,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Bénédiction de Kanten Senmyou",
+            "label": {
+              "fr": "A4 : Bénédiction de Kanten Senmyou (DGTs Cryo)",
+              "en": "A4: Kanten Senmyou blessing (Cryo DMG)"
+            },
             "stats": {
               "elemental_dmg_": 0.18
             }
@@ -7999,7 +8584,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Gel": {
-        "name": "DPS Gel",
+        "name": {
+          "fr": "DPS Gel",
+          "en": "Freeze DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -8097,7 +8685,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Source du monde",
+            "label": {
+              "fr": "C2 : Source du monde (PV%)",
+              "en": "C2: World source (HP%)"
+            },
             "cons": 2,
             "stats": {
               "hp_": 0.5
@@ -8108,7 +8699,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Hydro": {
-        "name": "DPS Hydro",
+        "name": {
+          "fr": "DPS Hydro",
+          "en": "Hydro DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -8187,7 +8781,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Gel": {
-        "name": "DPS Gel",
+        "name": {
+          "fr": "DPS Gel",
+          "en": "Freeze DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -8272,8 +8869,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "DPS Exubérance": {
-        "name": "DPS Exubérance",
+      "Driver Exubérance": {
+        "name": {
+          "fr": "Driver Exubérance",
+          "en": "Hyperbloom Driver"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -8356,7 +8956,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Driver Fleurissement": {
-        "name": "Driver Fleurissement",
+        "name": {
+          "fr": "Driver Fleurissement",
+          "en": "Bloom Driver"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -8433,7 +9036,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Électrocution": {
-        "name": "DPS Électrocution",
+        "name": {
+          "fr": "DPS Électrocution",
+          "en": "Electro-Charged DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -8512,7 +9118,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Évaporation": {
-        "name": "DPS Évaporation",
+        "name": {
+          "fr": "DPS Évaporation",
+          "en": "Vape DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -8603,29 +9212,44 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "A4 : Extravagance d'un artisan",
+        "category": {
+          "fr": "A4 : Extravagance d'un artisan (Maîtrise élémentaire)",
+          "en": "A4: A craftsman's curious conceptions (EM)"
+        },
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "1 stack",
+            "label": {
+              "fr": "1 stack",
+              "en": "1 stack"
+            },
             "stats": {
               "eleMas": 25
             }
           },
           {
-            "label": "2 stacks",
+            "label": {
+              "fr": "2 stacks",
+              "en": "2 stacks"
+            },
             "stats": {
               "eleMas": 25
             }
           },
           {
-            "label": "3 stacks",
+            "label": {
+              "fr": "3 stacks",
+              "en": "3 stacks"
+            },
             "stats": {
               "eleMas": 25
             }
           },
           {
-            "label": "4 stacks",
+            "label": {
+              "fr": "4 stacks",
+              "en": "4 stacks"
+            },
             "stats": {
               "eleMas": 25
             }
@@ -8634,8 +9258,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Driver dendro": {
-        "name": "Driver dendro",
+      "Driver Dendro": {
+        "name": {
+          "fr": "Driver Dendro",
+          "en": "Dendro Driver"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -8732,7 +9359,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Trésor de l'Alioth (après déchaînement élémentaire)",
+            "label": {
+              "fr": "A4 : Trésor de l'Alioth (après déchaînement - Taux Crit, Recharge d'énergie)",
+              "en": "A4: Aristocratic dignity (after the burst - Crit Rate, ER)"
+            },
             "active": false,
             "stats": {
               "critRate_": 0.15,
@@ -8742,10 +9372,16 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 4 : Syntonie",
+        "category": {
+          "fr": "Constellation 4 : Syntonie (ATQ%)",
+          "en": "Constellation4 : Attunement (ATK%)"
+        },
         "buffs": [
           {
-            "label": "Après réaction électro",
+            "label": {
+              "fr": "Après réaction Électro",
+              "en": "After Electro reaction"
+            },
             "cons": 4,
             "stats": {
               "atk_": 0.25
@@ -8754,32 +9390,47 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 6 : Étoile tenace",
+        "category": {
+          "fr": "Constellation 6 : Étoile tenace (DGTs Électro)",
+          "en": "Constellation 6: Tenacious star (Electro DMG)"
+        },
         "selectMode": "Cumulative",
         "buffs": [
           {
-            "label": "Attaque normale",
+            "label": {
+              "fr": "Attaque normale",
+              "en": "Normal attack"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.06
             }
           },
           {
-            "label": "Attaque chargée",
+            "label": {
+              "fr": "Attaque chargée",
+              "en": "Charged attack"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.06
             }
           },
           {
-            "label": "Compétence élémentaire",
+            "label": {
+              "fr": "Compétence élémentaire",
+              "en": "Elemental skill"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.06
             }
           },
           {
-            "label": "Déchaînement élémentaire",
+            "label": {
+              "fr": "Déchaînement élémentaire",
+              "en": "Elemental burst"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.06
@@ -8790,7 +9441,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Suractivation": {
-        "name": "DPS Suractivation",
+        "name": {
+          "fr": "DPS Suractivation",
+          "en": "Aggravate DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -8870,7 +9524,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Surcharge": {
-        "name": "DPS Surcharge",
+        "name": {
+          "fr": "DPS Surcharge",
+          "en": "Overload DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -8943,7 +9600,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Sélénocution": {
-        "name": "DPS Sélénocution",
+        "name": {
+          "fr": "DPS Sélénocution",
+          "en": "Lunar-Charged DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -9038,7 +9698,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Bec de perroquet (uniquement le canon)",
+            "label": {
+              "fr": "C1 : Bec de perroquet (uniquement le canon - DGT Crit)",
+              "en": "C1: Parrot's beak (only the cannon - Crit DMG)"
+            },
             "cons": 1,
             "stats": {
               "critDMG_": 1
@@ -9049,7 +9712,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Brûlure": {
-        "name": "DPS Brûlure",
+        "name": {
+          "fr": "DPS Brûlure",
+          "en": "Burning DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -9147,7 +9813,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Myriade de curiosités en chemin",
+            "label": {
+              "fr": "C6 : Myriade de curiosités en chemin (DGTs Élémentaires)",
+              "en": "C6: Countless lights to see (Elemental DMG)"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.12
@@ -9157,8 +9826,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Shieldeuse générale": {
-        "name": "Shieldeuse générale",
+      "Shieldeuse universelle": {
+        "name": {
+          "fr": "Shieldeuse universelle",
+          "en": "Universal Shielder"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -9258,14 +9930,20 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Bombardement continu (Hexerei)",
+            "label": {
+              "fr": "C1 : Bombardement continu (Hexerei - ATQ%)",
+              "en": "C1: Chained reactions (Hexerei - ATK%)"
+            },
             "cons": 1,
             "stats": {
               "atk_": 0.6
             }
           },
           {
-            "label": "C6 : À tout feu (Hexerei)",
+            "label": {
+              "fr": "C6 : À tout feu (Hexerei - DGTs Pyro)",
+              "en": "C6: Blazing delight (Hexerei - Pyro DMG)"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.5
@@ -9276,7 +9954,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Surcharge Hexerei": {
-        "name": "DPS Surcharge Hexerei",
+        "name": {
+          "fr": "DPS Surcharge Hexerei",
+          "en": "Hexerei Overload DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -9348,7 +10029,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Évaporation Hexerei": {
-        "name": "DPS Évaporation Hexerei",
+        "name": {
+          "fr": "DPS Évaporation Hexerei",
+          "en": "Hexerei Vape DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -9428,7 +10112,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Mono-pyro Hexerei": {
-        "name": "DPS Mono-pyro Hexerei",
+        "name": {
+          "fr": "DPS Mono-pyro Hexerei",
+          "en": "Hexerei Mono-pyro DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -9519,7 +10206,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Péché d'orgueil (uniquement les dégâts électro)",
+            "label": {
+              "fr": "C6 : Péché d'orgueil (uniquement les dégâts Électro - DGT Crit)",
+              "en": "C6: Sin of pride (only Electro DMG - Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -9530,8 +10220,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Buffeuse électro": {
-        "name": "Buffeuse électro",
+      "Support Électro": {
+        "name": {
+          "fr": "Support Électro",
+          "en": "Electro Support"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -9623,7 +10316,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Désir libérateur (PV <= 50%)",
+            "label": {
+              "fr": "A1 : Désir libérateur (PV <= 50% - Soins)",
+              "en": "A1: Breaking free (HP <= 50% - Healing)"
+            },
             "active": true,
             "stats": {
               "heal_": 0.15
@@ -9635,7 +10331,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Pour parer à la faiblesse (PV <= 25%)",
+            "label": {
+              "fr": "C6 : Pour parer à la faiblesse (PV <= 25% - Maîtrise élémentaire)",
+              "en": "C6: To ward weakness (HP <= 25% - EM)"
+            },
             "cons": 6,
             "stats": {
               "eleMas": 150
@@ -9646,7 +10345,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Sub-DPS Exubérance": {
-        "name": "Sub-DPS Exubérance",
+        "name": {
+          "fr": "Sub-DPS Exubérance",
+          "en": "Hyperbloom Sub-DPS"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -9721,8 +10423,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS Propagation": {
-        "name": "Sub-DPS Propagation",
+      "Sub-DPS Suractivation": {
+        "name": {
+          "fr": "Sub-DPS Suractivation",
+          "en": "Aggravate Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -9814,7 +10519,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C4 : « Des perles de sang de faucon-dragon en ornement »",
+            "label": {
+              "fr": "C4 : « Des perles de sang de faucon-dragon en ornement » (Maîtrise élémentaire)",
+              "en": "C4: \"With drakefalcon's blood-pearls adorned\" (EM)"
+            },
             "cons": 4,
             "stats": {
               "eleMas": 60
@@ -9824,8 +10532,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Shieldeuse générale": {
-        "name": "Shieldeuse générale",
+      "Shieldeuse universelle": {
+        "name": {
+          "fr": "Shieldeuse universelle",
+          "en": "Universal Shielder"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -9910,8 +10621,11 @@ window.CHARACTER_CONFIG = {
       "burst": 8
     },
     "builds": {
-      "Sélénofleurissement": {
-        "name": "Sélénofleurissement",
+      "Sub-DPS Sélénofleurissement": {
+        "name": {
+          "fr": "Sub-DPS Sélénofleurissement",
+          "en": "Lunar-Bloom Sub-DPS"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0.4,
@@ -9985,8 +10699,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Fleurissement": {
-        "name": "Fleurissement",
+      "Sub-DPS Fleurissement": {
+        "name": {
+          "fr": "Sub-DPS Fleurissement",
+          "en": "Bloom Sub-DPS"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0.4,
@@ -10059,8 +10776,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Exubérance": {
-        "name": "Exubérance",
+      "Sub-DPS Exubérance": {
+        "name": {
+          "fr": "Sub-DPS Exubérance",
+          "en": "Hyperbloom Sub-DPS"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0.4,
@@ -10144,8 +10864,11 @@ window.CHARACTER_CONFIG = {
       "burst": 6
     },
     "builds": {
-      "Shielder universel": {
-        "name": "Shielder universel",
+      "Shieldeuse universelle": {
+        "name": {
+          "fr": "Shieldeuse universelle",
+          "en": "Universal Shielder"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -10226,11 +10949,17 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "A2 : Archive naturaliste universelle",
+        "category": {
+          "fr": "A4 : Archive naturaliste universelle",
+          "en": "A4: Universal naturalist archive"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "Personnage non-lunaire sur le terrain",
+            "label": {
+              "fr": "Personnage non-lunaire sur le terrain (Maîtrise élémentaire)",
+              "en": "Non-lunar character on the field (EM)"
+            },
             "active": true,
             "stats": {
               "eleMas_bonus_scaling": {
@@ -10245,14 +10974,20 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Présage de joie et de tristesse",
+            "label": {
+              "fr": "C2 : Présage de joie et de tristesse (DGT Crit)",
+              "en": "C2: Tidings of joy and sorrow (Crit DMG)"
+            },
             "cons": 2,
             "stats": {
               "critDMG_": 0.4
             }
           },
           {
-            "label": "C4 : Instinct d'experte",
+            "label": {
+              "fr": "C4 : Instinct d'experte (DÉF%)",
+              "en": "C4: Expert instinct (DEF%)"
+            },
             "cons": 4,
             "stats": {
               "def_": 0.25
@@ -10262,8 +10997,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Sub-DPS sélénocristallisation": {
-        "name": "Sub-DPS sélénocristallisation",
+      "Sub-DPS Sélénocristallisation": {
+        "name": {
+          "fr": "Sub-DPS Sélénocristallisation",
+          "en": "Lunar-Crystallize Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -10350,7 +11088,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Champ électromagnétique",
+            "label": {
+              "fr": "C2 : Champ électromagnétique (DÉF%)",
+              "en": "C2: Electromagnetic field (DEF%)"
+            },
             "cons": 2,
             "stats": {
               "def_": 0.25
@@ -10361,7 +11102,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Suractivation": {
-        "name": "DPS Suractivation",
+        "name": {
+          "fr": "DPS Suractivation",
+          "en": "Aggravate DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -10440,7 +11184,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Sélénocution": {
-        "name": "DPS Sélénocution",
+        "name": {
+          "fr": "DPS Sélénocution",
+          "en": "Lunar-Charged DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -10520,7 +11267,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Sub-DPS Propagation": {
-        "name": "Sub-DPS Propagation",
+        "name": {
+          "fr": "Sub-DPS Propagation",
+          "en": "Spread Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -10613,7 +11363,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Chef-d'œuvre désinvolte",
+            "label": {
+              "fr": "A4 : Chef-d'œuvre désinvolte (ATQ%)",
+              "en": "A4: Flippant masterpiece (ATK%)"
+            },
             "active": true,
             "stats": {
               "atk_": 0.15
@@ -10625,7 +11378,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Se noyer, sombrer, inconscient — Joie suprême (uniquement la compétence et le déchaînement)",
+            "label": {
+              "fr": "C6 : Se noyer, sombrer, inconscient — Joie suprême (uniquement la compétence et le déchaînement - DGT Crit)",
+              "en": "C6: To Drown, to Sink, Unconscious — Supreme Joy (only the skill and burst - Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -10637,7 +11393,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Fonte": {
-        "name": "DPS Fonte",
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -10728,32 +11487,47 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "A1 : Synergie ingénieuse",
+        "category": {
+          "fr": "A1 : Synergie ingénieuse (ATQ%)",
+          "en": "A1: Sophisticated synergy (ATK%)"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "1 type élémentaire",
+            "label": {
+              "fr": "1 type élémentaire",
+              "en": "1 elemental type"
+            },
             "active": false,
             "stats": {
               "atk_": 0.08
             }
           },
           {
-            "label": "2 types élémentaires",
+            "label": {
+              "fr": "2 types élémentaires",
+              "en": "2 elemental types"
+            },
             "active": false,
             "stats": {
               "atk_": 0.12
             }
           },
           {
-            "label": "3 types élémentaires",
+            "label": {
+              "fr": "3 types élémentaires",
+              "en": "3 elemental types"
+            },
             "active": true,
             "stats": {
               "atk_": 0.16
             }
           },
           {
-            "label": "4 types élémentaires",
+            "label": {
+              "fr": "4 types élémentaires",
+              "en": "4 elemental types"
+            },
             "active": false,
             "stats": {
               "atk_": 0.2
@@ -10765,7 +11539,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Œil perspicace",
+            "label": {
+              "fr": "C6 : Œil perspicace (DGTs Anémo)",
+              "en": "C6: Watchful eye (Anemo DMG)"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.2
@@ -10775,8 +11552,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Support général": {
-        "name": "Support général",
+      "Support universel": {
+        "name": {
+          "fr": "Support universel",
+          "en": "Universal Support"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -10864,25 +11644,37 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "C2 : Cajolerie affable",
+        "category": {
+          "fr": "C2 : Cajolerie affable (DGT Crit)",
+          "en": "C2: Loquacious cajoling (Crit DMG)"
+        },
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "2s sur le terrain",
+            "label": {
+              "fr": "2s sur le terrain",
+              "en": "2s on the field"
+            },
             "cons": 2,
             "stats": {
               "critDMG_": 0.2
             }
           },
           {
-            "label": "4s sur le terrain",
+            "label": {
+              "fr": "4s sur le terrain",
+              "en": "4s on the field"
+            },
             "cons": 2,
             "stats": {
               "critDMG_": 0.2
             }
           },
           {
-            "label": "6s sur le terrain",
+            "label": {
+              "fr": "6s sur le terrain",
+              "en": "6s on the field"
+            },
             "cons": 2,
             "stats": {
               "critDMG_": 0.2
@@ -10892,8 +11684,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "DPS mono-pyro": {
-        "name": "DPS mono-pyro",
+      "DPS Mono-pyro": {
+        "name": {
+          "fr": "DPS Mono-pyro",
+          "en": "Mono-pyro DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -10984,7 +11779,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Cadeau de fleurs enflammées",
+            "label": {
+              "fr": "A1 : Cadeau de fleurs enflammées (ATQ%)",
+              "en": "A1: Gift of flaming flowers (ATK%)"
+            },
             "active": true,
             "stats": {
               "atk_": 0.3
@@ -10996,14 +11794,20 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Confession du seigneur de la nuit",
+            "label": {
+              "fr": "C1 : Confession du seigneur de la nuit (ATQ%)",
+              "en": "C1: The Night-Lord's explication (ATK%)"
+            },
             "cons": 1,
             "stats": {
               "atk_": 0.4
             }
           },
           {
-            "label": "C2 : Prix des braises cendrées",
+            "label": {
+              "fr": "C2 : Prix des braises cendrées (ATQ)",
+              "en": "C2: The ashen price (ATK)"
+            },
             "cons": 2,
             "stats": {
               "atk": 200
@@ -11014,7 +11818,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Fonte": {
-        "name": "DPS Fonte",
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -11093,7 +11900,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Surcharge": {
-        "name": "DPS Surcharge",
+        "name": {
+          "fr": "DPS Surcharge",
+          "en": "Overload DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -11176,35 +11986,53 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "Passifs & Cumuls",
+        "category": {
+          "fr": "Passifs & Cumuls",
+          "en": "Passives & Stacks"
+        },
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "Effet Localisation (1 cumul)",
+            "label": {
+              "fr": "Effet Localisation (1 cumul - DGTs Physiques)",
+              "en": "Detector effect (1 stack - Physical DMG)"
+            },
             "stats": {
               "physical_dmg_": 0.1
             }
           },
           {
-            "label": "Effet Localisation (2 cumuls)",
+            "label": {
+              "fr": "Effet Localisation (2 cumuls - DGTs Physiques)",
+              "en": "Detector effect (2 stacks - Physical DMG)"
+            },
             "stats": {
               "physical_dmg_": 0.1
             }
           },
           {
-            "label": "Effet Localisation (3 cumuls - Max A1)",
+            "label": {
+              "fr": "Effet Localisation (3 cumuls / A1 - DGTs Physiques)",
+              "en": "Detector effect (3 stacks / A1 - Physical DMG)"
+            },
             "stats": {
               "physical_dmg_": 0.1
             }
           },
           {
-            "label": "Effet Localisation (4 cumuls - Max A4)",
+            "label": {
+              "fr": "Effet Localisation (4 cumuls / A4 - DGTs Physiques)",
+              "en": "Detector effect (4 stacks / A4 - Physical DMG)"
+            },
             "stats": {
               "physical_dmg_": 0.1
             }
           },
           {
-            "label": "Effet Localisation (5 cumuls - Max C6)",
+            "label": {
+              "fr": "Effet Localisation (5 cumuls / C6 - DGTs Physiques)",
+              "en": "Detector effect (5 stacks / C6 - Physical DMG)"
+            },
             "cons": 6,
             "stats": {
               "physical_dmg_": 0.1
@@ -11216,7 +12044,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Conseil du compagnon",
+            "label": {
+              "fr": "C6 : Conseil du compagnon (DGT Crit)",
+              "en": "C6: Companion's counsel (Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -11227,8 +12058,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Buffer physique": {
-        "name": "Buffer physique",
+      "Support Physique": {
+        "name": {
+          "fr": "Support Physique",
+          "en": "Physical Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -11320,7 +12154,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Que le destin décide",
+            "label": {
+              "fr": "A4 : Que le destin décide (DGTs Hydro)",
+              "en": "A4: Waterborne destiny (Hydro DMG)"
+            },
             "stats": {
               "elemental_dmg_bonus_scaling": {
                 "source": "enerRech_",
@@ -11331,10 +12168,16 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 2 : Chaîne lunaire",
+        "category": {
+          "fr": "Constellation 2 : Chaîne lunaire",
+          "en": "Constellation 2: Lunar chain"
+        },
         "buffs": [
           {
-            "label": "Buff Hexerei",
+            "label": {
+              "fr": "Buff Hexerei (Maîtrise élémentaire)",
+              "en": "Hexerei buff (EM)"
+            },
             "cons": 2,
             "stats": {
               "eleMas": 80
@@ -11343,10 +12186,16 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 4 : Prophétie de la fin",
+        "category": {
+          "fr": "Constellation 4 : Prophétie de la fin",
+          "en": "Constellation 4: Prophecy of oblivion"
+        },
         "buffs": [
           {
-            "label": "Si l'ennemi attaqué est marqué par un présage",
+            "label": {
+              "fr": "Si l'ennemi attaqué est marqué par un présage (Taux Crit)",
+              "en": "If the attacked enemy is affected by an omen (Crit Rate)"
+            },
             "active": false,
             "cons": 4,
             "stats": {
@@ -11354,7 +12203,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "Si le personnage est un Hexerei",
+            "label": {
+              "fr": "Si le personnage qui attaque est Hexerei (DGT Crit)",
+              "en": "Of the attacking character is Hexerei (Crit DMG)"
+            },
             "cons": 4,
             "stats": {
               "critDMG_": 0.15
@@ -11365,7 +12217,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support Hexerei": {
-        "name": "Support Hexerei",
+        "name": {
+          "fr": "Support Hexerei",
+          "en": "Hexerei Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0.4,
@@ -11403,6 +12258,7 @@ window.CHARACTER_CONFIG = {
         "hideUIStats": [],
         "showUIStats": [],
         "bestSets": [
+          "CelestialGift:4",
           "NoblesseOblige:4",
           "TenacityOfTheMillelith:4"
         ],
@@ -11433,7 +12289,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Nuke Évaporation": {
-        "name": "Nuke Évaporation",
+        "name": {
+          "fr": "Nuke Évaporation",
+          "en": "Vape Nuke"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -11524,7 +12383,10 @@ window.CHARACTER_CONFIG = {
     },
     "builds": {
       "DPS Évaporation": {
-        "name": "DPS Évaporation",
+        "name": {
+          "fr": "DPS Évaporation",
+          "en": "Vape DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -11606,7 +12468,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Hexerei": {
-        "name": "DPS Hexerei",
+        "name": {
+          "fr": "DPS Hexerei",
+          "en": "Hexerei DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -11696,7 +12561,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Compassion illuminée (Nahida On-field)",
+            "label": {
+              "fr": "A1 : Compassion illuminée (Nahida On-field - Maîtrise élémentaire)",
+              "en": "A1: Compassion illuminated (On-field Nahida - EM)"
+            },
             "stats": {
               "eleMas_bonus_scaling": {
                 "source": "eleMas",
@@ -11707,7 +12575,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "A4 : Éveil élucidé",
+            "label": {
+              "fr": "A4 : Éveil élucidé (Taux Crit)",
+              "en": "A4: Awakening elucidated (Crit Rate)"
+            },
             "stats": {
               "critRate__bonus_scaling": {
                 "source": "eleMas",
@@ -11720,10 +12591,16 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 2 : Racine de toute plénitude",
+        "category": {
+          "fr": "Constellation 2 : Racine de toute plénitude",
+          "en": "Constellation 2: The root of all fullness"
+        },
         "buffs": [
           {
-            "label": "Sélénofleurissement",
+            "label": {
+              "fr": "Sélénofleurissement (Taux Crit, DGT Crit)",
+              "en": "Lunar-Bloom (Crit Rate, Crit DMG)"
+            },
             "cons": 2,
             "active": false,
             "stats": {
@@ -11734,32 +12611,47 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 4 : Tige d'inférence manifeste",
+        "category": {
+          "fr": "Constellation 4 : Tige d'inférence manifeste (Maîtrise élémentaire)",
+          "en": "Constellation 4: The stem of manifest inference (EM)"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "1 ennemi affecté par la compétence élémentaire",
+            "label": {
+              "fr": "1 ennemi affecté par la compétence élémentaire",
+              "en": "1 enemy affected by the elemental skill"
+            },
             "cons": 4,
             "stats": {
               "eleMas": 100
             }
           },
           {
-            "label": "2 ennemis affectés par la compétence élémentaire",
+            "label": {
+              "fr": "2 ennemis affectés par la compétence élémentaire",
+              "en": "2 enemies affected by the elemental skill"
+            },
             "cons": 4,
             "stats": {
               "eleMas": 120
             }
           },
           {
-            "label": "3 ennemis affectés par la compétence élémentaire",
+            "label": {
+              "fr": "3 ennemis affectés par la compétence élémentaire",
+              "en": "3 enemies affected by the elemental skill"
+            },
             "cons": 4,
             "stats": {
               "eleMas": 140
             }
           },
           {
-            "label": "4 ennemis affectés par la compétence élémentaire",
+            "label": {
+              "fr": "4 ennemis affectés par la compétence élémentaire",
+              "en": "4 enemies affected by the elemental skill"
+            },
             "cons": 4,
             "stats": {
               "eleMas": 160
@@ -11770,7 +12662,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Sub-DPS Propagation": {
-        "name": "Sub-DPS Propagation",
+        "name": {
+          "fr": "Sub-DPS Propagation",
+          "en": "Spread Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -11846,7 +12741,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Sub-DPS Exubérance": {
-        "name": "Sub-DPS Exubérance",
+        "name": {
+          "fr": "Sub-DPS Exubérance",
+          "en": "Hyperbloom Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -11922,7 +12820,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Sub-DPS Fleurissement": {
-        "name": "Sub-DPS Fleurissement",
+        "name": {
+          "fr": "Sub-DPS Fleurissement",
+          "en": "Bloom Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -12013,14 +12914,20 @@ window.CHARACTER_CONFIG = {
         "selectMode": "exclusive",
         "data": [
           {
-            "label": "A4 : Réseau d'assistance mutuelle (1 allié Pyro/Hydro/Cryo/Électro)",
+            "label": {
+              "fr": "A4 : Réseau d'assistance mutuelle (1 allié Pyro/Hydro/Cryo/Électro - ATQ%)",
+              "en": "A4: Mutual assistance network (1 Pyro/Hydro/Cryo/Electro ally - ATK%)"
+            },
             "active": false,
             "stats": {
               "atk_": 0.2
             }
           },
           {
-            "label": "A4 : Réseau d'assistance mutuelle (2 alliés Pyro/Hydro/Cryo/Électro)",
+            "label": {
+              "fr": "A4 : Réseau d'assistance mutuelle (2 alliés Pyro/Hydro/Cryo/Électro - ATQ%)",
+              "en": "A4: Mutual assistance network (1 Pyro/Hydro/Cryo/Electro ally - ATK%)"
+            },
             "active": true,
             "stats": {
               "atk_": 0.4
@@ -12032,7 +12939,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Quête de victoire de la présidente (pour la compétence)",
+            "label": {
+              "fr": "C2 : Quête de victoire de la présidente (uniquement la compétence - Taux Crit)",
+              "en": "C2: The president's pursuit of victory (only the skill - Crit Rate)"
+            },
             "cons": 2,
             "active": false,
             "stats": {
@@ -12040,7 +12950,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Finesse flexible de la présidente de la Spina (pour la compétence)",
+            "label": {
+              "fr": "C6 : Finesse flexible de la présidente de la Spina (uniquement la compétence - DGT Crit)",
+              "en": "C6: The flexible finesse of the Spina's president (only the skill - Crit DMG)"
+            },
             "cons": 6,
             "stats": {
               "critDMG_": 1.35
@@ -12050,8 +12963,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "DPS cristallisation": {
-        "name": "DPS cristallisation",
+      "DPS Cristallisation": {
+        "name": {
+          "fr": "DPS Cristallisation",
+          "en": "Crystallize DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -12122,7 +13038,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Sélénocristallisation": {
-        "name": "DPS Sélénocristallisation",
+        "name": {
+          "fr": "DPS Sélénocristallisation",
+          "en": "Lunar-Crystallize DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -12211,7 +13130,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Pari au clair de lune",
+            "label": {
+              "fr": "A1 : Pari au clair de lune (Maîtrise élémentaire)",
+              "en": "A1: A wager of moonlight (EM)"
+            },
             "active": true,
             "stats": {
               "eleMas": 100
@@ -12223,7 +13145,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : L'observation nourrit la stratégie",
+            "label": {
+              "fr": "C2 : L'observation nourrit la stratégie (Maîtrise élémentaire)",
+              "en": "C2: Observation feeds strategy (EM)"
+            },
             "cons": 2,
             "stats": {
               "eleMas": 200
@@ -12234,7 +13159,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Sélénofleurissement": {
-        "name": "DPS Sélénofleurissement",
+        "name": {
+          "fr": "DPS Sélénofleurissement",
+          "en": "Lunar-Bloom DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -12332,7 +13260,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Discipline de l'arbitrage suprême",
+            "label": {
+              "fr": "A4 : Discipline de l'arbitrage suprême (DGTs Hydro)",
+              "en": "A4: Discipline of the supreme arbitration (Hydro DMG)"
+            },
             "active": true,
             "stats": {
               "hydro_dmg_": 0.3
@@ -12344,7 +13275,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Exhortation de la loi",
+            "label": {
+              "fr": "C2 : Exhortation de la loi (DGT Crit)",
+              "en": "C2: Juridical exhortation (Crit DMG)"
+            },
             "cons": 2,
             "stats": {
               "critDMG_": 0.42
@@ -12355,7 +13289,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Hydro": {
-        "name": "DPS Hydro",
+        "name": {
+          "fr": "DPS Hydro",
+          "en": "Hydro DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -12429,7 +13366,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Gel": {
-        "name": "DPS Gel",
+        "name": {
+          "fr": "DPS Gel",
+          "en": "Freeze DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -12494,7 +13434,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Exubérance": {
-        "name": "DPS Exubérance",
+        "name": {
+          "fr": "DPS Exubérance",
+          "en": "Hyperbloom DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -12574,14 +13517,20 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Méthexis",
+            "label": {
+              "fr": "A1 : Méthexis (ATQ)",
+              "en": "A1: Methexis (ATK)"
+            },
             "active": true,
             "stats": {
               "atk": 300
             }
           },
           {
-            "label": "A1 : Méthexis (C2)",
+            "label": {
+              "fr": "A1 : Méthexis (C2 - ATQ)",
+              "en": "A1: Methexis (C2 - ATK)"
+            },
             "active": true,
             "cons": 2,
             "stats": {
@@ -12593,7 +13542,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support Hexerei": {
-        "name": "Support Hexerei",
+        "name": {
+          "fr": "Support Hexerei",
+          "en": "Hexerei Support"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -12687,7 +13639,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Cour des pétales dansants",
+            "label": {
+              "fr": "A1 : Cour des pétales dansants (Maîtrise élémentaire)",
+              "en": "A1: Court of dancing petals (EM)"
+            },
             "active": true,
             "stats": {
               "eleMas": 100
@@ -12699,7 +13654,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Mélodie du brise-givre",
+            "label": {
+              "fr": "C6 : Mélodie du brise-givre (Taux Crit, DGT Crit)",
+              "en": "C6: Frostbreaker's melody (Crit Rate, Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -12720,7 +13678,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Enabler Fleurissement": {
-        "name": "Enabler Fleurissement",
+        "name": {
+          "fr": "Enabler Fleurissement",
+          "en": "Bloom Enabler"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -12805,7 +13766,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Réserve stratégique (en traversant le paravent)",
+            "label": {
+              "fr": "A4 : Réserve stratégique (en traversant le paravent - DGTs Géo)",
+              "en": "A4: Strategic reserve (passing through the jade screen - Geo DMG)"
+            },
             "active": false,
             "stats": {
               "geo_dmg_": 0.12
@@ -12816,7 +13780,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Géo": {
-        "name": "DPS Géo",
+        "name": {
+          "fr": "DPS Géo",
+          "en": "Geo DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -12904,14 +13871,20 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Fleur de jade (Pyro)",
+            "label": {
+              "fr": "A1 : Fleur de jade (Pyro - ATQ%)",
+              "en": "A1: Jade-claimed flower (Pyro - ATK%)"
+            },
             "active": true,
             "stats": {
               "atk_": 0.3
             }
           },
           {
-            "label": "A1 : Fleur de jade (Cryo)",
+            "label": {
+              "fr": "A1 : Fleur de jade (Cryo - Taux Crit)",
+              "en": "A1: Jade-claimed flower (Cryo - Crit Rate)"
+            },
             "active": false,
             "stats": {
               "critRate_": 0.2
@@ -12922,7 +13895,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Dispersion": {
-        "name": "DPS Dispersion",
+        "name": {
+          "fr": "DPS Dispersion",
+          "en": "Swirl DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -13011,7 +13987,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Aucune poussière",
+            "label": {
+              "fr": "C6 : Aucune poussière (ATQ%)",
+              "en": "C6: Must be spotless (ATK%)"
+            },
             "cons": 6,
             "atk_bonus_scaling": {
               "source": "def",
@@ -13023,7 +14002,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Géo": {
-        "name": "DPS Géo",
+        "name": {
+          "fr": "DPS Géo",
+          "en": "Geo DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -13105,7 +14087,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Sélénocristallisation": {
-        "name": "DPS Sélénocristallisation",
+        "name": {
+          "fr": "DPS Sélénocristallisation",
+          "en": "Lunar-Crystallize DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -13205,32 +14190,47 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "C2 : Roi du vin nectarin",
+        "category": {
+          "fr": "C2 : Roi du vin nectarin (DGTs Électro)",
+          "en": "C2: King bee of the hidden honeyed wine (Electro DMG)"
+        },
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "1 ennemi touché par le déchaînement",
+            "label": {
+              "fr": "1 ennemi touché par le déchaînement",
+              "en": "1 enemy hit by the burst"
+            },
             "cons": 2,
             "stats": {
               "elemental_dmg_": 0.08
             }
           },
           {
-            "label": "2 ennemis touchés par le déchaînement",
+            "label": {
+              "fr": "2 ennemis touchés par le déchaînement",
+              "en": "2 enemies hit by the burst"
+            },
             "cons": 2,
             "stats": {
               "elemental_dmg_": 0.08
             }
           },
           {
-            "label": "3 ennemis touchés par le déchaînement",
+            "label": {
+              "fr": "3 ennemis touchés par le déchaînement",
+              "en": "3 enemies hit by the burst"
+            },
             "cons": 2,
             "stats": {
               "elemental_dmg_": 0.08
             }
           },
           {
-            "label": "4 ennemis touchés par le déchaînement",
+            "label": {
+              "fr": "4 ennemis touchés par le déchaînement",
+              "en": "4 enemies hit by the burst"
+            },
             "cons": 2,
             "stats": {
               "elemental_dmg_": 0.08
@@ -13240,8 +14240,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Sub-DPS électrocution": {
-        "name": "Sub-DPS électrocution",
+      "Sub-DPS Électrocution": {
+        "name": {
+          "fr": "Sub-DPS Électrocution",
+          "en": "Electro-Charged Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -13318,8 +14321,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS surcharge": {
-        "name": "Sub-DPS surcharge",
+      "Sub-DPS Surcharge": {
+        "name": {
+          "fr": "Sub-DPS Surcharge",
+          "en": "Overload Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -13410,7 +14416,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "Hexerei : Vœu de recherche de sorcières",
+            "label": {
+              "fr": "Hexerei : Vœu de recherche de sorcières (ATQ%)",
+              "en": "Hexerei: Witchseeker's vow (ATK%)"
+            },
             "active": true,
             "stats": {
               "atk_": 0.6
@@ -13422,14 +14431,20 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Bons pour nettoyer les bagages négligés sont les pouvoirs élémentaires",
+            "label": {
+              "fr": "C2 : Bons pour nettoyer les bagages négligés sont les pouvoirs élémentaires (ATQ%)",
+              "en": "C2: Useful for Cleaning Messy Baggage, Elemental Powers Are Indeed (ATK%)"
+            },
             "cons": 2,
             "stats": {
               "atk_": 0.4
             }
           },
           {
-            "label": "C6 : Et voilà l'histoire ! À partager avec vos amis !",
+            "label": {
+              "fr": "C6 : Et voilà l'histoire ! À partager avec vos amis ! (ATQ)",
+              "en": "C6: And That's the Story! Share It With Your Friends! (ATK)"
+            },
             "cons": 6,
             "stats": {
               "atk": 350
@@ -13440,7 +14455,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support Hexerei": {
-        "name": "Support Hexerei",
+        "name": {
+          "fr": "Support Hexerei",
+          "en": "Hexerei Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -13526,8 +14544,11 @@ window.CHARACTER_CONFIG = {
       "burst": 8
     },
     "builds": {
-      "Healer": {
-        "name": "Healer",
+      "Healeuse universelle": {
+        "name": {
+          "fr": "Healeuse universelle",
+          "en": "Universel Healer"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -13602,7 +14623,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Physique": {
-        "name": "DPS Physique",
+        "name": {
+          "fr": "DPS Physique",
+          "en": "Physical DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -13689,7 +14713,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Famine (ER < 50%)",
+            "label": {
+              "fr": "A4 : Famine (ER < 50% - Recharge d'énergie)",
+              "en": "A4: Hunger (ER < 50% - ER)"
+            },
             "active": false,
             "stats": {
               "enerRech_": 0.3
@@ -13701,7 +14728,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Répression (ennemis PV < 30%)",
+            "label": {
+              "fr": "C2 : Répression (ennemis PV < 30% - Taux Crit)",
+              "en": "C2: Suppression (enemies HP < 30% - Crit Rate)"
+            },
             "cons": 2,
             "active": false,
             "stats": {
@@ -13709,7 +14739,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Lupus Fulguris (Hexerei)",
+            "label": {
+              "fr": "C6 : Lupus Fulguris (Hexerei - Taux Crit, DGT Crit)",
+              "en": "C6: Lupus Fulguris (Hexerei - Crit Rate, Crit DMG)"
+            },
             "cons": 6,
             "active": true,
             "stats": {
@@ -13722,7 +14755,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Surcharge Hexerei": {
-        "name": "DPS Surcharge Hexerei",
+        "name": {
+          "fr": "DPS Surcharge Hexerei",
+          "en": "Hexerei Overload DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -13795,7 +14831,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Physique": {
-        "name": "DPS Physique",
+        "name": {
+          "fr": "DPS Physique",
+          "en": "Physical DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -13884,7 +14923,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Confession forcée (compétence dans le dos)",
+            "label": {
+              "fr": "A1 : Confession forcée (compétence dans le dos - Taux Crit)",
+              "en": "A1: Regina Probationum (skill from behind - Crit Rate)"
+            },
             "active": false,
             "stats": {
               "critRate_": 0.12
@@ -13894,8 +14936,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Sub-DPS fonte inversée": {
-        "name": "Sub-DPS fonte inversée",
+      "Sub-DPS Fonte": {
+        "name": {
+          "fr": "Sub-DPS Fonte",
+          "en": "Melt Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -13978,8 +15023,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS gel": {
-        "name": "Sub-DPS gel",
+      "Sub-DPS Gel": {
+        "name": {
+          "fr": "Sub-DPS Gel",
+          "en": "Freeze Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -14074,7 +15122,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Sango Isshin",
+            "label": {
+              "fr": "C6 : Sango Isshin (DGTs Hydro)",
+              "en": "C6: Sango Isshin (Hydro DMG)"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.4
@@ -14084,8 +15135,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Healeuse générale": {
-        "name": "Healeuse générale",
+      "Healeuse universelle": {
+        "name": {
+          "fr": "Healeuse universelle",
+          "en": "Universal Healer"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -14157,7 +15211,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Driver Fleurissement": {
-        "name": "Driver Fleurissement",
+        "name": {
+          "fr": "Driver Fleurissement",
+          "en": "Bloom Driver"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -14238,8 +15295,11 @@ window.CHARACTER_CONFIG = {
       "burst": 9
     },
     "builds": {
-      "Burst support": {
-        "name": "Burst support",
+      "Burst Support": {
+        "name": {
+          "fr": "Burst Support",
+          "en": "Burst Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -14326,8 +15386,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Driver dispersion": {
-        "name": "Driver dispersion",
+      "Driver Dispersion": {
+        "name": {
+          "fr": "Driver Dispersion",
+          "en": "Swirl Driver"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -14424,7 +15487,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Chant du sanctuaire scellé (attaque chargée uniquement)",
+            "label": {
+              "fr": "C1 : Chant du sanctuaire scellé (attaque chargée uniquement - Taux Crit)",
+              "en": "C1: Sealed shrine's spiritsong (charged attack only - Crit DMG)"
+            },
             "active": false,
             "cons": 1,
             "stats": {
@@ -14432,7 +15498,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C2 : Papyrus du secret silencieux",
+            "label": {
+              "fr": "C2 : Papyrus du secret silencieux (DGTs Électro)",
+              "en": "C2: Papyrus scripture of silent secrets (Electro DMG)"
+            },
             "active": true,
             "cons": 2,
             "stats": {
@@ -14440,7 +15509,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C4 : Collection de la plume bienveillante",
+            "label": {
+              "fr": "C4 : Collection de la plume bienveillante (Maîtrise élémentaire)",
+              "en": "C4: Beneficient plumage (EM)"
+            },
             "active": true,
             "cons": 4,
             "stats": {
@@ -14451,8 +15523,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "DPS Propagation": {
-        "name": "DPS Propagation",
+      "DPS Suractivation": {
+        "name": {
+          "fr": "DPS Suractivation",
+          "en": "Aggravate DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -14554,7 +15629,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Étreinte divine",
+            "label": {
+              "fr": "A1 : Étreinte divine (DGTs Cryo)",
+              "en": "A1: Deific embrace (Cryo DMG)"
+            },
             "stats": {
               "elemental_dmg_": 0.15
             }
@@ -14565,7 +15643,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Esprit centré (uniquement dégâts cryo)",
+            "label": {
+              "fr": "C2 : Esprit centré (uniquement dégâts Cryo - DGT Crit)",
+              "en": "C2: Centered spirit (only Cryo damage - Crit DMG)"
+            },
             "cons": 2,
             "stats": {
               "critDMG_": 0.15
@@ -14576,7 +15657,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support Cryo": {
-        "name": "Support Cryo",
+        "name": {
+          "fr": "Support Cryo",
+          "en": "Cryo Support"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -14666,7 +15750,10 @@ window.CHARACTER_CONFIG = {
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "C6 : Registre curieux (1 cumul - Compétence)",
+            "label": {
+              "fr": "C6 : Registre curieux (1 cumul - Compétence uniquement - Taux Crit)",
+              "en": "C6: Curious casefiles (1 stack - Skill only - Crit Rate)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -14674,7 +15761,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Registre curieux (2 cumuls - Compétence)",
+            "label": {
+              "fr": "C6 : Registre curieux (2 cumuls - Compétence uniquement - Taux Crit)",
+              "en": "C6: Curious casefiles (2 stacks - Skill only - Crit Rate)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -14682,7 +15772,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Registre curieux (3 cumuls - Compétence)",
+            "label": {
+              "fr": "C6 : Registre curieux (3 cumuls - Compétence uniquement - Taux Crit)",
+              "en": "C6: Curious casefiles (3 stacks - Skill only - Crit Rate)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -14690,7 +15783,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Registre curieux (4 cumuls + Conviction)",
+            "label": {
+              "fr": "C6 : Registre curieux (4 cumuls - Compétence uniquement - Taux Crit)",
+              "en": "C6: Curious casefiles (4 stacks - Skill only - Crit Rate)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -14703,7 +15799,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Anémo": {
-        "name": "DPS Anémo",
+        "name": {
+          "fr": "DPS Anémo",
+          "en": "Anemo DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -14792,7 +15891,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : L'Illuminée",
+            "label": {
+              "fr": "A4 : L'Illuminée (DGTs Électro)",
+              "en": "A4: Enlightened one (Electro DMG)"
+            },
             "stats": {
               "elemental_dmg_bonus_scaling": {
                 "source": "enerRech_",
@@ -14806,7 +15908,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Électro": {
-        "name": "DPS Électro",
+        "name": {
+          "fr": "DPS Électro",
+          "en": "Electro DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -14883,8 +15988,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Exubérance": {
-        "name": "Exubérance",
+      "DPS Exubérance": {
+        "name": {
+          "fr": "DPS Exubérance",
+          "en": "Hyperbloom DPS"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -14967,13 +16075,19 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Repos adéquat requis",
+            "label": {
+              "fr": "A1 : Repos adéquat requis (DGTs Hydro)",
+              "en": "A1: Requires appropriate rest (Hydro DMG)"
+            },
             "stats": {
               "elemental_dmg_": 0.08
             }
           },
           {
-            "label": "A4 : Traitement minutieux prescrit",
+            "label": {
+              "fr": "A4 : Traitement minutieux prescrit (Soins)",
+              "en": "A4: Detailed diagnosis, thorough treatment (Healing)"
+            },
             "stats": {
               "heal_": 0.3
             }
@@ -14984,7 +16098,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : « Le plus radieux des esprits peut-il prier pour moi ? »",
+            "label": {
+              "fr": "C6 : « Le plus radieux des esprits peut-il prier pour moi ? » (Taux Crit, DGT Crit)",
+              "en": "C6: \"Can the Most Radiant of Spirits Pray For Me?\" (Crit Rate, Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -15004,8 +16121,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Support universel": {
-        "name": "Support universel",
+      "Healeuse universelle": {
+        "name": {
+          "fr": "Healeuse universelle",
+          "en": "Universal Healer"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -15073,7 +16193,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Sub-DPS Burst": {
-        "name": "Sub-DPS Burst",
+        "name": {
+          "fr": "Sub-DPS Burst",
+          "en": "Burst Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -15156,14 +16279,20 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Abîme profond",
+            "label": {
+              "fr": "C2 : Abîme profond (ATQ%)",
+              "en": "C2: Into the abyss (ATK%)"
+            },
             "cons": 2,
             "stats": {
               "atk_": 0.7
             }
           },
           {
-            "label": "C4 : Flux scindé",
+            "label": {
+              "fr": "C4 : Flux scindé (ATQ%)",
+              "en": "C4: Fractured flow (ATK%)"
+            },
             "cons": 4,
             "stats": {
               "atk_": 0.4
@@ -15174,7 +16303,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Gel": {
-        "name": "DPS Gel",
+        "name": {
+          "fr": "DPS Gel",
+          "en": "Freeze DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -15261,7 +16393,10 @@ window.CHARACTER_CONFIG = {
     },
     "builds": {
       "Support universel": {
-        "name": "Support universel",
+        "name": {
+          "fr": "Support universel",
+          "en": "Universal Support"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -15341,7 +16476,10 @@ window.CHARACTER_CONFIG = {
     },
     "builds": {
       "DPS Évaporation inversée": {
-        "name": "DPS Évaporation inversée",
+        "name": {
+          "fr": "DPS Évaporation inversée",
+          "en": "Reverse Vape DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -15420,7 +16558,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Électrocution": {
-        "name": "DPS Électrocution",
+        "name": {
+          "fr": "DPS Électrocution",
+          "en": "Electro-Charged DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -15493,7 +16634,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Gel": {
-        "name": "DPS Gel",
+        "name": {
+          "fr": "DPS Gel",
+          "en": "Freeze DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -15577,8 +16721,11 @@ window.CHARACTER_CONFIG = {
       "burst": 9
     },
     "builds": {
-      "Shielder général": {
-        "name": "Shielder général",
+      "Shielder universel": {
+        "name": {
+          "fr": "Shielder universel",
+          "en": "Universal Shielder"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -15644,8 +16791,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS bourgeonnement": {
-        "name": "Sub-DPS bourgeonnement",
+      "Sub-DPS Bourgeonnement": {
+        "name": {
+          "fr": "Sub-DPS Bourgeonnement",
+          "en": "Burgeon Sub-DPS"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -15737,7 +16887,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Vue aiguë",
+            "label": {
+              "fr": "A1 : Vue aiguë (Maîtrise élémentaire)",
+              "en": "A1: Keen sight (EM)"
+            },
             "active": true,
             "stats": {
               "eleMas": 50
@@ -15746,10 +16899,16 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 1 : Début déterminé à la racine",
+        "category": {
+          "fr": "Constellation 1 : Début déterminé à la racine (Taux Crit)",
+          "en": "Constellation 1: Beginnings determined at the roots (Crit Rate)"
+        },
         "buffs": [
           {
-            "label": "Concerne uniquement les attaques chargées",
+            "label": {
+              "fr": "Concerne uniquement les attaques chargées",
+              "en": "Only for the charged attacks"
+            },
             "cons": 1,
             "active": false,
             "stats": {
@@ -15759,10 +16918,16 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 2 : Origine connue dans la tige",
+        "category": {
+          "fr": "Constellation 2 : Origine connue dans la tige (DGTs Dendro)",
+          "en": "Constellation 2: Origins known from the stem (Dendro DMG)"
+        },
         "buffs": [
           {
-            "label": "Lorsqu'un ennemi est dans la compétence élémentaire",
+            "label": {
+              "fr": "Lorsqu'un ennemi est dans la compétence élémentaire",
+              "en": "When an enemy is inside the elemental skill"
+            },
             "cons": 2,
             "stats": {
               "elemental_dmg_": 0.2
@@ -15771,18 +16936,27 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 4 : Flétrissement entrevu grâce aux feuilles",
+        "category": {
+          "fr": "Constellation 4 : Flétrissement entrevu grâce aux feuilles (Maîtrise élémentaire)",
+          "en": "Constellation 4: Withering glimpsed in the leaves (EM)"
+        },
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "Lorsque le déchaînement élémentaire est utilisé",
+            "label": {
+              "fr": "Lorsque le déchaînement élémentaire est utilisé",
+              "en": "When the elemental burst is used"
+            },
             "cons": 4,
             "stats": {
               "eleMas": 60
             }
           },
           {
-            "label": "Si une réaction liée à l'élément dendro est déclenchée",
+            "label": {
+              "fr": "Si une réaction liée à l'élément Dendro est déclenchée",
+              "en": "If a Dendro elemental reaction is triggered"
+            },
             "cons": 4,
             "stats": {
               "eleMas": 60
@@ -15793,7 +16967,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Propagation": {
-        "name": "Propagation",
+        "name": {
+          "fr": "DPS Propagation",
+          "en": "Spread DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -15887,14 +17064,20 @@ window.CHARACTER_CONFIG = {
         "selectMode": "exclusive",
         "data": [
           {
-            "label": "A4 : L'héroïne une nouvelle fois de retour ! (1 Stack)",
+            "label": {
+              "fr": "A4 : L'héroïne une nouvelle fois de retour ! (1 Stack - ATQ%)",
+              "en": "A4: The hero twice-returned! (1 Stack - ATK%)"
+            },
             "active": false,
             "stats": {
               "atk_": 0.35
             }
           },
           {
-            "label": "A4 : L'héroïne une nouvelle fois de retour ! (2 Stacks)",
+            "label": {
+              "fr": "A4 : L'héroïne une nouvelle fois de retour ! (2 Stacks - ATK%)",
+              "en": "A4: The hero twice-returned (2 Stacks - ATK%)"
+            },
             "active": true,
             "stats": {
               "atk_": 0.7
@@ -15906,7 +17089,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Le triomphe d'une héroïne de la justice",
+            "label": {
+              "fr": "C6 : Le triomphe d'une héroïne de la justice (Taux Crit, DGT Crit)",
+              "en": "C6: A hero of justice's triumph (Crit Rate, Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -15919,7 +17105,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Surcharge": {
-        "name": "Surcharge",
+        "name": {
+          "fr": "DPS Surcharge",
+          "en": "Overload DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -15995,7 +17184,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Hypercarry": {
-        "name": "Hypercarry",
+        "name": {
+          "fr": "DPS Hypercarry",
+          "en": "Hypercarry DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -16069,7 +17261,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Suractivation": {
-        "name": "Suractivation",
+        "name": {
+          "fr": "DPS Suractivation",
+          "en": "Aggravate DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -16156,7 +17351,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Sélénocution": {
-        "name": "Sélénocution",
+        "name": {
+          "fr": "DPS Sélénocution",
+          "en": "Lunar-Charged DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -16249,7 +17447,10 @@ window.CHARACTER_CONFIG = {
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "A1 : Équipe avec Pyro",
+            "label": {
+              "fr": "A1 : Équipe avec Pyro (DGTs Anémo, DGTs Pyro)",
+              "en": "A1: Party with Pyro (Anemo DMG, Pyro DMG)"
+            },
             "active": true,
             "stats": {
               "elemental_dmg_bonus_scaling": {
@@ -16265,7 +17466,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "A1 : Équipe avec Hydro",
+            "label": {
+              "fr": "A1 : Équipe avec Hydro (DGTs Anémo, DGTs Hydro)",
+              "en": "A1: Party with Hydro (Anemo DMG, Hydro DMG)"
+            },
             "active": false,
             "stats": {
               "elemental_dmg_bonus_scaling": {
@@ -16281,7 +17485,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "A1 : Équipe avec Electro",
+            "label": {
+              "fr": "A1 : Équipe avec Électro (DGTs Anémo, DGTs Électro)",
+              "en": "A1: Party with Electro (Anemo DMG, Electro DMG)"
+            },
             "active": false,
             "stats": {
               "elemental_dmg_bonus_scaling": {
@@ -16297,7 +17504,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "A1 : Équipe avec Cryo",
+            "label": {
+              "fr": "A1 : Équipe avec Cryo (DGTs Anémo, DGTs Cryo)",
+              "en": "A1: Party with Cryo (Anemo DMG, Cryo DMG)"
+            },
             "active": false,
             "stats": {
               "elemental_dmg_bonus_scaling": {
@@ -16315,11 +17525,17 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 4",
+        "category": {
+          "fr": "Constellation 4",
+          "en": "Constellation 4: \"For None May Take From Us Our Freedom of Song\""
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "C4 : Dispersion Pyro (+20% Anémo/Pyro)",
+            "label": {
+              "fr": "Dispersion Pyro (DGTs Anémo, DGTs Pyro)",
+              "en": "Pyro Swirl (Anemo DMG, Pyro DMG)"
+            },
             "active": true,
             "cons": 4,
             "stats": {
@@ -16328,7 +17544,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C4 : Dispersion Hydro (+20% Anémo/Hydro)",
+            "label": {
+              "fr": "Dispersion Hydro (DGTs Anémo, DGTs Hydro)",
+              "en": "Hydro Swirl (Anemo DMG, Hydro DMG)"
+            },
             "active": false,
             "cons": 4,
             "stats": {
@@ -16337,7 +17556,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C4 : Dispersion Électro (+20% Anémo/Électro)",
+            "label": {
+              "fr": "Dispersion Électro (DGTs Anémo, DGTs Électro)",
+              "en": "Electro Swirl (Anemo DMG, Electro DMG)"
+            },
             "active": false,
             "cons": 4,
             "stats": {
@@ -16346,7 +17568,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C4 : Dispersion Cryo (+20% Anémo/Cryo)",
+            "label": {
+              "fr": "Dispersion Cryo (DGTs Anémo, DGTs Cryo)",
+              "en": "Cryo Swirl (Anemo DMG, Cryo DMG)"
+            },
             "active": false,
             "cons": 4,
             "stats": {
@@ -16357,10 +17582,16 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "Constellation 6",
+        "category": {
+          "fr": "Constellation 6",
+          "en": "Constellation 6"
+        },
         "buffs": [
           {
-            "label": "C6",
+            "label": {
+              "fr": "4 Cumuls",
+              "en": "4 Stacks"
+            },
             "cons": 6,
             "stats": {
               "critDMG_": 0.8
@@ -16370,8 +17601,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Anémo/Pyro": {
-        "name": "Anémo/Pyro",
+      "DPS Anémo/Pyro": {
+        "name": {
+          "fr": "DPS Anémo/Pyro",
+          "en": "Anemo/Pyro DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -16454,8 +17688,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Anémo/Cryo": {
-        "name": "Anémo/Cryo",
+      "DPS Anémo/Cryo": {
+        "name": {
+          "fr": "DPS Anémo/Cryo",
+          "en": "Anemo/Cryo DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -16539,8 +17776,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Anémo/Electro": {
-        "name": "Anémo/Electro",
+      "DPS Anémo/Électro": {
+        "name": {
+          "fr": "DPS Anémo/Électro",
+          "en": "Anemo/Electro DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -16623,8 +17863,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Anémo/Hydro": {
-        "name": "Anémo/Hydro",
+      "DPS Anémo/Hydro": {
+        "name": {
+          "fr": "DPS Anémo/Hydro",
+          "en": "Anemo/Hydro DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -16723,7 +17966,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C4 : Vent glacial de liberté (Hexerei)",
+            "label": {
+              "fr": "C4 : Vent glacial de liberté (Hexerei - DGTs Anémo)",
+              "en": "C4: Hurricane of freedom (Hexerei - Anemo DMG)"
+            },
             "cons": 4,
             "active": true,
             "stats": {
@@ -16731,7 +17977,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C6 : Tempête de résistance (Hexerei)",
+            "label": {
+              "fr": "C6 : Tempête de résistance (Hexerei - DGT Crit)",
+              "en": "C6: Storm of defiance (Hexerei - Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -16742,8 +17991,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Support off-field": {
-        "name": "Support off-field",
+      "Support Dispersion off-field": {
+        "name": {
+          "fr": "Support Dispersion off-field",
+          "en": "Off-field Swirl Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -16817,7 +18069,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Anémo": {
-        "name": "DPS Anémo",
+        "name": {
+          "fr": "DPS Anémo",
+          "en": "Anemo DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -16908,31 +18163,46 @@ window.CHARACTER_CONFIG = {
         "selectMode": "cumulative",
         "buffs": [
           {
-            "label": "A4 : Rétribution pour le péché (1 stack)",
+            "label": {
+              "fr": "A4 : Rétribution pour le péché (1 stack - ATQ%)",
+              "en": "A4: There shall be a reckoning for sin (1 stack - ATK%)"
+            },
             "stats": {
               "atk_": 0.06
             }
           },
           {
-            "label": "A4 : Rétribution pour le péché (2 stacks)",
+            "label": {
+              "fr": "A4 : Rétribution pour le péché (2 stacks - ATQ%)",
+              "en": "A4: There shall be a reckoning for sin (2 stacks - ATK%)"
+            },
             "stats": {
               "atk_": 0.06
             }
           },
           {
-            "label": "A4 : Rétribution pour le péché (3 stacks)",
+            "label": {
+              "fr": "A4 : Rétribution pour le péché (3 stacks - ATQ%)",
+              "en": "A4: There shall be a reckoning for sin (3 stacks - ATK%)"
+            },
             "stats": {
               "atk_": 0.06
             }
           },
           {
-            "label": "A4 : Rétribution pour le péché (4 stacks)",
+            "label": {
+              "fr": "A4 : Rétribution pour le péché (4 stacks - ATQ%)",
+              "en": "A4: There shall be a reckoning for sin (4 stacks - ATK%)"
+            },
             "stats": {
               "atk_": 0.06
             }
           },
           {
-            "label": "A4 : Rétribution pour le péché (5 stacks)",
+            "label": {
+              "fr": "A4 : Rétribution pour le péché (5 stacks - ATQ%)",
+              "en": "A4: There shall be a reckoning for sin (5 stacks - ATK%)"
+            },
             "stats": {
               "atk_": 0.06
             }
@@ -16943,7 +18213,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Estime pour les irréprochables (Att. Chargée)",
+            "label": {
+              "fr": "C6 : Estime pour les irréprochables (Att. chargée uniquement - Taux Crit, DGT Crit)",
+              "en": "C6: Esteem for the innocent (Charged attack only - Crit Rate, Crit DMG)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -16956,7 +18229,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Gel": {
-        "name": "DPS Gel",
+        "name": {
+          "fr": "DPS Gel",
+          "en": "Freeze DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -17038,7 +18314,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Fonte inversée": {
-        "name": "DPS Fonte inversée",
+        "name": {
+          "fr": "DPS Fonte inversée",
+          "en": "Reverse Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -17138,7 +18417,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Attention, ça pique (piment)",
+            "label": {
+              "fr": "A4 : Attention, ça pique (en mangeant le piment - ATQ%)",
+              "en": "A4: Beware, it's super hot! (when eating a pepper - ATK%)"
+            },
             "active": true,
             "stats": {
               "atk_": 0.1
@@ -17150,7 +18432,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Pyrotation condensée",
+            "label": {
+              "fr": "C6 : Pyrotation condensée (DGTs Pyro)",
+              "en": "C6: Condensed pyronado (Pyro DMG)"
+            },
             "cons": 6,
             "stats": {
               "elemental_dmg_": 0.15
@@ -17160,8 +18445,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Sub-DPS évaporation": {
-        "name": "Sub-DPS évaporation",
+      "Sub-DPS Évaporation": {
+        "name": {
+          "fr": "Sub-DPS Évaporation",
+          "en": "Vape Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -17243,8 +18531,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS fonte": {
-        "name": "Sub-DPS fonte",
+      "Sub-DPS Fonte": {
+        "name": {
+          "fr": "Sub-DPS Fonte",
+          "en": "Melt Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -17326,8 +18617,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS mono-pyro": {
-        "name": "Sub-DPS mono-pyro",
+      "Sub-DPS Mono-pyro": {
+        "name": {
+          "fr": "Sub-DPS Mono-pyro",
+          "en": "Mono-pyro Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -17402,8 +18696,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS surcharge": {
-        "name": "Sub-DPS surcharge",
+      "Sub-DPS Surcharge": {
+        "name": {
+          "fr": "Sub-DPS Surcharge",
+          "en": "Overload Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -17490,32 +18787,47 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "A1 : Poursuite des plumes de givre",
+        "category": {
+          "fr": "A1 : Poursuite des plumes de givre (Taux Crit)",
+          "en": "A1: Galefeather pursuit (Crit Rate)"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "1 stack (uniquement attaques plongeantes)",
+            "label": {
+              "fr": "1 stack (uniquement attaques plongeantes)",
+              "en": "1 stack (plunging attacks only)"
+            },
             "active": false,
             "stats": {
               "critRate_": 0.04
             }
           },
           {
-            "label": "2 stacks (uniquement attaques plongeantes)",
+            "label": {
+              "fr": "2 stacks (uniquement attaques plongeantes)",
+              "en": "2 stacks (plunging attacks only)"
+            },
             "active": false,
             "stats": {
               "critRate_": 0.06
             }
           },
           {
-            "label": "3 stacks (uniquement attaques plongeantes)",
+            "label": {
+              "fr": "3 stacks (uniquement attaques plongeantes)",
+              "en": "3 stacks (plunging attacks only)"
+            },
             "active": false,
             "stats": {
               "critRate_": 0.08
             }
           },
           {
-            "label": "4 stacks (uniquement attaques plongeantes)",
+            "label": {
+              "fr": "4 stacks (uniquement attaques plongeantes)",
+              "en": "4 stacks (plunging attacks only)"
+            },
             "active": false,
             "stats": {
               "critRate_": 0.1
@@ -17524,10 +18836,16 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "C2 : Réclusion du monde",
+        "category": {
+          "fr": "C2 : Réclusion du monde (ATQ%)",
+          "en": "C2: Aloof from the world (ATK%)"
+        },
         "buffs": [
           {
-            "label": "Après la compétence",
+            "label": {
+              "fr": "Après la compétence",
+              "en": "After the skill"
+            },
             "cons": 2,
             "stats": {
               "atk_": 0.2
@@ -17536,25 +18854,37 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "C6 : Souffle-Nuages est son nom",
+        "category": {
+          "fr": "C6 : Souffle-Nuages est son nom (DGT Crit)",
+          "en": "C6: They call her Cloud Retainer (Crit DMG)"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "1 utilisation",
+            "label": {
+              "fr": "1 utilisation",
+              "en": "1 use"
+            },
             "cons": 6,
             "stats": {
               "crit_dmg_": 0.15
             }
           },
           {
-            "label": "2 utilisations",
+            "label": {
+              "fr": "2 utilisations",
+              "en": "2 uses"
+            },
             "cons": 6,
             "stats": {
               "crit_dmg_": 0.35
             }
           },
           {
-            "label": "3 utilisations",
+            "label": {
+              "fr": "3 utilisations",
+              "en": "3 uses"
+            },
             "cons": 6,
             "stats": {
               "crit_dmg_": 0.7
@@ -17565,7 +18895,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support attaques plongeantes": {
-        "name": "Support attaques plongeantes",
+        "name": {
+          "fr": "Support attaques plongeantes",
+          "en": "Plunging attacks Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -17660,14 +18993,20 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Annihilation d'éon : Fleur du kaléidoscope (off-field)",
+            "label": {
+              "fr": "C2 : Annihilation d'éon : Fleur du kaléidoscope (off-field - Recharge d'énergie)",
+              "en": "C2: Annihilation eon: Blossom of kaleidos (off-field - ER)"
+            },
             "cons": 2,
             "stats": {
               "enerRech_": 0.25
             }
           },
           {
-            "label": "C4 : Transcendance : Extinction de la souffrance (PV inférieurs à 50%)",
+            "label": {
+              "fr": "C4 : Transcendance : Extinction de la souffrance (PV < 50% - DÉF%)",
+              "en": "C4: Transcension: Extinction of suffering (HP < 50% - DEF%)"
+            },
             "cons": 4,
             "stats": {
               "def_": 1
@@ -17678,7 +19017,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Hypercarry Plunge DPS": {
-        "name": "Hypercarry Plunge DPS",
+        "name": {
+          "fr": "Hypercarry Plunge DPS",
+          "en": "Hypercarry Plunge DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -17776,7 +19118,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : Gaine blindée portable",
+            "label": {
+              "fr": "A4 : Gaine blindée portable (DÉF%)",
+              "en": "A4: Portable armored sheath (DEF%)"
+            },
             "active": true,
             "stats": {
               "def_": 0.2
@@ -17787,7 +19132,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support universel": {
-        "name": "Support universel",
+        "name": {
+          "fr": "Support universel",
+          "en": "Universal Support"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -17854,8 +19202,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "DPS": {
-        "name": "DPS",
+      "DPS Géo": {
+        "name": {
+          "fr": "DPS Géo",
+          "en": "Geo DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -17933,8 +19284,11 @@ window.CHARACTER_CONFIG = {
       "burst": 10
     },
     "builds": {
-      "Sub-DPS évaporation": {
-        "name": "Sub-DPS évaporation",
+      "Sub-DPS Évaporation": {
+        "name": {
+          "fr": "Sub-DPS Évaporation",
+          "en": "Vape Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -18015,8 +19369,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS gel": {
-        "name": "Sub-DPS gel",
+      "Sub-DPS Gel": {
+        "name": {
+          "fr": "Sub-DPS Gel",
+          "en": "Freeze Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -18092,8 +19449,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS fleurissement": {
-        "name": "Sub-DPS fleurissement",
+      "Sub-DPS Fleurissement": {
+        "name": {
+          "fr": "Sub-DPS Fleurissement",
+          "en": "Bloom Sub-DPS"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -18165,8 +19525,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS électrocution": {
-        "name": "Sub-DPS électrocution",
+      "Sub-DPS Électrocution": {
+        "name": {
+          "fr": "Sub-DPS Électrocution",
+          "en": "Electro-Charged Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -18257,7 +19620,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A4 : « ... Ça, c'est du rock ! »",
+            "label": {
+              "fr": "A4 : « ... Ça, c'est du rock ! » (DGTs Physiques)",
+              "en": "A4: \"...Now That's Rock 'N' Roll!\" (Physical DMG)"
+            },
             "active": true,
             "stats": {
               "physical_dmg_": 0.15
@@ -18269,7 +19635,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C6 : Rock infernal (uniquement les attaques chargées)",
+            "label": {
+              "fr": "C6 : Rock infernal (uniquement les attaques chargées - ATQ%)",
+              "en": "C6: Rockin' in a flaming world (only charged attacks - ATK%)"
+            },
             "cons": 6,
             "active": false,
             "stats": {
@@ -18283,8 +19652,11 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "Shieldeuse générale": {
-        "name": "Shieldeuse générale",
+      "Shieldeuse universelle": {
+        "name": {
+          "fr": "Shieldeuse universelle",
+          "en": "Universal Shielder"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -18351,8 +19723,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "DPS physique": {
-        "name": "DPS physique",
+      "DPS Physique": {
+        "name": {
+          "fr": "DPS Physique",
+          "en": "Physical DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -18430,8 +19805,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "DPS fonte": {
-        "name": "DPS fonte",
+      "DPS Fonte": {
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -18529,7 +19907,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C4 : Canalisation de sakura",
+            "label": {
+              "fr": "C4 : Canalisation de sakura (DGTs Électro)",
+              "en": "C4: Sakura channeling (Electro DMG)"
+            },
             "cons": 4,
             "stats": {
               "elemental_dmg_": 0.2
@@ -18540,7 +19921,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Sub-DPS Suractivation": {
-        "name": "Sub-DPS Suractivation",
+        "name": {
+          "fr": "Sub-DPS Suractivation",
+          "en": "Aggravate Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -18638,29 +20022,44 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "category": "A1 - Dispositions supplémentaires",
+            "category": {
+              "fr": "A1 : Dispositions supplémentaires (DGTs Pyro)",
+              "en": "A1: Proviso (Pyro DMG)"
+            },
             "selectMode": "cumulative",
             "buffs": [
               {
-                "label": "1 Sceau consommé (+5% DGT Pyro)",
+                "label": {
+                  "fr": "1 sceau consommé",
+                  "en": "1 seal consumed"
+                },
                 "stats": {
                   "pyro_dmg_": 0.05
                 }
               },
               {
-                "label": "2 Sceaux consommés (+10% DGT Pyro)",
+                "label": {
+                  "fr": "2 sceaux consommés",
+                  "en": "2 seals consumed"
+                },
                 "stats": {
                   "pyro_dmg_": 0.05
                 }
               },
               {
-                "label": "3 Sceaux consommés (Max de base)",
+                "label": {
+                  "fr": "3 sceaux consommés",
+                  "en": "3 seals consumed"
+                },
                 "stats": {
                   "pyro_dmg_": 0.05
                 }
               },
               {
-                "label": "4 Sceaux consommés (Max C6)",
+                "label": {
+                  "fr": "4 sceaux consommés (C6)",
+                  "en": "4 seals consumed (C6)"
+                },
                 "active": true,
                 "stats": {
                   "pyro_dmg_": 0.05
@@ -18674,7 +20073,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C2 : Verdict final (PV ennemi < 50% et uniquement attaques chargées)",
+            "label": {
+              "fr": "C2 : Verdict final (PV ennemi < 50% et uniquement attaques chargées - Taux Crit)",
+              "en": "C2: Right of final interpretation (Enemy HP < 50% & only charged attacks - Crit Rate)"
+            },
             "cons": 2,
             "active": false,
             "stats": {
@@ -18686,7 +20088,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Évaporation": {
-        "name": "DPS Évaporation",
+        "name": {
+          "fr": "DPS Évaporation",
+          "en": "Vape DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -18770,7 +20175,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Fonte": {
-        "name": "DPS Fonte",
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -18853,7 +20261,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Surcharge": {
-        "name": "DPS Surcharge",
+        "name": {
+          "fr": "DPS Surcharge",
+          "en": "Overload DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -18930,7 +20341,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "DPS Bourgeonnement": {
-        "name": "DPS Bourgeonnement",
+        "name": {
+          "fr": "DPS Bourgeonnement",
+          "en": "Burgeon DPS"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -19019,7 +20433,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Tutelle",
+            "label": {
+              "fr": "C1 : Tutelle (DGTs Dendro)",
+              "en": "C1: Adeptus' tutelage (Dendro DMG)"
+            },
             "cons": 1,
             "active": true,
             "stats": {
@@ -19027,7 +20444,10 @@ window.CHARACTER_CONFIG = {
             }
           },
           {
-            "label": "C4 : Attrait",
+            "label": {
+              "fr": "C4 : Attrait (Maîtrise élémentaire)",
+              "en": "C4: Winsome (EM)"
+            },
             "cons": 4,
             "active": true,
             "stats": {
@@ -19043,7 +20463,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Healeuse universelle": {
-        "name": "Healeuse universelle",
+        "name": {
+          "fr": "Healeuse universelle",
+          "en": "Universal Healer"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -19113,8 +20536,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS propagation": {
-        "name": "Sub-DPS propagation",
+      "Sub-DPS Propagation": {
+        "name": {
+          "fr": "Sub-DPS Propagation",
+          "en": "Spread Sub-DPS"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -19187,8 +20613,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Sub-DPS fleurissement": {
-        "name": "Sub-DPS fleurissement",
+      "Sub-DPS Fleurissement": {
+        "name": {
+          "fr": "Sub-DPS Fleurissement",
+          "en": "Bloom Sub-DPS"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -19278,28 +20707,40 @@ window.CHARACTER_CONFIG = {
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "A1 : Contrôle stratégique (1 type élémentaire différent)",
+            "label": {
+              "fr": "A1 : Contrôle stratégique (1 type élémentaire dans l'équipe - PV%)",
+              "en": "A1: Turn control (1 party elemental type - HP%)"
+            },
             "active": false,
             "stats": {
               "hp_": 0.06
             }
           },
           {
-            "label": "A1 : Contrôle stratégique (2 types élémentaires différents)",
+            "label": {
+              "fr": "A1 : Contrôle stratégique (2 types élémentaires dans l'équipe - PV%)",
+              "en": "A1: Turn control (2 party elemental types - HP%)"
+            },
             "active": false,
             "stats": {
               "hp_": 0.12
             }
           },
           {
-            "label": "A1 : Contrôle stratégique (3 types élémentaires différents)",
+            "label": {
+              "fr": "A1 : Contrôle stratégique (3 types élémentaires dans l'équipe - PV%)",
+              "en": "A1: Turn control (3 party elemental types - HP%)"
+            },
             "active": false,
             "stats": {
               "hp_": 0.18
             }
           },
           {
-            "label": "A1 : Contrôle stratégique (4 types élémentaires différents)",
+            "label": {
+              "fr": "A1 : Contrôle stratégique (4 types élémentaires dans l'équipe - PV%)",
+              "en": "A1: Turn control (4 party elemental types - HP%)"
+            },
             "active": true,
             "stats": {
               "hp_": 0.3
@@ -19311,7 +20752,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C4 : Tour de passe-passe",
+            "label": {
+              "fr": "C4 : Tour de passe-passe (PV%)",
+              "en": "C4: Bait-and-switch (HP%)"
+            },
             "cons": 4,
             "stats": {
               "hp_": 0.4
@@ -19322,7 +20766,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Sub-DPS Exubérance": {
-        "name": "Sub-DPS Exubérance",
+        "name": {
+          "fr": "Sub-DPS Exubérance",
+          "en": "Hyperbloom Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -19398,7 +20845,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Sub-DPS Gel": {
-        "name": "Sub-DPS Gel",
+        "name": {
+          "fr": "Sub-DPS Gel",
+          "en": "Freeze Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -19468,7 +20918,10 @@ window.CHARACTER_CONFIG = {
         ]
       },
       "Sub-DPS Évaporation": {
-        "name": "Sub-DPS Évaporation",
+        "name": {
+          "fr": "Sub-DPS Évaporation",
+          "en": "Vape Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -19557,7 +21010,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A1 : Tour de passe-passe",
+            "label": {
+              "fr": "A1 : Tour de passe-passe (DGTs Pyro)",
+              "en": "A1: Tricks of the trouble-maker (Pyro DMG)"
+            },
             "active": true,
             "stats": {
               "pyro_dmg_": 0.2
@@ -19569,14 +21025,20 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C1 : Agate Ryuukin",
+            "label": {
+              "fr": "C1 : Agate Ryuukin (ATQ%)",
+              "en": "C1: Agate Ryuukin (ATK%)"
+            },
             "cons": 1,
             "stats": {
               "atk_": 0.2
             }
           },
           {
-            "label": "C2 : Procession de feux de joie",
+            "label": {
+              "fr": "C2 : Procession de feux de joie (DGTs Pyro)",
+              "en": "C2: A procession of bonfires (Pyro DMG)"
+            },
             "cons": 2,
             "stats": {
               "pyro_dmg_": 0.25
@@ -19587,7 +21049,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Évaporation": {
-        "name": "DPS Évaporation",
+        "name": {
+          "fr": "DPS Évaporation",
+          "en": "Vape DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -19662,8 +21127,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Fonte": {
-        "name": "Fonte",
+      "DPS Fonte": {
+        "name": {
+          "fr": "DPS Fonte",
+          "en": "Melt DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -19738,8 +21206,11 @@ window.CHARACTER_CONFIG = {
           }
         ]
       },
-      "Surcharge": {
-        "name": "Surcharge",
+      "DPS Surcharge": {
+        "name": {
+          "fr": "DPS Surcharge",
+          "en": "Overload DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -19823,7 +21294,10 @@ window.CHARACTER_CONFIG = {
         "category": "Passifs",
         "buffs": [
           {
-            "label": "A2 : Pensées de jour, rêveries de nuit",
+            "label": {
+              "fr": "A1 : Pensées de jour, rêveries de nuit (Maîtrise élémentaire)",
+              "en": "A1: Bright moon's restless voice (EM)"
+            },
             "active": true,
             "stats": {
               "eleMas": 100
@@ -19834,7 +21308,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Driver Dispersion": {
-        "name": "Driver Dispersion",
+        "name": {
+          "fr": "Driver Dispersion",
+          "en": "Swirl Driver"
+        },
         "weights": {
           "critRate_": 0,
           "critDMG_": 0,
@@ -19921,7 +21398,10 @@ window.CHARACTER_CONFIG = {
         "category": "Constellations",
         "buffs": [
           {
-            "label": "C4 : Le tranchant d'une fleur",
+            "label": {
+              "fr": "C4 : Le tranchant d'une fleur (DÉF%)",
+              "en": "C4: Flower and a fighter (DEF%)"
+            },
             "cons": 4,
             "stats": {
               "def_": 0.2
@@ -19932,7 +21412,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "Support universel": {
-        "name": "Support universel",
+        "name": {
+          "fr": "Support universel",
+          "en": "Universal Support"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -20011,8 +21494,11 @@ window.CHARACTER_CONFIG = {
       "burst": 6
     },
     "builds": {
-      "Shielder général": {
-        "name": "Shielder général",
+      "Shielder universel": {
+        "name": {
+          "fr": "Shielder universel",
+          "en": "Universal Shielder"
+        },
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0,
@@ -20075,25 +21561,37 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "A4 : Pics stratifiés perçant les nuages (Alliés Géo)",
+        "category": {
+          "fr": "A4 : Pics stratifiés perçant les nuages (Alliés Géo - DÉF%)",
+          "en": "A4: Layered peaks pierce the clouds (Geo allies - DEF%)"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "1 Allié Géo (+15% DEF)",
+            "label": {
+              "fr": "1 Allié Géo",
+              "en": "A Geo ally"
+            },
             "active": false,
             "stats": {
               "def_": 0.15
             }
           },
           {
-            "label": "2 Alliés Géo (+30% DEF)",
+            "label": {
+              "fr": "2 Alliés Géo",
+              "en": "2 Geo allies"
+            },
             "active": true,
             "stats": {
               "def_": 0.3
             }
           },
           {
-            "label": "3 Alliés Géo (+45% DEF)",
+            "label": {
+              "fr": "3 Alliés Géo",
+              "en": "3 Geo allies"
+            },
             "active": false,
             "stats": {
               "def_": 0.45
@@ -20102,25 +21600,37 @@ window.CHARACTER_CONFIG = {
         ]
       },
       {
-        "category": "A4 : Pics stratifiés perçant les nuages (Alliés Hydro)",
+        "category": {
+          "fr": "A4 : Pics stratifiés perçant les nuages (Alliés Hydro - Maîtrise élémentaire)",
+          "en": "A4: Layered peaks pierce the clouds (Hydro allies - EM)"
+        },
         "selectMode": "exclusive",
         "buffs": [
           {
-            "label": "1 Allié Hydro (+60 EM)",
+            "label": {
+              "fr": "1 Allié Hydro",
+              "en": "1 Hydro ally"
+            },
             "active": true,
             "stats": {
               "eleMas": 60
             }
           },
           {
-            "label": "2 Alliés Hydro (+120 EM)",
+            "label": {
+              "fr": "2 Alliés Hydro",
+              "en": "2 Hydro allies"
+            },
             "active": false,
             "stats": {
               "eleMas": 120
             }
           },
           {
-            "label": "3 Alliés Hydro (+180 EM)",
+            "label": {
+              "fr": "3 Alliés Hydro",
+              "en": "3 Hydro allies"
+            },
             "active": false,
             "stats": {
               "eleMas": 180
@@ -20131,7 +21641,10 @@ window.CHARACTER_CONFIG = {
     ],
     "builds": {
       "DPS Sélénocristallisation": {
-        "name": "DPS Sélénocristallisation",
+        "name": {
+          "fr": "DPS Sélénocristallisation",
+          "en": "Lunar-Crystallize DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
@@ -20208,7 +21721,10 @@ window.CHARACTER_CONFIG = {
     },
     "builds": {
       "Sub-DPS Brûlure": {
-        "name": "Sub-DPS Brûlure",
+        "name": {
+          "fr": "Sub-DPS Brûlure",
+          "en": "Burning Sub-DPS"
+        },
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,

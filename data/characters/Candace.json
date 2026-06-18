@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Brillance perçant la lune",
+          "label": {
+            "fr": "C2 : Brillance perçant la lune (PV%)",
+            "en": "C2: Moon-piercing brilliance (HP%)"
+          },
           "cons": 2,
           "stats": {
             "hp_": 0.2
@@ -22,7 +25,10 @@
   ],
   "builds": {
     "Driver fleurissement": {
-      "name": "Driver fleurissement",
+      "name": {
+        "fr": "Driver Fleurissement",
+        "en": "Bloom Driver"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -92,7 +98,10 @@
       ]
     },
     "Support général": {
-      "name": "Support général",
+      "name": {
+        "fr": "Support universel",
+        "en": "Universal support"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -164,7 +173,10 @@
       ]
     },
     "Applicatrice évaporation": {
-      "name": "Applicatrice évaporation",
+      "name": {
+        "fr": "Applicatrice Évaporation",
+        "en": "Vape Enabler"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Accord d'entraide (éruption noctâme)",
+          "label": {
+            "fr": "A4 : Accord d'entraide (Éruption Noctâme - Maîtrise élémentaire)",
+            "en": "A4: Mutual aid agreement (Nightsoul Burst - EM)"
+          },
           "active": true,
           "stats": {
             "eleMas": 80
@@ -23,7 +26,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C4 : Permutation de vaisseau en décomposition (utilisation du déchaînement)",
+          "label": {
+            "fr": "C4 : Permutation de vaisseau en décomposition (utilisation du déchaînement - Maîtrise élémentaire)",
+            "en": "C4: Decayed vessel's permutation (when burst is used - EM)"
+          },
           "cons": 4,
           "stats": {
             "eleMas": 100
@@ -34,7 +40,10 @@
   ],
   "builds": {
     "Driver dispersion": {
-      "name": "Driver dispersion",
+      "name": {
+        "fr": "Driver Dispersion",
+        "en": "Swirl Driver"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

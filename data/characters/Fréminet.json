@@ -8,10 +8,16 @@
   },
   "buffs": [
     {
-      "category": "C1 : Rêves des profondeurs mousseuses",
+      "category": {
+        "fr": "C1 : Rêves des profondeurs mousseuses (Taux Crit)",
+        "en": "C1: Dreams of the foamy deep (Crit Rate)"
+      },
       "buffs": [
         {
-          "label": "Uniquement la compétence",
+          "label": {
+            "fr": "Uniquement la compétence",
+            "en": "Only the skill"
+          },
           "cons": 1,
           "active": false,
           "stats": {
@@ -21,18 +27,27 @@
       ]
     },
     {
-      "category": "C4 : Danse de lune et de flûte",
+      "category": {
+        "fr": "C4 : Danse de lune et de flûte (ATQ%)",
+        "en": "C4: Dance of the snowy moon and flute (ATK%)"
+      },
       "selectMode": "cumulative",
       "buffs": [
         {
-          "label": "Réaction cryo déclenchée (1 stack)",
+          "label": {
+            "fr": "Réaction Cryo déclenchée (1 stack)",
+            "en": "Cryo reaction triggered (1 stack)"
+          },
           "cons": 4,
           "stats": {
             "atk_": 0.09
           }
         },
         {
-          "label": "Réaction cryo déclenchée (2 stacks)",
+          "label": {
+            "fr": "Réaction Cryo déclenchée (2 stacks)",
+            "en": "Cryo reaction triggered (2 stacks)"
+          },
           "cons": 4,
           "stats": {
             "atk_": 0.09
@@ -41,25 +56,37 @@
       ]
     },
     {
-      "category": "C6 : Instant d'aube et de détermination",
+      "category": {
+        "fr": "C6 : Instant d'aube et de détermination (DGT Crit)",
+        "en": "C6: Moment of waking and resolve (Crit DMG)"
+      },
       "selectMode": "cumulative",
       "buffs": [
         {
-          "label": "Réaction cryo déclenchée (1 stack)",
+          "label": {
+            "fr": "Réaction Cryo déclenchée (1 stack)",
+            "en": "Cryo reaction triggered (1 stack)"
+          },
           "cons": 6,
           "stats": {
             "critDMG_": 0.12
           }
         },
         {
-          "label": "Réaction cryo déclenchée (2 stacks)",
+          "label": {
+            "fr": "Réaction Cryo déclenchée (2 stacks)",
+            "en": "Cryo reaction triggered (2 stacks)"
+          },
           "cons": 6,
           "stats": {
             "critDMG_": 0.12
           }
         },
         {
-          "label": "Réaction cryo déclenchée (3 stacks)",
+          "label": {
+            "fr": "Réaction Cryo déclenchée (3 stacks)",
+            "en": "Cryo reaction triggered (3 stacks)"
+          },
           "cons": 6,
           "stats": {
             "critDMG_": 0.12
@@ -70,7 +97,10 @@
   ],
   "builds": {
     "DPS Physique": {
-      "name": "DPS Physique",
+      "name": {
+        "fr": "DPS Physique",
+        "en": "Physical DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -152,7 +182,10 @@
       ]
     },
     "DPS Cryo": {
-      "name": "DPS Cryo",
+      "name": {
+        "fr": "DPS Cryo",
+        "en": "Cryo DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

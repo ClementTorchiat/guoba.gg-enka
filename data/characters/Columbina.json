@@ -12,21 +12,30 @@
       "selectMode": "exclusive",
       "data": [
         {
-          "label": "A1 : Appel de la lune (1 stack)",
+          "label": {
+            "fr": "A1 : Appel de la lune (1 stack - Taux Crit)",
+            "en": "A1: Lunacy's lure (1 stack - Crit Rate)"
+          },
           "active": false,
           "stats": {
             "critRate_": 0.05
           }
         },
         {
-          "label": "A1 : Appel de la lune (2 stacks)",
+          "label": {
+            "fr": "A1 : Appel de la lune (2 stacks - Taux Crit)",
+            "en": "A1: Lunacy's lure (2 stacks - Crit Rate)"
+          },
           "active": false,
           "stats": {
             "critRate_": 0.1
           }
         },
         {
-          "label": "A1 : Appel de la lune (3 stacks)",
+          "label": {
+            "fr": "A1 : Appel de la lune (3 stacks - Taux Crit)",
+            "en": "A1: Lunacy's lure (3 stacks - Crit Rate)"
+          },
           "active": true,
           "stats": {
             "critRate_": 0.15
@@ -38,14 +47,20 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Nuit en splendeur, jamais solitaire",
+          "label": {
+            "fr": "C2 : Nuit en splendeur, jamais solitaire (PV%)",
+            "en": "C2: Not in lone splendor (HP%)"
+          },
           "cons": 2,
           "stats": {
             "hp_": 0.4
           }
         },
         {
-          "label": "C6 : Nuit lugubre, lune à travers (uniquement sur un élément)",
+          "label": {
+            "fr": "C6 : Nuit lugubre, lune à travers (uniquement sur un élément - DGT Crit)",
+            "en": "C6: Through darkness led by moonlight (only for one element - Crit DMG)"
+          },
           "cons": 6,
           "stats": {
             "critDMG_": "0.80"
@@ -56,7 +71,10 @@
   ],
   "builds": {
     "Support sélénofleurissement": {
-      "name": "Support sélénofleurissement",
+      "name": {
+        "fr": "Support Sélénofleurissement",
+        "en": "Lunar-Bloom Support"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -135,7 +153,10 @@
       ]
     },
     "Driver sélénofleurissement": {
-      "name": "Driver sélénofleurissement",
+      "name": {
+        "fr": "Driver Sélénofleurissement",
+        "en": "Lunar-Bloom Driver"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -208,7 +229,10 @@
       ]
     },
     "Support sélénocution": {
-      "name": "Support sélénocution",
+      "name": {
+        "fr": "Support Sélénocution",
+        "en": "Lunar-Charged Support"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -281,7 +305,10 @@
       ]
     },
     "Support sélénocristallisation": {
-      "name": "Support sélénocristallisation",
+      "name": {
+        "fr": "Support Sélénocristallisation",
+        "en": "Lunar-Crystallize Support"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

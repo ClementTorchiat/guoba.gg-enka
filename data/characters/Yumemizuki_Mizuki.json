@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A2 : Pensées de jour, rêveries de nuit",
+          "label": {
+            "fr": "A1 : Pensées de jour, rêveries de nuit (Maîtrise élémentaire)",
+            "en": "A1: Bright moon's restless voice (EM)"
+          },
           "active": true,
           "stats": {
             "eleMas": 100
@@ -22,7 +25,10 @@
   ],
   "builds": {
     "Driver Dispersion": {
-      "name": "Driver Dispersion",
+      "name": {
+        "fr": "Driver Dispersion",
+        "en": "Swirl Driver"
+      },
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

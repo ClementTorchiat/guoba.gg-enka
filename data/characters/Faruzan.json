@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C6 : Merveilleux chemin de la vérité (dans le déchaînement)",
+          "label": {
+            "fr": "C6 : Merveilleux chemin de la vérité (dans le déchaînement - DGT Crit)",
+            "en": "C6: The wondrous path of truth (in the burst - Crit DMG)"
+          },
           "cons": 6,
           "stats": {
             "critDMG_": 0.4
@@ -22,7 +25,10 @@
   ],
   "builds": {
     "Support Anémo": {
-      "name": "Support Anémo",
+      "name": {
+        "fr": "Support Anémo",
+        "en": "Anemo Support"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

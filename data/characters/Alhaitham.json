@@ -8,11 +8,17 @@
   },
   "buffs": [
     {
-      "category": "Constellation 2 : Rhétorique",
+      "category": {
+        "fr": "Constellation 2 : Rhétorique",
+        "en": "Constellation 2: Debate"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "1 Stack",
+          "label": {
+            "fr": "1 Stack (EM)",
+            "en": "1 Stack (EM)"
+          },
           "cons": 2,
           "active": false,
           "stats": {
@@ -20,7 +26,10 @@
           }
         },
         {
-          "label": "2 stacks",
+          "label": {
+            "fr": "2 stacks (EM)",
+            "en": "2 stacks (EM)"
+          },
           "cons": 2,
           "active": false,
           "stats": {
@@ -28,7 +37,10 @@
           }
         },
         {
-          "label": "3 stacks",
+          "label": {
+            "fr": "3 stacks (EM)",
+            "en": "3 stacks (EM)"
+          },
           "cons": 2,
           "active": true,
           "stats": {
@@ -36,7 +48,10 @@
           }
         },
         {
-          "label": "4 stacks",
+          "label": {
+            "fr": "4 stacks (EM)",
+            "en": "4 stacks (EM)"
+          },
           "cons": 2,
           "active": false,
           "stats": {
@@ -46,11 +61,17 @@
       ]
     },
     {
-      "category": "Constellation 4 : Élucidation",
+      "category": {
+        "fr": "Constellation 4 : Élucidation",
+        "en": "Constellation 4: Elucidation"
+      },
       "selectMode": "exclusive",
       "buffs": [
         {
-          "label": "1 miroir généré",
+          "label": {
+            "fr": "1 miroir généré (DGTs Dendro)",
+            "en": "1 mirror created (Dendro DMG)"
+          },
           "cons": 4,
           "active": false,
           "stats": {
@@ -58,7 +79,10 @@
           }
         },
         {
-          "label": "2 miroirs générés",
+          "label": {
+            "fr": "2 miroirs générés (DGTs Dendro)",
+            "en": "2 mirrors created (Dendro DMG)"
+          },
           "cons": 4,
           "active": false,
           "stats": {
@@ -66,7 +90,10 @@
           }
         },
         {
-          "label": "3 miroirs générés",
+          "label": {
+            "fr": "3 miroirs générés (DGTs Dendro)",
+            "en": "3 mirrors created (Dendro DMG)"
+          },
           "cons": 4,
           "active": true,
           "stats": {
@@ -76,10 +103,16 @@
       ]
     },
     {
-      "category": "Constellation 6 : Structuration",
+      "category": {
+        "fr": "Constellation 6 : Structuration",
+        "en": "Constellation 6: Structuration"
+      },
       "buffs": [
         {
-          "label": "1 miroir généré si 3 existent déjà",
+          "label": {
+            "fr": "1 miroir généré si 3 existent déjà (Taux Crit et DGT Crit)",
+            "en": "1 mirror created when 3 already exist (Crit Rate & Crit DMG)"
+          },
           "cons": 6,
           "active": false,
           "stats": {
@@ -92,7 +125,10 @@
   ],
   "builds": {
     "DPS Exubérance": {
-      "name": "DPS Exubérance",
+      "name": {
+        "fr": "DPS Exubérance",
+        "en": "Hyperbloom DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -180,7 +216,10 @@
       ]
     },
     "DPS Propagation": {
-      "name": "DPS Propagation",
+      "name": {
+        "fr": "DPS Propagation",
+        "en": "Spead DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -261,7 +300,10 @@
       ]
     },
     "Driver Fleurissement": {
-      "name": "Driver Fleurissement",
+      "name": {
+        "fr": "Driver Fleurissement",
+        "en": "Bloom Driver"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Confession forcée (compétence dans le dos)",
+          "label": {
+            "fr": "A1 : Confession forcée (compétence dans le dos - Taux Crit)",
+            "en": "A1: Regina Probationum (skill from behind - Crit Rate)"
+          },
           "active": false,
           "stats": {
             "critRate_": 0.12
@@ -21,8 +24,11 @@
     }
   ],
   "builds": {
-    "Sub-DPS fonte inversée": {
-      "name": "Sub-DPS fonte inversée",
+    "Sub-DPS Fonte": {
+      "name": {
+        "fr": "Sub-DPS Fonte",
+        "en": "Melt Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -105,8 +111,11 @@
         }
       ]
     },
-    "Sub-DPS gel": {
-      "name": "Sub-DPS gel",
+    "Sub-DPS Gel": {
+      "name": {
+        "fr": "Sub-DPS Gel",
+        "en": "Freeze Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

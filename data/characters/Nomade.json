@@ -11,14 +11,20 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A1 : Fleur de jade (Pyro)",
+          "label": {
+            "fr": "A1 : Fleur de jade (Pyro - ATQ%)",
+            "en": "A1: Jade-claimed flower (Pyro - ATK%)"
+          },
           "active": true,
           "stats": {
             "atk_": 0.3
           }
         },
         {
-          "label": "A1 : Fleur de jade (Cryo)",
+          "label": {
+            "fr": "A1 : Fleur de jade (Cryo - Taux Crit)",
+            "en": "A1: Jade-claimed flower (Cryo - Crit Rate)"
+          },
           "active": false,
           "stats": {
             "critRate_": 0.2
@@ -29,7 +35,10 @@
   ],
   "builds": {
     "DPS Dispersion": {
-      "name": "DPS Dispersion",
+      "name": {
+        "fr": "DPS Dispersion",
+        "en": "Swirl DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

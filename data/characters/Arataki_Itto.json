@@ -11,7 +11,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C4 : Au pain sec et à l'eau !",
+          "label": {
+            "fr": "C4 : Au pain sec et à l'eau ! (DÉF% et ATQ%)",
+            "en": "C4: Jailhouse Bread and Butter (DEF% & ATK%)"
+          },
           "cons": 4,
           "active": true,
           "stats": {
@@ -20,7 +23,10 @@
           }
         },
         {
-          "label": "C6 : Arataki Itto, présent !",
+          "label": {
+            "fr": "C6 : Arataki Itto, présent ! (DGT Crit)",
+            "en": "C6: Arataki Itto, present! (Crit DMG)"
+          },
           "cons": 6,
           "active": true,
           "stats": {
@@ -32,7 +38,10 @@
   ],
   "builds": {
     "DPS Géo": {
-      "name": "DPS Géo",
+      "name": {
+        "fr": "DPS Géo",
+        "en": "Geo DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -97,7 +106,10 @@
       ]
     },
     "DPS Sélénocristallisation": {
-      "name": "DPS Sélénocristallisation",
+      "name": {
+        "fr": "DPS Sélénocristallisation",
+        "en": "Lunar-Crystallize DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -8,7 +8,10 @@
   },
   "builds": {
     "DPS Évaporation": {
-      "name": "DPS Évaporation",
+      "name": {
+        "fr": "DPS Évaporation",
+        "en": "Vape DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -90,7 +93,10 @@
       ]
     },
     "DPS Hexerei": {
-      "name": "DPS Hexerei",
+      "name": {
+        "fr": "DPS Hexerei",
+        "en": "Hexerei DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

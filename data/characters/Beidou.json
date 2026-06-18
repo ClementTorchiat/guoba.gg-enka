@@ -7,8 +7,11 @@
     "burst": 10
   },
   "builds": {
-    "Sub-DPS électrocution": {
-      "name": "Sub-DPS électrocution",
+    "Sub-DPS Électrocution": {
+      "name": {
+        "fr": "Sub-DPS Électrocution",
+        "en": "Electro-Charged Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -85,8 +88,11 @@
         }
       ]
     },
-    "Sub-DPS stimulation": {
-      "name": "Sub-DPS stimulation",
+    "Sub-DPS Suractivation": {
+      "name": {
+        "fr": "Sub-DPS Suractivation",
+        "en": "Aggravate Sub-DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -11,7 +11,10 @@
       "category": "Passifs",
       "buffs": [
         {
-          "label": "A4 : Famine (ER < 50%)",
+          "label": {
+            "fr": "A4 : Famine (ER < 50% - Recharge d'énergie)",
+            "en": "A4: Hunger (ER < 50% - ER)"
+          },
           "active": false,
           "stats": {
             "enerRech_": 0.3
@@ -23,7 +26,10 @@
       "category": "Constellations",
       "buffs": [
         {
-          "label": "C2 : Répression (ennemis PV < 30%)",
+          "label": {
+            "fr": "C2 : Répression (ennemis PV < 30% - Taux Crit)",
+            "en": "C2: Suppression (enemies HP < 30% - Crit Rate)"
+          },
           "cons": 2,
           "active": false,
           "stats": {
@@ -31,7 +37,10 @@
           }
         },
         {
-          "label": "C6 : Lupus Fulguris (Hexerei)",
+          "label": {
+            "fr": "C6 : Lupus Fulguris (Hexerei - Taux Crit, DGT Crit)",
+            "en": "C6: Lupus Fulguris (Hexerei - Crit Rate, Crit DMG)"
+          },
           "cons": 6,
           "active": true,
           "stats": {
@@ -44,7 +53,10 @@
   ],
   "builds": {
     "DPS Surcharge Hexerei": {
-      "name": "DPS Surcharge Hexerei",
+      "name": {
+        "fr": "DPS Surcharge Hexerei",
+        "en": "Hexerei Overload DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -117,7 +129,10 @@
       ]
     },
     "DPS Physique": {
-      "name": "DPS Physique",
+      "name": {
+        "fr": "DPS Physique",
+        "en": "Physical DPS"
+      },
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

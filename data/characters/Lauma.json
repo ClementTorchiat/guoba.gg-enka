@@ -7,8 +7,11 @@
     "burst": 8
   },
   "builds": {
-    "Sélénofleurissement": {
-      "name": "Sélénofleurissement",
+    "Sub-DPS Sélénofleurissement": {
+      "name": {
+        "fr": "Sub-DPS Sélénofleurissement",
+        "en": "Lunar-Bloom Sub-DPS"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0.4,
@@ -82,8 +85,11 @@
         }
       ]
     },
-    "Fleurissement": {
-      "name": "Fleurissement",
+    "Sub-DPS Fleurissement": {
+      "name": {
+        "fr": "Sub-DPS Fleurissement",
+        "en": "Bloom Sub-DPS"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0.4,
@@ -156,8 +162,11 @@
         }
       ]
     },
-    "Exubérance": {
-      "name": "Exubérance",
+    "Sub-DPS Exubérance": {
+      "name": {
+        "fr": "Sub-DPS Exubérance",
+        "en": "Hyperbloom Sub-DPS"
+      },
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0.4,
