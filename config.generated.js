@@ -1,7 +1,7 @@
 /* =========================================================
    config.generated.js — FICHIER AUTO-GÉNÉRÉ
-   Généré le : 2026-06-18T22:02:07.034Z
-   115 personnages | 111 armes | 21 sets
+   Généré le : 2026-07-01T09:04:38.150Z
+   116 personnages | 111 armes | 21 sets
 
    ========================================================= */
 
@@ -55,24 +55,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -194,22 +179,10 @@ window.CHARACTER_CONFIG = {
           "critRate_": 1,
           "critDMG_": 1,
           "atk_": 0.1,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 0.8,
           "def": 0.1,
-          "eleMas": 0,
           "enerRech_": 0.1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 1,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "geo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -395,21 +368,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.4,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -486,21 +447,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.4,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -570,21 +519,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.4,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -693,21 +630,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.4,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -781,21 +706,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.4,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -914,21 +826,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.6,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -997,25 +897,7 @@ window.CHARACTER_CONFIG = {
           "en": "Burgeon DPS"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 1,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "eleMas": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -1111,23 +993,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 0.8,
           "def": 0.1,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 1,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "geo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -1179,23 +1048,11 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 0.8,
           "def": 0.1,
           "eleMas": 0.5,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 1,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "geo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -1299,21 +1156,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
-          "enerRech_": 0,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -1380,21 +1224,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -1455,21 +1285,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -1582,24 +1398,9 @@ window.CHARACTER_CONFIG = {
           "en": "Universal healer and enabler"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -1691,24 +1492,9 @@ window.CHARACTER_CONFIG = {
           "en": "Universal healer"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -1765,6 +1551,23 @@ window.CHARACTER_CONFIG = {
       "skill": 8,
       "burst": 10
     },
+    "buffs": [
+      {
+        "category": "Constellations",
+        "buffs": [
+          {
+            "label": {
+              "fr": "C6 : Chancre du mal (quand le déchaînement est actif / Radiance - Maîtrise élémentaire)",
+              "en": "C6 : Bane of Evil (while burst is active / Radiance - EM)"
+            },
+            "cons": 6,
+            "stats": {
+              "eleMas": 200
+            }
+          }
+        ]
+      }
+    ],
     "builds": {
       "Sub-DPS Électrocution": {
         "name": {
@@ -1776,21 +1579,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -1857,21 +1647,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -1988,23 +1766,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -2097,24 +1861,10 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.8,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -2170,24 +1920,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -2246,23 +1981,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.8,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -2428,23 +2150,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
           "atk_": 1,
           "atk": 0.8,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -2526,21 +2234,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.3,
-          "enerRech_": 0.1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -2605,12 +2300,12 @@ window.CHARACTER_CONFIG = {
         "buffs": [
           {
             "label": {
-              "fr": "A4 : Manœuvre de coordination tactique (ATQ% en fonction de PV%)",
-              "en": "A4 : Vertical force coordination (ATK% depending on HP%)"
+              "fr": "A4 : Manœuvre de coordination tactique (ATQ% en fonction de PV max)",
+              "en": "A4 : Vertical force coordination (ATK% depending on max HP)"
             },
             "active": true,
             "stats": {
-              "atk_bonus_scaling": {
+              "atk__bonus_scaling": {
                 "source": "hp",
                 "percent": 0.00001,
                 "max": 0.4
@@ -2667,23 +2362,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -2777,22 +2458,10 @@ window.CHARACTER_CONFIG = {
           "critRate_": 1,
           "critDMG_": 1,
           "atk_": 0.4,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 0.8,
           "def": 0.1,
-          "eleMas": 0,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 1,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "geo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -2861,21 +2530,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -2949,21 +2606,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -3056,25 +2700,8 @@ window.CHARACTER_CONFIG = {
           "en": "Universal Support (Melt & Freeze)"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -3211,21 +2838,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -3288,21 +2902,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.6,
           "atk": 0.06,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -3371,21 +2973,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -3483,21 +3073,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -3568,24 +3146,8 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -3724,23 +3286,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.9,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
-          "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.8
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -3806,23 +3355,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.9,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
-          "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.8
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -3882,23 +3418,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.9,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
-          "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.8
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -3958,23 +3481,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.9,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
-          "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.8
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -4037,6 +3547,24 @@ window.CHARACTER_CONFIG = {
       "burst": 10
     },
     "buffs": [
+      {
+        "category": {
+          "fr": "Constellation 1 : Sacrement : Vigile incessante (Radiance - Maîtrise Élémentaire)",
+          "en": "Constellation 1: Ordinance: Unceasing Vigil (Radiance - EM)"
+        },
+        "buffs": [
+          {
+            "label": {
+              "fr": "En forme Éclaireur Sermenté",
+              "en": "In the Pactsworn Pathclearer state"
+            },
+            "cons": 1,
+            "stats": {
+              "eleMas": 200
+            }
+          }
+        ]
+      },
       {
         "category": {
           "fr": "Constellation 2 : Cérémonie : Retour des esprits (DGTs Élémentaires)",
@@ -4108,21 +3636,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.4,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -4193,21 +3709,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.4,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -4266,6 +3770,74 @@ window.CHARACTER_CONFIG = {
             "element": "electro"
           }
         ]
+      },
+      "DPS Astroconduction": {
+        "name": {
+          "fr": "DPS Astroconduction",
+          "en": "Stellar-Conduct DPS"
+        },
+        "weights": {
+          "critRate_": 1,
+          "critDMG_": 1,
+          "atk_": 0.8,
+          "atk": 0.1,
+          "eleMas": 0.4,
+          "enerRech_": 0.6
+        },
+        "idealMainStats": {
+          "EQUIP_SHOES": [
+            "atk_",
+            "eleMas"
+          ],
+          "EQUIP_RING": [
+            "atk_",
+            "eleMas"
+          ],
+          "EQUIP_DRESS": [
+            "critDMG_",
+            "critRate_"
+          ]
+        },
+        "hideUIStats": [],
+        "showUIStats": [],
+        "bestSets": [
+          "DisenchantmentInDeepShadow:4",
+          "GildedDreams:4"
+        ],
+        "goodSets": [
+          "GladiatorsFinale:2",
+          "ShimenawasReminiscence:2",
+          "VermillionHereafter:2",
+          "EchoesOfAnOffering:2",
+          "NighttimeWhispersInTheEchoingWoods:2",
+          "FragmentOfHarmonicWhimsy:2",
+          "UnfinishedReverie:2",
+          "ADayCarvedFromRisingWinds:2",
+          "DisenchantmentInDeepShadow:2",
+          "WanderersTroupe:2",
+          "GildedDreams:2",
+          "FlowerOfParadiseLost:2",
+          "NightOfTheSkysUnveiling:2",
+          "AubadeOfMorningstarAndMoon:2"
+        ],
+        "er_req": 130,
+        "team": [
+          {
+            "role": "Sub-DPS",
+            "name": "Yae",
+            "element": "electro"
+          },
+          {
+            "role": "Support",
+            "name": "Qiqi",
+            "element": "cryo"
+          },
+          {
+            "role": "DPS",
+            "name": "MarionetteNew",
+            "element": "cryo"
+          }
+        ]
       }
     }
   },
@@ -4285,24 +3857,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -4387,25 +3944,9 @@ window.CHARACTER_CONFIG = {
           "en": "Sub-DPS"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0.4,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "eleMas": 0.4
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -4476,20 +4017,9 @@ window.CHARACTER_CONFIG = {
           "atk_": 0.8,
           "atk": 0.1,
           "hp_": 0.1,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.8,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -4647,21 +4177,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.4,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -4730,21 +4248,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.4,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -4812,21 +4318,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.4,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -4913,23 +4406,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -5019,21 +4498,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -5106,24 +4573,8 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.6
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -5221,21 +4672,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -5307,21 +4745,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -5387,21 +4812,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -5495,21 +4907,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.7,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -5604,21 +5003,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 1,
-          "heal_": 0
+          "physical_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -5712,24 +5098,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
           "atk_": 1,
           "atk": 0.8,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -5862,21 +5233,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -5939,21 +5297,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -6076,21 +5422,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
-          "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.6
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -6253,21 +5586,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 1,
-          "heal_": 0
+          "physical_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -6338,21 +5658,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -6443,23 +5750,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -6560,21 +5854,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.8,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -6649,21 +5931,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.8,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -6737,21 +6007,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -6867,21 +6124,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.3,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -6947,21 +6191,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -7097,24 +6328,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 0.4,
           "def": 0.1,
-          "eleMas": 0,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -7220,22 +6436,11 @@ window.CHARACTER_CONFIG = {
           "critRate_": 1,
           "critDMG_": 1,
           "atk_": 0.1,
-          "atk": 0,
           "hp_": 0.8,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.1,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -7294,22 +6499,11 @@ window.CHARACTER_CONFIG = {
           "critRate_": 1,
           "critDMG_": 1,
           "atk_": 0.1,
-          "atk": 0,
           "hp_": 0.8,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.1,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -7395,24 +6589,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
           "atk_": 1,
           "atk": 0.8,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -7516,24 +6695,8 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -7604,24 +6767,10 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 0.4,
           "def": 0.1,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -7716,21 +6865,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
-          "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.6
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -7823,23 +6959,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
           "atk_": 1,
           "atk": 0.8,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -7925,20 +7047,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
           "anemo_dmg_": 1,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -8009,20 +7119,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 0.4,
           "atk_": 0.4,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
           "anemo_dmg_": 1,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -8163,23 +7262,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 1,
           "def": 0.8,
-          "eleMas": 0,
           "enerRech_": 0.4,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 1,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "geo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -8282,21 +7368,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 0.4,
           "atk_": 0.4,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -8393,21 +7466,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -8480,21 +7541,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -8593,21 +7641,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -8709,20 +7744,8 @@ window.CHARACTER_CONFIG = {
           "atk_": 0.8,
           "atk": 0.1,
           "hp_": 0.4,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.4,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -8791,20 +7814,8 @@ window.CHARACTER_CONFIG = {
           "atk_": 0.8,
           "atk": 0.1,
           "hp_": 0.4,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.4,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -8880,20 +7891,8 @@ window.CHARACTER_CONFIG = {
           "atk_": 0.8,
           "atk": 0.1,
           "hp_": 0.4,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -8961,25 +7960,8 @@ window.CHARACTER_CONFIG = {
           "en": "Bloom Driver"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.8
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -9046,20 +8028,8 @@ window.CHARACTER_CONFIG = {
           "atk_": 0.8,
           "atk": 0.1,
           "hp_": 0.4,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.4,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -9128,20 +8098,9 @@ window.CHARACTER_CONFIG = {
           "atk_": 0.8,
           "atk": 0.1,
           "hp_": 0.4,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.4,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -9265,23 +8224,8 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -9450,21 +8394,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -9533,21 +8464,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -9609,21 +8526,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -9721,21 +8625,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -9833,24 +8724,10 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
-          "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.6
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -9963,21 +8840,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.3,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -10038,21 +8902,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.3,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -10121,21 +8973,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.3,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -10230,21 +9069,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -10350,25 +9176,10 @@ window.CHARACTER_CONFIG = {
           "en": "Hyperbloom Sub-DPS"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.4,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 0.4,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.4
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -10431,23 +9242,11 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.4,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -10539,24 +9338,10 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
           "atk_": 1,
           "atk": 0.8,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
-          "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.8
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -10629,23 +9414,8 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0.4,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -10707,23 +9477,8 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0.4,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -10784,23 +9539,8 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 0.4,
           "critDMG_": 0.4,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -10871,24 +9611,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.5
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -11005,23 +9730,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 0.8,
           "def": 0.1,
           "eleMas": 0.4,
-          "enerRech_": 0.1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -11111,21 +9823,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -11193,21 +9893,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -11276,21 +9964,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -11402,21 +10078,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -11562,21 +10225,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 1,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "anemo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -11694,21 +10344,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.3,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -11827,21 +10464,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
-          "enerRech_": 0,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -11909,21 +10533,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -12065,23 +10675,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -12226,21 +10822,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 0.4,
           "atk_": 0.4,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -12298,21 +10881,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -12390,23 +10961,11 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -12475,23 +11034,11 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -12669,23 +11216,9 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -12748,23 +11281,9 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -12827,23 +11346,9 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -12973,21 +11478,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.3,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 1,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "geo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -13047,21 +11539,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.4,
           "enerRech_": 0.3,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 1,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "geo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -13166,23 +11646,8 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 0.2,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.2
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -13296,23 +11761,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -13373,23 +11825,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -13441,23 +11880,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -13547,25 +11973,9 @@ window.CHARACTER_CONFIG = {
           "en": "Hexerei Support"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
           "atk_": 1,
           "atk": 0.8,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -13683,25 +12093,10 @@ window.CHARACTER_CONFIG = {
           "en": "Bloom Enabler"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.5,
-          "enerRech_": 0.3,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.3
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -13789,21 +12184,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 1,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "geo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -13904,21 +12286,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.3,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 1,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "anemo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -13988,13 +12357,16 @@ window.CHARACTER_CONFIG = {
         "buffs": [
           {
             "label": {
-              "fr": "C6 : Aucune poussière (ATQ%)",
-              "en": "C6: Must be spotless (ATK%)"
+              "fr": "C6 : Aucune poussière (ATQ)",
+              "en": "C6: Must be spotless (ATK)"
             },
             "cons": 6,
-            "atk_bonus_scaling": {
-              "source": "def",
-              "percent": 0.5
+            "active": false,
+            "stats": {
+              "atk_bonus_scaling": {
+                "source": "def",
+                "percent": 0.5
+              }
             }
           }
         ]
@@ -14010,22 +12382,10 @@ window.CHARACTER_CONFIG = {
           "critRate_": 1,
           "critDMG_": 1,
           "atk_": 0.4,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 0.8,
           "def": 0.1,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 1,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "geo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -14095,22 +12455,11 @@ window.CHARACTER_CONFIG = {
           "critRate_": 1,
           "critDMG_": 1,
           "atk_": 0.4,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 0.8,
           "def": 0.1,
           "eleMas": 0.4,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 1,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "geo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -14250,21 +12599,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -14331,21 +12667,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -14461,24 +12784,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
           "atk_": 1,
           "atk": 0.8,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -14550,24 +12858,9 @@ window.CHARACTER_CONFIG = {
           "en": "Universel Healer"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
           "atk_": 1,
           "atk": 0.8,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -14632,21 +12925,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.4,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 1,
-          "heal_": 0
+          "physical_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -14694,6 +12974,67 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Mika",
+            "element": "cryo"
+          }
+        ]
+      },
+      "Support Astroconduction": {
+        "name": {
+          "fr": "Support Astroconduction",
+          "en": "Stellar-Conduct Support"
+        },
+        "weights": {
+          "atk_": 1,
+          "atk": 0.8,
+          "enerRech_": 1
+        },
+        "idealMainStats": {
+          "EQUIP_SHOES": [
+            "enerRech_",
+            "atk_"
+          ],
+          "EQUIP_RING": [
+            "atk_"
+          ],
+          "EQUIP_DRESS": [
+            "atk_"
+          ]
+        },
+        "hideUIStats": [],
+        "showUIStats": [],
+        "bestSets": [
+          "TenacityOfTheMillelith:4",
+          "NoblesseOblige:4"
+        ],
+        "goodSets": [
+          "GladiatorsFinale:2",
+          "ShimenawasReminiscence:2",
+          "VermillionHereafter:2",
+          "EchoesOfAnOffering:2",
+          "NighttimeWhispersInTheEchoingWoods:2",
+          "FragmentOfHarmonicWhimsy:2",
+          "UnfinishedReverie:2",
+          "ADayCarvedFromRisingWinds:2",
+          "DisenchantmentInDeepShadow:2",
+          "EmblemOfSeveredFate:2",
+          "SilkenMoonsSerenade:2",
+          "CelestialGift:2"
+        ],
+        "er_req": 200,
+        "team": [
+          {
+            "role": "DPS",
+            "name": "MarionetteNew",
+            "element": "cryo"
+          },
+          {
+            "role": "Sub-DPS",
+            "name": "Yae",
+            "element": "electro"
+          },
+          {
+            "role": "Sub-DPS",
+            "name": "Escoffier",
             "element": "cryo"
           }
         ]
@@ -14764,21 +13105,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -14840,21 +13168,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 1,
-          "heal_": 0
+          "physical_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -14946,21 +13261,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -15033,21 +13336,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -15109,6 +13399,145 @@ window.CHARACTER_CONFIG = {
       }
     }
   },
+  "Sandrone": {
+    "color": "#5053bb",
+    "portraitOffset": -35,
+    "talents": {
+      "auto": 10,
+      "skill": 6,
+      "burst": 9
+    },
+    "buffs": [
+      {
+        "category": "Passifs",
+        "buffs": [
+          {
+            "label": {
+              "fr": "A4 : Code de conduite d'une dame (Maîtrise élémentaire)",
+              "en": "A4: A lady's code of conduct (EM)"
+            },
+            "active": true,
+            "stats": {
+              "eleMas_bonus_scaling": {
+                "source": "atk",
+                "percent": 0.08,
+                "baseline": 0,
+                "max": 160
+              }
+            }
+          }
+        ]
+      },
+      {
+        "category": "Constellations",
+        "selectMode": "cumulative",
+        "buffs": [
+          {
+            "label": {
+              "fr": "C2 : Une héritière regarda dans le miroir (attaque chargée uniquement - DGT Crit)",
+              "en": "C2: An Heiress Gazed Into the Looking-Glass (charged attack only - Crit DMG)"
+            },
+            "cons": 2,
+            "active": false,
+            "stats": {
+              "critDMG_": 0.6
+            }
+          },
+          {
+            "label": {
+              "fr": "C2 : Une héritière regarda dans le miroir (1 stack - attaque chargée uniquement - DGT Crit)",
+              "en": "C2: An Heiress Gazed Into the Looking-Glass (1 stack - charged attack only - Crit DMG)"
+            },
+            "cons": 2,
+            "active": false,
+            "stats": {
+              "critDMG_": 0.2
+            }
+          },
+          {
+            "label": {
+              "fr": "C2 : Une héritière regarda dans le miroir (2 stacks - attaque chargée uniquement - DGT Crit)",
+              "en": "C2: An Heiress Gazed Into the Looking-Glass (2 stacks - charged attack only - Crit DMG)"
+            },
+            "cons": 2,
+            "active": false,
+            "stats": {
+              "critDMG_": 0.2
+            }
+          }
+        ]
+      }
+    ],
+    "builds": {
+      "DPS Astroconduction": {
+        "name": {
+          "fr": "DPS Astroconduction",
+          "en": "Stellar-Conduct DPS"
+        },
+        "weights": {
+          "critRate_": 1,
+          "critDMG_": 1,
+          "atk_": 0.8,
+          "atk": 0.1,
+          "eleMas": 0.4,
+          "enerRech_": 0.6
+        },
+        "idealMainStats": {
+          "EQUIP_SHOES": [
+            "atk_",
+            "eleMas"
+          ],
+          "EQUIP_RING": [
+            "atk_",
+            "eleMas"
+          ],
+          "EQUIP_DRESS": [
+            "critDMG_",
+            "critRate_"
+          ]
+        },
+        "hideUIStats": [],
+        "showUIStats": [],
+        "bestSets": [
+          "DisenchantmentInDeepShadow:4"
+        ],
+        "goodSets": [
+          "GladiatorsFinale:2",
+          "ShimenawasReminiscence:2",
+          "VermillionHereafter:2",
+          "EchoesOfAnOffering:2",
+          "NighttimeWhispersInTheEchoingWoods:2",
+          "FragmentOfHarmonicWhimsy:2",
+          "UnfinishedReverie:2",
+          "ADayCarvedFromRisingWinds:2",
+          "DisenchantmentInDeepShadow:2",
+          "WanderersTroupe:2",
+          "GildedDreams:2",
+          "FlowerOfParadiseLost:2",
+          "NightOfTheSkysUnveiling:2",
+          "AubadeOfMorningstarAndMoon:2"
+        ],
+        "er_req": 130,
+        "team": [
+          {
+            "role": "Sub-DPS",
+            "name": "Yae",
+            "element": "electro"
+          },
+          {
+            "role": "Support",
+            "name": "Qiqi",
+            "element": "cryo"
+          },
+          {
+            "role": "Sub-DPS",
+            "name": "Escoffier",
+            "element": "cryo"
+          }
+        ]
+      }
+    }
+  },
   "Sangonomiya Kokomi": {
     "color": "#858fff",
     "portraitOffset": -36,
@@ -15141,24 +13570,9 @@ window.CHARACTER_CONFIG = {
           "en": "Universal Healer"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -15216,24 +13630,10 @@ window.CHARACTER_CONFIG = {
           "en": "Bloom Driver"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.8,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -15302,23 +13702,10 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.9,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -15396,21 +13783,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.9,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 1,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "anemo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -15531,23 +13905,9 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -15662,25 +14022,9 @@ window.CHARACTER_CONFIG = {
           "en": "Cryo Support"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
           "atk_": 1,
           "atk": 0.8,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -15808,21 +14152,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.4,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 1,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "anemo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -15917,21 +14248,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -15994,25 +14312,7 @@ window.CHARACTER_CONFIG = {
           "en": "Hyperbloom DPS"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 1,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "eleMas": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -16127,24 +14427,9 @@ window.CHARACTER_CONFIG = {
           "en": "Universal Healer"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -16200,23 +14485,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -16312,21 +14584,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -16398,25 +14656,8 @@ window.CHARACTER_CONFIG = {
           "en": "Universal Support"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -16485,21 +14726,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -16567,21 +14795,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -16643,21 +14857,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -16728,24 +14928,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.8
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -16798,24 +14983,10 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.4,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.8
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -16976,21 +15147,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -17114,21 +15273,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -17193,21 +15339,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -17270,21 +15403,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -17360,21 +15481,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.5,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -17437,7 +15546,7 @@ window.CHARACTER_CONFIG = {
     "color": "#1D849A",
     "portraitOffset": -38,
     "talents": {
-      "auto": 6,
+      "auto": 1,
       "skill": 10,
       "burst": 8
     },
@@ -17611,21 +15720,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -17698,21 +15793,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -17786,21 +15867,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -17873,21 +15940,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -17998,24 +16051,8 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -18078,21 +16115,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 1,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "anemo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -18238,21 +16262,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -18323,21 +16334,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 1,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "cryo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -18388,6 +16387,76 @@ window.CHARACTER_CONFIG = {
             "role": "Sub-DPS",
             "name": "Durin",
             "element": "pyro"
+          },
+          {
+            "role": "Support",
+            "name": "Nicole",
+            "element": "pyro"
+          }
+        ]
+      },
+      "DPS Astroconduction": {
+        "name": {
+          "fr": "DPS Astroconduction",
+          "en": "Stellar-Conduct DPS"
+        },
+        "weights": {
+          "critRate_": 1,
+          "critDMG_": 1,
+          "atk_": 0.8,
+          "atk": 0.1,
+          "eleMas": 0.4,
+          "enerRech_": 0.3
+        },
+        "idealMainStats": {
+          "EQUIP_SHOES": [
+            "atk_",
+            "eleMas"
+          ],
+          "EQUIP_RING": [
+            "atk_",
+            "eleMas"
+          ],
+          "EQUIP_DRESS": [
+            "critRate_",
+            "critDMG_"
+          ]
+        },
+        "hideUIStats": [],
+        "showUIStats": [],
+        "bestSets": [
+          "DisenchantmentInDeepShadow:4",
+          "MarechausseeHunter:4"
+        ],
+        "goodSets": [
+          "GladiatorsFinale:2",
+          "ShimenawasReminiscence:2",
+          "VermillionHereafter:2",
+          "EchoesOfAnOffering:2",
+          "NighttimeWhispersInTheEchoingWoods:2",
+          "FragmentOfHarmonicWhimsy:2",
+          "UnfinishedReverie:2",
+          "ADayCarvedFromRisingWinds:2",
+          "DisenchantmentInDeepShadow:2",
+          "WanderersTroupe:2",
+          "GildedDreams:2",
+          "FlowerOfParadiseLost:2",
+          "NightOfTheSkysUnveiling:2",
+          "AubadeOfMorningstarAndMoon:2",
+          "BlizzardStrayer:2",
+          "FinaleOfTheDeepGalleries:2"
+        ],
+        "er_req": 140,
+        "team": [
+          {
+            "role": "DPS",
+            "name": "MarionetteNew",
+            "element": "cryo"
+          },
+          {
+            "role": "Sub-DPS",
+            "name": "Yae",
+            "element": "electro"
           },
           {
             "role": "Support",
@@ -18455,21 +16524,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 1,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -18541,21 +16598,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 1,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -18627,21 +16672,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -18706,21 +16738,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -18901,24 +16920,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
           "atk_": 1,
           "atk": 0.8,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -19026,21 +17030,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 1,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "anemo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -19137,24 +17128,9 @@ window.CHARACTER_CONFIG = {
           "en": "Universal Support"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 1,
           "def": 0.1,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -19210,23 +17186,9 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 0.8,
           "def": 0.1,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 1,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "geo_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -19294,21 +17256,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -19379,21 +17329,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -19456,24 +17393,8 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -19535,21 +17456,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -19659,24 +17567,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 1,
           "def": 0.8,
-          "eleMas": 0,
-          "enerRech_": 0.3,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.3
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -19733,21 +17626,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.3,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 1,
-          "heal_": 0
+          "physical_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -19815,21 +17695,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.3,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -19904,16 +17772,106 @@ window.CHARACTER_CONFIG = {
     },
     "buffs": [
       {
-        "category": "Constellations",
+        "category": {
+          "fr": "Constellation 1 : Offrande des yakan (DGTs Électro)",
+          "en": "Constellation 1: Yakan offering (Electro DMG)"
+        },
         "buffs": [
           {
             "label": {
-              "fr": "C4 : Canalisation de sakura (DGTs Électro)",
-              "en": "C4: Sakura channeling (Electro DMG)"
+              "fr": "Si une réaction d'Astroconduction ou de Supraconduction est déclenchée",
+              "en": "If a Stellar-Conduct or Superconduct reaction is triggered"
+            },
+            "cons": 1,
+            "active": false,
+            "stats": {
+              "elemental_dmg_": 0.5
+            }
+          }
+        ]
+      },
+      {
+        "category": {
+          "fr": "Constellation 2 : Glapissement sous la lune (Maîtrise élémentaire)",
+          "en": "Constellation 2: Fox's mooncall (EM)"
+        },
+        "selectMode": "exclusive",
+        "buffs": [
+          {
+            "label": {
+              "fr": "1 sakura dévastateur",
+              "en": "1 Sesshou Sakura"
+            },
+            "cons": 2,
+            "stats": {
+              "eleMas": 60
+            }
+          },
+          {
+            "label": {
+              "fr": "2 sakuras dévastateurs",
+              "en": "2 Sesshou Sakura"
+            },
+            "cons": 2,
+            "stats": {
+              "eleMas": 90
+            }
+          },
+          {
+            "label": {
+              "fr": "3 sakuras dévastateurs",
+              "en": "3 Sesshou Sakura"
+            },
+            "cons": 2,
+            "stats": {
+              "eleMas": 120
+            }
+          },
+          {
+            "label": {
+              "fr": "4 sakuras dévastateurs",
+              "en": "4 Sesshou Sakura"
+            },
+            "cons": 2,
+            "stats": {
+              "eleMas": 200
+            }
+          }
+        ]
+      },
+      {
+        "category": {
+          "fr": "Constellation 4 : Canalisation de sakura (DGTs Électro)",
+          "en": "Constellation 4: Sakura channeling (Electro DMG)"
+        },
+        "buffs": [
+          {
+            "label": {
+              "fr": "Quand un éclair de la compétence touche un ennemi",
+              "en": "When a lightning bolt from the skill hits an enemy"
             },
             "cons": 4,
             "stats": {
               "elemental_dmg_": 0.2
+            }
+          }
+        ]
+      },
+      {
+        "category": {
+          "fr": "Constellation 6 : Art tabou : Daisesshou (DGT Crit)",
+          "en": "Constellation 6: Forbidden Art: Daisesshou (Crit DMG)"
+        },
+        "buffs": [
+          {
+            "label": {
+              "fr": "Uniquement les dégâts d'Astroconduction",
+              "en": "Only for Stellar-Conduct damage"
+            },
+            "cons": 4,
+            "active": false,
+            "stats": {
+              "critDMG_": 2
             }
           }
         ]
@@ -19930,21 +17888,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 0.5,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 1,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "electro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -19962,13 +17908,10 @@ window.CHARACTER_CONFIG = {
         "hideUIStats": [],
         "showUIStats": [],
         "bestSets": [
-          "EmblemOfSeveredFate:4",
           "GoldenTroupe:4",
           "GildedDreams:4"
         ],
         "goodSets": [
-          "MarechausseeHunter:4",
-          "LongNightsOath:4",
           "GoldenTroupe:2",
           "TenacityOfTheMillelith:4",
           "Instructor:4",
@@ -20004,6 +17947,79 @@ window.CHARACTER_CONFIG = {
             "role": "Support",
             "name": "Sucrose",
             "element": "anemo"
+          }
+        ]
+      },
+      "Sub-DPS Astroconduction": {
+        "name": {
+          "fr": "Sub-DPS Astroconduction",
+          "en": "Stellar-Conduct Sub-DPS"
+        },
+        "weights": {
+          "critRate_": 1,
+          "critDMG_": 1,
+          "atk_": 0.8,
+          "atk": 0.1,
+          "eleMas": 0.4,
+          "enerRech_": 0.5
+        },
+        "idealMainStats": {
+          "EQUIP_SHOES": [
+            "atk_",
+            "eleMas"
+          ],
+          "EQUIP_RING": [
+            "atk_",
+            "eleMas"
+          ],
+          "EQUIP_DRESS": [
+            "critRate_",
+            "critDMG_"
+          ]
+        },
+        "hideUIStats": [],
+        "showUIStats": [],
+        "bestSets": [
+          "DisenchantmentInDeepShadow:4"
+        ],
+        "goodSets": [
+          "GoldenTroupe:4",
+          "GildedDreams:4",
+          "GoldenTroupe:2",
+          "TenacityOfTheMillelith:4",
+          "Instructor:4",
+          "WanderersTroupe:2",
+          "GildedDreams:2",
+          "FlowerOfParadiseLost:2",
+          "NightOfTheSkysUnveiling:2",
+          "AubadeOfMorningstarAndMoon:2",
+          "GladiatorsFinale:2",
+          "ShimenawasReminiscence:2",
+          "VermillionHereafter:2",
+          "EchoesOfAnOffering:2",
+          "NighttimeWhispersInTheEchoingWoods:2",
+          "FragmentOfHarmonicWhimsy:2",
+          "UnfinishedReverie:2",
+          "ADayCarvedFromRisingWinds:2",
+          "DisenchantmentInDeepShadow:2",
+          "ThunderingFury:2"
+        ],
+        "er_req": 140,
+        "team": [
+          {
+            "role": "DPS",
+            "name": "MarionetteNew",
+            "element": "cryo"
+          },
+          {
+            "role": "Sub-DPS",
+            "name": "Escoffier",
+            "element": "cryo"
+          },
+          {
+            "role": "Support",
+            "name": "Qiqi",
+            "element": "cryo"
           }
         ]
       }
@@ -20097,21 +18113,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.6,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -20184,21 +18188,9 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 0.6,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -20270,21 +18262,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.6,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -20346,25 +18325,8 @@ window.CHARACTER_CONFIG = {
           "en": "Burgeon DPS"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.6
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -20469,23 +18431,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
           "heal_": 1
         },
         "idealMainStats": {
@@ -20543,24 +18491,11 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.4,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.8,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -20620,24 +18555,11 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.4,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
           "enerRech_": 0.6,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -20773,23 +18695,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.9,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -20852,23 +18761,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.9,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -20925,23 +18821,11 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 0.8,
           "hp": 0.1,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
           "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 1,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "hydro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -21058,21 +18942,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
-          "enerRech_": 0,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -21137,21 +19008,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 0.6,
-          "enerRech_": 0,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -21216,21 +19074,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0,
-          "pyro_dmg_": 1,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "pyro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -21304,6 +19148,32 @@ window.CHARACTER_CONFIG = {
             }
           }
         ]
+      },
+      {
+        "category": "Constellations",
+        "buffs": [
+          {
+            "label": {
+              "fr": "C6 : Le cœur s'attardant longtemps (Taux Crit, DGT Crit)",
+              "en": "C6: The Heart Lingers Long (Crit Rate, Crit DMG)"
+            },
+            "active": true,
+            "stats": {
+              "critRate__bonus_scaling": {
+                "source": "eleMas",
+                "percent": 0.04,
+                "baseline": 500,
+                "max": 20
+              },
+              "critDMG__bonus_scaling": {
+                "source": "eleMas",
+                "percent": 0.16,
+                "baseline": 500,
+                "max": 80
+              }
+            }
+          }
+        ]
       }
     ],
     "builds": {
@@ -21313,25 +19183,8 @@ window.CHARACTER_CONFIG = {
           "en": "Swirl Driver"
         },
         "weights": {
-          "critRate_": 0,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
           "eleMas": 1,
-          "enerRech_": 1,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -21418,24 +19271,9 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 1,
           "def": 0.8,
-          "eleMas": 0,
-          "enerRech_": 0.8,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.8
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -21501,24 +19339,20 @@ window.CHARACTER_CONFIG = {
         },
         "weights": {
           "critRate_": 0.4,
-          "critDMG_": 0,
-          "atk_": 0,
-          "atk": 0,
           "hp_": 1,
           "hp": 0.8,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
-          "enerRech_": 0.3,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.3
+        },
+        "idealMainStats": {
+          "EQUIP_SHOES": [
+            "hp_"
+          ],
+          "EQUIP_RING": [
+            "hp_"
+          ],
+          "EQUIP_DRESS": [
+            "hp_"
+          ]
         },
         "hideUIStats": [],
         "showUIStats": [],
@@ -21648,23 +19482,10 @@ window.CHARACTER_CONFIG = {
         "weights": {
           "critRate_": 1,
           "critDMG_": 1,
-          "atk_": 0,
-          "atk": 0,
-          "hp_": 0,
-          "hp": 0,
           "def_": 0.8,
           "def": 0.1,
           "eleMas": 0.4,
-          "enerRech_": 0.3,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 0,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "enerRech_": 0.3
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -21730,21 +19551,8 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "hp_": 0,
-          "hp": 0,
-          "def_": 0,
-          "def": 0,
-          "eleMas": 0,
           "enerRech_": 0.4,
-          "pyro_dmg_": 0,
-          "hydro_dmg_": 0,
-          "cryo_dmg_": 0,
-          "geo_dmg_": 0,
-          "anemo_dmg_": 0,
-          "electro_dmg_": 0,
-          "dendro_dmg_": 1,
-          "physical_dmg_": 0,
-          "heal_": 0
+          "dendro_dmg_": 1
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -23522,8 +21330,8 @@ window.WEAPON_PASSIVES  = {
     "buffs": [
       {
         "label": {
-          "fr": "Bonus selon la Maîtrise élémentaire (ATQ%)",
-          "en": "Passive buff based on EM (ATK%)"
+          "fr": "Bonus selon la Maîtrise élémentaire (ATQ)",
+          "en": "Passive buff based on EM (ATK)"
         },
         "stats": {
           "atk_bonus_scaling": {
@@ -25287,8 +23095,8 @@ window.WEAPON_PASSIVES  = {
     "buffs": [
       {
         "label": {
-          "fr": "Si les PV sont inférieurs à 50% (ATQ% en fonction des PV%)",
-          "en": "If the wielder's HP is less than 50% (ATK% based on HP%)"
+          "fr": "Si les PV sont inférieurs à 50% (ATQ en fonction des PV%)",
+          "en": "If the wielder's HP is less than 50% (ATK based on HP%)"
         },
         "stats": {
           "atk_bonus_scaling": {
@@ -25307,8 +23115,8 @@ window.WEAPON_PASSIVES  = {
     "buffs": [
       {
         "label": {
-          "fr": "1 Stack (ATQ% en fonction de la Maîtrise élémentaire)",
-          "en": "1 Stack (ATK% based on EM)"
+          "fr": "1 Stack (ATQ en fonction de la Maîtrise élémentaire)",
+          "en": "1 Stack (ATK based on EM)"
         },
         "stats": {
           "atk_bonus_scaling": {
@@ -25322,8 +23130,8 @@ window.WEAPON_PASSIVES  = {
       },
       {
         "label": {
-          "fr": "2 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
-          "en": "2 Stacks (ATK% based on EM)"
+          "fr": "2 Stacks (ATQ en fonction de la Maîtrise élémentaire)",
+          "en": "2 Stacks (ATK based on EM)"
         },
         "stats": {
           "atk_bonus_scaling": {
@@ -25337,8 +23145,8 @@ window.WEAPON_PASSIVES  = {
       },
       {
         "label": {
-          "fr": "3 Stacks (ATQ% en fonction de la Maîtrise élémentaire)",
-          "en": "3 Stacks (ATK% based on EM)"
+          "fr": "3 Stacks (ATQ en fonction de la Maîtrise élémentaire)",
+          "en": "3 Stacks (ATK based on EM)"
         },
         "stats": {
           "atk_bonus_scaling": {
@@ -25928,8 +23736,8 @@ window.WEAPON_PASSIVES  = {
     "buffs": [
       {
         "label": {
-          "fr": "Bonus selon la Maîtrise élémentaire (ATQ%)",
-          "en": "Buff based on EM (ATK%)"
+          "fr": "Bonus selon la Maîtrise élémentaire (ATQ)",
+          "en": "Buff based on EM (ATK)"
         },
         "stats": {
           "atk_bonus_scaling": {

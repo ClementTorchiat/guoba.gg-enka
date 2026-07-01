@@ -12,12 +12,12 @@
       "buffs": [
         {
           "label": {
-            "fr": "A4 : Manœuvre de coordination tactique (ATQ% en fonction de PV%)",
-            "en": "A4 : Vertical force coordination (ATK% depending on HP%)"
+            "fr": "A4 : Manœuvre de coordination tactique (ATQ% en fonction de PV max)",
+            "en": "A4 : Vertical force coordination (ATK% depending on max HP)"
           },
           "active": true,
           "stats": {
-            "atk_bonus_scaling": {
+            "atk__bonus_scaling": {
               "source": "hp",
               "percent": 0.00001,
               "max": 0.4

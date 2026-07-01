@@ -21,6 +21,32 @@
           }
         }
       ]
+    },
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": {
+            "fr": "C6 : Le cœur s'attardant longtemps (Taux Crit, DGT Crit)",
+            "en": "C6: The Heart Lingers Long (Crit Rate, Crit DMG)"
+          },
+          "active": true,
+          "stats": {
+            "critRate__bonus_scaling": {
+              "source": "eleMas",
+              "percent": 0.04,
+              "baseline": 500,
+              "max": 20
+            },
+            "critDMG__bonus_scaling": {
+              "source": "eleMas",
+              "percent": 0.16,
+              "baseline": 500,
+              "max": 80
+            }
+          }
+        }
+      ]
     }
   ],
   "builds": {

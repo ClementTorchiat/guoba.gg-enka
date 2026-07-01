@@ -6,6 +6,23 @@
     "skill": 8,
     "burst": 10
   },
+  "buffs": [
+    {
+      "category": "Constellations",
+      "buffs": [
+        {
+          "label": {
+            "fr": "C6 : Chancre du mal (quand le déchaînement est actif / Radiance - Maîtrise élémentaire)",
+            "en": "C6 : Bane of Evil (while burst is active / Radiance - EM)"
+          },
+          "cons": 6,
+          "stats": {
+            "eleMas": 200
+          }
+        }
+      ]
+    }
+  ],
   "builds": {
     "Sub-DPS Électrocution": {
       "name": {

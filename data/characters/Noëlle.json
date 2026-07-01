@@ -12,13 +12,16 @@
       "buffs": [
         {
           "label": {
-            "fr": "C6 : Aucune poussière (ATQ%)",
-            "en": "C6: Must be spotless (ATK%)"
+            "fr": "C6 : Aucune poussière (ATQ)",
+            "en": "C6: Must be spotless (ATK)"
           },
           "cons": 6,
-          "atk_bonus_scaling": {
-            "source": "def",
-            "percent": 0.5
+          "active": false,
+          "stats": {
+            "atk_bonus_scaling": {
+              "source": "def",
+              "percent": 0.5
+            }
           }
         }
       ]

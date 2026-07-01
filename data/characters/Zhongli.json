@@ -33,6 +33,17 @@
         "physical_dmg_": 0,
         "heal_": 0
       },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "hp_"
+        ],
+        "EQUIP_RING": [
+          "hp_"
+        ],
+        "EQUIP_DRESS": [
+          "hp_"
+        ]
+      },
       "hideUIStats": [],
       "showUIStats": [],
       "bestSets": [

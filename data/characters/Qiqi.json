@@ -160,6 +160,72 @@
           "element": "cryo"
         }
       ]
+    },
+    "Support Astroconduction": {
+      "name": {
+        "fr": "Support Astroconduction",
+        "en": "Stellar-Conduct Support"
+      },
+      "weights": {
+        "critRate_": 0,
+        "critDMG_": 0,
+        "atk_": 1,
+        "atk": 0.8,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0,
+        "enerRech_": 1,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "enerRech_",
+          "atk_"
+        ],
+        "EQUIP_RING": [
+          "atk_"
+        ],
+        "EQUIP_DRESS": [
+          "atk_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "TenacityOfTheMillelith:4",
+        "NoblesseOblige:4"
+      ],
+      "goodSets": [
+        "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"
+      ],
+      "er_req": 200,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "MarionetteNew",
+          "element": "cryo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Yae",
+          "element": "electro"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Escoffier",
+          "element": "cryo"
+        }
+      ]
     }
   }
 }

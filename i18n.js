@@ -140,19 +140,20 @@
             "error.invalidLink":   "Lien invalide ou compte introuvable.",
             "error.filesErr":      "Erreur Fichiers.",
             "error.loadingV2":     "Chargement V2 (Indexation)...",
+            "error.pageNotFound":  "Page introuvable.",
 
             // ── Export image ──────────────────────────────────
             "export.processing":   "Traitement...",
 
             // ── Section Analyse & Conseils — Titres ──────────
             "analysis.title":      (nom) => `${nom} - Analyse & conseils`,
-            "analysis.s1.title":   "1. Vue d'ensemble",
+            "analysis.s1.title":   "Vue d'ensemble",
             "analysis.s1.desc":    "Évaluez la qualité de vos sous-stats et ayez un aperçu réel du potentiel de vos artéfacts actuels.",
             "analysis.s1.buildEff":    "Efficacité du Build",
             "analysis.s1.rngFactor":   "Facteur Chance (RNG)",
             "analysis.s1.maxScore":    "Score Potentiel Max",
 
-            "analysis.s2.title":   "2. Analyse stratégique",
+            "analysis.s2.title":   "Analyse stratégique",
             "analysis.s2.desc":    "Identifiez les déséquilibres majeurs de votre build et assurez-vous que votre pièce hors-set apporte un vrai bonus.",
             "analysis.s2.critAnalysis": "Analyse de taux critique",
             "analysis.s2.rollDist":    "Répartition des Rolls",
@@ -163,8 +164,11 @@
             "analysis.s2.noDeadStats": "Aucune !",
             "analysis.s2.offPiece":    "Analyse Pièce Hors-Set",
             "ui.art.offPiece": "Off-Set",
+            "analysis.offPiece.replaceable": "Remplaçable",
+            "analysis.offPiece.offSet": "Hors-Set",
+            "analysis.offPiece.setAvg": "Moy. Set",
 
-            "analysis.s3.title":   "3. Plan d'action",
+            "analysis.s3.title":   "Plan d'action",
             "analysis.s3.desc":    "Votre feuille de route prioritaire avec les corrections urgentes à appliquer et les artéfacts à remplacer.",
             "analysis.s3.p1.title": "Conseils généraux",
             "analysis.s3.noSwap":  "Aucun échange avantageux détecté",
@@ -172,6 +176,11 @@
             "analysis.s3.mainStatTitle":  "Problème Statistique Principale",
             "analysis.s3.mainStatOk":     "Statistiques Principales",
             "analysis.s3.top3":    "Top 3 des artéfacts à changer par ordre de priorité",
+            "analysis.top3.tooltip.dropRate": (rate) => `Probabilité d'obtention de cette stat principale : ${rate}%`,
+            "analysis.top3.tooltip.fixed": "Stat principale fixe ou garantie",
+            "analysis.top3.tooltip.resin": "Estimation basée sur une génération naturelle de 180 Résines par jour.",
+            "analysis.top3.thisPiece": "Cette pièce",
+            "analysis.top3.globalAvg": "Moy. Globale",
             "analysis.s3.noPriority": "Rien à signaler, excellent travail.",
             "analysis.s3.resinEst":   (resin, days) => `~${resin} Résines (${days} jours)`,
             "analysis.s3.mainStatDetail": (piece, better, current) =>
@@ -179,22 +188,30 @@
             "analysis.s3.p2.title": "Ce qu'il faut viser",
             "analysis.s3.p3.title": "Échange avantageux",
             "analysis.s3.swap.desc": "Ce système repère les artéfacts équipés sur vos autres personnages qui amélioreraient celui que vous regardez actuellement. Attention : procéder à cet échange optimisera ce personnage au maximum, mais cela réduira inévitablement les statistiques du personnage qui se fait emprunter sa pièce !",
+            "analysis.s3.lvl.1":      "Niv. 1",
+            "analysis.s3.lvl.max":    (n) => `Niv. ${n}`,
+            "analysis.s3.lvl.current": (n) => `Actuellement : Niv. ${n}`,
 
-            "analysis.s4.title":   "4. Projection idéale",
-            "analysis.s4.desc":    "Visualisez les statistiques que vous pourriez obtenir si vos statistiques inutiles étaient converties en statistiques optimales.",
+            "analysis.s4.title":   "Projection idéale",
+            "analysis.s4.desc":    "Visualisez vos artéfacts sous leur meilleur jour : remplacements des stats inutiles et rolls portés à leur maximum.",
             "analysis.s4.replace": (dead, target) => `Remplacer ${dead} par ${target} :`,
             "analysis.s4.optimal": "Déjà optimal",
             "analysis.s4.totalGains": "Résumé des gains potentiels",
 
-            "analysis.s5.title":   "5. Détails des rolls",
+            "analysis.s5.title":   "Détails des rolls",
             "analysis.s5.desc":    "Lisez dans le code source du jeu et découvrez exactement quelle qualité de statistiques vous avez obtenue.",
             "analysis.s5.unavailable": (stars) => `Artéfact ${stars}★ — Analyse indisponible`,
             "analysis.s5.rollWeak":    "Jet faible",
             "analysis.s5.rollMed":     "Jet moyen",
             "analysis.s5.rollStrong":  "Jet fort",
             "analysis.s5.rollPerfect": "Jet parfait",
+            "analysis.s5a.title":  "Remplacement des stats inutiles",
+            "analysis.s5a.desc":   "Chaque statistique inutile est convertie en la statistique utile la plus précieuse disponible, avec le même nombre de rolls.",
+            "analysis.s5b.title":  "Rolls au maximum",
+            "analysis.s5b.desc":   "Même répartition de rolls que vos artéfacts actuels, mais chaque roll individuel remplacé par sa valeur maximale possible.",
+            "analysis.s5b.unavailable": (stars) => `Artéfact ${stars}★ — Analyse indisponible`,
 
-            "analysis.s6.title":   "6. Simulateur de reroll",
+            "analysis.s6.title":   "Simulateur de reroll",
             "analysis.s6.desc":    "Évaluez s'il est rentable de redistribuer les valeurs des statistiques de vos artéfacts vers de meilleures valeurs.",
             "analysis.s6.gainPotential": "Potentiel de gain",
             "analysis.s6.lossRisk":      "Risque de perte",
@@ -221,8 +238,12 @@
             "advice.mainStat.title.ok":      "Statistiques Principales",
             "advice.mainStat.ok":            "Votre sablier, votre coupe et votre diadème ont tous les trois une statistique principale optimale.",
             "advice.mainStat.title.problem": "Problème Statistique Principale",
+            "advice.mainStat.empty":         "Aucun artéfact équipé.",
 
             // getOffPieceAdvice
+            "advice.offPiece.empty":      "Aucun artéfact équipé.",
+            "advice.offPiece.incomplete": "Équipez complètement votre personnage pour évaluer la pertinence de sa pièce hors-set.",
+            "advice.offPiece.rainbow":    "Équipez votre personnage d'un set 4p ou 2p/2p pour avoir des conseils sur votre pièce hors-set.",
             "advice.offPiece.5of5":   (setName, piece, score) =>
                 `Vous utilisez 5 pièces du set <b>${setName}</b>. Votre <b style="color: #aaa;">${piece}</b> étant statistiquement la plus faible (Score: ${score}), vous devriez la remplacer par une meilleure pièce hors-set.`,
             "advice.offPiece.good":   (piece) => `Excellente pièce hors-set <b style="color: #aaa;">(${piece})</b>. Cette dernière porte votre build vers le haut.`,
@@ -231,8 +252,9 @@
 
             // getTalentAdvice
             "advice.talent.ok":       "Vos aptitudes sont au niveau recommandé.",
-            "advice.talent.critical": (label, lvl) => `Améliorer votre <b style="color: #aaa;">${label}</b> au niv ${lvl} est important pour ce personnage.`,
-            "advice.talent.info":     (label, lvl) => `Améliorer votre <b style="color: #aaa;">${label}</b> au niveau ${lvl} est recommandé pour ce personnage.`,
+            "advice.talent.critical": (str) => `Améliorer ${str} est important pour ce personnage.`,
+            "advice.talent.info":     (str) => `Améliorer ${str} est recommandé pour ce personnage.`,
+            "advice.talent.item":     (label, lvl) => `votre <b style="color: #aaa;">${label}</b> au niv ${lvl}`,
             "advice.talent.auto":     "Attaque Normale",
             "advice.talent.skill":    "Compétence",
             "advice.talent.burst":    "Déchaînement",
@@ -245,6 +267,9 @@
             "advice.setForce.okQuality":        "Set d'artéfacts optimal et de bonne qualité.",
             "advice.setForce.weak":             "Vous forcez un set d'artéfacts de 4 pièces avec des artéfacts faibles. Vous devriez essayer une alternative.",
             "advice.setForce.weakHint2p":       "Ce personnage fonctionne très bien en set d'artéfacts 2 pièces / 2 pièces, n'hésitez pas à casser votre set d'artéfacts actuel pour de meilleures stats.",
+            "advice.setForce.okQualityOffMeta": "Vos artéfacts sont de bonne qualité, mais ce set 4 pièces n'est pas recommandé pour ce personnage.",
+            "advice.setForce.empty":            "Aucun artéfact équipé.",
+            "advice.setForce.incomplete":       "Équipez complètement votre personnage pour évaluer la pertinence de vos bonus de set.",
 
             // getMetaSetAdvice
             "advice.metaSet.title.ok":         "Choix du set d'artéfacts",
@@ -266,11 +291,14 @@
             "advice.er.ok":            (cur, tgt) => `Votre ER (${cur}%) est idéale pour cet archétype (Cible : ${tgt}%).`,
             "advice.er.low":           (cur, tgt) => `Vous avez ${cur}% d'ER, mais cet archétype demande environ <b>${tgt}%</b>. Vos rotations risquent de bloquer.`,
             "advice.er.excess":        (cur, tgt) => `Vous avez ${cur}% d'ER, ce qui est bien au-dessus du nécessaire (${tgt}%). Essayez de troquer de l'ER contre d'autres stats.`,
+            "advice.er.target": "Cible :",
 
             // getLevelAdvice
-            "advice.level.title":      "Niveau du Personnage",
-            "advice.level.low":        "Améliorez votre personnage au niveau 90 pour maximiser ses statistiques.",
-            "advice.level.ok":         "Votre personnage est au niveau maximum.",
+            "advice.level.title":     "Niveau du Personnage",
+            "advice.level.low":       "Améliorez votre personnage au niveau 90 pour maximiser ses statistiques.",
+            "advice.level.ok":        "Votre personnage est au niveau 90.",
+            "advice.level.ascended":  "Niveau 95 atteint grâce à une Masterless Stella Fortuna. Vous avez dépassé le cap standard de 90 !",
+            "advice.level.legendary": "Niveau 100 atteint grâce à 3 Masterless Stella Fortuna. Bien joué !",
 
             // getFarmDifficulty
             "farm.easy":               "Facile",
@@ -332,7 +360,7 @@
             "badge.whale.name":          "Baleine",
             "badge.whale.desc":          "Un personnage 5 étoiles C6 détecté.",
             "badge.narval.name":         "Le Narval",
-            "badge.narval.desc":         "Plusieurs personnages 5 étoiles C6 détectés.",
+            "badge.narval.desc":         "Plusieurs personnages 5 étoiles C6 détectés. Vous êtes un actionnaire HoyoVerse ou quoi ?",
             "badge.lucky.name":          "Touché par la Grâce",
             "badge.lucky.desc":          (rng) => `RNG moyenne exceptionnelle (${rng}%). Le jeu vous aime.`,
             "badge.cursed.name":         "Maudit par la RNG",
@@ -435,6 +463,8 @@
             "badge.sumeru.desc": "Le quatuor de l'Académie est réuni. Préparez-vous pour des disputes de loyer et des blagues douteuses.",
             "badge.mermonia.name": "Palais Mermonia",
             "badge.mermonia.desc": "La Cour de Fontaine est en session. La justice sera rendue avec la plus grande des théâtralités.",
+            "badge.stellaFortuna.name": "Stella Fortuna",
+            "badge.stellaFortuna.desc": "A dépensé 3 Masterless Stella Fortuna sur un personnage pour l'amener au niveau 100. La chance (ou le portefeuille) sourit aux audacieux.",
 
             // ── Accessibilité (Balises Alt) ───────────────────
             "ui.alt.achievements": "Succès",
@@ -448,12 +478,83 @@
             "data.unknownPlayer": "Joueur inconnu",
             "data.traveler":      "Voyageur",
 
+            // ── Thèmes ────────────────────────────────────────
+            "theme.dark":          "Sombre Classique",
+            "theme.abyssal":       "Fond Abyssal",
+            "theme.sea":           "Mer Primordiale",
+            "theme.wish":          "Vœu de Minuit",
+            "theme.guild":         "Guilde des Aventuriers",
+
             "wtl.or":           "ou",
             "wtl.anyChoice":    "Au choix",
             "wtl.chooseAmong":  (n) => `${n} au choix parmi :`,
             "wtl.offSetPiece":  "Pièce Hors-Set",
             "wtl.anySet":       "Set au choix",
             "analysis.s3.noSwapOn": (piece) => `Aucun échange<br>avantageux détecté<br>sur ${piece}`,
+
+            // ── Menu statique ─────────────────────────────────
+            "nav.home": "Accueil",
+            "nav.about": "À propos",
+            "nav.team": "L'équipe",
+            "nav.privacy": "Confidentialité",
+
+            // ── Pages statiques ───────────────────────────────
+            "page.about.title": "guoba.gg",
+            "page.about.lead": "Un optimiseur de builds Genshin Impact indépendant, conçu par des joueurs, pour des joueurs.",
+            "page.about.q1.title": "Qu'est-ce que guoba.gg ?",
+            "page.about.q1.p1": "<strong>guoba.gg</strong> réinvente l'optimisation sur Genshin Impact. Bien plus qu'une simple calculatrice, c'est un véritable <strong>coach virtuel</strong> : en entrant votre UID, l'outil évalue la qualité mathématique pure de vos équipements via un double système de score et de grade, simule vos statistiques réelles en combat sous buffs, et vous guide pas à pas pour perfectionner votre personnage.",
+            "page.about.q1.p2": "Le projet est né d'une frustration simple : le besoin d'avoir un outil précis, immersif et proactif pour orienter ses choix de farm sans avoir à ouvrir un tableur.",
+            "page.about.q2.title": "Comment ça fonctionne ?",
+            "page.about.q2.c1.title": "Récupération",
+            "page.about.q2.c1.desc": "Vos données sont lues via l'API publique d'<a href=\"https://enka.network\" target=\"_blank\" rel=\"noopener\">Enka.Network</a> à partir de votre UID. Aucun compte, aucun mot de passe, et vos données sont en local.",
+            "page.about.q2.c2.title": "Calcul",
+            "page.about.q2.c2.desc": "Chaque artéfact est évalué selon les tables de rolls officielles du jeu, pondéré par les besoins de votre personnage et ajusté selon vos bonus de set.",
+            "page.about.q2.c3.title": "Coaching visuel",
+            "page.about.q2.c3.desc": "Les résultats s'affichent sous forme de fiches immersives avec des grades, des graphiques et des recommandations d'actions immédiates.",
+            "page.about.q2.c4.title": "Partage & Export",
+            "page.about.q2.c4.desc": "Générez une fiche visuelle de votre personnage en un clic, ou partagez directement le lien de votre profil avec la communauté pour comparer vos builds.",
+            "page.about.q3.title": "Ce que guoba.gg n'est pas",
+            "page.about.q3.l1": "Ce n'est <strong>pas</strong> un outil officiel de HoYoverse.",
+            "page.about.q3.l2": "Ce n'est <strong>pas</strong> un simulateur de dégâts ou un classement de speedrun.",
+            "page.about.q3.l3": "Ce n'est <strong>pas</strong> une base de données de tier lists.",
+            "page.about.q3.note": "L'outil se concentre sur la <strong>qualité de votre investissement</strong> : vos artéfacts sont-ils mathématiquement excellents, votre build est-il bien équilibré en jeu, et que devez-vous farmer en priorité absolue ?",
+            "page.about.q4.title": "Open source & contributions",
+            "page.about.q4.desc": "Le projet est ouvert aux retours de la communauté. Si vous repérez une erreur dans les poids d'un personnage, une stat mal calculée ou souhaitez proposer une amélioration, rejoignez le Discord.",
+
+            "page.team.title": "L'équipe",
+            "page.team.lead": "Les personnes INCROYABLES derrière ce projet !",
+            "page.team.clem.role": "Fondateur & Développeur",
+            "page.team.clem.bio": "Créateur du projet. Développement front-end, UX/UI, architecture, système de scoring et maintenance générale.",
+            "page.team.blu.role": "UI Artist & Conseillère",
+            "page.team.blu.bio": "Conseillère générale et première testeuse. Soutien stratégique et création d'un bon nombre d'icônes de l'interface.",
+            "page.team.copyUid": "Copier l'UID",
+            "page.team.thanks.title": "Remerciements",
+            "page.team.thanks.lead": "Ce projet n'existerait pas sans :",
+            "page.team.thanks.l1": "<a href=\"https://enka.network\" target=\"_blank\" rel=\"noopener\">Enka.Network</a> — API de données joueur",
+            "page.team.thanks.l2": "La communauté Discord qui teste, remonte des bugs et suggère des améliorations",
+            "page.team.thanks.l3": "Fribbels, pour l'inspiration du design de la fiche personnage",
+
+            "page.privacy.title": "Charte de confidentialité",
+            "page.privacy.lead": "Transparence sur les données que guoba.gg collecte — ou plutôt ne collecte pas.",
+            "page.privacy.q1.title": "Ce que nous ne collectons pas",
+            "page.privacy.q1.p1": "guoba.gg ne possède <strong>aucun compte utilisateur</strong>, ne demande aucune inscription, aucun email, aucun mot de passe.",
+            "page.privacy.q1.p2": "Nous n'avons pas accès à votre compte HoYoverse. Votre UID est une information publique exposée nativement par le jeu.",
+            "page.privacy.q2.title": "Données locales (votre navigateur)",
+            "page.privacy.q2.p1": "L'application stocke uniquement dans votre <code>localStorage</code> :",
+            "page.privacy.q2.l1": "Les <strong>UIDs récemment consultés</strong> et les métadonnées associées (pseudo, avatar, stats de profil) pour l'affichage de la page d'accueil.",
+            "page.privacy.q2.l2": "Vos <strong>préférences d'interface</strong> : thème visuel, langue, compte favori.",
+            "page.privacy.q2.note": "Ces données ne quittent jamais votre appareil. Elles ne sont ni transmises, ni vendues, ni analysées par nos soins. Vous pouvez les effacer à tout moment via les paramètres de votre navigateur.",
+            "page.privacy.q3.title": "API tierce — Enka.Network",
+            "page.privacy.q3.p1": "Lorsque vous entrez un UID, une requête est envoyée à notre proxy (<code>guobagg.clement-torchiat.workers.dev</code>), lui-même relayant vers <a href=\"https://enka.network\" target=\"_blank\" rel=\"noopener\">Enka.Network</a>. Les données renvoyées sont celles que le jeu expose publiquement : personnages en vitrine, artéfacts et armes équipés, statistiques de profil.",
+            "page.privacy.q3.p2": "Consultez la <a href=\"https://enka.network/privacy-policy/\" target=\"_blank\" rel=\"noopener\">politique d'Enka.Network</a> pour les détails sur leur propre traitement des données.",
+            "page.privacy.q4.title": "Clause de non-responsabilité et affiliation",
+            "page.privacy.q4.p1": "guoba.gg est un projet tiers indépendant créé par la communauté. Ce site n'est en aucun cas affilié, commandité, approuvé ou associé à <strong>HoYoverse</strong> ou <strong>Cognosphere PTE. LTD.</strong>",
+            "page.privacy.q4.p2": "<em>Genshin Impact</em>, ainsi que l'ensemble des éléments graphiques, modèles de jeu, noms de personnages et ressources visuelles utilisés sur ce domaine, demeurent la propriété intellectuelle exclusive de HoYoverse. Leur utilisation s'inscrit dans le cadre d'un usage non commercial destiné à l'information et à l'assistance des joueurs.",
+            "page.privacy.q5.title": "Cookies & traceurs",
+            "page.privacy.q5.p1": "guoba.gg n'utilise <strong>aucun cookie</strong> de tracking, aucune régie publicitaire, aucun outil d'analyse comportementale (Google Analytics, etc.).",
+            "page.privacy.q6.title": "Contact",
+            "page.privacy.q6.p1": "Pour toute question relative à la confidentialité, rejoignez le Discord et adressez-vous à clem.",
+            "page.privacy.date": "Dernière mise à jour : juin 2026",
 
             "ob.steps": [
                 {
@@ -685,19 +786,20 @@
             "error.invalidLink":   "Invalid link or account not found.",
             "error.filesErr":      "Files Error.",
             "error.loadingV2":     "Loading V2 (Indexing)...",
+            "error.pageNotFound":  "Page not found.",
 
             // ── Export ────────────────────────────────────────
             "export.processing":   "Processing...",
 
             // ── Analysis & Tips — Titles ──────────────────────
             "analysis.title":      (nom) => `${nom} - Analysis & Tips`,
-            "analysis.s1.title":   "1. Overview",
+            "analysis.s1.title":   "Overview",
             "analysis.s1.desc":    "Evaluate the quality of your sub-stats and get a real picture of your current artifacts' potential.",
             "analysis.s1.buildEff":    "Build Efficiency",
             "analysis.s1.rngFactor":   "Luck Factor (RNG)",
             "analysis.s1.maxScore":    "Max Potential Score",
 
-            "analysis.s2.title":   "2. Strategic analysis",
+            "analysis.s2.title":   "Strategic analysis",
             "analysis.s2.desc":    "Identify major imbalances in your build and make sure your off-set piece adds real value.",
             "analysis.s2.critAnalysis": "Crit Rate Analysis",
             "analysis.s2.rollDist":    "Roll Distribution",
@@ -708,8 +810,11 @@
             "analysis.s2.noDeadStats": "None!",
             "analysis.s2.offPiece":    "Off-Set Piece Analysis",
             "ui.art.offPiece": "Off-Set",
+            "analysis.offPiece.replaceable": "Replaceable",
+            "analysis.offPiece.offSet": "Off-Piece",
+            "analysis.offPiece.setAvg": "Set Avg.",
 
-            "analysis.s3.title":   "3. Action plan",
+            "analysis.s3.title":   "Action plan",
             "analysis.s3.desc":    "Your priority roadmap with urgent fixes to apply and artifacts to replace.",
             "analysis.s3.p1.title": "General tips",
             "analysis.s3.noSwap":  "No beneficial swap detected",
@@ -717,6 +822,11 @@
             "analysis.s3.mainStatTitle":  "Main Stat Issue",
             "analysis.s3.mainStatOk":     "Main Stats",
             "analysis.s3.top3":    "Top 3 artifacts to replace, by priority",
+            "analysis.top3.tooltip.dropRate": (rate) => `Drop rate probability for this main stat: ${rate}%`,
+            "analysis.top3.tooltip.fixed": "Fixed or guaranteed main stat",
+            "analysis.top3.tooltip.resin": "Estimate based on a natural regeneration of 180 Resin per day.",
+            "analysis.top3.thisPiece": "This piece",
+            "analysis.top3.globalAvg": "Global Avg.",
             "analysis.s3.noPriority": "Nothing to report, excellent work.",
             "analysis.s3.resinEst":   (resin, days) => `~${resin} Resin (${days} days)`,
             "analysis.s3.mainStatDetail": (piece, better, current) =>
@@ -724,22 +834,30 @@
             "analysis.s3.p2.title": "What to look for",
             "analysis.s3.p3.title": "Beneficial swap",
             "analysis.s3.swap.desc": "This system detects artifacts equipped on your other characters that enhance the one you are currently viewing. While this exchange will maximize the potential of your current character, it will inevitably reduce the stats of the character whose artifact is borrowed!",
+            "analysis.s3.lvl.1":      "Lvl. 1",
+            "analysis.s3.lvl.max":    (n) => `Lvl. ${n}`,
+            "analysis.s3.lvl.current": (n) => `Currently : Lvl. ${n}`,
 
-            "analysis.s4.title":   "4. Ideal projection",
-            "analysis.s4.desc":    "Visualize the stats you could obtain if your wasted stats were converted into optimal ones.",
+            "analysis.s4.title":   "Ideal projection",
+            "analysis.s4.desc":    "See your artifacts at their best: dead stats replaced with optimal ones, and rolls pushed to their maximum.",
             "analysis.s4.replace": (dead, target) => `Replace ${dead} with ${target}:`,
             "analysis.s4.optimal": "Already optimal",
             "analysis.s4.totalGains": "Potential gains summary",
 
-            "analysis.s5.title":   "5. Roll details",
+            "analysis.s5.title":   "Roll details",
             "analysis.s5.desc":    "Read directly from the game's source code and discover the exact quality of each stat roll.",
             "analysis.s5.unavailable": (stars) => `${stars}★ Artifact — Analysis unavailable`,
             "analysis.s5.rollWeak":    "Low roll",
             "analysis.s5.rollMed":     "Mid roll",
             "analysis.s5.rollStrong":  "High roll",
             "analysis.s5.rollPerfect": "Perfect roll",
+            "analysis.s5a.title":  "Dead stat replacement",
+            "analysis.s5a.desc":   "Each wasted stat is converted into the most valuable available useful stat, with the same number of rolls.",
+            "analysis.s5b.title":  "Maximum potential rolls",
+            "analysis.s5b.desc":   "Same roll distribution as your current artifacts, but every individual roll replaced with its highest possible value.",
+            "analysis.s5b.unavailable": (stars) => `${stars}★ Artifact — Analysis unavailable`,
 
-            "analysis.s6.title":   "6. Reroll simulator",
+            "analysis.s6.title":   "Reroll simulator",
             "analysis.s6.desc":    "Evaluate whether redistributing your artifact's stat values toward better ones is worth it.",
             "analysis.s6.gainPotential": "Gain potential",
             "analysis.s6.lossRisk":      "Loss risk",
@@ -763,7 +881,11 @@
             "advice.mainStat.title.ok":      "Main Stats",
             "advice.mainStat.ok":            "Your sands, goblet, and circlet all have optimal main stats.",
             "advice.mainStat.title.problem": "Main Stat Issue",
+            "advice.mainStat.empty":         "No artifacts equipped.",
 
+            "advice.offPiece.empty":      "No artifacts equipped.",
+            "advice.offPiece.incomplete": "Fully equip your character to evaluate the relevance of their off-set piece.",
+            "advice.offPiece.rainbow":    "Equip your character with a 4p or 2p/2p set to get advice on your off-set piece.",
             "advice.offPiece.5of5":   (setName, piece, score) =>
                 `You are using 5 pieces from the <b>${setName}</b> set. Your <b style="color: #aaa;">${piece}</b> is statistically the weakest (Score: ${score}), you should replace it with a better off-set piece.`,
             "advice.offPiece.good":   (piece) => `Excellent off-set piece <b style="color: #aaa;">(${piece})</b>. It is lifting your build up.`,
@@ -771,8 +893,9 @@
             "advice.offPiece.bad":    (piece) => `Your off-set piece <b style="color: #aaa;">(${piece})</b> could be a lot better. Look for a better one in your inventory or let a different piece be off-set.`,
 
             "advice.talent.ok":       "Your talents are at the recommended level.",
-            "advice.talent.critical": (label, lvl) => `Upgrading your <b style="color: #aaa;">${label}</b> to level ${lvl} is important for this character.`,
-            "advice.talent.info":     (label, lvl) => `Upgrading your <b style="color: #aaa;">${label}</b> to level ${lvl} is recommended for this character.`,
+            "advice.talent.critical": (str) => `Upgrading ${str} is important for this character.`,
+            "advice.talent.info":     (str) => `Upgrading ${str} is recommended for this character.`,
+            "advice.talent.item":     (label, lvl) => `your <b style="color: #aaa;">${label}</b> to level ${lvl}`,
             "advice.talent.auto":     "Normal Attack",
             "advice.talent.skill":    "Elemental Skill",
             "advice.talent.burst":    "Elemental Burst",
@@ -784,6 +907,9 @@
             "advice.setForce.okQuality":        "Optimal artifact set of good quality.",
             "advice.setForce.weak":             "You are forcing a 4-piece artifact set with weak artifacts. You should try an alternative.",
             "advice.setForce.weakHint2p":       "This character works very well with a 2p/2p set; don't hesitate to break your current set for better stats.",
+            "advice.setForce.okQualityOffMeta": "Your artifacts are of good quality, but this 4-piece set is not recommended for this character.",
+            "advice.setForce.empty":            "No artifacts equipped.",
+            "advice.setForce.incomplete":       "Fully equip your character to evaluate the relevance of your set bonuses.",
 
             "advice.metaSet.title.ok":         "Artifact set choice",
             "advice.metaSet.title.optimize":   "Artifact set optimization",
@@ -802,10 +928,13 @@
             "advice.er.ok":            (cur, tgt) => `Your ER (${cur}%) is ideal for this archetype (Target: ${tgt}%).`,
             "advice.er.low":           (cur, tgt) => `You have ${cur}% ER, but this archetype needs around <b>${tgt}%</b>. Your rotations may get stuck.`,
             "advice.er.excess":        (cur, tgt) => `You have ${cur}% ER, which is well above what's needed (${tgt}%). Try trading ER for other stats.`,
+            "advice.er.target": "Target:",
 
-            "advice.level.title":      "Character Level",
-            "advice.level.low":        "Upgrade your character to level 90 to maximize their stats.",
-            "advice.level.ok":         "Your character is at maximum level.",
+            "advice.level.title":     "Character Level",
+            "advice.level.low":       "Upgrade your character to level 90 to maximize their stats.",
+            "advice.level.ok":        "Your character is at level 90.",
+            "advice.level.ascended":  "Level 95 reached thanks to a Masterless Stella Fortuna. You've gone past the standard 90 cap!",
+            "advice.level.legendary": "Level 100 reached using 3 Masterless Stella Fortuna. Congratulations!",
 
             "farm.easy":               "Easy",
             "farm.medium":             "Relatively easy",
@@ -864,7 +993,7 @@
             "badge.whale.name":          "Whale",
             "badge.whale.desc":          "One 5-star character at C6 detected.",
             "badge.narval.name":         "Narwal",
-            "badge.narval.desc":         "Multiple 5-star C6 characters detected.",
+            "badge.narval.desc":         "Multiple 5-star C6 characters detected. Are you a HoyoVerse shareholder ?",
             "badge.lucky.name":          "Touched by Grace",
             "badge.lucky.desc":          (rng) => `Exceptional average RNG (${rng}%). The game loves you.`,
             "badge.cursed.name":         "RNG Cursed",
@@ -967,6 +1096,8 @@
             "badge.sumeru.desc": "The Akademiya quartet is reunited. Get ready for rent disputes and terrible jokes.",
             "badge.mermonia.name": "Palais Mermonia",
             "badge.mermonia.desc": "The Court of Fontaine is in session. Justice will be served with the utmost theatricality.",
+            "badge.stellaFortuna.name": "Stella Fortuna",
+            "badge.stellaFortuna.desc": "Spent 3 Masterless Stella Fortuna on one character to push it to level 100. Luck (or your wallet) favors the bold.",
 
             // ── Accessibility (Alt Tags) ──────────────────────
             "ui.alt.achievements": "Achievements",
@@ -980,12 +1111,83 @@
             "data.unknownPlayer": "Unknown Player",
             "data.traveler":      "Traveler",
 
+            // ── Themes ────────────────────────────────────────
+            "theme.dark":          "Dark Classic",
+            "theme.abyssal":       "Abyssal Void",
+            "theme.sea":           "Primordial Sea",
+            "theme.wish":          "Night Wish",
+            "theme.guild":         "Adventurer's Guild",
+
             "wtl.or":           "or",
             "wtl.anyChoice":    "Any",
             "wtl.chooseAmong":  (n) => `${n} of the following:`,
             "wtl.offSetPiece":  "Off-Set Piece",
             "wtl.anySet":       "Any set",
             "analysis.s3.noSwapOn": (piece) => `No beneficial<br>swap detected<br>for ${piece}`,
+
+            // ── Static menu ───────────────────────────────────
+            "nav.home": "Home",
+            "nav.about": "About",
+            "nav.team": "Team",
+            "nav.privacy": "Privacy",
+
+            // ── Static pages ──────────────────────────────────
+            "page.about.title": "guoba.gg",
+            "page.about.lead": "An independent Genshin Impact build optimizer, designed by players, for players.",
+            "page.about.q1.title": "What is guoba.gg?",
+            "page.about.q1.p1": "<strong>guoba.gg</strong> reinvents optimization in Genshin Impact. Much more than a simple calculator, it's a true <strong>virtual coach</strong>: by entering your UID, the tool evaluates the pure mathematical quality of your equipment via a dual score and grade system, simulates your real combat stats under buffs, and guides you step-by-step to perfect your character.",
+            "page.about.q1.p2": "The project was born from a simple frustration: the need for a precise, immersive, and proactive tool to guide farming choices without having to open a spreadsheet.",
+            "page.about.q2.title": "How does it work?",
+            "page.about.q2.c1.title": "Data Retrieval",
+            "page.about.q2.c1.desc": "Your data is read via the public <a href=\"https://enka.network\" target=\"_blank\" rel=\"noopener\">Enka.Network</a> API using your UID. No account, no password, and your data stays local.",
+            "page.about.q2.c2.title": "Calculation",
+            "page.about.q2.c2.desc": "Each artifact is evaluated using the game's official roll tables, weighted by your character's needs and adjusted for set bonuses.",
+            "page.about.q2.c3.title": "Visual Coaching",
+            "page.about.q2.c3.desc": "Results are displayed in immersive sheets with grades, charts, and immediate action recommendations.",
+            "page.about.q2.c4.title": "Share & Export",
+            "page.about.q2.c4.desc": "Generate a visual summary of your character in one click, or directly share your profile link with the community.",
+            "page.about.q3.title": "What guoba.gg is not",
+            "page.about.q3.l1": "It is <strong>not</strong> an official HoYoverse tool.",
+            "page.about.q3.l2": "It is <strong>not</strong> a damage simulator or a speedrun leaderboard.",
+            "page.about.q3.l3": "It is <strong>not</strong> a tier list database.",
+            "page.about.q3.note": "The tool focuses on the <strong>quality of your investment</strong>: are your artifacts mathematically excellent, is your build well-balanced in-game, and what should you farm as an absolute priority?",
+            "page.about.q4.title": "Open source & contributions",
+            "page.about.q4.desc": "The project is open to community feedback. If you spot an error in a character's weights, a miscalculated stat, or want to suggest an improvement, join the Discord.",
+
+            "page.team.title": "The Team",
+            "page.team.lead": "The AMAZING people behind this project!",
+            "page.team.clem.role": "Founder & Developer",
+            "page.team.clem.bio": "Creator of the project. Front-end development, UX/UI, architecture, scoring system, and general maintenance.",
+            "page.team.blu.role": "UI Artist & Advisor",
+            "page.team.blu.bio": "General advisor and first tester. Strategic support, UX/UI feedback and creator of many icons for the interface.",
+            "page.team.copyUid": "Copy UID",
+            "page.team.thanks.title": "Special Thanks",
+            "page.team.thanks.lead": "This project wouldn't exist without:",
+            "page.team.thanks.l1": "<a href=\"https://enka.network\" target=\"_blank\" rel=\"noopener\">Enka.Network</a> — Player data API",
+            "page.team.thanks.l2": "The Discord community who tests, reports bugs, and suggests improvements",
+            "page.team.thanks.l3": "Fribbels, for the character sheet design inspiration",
+
+            "page.privacy.title": "Privacy Policy",
+            "page.privacy.lead": "Transparency about the data guoba.gg collects — or rather, doesn't collect.",
+            "page.privacy.q1.title": "What we do not collect",
+            "page.privacy.q1.p1": "guoba.gg has <strong>no user accounts</strong>, requires no registration, no email, no password.",
+            "page.privacy.q1.p2": "We do not have access to your HoYoverse account. Your UID is public information natively exposed by the game.",
+            "page.privacy.q2.title": "Local Data (your browser)",
+            "page.privacy.q2.p1": "The application only stores in your <code>localStorage</code>:",
+            "page.privacy.q2.l1": "<strong>Recently viewed UIDs</strong> and associated metadata (nickname, avatar, profile stats) to display on the home page.",
+            "page.privacy.q2.l2": "Your <strong>interface preferences</strong>: visual theme, language, pinned account.",
+            "page.privacy.q2.note": "This data never leaves your device. It is neither transmitted, sold, nor analyzed by us. You can delete it at any time via your browser settings.",
+            "page.privacy.q3.title": "Third-Party API — Enka.Network",
+            "page.privacy.q3.p1": "When you enter a UID, a request is sent to our proxy (<code>guobagg.clement-torchiat.workers.dev</code>), which relays it to <a href=\"https://enka.network\" target=\"_blank\" rel=\"noopener\">Enka.Network</a>. The returned data is what the game exposes publicly: showcased characters, equipped artifacts and weapons, profile stats.",
+            "page.privacy.q3.p2": "Check the <a href=\"https://enka.network/privacy-policy/\" target=\"_blank\" rel=\"noopener\">Enka.Network privacy policy</a> for details on their data handling.",
+            "page.privacy.q4.title": "Disclaimer and Affiliation",
+            "page.privacy.q4.p1": "guoba.gg is an independent third-party project created by the community. This site is in no way affiliated with, sponsored by, endorsed by, or associated with <strong>HoYoverse</strong> or <strong>Cognosphere PTE. LTD.</strong>",
+            "page.privacy.q4.p2": "<em>Genshin Impact</em>, along with all graphical elements, game models, character names, and visual assets used on this domain, remain the exclusive intellectual property of HoYoverse. Their use falls under non-commercial fair use intended for player information and assistance.",
+            "page.privacy.q5.title": "Cookies & Trackers",
+            "page.privacy.q5.p1": "guoba.gg uses <strong>no tracking cookies</strong>, no ad networks, no behavioral analysis tools (Google Analytics, etc.).",
+            "page.privacy.q6.title": "Contact",
+            "page.privacy.q6.p1": "For any privacy-related questions, join the Discord and reach out to clem.",
+            "page.privacy.date": "Last updated: June 2026",
 
             "ob.steps": [
                 {
@@ -1132,7 +1334,7 @@
         updateMeta('meta[property="og:locale"]', window.t('meta.locale'));
         const versionEl = document.querySelector('.sidebar-text');
         if (versionEl) {
-            versionEl.textContent = window.t('ui.version', '1.1.8', '6.6');
+            versionEl.textContent = window.t('ui.version', '1.2.0', '6.7');
         }
     });
 

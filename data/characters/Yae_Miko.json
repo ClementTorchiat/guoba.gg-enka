@@ -8,16 +8,106 @@
   },
   "buffs": [
     {
-      "category": "Constellations",
+      "category": {
+        "fr": "Constellation 1 : Offrande des yakan (DGTs Électro)",
+        "en": "Constellation 1: Yakan offering (Electro DMG)"
+      },
       "buffs": [
         {
           "label": {
-            "fr": "C4 : Canalisation de sakura (DGTs Électro)",
-            "en": "C4: Sakura channeling (Electro DMG)"
+            "fr": "Si une réaction d'Astroconduction ou de Supraconduction est déclenchée",
+            "en": "If a Stellar-Conduct or Superconduct reaction is triggered"
+          },
+          "cons": 1,
+          "active": false,
+          "stats": {
+            "elemental_dmg_": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "category": {
+        "fr": "Constellation 2 : Glapissement sous la lune (Maîtrise élémentaire)",
+        "en": "Constellation 2: Fox's mooncall (EM)"
+      },
+      "selectMode": "exclusive",
+      "buffs": [
+        {
+          "label": {
+            "fr": "1 sakura dévastateur",
+            "en": "1 Sesshou Sakura"
+          },
+          "cons": 2,
+          "stats": {
+            "eleMas": 60
+          }
+        },
+        {
+          "label": {
+            "fr": "2 sakuras dévastateurs",
+            "en": "2 Sesshou Sakura"
+          },
+          "cons": 2,
+          "stats": {
+            "eleMas": 90
+          }
+        },
+        {
+          "label": {
+            "fr": "3 sakuras dévastateurs",
+            "en": "3 Sesshou Sakura"
+          },
+          "cons": 2,
+          "stats": {
+            "eleMas": 120
+          }
+        },
+        {
+          "label": {
+            "fr": "4 sakuras dévastateurs",
+            "en": "4 Sesshou Sakura"
+          },
+          "cons": 2,
+          "stats": {
+            "eleMas": 200
+          }
+        }
+      ]
+    },
+    {
+      "category": {
+        "fr": "Constellation 4 : Canalisation de sakura (DGTs Électro)",
+        "en": "Constellation 4: Sakura channeling (Electro DMG)"
+      },
+      "buffs": [
+        {
+          "label": {
+            "fr": "Quand un éclair de la compétence touche un ennemi",
+            "en": "When a lightning bolt from the skill hits an enemy"
           },
           "cons": 4,
           "stats": {
             "elemental_dmg_": 0.2
+          }
+        }
+      ]
+    },
+    {
+      "category": {
+        "fr": "Constellation 6 : Art tabou : Daisesshou (DGT Crit)",
+        "en": "Constellation 6: Forbidden Art: Daisesshou (Crit DMG)"
+      },
+      "buffs": [
+        {
+          "label": {
+            "fr": "Uniquement les dégâts d'Astroconduction",
+            "en": "Only for Stellar-Conduct damage"
+          },
+          "cons": 4,
+          "active": false,
+          "stats": {
+            "critDMG_": 2
           }
         }
       ]
@@ -66,13 +156,10 @@
       "hideUIStats": [],
       "showUIStats": [],
       "bestSets": [
-        "EmblemOfSeveredFate:4",
         "GoldenTroupe:4",
         "GildedDreams:4"
       ],
       "goodSets": [
-        "MarechausseeHunter:4",
-        "LongNightsOath:4",
         "GoldenTroupe:2",
         "TenacityOfTheMillelith:4",
         "Instructor:4",
@@ -108,6 +195,92 @@
           "role": "Support",
           "name": "Sucrose",
           "element": "anemo"
+        }
+      ]
+    },
+    "Sub-DPS Astroconduction": {
+      "name": {
+        "fr": "Sub-DPS Astroconduction",
+        "en": "Stellar-Conduct Sub-DPS"
+      },
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "hp": 0,
+        "def_": 0,
+        "def": 0,
+        "eleMas": 0.4,
+        "enerRech_": 0.5,
+        "pyro_dmg_": 0,
+        "hydro_dmg_": 0,
+        "cryo_dmg_": 0,
+        "geo_dmg_": 0,
+        "anemo_dmg_": 0,
+        "electro_dmg_": 0,
+        "dendro_dmg_": 0,
+        "physical_dmg_": 0,
+        "heal_": 0
+      },
+      "idealMainStats": {
+        "EQUIP_SHOES": [
+          "atk_",
+          "eleMas"
+        ],
+        "EQUIP_RING": [
+          "atk_",
+          "eleMas"
+        ],
+        "EQUIP_DRESS": [
+          "critRate_",
+          "critDMG_"
+        ]
+      },
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [
+        "DisenchantmentInDeepShadow:4"
+      ],
+      "goodSets": [
+        "GoldenTroupe:4",
+        "GildedDreams:4",
+        "GoldenTroupe:2",
+        "TenacityOfTheMillelith:4",
+        "Instructor:4",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "ThunderingFury:2"
+      ],
+      "er_req": 140,
+      "team": [
+        {
+          "role": "DPS",
+          "name": "MarionetteNew",
+          "element": "cryo"
+        },
+        {
+          "role": "Sub-DPS",
+          "name": "Escoffier",
+          "element": "cryo"
+        },
+        {
+          "role": "Support",
+          "name": "Qiqi",
+          "element": "cryo"
         }
       ]
     }

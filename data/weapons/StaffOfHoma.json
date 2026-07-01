@@ -2,8 +2,8 @@
   "buffs": [
     {
       "label": {
-        "fr": "Si les PV sont inférieurs à 50% (ATQ% en fonction des PV%)",
-        "en": "If the wielder's HP is less than 50% (ATK% based on HP%)"
+        "fr": "Si les PV sont inférieurs à 50% (ATQ en fonction des PV%)",
+        "en": "If the wielder's HP is less than 50% (ATK based on HP%)"
       },
       "stats": {
         "atk_bonus_scaling": {

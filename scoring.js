@@ -86,7 +86,7 @@ function calculateCharacterScore(perso, config, maxRolls = 45.0) {
         if (totalRolls < 0) totalRolls = 0;
     }
 
-    let setMultiplier = 0.5;
+    let setMultiplier = 0.65;
     let activeBonuses = [];
     for (const [setKey, count] of Object.entries(setsCounter)) {
         if (count >= 4) activeBonuses.push(`${setKey}:4`);
@@ -111,7 +111,7 @@ function calculateCharacterScore(perso, config, maxRolls = 45.0) {
     }
 
     if (isBest)      setMultiplier = 1.0;
-    else if (isGood) setMultiplier = 0.75;
+    else if (isGood) setMultiplier = 0.85;
 
     const finalScore = parseFloat((totalScore * setMultiplier).toFixed(1));
 

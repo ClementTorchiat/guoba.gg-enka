@@ -40,6 +40,25 @@ const charKeyFromName   = (baseName) => baseName.replace(/_/g, ' ');
 const weaponKeyFromName = (baseName) => baseName;
 const setKeyFromName    = (baseName) => baseName;
 
+function stripZeroWeights(config) {
+    const result = {};
+    for (const [charKey, charVal] of Object.entries(config)) {
+        result[charKey] = { ...charVal };
+        if (charVal.builds) {
+            result[charKey].builds = {};
+            for (const [buildKey, buildVal] of Object.entries(charVal.builds)) {
+                const build = { ...buildVal };
+                if (build.weights) {
+                    build.weights = Object.fromEntries(
+                        Object.entries(build.weights).filter(([, v]) => v !== 0)
+                    );
+                }
+                result[charKey].builds[buildKey] = build;
+            }
+        }
+    }
+    return result;
+}
 
 function build() {
     const buildStart = Date.now();
@@ -77,7 +96,7 @@ function build() {
         ``,
         `window.DEFAULT_CONFIG   = ${JSON.stringify(DEFAULT_CONFIG,   null, 2)};`,
         ``,
-        `window.CHARACTER_CONFIG = ${JSON.stringify(CHARACTER_CONFIG, null, 2)};`,
+        `window.CHARACTER_CONFIG = ${JSON.stringify(stripZeroWeights(CHARACTER_CONFIG), null, 2)};`,
         ``,
         `window.WEAPON_PASSIVES  = ${JSON.stringify(WEAPON_PASSIVES,  null, 2)};`,
         ``,
