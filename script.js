@@ -3650,7 +3650,7 @@ function renderGlobalEvaluation(playerInfo) {
     const archonNames = ["Venti", "Zhongli", "Raiden", "Nahida", "Furina", "Mavuika"];
     let starterPackNames = ["Amber", "Kaeya", "Lisa"];
     let starterCount = 0;
-    let hasNilou = false;
+    let hasSandrone = false;
     let hasFurinaWithPipe = false;
     const creatorUIDs = ["704449686"];
     const contributorUIDs = ["741928446"];
@@ -3795,7 +3795,7 @@ function renderGlobalEvaluation(playerInfo) {
         }
 
         if (starterPackNames.includes(p.nom)) starterCount++;
-        if (p.nom === "Nilou") hasNilou = true;
+        if (p.nom === "Sandrone") hasSandrone = true;
 
         if (p.nom === "Furina" && p.weapon && p.weapon.key === "FleuveCendreFerryman") {
             hasFurinaWithPipe = true;
@@ -3835,8 +3835,8 @@ function renderGlobalEvaluation(playerInfo) {
         addBadge("🕊️", t('badge.celestia.name'), t('badge.celestia.desc'), "linear-gradient(135deg, rgba(250, 214, 32, 0.7) 0%, rgba(255, 255, 255, 0.7) 40%, rgba(56, 189, 248, 0.7) 100%)");
     }
 
-    if (hasNilou) {
-        addBadge("🌸", t('badge.nilou.name'), t('badge.nilou.desc'), "linear-gradient(135deg, rgba(251, 207, 232, 0.7), rgba(244, 114, 182, 0.7), rgba(251, 191, 36, 0.7))");
+    if (hasSandrone) {
+        addBadge("⚙️", t('badge.sandrone.name'), t('badge.sandrone.desc'), "linear-gradient(135deg, #5053BB 0%, #656788 50%, #91101D 100%)");
     }
 
     if (isAbyss && isTheater && isStygian) {
