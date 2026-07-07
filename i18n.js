@@ -1336,7 +1336,7 @@
         updateMeta('meta[property="og:locale"]', window.t('meta.locale'));
         const versionEl = document.querySelector('.sidebar-text');
         if (versionEl) {
-            versionEl.textContent = window.t('ui.version', '1.2.0', '6.7');
+            versionEl.textContent = window.t('ui.version', '1.2.1', '6.7');
         }
     });
 
