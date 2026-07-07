@@ -1,7 +1,7 @@
 /* =========================================================
    config.generated.js — FICHIER AUTO-GÉNÉRÉ
-   Généré le : 2026-07-01T09:04:38.150Z
-   116 personnages | 111 armes | 21 sets
+   Généré le : 2026-07-07T09:19:33.903Z
+   116 personnages | 112 armes | 21 sets
 
    ========================================================= */
 
@@ -123,7 +123,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Sucrose",
-            "element": "anemo"
+            "element": "anemo",
+            "cons": "6"
           }
         ]
       }
@@ -226,7 +227,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       }
@@ -422,7 +424,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Shinobu",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Flex",
@@ -505,7 +508,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Zhongli",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "Instructor"
           }
         ]
       },
@@ -573,11 +577,12 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Xingqiu",
-            "element": "hydro"
+            "element": "hydro",
+            "cons": "6"
           },
           {
             "role": "Support",
-            "name": "Baizhuer",
+            "name": "",
             "element": "dendro"
           }
         ]
@@ -682,17 +687,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -758,7 +767,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       }
@@ -877,17 +888,22 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "Instructor"
           },
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -930,7 +946,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Collei",
-            "element": "dendro"
+            "element": "dendro",
+            "cons": "6"
           },
           {
             "role": "Support",
@@ -940,7 +957,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Rosaria",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "Instructor",
+            "cons": "6"
           }
         ]
       }
@@ -1031,7 +1050,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Gorou",
-            "element": "geo"
+            "element": "geo",
+            "cons": "6"
           },
           {
             "role": "Support",
@@ -1088,12 +1108,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Columbina",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Support",
             "name": "Gorou",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "Instructor",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -1200,17 +1223,22 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "Instructor"
           },
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -1261,17 +1289,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Nicole",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       },
@@ -1321,17 +1353,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sustain",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           }
         ]
       }
@@ -1623,17 +1659,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Sucrose",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Xingqiu",
-            "element": "hydro"
+            "element": "hydro",
+            "cons": "6"
           }
         ]
       },
@@ -1698,7 +1738,7 @@ window.CHARACTER_CONFIG = {
         "team": [
           {
             "role": "DPS",
-            "name": "Tighnari",
+            "name": "",
             "element": "dendro"
           },
           {
@@ -1709,7 +1749,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       }
@@ -1904,12 +1945,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Yaoyao",
-            "element": "dendro"
+            "element": "dendro",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Lauma",
-            "element": "dendro"
+            "element": "dendro",
+            "artifact": "SilkenMoonsSerenade"
           }
         ]
       },
@@ -2033,7 +2076,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Zhongli",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "Instructor"
           }
         ]
       }
@@ -2225,7 +2269,7 @@ window.CHARACTER_CONFIG = {
     },
     "builds": {
       "DPS Dispersion": {
-        "label": {
+        "name": {
           "fr": "DPS Dispersion",
           "en": "Swirl DPS"
         },
@@ -2270,17 +2314,23 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "TenacityOfTheMillelith"
           },
           {
             "role": "Support",
             "name": "Iansan",
-            "element": "electro"
+            "element": "electro",
+            "artifact": "ScrollOfTheHeroOfCinderCity",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       }
@@ -2500,7 +2550,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Gorou",
-            "element": "geo"
+            "element": "geo",
+            "cons": "6"
           },
           {
             "role": "Support",
@@ -2582,17 +2633,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Rosaria",
-            "element": "cryo"
+            "element": "cryo",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -2662,7 +2717,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       }
@@ -2883,12 +2940,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       },
@@ -2954,12 +3014,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Lauma",
-            "element": "dendro"
+            "element": "dendro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       },
@@ -3025,12 +3087,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Columbina",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Support",
             "name": "Sucrose",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "cons": "6"
           }
         ]
       }
@@ -3130,12 +3195,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       },
@@ -3396,12 +3463,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Nilou",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "Instructor"
           },
           {
             "role": "Sub-DPS",
             "name": "Lauma",
-            "element": "dendro"
+            "element": "dendro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Support",
@@ -3469,7 +3538,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Sucrose",
-            "element": "anemo"
+            "element": "anemo",
+            "cons": "6"
           }
         ]
       },
@@ -3527,7 +3597,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Illuga",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "SilkenMoonsSerenade",
+            "cons": "6"
           },
           {
             "role": "Support",
@@ -3695,7 +3767,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Shinobu",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       },
@@ -3767,7 +3840,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       },
@@ -3830,7 +3904,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Qiqi",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "TenacityOfTheMillelith"
           },
           {
             "role": "DPS",
@@ -4079,7 +4154,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Flex",
@@ -4234,7 +4311,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -4294,17 +4373,22 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -4357,17 +4441,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       }
@@ -4552,7 +4640,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -4562,7 +4651,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           }
         ]
       },
@@ -4714,10 +4804,7 @@ window.CHARACTER_CONFIG = {
         "team": [
           {
             "role": "DPS",
-            "name": [
-              "Arlecchino",
-              "Varesa"
-            ],
+            "name": [],
             "element": [
               "pyro",
               "electro"
@@ -4726,12 +4813,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -4797,8 +4887,9 @@ window.CHARACTER_CONFIG = {
           },
           {
             "role": "Support",
-            "name": "Bennett",
-            "element": "pyro"
+            "name": "Nicole",
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       },
@@ -4853,19 +4944,19 @@ window.CHARACTER_CONFIG = {
         "er_req": 150,
         "team": [
           {
-            "role": "DPS",
-            "name": "Chasca",
-            "element": "anemo"
+            "role": "Hexerei",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Sub-DPS",
-            "name": "Furina",
-            "element": "hydro"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Sub-DPS",
-            "name": "Fischl",
-            "element": "electro"
+            "role": "",
+            "name": "",
+            "element": ""
           }
         ]
       }
@@ -4947,13 +5038,13 @@ window.CHARACTER_CONFIG = {
         "er_req": 170,
         "team": [
           {
-            "role": "DPS",
-            "name": "SkirkNew",
+            "role": "",
+            "name": "",
             "element": "cryo"
           },
           {
-            "role": "Sub-DPS",
-            "name": "Furina",
+            "role": "",
+            "name": "",
             "element": "hydro"
           },
           {
@@ -5049,17 +5140,22 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Mika",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "TenacityOfTheMillelith",
+            "cons": "6"
           },
           {
             "role": "Support",
-            "name": "Diona",
-            "element": "cryo"
+            "name": "Bennett",
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "5"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       }
@@ -5283,7 +5379,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -5350,12 +5448,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Shinobu",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           }
         ]
       }
@@ -5467,12 +5567,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Columbina",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Support",
             "name": "Sucrose",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "cons": "6"
           }
         ]
       }
@@ -5710,7 +5813,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Shenhe",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "NoblesseOblige"
           }
         ]
       }
@@ -5794,12 +5898,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           }
         ]
       }
@@ -5917,7 +6023,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -5983,7 +6091,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Support",
@@ -5993,7 +6103,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -6050,23 +6162,22 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
-            "name": [
-              "Bennett",
-              "Iansan"
-            ],
-            "element": [
-              "pyro",
-              "electro"
-            ]
+            "name": "Iansan",
+            "element": "electro",
+            "artifact": "ScrollOfTheHeroOfCinderCity",
+            "cons": "6"
           }
         ]
       }
@@ -6177,7 +6288,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Shenhe",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "NoblesseOblige"
           }
         ]
       },
@@ -6245,12 +6357,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       }
@@ -6486,7 +6601,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Zhongli",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "Instructor"
           }
         ]
       },
@@ -6540,17 +6656,22 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Rosaria",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "Instructor",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           },
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       }
@@ -6735,12 +6856,16 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Olorun",
-            "element": "electro"
+            "element": "electro",
+            "artifact": "ScrollOfTheHeroOfCinderCity",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Aino",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -6914,12 +7039,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Columbina",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Support",
             "name": "Sucrose",
-            "element": "anemo"
+            "element": "anemo",
+            "cons": "6"
           }
         ]
       }
@@ -7011,7 +7138,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Columbina",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Sub-DPS",
@@ -7105,7 +7233,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Zhongli",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "TenacityOfTheMillelith"
           }
         ]
       },
@@ -7159,7 +7288,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Flex",
@@ -7522,7 +7653,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Support",
@@ -7695,13 +7827,10 @@ window.CHARACTER_CONFIG = {
           },
           {
             "role": "Flex",
-            "name": [
-              ""
-            ],
-            "element": [
-              "cryo",
-              "hydro"
-            ]
+            "name": "Citlali",
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       }
@@ -7794,12 +7923,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Yunjin",
-            "element": "geo"
+            "element": "geo",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       },
@@ -7869,14 +8000,9 @@ window.CHARACTER_CONFIG = {
           },
           {
             "role": "Flex",
-            "name": [
-              "Yelan",
-              "Citlali"
-            ],
-            "element": [
-              "hydro",
-              "cryo"
-            ]
+            "name": "Citlali",
+            "element": "cryo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       },
@@ -7940,7 +8066,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Shinobu",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
@@ -7950,7 +8077,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       },
@@ -8001,18 +8129,13 @@ window.CHARACTER_CONFIG = {
           },
           {
             "role": "Flex",
-            "name": [
-              "Lauma",
-              "Nahida"
-            ],
-            "element": [
-              "dendro",
-              "dendro"
-            ]
+            "name": "Lauma",
+            "element": "dendro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Support",
-            "name": "Baizhuer",
+            "name": "",
             "element": "dendro"
           }
         ]
@@ -8073,7 +8196,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -8083,7 +8207,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Sucrose",
-            "element": "anemo"
+            "element": "anemo",
+            "cons": "6"
           }
         ]
       },
@@ -8150,12 +8275,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           }
         ]
       }
@@ -8445,12 +8572,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
-            "name": "Kazuha",
-            "element": "anemo"
+            "name": "Prune",
+            "element": "anemo",
+            "cons": "6"
           }
         ]
       },
@@ -8502,17 +8631,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           }
         ]
       },
@@ -8582,7 +8715,7 @@ window.CHARACTER_CONFIG = {
           },
           {
             "role": "Support",
-            "name": "Qin",
+            "name": "",
             "element": "anemo"
           }
         ]
@@ -8679,7 +8812,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Nicole",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       }
@@ -8883,12 +9017,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Support",
-            "name": "Bennett",
-            "element": "pyro"
+            "name": "Nicole",
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       },
@@ -8959,7 +9096,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       },
@@ -9016,7 +9154,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Prune",
-            "element": "anemo"
+            "element": "anemo",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -9026,7 +9165,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Nicole",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       }
@@ -9116,14 +9256,14 @@ window.CHARACTER_CONFIG = {
             "element": "electro"
           },
           {
-            "role": "Support",
-            "name": "Kazuha",
-            "element": "anemo"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Support",
-            "name": "Bennett",
-            "element": "pyro"
+            "role": "",
+            "name": "",
+            "element": ""
           }
         ]
       }
@@ -9299,7 +9439,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           }
         ]
       }
@@ -9460,12 +9601,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Columbina",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Support",
             "name": "Nahida",
-            "element": "dendro"
+            "element": "dendro",
+            "artifact": "Instructor"
           }
         ]
       },
@@ -9517,12 +9660,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Nilou",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "Instructor"
           },
           {
             "role": "Sub-DPS",
             "name": "Columbina",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Support",
@@ -9770,7 +9915,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Illuga",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "SilkenMoonsSerenade",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -9945,12 +10092,16 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Columbina",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Support",
             "name": "Sucrose",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "Instructor",
+            "cons": "6"
           }
         ]
       },
@@ -10124,7 +10275,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Sub-DPS",
@@ -10134,7 +10287,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Nicole",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       }
@@ -10392,12 +10546,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       }
@@ -10509,17 +10666,22 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "Instructor"
           },
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -10569,18 +10731,24 @@ window.CHARACTER_CONFIG = {
         "team": [
           {
             "role": "DPS",
-            "name": "Varesa",
-            "element": "electro"
+            "name": "Olorun",
+            "element": "electro",
+            "artifact": "Instructor",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Iansan",
-            "element": "electro"
+            "element": "electro",
+            "artifact": "ScrollOfTheHeroOfCinderCity",
+            "cons": "6"
           }
         ]
       }
@@ -10855,19 +11023,19 @@ window.CHARACTER_CONFIG = {
         "er_req": 220,
         "team": [
           {
-            "role": "DPS",
-            "name": "Mualani",
-            "element": "hydro"
+            "role": "Hexerei",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Sub-DPS",
-            "name": "Mavuika",
-            "element": "pyro"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Support",
-            "name": "Sucrose",
-            "element": "anemo"
+            "role": "",
+            "name": "",
+            "element": ""
           }
         ]
       },
@@ -10928,12 +11096,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           },
           {
             "role": "Sub-DPS",
@@ -11011,18 +11182,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Flex",
-            "name": [
-              "Citlali",
-              "Sucrose"
-            ],
-            "element": [
-              "cryo",
-              "anemo"
-            ]
+            "name": "Sucrose",
+            "element": "anemo",
+            "cons": "6"
           }
         ]
       },
@@ -11089,7 +11256,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Sucrose",
-            "element": "anemo"
+            "element": "anemo",
+            "cons": "6"
           }
         ]
       }
@@ -11269,7 +11437,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Shinobu",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       },
@@ -11329,12 +11498,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Xingqiu",
-            "element": "hydro"
+            "element": "hydro",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Shinobu",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       },
@@ -11398,8 +11569,9 @@ window.CHARACTER_CONFIG = {
           },
           {
             "role": "Sub-DPS",
-            "name": "Collei",
-            "element": "dendro"
+            "name": "Lauma",
+            "element": "dendro",
+            "artifact": "SilkenMoonsSerenade"
           }
         ]
       }
@@ -11520,12 +11692,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -11581,11 +11756,12 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Columbina",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
-            "role": "Support",
-            "name": "Xilonen",
+            "role": "Sub-DPS",
+            "name": "Linnea",
             "element": "geo"
           },
           {
@@ -11684,7 +11860,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Columbina",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Sub-DPS",
@@ -11693,14 +11870,9 @@ window.CHARACTER_CONFIG = {
           },
           {
             "role": "Flex",
-            "name": [
-              "Nahida",
-              "Sucrose"
-            ],
-            "element": [
-              "dendro",
-              "anemo"
-            ]
+            "name": "Nahida",
+            "element": "dendro",
+            "artifact": "Instructor"
           }
         ]
       }
@@ -11753,10 +11925,10 @@ window.CHARACTER_CONFIG = {
       }
     ],
     "builds": {
-      "DPS Hydro": {
+      "DPS Hypercarry Hydro": {
         "name": {
-          "fr": "DPS Hydro",
-          "en": "Hydro DPS"
+          "fr": "DPS Hypercarry Hydro",
+          "en": "Hypercarry Hydro DPS"
         },
         "weights": {
           "critRate_": 1,
@@ -11801,19 +11973,15 @@ window.CHARACTER_CONFIG = {
           },
           {
             "role": "Support",
-            "name": [
-              "Kazuha",
-              "Lanyan"
-            ],
-            "element": [
-              "anemo",
-              "anemo"
-            ]
+            "name": "Kazuha",
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           },
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       },
@@ -11868,7 +12036,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       },
@@ -11924,7 +12093,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Lauma",
-            "element": "dendro"
+            "element": "dendro",
+            "artifact": "SilkenMoonsSerenade"
           }
         ]
       }
@@ -12131,7 +12301,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Lauma",
-            "element": "dendro"
+            "element": "dendro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Support",
@@ -12229,12 +12400,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       }
@@ -12302,8 +12475,12 @@ window.CHARACTER_CONFIG = {
             "critDMG_"
           ]
         },
-        "hideUIStats": [],
-        "showUIStats": [],
+        "hideUIStats": [
+          "heal_"
+        ],
+        "showUIStats": [
+          "pyro_dmg_"
+        ],
         "bestSets": [
           "DesertPavilionChronicle:4"
         ],
@@ -12327,7 +12504,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Faruzan",
-            "element": "anemo"
+            "element": "anemo",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -12337,7 +12515,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Nicole",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       }
@@ -12442,7 +12621,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Gorou",
-            "element": "geo"
+            "element": "geo",
+            "cons": "6"
           }
         ]
       },
@@ -12523,7 +12703,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Illuga",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "SilkenMoonsSerenade",
+            "cons": "6"
           }
         ]
       }
@@ -12653,7 +12835,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "artifact": "XiphosMoonlight"
           }
         ]
       },
@@ -12710,7 +12893,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Flex",
@@ -12837,7 +13022,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Nicole",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       }
@@ -12899,19 +13085,19 @@ window.CHARACTER_CONFIG = {
         "er_req": 200,
         "team": [
           {
-            "role": "DPS",
-            "name": "Eula",
-            "element": "cryo"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Sub-DPS",
-            "name": "Shougun",
-            "element": "electro"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Sub-DPS",
-            "name": "Furina",
-            "element": "hydro"
+            "role": "",
+            "name": "",
+            "element": ""
           }
         ]
       },
@@ -12940,8 +13126,12 @@ window.CHARACTER_CONFIG = {
             "critDMG_"
           ]
         },
-        "hideUIStats": [],
-        "showUIStats": [],
+        "hideUIStats": [
+          "heal_"
+        ],
+        "showUIStats": [
+          "physical_dmg_"
+        ],
         "bestSets": [
           "PaleFlame:4",
           "GladiatorsFinale:4"
@@ -12964,7 +13154,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -12974,7 +13165,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Mika",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -13035,7 +13228,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Escoffier",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "TenacityOfTheMillelith"
           }
         ]
       }
@@ -13149,12 +13343,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       },
@@ -13209,17 +13406,20 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Rosaria",
-            "element": "cryo"
+            "element": "cryo",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Zhongli",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "TenacityOfTheMillelith"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           }
         ]
       }
@@ -13310,19 +13510,19 @@ window.CHARACTER_CONFIG = {
         "er_req": 170,
         "team": [
           {
-            "role": "Support",
-            "name": "Bennett",
+            "role": "",
+            "name": "",
             "element": "pyro"
           },
           {
-            "role": "Support",
-            "name": "Kazuha",
-            "element": "anemo"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Support",
-            "name": "Shenhe",
-            "element": "cryo"
+            "role": "",
+            "name": "",
+            "element": ""
           }
         ]
       },
@@ -13438,7 +13638,7 @@ window.CHARACTER_CONFIG = {
               "en": "C2: An Heiress Gazed Into the Looking-Glass (charged attack only - Crit DMG)"
             },
             "cons": 2,
-            "active": false,
+            "active": true,
             "stats": {
               "critDMG_": 0.6
             }
@@ -13449,7 +13649,7 @@ window.CHARACTER_CONFIG = {
               "en": "C2: An Heiress Gazed Into the Looking-Glass (1 stack - charged attack only - Crit DMG)"
             },
             "cons": 2,
-            "active": false,
+            "active": true,
             "stats": {
               "critDMG_": 0.2
             }
@@ -13460,7 +13660,7 @@ window.CHARACTER_CONFIG = {
               "en": "C2: An Heiress Gazed Into the Looking-Glass (2 stacks - charged attack only - Crit DMG)"
             },
             "cons": 2,
-            "active": false,
+            "active": true,
             "stats": {
               "critDMG_": 0.2
             }
@@ -13480,7 +13680,7 @@ window.CHARACTER_CONFIG = {
           "atk_": 0.8,
           "atk": 0.1,
           "eleMas": 0.4,
-          "enerRech_": 0.6
+          "enerRech_": 0.5
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -13527,12 +13727,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Qiqi",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "NoblesseOblige"
           },
           {
             "role": "Sub-DPS",
             "name": "Escoffier",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "TenacityOfTheMillelith"
           }
         ]
       }
@@ -13675,7 +13877,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Lauma",
-            "element": "dendro"
+            "element": "dendro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Support",
@@ -13757,19 +13960,19 @@ window.CHARACTER_CONFIG = {
         "er_req": 200,
         "team": [
           {
-            "role": "DPS",
-            "name": "Keqing",
-            "element": "electro"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Sub-DPS",
-            "name": "Nahida",
-            "element": "dendro"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Sub-DPS",
-            "name": "Fischl",
-            "element": "electro"
+            "role": "",
+            "name": "",
+            "element": ""
           }
         ]
       },
@@ -13832,17 +14035,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Kaeya",
-            "element": "cryo"
+            "element": "cryo",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       }
@@ -13954,7 +14161,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "",
@@ -14193,17 +14401,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Faruzan",
-            "element": "anemo"
+            "element": "anemo",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       }
@@ -14292,17 +14504,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Xingqiu",
-            "element": "hydro"
+            "element": "hydro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -14351,12 +14567,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Xingqiu",
-            "element": "hydro"
+            "element": "hydro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Baizhuer",
-            "element": "dendro"
+            "element": "dendro",
+            "weapon": "ThrillingTalesOfDragonSlayers"
           }
         ]
       }
@@ -14461,19 +14679,19 @@ window.CHARACTER_CONFIG = {
         "er_req": 160,
         "team": [
           {
-            "role": "Sub-DPS",
-            "name": "Furina",
-            "element": "hydro"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Sub-DPS",
-            "name": "Fischl",
-            "element": "electro"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Support",
-            "name": "Nahida",
-            "element": "dendro"
+            "role": "",
+            "name": "",
+            "element": ""
           }
         ]
       },
@@ -14527,12 +14745,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           },
           {
             "role": "Sub-DPS",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           }
         ]
       }
@@ -14621,7 +14841,7 @@ window.CHARACTER_CONFIG = {
         "er_req": 100,
         "team": [
           {
-            "role": "Support",
+            "role": "Sub-DPS",
             "name": "Furina",
             "element": "hydro"
           },
@@ -14631,11 +14851,11 @@ window.CHARACTER_CONFIG = {
             "element": "cryo"
           },
           {
-            "role": "Flex",
-            "element": [
-              "hydro",
-              "cryo"
-            ]
+            "role": "Support",
+            "name": "Citlali",
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           }
         ]
       }
@@ -14689,7 +14909,7 @@ window.CHARACTER_CONFIG = {
         "er_req": 170,
         "team": [
           {
-            "role": "",
+            "role": "Hexerei",
             "name": "",
             "element": ""
           },
@@ -14771,17 +14991,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Xiangling",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -14833,17 +15057,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Beidou",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -15039,7 +15267,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Xingqiu",
-            "element": "hydro"
+            "element": "hydro",
+            "cons": "6"
           }
         ]
       }
@@ -15198,12 +15427,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Yaoyao",
-            "element": "dendro"
+            "element": "dendro",
+            "cons": "6"
           }
         ]
       }
@@ -15310,22 +15541,23 @@ window.CHARACTER_CONFIG = {
         "er_req": 120,
         "team": [
           {
-            "role": "Flex",
-            "name": [
-              "Mavuika",
-              "Durin"
-            ],
+            "role": "Sub-DPS",
+            "name": "Mavuika",
             "element": "pyro"
           },
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Iansan",
-            "element": "electro"
+            "element": "electro",
+            "artifact": "ScrollOfTheHeroOfCinderCity",
+            "cons": "6"
           }
         ]
       },
@@ -15384,12 +15616,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Liuyun",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "ThrillingTalesOfDragonSlayers"
           },
           {
             "role": "Support",
             "name": "Iansan",
-            "element": "electro"
+            "element": "electro",
+            "artifact": "ScrollOfTheHeroOfCinderCity",
+            "cons": "6"
           }
         ]
       },
@@ -15448,26 +15683,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Lauma",
-            "element": "dendro"
+            "element": "dendro",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
-            "role": "Flex",
-            "name": [
-              "Fischl",
-              "Iansan"
-            ],
+            "role": "Sub-DPS",
+            "name": "Ineffa",
             "element": "electro"
           },
           {
             "role": "Support",
-            "name": [
-              "Ineffa",
-              "Nahida"
-            ],
-            "element": [
-              "electro",
-              "dendro"
-            ]
+            "name": "Iansan",
+            "element": "electro",
+            "artifact": "ScrollOfTheHeroOfCinderCity",
+            "cons": "6"
           }
         ]
       },
@@ -15526,7 +15756,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Columbina",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "SilkenMoonsSerenade"
           },
           {
             "role": "Sub-DPS",
@@ -15536,7 +15767,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Liuyun",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "ThrillingTalesOfDragonSlayers"
           }
         ]
       }
@@ -15764,12 +15996,10 @@ window.CHARACTER_CONFIG = {
         "er_req": 100,
         "team": [
           {
-            "role": "Flex",
-            "name": [
-              "Venti",
-              "Prune"
-            ],
-            "element": "anemo"
+            "role": "Support",
+            "name": "Prune",
+            "element": "anemo",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -15779,7 +16009,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Nicole",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       },
@@ -15838,12 +16069,10 @@ window.CHARACTER_CONFIG = {
         "er_req": 100,
         "team": [
           {
-            "role": "Flex",
-            "name": [
-              "Venti",
-              "Prune"
-            ],
-            "element": "anemo"
+            "role": "Support",
+            "name": "Prune",
+            "element": "anemo",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -15853,7 +16082,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Shenhe",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "NoblesseOblige"
           }
         ]
       },
@@ -15911,22 +16141,23 @@ window.CHARACTER_CONFIG = {
         "er_req": 100,
         "team": [
           {
-            "role": "Flex",
-            "name": [
-              "Venti",
-              "Prune"
-            ],
-            "element": "anemo"
+            "role": "Support",
+            "name": "Prune",
+            "element": "anemo",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Iansan",
-            "element": "electro"
+            "element": "electro",
+            "artifact": "ScrollOfTheHeroOfCinderCity",
+            "cons": "6"
           }
         ]
       },
@@ -15985,12 +16216,10 @@ window.CHARACTER_CONFIG = {
         "er_req": 100,
         "team": [
           {
-            "role": "Flex",
-            "name": [
-              "Venti",
-              "Prune"
-            ],
-            "element": "anemo"
+            "role": "Support",
+            "name": "Prune",
+            "element": "anemo",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -16000,7 +16229,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Mona",
-            "element": "hydro"
+            "element": "hydro",
+            "artifact": "NoblesseOblige"
           }
         ]
       }
@@ -16157,7 +16387,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Faruzan",
-            "element": "anemo"
+            "element": "anemo",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -16167,7 +16398,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Nicole",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       }
@@ -16391,7 +16623,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Nicole",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       },
@@ -16461,7 +16694,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Nicole",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       }
@@ -16579,12 +16813,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -16648,17 +16885,22 @@ window.CHARACTER_CONFIG = {
           {
             "role": "DPS",
             "name": "Chongyun",
-            "element": "cryo"
+            "element": "cryo",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Rosaria",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "Instructor",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -16719,12 +16961,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Zhongli",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "TenacityOfTheMillelith"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -16780,17 +17025,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       }
@@ -16978,7 +17227,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Faruzan",
-            "element": "anemo"
+            "element": "anemo",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       }
@@ -17080,12 +17331,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Faruzan",
-            "element": "anemo"
+            "element": "anemo",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Liuyun",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "NoblesseOblige"
           },
           {
             "role": "Sub-DPS",
@@ -17162,19 +17416,19 @@ window.CHARACTER_CONFIG = {
         "er_req": 200,
         "team": [
           {
-            "role": "DPS",
-            "name": "Mavuika",
-            "element": "pyro"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "Support",
-            "name": "Citlali",
-            "element": "cryo"
+            "role": "",
+            "name": "",
+            "element": ""
           },
           {
-            "role": "support",
-            "name": "Bennett",
-            "element": "pyro"
+            "role": "",
+            "name": "",
+            "element": ""
           }
         ]
       },
@@ -17315,7 +17569,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Zhongli",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "TenacityOfTheMillelith"
           }
         ]
       },
@@ -17442,7 +17697,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Lauma",
-            "element": "dendro"
+            "element": "dendro",
+            "artifact": "SilkenMoonsSerenade"
           }
         ]
       },
@@ -17499,17 +17755,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Beidou",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Sucrose",
-            "element": "anemo"
+            "element": "anemo",
+            "artifact": "ThrillingTalesOfDragonSlayers",
+            "cons": "6"
           }
         ]
       }
@@ -17670,18 +17930,22 @@ window.CHARACTER_CONFIG = {
         "team": [
           {
             "role": "Sub-DPS",
-            "name": "Rosaria",
-            "element": "cryo"
+            "name": "Mika",
+            "element": "cryo",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "5"
           }
         ]
       },
@@ -17746,17 +18010,22 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "Instructor"
           },
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       }
@@ -17940,13 +18209,13 @@ window.CHARACTER_CONFIG = {
           },
           {
             "role": "Support",
-            "name": "Yaoyao",
+            "name": "",
             "element": "dendro"
           },
           {
             "role": "Support",
-            "name": "Sucrose",
-            "element": "anemo"
+            "name": "",
+            "element": "dendro"
           }
         ]
       },
@@ -17960,8 +18229,7 @@ window.CHARACTER_CONFIG = {
           "critDMG_": 1,
           "atk_": 0.8,
           "atk": 0.1,
-          "eleMas": 0.4,
-          "enerRech_": 0.5
+          "eleMas": 0.4
         },
         "idealMainStats": {
           "EQUIP_SHOES": [
@@ -18004,7 +18272,7 @@ window.CHARACTER_CONFIG = {
           "DisenchantmentInDeepShadow:2",
           "ThunderingFury:2"
         ],
-        "er_req": 140,
+        "er_req": 100,
         "team": [
           {
             "role": "DPS",
@@ -18014,12 +18282,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Escoffier",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "TenacityOfTheMillelith"
           },
           {
             "role": "Support",
             "name": "Qiqi",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "NoblesseOblige"
           }
         ]
       }
@@ -18174,7 +18444,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -18238,17 +18510,22 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "Instructor"
           },
           {
             "role": "Support",
             "name": "Xilonen",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -18305,17 +18582,21 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -18365,7 +18646,8 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Xingqiu",
-            "element": "hydro"
+            "element": "hydro",
+            "cons": "6"
           },
           {
             "role": "Support",
@@ -18539,12 +18821,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Kazuha",
-            "element": "anemo"
+            "element": "anemo",
+            "weapon": "XiphosMoonlight"
           }
         ]
       },
@@ -18870,12 +19154,14 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Zhongli",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "Instructor"
           },
           {
             "role": "Sub-DPS",
             "name": "Xingqiu",
-            "element": "hydro"
+            "element": "hydro",
+            "cons": "6"
           }
         ]
       }
@@ -18994,7 +19280,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -19050,17 +19338,23 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Rosaria",
-            "element": "cryo"
+            "element": "cryo",
+            "artifact": "Instructor",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Citlali",
-            "element": "cryo"
+            "element": "cryo",
+            "weapon": "ThrillingTalesOfDragonSlayers",
+            "artifact": "ScrollOfTheHeroOfCinderCity"
           },
           {
             "role": "Support",
             "name": "Bennett",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       },
@@ -19114,12 +19408,15 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Fischl",
-            "element": "electro"
+            "element": "electro",
+            "cons": "6"
           },
           {
             "role": "Support",
             "name": "Chevreuse",
-            "element": "pyro"
+            "element": "pyro",
+            "artifact": "NoblesseOblige",
+            "cons": "6"
           }
         ]
       }
@@ -19227,7 +19524,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Sub-DPS",
             "name": "Ororon",
-            "element": "electro"
+            "element": "electro",
+            "artifact": "ScrollOfTheHeroOfCinderCity",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -19516,7 +19815,9 @@ window.CHARACTER_CONFIG = {
           {
             "role": "Support",
             "name": "Illuga",
-            "element": "geo"
+            "element": "geo",
+            "artifact": "SilkenMoonsSerenade",
+            "cons": "6"
           },
           {
             "role": "Sub-DPS",
@@ -19599,13 +19900,14 @@ window.CHARACTER_CONFIG = {
           },
           {
             "role": "Sub-DPS",
-            "name": "Mavuika",
+            "name": "Durin",
             "element": "pyro"
           },
           {
             "role": "Support",
-            "name": "Bennett",
-            "element": "pyro"
+            "name": "Nicole",
+            "element": "pyro",
+            "artifact": "CelestialGift"
           }
         ]
       }
@@ -19614,6 +19916,22 @@ window.CHARACTER_CONFIG = {
 };
 
 window.WEAPON_PASSIVES  = {
+  "ATeaspoonOfTranscendence": {
+    "buffs": [
+      {
+        "label": {
+          "fr": "Augmentation d'ATQ%",
+          "en": "ATK% Buff"
+        },
+        "stats": {
+          "atk_": [
+            0.28,
+            0.07
+          ]
+        }
+      }
+    ]
+  },
   "AThousandBlazingSuns": {
     "selectMode": "cumulative",
     "buffs": [
@@ -24151,7 +24469,7 @@ window.SET_PASSIVES     = {
         "stats": {
           "critRate_": 0.16
         },
-        "active": false
+        "active": true
       }
     ]
   },

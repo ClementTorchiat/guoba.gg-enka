@@ -95,6 +95,7 @@
             "buff.category.Passifs":        "Passifs",
             "buff.category.Constellations": "Constellations",
             "buff.category.Résonance":      "Résonance",
+            "buff.category.teammate": "Équipe",
 
             // ── Artéfacts ─────────────────────────────────────
             "ui.art.baseAtk":      "ATQ de base",
@@ -741,6 +742,7 @@
             "buff.category.Passifs":        "Passives",
             "buff.category.Constellations": "Constellations",
             "buff.category.Résonance":      "Resonance",
+            "buff.category.teammate": "Team",
 
             // ── Artifacts ─────────────────────────────────────
             "ui.art.baseAtk":      "Base ATK",

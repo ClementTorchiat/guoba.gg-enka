@@ -88,12 +88,14 @@
         {
           "role": "Support",
           "name": "Yaoyao",
-          "element": "dendro"
+          "element": "dendro",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Lauma",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "SilkenMoonsSerenade"
         }
       ]
     },
@@ -245,7 +247,8 @@
         {
           "role": "Support",
           "name": "Zhongli",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "Instructor"
         }
       ]
     }

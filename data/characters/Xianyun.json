@@ -195,7 +195,9 @@
         {
           "role": "Support",
           "name": "Faruzan",
-          "element": "anemo"
+          "element": "anemo",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     }

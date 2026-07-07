@@ -98,7 +98,8 @@
         {
           "role": "Sub-DPS",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
           "role": "Sub-DPS",

@@ -114,7 +114,8 @@
         {
           "role": "Support",
           "name": "Sucrose",
-          "element": "anemo"
+          "element": "anemo",
+          "cons": "6"
         }
       ]
     }

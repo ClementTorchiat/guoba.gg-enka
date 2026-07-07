@@ -142,7 +142,9 @@
         {
           "role": "Support",
           "name": "Illuga",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "SilkenMoonsSerenade",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",

@@ -93,7 +93,8 @@
         {
           "role": "Support",
           "name": "Zhongli",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "TenacityOfTheMillelith"
         }
       ]
     },
@@ -158,7 +159,9 @@
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Flex",

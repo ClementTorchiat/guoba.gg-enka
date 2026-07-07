@@ -81,17 +81,21 @@
         {
           "role": "Sub-DPS",
           "name": "Rosaria",
-          "element": "cryo"
+          "element": "cryo",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Xiangling",
-          "element": "pyro"
+          "element": "pyro",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     },
@@ -174,7 +178,9 @@
         {
           "role": "Support",
           "name": "Citlali",
-          "element": "cryo"
+          "element": "cryo",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         }
       ]
     }

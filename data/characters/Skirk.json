@@ -95,7 +95,7 @@
       "er_req": 100,
       "team": [
         {
-          "role": "Support",
+          "role": "Sub-DPS",
           "name": "Furina",
           "element": "hydro"
         },
@@ -105,11 +105,11 @@
           "element": "cryo"
         },
         {
-          "role": "Flex",
-          "element": [
-            "hydro",
-            "cryo"
-          ]
+          "role": "Support",
+          "name": "Citlali",
+          "element": "cryo",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         }
       ]
     }

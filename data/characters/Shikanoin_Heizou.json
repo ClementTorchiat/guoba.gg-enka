@@ -124,17 +124,21 @@
         {
           "role": "Support",
           "name": "Faruzan",
-          "element": "anemo"
+          "element": "anemo",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Xiangling",
-          "element": "pyro"
+          "element": "pyro",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     }

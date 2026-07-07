@@ -78,13 +78,14 @@
         },
         {
           "role": "Sub-DPS",
-          "name": "Mavuika",
+          "name": "Durin",
           "element": "pyro"
         },
         {
           "role": "Support",
-          "name": "Bennett",
-          "element": "pyro"
+          "name": "Nicole",
+          "element": "pyro",
+          "artifact": "CelestialGift"
         }
       ]
     }

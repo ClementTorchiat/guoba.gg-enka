@@ -112,19 +112,19 @@
       "er_req": 160,
       "team": [
         {
-          "role": "Sub-DPS",
-          "name": "Furina",
-          "element": "hydro"
+          "role": "",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Sub-DPS",
-          "name": "Fischl",
-          "element": "electro"
+          "role": "",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Support",
-          "name": "Nahida",
-          "element": "dendro"
+          "role": "",
+          "name": "",
+          "element": ""
         }
       ]
     },
@@ -191,12 +191,14 @@
         {
           "role": "Support",
           "name": "Kazuha",
-          "element": "anemo"
+          "element": "anemo",
+          "weapon": "XiphosMoonlight"
         },
         {
           "role": "Sub-DPS",
           "name": "Xiangling",
-          "element": "pyro"
+          "element": "pyro",
+          "cons": "6"
         }
       ]
     }

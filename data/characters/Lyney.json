@@ -119,12 +119,15 @@
         {
           "role": "Support",
           "name": "Chevreuse",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         }
       ]
     }

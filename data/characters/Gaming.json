@@ -122,7 +122,9 @@
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     },
@@ -200,7 +202,9 @@
         {
           "role": "Support",
           "name": "Citlali",
-          "element": "cryo"
+          "element": "cryo",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         },
         {
           "role": "Support",
@@ -210,7 +214,9 @@
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     },
@@ -280,23 +286,22 @@
         {
           "role": "Support",
           "name": "Chevreuse",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         },
         {
           "role": "Support",
-          "name": [
-            "Bennett",
-            "Iansan"
-          ],
-          "element": [
-            "pyro",
-            "electro"
-          ]
+          "name": "Iansan",
+          "element": "electro",
+          "artifact": "ScrollOfTheHeroOfCinderCity",
+          "cons": "6"
         }
       ]
     }

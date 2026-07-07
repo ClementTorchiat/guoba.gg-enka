@@ -109,7 +109,9 @@
         {
           "role": "Support",
           "name": "Citlali",
-          "element": "cryo"
+          "element": "cryo",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         },
         {
           "role": "Sub-DPS",
@@ -119,7 +121,8 @@
         {
           "role": "Support",
           "name": "Nicole",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "CelestialGift"
         }
       ]
     }

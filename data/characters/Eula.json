@@ -93,17 +93,22 @@
         {
           "role": "Support",
           "name": "Mika",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "TenacityOfTheMillelith",
+          "cons": "6"
         },
         {
           "role": "Support",
-          "name": "Diona",
-          "element": "cryo"
+          "name": "Bennett",
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "5"
         },
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         }
       ]
     }

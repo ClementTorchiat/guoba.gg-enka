@@ -126,12 +126,15 @@
         {
           "role": "Support",
           "name": "Xilonen",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         },
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     },
@@ -199,11 +202,12 @@
         {
           "role": "Support",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
-          "role": "Support",
-          "name": "Xilonen",
+          "role": "Sub-DPS",
+          "name": "Linnea",
           "element": "geo"
         },
         {

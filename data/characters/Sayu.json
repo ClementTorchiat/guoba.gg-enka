@@ -82,19 +82,19 @@
       "er_req": 200,
       "team": [
         {
-          "role": "DPS",
-          "name": "Keqing",
-          "element": "electro"
+          "role": "",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Sub-DPS",
-          "name": "Nahida",
-          "element": "dendro"
+          "role": "",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Sub-DPS",
-          "name": "Fischl",
-          "element": "electro"
+          "role": "",
+          "name": "",
+          "element": ""
         }
       ]
     },
@@ -170,17 +170,21 @@
         {
           "role": "Sub-DPS",
           "name": "Kaeya",
-          "element": "cryo"
+          "element": "cryo",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Xiangling",
-          "element": "pyro"
+          "element": "pyro",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     }

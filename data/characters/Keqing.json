@@ -172,12 +172,14 @@
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         },
         {
           "role": "Support",
-          "name": "Kazuha",
-          "element": "anemo"
+          "name": "Prune",
+          "element": "anemo",
+          "cons": "6"
         }
       ]
     },
@@ -243,17 +245,21 @@
         {
           "role": "Support",
           "name": "Chevreuse",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Xiangling",
-          "element": "pyro"
+          "element": "pyro",
+          "cons": "6"
         }
       ]
     },
@@ -336,7 +342,7 @@
         },
         {
           "role": "Support",
-          "name": "Qin",
+          "name": "",
           "element": "anemo"
         }
       ]

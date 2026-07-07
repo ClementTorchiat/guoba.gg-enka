@@ -135,7 +135,8 @@
         {
           "role": "Support",
           "name": "Kazuha",
-          "element": "anemo"
+          "element": "anemo",
+          "artifact": "XiphosMoonlight"
         }
       ]
     },
@@ -205,7 +206,9 @@
         {
           "role": "Support",
           "name": "Chevreuse",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Flex",

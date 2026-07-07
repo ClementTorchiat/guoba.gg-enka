@@ -76,12 +76,14 @@
         {
           "role": "Sub-DPS",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
           "role": "Support",
           "name": "Nahida",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "Instructor"
         }
       ]
     },
@@ -148,12 +150,14 @@
         {
           "role": "Support",
           "name": "Nilou",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "Instructor"
         },
         {
           "role": "Sub-DPS",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
           "role": "Support",

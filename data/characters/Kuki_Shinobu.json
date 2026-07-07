@@ -195,7 +195,8 @@
         {
           "role": "Support",
           "name": "Kazuha",
-          "element": "anemo"
+          "element": "anemo",
+          "weapon": "XiphosMoonlight"
         }
       ]
     }

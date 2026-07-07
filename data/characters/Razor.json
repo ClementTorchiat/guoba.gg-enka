@@ -119,12 +119,15 @@
         {
           "role": "Support",
           "name": "Chevreuse",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         }
       ]
     },
@@ -192,17 +195,20 @@
         {
           "role": "Sub-DPS",
           "name": "Rosaria",
-          "element": "cryo"
+          "element": "cryo",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Zhongli",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "TenacityOfTheMillelith"
         },
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         }
       ]
     }

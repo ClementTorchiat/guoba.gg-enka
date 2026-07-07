@@ -96,8 +96,6 @@
         {
           "role": "DPS",
           "name": [
-            "Arlecchino",
-            "Varesa"
           ],
           "element": [
             "pyro",
@@ -107,12 +105,15 @@
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Chevreuse",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     },
@@ -191,8 +192,9 @@
         },
         {
           "role": "Support",
-          "name": "Bennett",
-          "element": "pyro"
+          "name": "Nicole",
+          "element": "pyro",
+          "artifact": "CelestialGift"
         }
       ]
     },
@@ -260,19 +262,19 @@
       "er_req": 150,
       "team": [
         {
-          "role": "DPS",
-          "name": "Chasca",
-          "element": "anemo"
+          "role": "Hexerei",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Sub-DPS",
-          "name": "Furina",
-          "element": "hydro"
+          "role": "",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Sub-DPS",
-          "name": "Fischl",
-          "element": "electro"
+          "role": "",
+          "name": "",
+          "element": ""
         }
       ]
     }

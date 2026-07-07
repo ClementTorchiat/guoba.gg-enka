@@ -45,10 +45,10 @@
     }
   ],
   "builds": {
-    "DPS Hydro": {
+    "DPS Hypercarry Hydro": {
       "name": {
-        "fr": "DPS Hydro",
-        "en": "Hydro DPS"
+        "fr": "DPS Hypercarry Hydro",
+        "en": "Hypercarry Hydro DPS"
       },
       "weights": {
         "critRate_": 1,
@@ -106,19 +106,15 @@
         },
         {
           "role": "Support",
-          "name": [
-            "Kazuha",
-            "Lanyan"
-          ],
-          "element": [
-            "anemo",
-            "anemo"
-          ]
+          "name": "Kazuha",
+          "element": "anemo",
+          "weapon": "XiphosMoonlight"
         },
         {
           "role": "Support",
           "name": "Xilonen",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         }
       ]
     },
@@ -186,7 +182,8 @@
         {
           "role": "Support",
           "name": "Citlali",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         }
       ]
     },
@@ -255,7 +252,8 @@
         {
           "role": "Sub-DPS",
           "name": "Lauma",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "SilkenMoonsSerenade"
         }
       ]
     }

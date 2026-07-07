@@ -108,17 +108,21 @@
         {
           "role": "Sub-DPS",
           "name": "Xiangling",
-          "element": "pyro"
+          "element": "pyro",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Kazuha",
-          "element": "anemo"
+          "element": "anemo",
+          "weapon": "XiphosMoonlight"
         },
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     },
@@ -197,7 +201,9 @@
         {
           "role": "Support",
           "name": "Citlali",
-          "element": "cryo"
+          "element": "cryo",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         }
       ]
     }

@@ -100,7 +100,8 @@
         {
           "role": "Support",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
           "role": "Sub-DPS",
@@ -109,14 +110,9 @@
         },
         {
           "role": "Flex",
-          "name": [
-            "Nahida",
-            "Sucrose"
-          ],
-          "element": [
-            "dendro",
-            "anemo"
-          ]
+          "name": "Nahida",
+          "element": "dendro",
+          "artifact": "Instructor"
         }
       ]
     }

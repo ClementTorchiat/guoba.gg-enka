@@ -154,7 +154,8 @@
         {
           "role": "Sub-DPS",
           "name": "Xingqiu",
-          "element": "hydro"
+          "element": "hydro",
+          "cons": "6"
         }
       ]
     }

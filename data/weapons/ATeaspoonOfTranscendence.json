@@ -1,0 +1,16 @@
+{
+  "buffs": [
+    {
+      "label": {
+        "fr": "Augmentation d'ATQ%",
+        "en": "ATK% Buff"
+      },
+      "stats": {
+        "atk_": [
+          0.28,
+          0.07
+        ]
+      }
+    }
+  ]
+}

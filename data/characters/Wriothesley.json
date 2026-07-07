@@ -241,7 +241,8 @@
         {
           "role": "Support",
           "name": "Nicole",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "CelestialGift"
         }
       ]
     },
@@ -309,7 +310,8 @@
         {
           "role": "Support",
           "name": "Nicole",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "CelestialGift"
         }
       ]
     }

@@ -87,13 +87,13 @@
       "er_req": 170,
       "team": [
         {
-          "role": "DPS",
-          "name": "SkirkNew",
+          "role": "",
+          "name": "",
           "element": "cryo"
         },
         {
-          "role": "Sub-DPS",
-          "name": "Furina",
+          "role": "",
+          "name": "",
           "element": "hydro"
         },
         {

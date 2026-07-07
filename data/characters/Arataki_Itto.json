@@ -96,7 +96,8 @@
         {
           "role": "Support",
           "name": "Gorou",
-          "element": "geo"
+          "element": "geo",
+          "cons": "6"
         },
         {
           "role": "Support",
@@ -165,12 +166,15 @@
         {
           "role": "Sub-DPS",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
           "role": "Support",
           "name": "Gorou",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "Instructor",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",

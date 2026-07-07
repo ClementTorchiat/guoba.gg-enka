@@ -167,7 +167,8 @@
         {
           "role": "Sub-DPS",
           "name": "Shinobu",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         }
       ]
     },
@@ -251,7 +252,8 @@
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         }
       ]
     },
@@ -315,7 +317,8 @@
         {
           "role": "Support",
           "name": "Qiqi",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "TenacityOfTheMillelith"
         },
         {
           "role": "DPS",

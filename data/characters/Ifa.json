@@ -102,12 +102,16 @@
         {
           "role": "Sub-DPS",
           "name": "Olorun",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "ScrollOfTheHeroOfCinderCity",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Aino",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "SilkenMoonsSerenade",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",

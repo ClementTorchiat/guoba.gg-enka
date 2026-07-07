@@ -95,14 +95,14 @@
           "element": "electro"
         },
         {
-          "role": "Support",
-          "name": "Kazuha",
-          "element": "anemo"
+          "role": "",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Support",
-          "name": "Bennett",
-          "element": "pyro"
+          "role": "",
+          "name": "",
+          "element": ""
         }
       ]
     }

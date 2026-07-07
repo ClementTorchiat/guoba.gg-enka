@@ -209,13 +209,10 @@ const STAT_LABELS = {
 };
 
 const RESONANCE_DATA = {
-    "pyro":    { get name() { return t('resonance.pyro'); },    active: false, stats: {atk_: 0.25} },
-    "hydro":   { get name() { return t('resonance.hydro'); },   active: false, stats: {hp_: 0.25} },
-    "dendro":  { get name() { return t('resonance.dendro'); },  active: false, stats: {eleMas: 50} },
-    "electro": { get name() { return t('resonance.electro'); }, active: false, stats: {} },
+    "pyro":    { get name() { return t('resonance.pyro'); },    active: true, stats: {atk_: 0.25} },
+    "hydro":   { get name() { return t('resonance.hydro'); },   active: true, stats: {hp_: 0.25} },
+    "dendro":  { get name() { return t('resonance.dendro'); },  active: true, stats: {eleMas: 50} },
     "cryo":    { get name() { return t('resonance.cryo'); },    active: false, stats: {critRate_: 0.15} },
-    "geo":     { get name() { return t('resonance.geo'); },     active: false, stats: {} },
-    "anemo":   { get name() { return t('resonance.anemo'); },   active: false, stats: {} }
 };
 
 const ELEMENT_COLORS = {
@@ -950,8 +947,11 @@ async function loadGameData() {
     const loader = document.getElementById('loading-msg');
     if (loader) loader.innerText = t('error.loadingV2');
     window.iconToNameHash = {};
-    const CACHE_KEY = 'guoba_gamedata_v3';
+
+    // ⚠️ TRÈS IMPORTANT : Passer en v4 pour vider l'ancien cache sans armes
+    const CACHE_KEY = 'guoba_gamedata_v4';
     const CACHE_TTL = 24 * 60 * 60 * 1000;
+
     try {
         const uidInput = document.getElementById('uidInput');
         const searchBtn = document.getElementById('searchBtn');
@@ -962,6 +962,7 @@ async function loadGameData() {
         if (searchBtn) {
             searchBtn.disabled = true;
         }
+
         const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
         if (cached && (Date.now() - cached.ts < CACHE_TTL)) {
             charData = cached.chars;
@@ -983,19 +984,24 @@ async function loadGameData() {
             return;
         }
 
-        const [chars, locs, relics, namecards, pfps, rollTable] = await Promise.all([
+        // AJOUT DE WEAPONS.JSON DANS LES FETCHS
+        const [chars, locs, relics, namecards, pfps, rollTable, weapons] = await Promise.all([
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/avatars.json`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/relics.json`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/namecards.json`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/pfps.json`).then(r => r.json()),
-            fetch(`./rollTable.json`).then(r => r.json())
+            fetch(`./rollTable.json`).then(r => r.json()),
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/weapons.json`).then(r => r.json())
         ]);
+
         window.ROLL_TABLE = rollTable;
         charData = chars;
         locData = locs;
         window.namecardsData = namecards;
         window.pfpsData = pfps;
+
+        // --- 1. Remplissage du dictionnaire avec les Artéfacts ---
         if (relics && relics.Items && relics.Sets) {
             Object.values(relics.Items).forEach(item => {
                 if (item.Icon && item.SetId && relics.Sets[item.SetId]) {
@@ -1007,6 +1013,18 @@ async function loadGameData() {
                 }
             });
         }
+
+        // --- 2. Remplissage du dictionnaire avec les Armes (NOUVEAU) ---
+        if (weapons) {
+            Object.values(weapons).forEach(weapon => {
+                const iconName = weapon.Icon || weapon.icon;
+                const nameHash = weapon.NameTextMapHash || weapon.nameTextMapHash;
+                if (iconName && nameHash) {
+                    window.iconToNameHash[iconName] = nameHash;
+                }
+            });
+        }
+
         try {
             localStorage.setItem(CACHE_KEY, JSON.stringify({
                 ts: Date.now(),
@@ -1017,17 +1035,11 @@ async function loadGameData() {
         } catch (e) {
             console.warn('[guoba] localStorage plein, cache ignoré.', e);
         }
-        /*
-        localStorage.setItem(CACHE_KEY, JSON.stringify({
-            ts: Date.now(),
-            chars, locs, namecards, pfps,
-            iconToNameHash: window.iconToNameHash,
-            rollTable
-        }));
-        */
+
         if (loader) loader.innerText = "";
         gameDataReady = true;
         buildHashToKey();
+
         if (uidInput) {
             uidInput.disabled = false;
             uidInput.placeholder = t('ui.search.placeholder');
@@ -2646,6 +2658,7 @@ function processData(data) {
     const G_WEAPON_PASSIVES = window.WEAPON_PASSIVES || {};
     const G_SET_PASSIVES = window.SET_PASSIVES || {};
     const G_DEFAULT_CONFIG = window.DEFAULT_CONFIG || {weights: {}, bestSets: [], goodSets: []};
+    window.ITEM_ICON_MAP = window.ITEM_ICON_MAP || {};
 
     data.avatarInfoList.forEach(perso => {
         const id = perso.avatarId;
@@ -2789,7 +2802,9 @@ function processData(data) {
                     baseAtk: main,
                     subStat: sub,
                     stars: flat.rankLevel
-                };
+                }
+                window.ITEM_ICON_MAP[weaponKey] = `https://enka.network/ui/${flat.icon}.png`;
+                ;
             }
             if (flat.itemType === "ITEM_RELIQUARY") {
                 let targetHash = flat.setNameTextMapHash;
@@ -2824,6 +2839,9 @@ function processData(data) {
                     level: item.reliquary.level - 1,
                     stars: flat.rankLevel
                 });
+                if (!window.ITEM_ICON_MAP[setKey]) {
+                    window.ITEM_ICON_MAP[setKey] = `https://enka.network/ui/${flat.icon}.png`;
+                }
             }
         });
 
@@ -2973,6 +2991,7 @@ function processData(data) {
 
         if (activeBuild && activeBuild.team) {
             updateResonanceBuffs(persoObj, activeBuild.team);
+            updateTeammateBuffs(persoObj, activeBuild.team);
         }
 
         const potentialMax = calculateMaxTheoreticalScore(persoObj, scoringConfig);
@@ -3119,7 +3138,7 @@ function renderToolbar(index) {
                     <img src="${url}" 
                          style="${imgStyle}"
                          onerror="this.src='${fallback}'" 
-                         title="${mate.role}: ${names[0] || elems[0] || t('data.unknown')}">
+                         title="${mate.role}: ${names[0] ? resolveTeammateName(names[0]) : (elems[0] || t('data.unknown'))}">
                 `;
             } else {
                 const url1 = getIconUrl(names[0], elems[0], mate.role);
@@ -3139,9 +3158,77 @@ function renderToolbar(index) {
                 `;
             }
 
+            const mateName = typeof mate.name === 'string' ? mate.name : null;
+            const wpnBuff = mate.weapon ? window.TEAMMATE_WEAPON_BUFFS?.[mate.weapon] : null;
+            const setBuff = mate.artifact ? window.TEAMMATE_SET_BUFFS?.[mate.artifact] : null;
+            const tmBuff = mateName ? window.TEAMMATE_BUFFS?.[mateName] : null;
+
+            const resolveIconFromKey = (key) => {
+                if (!key || !window.HASH_TO_KEY || !window.iconToNameHash) return null;
+
+                const hash = Object.keys(window.HASH_TO_KEY).find(h => window.HASH_TO_KEY[h] === key);
+                if (!hash) return null;
+
+                for (let [icon, h] of Object.entries(window.iconToNameHash)) {
+                    if (String(h) === String(hash)) {
+                        // Nettoyage : On vire les dossiers (ui/) et l'extension (.png) s'ils sont présents
+                        let cleanIcon = icon.split('/').pop().replace('.png', '');
+
+                        // Si c'est un artéfact, on applique ton traitement de slot original (_4.png)
+                        if (cleanIcon.startsWith('UI_RelicIcon')) {
+                            const base = cleanIcon.substring(0, cleanIcon.lastIndexOf('_'));
+                            return `https://enka.network/ui/${base}_4.png`;
+                        }
+                        // Si c'est une arme, le nom propre est nettoyé et l'URL sera parfaite
+                        else {
+                            return `https://enka.network/ui/${cleanIcon}.png`;
+                        }
+                    }
+                }
+                return null;
+            };
+
+            const weaponIcon = mate.weapon
+                ? (window.ITEM_ICON_MAP?.[mate.weapon] || resolveIconFromKey(mate.weapon))
+                : null;
+            const artifactIcon = mate.artifact
+                ? (window.ITEM_ICON_MAP?.[mate.artifact] || resolveIconFromKey(mate.artifact))
+                : null;
+
+// --- NOUVEAU : Fonction pour récupérer le nom traduit ---
+            const getLocalizedName = (key) => {
+                if (!key || !window.HASH_TO_KEY) return '';
+                const hash = Object.keys(window.HASH_TO_KEY).find(h => window.HASH_TO_KEY[h] === key);
+                return hash ? getText(hash) : key;
+            };
+
+            const weaponName = mate.weapon ? getLocalizedName(mate.weapon).replace(/"/g, '&quot;') : '';
+            const artifactName = mate.artifact ? getLocalizedName(mate.artifact).replace(/"/g, '&quot;') : '';
+
+            const weaponBadge = weaponIcon
+                ? `<img src="${weaponIcon}"
+            title="${weaponName}"
+            style="position:absolute; bottom:0; left:0; width:16px; height:16px; border-radius:4px; z-index:10; background: var(--bg-panel);"
+            onerror="this.style.display='none'">`
+                : '';
+
+            const artifactBadge = artifactIcon
+                ? `<img src="${artifactIcon}"
+            title="${artifactName}"
+            style="position:absolute; bottom:0; right:0; width:16px; height:16px; border-radius:4px; z-index:10; background: var(--bg-panel);"
+            onerror="this.style.display='none'">`
+                : '';
+
+            const consBadge = (mate.cons && mate.cons > 0)
+                ? `<span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:700; color:#fff; text-shadow:0 0 3px #000; z-index:10;">C${mate.cons}</span>`
+                : '';
+
             return `
                 <div style="position:relative; width:40px; height:40px; border-radius:5px; ${bgStyle} overflow:hidden;" title="${mate.role}">
                     ${innerHtml}
+                    ${weaponBadge}
+                    ${artifactBadge}
+                    ${consBadge}
                 </div>
             `;
         }).join('');
@@ -3198,6 +3285,7 @@ function switchBuild(charIndex, buildKey) {
     p.weights = newScoringConfig.weights;
 
     updateResonanceBuffs(p, newBuild.team);
+    updateTeammateBuffs(p, newBuild.team);
 
     const potentialMax = calculateMaxTheoreticalScore(p, newScoringConfig);
     p.evaluation = calculateCharacterScore(p, newScoringConfig, potentialMax.totalRolls);
@@ -3249,6 +3337,123 @@ function updateResonanceBuffs(p, teamData) {
     });
 
     p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
+}
+
+function resolveTeammateName(name) {
+    const alias = window.TEAMMATE_NAME_ALIASES?.[name];
+    if (alias) return alias[window.GUOBA_LANG] ?? alias.en ?? name;
+
+    if (window.GUOBA_LANG === 'fr') {
+        return CONFIG_NAME_ALIASES_EN_TO_FR[name] ?? name;
+    }
+    return name;
+}
+
+function resolveTeammateNames(teamData) {
+    return teamData.filter(mate => typeof mate.name === 'string');
+}
+
+function updateTeammateBuffs(p, teamData) {
+    if (!teamData) return;
+
+    p.buffs = p.buffs.filter(b => b.source !== 'teammate');
+
+    resolveTeammateNames(teamData).forEach(mate => {
+        const name = mate.name;
+        const tmCons = mate.cons !== undefined ? parseInt(mate.cons) : 6;
+        const categoryName = `${t('buff.category.teammate')} : ${resolveTeammateName(name)}`;
+
+        const tmData = window.TEAMMATE_BUFFS?.[name];
+        if (tmData) {
+            tmData.buffs.forEach((buffDef, idx) => {
+                if (buffDef.cons !== undefined && tmCons < buffDef.cons) return;
+                p.buffs.push({
+                    id: `tm_${name}_${idx}`,
+                    category: categoryName,
+                    source: 'teammate',
+                    name: getLabel(buffDef.label),
+                    bonuses: buffDef.stats,
+                    active: buffDef.active ?? true,
+                    selectMode: buffDef.selectMode || 'standard'
+                });
+            });
+        }
+
+        if (mate.weapon) {
+            const wpnData = window.TEAMMATE_WEAPON_BUFFS?.[mate.weapon];
+            if (wpnData) {
+                const wpnBuffs = wpnData.buffs || [wpnData];
+                const selectMode = wpnData.selectMode || 'standard';
+                wpnBuffs.forEach((b, index) => {
+                    p.buffs.push({
+                        id: `tm_${name}_wpn_${index}`,
+                        category: categoryName,
+                        source: 'teammate',
+                        name: getLabel(b.label) || mate.weapon,
+                        bonuses: b.stats || {},
+                        active: b.active ?? true,
+                        selectMode: selectMode
+                    });
+                });
+            }
+        }
+
+        if (mate.artifact) {
+            if (mate.artifact === "CelestialGift") {
+                const charActiveElem = p.combatStats.dmgBonusKey.replace('_dmg_', '');
+                const charEquipperElem = Array.isArray(mate.element) ? mate.element[0] : mate.element;
+
+                let dynamicBonuses = {};
+                dynamicBonuses[`${charActiveElem}_dmg_`] = 0.40;
+                if (charEquipperElem && charEquipperElem !== charActiveElem) {
+                    dynamicBonuses[`${charEquipperElem}_dmg_`] = 0.40;
+                }
+
+                p.buffs.push({
+                    id: `tm_${name}_set_celestial`,
+                    category: categoryName,
+                    source: 'teammate',
+                    name: getLabel(window.TEAMMATE_SET_BUFFS["CelestialGift"].label),
+                    bonuses: dynamicBonuses,
+                    active: true,
+                    selectMode: 'standard'
+                });
+            } else {
+                const setData = window.TEAMMATE_SET_BUFFS?.[mate.artifact];
+                if (setData) {
+                    const setBuffs = setData.buffs || [setData];
+                    const selectMode = setData.selectMode || 'standard';
+                    setBuffs.forEach((b, index) => {
+                        p.buffs.push({
+                            id: `tm_${name}_art_${index}`,
+                            category: categoryName,
+                            source: 'teammate',
+                            name: getLabel(b.label) || mate.artifact,
+                            bonuses: b.stats || {},
+                            active: b.active ?? true,
+                            selectMode: selectMode
+                        });
+                    });
+                }
+            }
+        }
+    });
+
+    p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
+}
+
+function enrichTeammateIcons() {
+    if (!window.ITEM_ICON_MAP) return;
+    for (const key of Object.keys(window.TEAMMATE_WEAPON_BUFFS || {})) {
+        if (!window.TEAMMATE_WEAPON_BUFFS[key]._icon && window.ITEM_ICON_MAP[key]) {
+            window.TEAMMATE_WEAPON_BUFFS[key]._icon = window.ITEM_ICON_MAP[key];
+        }
+    }
+    for (const key of Object.keys(window.TEAMMATE_SET_BUFFS || {})) {
+        if (!window.TEAMMATE_SET_BUFFS[key]._icon && window.ITEM_ICON_MAP[key]) {
+            window.TEAMMATE_SET_BUFFS[key]._icon = window.ITEM_ICON_MAP[key];
+        }
+    }
 }
 
 function updateERTarget(index, val) {

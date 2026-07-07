@@ -107,17 +107,23 @@
         {
           "role": "Support",
           "name": "Citlali",
-          "element": "cryo"
+          "element": "cryo",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "Instructor"
         },
         {
           "role": "Support",
           "name": "Xilonen",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
+
         },
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     },
@@ -182,17 +188,21 @@
         {
           "role": "Support",
           "name": "Chevreuse",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Nicole",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "CelestialGift"
         }
       ]
     },
@@ -256,17 +266,21 @@
         {
           "role": "Sustain",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Xiangling",
-          "element": "pyro"
+          "element": "pyro",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Kazuha",
-          "element": "anemo"
+          "element": "anemo",
+          "weapon": "XiphosMoonlight"
         }
       ]
     }

@@ -95,19 +95,19 @@
       "er_req": 170,
       "team": [
         {
-          "role": "Support",
-          "name": "Bennett",
+          "role": "",
+          "name": "",
           "element": "pyro"
         },
         {
-          "role": "Support",
-          "name": "Kazuha",
-          "element": "anemo"
+          "role": "",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Support",
-          "name": "Shenhe",
-          "element": "cryo"
+          "role": "",
+          "name": "",
+          "element": ""
         }
       ]
     },

@@ -89,12 +89,14 @@
         {
           "role": "Support",
           "name": "Xilonen",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         },
         {
           "role": "Support",
           "name": "Kazuha",
-          "element": "anemo"
+          "element": "anemo",
+          "weapon": "XiphosMoonlight"
         }
       ]
     }

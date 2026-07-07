@@ -97,12 +97,14 @@
         {
           "role": "Support",
           "name": "Yunjin",
-          "element": "geo"
+          "element": "geo",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Xilonen",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         }
       ]
     },
@@ -184,14 +186,9 @@
         },
         {
           "role": "Flex",
-          "name": [
-            "Yelan",
-            "Citlali"
-          ],
-          "element": [
-            "hydro",
-            "cryo"
-          ]
+          "name": "Citlali",
+          "element": "cryo",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         }
       ]
     },
@@ -267,7 +264,8 @@
         {
           "role": "Sub-DPS",
           "name": "Shinobu",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         },
         {
           "role": "Support",
@@ -277,7 +275,8 @@
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         }
       ]
     },
@@ -345,18 +344,13 @@
         },
         {
           "role": "Flex",
-          "name": [
-            "Lauma",
-            "Nahida"
-          ],
-          "element": [
-            "dendro",
-            "dendro"
-          ]
+          "name": "Lauma",
+          "element": "dendro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
           "role": "Support",
-          "name": "Baizhuer",
+          "name": "",
           "element": "dendro"
         }
       ]
@@ -429,7 +423,8 @@
         {
           "role": "Sub-DPS",
           "name": "Fischl",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
@@ -439,7 +434,8 @@
         {
           "role": "Support",
           "name": "Sucrose",
-          "element": "anemo"
+          "element": "anemo",
+          "cons": "6"
         }
       ]
     },
@@ -517,12 +513,14 @@
         {
           "role": "Sub-DPS",
           "name": "Xiangling",
-          "element": "pyro"
+          "element": "pyro",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "cons": "6"
         }
       ]
     }

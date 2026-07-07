@@ -188,13 +188,13 @@
         },
         {
           "role": "Support",
-          "name": "Yaoyao",
+          "name": "",
           "element": "dendro"
         },
         {
           "role": "Support",
-          "name": "Sucrose",
-          "element": "anemo"
+          "name": "",
+          "element": "dendro"
         }
       ]
     },
@@ -213,7 +213,7 @@
         "def_": 0,
         "def": 0,
         "eleMas": 0.4,
-        "enerRech_": 0.5,
+        "enerRech_": 0,
         "pyro_dmg_": 0,
         "hydro_dmg_": 0,
         "cryo_dmg_": 0,
@@ -265,7 +265,7 @@
         "DisenchantmentInDeepShadow:2",
         "ThunderingFury:2"
       ],
-      "er_req": 140,
+      "er_req": 100,
       "team": [
         {
           "role": "DPS",
@@ -275,12 +275,14 @@
         {
           "role": "Sub-DPS",
           "name": "Escoffier",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "TenacityOfTheMillelith"
         },
         {
           "role": "Support",
           "name": "Qiqi",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "NoblesseOblige"
         }
       ]
     }

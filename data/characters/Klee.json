@@ -106,12 +106,15 @@
         {
           "role": "Support",
           "name": "Chevreuse",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Support",
-          "name": "Bennett",
-          "element": "pyro"
+          "name": "Nicole",
+          "element": "pyro",
+          "artifact": "CelestialGift"
         }
       ]
     },
@@ -194,7 +197,8 @@
         {
           "role": "Support",
           "name": "Xilonen",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         }
       ]
     },
@@ -264,7 +268,8 @@
         {
           "role": "Support",
           "name": "Prune",
-          "element": "anemo"
+          "element": "anemo",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
@@ -274,7 +279,8 @@
         {
           "role": "Support",
           "name": "Nicole",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "CelestialGift"
         }
       ]
     }

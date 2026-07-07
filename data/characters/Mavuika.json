@@ -117,17 +117,23 @@
         {
           "role": "Support",
           "name": "Citlali",
-          "element": "cryo"
+          "element": "cryo",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "Instructor"
         },
         {
           "role": "Support",
           "name": "Xilonen",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
+
         },
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     },
@@ -191,18 +197,24 @@
       "team": [
         {
           "role": "DPS",
-          "name": "Varesa",
-          "element": "electro"
+          "name": "Olorun",
+          "element": "electro",
+          "artifact": "Instructor",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Chevreuse",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Iansan",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "ScrollOfTheHeroOfCinderCity",
+          "cons": "6"
         }
       ]
     }

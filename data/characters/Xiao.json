@@ -107,12 +107,15 @@
         {
           "role": "Support",
           "name": "Faruzan",
-          "element": "anemo"
+          "element": "anemo",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Liuyun",
-          "element": "anemo"
+          "element": "anemo",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "NoblesseOblige"
         },
         {
           "role": "Sub-DPS",

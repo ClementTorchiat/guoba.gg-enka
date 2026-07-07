@@ -214,12 +214,14 @@
         {
           "role": "Support",
           "name": "Nilou",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "Instructor"
         },
         {
           "role": "Sub-DPS",
           "name": "Lauma",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
           "role": "Support",
@@ -300,7 +302,8 @@
         {
           "role": "Support",
           "name": "Sucrose",
-          "element": "anemo"
+          "element": "anemo",
+          "cons": "6"
         }
       ]
     },
@@ -371,7 +374,9 @@
         {
           "role": "Support",
           "name": "Illuga",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "SilkenMoonsSerenade",
+          "cons": "6"
         },
         {
           "role": "Support",

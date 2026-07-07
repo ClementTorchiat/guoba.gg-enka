@@ -116,7 +116,8 @@
         {
           "role": "Support",
           "name": "Shenhe",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "NoblesseOblige"
         }
       ]
     },
@@ -197,12 +198,15 @@
         {
           "role": "Sub-DPS",
           "name": "Xiangling",
-          "element": "pyro"
+          "element": "pyro",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     }

@@ -186,7 +186,8 @@
         {
           "role": "Sub-DPS",
           "name": "Shinobu",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         }
       ]
     },
@@ -260,12 +261,14 @@
         {
           "role": "Sub-DPS",
           "name": "Xingqiu",
-          "element": "hydro"
+          "element": "hydro",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Shinobu",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         }
       ]
     },
@@ -343,8 +346,9 @@
         },
         {
           "role": "Sub-DPS",
-          "name": "Collei",
-          "element": "dendro"
+          "name": "Lauma",
+          "element": "dendro",
+          "artifact": "SilkenMoonsSerenade"
         }
       ]
     }

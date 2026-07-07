@@ -106,13 +106,10 @@
         },
         {
           "role": "Flex",
-          "name": [
-            ""
-          ],
-          "element": [
-            "cryo",
-            "hydro"
-          ]
+          "name": "Citlali",
+          "element": "cryo",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         }
       ]
     }

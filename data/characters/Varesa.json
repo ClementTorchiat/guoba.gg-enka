@@ -112,22 +112,23 @@
       "er_req": 120,
       "team": [
         {
-          "role": "Flex",
-          "name": [
-            "Mavuika",
-            "Durin"
-          ],
+          "role": "Sub-DPS",
+          "name": "Mavuika",
           "element": "pyro"
         },
         {
           "role": "Support",
           "name": "Chevreuse",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Iansan",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "ScrollOfTheHeroOfCinderCity",
+          "cons": "6"
         }
       ]
     },
@@ -199,12 +200,15 @@
         {
           "role": "Support",
           "name": "Liuyun",
-          "element": "anemo"
+          "element": "anemo",
+          "weapon": "ThrillingTalesOfDragonSlayers"
         },
         {
           "role": "Support",
           "name": "Iansan",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "ScrollOfTheHeroOfCinderCity",
+          "cons": "6"
         }
       ]
     },
@@ -275,26 +279,21 @@
         {
           "role": "Sub-DPS",
           "name": "Lauma",
-          "element": "dendro"
+          "element": "dendro",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
-          "role": "Flex",
-          "name": [
-            "Fischl",
-            "Iansan"
-          ],
+          "role": "Sub-DPS",
+          "name": "Ineffa",
           "element": "electro"
         },
         {
           "role": "Support",
-          "name": [
-            "Ineffa",
-            "Nahida"
-          ],
-          "element": [
-            "electro",
-            "dendro"
-          ]
+          "name": "Iansan",
+          "element": "electro",
+          "artifact": "ScrollOfTheHeroOfCinderCity",
+          "cons": "6"
         }
       ]
     },
@@ -365,7 +364,8 @@
         {
           "role": "Support",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
           "role": "Sub-DPS",
@@ -375,7 +375,8 @@
         {
           "role": "Support",
           "name": "Liuyun",
-          "element": "anemo"
+          "element": "anemo",
+          "weapon": "ThrillingTalesOfDragonSlayers"
         }
       ]
     }

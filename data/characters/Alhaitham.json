@@ -200,7 +200,8 @@
         {
           "role": "Sub-DPS",
           "name": "Shinobu",
-          "element": "electro"
+          "element": "electro",
+          "cons": "6"
         },
         {
           "role": "Flex",
@@ -295,7 +296,8 @@
         {
           "role": "Support",
           "name": "Zhongli",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "Instructor"
         }
       ]
     },
@@ -375,11 +377,12 @@
         {
           "role": "Sub-DPS",
           "name": "Xingqiu",
-          "element": "hydro"
+          "element": "hydro",
+          "cons": "6"
         },
         {
           "role": "Support",
-          "name": "Baizhuer",
+          "name": "",
           "element": "dendro"
         }
       ]

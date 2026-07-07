@@ -178,7 +178,8 @@
         {
           "role": "Support",
           "name": "Faruzan",
-          "element": "anemo"
+          "element": "anemo",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",
@@ -188,7 +189,8 @@
         {
           "role": "Support",
           "name": "Nicole",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "CelestialGift"
         }
       ]
     }

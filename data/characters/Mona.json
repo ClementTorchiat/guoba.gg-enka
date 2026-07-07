@@ -129,19 +129,19 @@
       "er_req": 220,
       "team": [
         {
-          "role": "DPS",
-          "name": "Mualani",
-          "element": "hydro"
+          "role": "Hexerei",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Sub-DPS",
-          "name": "Mavuika",
-          "element": "pyro"
+          "role": "",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Support",
-          "name": "Sucrose",
-          "element": "anemo"
+          "role": "",
+          "name": "",
+          "element": ""
         }
       ]
     },
@@ -214,12 +214,15 @@
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Kazuha",
-          "element": "anemo"
+          "element": "anemo",
+          "weapon": "XiphosMoonlight"
         },
         {
           "role": "Sub-DPS",

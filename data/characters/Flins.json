@@ -117,12 +117,15 @@
         {
           "role": "Support",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
           "role": "Support",
           "name": "Sucrose",
-          "element": "anemo"
+          "element": "anemo",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "cons": "6"
         }
       ]
     }

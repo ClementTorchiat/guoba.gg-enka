@@ -117,7 +117,9 @@
         {
           "role": "Sub-DPS",
           "name": "Ororon",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "ScrollOfTheHeroOfCinderCity",
+          "cons": "6"
         },
         {
           "role": "Sub-DPS",

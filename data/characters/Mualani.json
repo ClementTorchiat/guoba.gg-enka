@@ -77,18 +77,14 @@
         {
           "role": "Support",
           "name": "Xilonen",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
         },
         {
           "role": "Flex",
-          "name": [
-            "Citlali",
-            "Sucrose"
-          ],
-          "element": [
-            "cryo",
-            "anemo"
-          ]
+          "name": "Sucrose",
+          "element": "anemo",
+          "cons": "6"
         }
       ]
     },
@@ -167,7 +163,8 @@
         {
           "role": "Support",
           "name": "Sucrose",
-          "element": "anemo"
+          "element": "anemo",
+          "cons": "6"
         }
       ]
     }

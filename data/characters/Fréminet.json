@@ -256,7 +256,8 @@
         {
           "role": "Support",
           "name": "Shenhe",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "NoblesseOblige"
         }
       ]
     }

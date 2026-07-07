@@ -37,7 +37,7 @@
             "en": "C2: An Heiress Gazed Into the Looking-Glass (charged attack only - Crit DMG)"
           },
           "cons": 2,
-          "active": false,
+          "active": true,
           "stats": {
             "critDMG_": 0.6
           }
@@ -48,7 +48,7 @@
             "en": "C2: An Heiress Gazed Into the Looking-Glass (1 stack - charged attack only - Crit DMG)"
           },
           "cons": 2,
-          "active": false,
+          "active": true,
           "stats": {
             "critDMG_": 0.2
           }
@@ -59,7 +59,7 @@
             "en": "C2: An Heiress Gazed Into the Looking-Glass (2 stacks - charged attack only - Crit DMG)"
           },
           "cons": 2,
-          "active": false,
+          "active": true,
           "stats": {
             "critDMG_": 0.2
           }
@@ -83,7 +83,7 @@
         "def_": 0,
         "def": 0,
         "eleMas": 0.4,
-        "enerRech_": 0.6,
+        "enerRech_": 0.5,
         "pyro_dmg_": 0,
         "hydro_dmg_": 0,
         "cryo_dmg_": 0,
@@ -128,12 +128,14 @@
         {
           "role": "Support",
           "name": "Qiqi",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "NoblesseOblige"
         },
         {
           "role": "Sub-DPS",
           "name": "Escoffier",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "TenacityOfTheMillelith"
         }
       ]
     }

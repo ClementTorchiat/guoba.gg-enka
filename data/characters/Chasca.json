@@ -8,7 +8,7 @@
   },
   "builds": {
     "DPS Dispersion": {
-      "label": {
+      "name": {
         "fr": "DPS Dispersion",
         "en": "Swirl DPS"
       },
@@ -66,17 +66,23 @@
         {
           "role": "Support",
           "name": "Citlali",
-          "element": "cryo"
+          "element": "cryo",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "TenacityOfTheMillelith"
         },
         {
           "role": "Support",
           "name": "Iansan",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "ScrollOfTheHeroOfCinderCity",
+          "cons": "6"
         },
         {
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         }
       ]
     }

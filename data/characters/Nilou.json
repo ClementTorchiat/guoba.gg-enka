@@ -114,7 +114,8 @@
         {
           "role": "Sub-DPS",
           "name": "Lauma",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
           "role": "Support",

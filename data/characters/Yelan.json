@@ -297,12 +297,14 @@
         {
           "role": "Support",
           "name": "Zhongli",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "Instructor"
         },
         {
           "role": "Sub-DPS",
           "name": "Xingqiu",
-          "element": "hydro"
+          "element": "hydro",
+          "cons": "6"
         }
       ]
     }

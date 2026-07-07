@@ -99,12 +99,14 @@
         {
           "role": "Sub-DPS",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
           "role": "Support",
           "name": "Sucrose",
-          "element": "anemo"
+          "element": "anemo",
+          "cons": "6"
         }
       ]
     }
