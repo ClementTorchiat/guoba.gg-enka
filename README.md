@@ -1,153 +1,245 @@
-# guoba.gg
+# guoba.gg — Optimiseur de Builds & Coach Virtuel Genshin Impact
 
-Un outil web interactif et avancé conçu pour les joueurs de **Genshin Impact**. Ce projet permet d'importer automatiquement les données des personnages depuis le jeu via l'UID, d'évaluer la qualité des artéfacts, de simuler des statistiques en conditions de combat (buffs, résonances) et de fournir un coaching personnalisé pour optimiser les builds.
+**guoba.gg** est une application web moderne, interactive et complète conçue pour les joueurs de **Genshin Impact**. 
+
+Bien plus qu'un simple calculateur, c'est un véritable **coach virtuel** qui audite mathématiquement la qualité de vos équipements via un double système de score et de grade, simule vos statistiques réelles en conditions de combat sous buffs, et vous guide pas à pas pour orienter vos priorités de farm sans jamais avoir à manipuler un tableur complexe.
+
+---
+
+## Pourquoi guoba.gg ? (Genèse & Vision)
+
+Le projet est né d'une frustration récurrente chez les joueurs :
+1. **L'opacité et la complexité des tableurs** : Les feuilles de calcul traditionnelles sont souvent austères, difficiles à configurer et peu adaptées à une consultation rapide.
+2. **Le piège des calculateurs de dégâts bruts (speedrun)** : Beaucoup d'outils comparent des builds dans des conditions idéalisées ou irréalistes sans évaluer l'équilibre global (Recharge d'Énergie suffisante, ratio critique cohérent, statistiques utiles gaspillées).
+3. **Le manque de conseils exploitables** : Savoir qu'un artéfact a 30% de DGT Crit est une chose ; savoir s'il est rentable de le recycler dans l'Offrande Mystique, si le set 4-pièces actuel vaut la peine d'être forcé, ou quelle pièce remplacer en priorité en est une autre.
+
+**guoba.gg** répond à ces besoins en combinant rigueur mathématique, immersion visuelle et conseils d'optimisation clairs et actionnables.
+
+> 
+> **Ce que guoba.gg n'est pas :**  
+> Ce n'est ni un outil officiel HoYoverse, ni un classement de dégâts speedrun, ni une base de données de tier-lists. L'outil se concentre sur la **qualité mathématique de votre investissement** et l'**orientation concrète de votre farm**.
 
 ---
 
 ## Fonctionnalités Principales
 
-* **Importation via UID en temps réel** : Utilise l'API publique d'Enka.Network pour récupérer instantanément les personnages exposés dans la vitrine en jeu du joueur.
-* **Système de Notation (Scoring) Avancé** : Calcule un score précis pour chaque artéfact et pour le personnage global en se basant sur un système de poids (similaire aux standards de la communauté comme Akasha/Fribbels). Les notes vont de **F** (Poubelle) jusqu'à **ARCHON** (God Roll absolu).
-* **Simulateur de Combat (Buffs Dynamiques)** : Permet d'activer/désactiver à la volée les passifs des personnages, les effets de constellations, les buffs d'armes et les bonus de sets d'artéfacts pour visualiser les "Stats de combat" réelles.
-* **Coaching et Plan d'Action Stratégique** :
-    * *Analyse du Taux Critique / DGT Crit*.
-    * *Besoins en Recharge d'Énergie (ER)* par rapport à l'archétype sélectionné.
-    * *Analyse de Forçage de Set* : Détecte si le joueur se force à jouer un set de 4 pièces médiocre au lieu d'un 2p/2p excellent.
-    * *Évaluation de la pièce Hors-Set (Off-piece)*.
-    * *Conseils sur les niveaux d'armes et d'aptitudes*.
-* **Simulateur de Reroll & Potentiel** : Analyse la "densité" d'un artéfact pour déterminer le potentiel de gain et le risque de perte en cas de reroll (ex: via l'Offrande Mystique).
-* **Exportation Haute Qualité** : Génération d'une carte récapitulative du build au format image (PNG) pour le partage sur les réseaux sociaux ou Discord, intégrant le splash art du personnage et l'ensemble de ses statistiques.
+### 1. Importation instantanée via UID (Enka.Network)
+* Récupération automatique et instantanée des données publiques de votre vitrine de personnages en jeu.
+* **100% sécurisé et transparent** : aucun mot de passe ni identifiant de connexion requis.
+* Données stockées localement sur votre navigateur (via IndexedDB).
+
+### 2. Système de Notation (Scoring) & Grades
+* **Précision mathématique** : Évaluation de chaque artéfact et du build global croisant les valeurs réelles avec les tables de rolls officielles du jeu (`rollTable.json`).
+* **Pondération par archétype** : Chaque statistique est valorisée selon le build choisi pour le personnage (DPS, Sub-DPS, Support, etc.).
+* **Grades visuels clairs** : Attribution d'un grade de **F** (Poubelle) jusqu'à **ARCHON** (God Roll absolu), avec détail de l'efficacité de chaque sous-statistique et des rolls gaspillés (*dead rolls*).
+
+### 3. Simulateur de Combat & Buffs Dynamiques
+* Simulation des statistiques réelles du personnage en conditions de combat :
+  * **Passifs d'aptitudes et de constellations** (avec sélection standard, exclusive ou cumulative).
+  * **Passifs d'armes et bonus de sets d'artéfacts**.
+  * **Résonances élémentaires** actives selon la composition d'équipe.
+  * **Buffs d'alliés (*Teammate Buffs*)** : Bennett, Kazuha, Furina, Sara, etc.
+  * Prise en compte des **scalings dynamiques** appliqués en fin de chaîne de calcul (ex: conversion de l'ER en DGT Électro).
+
+### 4. Modules de Coaching & Conseils Proactifs
+* **Équilibrage Crit** : Analyse du ratio Taux Crit / DGT Crit et détection d'overcap.
+* **Besoins en Recharge d'Énergie (ER)** : Comparaison en temps réel avec la cible d'ER recommandée pour l'archétype sélectionné.
+* **Détecteur de « Forçage de Set »** : Détecte si un joueur se pénalise en conservant un set 4-pièces aux statistiques médiocres au lieu d'un combo 2p/2p bien supérieur.
+* **Évaluation de la Pièce Hors-Set (*Off-piece*)** : Analyse de la pertinence de la pièce isolée.
+* **Simulateur d'Offrande Mystique & Potentiel de Reroll** : Évalue la densité de rolls d'une pièce pour conseiller le recyclage ou la conservation.
+* **Distribution des Rolls & Pièces Idéales** : Identification des pièces les plus faibles et projection des gains potentiels de statistiques.
+* **Recommandations d'Investissement** : Conseils sur les niveaux d'élévation, d'armes et d'aptitudes prioritaires.
+
+### 5. Export & Partage
+* **Génération de cartes de build en haute définition (PNG)** intégrant le splash art officiel du personnage, ses statistiques de combat, son score et ses artéfacts.
+* Contournement transparent des blocages CORS sur les images distantes via un proxy d'optimisation d'images.
+* Liens de partage de profil pour comparer ses builds avec ses amis ou sur Discord.
+
+### 6. Internationalisation (i18n)
+* Interface et données entièrement bilingues : **Français** et **Anglais** avec détection automatique de la langue du navigateur et bascule manuelle instantanée.
 
 ---
 
-## Architecture du Projet
+## Stack Technique & Architecture
 
-Le projet est construit en pur Vanilla JavaScript, HTML et CSS, garantissant légèreté et rapidité d'exécution.
+Le projet a évolué d'une architecture monolithique en Vanilla JS vers une stack moderne et ultra-performante propulsée par **Astro 5** :
 
-| Fichier | Description |
-| :--- | :--- |
-| `index.html` | L'interface utilisateur principale (UI). Contient le layout en grille flexbox, la barre de recherche latérale, le modal d'aide et l'intégration des librairies externes (FontAwesome, dom-to-image). |
-| `script.js` | Le cœur logique de l'application. Gère les appels API, le mapping des données, le moteur de rendu HTML dynamique, la logique des buffs (toggle, cumulatif, exclusif), et la génération des modules de coaching. |
-| `scoring.js` | Le moteur mathématique de notation. Évalue les artéfacts en croisant les valeurs réelles avec les "poids" définis pour l'archétype du personnage. Calcule les notes globales et les grades. |
-| `config.js` | La base de données de configuration des personnages. Définit pour chaque personnage ses archétypes (builds), le poids de chaque statistique (Crit, ATQ, EM, etc.), les sets recommandés, les cibles d'ER, et les passifs/constellations. Contient également les passifs de toutes les armes et de tous les sets du jeu. |
-| `data.js` | Dictionnaire des valeurs "pures" du jeu Genshin Impact. Contient les valeurs d'incrémentation maximales (Rolls) pour chaque type de sous-statistique (ex: 3.89% pour le Taux Crit, 7.77% pour le DGT Crit). |
-
----
-
-## Fonctionnement Technique
-
-### 1. Importation et Mapping des Données
-Le système interroge `https://enka.network/api/uid/{UID}` à travers un proxy (`corsproxy.io`) pour éviter les restrictions CORS. Les données JSON brutes du jeu (identifiants numériques) sont ensuite croisées avec les bases de données open-source d'Enka (`avatars.json`, `locs.json`, `relics.json`) pour récupérer les noms, traductions et icônes correspondantes.
-
-### 2. Le Moteur de Notation (`scoring.js`)
-La notation est un système hybride :
-* **Valeur de Base** : Chaque "Roll" parfait (ex: 7.8% DGT Crit) vaut une fraction de point.
-* **Pondération** : Ces points sont multipliés par un "poids" (défini dans `config.js`). *Exemple : La Défense aura un poids de 1 pour Chiori, mais de 0 pour Arlecchino.*
-* **Bonus Mainstat** : L'algorithme prend en compte la pertinence de la statistique principale des pièces variables (Sablier, Coupe, Diadème).
-* **Multiplicateur de Set** : Un bonus est appliqué si le joueur possède le Set Best-in-Slot (BiS) recommandé.
-
-### 3. Gestion des Buffs et "Snapshoting"
-Les buffs sont classés par catégories (Armes, Sets, Constellations, Passifs). Le script gère 3 comportements de sélection :
-* `standard` : Toggle on/off simple (ex: buff d'arme basique).
-* `exclusive` : Boutons radio (ex: "1 allié Géo", "2 alliés Géo" ne peuvent pas être actifs en même temps).
-* `cumulative` : Mode escalier. Si on active le niveau 3, les niveaux 1 et 2 s'activent automatiquement (ex: Stacks d'armes).
-  *Le calcul gère le "scaling" (ex: "Convertit 0.4% de l'ER en DGT Électro") en l'appliquant en fin de chaîne de calcul.*
-
-### 4. Génération d'Images
-Utilise la librairie `dom-to-image-more`. Pour contourner le blocage CORS du canvas sur les images externes (Splash Arts), le projet utilise le proxy de redimensionnement/conversion `wsrv.nl`, garantissant des exports sans faille.
+* **Framework & Build** : [Astro 5](https://astro.build/) avec **Vite** pour un bundling ultra-rapide, du préchargement de pages (*prefetching*) et une génération optimisée.
+* **Gestion d'état** : [Nanostores](https://github.com/nanostores/nanostores) pour une réactivité légère et découplée entre composants.
+* **Composants modulaires** :
+  * Layouts statiques et dynamiques (`src/layouts/`).
+  * Composants d'affichage de profil et vitrine (`src/components/showcase/`, `src/components/profile/`).
+  * Modules de coaching indépendants (`src/components/advice/`).
+* **Micro-chunks de données dynamiques** : Les configurations de personnages (`data/characters/*.json`), armes (`data/weapons/*.json`) et sets (`data/sets/*.json`) sont découpées et chargées à la demande via `import.meta.glob`, évitant le chargement de mégabytes inutiles.
+* **Persistance & Performance** : Moteur de cache local natif basé sur **IndexedDB** (`src/scripts/db.js`) garantissant zéro dépendance externe pour la base locale et des temps de chargement quasi-instantanés.
+* **Export Image** : Intégration de `dom-to-image-more` optimisée pour le rendu canvas.
+* **Compression & SEO** : `vite-plugin-compression` (Brotli & Gzip), `@astrojs/sitemap`, métadonnées enrichies (OpenGraph, Schema.org).
 
 ---
 
-## Guide de Configuration d'un Personnage (`config.js`)
+## Structure du Projet
 
-La puissance de cet outil réside dans la personnalisation granulaire de chaque personnage. Voici comment structurer l'entrée d'un personnage dans `CHARACTER_CONFIG` :
+```text
+guoba.gg/
+├── data/                               # Base de données modulaire du jeu
+│   ├── characters/                     # 115+ configurations JSON individuelles par personnage
+│   ├── weapons/                        # Passifs et stats de toutes les armes
+│   ├── sets/                           # Passifs et effets des sets d'artéfacts
+│   └── default_config.json             # Configuration de fallback par défaut
+├── public/                             # Assets statiques distribués tels quels
+├── src/
+│   ├── assets/                         # Images, icônes et visuels d'onboarding
+│   ├── components/                     # Composants de l'application
+│   │   ├── advice/                     # 20+ modules de coaching (Crit, ER, Reroll, SetForcing...)
+│   │   ├── profile/                    # Header joueur, sidebar, évaluation globale
+│   │   └── showcase/                   # Carte personnage, artéfacts, armes, buffs, toolbar
+│   ├── data/                           # Dictionnaires et tables (rollTable, mappings, couleurs...)
+│   ├── layouts/                        # Templates Astro (Layout.astro, StaticLayout.astro)
+│   ├── pages/                          # Routes de l'application
+│   │   ├── index.astro                 # Vitrine principale et recherche UID
+│   │   ├── team.astro                  # Page de présentation de l'équipe
+│   │   ├── about.astro                 # Page À propos & FAQ
+│   │   └── privacy.astro               # Politique de confidentialité
+│   ├── scripts/                        # Logique métier et moteurs de calcul
+│   │   ├── script.js                   # Orchestration principale et interactions
+│   │   ├── scoring.js                  # Moteur mathématique de notation et pondération
+│   │   ├── configLoader.js             # Chargeur dynamique des micro-fichiers JSON
+│   │   ├── teammate_buffs.js           # Définition et calcul des buffs d'alliés
+│   │   ├── db.js                       # Wrapper natif IndexedDB pour le cache local
+│   │   ├── i18n.js                     # Moteur de traduction FR/EN
+│   │   └── embedHelper.js              # Générateur d'exports et cartes partagées
+│   ├── stores/                         # Stores réactifs Nanostores (appStore.js)
+│   └── styles/                         # Feuilles de style modulaires
+├── astro.config.mjs                    # Configuration Astro, Vite et plugins
+├── package.json                        # Dépendances et scripts de build
+└── README.md                           # Documentation du projet
+```
 
-```javascript
-"NomDuPersonnage": {
-    color: "#HexCode", // Couleur de thème du personnage
-    portraitOffset: -35, // Ajustement de l'image (CSS translate-y)
-    talents: { auto: 1, skill: 8, burst: 10 }, // Priorité des talents
-    
-    buffs: [
-        // Déclaration des passifs et constellations
+---
+
+## Structure d'une Configuration de Personnage (`data/characters/`)
+
+Chaque personnage dispose de son propre fichier JSON structuré, permettant d'ajouter ou ajuster un personnage facilement :
+
+```json
+{
+  "color": "#AB3D2D",
+  "portraitOffset": -38,
+  "talents": {
+    "auto": 10,
+    "skill": 8,
+    "burst": 6
+  },
+  "buffs": [
+    {
+      "category": "Passifs",
+      "buffs": [
         {
-            category: "Passifs",
-            buffs: [
-                {
-                    label: "Nom du Passif (+20% ATQ)",
-                    active: true, // Activé par défaut ?
-                    stats: { "atk_": 0.20 }
-                }
-            ]
+          "label": {
+            "fr": "Passif : Seule la lune peut savoir (DGTs Pyro)",
+            "en": "Passive: The Balemoon alone may know (Pyro DMG)"
+          },
+          "stats": {
+            "pyro_dmg_": 0.4
+          }
         }
-    ],
-
-    builds: {
-        "Nom_De_Larchetype": { // Ex: "Vaporisation", "Hypercarry"
-            name: "Nom d'affichage",
-            weights: {
-                "critRate_": 1, "critDMG_": 1,
-                "atk_": 0.75, "atk": 0.075,
-                "hp_": 0, "hp": 0, "def_": 0, "def": 0,
-                "eleMas": 0.5, "enerRech_": 0.8,
-                "pyro_dmg_": 1, // 1 pour l'élément du perso, 0 pour le reste
-                "heal_": 0
-            },
-            bestSets: ["NomDuSetEnAnglais:4"], // Set Optimal (4 pièces)
-            goodSets: ["SetAlternatif1:2", "SetAlternatif2:2"], // Sets de remplacement
-            er_req: 120, // Besoin en ER théorique
-            team: [
-                // Définition de l'équipe pour la Résonance automatique et UI
-                { role: "Sustain", name: "Bennett", element: "pyro" },
-                { role: "Flex", name: ["Kazuha", "Sucrose"], element: ["anemo", "anemo"] }
-            ]
-        }
+      ]
     }
+  ],
+  "builds": {
+    "DPS Fonte": {
+      "name": {
+        "fr": "DPS Fonte",
+        "en": "Melt DPS"
+      },
+      "weights": {
+        "critRate_": 1,
+        "critDMG_": 1,
+        "atk_": 0.8,
+        "atk": 0.1,
+        "hp_": 0,
+        "def_": 0,
+        "eleMas": 0.6,
+        "enerRech_": 0,
+        "pyro_dmg_": 1
+      },
+      "bestSets": ["FragmentOfHarmonicWhimsy:4"],
+      "goodSets": ["GladiatorsFinale:4", "CrimsonWitchOfFlames:4"],
+      "er_req": 100,
+      "team": [
+        { "role": "Sub-DPS", "name": "Citlali", "element": "cryo" },
+        { "role": "Buffer", "name": "Bennett", "element": "pyro" },
+        { "role": "Flex", "name": ["Kazuha", "Sucrose"], "element": ["anemo", "anemo"] }
+      ]
+    }
+  }
 }
 ```
 
 ---
 
-## Installation et Lancement
+## Installation et Démarrage Local
 
-Ce projet est purement front-end (Client-side). Aucune base de données ou serveur backend (Node.js/Python) n'est requis.
+### Prérequis
+* [Node.js](https://nodejs.org/) (version 18 ou supérieure recommandée)
+* Gestionnaire de paquets `npm` ou `pnpm`
 
-1.  **Cloner le dépôt** :
-    ```bash
-    git clone https://github.com/votre-repo/genshin-simulator.git
-    cd genshin-simulator
-    ```
-2.  **Lancer l'application** :
-    * Ouvrez simplement le fichier `index.html` dans un navigateur web moderne (Chrome, Firefox, Edge, Safari).
-    * *Optionnel* : Pour une meilleure expérience (surtout lors des développements avec l'exportation d'image), utilisez une extension comme **Live Server** sur VSCode.
+### 1. Cloner le dépôt
+```bash
+git clone https://github.com/votre-compte/guobagg_enka_tests.git
+cd guobagg_enka_tests
+```
 
----
+### 2. Installer les dépendances
+```bash
+npm install
+```
 
-## Prérequis en jeu (Pour l'utilisateur)
+### 3. Lancer le serveur de développement
+```bash
+npm run dev
+```
+L'application sera accessible localement à l'adresse `http://localhost:4321`.
 
-Pour que l'outil puisse récupérer les données, le joueur doit configurer son compte Genshin Impact :
-1. Aller dans le Menu Paimon > Modifier le profil.
-2. Ajouter les personnages souhaités dans la **Vitrine de personnages**.
-3. **Cocher l'option : "Afficher les détails des personnages"** (Crucial).
-4. Patienter 2 à 5 minutes (Délai de synchronisation des serveurs Hoyoverse/Enka).
-
----
-
-## Dépendances externes
-
-* **Polices** : *Inter* (Google Fonts) et *ShinShin* (Custom - `ShinShin.ttf`).
-* **Icônes** : [FontAwesome 6.4.0](https://fontawesome.com/) (CDN).
-* **API** : [Enka.Network](https://enka.network/) (API Publique + Raw Github Json pour l'indexation V2).
-* **Image Export** : `dom-to-image-more` v2.9.5 (CDN).
-* **Proxies** : `corsproxy.io` (Requêtes API) et `wsrv.nl` (Bypass CORS Images).
+### 4. Construire pour la production
+```bash
+npm run build
+npm run preview
+```
 
 ---
 
-## Avertissements et Limitations
+## Prérequis en Jeu (Pour l'utilisateur)
 
-* **Dépendance à Enka.Network** : Si l'API d'Enka est hors-ligne ou change sa structure de données, le projet nécessitera une mise à jour des fonctions de mapping dans `script.js`.
-* **Temps de latence Hoyoverse** : Les modifications d'artéfacts en jeu mettent quelques minutes à se refléter dans la vitrine publique. Le bouton de recherche utilise un timestamp (Cache-busting) pour forcer le rafraîchissement au maximum des capacités de l'API.
-* **Limitations des Proxies** : Les proxys gratuits (`corsproxy.io`) peuvent parfois connaître des ralentissements.
+Pour que l'outil puisse récupérer vos données publiques :
+1. Dans Genshin Impact, ouvrez le **Menu Paimon** > **Modifier le profil**.
+2. Ajoutez vos personnages dans la **Vitrine de personnages**.
+3. **Cochez impérativement l'option : « Afficher les détails des personnages »**.
+4. Patientez quelques minutes pour que les serveurs de HoYoverse synchronisent les données publiques.
 
 ---
-*Ce projet a été développé par passion pour la communauté Genshin Impact. Aucune donnée personnelle n'est stockée par ce service.*
+
+## Équipe & Remerciements
+
+* **Clem** — *Fondateur & Développeur Front-End / Architecture*
+* **Bluvitae** — *UI Artist & Conseillère*
+* **Services externes & API** :
+  * [Enka.Network](https://enka.network/) pour la fourniture des données de vitrine publique.
+  * [Astro](https://astro.build/) & [Vite](https://vitejs.dev/) pour le moteur applicatif.
+  * [wsrv.nl](https://wsrv.nl/) pour le traitement et le proxy des images.
+
+---
+
+## Rejoindre la communauté & Contribuer
+
+Une suggestion, un bug à signaler ou envie de participer aux tests ?
+* Rejoignez le serveur Discord : [Discord guoba.gg](https://discord.gg/CZ5qxVqBVJ)
+* Soutenir le projet : [Ko-fi](https://ko-fi.com/guobagg)
+
+---
+
+## Licence & Mentions Légales
+
+*Ce projet est un outil communautaire indépendant et n'est affilié d'aucune manière à **HoYoverse** (COGNOSPHERE PTE. LTD.).*  
+*Genshin Impact™ et l'ensemble des éléments graphiques, noms de personnages et marques associées sont la propriété exclusive de HoYoverse.*  
+*Aucune donnée personnelle ou identifiant de compte de jeu n'est collecté ni stocké sur un serveur distant.*
