@@ -632,6 +632,8 @@ function clearSearch() {
     document.title = t('page.title.default');
     window.currentPlayerNickname = null;
     globalPersoData = [];
+    if (typeof preloadedSplashUrls !== 'undefined') preloadedSplashUrls.clear();
+    if (typeof decodedSplashImages !== 'undefined') decodedSplashImages.clear();
     sidebarSortState = { column: 'original', direction: 'desc' };
     const sidebar = document.getElementById('sidebar-list');
     if (sidebar) sidebar.innerHTML = '';
@@ -2198,7 +2200,7 @@ function processData(data) {
 
 
         let sideIconUrl = "https://enka.network/ui/UI_AvatarIcon_Side_Unknown.png";
-        let splashUrl = "https://enka.network/ui/UI_Gacha_AvatarImg_Unknown.png";
+        let splashUrl = "https://enka.network/ui/UI_Gacha_AvatarImg_Unknown.webp";
 
 
         if (iconNameRaw && typeof iconNameRaw === 'string') {
@@ -2209,20 +2211,22 @@ function processData(data) {
                 let cleanName = iconNameRaw
                     .replace("/ui/", "")
                     .replace(/\.png$/i, "")
+                    .replace(/\.webp$/i, "")
                     .replace("UI_AvatarIcon_Side_", "")
                     .replace("UI_AvatarIcon_", "");
 
-                splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.png`;
+                splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.webp`;
             }
             else {
                 let cleanName = iconNameRaw
                     .replace(/\.png$/i, "")
+                    .replace(/\.webp$/i, "")
                     .replace(/^UI_AvatarIcon_Side_/, "")
                     .replace(/^UI_AvatarIcon_/, "");
 
                 if (!cleanName.includes("/")) {
                     sideIconUrl = `https://enka.network/ui/UI_AvatarIcon_Side_${cleanName}.png`;
-                    splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.png`;
+                    splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.webp`;
                 }
             }
         }
@@ -2233,7 +2237,7 @@ function processData(data) {
             if (costume.SideIcon)
                 sideIconUrl = `https://enka.network${costume.SideIcon}`;
             if (costume.Art)
-                splashUrl = `https://enka.network${costume.Art}`;
+                splashUrl = `https://enka.network${costume.Art.replace(/\.png$/i, '.webp')}`;
         }
 
         const talents = [];
@@ -2501,6 +2505,63 @@ function processData(data) {
             if (found !== -1) targetIdx = found;
         }
         renderShowcase(targetIdx);
+        preloadSplashArts(globalPersoData, targetIdx);
+    }
+}
+
+const preloadedSplashUrls = new Set();
+const decodedSplashImages = new Map();
+
+function preloadSplashArts(characters, activeIndex = 0) {
+    if (!characters || characters.length === 0 || typeof window === 'undefined') return;
+
+    // 1. Priorité immédiate : Splash art du personnage actif (High priority + GPU decode)
+    const activeChar = characters[activeIndex];
+    const activeSplash = activeChar?.splashArt;
+    if (activeSplash && !activeSplash.includes('Unknown') && !preloadedSplashUrls.has(activeSplash)) {
+        preloadedSplashUrls.add(activeSplash);
+        const priorityImg = new Image();
+        priorityImg.fetchPriority = 'high';
+        priorityImg.src = activeSplash;
+        decodedSplashImages.set(activeSplash, priorityImg);
+        if ('decode' in priorityImg) {
+            priorityImg.decode().catch(() => {});
+        }
+    }
+
+    // 2. Préchargement et pré-décodage GPU en arrière-plan des autres personnages (jusqu'à 12 persos)
+    const queue = [];
+    characters.forEach((p, idx) => {
+        if (idx !== activeIndex && p.splashArt && !p.splashArt.includes('Unknown') && !preloadedSplashUrls.has(p.splashArt)) {
+            preloadedSplashUrls.add(p.splashArt);
+            queue.push(p.splashArt);
+        }
+    });
+
+    if (queue.length === 0) return;
+
+    const runIdlePreload = () => {
+        queue.forEach((url, i) => {
+            setTimeout(async () => {
+                const img = new Image();
+                img.fetchPriority = 'low';
+                img.src = url;
+                decodedSplashImages.set(url, img);
+                if ('decode' in img) {
+                    try {
+                        await img.decode();
+                    } catch (e) {
+                        // Ignore decode aborts on rapid navigation
+                    }
+                }
+            }, i * 80);
+        });
+    };
+
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(() => runIdlePreload(), { timeout: 2000 });
+    } else {
+        setTimeout(runIdlePreload, 150);
     }
 }
 

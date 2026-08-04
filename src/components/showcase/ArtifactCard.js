@@ -62,7 +62,7 @@ export function renderArtifactCard(art, weights = {}) {
                         <img src="${ICON_BASE_PATH}${ICON_MAP[art.mainStat?.key] || ICON_MAP['unknown']}" style="width: 17px; height: 17px; margin-bottom: 1px;" alt="${art.mainStat?.key}" decoding="async">
                         <p style="font-size: 12px; color: var(--text-always-white); margin:0;">${art.mainStat?.label}</p>
                     </div>
-                    <p style="font-size: 12px; color: var(--text-always-white); font-weight:bold; margin:0;">${formatValueDisplay(art.mainStat?.key, art.mainStat?.value)}</p>
+                    <p style="font-size: 12px; color: var(--text-always-white); font-weight:normal; margin:0;">${formatValueDisplay(art.mainStat?.key, art.mainStat?.value)}</p>
                 </div>
                 
                 <div class="card-divider" style="margin: 8px 0px; display: flex; clear: both; width: 100%; box-sizing: border-box; color: var(--dotted-line); border-width: 1px 0 0; border-color: var(--dotted-line); border-block-start: 1px solid var(--dotted-line);"></div>
