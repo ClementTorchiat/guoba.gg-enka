@@ -1,0 +1,109 @@
+---
+// src/layouts/StaticLayout.astro
+interface Props {
+  currentPage: 'about' | 'team' | 'privacy';
+}
+
+const { currentPage } = Astro.props;
+---
+
+<div id="mobile-block-overlay">
+    <div class="mobile-block-content">
+        <h2 style="margin: 0 0 10px 0;" data-i18n="mobile.title">Version mobile en développement</h2>
+        <p style="color: #a0a5b1; margin-bottom: 20px;" data-i18n="mobile.body">guoba.gg est optimisé pour les écrans d'ordinateur (1080p ou plus recommandé).</p>
+        <p style="font-weight: bold; color: var(--text-primary);" data-i18n="mobile.wip">Une interface mobile dédiée arrive bientôt !</p>
+        <p style="font-weight: bold; color: var(--text-primary); margin-top: 24px;" data-i18n="mobile.hint">Pour une meilleure expérience, utilisez un PC.</p>
+    </div>
+</div>
+
+<main>
+    <div class="layout-flex">
+        <div class="layout-content">
+            <aside class="sidebar">
+                <div class="sidebar-title">
+                    <a href="/" class="sidebar-title-container" style="cursor: pointer; text-decoration: none;">
+                        <img src="/assets/global/favicon.png" alt="" style="border-radius: 100%;">
+                        <h2 style="color: var(--text-primary); margin: 0;">guoba.gg</h2>
+                    </a>
+                    <p class="sidebar-text">Ver. 1.2.1 - Bêta Build (GI Ver. 6.7)</p>
+                </div>
+
+                <div class="sidebar-search">
+                    <form class="search-container" onsubmit="event.preventDefault(); const v = document.getElementById('uidInput').value.trim(); if(v) window.location.href = '/?uid=' + encodeURIComponent(v);">
+                        <input type="text" id="uidInput" class="search-input" data-i18n-placeholder="ui.search.placeholder" placeholder="Entrez un UID..." autocomplete="off">
+                        <button type="submit" id="searchBtn" class="search-btn">
+                            <img src="/assets/simulator/icons/icon_search_white.svg" alt="" style="width: 20px; height: 20px;">
+                        </button>
+                    </form>
+                </div>
+
+                <nav id="sidebar-static-nav" style="display:flex; min-width: 240px; box-sizing: border-box; align-items: stretch; flex-direction: column; border-radius: 8px; background-color: var(--bg-panel); overflow: hidden; padding: 5px; gap: 5px;">
+
+                    <a class="char-card snav-item" href="/" style="text-decoration:none;">
+                        <div style="width:52px; height:52px; border-radius:8px; background-color: rgba(0, 0, 0, 0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                            <svg width="26" height="26" viewBox="0 0 388 388" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M34.5654 228.481C48.0202 290.734 97.0345 339.749 159.287 353.204L172.92 387.77C81.9713 378.047 9.72168 305.798 0 214.85L34.5654 228.481Z" fill="currentColor"/>
+                                <path d="M387.771 214.85C378.049 305.799 305.8 378.048 214.851 387.77L228.482 353.204C290.736 339.749 339.75 290.735 353.205 228.481L387.771 214.85Z" fill="currentColor"/>
+                                <path d="M241.403 146.367L361.886 193.885L241.403 241.402L193.886 361.885L146.368 241.402L25.8857 193.885L146.368 146.367L193.886 25.8848L241.403 146.367Z" fill="currentColor"/>
+                                <path d="M159.287 34.5645C97.0351 48.0198 48.0207 97.0341 34.5654 159.286L0 172.919C9.72208 81.9706 81.9716 9.72213 172.92 0L159.287 34.5645Z" fill="currentColor"/>
+                                <path d="M214.851 0C305.799 9.72172 378.048 81.9703 387.771 172.919L353.205 159.286C339.75 97.0336 290.735 48.0192 228.482 34.5645L214.851 0Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="char-card-container">
+                            <p class="char-card-name" data-i18n="nav.home">Accueil</p>
+                        </div>
+                    </a>
+
+                    <a class={`char-card snav-item ${currentPage === 'about' ? 'snav-item--active' : ''}`} href="/about" style="text-decoration:none;">
+                        <div style="width:52px; height:52px; border-radius:8px; background-color: rgba(0, 0, 0, 0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                            <svg width="26" height="26" viewBox="0 0 365 365" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M57.3418 2.53686C58.6712 -0.845623 63.458 -0.845618 64.7874 2.53687L79.6123 40.2572C80.0188 41.2917 80.8375 42.1103 81.8719 42.5169L119.592 57.3418C122.975 58.6712 122.975 63.458 119.592 64.7874L81.8719 79.6123C80.8375 80.0188 80.0188 80.8375 79.6123 81.8719L64.7874 119.592C63.458 122.975 58.6712 122.975 57.3418 119.592L42.5169 81.8719C42.1103 80.8375 41.2917 80.0188 40.2572 79.6123L2.53686 64.7874C-0.845623 63.458 -0.845618 58.6712 2.53687 57.3418L40.2572 42.5169C41.2917 42.1103 42.1103 41.2917 42.5169 40.2572L57.3418 2.53686Z" fill="currentColor"/>
+                                <path d="M185.633 24.0344C188.06 18.3853 196.069 18.3853 198.496 24.0344L245.957 134.503C246.665 136.151 247.978 137.464 249.626 138.172L360.095 185.633C365.744 188.06 365.744 196.069 360.095 198.496L249.626 245.957C247.978 246.665 246.665 247.978 245.957 249.626L198.496 360.095C196.069 365.744 188.06 365.744 185.633 360.095L138.172 249.626C137.464 247.978 136.151 246.665 134.503 245.957L24.0344 198.496C18.3853 196.069 18.3853 188.06 24.0344 185.633L134.503 138.172C136.151 137.464 137.464 136.151 138.172 134.503L185.633 24.0344Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="char-card-container">
+                            <p class="char-card-name" data-i18n="nav.about">À propos</p>
+                        </div>
+                    </a>
+
+                    <a class={`char-card snav-item ${currentPage === 'team' ? 'snav-item--active' : ''}`} href="/team" style="text-decoration:none;">
+                        <div style="width:52px; height:52px; border-radius:8px; background-color: rgba(0, 0, 0, 0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                            <svg width="26" height="26" viewBox="0 0 261 331" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M34.8408 181.771C39.1039 256.084 79.1094 311.991 99.0542 331C118.999 311.991 159.005 256.084 163.268 181.771C163.471 178.233 165.036 174.892 167.765 172.646C179.643 162.873 198.108 148.625 198.108 143.035C198.108 136.717 124.211 101.967 99.0542 101.967C73.8976 101.967 0 136.717 0 143.035C0 148.625 18.4656 162.873 30.3433 172.646C33.0728 174.892 34.6379 178.233 34.8408 181.771Z" fill="currentColor"/>
+                                <path d="M174.524 108.242C196.485 108.242 260.993 138.704 261 144.246C261 149.147 244.88 161.638 234.511 170.206C232.128 172.175 230.76 175.104 230.583 178.206C226.861 243.357 191.936 292.372 174.524 309.038C168.098 302.887 159.298 292.323 150.553 278.172C163.272 251.897 173.711 219.35 175.826 182.489C175.831 182.41 175.841 182.343 175.854 182.293C175.859 182.273 175.864 182.255 175.869 182.241C181.514 177.599 189.475 171.289 195.808 165.598C199.001 162.729 202.187 159.662 204.665 156.722C205.898 155.258 207.211 153.528 208.273 151.63C209.21 149.955 210.687 146.883 210.687 143.035C210.687 139.892 209.585 137.507 208.875 136.24C208.112 134.878 207.241 133.818 206.584 133.096C205.274 131.656 203.762 130.417 202.451 129.432C199.749 127.402 196.226 125.217 192.378 123.037C185.022 118.871 175.319 114.081 164.943 109.473C168.628 108.686 171.883 108.242 174.524 108.242Z" fill="currentColor"/>
+                                <path d="M147.795 48.6303C147.795 75.4881 125.973 97.2607 99.0542 97.2607C72.1353 97.2607 50.3133 75.4881 50.3133 48.6303C50.3133 21.7725 72.1353 0 99.0542 0C125.973 0 147.795 21.7725 147.795 48.6303Z" fill="currentColor"/>
+                                <path d="M174.524 20.3934C197.97 20.3934 216.976 39.3565 216.976 62.7488C216.976 86.1411 197.97 105.104 174.524 105.104C162.059 105.104 150.853 99.7407 143.088 91.2033C153.786 80.1903 160.373 65.1787 160.373 48.6303C160.373 40.1939 158.66 32.1572 155.564 24.8452C161.272 21.9984 167.71 20.3934 174.524 20.3934Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="char-card-container">
+                            <p class="char-card-name" data-i18n="nav.team">L'équipe</p>
+                        </div>
+                    </a>
+
+                    <a class={`char-card snav-item ${currentPage === 'privacy' ? 'snav-item--active' : ''}`} href="/privacy" style="text-decoration:none;">
+                        <div style="width:52px; height:52px; border-radius:8px; background-color: rgba(0, 0, 0, 0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                            <svg width="26" height="26" viewBox="0 0 267 291" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M133.5 0C239.1 0 266.5 9.33333 267 14V173C267 190.5 192.5 260 133.5 290.5C74.5 260 0 190.5 0 173V14C0.5 9.33333 27.9 0 133.5 0ZM133.5 24C56.3 24 34.6667 30 33.5 33V157.5C33.5 170 92 226.5 133.5 248V24Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="char-card-container">
+                            <p class="char-card-name" data-i18n="nav.privacy">Confidentialité</p>
+                        </div>
+                    </a>
+
+                </nav>
+            </aside>
+
+            <div class="main-content">
+                <div class="main-content-showcase" id="main-container" style="display: block; overflow-y: auto;">
+                    <slot />
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    import "../scripts/i18n.js";
+    import "../scripts/configLoader.js";
+</script>

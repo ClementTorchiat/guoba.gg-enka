@@ -1,0 +1,93 @@
+---
+// src/pages/team.astro
+import Layout from "../layouts/Layout.astro";
+import StaticLayout from "../layouts/StaticLayout.astro";
+---
+
+<Layout title="L'équipe — guoba.gg">
+  <StaticLayout currentPage="team">
+    <div class="static-page">
+      <div class="static-page-hero">
+        <h1 class="static-page-title" data-i18n="page.team.title">L'équipe</h1>
+        <p class="static-page-lead" data-i18n="page.team.lead">Les personnes INCROYABLES derrière ce projet !</p>
+      </div>
+      <div class="static-page-body">
+        <section class="static-section">
+          <div class="team-grid">
+            <div class="team-card">
+              <div class="team-header">
+                <div class="team-avatar-wrap">
+                  <img src="/assets/subpages/team/clem_pfp.webp" alt="clem" class="team-avatar">
+                </div>
+                <div class="team-title-info">
+                  <p class="team-name">clem</p>
+                  <p class="team-role" data-i18n="page.team.clem.role">Fondateur & Développeur</p>
+                </div>
+              </div>
+              <div class="team-divider"></div>
+              <div class="team-content">
+                <p class="team-bio" data-i18n="page.team.clem.bio">Créateur du projet. Développement front-end, UX/UI, architecture, système de scoring et maintenance générale.</p>
+                <p class="team-uid">UID : 704449686
+                  <span class="copy-uid-btn" data-i18n-title="page.team.copyUid" data-uid="704449686">
+                    <i class="fa-regular fa-copy"></i>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-header">
+                <div class="team-avatar-wrap">
+                  <img src="/assets/subpages/team/bluvitae_pfp.webp" alt="bluvitae" class="team-avatar">
+                </div>
+                <div class="team-title-info">
+                  <p class="team-name">bluvitae</p>
+                  <p class="team-role" data-i18n="page.team.blu.role">UI Artist & Conseillère</p>
+                </div>
+              </div>
+              <div class="team-divider"></div>
+              <div class="team-content">
+                <p class="team-bio" data-i18n="page.team.blu.bio">Conseillère générale et première testeuse. Soutien stratégique et création d'un bon nombre d'icônes de l'interface.</p>
+                <p class="team-uid">UID : 741928446
+                  <span class="copy-uid-btn" data-i18n-title="page.team.copyUid" data-uid="741928446">
+                    <i class="fa-regular fa-copy"></i>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.team.thanks.title">Remerciements</h2>
+          <p data-i18n="page.team.thanks.lead">Ce projet n'existerait pas sans :</p>
+          <ul class="static-list">
+            <li data-i18n-html="page.team.thanks.l1"><a href="https://enka.network" target="_blank" rel="noopener">Enka.Network</a> — API de données joueur</li>
+            <li data-i18n-html="page.team.thanks.l2">La communauté Discord qui teste, remonte des bugs et suggère des améliorations</li>
+            <li data-i18n-html="page.team.thanks.l3">Fribbels, pour l'inspiration du design de la fiche personnage</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </StaticLayout>
+</Layout>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.copy-uid-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const uid = btn.dataset.uid;
+      if (uid) {
+        navigator.clipboard.writeText(uid);
+        const icon = btn.querySelector('i');
+        if (icon) {
+          icon.className = 'fa-solid fa-check';
+          setTimeout(() => {
+            icon.className = 'fa-regular fa-copy';
+          }, 1500);
+        }
+      }
+    });
+  });
+</script>

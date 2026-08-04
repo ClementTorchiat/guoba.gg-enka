@@ -1,0 +1,21 @@
+{
+  "hp": "stat.hp",
+  "hp_": "stat.hp_",
+  "atk": "stat.atk",
+  "atk_": "stat.atk_",
+  "def": "stat.def",
+  "def_": "stat.def_",
+  "eleMas": "stat.eleMas",
+  "enerRech_": "stat.enerRech_",
+  "critRate_": "stat.critRate_",
+  "critDMG_": "stat.critDMG_",
+  "heal_": "stat.heal_",
+  "pyro_dmg_": "stat.pyro_dmg_",
+  "hydro_dmg_": "stat.hydro_dmg_",
+  "cryo_dmg_": "stat.cryo_dmg_",
+  "electro_dmg_": "stat.electro_dmg_",
+  "anemo_dmg_": "stat.anemo_dmg_",
+  "geo_dmg_": "stat.geo_dmg_",
+  "dendro_dmg_": "stat.dendro_dmg_",
+  "physical_dmg_": "stat.physical_dmg_"
+}

@@ -1,0 +1,32 @@
+{
+  "EQUIP_SHOES": {
+    "hp_": 26.68,
+    "atk_": 26.66,
+    "def_": 26.66,
+    "enerRech_": 10,
+    "eleMas": 10
+  },
+  "EQUIP_RING": {
+    "hp_": 19.25,
+    "atk_": 19.25,
+    "def_": 19,
+    "eleMas": 2.5,
+    "physical_dmg_": 5,
+    "pyro_dmg_": 5,
+    "electro_dmg_": 5,
+    "cryo_dmg_": 5,
+    "hydro_dmg_": 5,
+    "anemo_dmg_": 5,
+    "geo_dmg_": 5,
+    "dendro_dmg_": 5
+  },
+  "EQUIP_DRESS": {
+    "hp_": 22,
+    "atk_": 22,
+    "def_": 22,
+    "critRate_": 10,
+    "critDMG_": 10,
+    "heal_": 10,
+    "eleMas": 4
+  }
+}

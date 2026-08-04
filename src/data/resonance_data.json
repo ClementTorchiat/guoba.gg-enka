@@ -1,0 +1,30 @@
+{
+  "pyro": {
+    "name": "resonance.pyro",
+    "active": true,
+    "stats": {
+      "atk_": 0.25
+    }
+  },
+  "hydro": {
+    "name": "resonance.hydro",
+    "active": true,
+    "stats": {
+      "hp_": 0.25
+    }
+  },
+  "dendro": {
+    "name": "resonance.dendro",
+    "active": true,
+    "stats": {
+      "eleMas": 50
+    }
+  },
+  "cryo": {
+    "name": "resonance.cryo",
+    "active": false,
+    "stats": {
+      "critRate_": 0.15
+    }
+  }
+}

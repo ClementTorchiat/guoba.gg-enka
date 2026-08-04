@@ -1,0 +1,74 @@
+---
+// src/pages/about.astro
+import Layout from "../layouts/Layout.astro";
+import StaticLayout from "../layouts/StaticLayout.astro";
+---
+
+<Layout title="À propos — guoba.gg">
+  <StaticLayout currentPage="about">
+    <div class="static-page">
+      <div class="static-page-hero">
+        <h1 class="static-page-title" data-i18n="page.about.title">guoba.gg</h1>
+        <p class="static-page-lead" data-i18n="page.about.lead">Un optimiseur de builds Genshin Impact indépendant, conçu par des joueurs, pour des joueurs.</p>
+      </div>
+
+      <div class="static-page-body">
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.about.q1.title">Qu'est-ce que guoba.gg ?</h2>
+          <p data-i18n-html="page.about.q1.p1"><strong>guoba.gg</strong> réinvente l'optimisation sur Genshin Impact. Bien plus qu'une simple calculatrice, c'est un véritable <strong>coach virtuel</strong> : en entrant votre UID, l'outil évalue la qualité mathématique pure de vos équipements via un double système de score et de grade, simule vos statistiques réelles en combat sous buffs, et vous guide pas à pas pour perfectionner votre personnage.</p>
+          <p class="static-note" data-i18n="page.about.q1.p2">Le projet est né d'une frustration simple : le besoin d'avoir un outil précis, immersif et proactif pour orienter ses choix de farm sans avoir à ouvrir un tableur.</p>
+        </section>
+
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.about.q2.title">Comment ça fonctionne ?</h2>
+          <div class="static-cards">
+            <div class="static-card">
+              <strong data-i18n="page.about.q2.c1.title">Récupération</strong>
+              <p data-i18n-html="page.about.q2.c1.desc">Vos données sont lues via l'API publique d'<a href="https://enka.network" target="_blank" rel="noopener">Enka.Network</a> à partir de votre UID. Aucun compte, aucun mot de passe, et vos données sont en local.</p>
+            </div>
+            <div class="static-card">
+              <strong data-i18n="page.about.q2.c2.title">Calcul</strong>
+              <p data-i18n-html="page.about.q2.c2.desc">Chaque artéfact est évalué selon les tables de rolls officielles du jeu, pondéré par les besoins de votre personnage et ajusté selon vos bonus de set.</p>
+            </div>
+            <div class="static-card">
+              <strong data-i18n="page.about.q2.c3.title">Coaching visuel</strong>
+              <p data-i18n-html="page.about.q2.c3.desc">Les résultats s'affichent sous forme de fiches immersives avec des grades, des graphiques et des recommandations d'actions immédiates.</p>
+            </div>
+            <div class="static-card">
+              <strong data-i18n="page.about.q2.c4.title">Partage & Export</strong>
+              <p data-i18n-html="page.about.q2.c4.desc">Générez une fiche visuelle de votre personnage en un clic, ou partagez directement le lien de votre profil avec la communauté pour comparer vos builds.</p>
+            </div>
+          </div>
+        </section>
+
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.about.q3.title">Ce que guoba.gg n'est pas</h2>
+          <ul class="static-list">
+            <li data-i18n-html="page.about.q3.l1">Ce n'est <strong>pas</strong> un outil officiel de HoYoverse.</li>
+            <li data-i18n-html="page.about.q3.l2">Ce n'est <strong>pas</strong> un simulateur de dégâts ou un classement de speedrun.</li>
+            <li data-i18n-html="page.about.q3.l3">Ce n'est <strong>pas</strong> une base de données de tier lists.</li>
+          </ul>
+          <p class="static-note" data-i18n-html="page.about.q3.note">L'outil se concentre sur la <strong>qualité de votre investissement</strong> : vos artéfacts sont-ils mathématiquement excellents, votre build est-il bien équilibré en jeu, et que devez-vous farmer en priorité absolue ?</p>
+        </section>
+
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.about.q4.title">Open source & contributions</h2>
+          <p data-i18n="page.about.q4.desc">Le projet est ouvert aux retours de la communauté. Si vous repérez une erreur dans les poids d'un personnage, une stat mal calculée ou souhaitez proposer une amélioration, rejoignez le Discord.</p>
+          <div class="static-links">
+            <a class="link-button" href="https://discord.gg/CZ5qxVqBVJ" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i>Discord</a>
+            <a class="link-button-coffee" href="https://ko-fi.com/guobagg" target="_blank" rel="noopener noreferrer">
+              <img src="https://cdn.prod.website-files.com/5c14e387dab576fe667689cf/670f5a01229bf8a18f97a3c1_favion.png" alt="" width="18" height="18">
+              Buy me a coffee
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </StaticLayout>
+</Layout>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>guoba.gg - À propos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="../assets/global/favicon.png">
+
+    <style>
+        @font-face {
+            font-family: 'OTBrut-Regular';
+            src: url("../assets/global/typo/ShinShin.ttf");
+        }
+
+        :root {
+            --bg-body: #0b0f19;
+            --text-main: #ffffff;
+            --accent-gold: #FFB13B;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'ShinShin', 'Inter', sans-serif;
+            background: var(--bg-body);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        main {
+            padding: 8px 8px 0;
+            margin: 0 auto;
+            min-height: 280px;
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            background: #323338;
+            flex: auto;
+        }
+
+        .layout-flex { width: 100%; justify-content: space-around; display: flex; }
+        .layout-content { height: 100%; margin-bottom: 200px; width: 1454px; gap: 8px; display: flex; }
+
+        /* Sidebar existante */
+        .sidebar { gap: 8px; display: flex; flex-direction: column; width: 293px; height: 100%; padding-bottom: 8px; }
+        .sidebar-title-container { display: flex; flex-direction: row; gap: 14px; align-items: center; margin-left: 6px; margin-top: 13px; }
+        .sidebar-title-container img { width: 34px; height: 34px; margin-bottom: 3px; }
+        .sidebar-title-container h2 { font-size: 34px; }
+        .sidebar-text { font-size: 12px; color: #ffffff; opacity: 40%; margin-left: 46px; margin-bottom: 1px; }
+
+        .main-content {
+            display: flex; gap: 8px; overflow-y: auto; position: relative; flex-direction: column; width: 100%;
+        }
+        .main-content::-webkit-scrollbar { width: 0; padding-top: 5px; }
+
+        .link-button {
+            color: white; text-decoration: none; display: flex; flex-direction: row; gap: 8px;
+            align-items: center; padding: 9px 16px 9px 12px; border-radius: 8px; transition: 0.2s; font-size: 14px;
+        }
+        .link-button:hover { background-color: #2C2D32; }
+    </style>
+</head>
+<body>
+<main>
+    <div class="layout-flex">
+        <div class="layout-content">
+
+            <aside class="sidebar">
+                <div class="sidebar-title">
+                    <div class="sidebar-title-container">
+                        <img src="../assets/global/favicon.png" alt="Simulateur" style="border-radius: 100%;">
+                        <h2>guoba.gg</h2>
+                    </div>
+                    <p class="sidebar-text">Le projet</p>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <a href="../index.html" class="link-button" style="background: #2C2D32;">
+                        <i class="fa-solid fa-arrow-left"></i> Retour au simulateur
+                    </a>
+                </div>
+            </aside>
+
+            <div class="main-content">
+                <div class="coaching-row" style="margin-top:20px; width:100%;">
+                    <div style="padding:20px;">
+
+                        <h2 style="color:#fff; margin-bottom:25px; font-size:32px; border-bottom:2px solid #FFFFFF; padding-bottom:10px; display:flex; align-items:center; gap:10px;">À propos du projet</h2>
+
+                        <div style="display:flex; flex-direction:column; gap:64px;">
+
+                            <div>
+                                <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">1. Vue d'ensemble</h3>
+                                <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Pourquoi Guoba.gg existe et ce que le simulateur essaie d'accomplir pour la communauté.</p>
+
+                                <div style="background:#2C2D32; padding:20px; border-radius:8px;">
+                                    <p style="font-size: 16px; color: #fff; line-height: 1.6;">Guoba.gg est né d'une volonté d'offrir un outil visuel et précis pour simuler des builds sur Genshin Impact. L'idée est de dépasser le simple calcul de "Crit Value" pour prendre en compte les synergies, les armes, et les plafonds théoriques de chaque archétype.<br><br>Ce projet est développé par des passionnés, pour des joueurs désireux de comprendre la vraie valeur de leurs artéfacts.</p>
+                                </div>
+                            </div>
+
+                            <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
+
+                            <div>
+                                <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">2. L'équipe</h3>
+                                <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Les personnes impliquées dans le développement et le theorycrafting derrière l'outil.</p>
+
+                                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+
+                                    <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid #22c55e;">
+                                        <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">Développeur Principal</p>
+                                        <p style="font-size: 18px; color:#fff; font-weight: bold;">TonPseudo</p>
+                                        <p style="font-size: 14px; color:#aaa; margin-top: 8px;">Création du moteur de calcul, interface utilisateur et intégration des données de jeu.</p>
+                                    </div>
+
+                                    <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid #3b82f6;">
+                                        <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">Data & Theorycrafting</p>
+                                        <p style="font-size: 18px; color:#fff; font-weight: bold;">NomCollaborateur</p>
+                                        <p style="font-size: 14px; color:#aaa; margin-top: 8px;">Définition des poids statistiques, tests de rentabilité et équilibrage des notes.</p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
+
+                            <div>
+                                <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">3. Mentions légales</h3>
+                                <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Crédits et propriétés intellectuelles.</p>
+
+                                <div style="background:#2C2D32; padding:20px; border-radius:8px; border-left:3px solid #ef4444;">
+                                    <p style="font-size: 14px; color: #fff; line-height: 1.6;">Ce site est un projet de fan indépendant et n'est en aucun cas affilié à, parrainé ou approuvé par HoYoverse.<br>Tous les contenus et actifs liés aux jeux sont la propriété exclusive de HoYoverse.<br><br>Ce projet s'appuie sur l'API fournie par <a href="https://enka.network" style="color: var(--accent-gold); text-decoration: none;">Enka.Network</a>.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+</body>
+</html>

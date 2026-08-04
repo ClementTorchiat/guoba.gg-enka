@@ -1,0 +1,30 @@
+{
+  "Fire": {
+    "id": 40,
+    "key": "pyro_dmg_"
+  },
+  "Water": {
+    "id": 42,
+    "key": "hydro_dmg_"
+  },
+  "Wind": {
+    "id": 44,
+    "key": "anemo_dmg_"
+  },
+  "Electric": {
+    "id": 41,
+    "key": "electro_dmg_"
+  },
+  "Grass": {
+    "id": 43,
+    "key": "dendro_dmg_"
+  },
+  "Ice": {
+    "id": 46,
+    "key": "cryo_dmg_"
+  },
+  "Rock": {
+    "id": 45,
+    "key": "geo_dmg_"
+  }
+}

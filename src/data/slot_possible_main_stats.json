@@ -1,0 +1,32 @@
+{
+  "EQUIP_SHOES": [
+    "hp_",
+    "atk_",
+    "def_",
+    "enerRech_",
+    "eleMas"
+  ],
+  "EQUIP_RING": [
+    "hp_",
+    "atk_",
+    "def_",
+    "eleMas",
+    "physical_dmg_",
+    "pyro_dmg_",
+    "hydro_dmg_",
+    "cryo_dmg_",
+    "electro_dmg_",
+    "anemo_dmg_",
+    "geo_dmg_",
+    "dendro_dmg_"
+  ],
+  "EQUIP_DRESS": [
+    "hp_",
+    "atk_",
+    "def_",
+    "eleMas",
+    "critRate_",
+    "critDMG_",
+    "heal_"
+  ]
+}

@@ -1,0 +1,71 @@
+---
+// src/pages/privacy.astro
+import Layout from "../layouts/Layout.astro";
+import StaticLayout from "../layouts/StaticLayout.astro";
+---
+
+<Layout title="Charte de confidentialité — guoba.gg">
+  <StaticLayout currentPage="privacy">
+    <div class="static-page">
+      <div class="static-page-hero">
+        <h1 class="static-page-title" data-i18n="page.privacy.title">Charte de confidentialité</h1>
+        <p class="static-page-lead" data-i18n="page.privacy.lead">Transparence sur les données que guoba.gg collecte — ou plutôt ne collecte pas.</p>
+      </div>
+
+      <div class="static-page-body">
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.privacy.q1.title">Ce que nous ne collectons pas</h2>
+          <p data-i18n-html="page.privacy.q1.p1">guoba.gg ne possède <strong>aucun compte utilisateur</strong>, ne demande aucune inscription, aucun email, aucun mot de passe.</p>
+          <p data-i18n="page.privacy.q1.p2">Nous n'avons pas accès à votre compte HoYoverse. Votre UID est une information publique exposée nativement par le jeu.</p>
+        </section>
+
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.privacy.q2.title">Données locales (votre navigateur)</h2>
+          <p data-i18n-html="page.privacy.q2.p1">L'application stocke uniquement dans votre <code>localStorage</code> :</p>
+          <ul class="static-list">
+            <li data-i18n-html="page.privacy.q2.l1">Les <strong>UIDs récemment consultés</strong> et les métadonnées associées (pseudo, avatar, stats de profil) pour l'affichage de la page d'accueil.</li>
+            <li data-i18n-html="page.privacy.q2.l2">Vos <strong>préférences d'interface</strong> : thème visuel, langue, compte favori.</li>
+          </ul>
+          <p class="static-note" data-i18n="page.privacy.q2.note">Ces données ne quittent jamais votre appareil. Elles ne sont ni transmises, ni vendues, ni analysées par nos soins. Vous pouvez les effacer à tout moment via les paramètres de votre navigateur.</p>
+        </section>
+
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.privacy.q3.title">API tierce — Enka.Network</h2>
+          <p data-i18n-html="page.privacy.q3.p1">Lorsque vous entrez un UID, une requête est envoyée à notre proxy (<code>guobagg.clement-torchiat.workers.dev</code>), lui-même relayant vers <a href="https://enka.network" target="_blank" rel="noopener">Enka.Network</a>. Les données renvoyées sont celles que le jeu expose publiquement : personnages en vitrine, artéfacts et armes équipés, statistiques de profil.</p>
+          <p data-i18n-html="page.privacy.q3.p2">Consultez la <a href="https://enka.network/privacy-policy/" target="_blank" rel="noopener">politique d'Enka.Network</a> pour les détails sur leur propre traitement des données.</p>
+        </section>
+        
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.privacy.q4.title">Clause de non-responsabilité et affiliation</h2>
+          <p data-i18n-html="page.privacy.q4.p1">guoba.gg est un projet tiers indépendant créé par la communauté. Ce site n'est en aucun cas affilié, commandité, approuvé ou associé à <strong>HoYoverse</strong> ou <strong>Cognosphere PTE. LTD.</strong></p>
+          <p data-i18n-html="page.privacy.q4.p2"><em>Genshin Impact</em>, ainsi que l'ensemble des éléments graphiques, modèles de jeu, noms de personnages et ressources visuelles utilisés sur ce domaine, demeurent la propriété intellectuelle exclusive de HoYoverse. Leur utilisation s'inscrit dans le cadre d'un usage non commercial destiné à l'information et à l'assistance des joueurs.</p>
+        </section>
+
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.privacy.q5.title">Cookies & traceurs</h2>
+          <p data-i18n-html="page.privacy.q5.p1">guoba.gg n'utilise <strong>aucun cookie</strong> de tracking, aucune régie publicitaire, aucun outil d'analyse comportementale (Google Analytics, etc.).</p>
+        </section>
+
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.privacy.q6.title">Contact</h2>
+          <p data-i18n="page.privacy.q6.p1">Pour toute question relative à la confidentialité, rejoignez le Discord et adressez-vous à clem.</p>
+          <div class="static-links">
+            <a class="link-button" href="https://discord.gg/CZ5qxVqBVJ" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i>Discord</a>
+          </div>
+        </section>
+
+        <p class="static-updated" data-i18n="page.privacy.date">Dernière mise à jour : juin 2026</p>
+      </div>
+    </div>
+  </StaticLayout>
+</Layout>
