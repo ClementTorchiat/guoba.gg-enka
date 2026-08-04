@@ -12,6 +12,14 @@ export function obRender(direction = 'right') {
     const step = OB_STEPS[obCurrentStep];
     if (!step) return;
 
+    let imgSrc = step.image;
+    if (typeof window !== 'undefined' && window.OB_OPTIMIZED_IMAGES) {
+        const stepKey = `step${obCurrentStep + 1}`;
+        if (window.OB_OPTIMIZED_IMAGES[stepKey]) {
+            imgSrc = window.OB_OPTIMIZED_IMAGES[stepKey];
+        }
+    }
+
     const imageHTML = step.placeholder
         ? `<div class="ob-image-zone">
            <div class="ob-image-placeholder">
@@ -19,7 +27,7 @@ export function obRender(direction = 'right') {
            </div>
        </div>`
         : `<div class="ob-image-zone">
-           <img src="${step.image}" alt="Step ${obCurrentStep + 1}" loading="lazy">
+           <img src="${imgSrc}" alt="Step ${obCurrentStep + 1}" loading="lazy">
        </div>`;
 
     const bodyEl = document.getElementById('ob-body');

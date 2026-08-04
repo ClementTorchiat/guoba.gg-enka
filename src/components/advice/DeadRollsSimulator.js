@@ -101,7 +101,7 @@ export function renderDeadRollsSimulator(persoObj, config) {
                 ${suggestions.map(s => `
                     <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:8px; border-bottom:1px dashed rgba(255,255,255,0.05);">
                         <div>
-                            <span style="font-weight:600; color:var(--text-primary);">${s.pieceName}</span> : ${s.text}
+                            <span style=" color:var(--text-primary);">${s.pieceName}</span> : ${s.text}
                         </div>
                         <div>${s.gainHtml}</div>
                     </div>

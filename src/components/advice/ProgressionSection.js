@@ -24,7 +24,7 @@ export function renderProgressionSection(persoObj, config, charIndex = 0) {
 
     return `
         <div class="advice-section-container" style="margin-bottom: 40px;">
-            <h3 style="color:var(--text-primary); font-size:24px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+            <h3 style="color:var(--text-primary); font-size:24px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; font-weight: normal;">
                 ${sectionSvg}
                 ${t('analysis.s3.title')}
             </h3>

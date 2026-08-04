@@ -2,9 +2,41 @@
 // src/pages/team.astro
 import Layout from "../layouts/Layout.astro";
 import StaticLayout from "../layouts/StaticLayout.astro";
+import { Image } from "astro:assets";
+import clemPfp from "../assets/team/clem_pfp.webp";
+import bluvitaePfp from "../assets/team/bluvitae_pfp.webp";
+
+const teamSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "name": "L'équipe de guoba.gg",
+  "url": "https://guoba.clement-torchiat.fr/team",
+  "description": "Découvrez les créateurs et contributeurs de guoba.gg, outil d'optimisation pour Genshin Impact.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "guoba.gg Team",
+    "url": "https://guoba.clement-torchiat.fr/",
+    "member": [
+      {
+        "@type": "Person",
+        "name": "Clem",
+        "jobTitle": "Fondateur & Développeur Front-End / Architecture"
+      },
+      {
+        "@type": "Person",
+        "name": "Bluvitae",
+        "jobTitle": "UI Artist & Conseillère"
+      }
+    ]
+  }
+};
 ---
 
-<Layout title="L'équipe — guoba.gg">
+<Layout 
+  title="L'équipe — guoba.gg"
+  description="Découvrez l'équipe et les créateurs derrière guoba.gg, le simulateur et optimiseur de builds pour Genshin Impact."
+  schema={teamSchema}
+>
   <StaticLayout currentPage="team">
     <div class="static-page">
       <div class="static-page-hero">
@@ -17,7 +49,7 @@ import StaticLayout from "../layouts/StaticLayout.astro";
             <div class="team-card">
               <div class="team-header">
                 <div class="team-avatar-wrap">
-                  <img src="/assets/subpages/team/clem_pfp.webp" alt="clem" class="team-avatar">
+                  <Image src={clemPfp} alt="clem" class="team-avatar" width={80} height={80} />
                 </div>
                 <div class="team-title-info">
                   <p class="team-name">clem</p>
@@ -29,7 +61,7 @@ import StaticLayout from "../layouts/StaticLayout.astro";
                 <p class="team-bio" data-i18n="page.team.clem.bio">Créateur du projet. Développement front-end, UX/UI, architecture, système de scoring et maintenance générale.</p>
                 <p class="team-uid">UID : 704449686
                   <span class="copy-uid-btn" data-i18n-title="page.team.copyUid" data-uid="704449686">
-                    <i class="fa-regular fa-copy"></i>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                   </span>
                 </p>
               </div>
@@ -37,7 +69,7 @@ import StaticLayout from "../layouts/StaticLayout.astro";
             <div class="team-card">
               <div class="team-header">
                 <div class="team-avatar-wrap">
-                  <img src="/assets/subpages/team/bluvitae_pfp.webp" alt="bluvitae" class="team-avatar">
+                  <Image src={bluvitaePfp} alt="bluvitae" class="team-avatar" width={80} height={80} />
                 </div>
                 <div class="team-title-info">
                   <p class="team-name">bluvitae</p>
@@ -49,7 +81,7 @@ import StaticLayout from "../layouts/StaticLayout.astro";
                 <p class="team-bio" data-i18n="page.team.blu.bio">Conseillère générale et première testeuse. Soutien stratégique et création d'un bon nombre d'icônes de l'interface.</p>
                 <p class="team-uid">UID : 741928446
                   <span class="copy-uid-btn" data-i18n-title="page.team.copyUid" data-uid="741928446">
-                    <i class="fa-regular fa-copy"></i>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                   </span>
                 </p>
               </div>
@@ -75,19 +107,30 @@ import StaticLayout from "../layouts/StaticLayout.astro";
 </Layout>
 
 <script>
-  document.querySelectorAll<HTMLElement>('.copy-uid-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const uid = btn.dataset.uid;
-      if (uid) {
-        navigator.clipboard.writeText(uid);
-        const icon = btn.querySelector('i');
-        if (icon) {
-          icon.className = 'fa-solid fa-check';
+  const COPY_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+  const CHECK_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+  function setupCopyUid() {
+    document.querySelectorAll<HTMLElement>('.copy-uid-btn').forEach((btn) => {
+      if (btn.dataset.copyBound) return;
+      btn.dataset.copyBound = 'true';
+      btn.addEventListener('click', () => {
+        const uid = btn.dataset.uid;
+        if (uid) {
+          navigator.clipboard.writeText(uid);
+          btn.innerHTML = CHECK_SVG;
           setTimeout(() => {
-            icon.className = 'fa-regular fa-copy';
+            btn.innerHTML = COPY_SVG;
           }, 1500);
         }
-      }
+      });
     });
-  });
+  }
+
+  document.addEventListener('astro:page-load', setupCopyUid);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupCopyUid);
+  } else {
+    setupCopyUid();
+  }
 </script>

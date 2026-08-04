@@ -17,7 +17,7 @@ export function renderScoreSection(p, config) {
 
     return `
         <div style="">
-            <h3 style="color:var(--text-primary); font-size:24px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+            <h3 style="color:var(--text-primary); font-size:24px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; font-weight: normal;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 754.56 635.09" width="1em" height="1em" fill="var(--text-always-white)" aria-hidden="true" style="margin-bottom: 4px;">
                   <g>
                     <path d="M152.14,280.13c-45.74-14.28-136.26-1.61-146.52-.11-3.56,.51-6.01,3.71-5.57,7.27,12.14,99.94,68.85,320.92,71.26,330.28,.63,2.46,2.66,4.36,5.16,4.83,13.37,2.51,27.14,3.35,39.61,3.35,21.67,0,39.4-2.54,44.21-3.3,3.24-.51,5.62-3.38,5.53-6.67l-9.07-329.54c-.08-2.82-1.93-5.27-4.61-6.11Z"/>
@@ -44,7 +44,7 @@ export function renderScoreSection(p, config) {
                     <div style="flex:1; min-width:200px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.8rem;">
                             <span style="color:var(--text-grey); font-size: 12px; text-transform: uppercase;">${t('analysis.s1.maxScore')}</span>
-                            <span style="font-weight:bold; color:var(--accent-gold);">${potential.score} <span style="color:#22c55e; font-size:0.7rem;">(+${gain})</span></span>
+                            <span style="color:var(--accent-gold);">${potential.score} <span style="color:#22c55e; font-size:0.7rem;">(+${gain})</span></span>
                         </div>
                         <div style="width:100%; background:#333; height:40px; border-radius:8px; position:relative;">
                             <div style="height:100%; background:var(--text-primary); width:${Math.min((ev.score / (potential.score || 100)) * 100, 100)}%; border-radius:8px; position:absolute;"></div>

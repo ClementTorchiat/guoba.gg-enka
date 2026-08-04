@@ -1,9 +1,33 @@
 ---
 // src/pages/index.astro
 import Layout from "../layouts/Layout.astro";
+import { Image, getImage } from "astro:assets";
+import guobaLogo from "../assets/global/favicon.png";
+
+import step1Img from "../assets/onboarding/step1.gif";
+import step2Img from "../assets/onboarding/step2.png";
+import step3Img from "../assets/onboarding/step3.png";
+import step4Img from "../assets/onboarding/step4.png";
+import step5Img from "../assets/onboarding/step5.png";
+
+const optStep2 = await getImage({ src: step2Img, format: "webp", width: 608, quality: 80 });
+const optStep3 = await getImage({ src: step3Img, format: "webp", width: 900, quality: 80 });
+const optStep4 = await getImage({ src: step4Img, format: "webp", width: 500, quality: 80 });
+const optStep5 = await getImage({ src: step5Img, format: "webp", width: 900, quality: 80 });
+
+const onboardingImages = {
+  step1: step1Img.src,
+  step2: optStep2.src,
+  step3: optStep3.src,
+  step4: optStep4.src,
+  step5: optStep5.src,
+};
 ---
 
 <Layout>
+<script is:inline define:vars={{ onboardingImages }}>
+    window.OB_OPTIMIZED_IMAGES = onboardingImages;
+</script>
 <div id="mobile-block-overlay">
     <div class="mobile-block-content">
         <h2 style="margin: 0 0 10px 0;" data-i18n="mobile.title"></h2>
@@ -18,7 +42,7 @@ import Layout from "../layouts/Layout.astro";
             <aside class="sidebar">
                 <div class="sidebar-title">
                     <div class="sidebar-title-container" onclick="clearSearch()" style="cursor: pointer;">
-                        <img src="assets/global/favicon.png" alt="" style="border-radius: 100%;">
+                        <Image src={guobaLogo} alt="guoba" width={32} height={32} style="border-radius: 100%;" />
                         <h2 style="color: var(--text-primary)">guoba.gg</h2>
                     </div>
                     <p class="sidebar-text">Ver. -- - Bêta Build (GI Ver. --)</p>
@@ -63,6 +87,7 @@ import Layout from "../layouts/Layout.astro";
                     <a class="char-card snav-item snav-item--active"
                        data-page="home"
                        href="/"
+                       data-astro-prefetch
                        onclick="event.preventDefault(); clearSearch();" style="text-decoration:none;">
                         <div style="width:52px;height:52px;border-radius:8px;background-color: rgba(0, 0, 0, 0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                             <svg width="26" height="26" viewBox="0 0 388 388" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,7 +105,9 @@ import Layout from "../layouts/Layout.astro";
 
                     <a class="char-card snav-item"
                        data-page="about"
-                       href="/about" style="text-decoration:none;">
+                       href="/about"
+                       data-astro-prefetch
+                       style="text-decoration:none;">
                         <div style="width:52px;height:52px;border-radius:8px;background-color: rgba(0, 0, 0, 0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                             <svg width="26" height="26" viewBox="0 0 365 365" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M57.3418 2.53686C58.6712 -0.845623 63.458 -0.845618 64.7874 2.53687L79.6123 40.2572C80.0188 41.2917 80.8375 42.1103 81.8719 42.5169L119.592 57.3418C122.975 58.6712 122.975 63.458 119.592 64.7874L81.8719 79.6123C80.8375 80.0188 80.0188 80.8375 79.6123 81.8719L64.7874 119.592C63.458 122.975 58.6712 122.975 57.3418 119.592L42.5169 81.8719C42.1103 80.8375 41.2917 80.0188 40.2572 79.6123L2.53686 64.7874C-0.845623 63.458 -0.845618 58.6712 2.53687 57.3418L40.2572 42.5169C41.2917 42.1103 42.1103 41.2917 42.5169 40.2572L57.3418 2.53686Z" fill="currentColor"/>
@@ -94,7 +121,9 @@ import Layout from "../layouts/Layout.astro";
 
                     <a class="char-card snav-item"
                        data-page="team"
-                       href="/team" style="text-decoration:none;">
+                       href="/team"
+                       data-astro-prefetch
+                       style="text-decoration:none;">
                         <div style="width:52px;height:52px;border-radius:8px;background-color: rgba(0, 0, 0, 0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                             <svg width="26" height="26" viewBox="0 0 261 331" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M34.8408 181.771C39.1039 256.084 79.1094 311.991 99.0542 331C118.999 311.991 159.005 256.084 163.268 181.771C163.471 178.233 165.036 174.892 167.765 172.646C179.643 162.873 198.108 148.625 198.108 143.035C198.108 136.717 124.211 101.967 99.0542 101.967C73.8976 101.967 0 136.717 0 143.035C0 148.625 18.4656 162.873 30.3433 172.646C33.0728 174.892 34.6379 178.233 34.8408 181.771Z" fill="currentColor"/>
@@ -110,7 +139,9 @@ import Layout from "../layouts/Layout.astro";
 
                     <a class="char-card snav-item"
                        data-page="privacy"
-                       href="/privacy" style="text-decoration:none;">
+                       href="/privacy"
+                       data-astro-prefetch
+                       style="text-decoration:none;">
                         <div style="width:52px;height:52px;border-radius:8px;background-color: rgba(0, 0, 0, 0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                             <svg width="26" height="26" viewBox="0 0 267 291" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M133.5 0C239.1 0 266.5 9.33333 267 14V173C267 190.5 192.5 260 133.5 290.5C74.5 260 0 190.5 0 173V14C0.5 9.33333 27.9 0 133.5 0ZM133.5 24C56.3 24 34.6667 30 33.5 33V157.5C33.5 170 92 226.5 133.5 248V24Z" fill="currentColor"/>
@@ -146,7 +177,7 @@ import Layout from "../layouts/Layout.astro";
                                 Top 2% - 161/9264
                             </div>
                         </div>
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                     </div>
                     -->
 
@@ -220,7 +251,7 @@ import Layout from "../layouts/Layout.astro";
         </div>
         <div class="ob-header">
             <div class="ob-logo-row">
-                <img src="assets/global/favicon.png" alt="guoba" class="ob-logo-img">
+                <Image src={guobaLogo} alt="guoba" class="ob-logo-img" width={28} height={28} />
                 <span class="ob-logo-text">guoba.gg</span>
             </div>
             <span class="ob-step-label" id="ob-step-label"></span>

@@ -128,7 +128,7 @@ export function renderMetaSetsAdvice(persoObj, config) {
                     <img src="${setIconUrl}" style="width: 60px; height: 60px; object-fit: contain;" alt="">
                 </div>
                 <div style="display:flex; flex-direction:column; gap:8px;">
-                    <span style="font-size: 11px; color: var(--text-primary); font-weight: 500;">${targetSet.name}</span>
+                    <span style="font-size: 11px; color: var(--text-primary);">${targetSet.name}</span>
                     <div style="display:flex; align-items:center; padding-left: 2px;">
                         ${piecesHtml}
                     </div>

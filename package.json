@@ -9,7 +9,12 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^4.16.18",
+    "astro": "^5.0.0",
     "nanostores": "^1.4.2"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "dom-to-image-more": "^3.10.2",
+    "vite-plugin-compression": "^0.5.1"
   }
 }

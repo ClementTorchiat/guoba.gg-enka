@@ -8,7 +8,7 @@ export function renderTalentsList(talents) {
     talents.forEach(talent => {
         talentsHtml += `
             <div style="width:64px; height:64px; background-color: rgba(0, 0, 0, 0.2); border-radius:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; border:1px solid rgba(255, 255, 255, 0.4); margin-bottom: 11px;">
-                <img src="${talent.icon}" style="width:60px; height:60px;" alt="${t('ui.char.skills')}">
+                <img src="${talent.icon}" style="width:60px; height:60px;" alt="${t('ui.char.skills')}" decoding="async">
                 <div style="position:absolute; bottom:-10px; background-color: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5)); padding:2px 6px; border-radius:100%; font-size:10px;">${talent.level}</div>
             </div>`;
     });

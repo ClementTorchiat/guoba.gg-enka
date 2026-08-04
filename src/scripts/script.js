@@ -19,6 +19,9 @@ import { renderPlayerProfileCard } from '../components/profile/PlayerHeader.js';
 import { renderGlobalEvaluation as renderGlobalEvaluationComponent } from '../components/profile/GlobalEvaluation.js';
 import { renderSidebarList } from '../components/profile/Sidebar.js';
 import { setUserData, setCharacterList, selectCharacter } from '../stores/appStore.js';
+import { preloadConfigsForShowcase, loadCharacterConfig } from './configLoader.js';
+import { idbGet, idbSet } from './db.js';
+import { loadRollTable } from './rollTableLoader.js';
 
 const t = (...args) => (window.t ? window.t(...args) : args[0]);
 
@@ -28,7 +31,7 @@ const ICON_MAP = window.ICON_MAP;
 
 function createIcon(key) {
     const filename = ICON_MAP[key] || ICON_MAP["unknown"];
-    return `<img src="${ICON_BASE_PATH}${filename}" class="stat-icon" alt="${key}">`;
+    return `<img src="${ICON_BASE_PATH}${filename}" class="stat-icon" alt="${key}" decoding="async">`;
 }
 
 const KEY_TO_FIGHT_PROP = window.KEY_TO_FIGHT_PROP;
@@ -125,7 +128,7 @@ const SLOT_POSSIBLE_MAIN_STATS = window.SLOT_POSSIBLE_MAIN_STATS;
 
 let globalPersoData = [];
 
-let sidebarSortState = {column: 'original', direction: 'desc'};
+let sidebarSortState = { column: 'original', direction: 'desc' };
 
 const THEME_COLORS = window.THEME_COLORS;
 
@@ -489,7 +492,7 @@ async function loadGameData() {
     window.iconToNameHash = {};
 
     // ⚠️ TRÈS IMPORTANT : Passer en v4 pour vider l'ancien cache sans armes
-    const CACHE_KEY = 'guoba_gamedata_v4';
+    const CACHE_KEY = 'guoba_gamedata_idb_v1';
     const CACHE_TTL = 24 * 60 * 60 * 1000;
 
     try {
@@ -497,20 +500,22 @@ async function loadGameData() {
         const searchBtn = document.getElementById('searchBtn');
         if (uidInput) {
             uidInput.disabled = true;
-            uidInput.placeholder = uidInput.placeholder = t('ui.search.loading');
+            uidInput.placeholder = t('ui.search.loading');
         }
         if (searchBtn) {
             searchBtn.disabled = true;
         }
 
-        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+        // 1. Lecture du cache asynchrone depuis IndexedDB
+        const cached = await idbGet(CACHE_KEY);
         if (cached && (Date.now() - cached.ts < CACHE_TTL)) {
             charData = cached.chars;
             locData = cached.locs;
             window.namecardsData = cached.namecards;
             window.pfpsData = cached.pfps;
-            window.iconToNameHash = cached.iconToNameHash;
-            window.ROLL_TABLE = cached.rollTable;
+            window.iconToNameHash = cached.iconToNameHash || {};
+            // Charge la table de rolls en tâche de fond si besoin
+            loadRollTable().catch(() => {});
             gameDataReady = true;
             buildHashToKey();
             if (uidInput) {
@@ -524,24 +529,23 @@ async function loadGameData() {
             return;
         }
 
-        // AJOUT DE WEAPONS.JSON DANS LES FETCHS
-        const [chars, locs, relics, namecards, pfps, rollTable, weapons] = await Promise.all([
+        // 2. Téléchargement des dictionnaires et de la table de rolls
+        const [chars, locs, relics, namecards, pfps, weapons] = await Promise.all([
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/avatars.json`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/relics.json`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/namecards.json`).then(r => r.json()),
             fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/pfps.json`).then(r => r.json()),
-            fetch(`./rollTable.json`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/weapons.json`).then(r => r.json())
+            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/weapons.json`).then(r => r.json()),
+            loadRollTable().catch(() => {})
         ]);
 
-        window.ROLL_TABLE = rollTable;
         charData = chars;
         locData = locs;
         window.namecardsData = namecards;
         window.pfpsData = pfps;
 
-        // --- 1. Remplissage du dictionnaire avec les Artéfacts ---
+        // Remplissage du dictionnaire avec les Artéfacts
         if (relics && relics.Items && relics.Sets) {
             Object.values(relics.Items).forEach(item => {
                 if (item.Icon && item.SetId && relics.Sets[item.SetId]) {
@@ -554,7 +558,7 @@ async function loadGameData() {
             });
         }
 
-        // --- 2. Remplissage du dictionnaire avec les Armes (NOUVEAU) ---
+        // Remplissage du dictionnaire avec les Armes
         if (weapons) {
             Object.values(weapons).forEach(weapon => {
                 const iconName = weapon.Icon || weapon.icon;
@@ -565,16 +569,12 @@ async function loadGameData() {
             });
         }
 
-        try {
-            localStorage.setItem(CACHE_KEY, JSON.stringify({
-                ts: Date.now(),
-                chars, locs, namecards, pfps,
-                iconToNameHash: window.iconToNameHash,
-                rollTable
-            }));
-        } catch (e) {
-            console.warn('[guoba] localStorage plein, cache ignoré.', e);
-        }
+        // 3. Stockage natif ultra-rapide dans IndexedDB (zéro limite 5Mo)
+        await idbSet(CACHE_KEY, {
+            ts: Date.now(),
+            chars, locs, namecards, pfps, weapons,
+            iconToNameHash: window.iconToNameHash
+        });
 
         if (loader) loader.innerText = "";
         gameDataReady = true;
@@ -620,7 +620,7 @@ function clearSearch() {
     document.title = t('page.title.default');
     window.currentPlayerNickname = null;
     globalPersoData = [];
-    sidebarSortState = {column: 'original', direction: 'desc'};
+    sidebarSortState = { column: 'original', direction: 'desc' };
     const sidebar = document.getElementById('sidebar-list');
     if (sidebar) sidebar.innerHTML = '';
     updateSortArrows();
@@ -659,6 +659,7 @@ async function fetchUserData(optionalUid) {
         console.log("⚡ Instant load from cache!");
         const cachedData = apiSessionCache[uid].data;
         window.currentPlayerNickname = cachedData.playerInfo.nickname || t('data.unknownPlayer');
+        await preloadConfigsForShowcase(cachedData, charData, locData, window.HASH_TO_KEY);
         processData(cachedData);
         renderPlayerProfile(cachedData.playerInfo, uid);
         renderGlobalEvaluation(cachedData.playerInfo);
@@ -681,7 +682,7 @@ async function fetchUserData(optionalUid) {
     const timeoutId = setTimeout(() => controller.abort(), 30000);
 
     try {
-        const res = await fetch(proxy, {signal: controller.signal});
+        const res = await fetch(proxy, { signal: controller.signal });
         clearTimeout(timeoutId);
         if (!res.ok) {
             if (res.status === 404) throw new Error("404");
@@ -707,6 +708,9 @@ async function fetchUserData(optionalUid) {
         };
 
         window.currentPlayerNickname = data.playerInfo.nickname || t('data.unknownPlayer');
+
+        // Préchargement ultra-rapide des configurations nécessaires pour le showcase
+        await preloadConfigsForShowcase(data, charData, locData, window.HASH_TO_KEY);
 
         processData(data);
         renderPlayerProfile(data.playerInfo, uid);
@@ -784,7 +788,7 @@ function buildHashToKey() {
     const frDict = locData["fr"] || {};
     for (const [hash, nom] of Object.entries(frDict)) {
         if (WEAPON_NAME_MAPPING[nom]) dict[hash] = WEAPON_NAME_MAPPING[nom];
-        if (SET_NAME_MAPPING[nom])    dict[hash] = SET_NAME_MAPPING[nom];
+        if (SET_NAME_MAPPING[nom]) dict[hash] = SET_NAME_MAPPING[nom];
     }
     window.HASH_TO_KEY = dict;
 }
@@ -797,7 +801,7 @@ function formatValueDisplay(key, val) {
 function formatStat(propId, value) {
     let key = STAT_MAPPING[propId];
     if (!key && (STAT_LABELS[propId] || propId === 'dmgBonus')) key = propId;
-    if (!key) return {key: "unknown", value: value, label: propId, icon: createIcon("unknown")};
+    if (!key) return { key: "unknown", value: value, label: propId, icon: createIcon("unknown") };
 
     let val = value;
     let isPercent = false;
@@ -820,7 +824,7 @@ function formatStat(propId, value) {
 }
 
 function calculateBuffedStats(baseStats, currentStats, buffsList) {
-    let buffed = {...currentStats};
+    let buffed = { ...currentStats };
     buffsList.forEach(buff => {
         if (buff.active) applyBonus(buffed, baseStats, buff.bonuses, false);
     });
@@ -987,7 +991,7 @@ function generateScoreBar(totalRolls, currentGrade, maxPossibleRolls = 45) {
 
 function calculateMaxTheoreticalScore(persoObj, config) {
     if (!config || !config.weights || !window.MAX_ROLLS) {
-        return {score: 100, totalRolls: 45};
+        return { score: 100, totalRolls: 45 };
     }
 
     const forbiddenSubStats = ["heal_", "physical_dmg_"];
@@ -996,7 +1000,7 @@ function calculateMaxTheoreticalScore(persoObj, config) {
         .filter(([key, w]) => w > 0 && !key.includes("_dmg_") && !forbiddenSubStats.includes(key))
         .sort((a, b) => b[1] - a[1]);
 
-    if (sortedSubWeights.length === 0) return {score: 0, totalRolls: 0};
+    if (sortedSubWeights.length === 0) return { score: 0, totalRolls: 0 };
 
     let maxTotalRolls = 0;
 
@@ -1054,10 +1058,10 @@ function calculateMaxTheoreticalScore(persoObj, config) {
             }
         }
 
-        return {...art, subStats: fakeSubStats, mainStat: perfectMainStat};
+        return { ...art, subStats: fakeSubStats, mainStat: perfectMainStat };
     });
 
-    let fakePerso = {...persoObj, artefacts: perfectArtefacts, isSimulation: true};
+    let fakePerso = { ...persoObj, artefacts: perfectArtefacts, isSimulation: true };
     let simulation = calculateCharacterScore(fakePerso, config);
 
     return {
@@ -1070,7 +1074,7 @@ function getCritAdvice(cr, cd, config) {
     const crWeight = (config && config.weights && config.weights['critRate_']) || 0;
 
     if (crWeight < 1) {
-        return {color: '#888', msg: t('advice.crit.noCrit')};
+        return { color: '#888', msg: t('advice.crit.noCrit') };
     }
 
     const roundedCR = Math.round(cr * 10) / 10;
@@ -1081,14 +1085,14 @@ function getCritAdvice(cr, cd, config) {
         msg: t('advice.crit.overcap', cr.toFixed(1))
     };
 
-    if (roundedCR === 100) return {color: '#00FFFF', msg: t('advice.crit.perfect100')};
+    if (roundedCR === 100) return { color: '#00FFFF', msg: t('advice.crit.perfect100') };
 
     if (roundedCR >= 90) {
         if (roundedCD < 160) return {
             color: '#eab308',
             msg: t('advice.crit.highCDLowCR', roundedCR, roundedCD)
         };
-        return {color: '#22c55e', msg: t('advice.crit.above90')};
+        return { color: '#22c55e', msg: t('advice.crit.above90') };
     }
 
     if (roundedCR >= 80) return {
@@ -1101,7 +1105,7 @@ function getCritAdvice(cr, cd, config) {
             color: '#f97316',
             msg: t('advice.crit.highCDLowCR2', roundedCD, roundedCR)
         };
-        return {color: '#eab308', msg: t('advice.crit.above70')};
+        return { color: '#eab308', msg: t('advice.crit.above70') };
     }
 
     if (roundedCR >= 60) return {
@@ -1118,13 +1122,13 @@ function getCritAdvice(cr, cd, config) {
 function getSetRecommendation(activeSets, config) {
     if (!config || !config.bestSets || config.bestSets.length === 0) return null;
     const hasBest = activeSets.some(s => config.bestSets.includes(s));
-    if (hasBest) return {type: 'success', msg: t('advice.set.best')};
+    if (hasBest) return { type: 'success', msg: t('advice.set.best') };
     const hasGood = config.goodSets && activeSets.some(s => config.goodSets.includes(s));
     const recommended = config.bestSets[0].split(':')[0];
     const hash = Object.keys(window.HASH_TO_KEY || {}).find(h => window.HASH_TO_KEY[h] === recommended);
     const recName = hash ? getText(hash) : recommended;
-    if (hasGood) return {type: 'info', msg: t('advice.set.good', recName)};
-    return {type: 'warning', msg: t('advice.set.bad', recName)};
+    if (hasGood) return { type: 'info', msg: t('advice.set.good', recName) };
+    return { type: 'warning', msg: t('advice.set.bad', recName) };
 }
 
 function getMainStatAdvice(persoObj, config) {
@@ -1202,18 +1206,18 @@ function getMainStatAdvice(persoObj, config) {
 
 function getFarmDifficulty(pieceType, mainStatKey) {
     if (pieceType === "EQUIP_BRACER" || pieceType === "EQUIP_NECKLACE") {
-        return {label: t('farm.easy'), color: "#3b82f6"};
+        return { label: t('farm.easy'), color: "#3b82f6" };
     }
 
     const rates = MAINSTAT_DROP_RATES[pieceType];
-    if (!rates || !rates[mainStatKey]) return {label: t('farm.hard'), color: "#eab308"};
+    if (!rates || !rates[mainStatKey]) return { label: t('farm.hard'), color: "#eab308" };
 
     const probability = rates[mainStatKey];
 
-    if (probability >= 19) return {label: t('farm.medium'), color: "#22c55e"};
-    if (probability >= 10) return {label: t('farm.hard'), color: "#eab308"};
-    if (probability >= 5) return {label: t('farm.veryHard'), color: "#f97316"};
-    return {label: t('farm.extreme'), color: "#ef4444"};
+    if (probability >= 19) return { label: t('farm.medium'), color: "#22c55e" };
+    if (probability >= 10) return { label: t('farm.hard'), color: "#eab308" };
+    if (probability >= 5) return { label: t('farm.veryHard'), color: "#f97316" };
+    return { label: t('farm.extreme'), color: "#ef4444" };
 }
 
 function getOffPieceAdvice(persoObj) {
@@ -1300,7 +1304,7 @@ function getOffPieceAdvice(persoObj) {
 function getTalentAdvice(persoObj, config) {
     if (!config.talents) return null;
     const target = config.talents;
-    const current = {auto: 0, skill: 0, burst: 0};
+    const current = { auto: 0, skill: 0, burst: 0 };
 
     if (persoObj.talents.length >= 3) {
         current.auto = persoObj.talents[0].level;
@@ -1329,7 +1333,7 @@ function getTalentAdvice(persoObj, config) {
     check('burst', t('advice.talent.burst'));
 
     if (criticals.length === 0 && infos.length === 0) {
-        return [{type: "success", msg: t('advice.talent.ok')}];
+        return [{ type: "success", msg: t('advice.talent.ok') }];
     }
 
     let advices = [];
@@ -1632,7 +1636,7 @@ function getLevelAdvice(persoObj) {
 
 
 function calculateRollDistribution(persoObj, config) {
-    if (!config || !config.weights) return {usefulCount: 0, deadCount: 0, total: 0, usefulDetails: [], deadDetails: []};
+    if (!config || !config.weights) return { usefulCount: 0, deadCount: 0, total: 0, usefulDetails: [], deadDetails: [] };
 
     let usefulCount = 0;
     let deadCount = 0;
@@ -1679,7 +1683,7 @@ function calculateRollDistribution(persoObj, config) {
 }
 
 function calculateDeadRolls(persoObj, config) {
-    if (!config || !config.weights) return {count: 0, details: []};
+    if (!config || !config.weights) return { count: 0, details: [] };
     let deadRolls = 0;
     let deadStatsCounts = {};
     persoObj.artefacts.forEach(art => {
@@ -1695,9 +1699,9 @@ function calculateDeadRolls(persoObj, config) {
     });
     const details = Object.entries(deadStatsCounts)
         .filter(([_, count]) => count > 0)
-        .map(([key, count]) => ({label: STAT_LABELS[key] || key, count: count}))
+        .map(([key, count]) => ({ label: STAT_LABELS[key] || key, count: count }))
         .sort((a, b) => b.count - a.count);
-    return {count: deadRolls, details: details};
+    return { count: deadRolls, details: details };
 }
 
 function getAllCrossCheckAdvice(charIndex) {
@@ -1705,7 +1709,7 @@ function getAllCrossCheckAdvice(charIndex) {
     const currChar = globalPersoData[charIndex];
     if (!currChar || !currChar.artefacts) return SLOT_ORDER.map(() => null);
 
-    const scoringConfig = {...currChar.charConfig, ...(currChar.activeBuild || {})};
+    const scoringConfig = { ...currChar.charConfig, ...(currChar.activeBuild || {}) };
     const active4pSet = Object.keys(currChar.setsCounter || {}).find(key => currChar.setsCounter[key] >= 4);
     const active4pCount = active4pSet ? currChar.setsCounter[active4pSet] : 0;
 
@@ -1737,9 +1741,9 @@ function getAllCrossCheckAdvice(charIndex) {
                 }
 
                 const clonedOtherArt = JSON.parse(JSON.stringify(otherArt));
-                const fakeArtefacts = currChar.artefacts.map(a => ({...a}));
+                const fakeArtefacts = currChar.artefacts.map(a => ({ ...a }));
                 fakeArtefacts[currArtIndex] = clonedOtherArt;
-                const fakePerso = {...currChar, artefacts: fakeArtefacts};
+                const fakePerso = { ...currChar, artefacts: fakeArtefacts };
                 const newCurrEval = calculateCharacterScore(fakePerso, scoringConfig);
                 const scoredNewArt = fakePerso.artefacts[currArtIndex];
                 const diff = scoredNewArt.score - currArt.score;
@@ -1749,11 +1753,11 @@ function getAllCrossCheckAdvice(charIndex) {
 
                     maxDiff = diff;
 
-                    const otherScoringConfig = {...otherChar.charConfig, ...(otherChar.activeBuild || {})};
-                    const fakeOtherArtefacts = otherChar.artefacts.map(a => ({...a}));
+                    const otherScoringConfig = { ...otherChar.charConfig, ...(otherChar.activeBuild || {}) };
+                    const fakeOtherArtefacts = otherChar.artefacts.map(a => ({ ...a }));
                     const otherArtIndex = otherChar.artefacts.findIndex(a => a.type === slotType);
                     fakeOtherArtefacts[otherArtIndex] = JSON.parse(JSON.stringify(currArt));
-                    const fakeOtherPerso = {...otherChar, artefacts: fakeOtherArtefacts};
+                    const fakeOtherPerso = { ...otherChar, artefacts: fakeOtherArtefacts };
                     const newOtherEval = calculateCharacterScore(fakeOtherPerso, otherScoringConfig);
 
                     const currSubMap = {};
@@ -1776,7 +1780,7 @@ function getAllCrossCheckAdvice(charIndex) {
                         const formatted = isPercent
                             ? `${delta > 0 ? "+" : ""}${delta.toFixed(1)}% ${label}`
                             : `${delta > 0 ? "+" : ""}${Math.round(delta)} ${label}`;
-                        deltas.push({delta, formatted});
+                        deltas.push({ delta, formatted });
                     });
                     deltas.sort((a, b) => b.delta - a.delta);
 
@@ -2055,15 +2059,15 @@ function calculateRerollMetrics(artifact, config) {
     let badge = { text: t('reroll.neutral'), color: "var(--text-muted)" };
 
     if (sortedTerrain[0] === 0 && sortedTerrain[1] === 0) {
-        badge = {text: t("reroll.trash"), color: "#4b5563"};
+        badge = { text: t("reroll.trash"), color: "#4b5563" };
     } else if (risk > 75) {
-        badge = {text: t("reroll.tooRisky"), color: "#ef4444"};
+        badge = { text: t("reroll.tooRisky"), color: "#ef4444" };
     } else if (potential > 40 && risk < 35) {
-        badge = {text: t("reroll.recommended"), color: "#22c55e"};
+        badge = { text: t("reroll.recommended"), color: "#22c55e" };
     } else if (potential > 15) {
-        badge = {text: t("reroll.optimizable"), color: "#3b82f6"};
+        badge = { text: t("reroll.optimizable"), color: "#3b82f6" };
     } else {
-        badge = {text: t("reroll.notWorth"), color: "#f97316"};
+        badge = { text: t("reroll.notWorth"), color: "#f97316" };
     }
 
     return {
@@ -2084,12 +2088,16 @@ const CONFIG_NAME_ALIASES_EN_TO_FR = window.CONFIG_NAME_ALIASES_EN_TO_FR;
 
 function resolveCharConfig(nom) {
     const charConfig = window.CHARACTER_CONFIG || {};
-    const defaultConfig = window.DEFAULT_CONFIG || {weights: {}, bestSets: [], goodSets: []};
+    const defaultConfig = window.DEFAULT_CONFIG || { weights: {}, bestSets: [], goodSets: [] };
     const safeNom = nom || "";
     const configKey = safeNom.replace(/\s+/g, '') || "Default";
+    const aliases = window.CONFIG_NAME_ALIASES_EN_TO_FR || {};
+    const norm = safeNom.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+
     return charConfig[configKey]
         || charConfig[safeNom]
-        || charConfig[CONFIG_NAME_ALIASES_EN_TO_FR[safeNom]]
+        || charConfig[aliases[safeNom]]
+        || charConfig[norm]
         || defaultConfig;
 }
 
@@ -2100,7 +2108,7 @@ function processData(data) {
     const G_CHAR_CONFIG = window.CHARACTER_CONFIG || {};
     const G_WEAPON_PASSIVES = window.WEAPON_PASSIVES || {};
     const G_SET_PASSIVES = window.SET_PASSIVES || {};
-    const G_DEFAULT_CONFIG = window.DEFAULT_CONFIG || {weights: {}, bestSets: [], goodSets: []};
+    const G_DEFAULT_CONFIG = window.DEFAULT_CONFIG || { weights: {}, bestSets: [], goodSets: [] };
     window.ITEM_ICON_MAP = window.ITEM_ICON_MAP || {};
 
     data.avatarInfoList.forEach(perso => {
@@ -2140,7 +2148,7 @@ function processData(data) {
         const level = perso.propMap['4001'] ? parseInt(perso.propMap['4001'].val) : 0;
         const constellations = perso.talentIdList ? perso.talentIdList.length : 0;
         const elemKey = getKey(info, "Element");
-        const elemInfo = ELEMENT_DATA[elemKey] || {id: 30, key: "physical_dmg_"};
+        const elemInfo = ELEMENT_DATA[elemKey] || { id: 30, key: "physical_dmg_" };
 
         const WEAPON_TYPE_MAP = {
             "WEAPON_SWORD_ONE_HAND": "sword",
@@ -2189,7 +2197,7 @@ function processData(data) {
             if (costume.SideIcon)
                 sideIconUrl = `https://enka.network${costume.SideIcon}`;
             if (costume.Art)
-                splashUrl   = `https://enka.network${costume.Art}`;
+                splashUrl = `https://enka.network${costume.Art}`;
         }
 
         const talents = [];
@@ -2208,12 +2216,12 @@ function processData(data) {
                     talentUrl = `https://enka.network/ui/${iconName}.png`;
                 }
 
-                talents.push({level: lvl, icon: talentUrl});
+                talents.push({ level: lvl, icon: talentUrl });
             });
         }
 
         const fp = perso.fightPropMap;
-        const baseStats = {hp: fp[1] || 0, atk: fp[4] || 0, def: fp[7] || 0};
+        const baseStats = { hp: fp[1] || 0, atk: fp[4] || 0, def: fp[7] || 0 };
         const combatStats = {
             hp: fp[2000], atk: fp[2001], def: fp[2002], em: fp[28],
             cr: fp[20] * 100, cd: fp[22] * 100, er: fp[23] * 100,
@@ -2296,7 +2304,7 @@ function processData(data) {
                 if (!statsObj) return resolved;
                 for (const [k, v] of Object.entries(statsObj)) {
                     if (typeof v === 'object' && v.percent) {
-                        resolved[k] = {...v, percent: getRefinedValue(v.percent, weaponRank)};
+                        resolved[k] = { ...v, percent: getRefinedValue(v.percent, weaponRank) };
                     } else {
                         resolved[k] = getRefinedValue(v, weaponRank);
                     }
@@ -2332,7 +2340,7 @@ function processData(data) {
                         buffs.push({
                             id: `${category}_${statKey}`, category,
                             name: `${STAT_LABELS[targetStat]} (+${percentDisplay} ${val.source})`,
-                            bonuses: {[statKey]: val}, active: isActive, selectMode: selectMode
+                            bonuses: { [statKey]: val }, active: isActive, selectMode: selectMode
                         });
                         continue;
                     }
@@ -2341,7 +2349,7 @@ function processData(data) {
                         buffs.push({
                             id: `${category}_${statKey}`, category,
                             name: `${STAT_LABELS[statKey]} (+${valDisplay})`,
-                            bonuses: {[statKey]: val}, active: isActive, selectMode: selectMode
+                            bonuses: { [statKey]: val }, active: isActive, selectMode: selectMode
                         });
                     }
                 }
@@ -2351,19 +2359,19 @@ function processData(data) {
         const rawConfig = resolveCharConfig(nom);
 
         let activeBuild = null;
-        let scoringConfig = {...rawConfig};
+        let scoringConfig = { ...rawConfig };
 
         if (rawConfig.builds) {
             let bestBuildKey = null;
             let maxEfficiency = -1;
 
             Object.entries(rawConfig.builds).forEach(([key, build]) => {
-                const tempConfig = {...rawConfig, ...build};
+                const tempConfig = { ...rawConfig, ...build };
 
-                const clonedArtefacts = artefacts.map(a => ({...a}));
-                const simulation = calculateCharacterScore({artefacts: clonedArtefacts}, tempConfig);
+                const clonedArtefacts = artefacts.map(a => ({ ...a }));
+                const simulation = calculateCharacterScore({ artefacts: clonedArtefacts }, tempConfig);
 
-                const potential = calculateMaxTheoreticalScore({artefacts: artefacts}, tempConfig);
+                const potential = calculateMaxTheoreticalScore({ artefacts: artefacts }, tempConfig);
 
                 let efficiency = 0;
                 if (potential && potential.score > 0) {
@@ -2379,7 +2387,7 @@ function processData(data) {
             if (!bestBuildKey) bestBuildKey = Object.keys(rawConfig.builds)[0];
             activeBuild = rawConfig.builds[bestBuildKey];
             activeBuild.key = bestBuildKey;
-            scoringConfig = {...rawConfig, ...activeBuild};
+            scoringConfig = { ...rawConfig, ...activeBuild };
         }
 
         if (weapon && G_WEAPON_PASSIVES[weapon.key]) {
@@ -2486,7 +2494,7 @@ function switchBuild(charIndex, buildKey) {
     p.activeBuild = newBuild;
     p.activeBuild.key = buildKey;
 
-    const newScoringConfig = {...p.charConfig, ...newBuild};
+    const newScoringConfig = { ...p.charConfig, ...newBuild };
     p.weights = newScoringConfig.weights;
 
     updateResonanceBuffs(p, newBuild.team);
@@ -2773,10 +2781,10 @@ function renderHome() {
         function stygianIcon() {
             if (p.stygianIndex === null) return '';
             if (p.stygianIndex === 6 && p.stygianSec !== null && p.stygianSec < 180) {
-                return `<img src="${ICON}stygian_difficulty_6_minus_180.webp" class="pp-icon" alt="${t('ui.alt.stygian')}">`;
+                return `<img src="${ICON}stygian_difficulty_6_minus_180.webp" class="pp-icon" alt="${t('ui.alt.stygian')}" decoding="async">`;
             }
             if (p.stygianIndex >= 1 && p.stygianIndex <= 6) {
-                return `<img src="${ICON}stygian_difficulty_${p.stygianIndex}.webp" class="pp-icon" alt="${t('ui.alt.stygian')}">`;
+                return `<img src="${ICON}stygian_difficulty_${p.stygianIndex}.webp" class="pp-icon" alt="${t('ui.alt.stygian')}" decoding="async">`;
             }
             return '';
         }
@@ -2784,7 +2792,7 @@ function renderHome() {
         const row1 = [
             `<span class="pp-badge pp-badge-server">${server}</span>`,
             p.achievements != null
-                ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="${t('ui.alt.achievements')}">${p.achievements.toLocaleString(window.GUOBA_LANG)}</span>`
+                ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="${t('ui.alt.achievements')}" decoding="async">${p.achievements.toLocaleString(window.GUOBA_LANG)}</span>`
                 : '',
             p.ar ? `<span class="pp-badge pp-badge-ar">AR${p.ar}</span>` : '',
         ].filter(Boolean).join('');
@@ -2794,10 +2802,10 @@ function renderHome() {
                 ? `<span class="pp-badge pp-badge-stygian">${stygianIcon()}${p.stygianSec}s</span>`
                 : '',
             p.theaterStars != null
-                ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.webp" class="pp-icon" alt="${t('ui.alt.theater')}">${p.theaterStars}</span>`
+                ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.webp" class="pp-icon" alt="${t('ui.alt.theater')}" decoding="async">${p.theaterStars}</span>`
                 : '',
             p.abyssStars != null
-                ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.webp" class="pp-icon" alt="${t('ui.alt.abyss')}">${p.abyssStars}</span>`
+                ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.webp" class="pp-icon" alt="${t('ui.alt.abyss')}" decoding="async">${p.abyssStars}</span>`
                 : '',
         ].filter(Boolean);
         const row2 = row2Items.join('');
@@ -2828,7 +2836,7 @@ function renderHome() {
             <div class="player-profile-card" style="margin: 0; width: 100%; height: 100%; box-sizing: border-box; pointer-events: none;">
                 <div class="player-profile-bg" ${p.banner ? `style="background-image:url('${p.banner}')"` : ''}></div>
                 <div class="player-profile-content">
-                    <img class="player-profile-avatar" src="${p.pic}" onerror="this.src='https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png'">
+                    <img class="player-profile-avatar" src="${p.pic}" onerror="this.src='https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png'" decoding="async">
                     <div class="player-profile-identity">
                         <div class="player-profile-name-row">
                             <span class="player-profile-name">${p.nickname}</span>
@@ -2854,13 +2862,21 @@ function renderHome() {
             <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-left: 20px;">
                 ${cardsHtml}
             </div>
-            <p style="color: var(--text-grey); font-size: 12px; margin-bottom: 30px; margin-top: 32px; margin-left: 12px;">
+            <p style="color: var(--text-grey); font-size: 12px; margin-bottom: 16px; margin-top: 32px; margin-left: 12px;">
                 ${t('home.legal')} <br><br>
                 ${t('home.enkaCredit')} <br>
                 ${t('home.designCredit')}
             </p>    
+            <div style="margin-left: 12px; margin-bottom: 16px; display: flex; align-items: center;">
+                <a class="made-with-astro" href="https://astro.build" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+                        <path d="M8.358 20.162c-1.186-1.07-1.532-3.316-1.038-4.944.856 1.026 2.043 1.352 3.272 1.535 1.897.283 3.76.177 5.522-.678.202-.098.388-.229.608-.36.166.473.209.95.151 1.437-.14 1.185-.738 2.1-1.688 2.794-.38.277-.782.525-1.175.787-1.205.804-1.531 1.747-1.078 3.119l.044.148a3.158 3.158 0 0 1-1.407-1.188 3.31 3.31 0 0 1-.544-1.815c-.004-.32-.004-.642-.048-.958-.106-.769-.472-1.113-1.161-1.133-.707-.02-1.267.411-1.415 1.09-.012.053-.028.104-.045.165h.002zm-5.961-4.445s3.24-1.575 6.49-1.575l2.451-7.565c.092-.366.36-.614.662-.614.302 0 .57.248.662.614l2.45 7.565c3.85 0 6.491 1.575 6.491 1.575L16.088.727C15.93.285 15.663 0 15.303 0H8.697c-.36 0-.615.285-.784.727l-5.516 14.99z"/>
+                    </svg>
+                    <span>${t('home.madeWithAstro')}</span>
+                </a>
+            </div>
             <div class="links" style="max-width:980px;display: flex; flex-direction: row; margin-bottom: 48px; gap: 8px; align-items: center;">
-                <a class="link-button" href="https://discord.gg/CZ5qxVqBVJ" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i>Discord</a>
+                <a class="link-button" href="https://discord.gg/CZ5qxVqBVJ" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>Discord</a>
                 <a class="link-button-coffee" href="https://ko-fi.com/guobagg" target="_blank" rel="noopener noreferrer">
                   <img src="https://cdn.prod.website-files.com/5c14e387dab576fe667689cf/670f5a01229bf8a18f97a3c1_favion.png" alt="Icône Discord" width="20" height="20">Buy me a coffee
                 </a>    
@@ -2997,8 +3013,10 @@ function renderShowcase(index) {
     }
 
     const currentUid = new URLSearchParams(window.location.search).get('uid') || (document.getElementById('uidInput') ? document.getElementById('uidInput').value.trim() : '');
-    if (!window._isPopstate && currentUid && p && p.nom) {
-        window.history.pushState({}, '', `?uid=${currentUid}&char=${encodeURIComponent(p.nom)}`);
+    if (!window._isPopstate && currentUid && p && (p.nom || p.name)) {
+        const charName = p.nom || p.name;
+        const lang = localStorage.getItem('guoba_lang') || 'fr';
+        window.history.replaceState({ uid: currentUid, char: charName }, '', `/?uid=${encodeURIComponent(currentUid)}&char=${encodeURIComponent(charName)}&lang=${lang}`);
     }
 
     document.querySelectorAll('#sidebar-list .char-card').forEach((card) => {
@@ -3022,16 +3040,20 @@ function renderShowcase(index) {
 
 loadGameData();
 
-const uidInput = document.getElementById('uidInput');
-if (uidInput) {
-    uidInput.focus();
-    uidInput.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            fetchUserData();
-        }
-    });
+function setupUidInputBinding() {
+    const uidInput = document.getElementById('uidInput');
+    if (uidInput && !uidInput.dataset.keyBound) {
+        uidInput.dataset.keyBound = 'true';
+        uidInput.focus();
+        uidInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                fetchUserData();
+            }
+        });
+    }
 }
+setupUidInputBinding();
 
 window.exportBuildAsImage = async function () {
     const element = document.querySelector('.top-row');
@@ -3039,7 +3061,7 @@ window.exportBuildAsImage = async function () {
 
     const btn = document.querySelector('button[onclick="exportBuildAsImage()"]');
     const originalContent = btn ? btn.innerHTML : t('ui.exportBtn');
-    if (btn) btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> ${t('export.processing')}`;
+    if (btn) btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 5px;"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> ${t('export.processing')}`;
 
     const bgDiv = element.querySelector('.background-splash-art');
     let originalBgImage = "";
@@ -3080,6 +3102,12 @@ window.exportBuildAsImage = async function () {
     element.classList.add('export-mode');
     const exportWidth = 1153;
     const exportHeight = 856;
+
+    let domtoimage = window.domtoimage;
+    if (!domtoimage) {
+        const mod = await import('dom-to-image-more');
+        domtoimage = mod.default || mod;
+    }
 
     domtoimage.toPng(element, {
         bgcolor: null,
@@ -3122,7 +3150,12 @@ window.exportBuildAsImage = async function () {
         });
 };
 
-window.addEventListener('DOMContentLoaded', () => {
+function initMainPageApp() {
+    setupUidInputBinding();
+
+    const isMainPage = !!document.getElementById('sort-col-original');
+    if (!isMainPage) return;
+
     const urlParams = new URLSearchParams(window.location.search);
     const urlUid = urlParams.get('uid');
     const urlChar = urlParams.get('char');
@@ -3138,7 +3171,6 @@ window.addEventListener('DOMContentLoaded', () => {
         if (uidInput) uidInput.value = urlUid;
 
         fetchUserData(urlUid).then(() => {
-
             toggleSearchIcon(true);
 
             if (urlChar && globalPersoData && globalPersoData.length > 0) {
@@ -3165,9 +3197,18 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         });
     } else {
-        renderHome();
+        if (!globalPersoData || globalPersoData.length === 0) {
+            renderHome();
+        }
     }
-});
+}
+
+document.addEventListener('astro:page-load', initMainPageApp);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMainPageApp);
+} else {
+    initMainPageApp();
+}
 
 window.addEventListener('popstate', () => {
     const urlParams = new URLSearchParams(window.location.search);

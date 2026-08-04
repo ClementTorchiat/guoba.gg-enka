@@ -82,8 +82,8 @@ export function renderTalentAdvice(persoObj, config) {
             const pct = Math.min((curLvl / tgtLvl) * 100, 100);
 
             const lvlText = curLvl >= tgtLvl
-                ? `<span style="color:var(--text-primary); font-weight:bold;">${curLvl}</span>`
-                : `<span style="color:var(--text-muted);">${curLvl}</span> <span style="color:var(--text-always-white); font-weight:bold; font-size:11px;">➔</span> <span style="color:#22c55e; font-weight:bold;">${tgtLvl}</span>`;
+                ? `<span style="color:var(--text-primary);">${curLvl}</span>`
+                : `<span style="color:var(--text-muted);">${curLvl}</span> <span style="color:var(--text-always-white); font-size:11px;">➔</span> <span style="color:#22c55e;">${tgtLvl}</span>`;
 
             const progressColor = curLvl >= tgtLvl ? '#22c55e' : '#ef4444';
 

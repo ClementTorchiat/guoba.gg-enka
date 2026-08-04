@@ -20,7 +20,7 @@ export function renderArtifactCard(art, weights = {}) {
         subsHtml += `
             <div style="color: var(--text-always-white); display: flex; justify-content: space-between; align-items: center;" class="substat-row ${isDead ? 'dead' : ''}">
                 <div style="display:flex; flex-direction: row; align-items:center; gap:5px;">
-                    <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width: 17px; height: 17px;" alt="${sub.key}">
+                    <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width: 17px; height: 17px;" alt="${sub.key}" decoding="async">
                     <p style="font-size: 12px; margin:0;">${sub.label}</p>
                     ${rolls > 0 ? `
                         <div style="display: flex; gap: 3px; align-items: center;">
@@ -43,7 +43,7 @@ export function renderArtifactCard(art, weights = {}) {
                 
                 <div class="item-header" style="height: 50px; display: flex; flex-direction: row; align-items: center; gap: 12px;">
                     <div style="position:relative; display:inline-block; flex-shrink: 0;">
-                        <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : art.stars === 4 ? '#a855f7' : '#6b7280'}; object-fit:cover;">
+                        <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : art.stars === 4 ? '#a855f7' : '#6b7280'}; object-fit:cover;" decoding="async">
                         <p style="position:absolute; bottom:7px; right:1px; background:rgba(0, 0, 0, 0.4); color:rgba(255, 255, 255, 0.8); font-size:11px; padding: 1px 5px 1px 4px; border-radius:8px;">+${art.level}</p>
                     </div>
                     <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center;">
@@ -59,7 +59,7 @@ export function renderArtifactCard(art, weights = {}) {
                 
                 <div class="main-stat-display" style="display: flex; flex-direction: row; justify-content:space-between; align-items: center;">
                     <div style="display:flex; align-items:center; gap:5px; font-size:0.7rem; color:var(--text-grey); font-weight:normal;">
-                        <img src="${ICON_BASE_PATH}${ICON_MAP[art.mainStat?.key] || ICON_MAP['unknown']}" style="width: 17px; height: 17px; margin-bottom: 1px;" alt="${art.mainStat?.key}">
+                        <img src="${ICON_BASE_PATH}${ICON_MAP[art.mainStat?.key] || ICON_MAP['unknown']}" style="width: 17px; height: 17px; margin-bottom: 1px;" alt="${art.mainStat?.key}" decoding="async">
                         <p style="font-size: 12px; color: var(--text-always-white); margin:0;">${art.mainStat?.label}</p>
                     </div>
                     <p style="font-size: 12px; color: var(--text-always-white); font-weight:bold; margin:0;">${formatValueDisplay(art.mainStat?.key, art.mainStat?.value)}</p>
@@ -73,7 +73,7 @@ export function renderArtifactCard(art, weights = {}) {
                 
                 <div style="font-size: 12px; display:flex; justify-content:space-between; align-items: center;" class="art-score-footer">
                     <div style="display:flex; align-items:center; gap: 5px;">
-                        <img src="./assets/simulator/icons/icon_score_white.webp" style="width: 19px; height: 19px;" alt="Score">
+                        <img src="./assets/simulator/icons/icon_score_white.webp" style="width: 19px; height: 19px;" alt="Score" decoding="async">
                         <p style="margin:0;">${t('ui.char.score')}</p>
                     </div>
                     <div style="display: flex; flex-direction: row; gap: 4px;">

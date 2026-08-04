@@ -56,7 +56,7 @@ export function renderRollEfficiencyAdvice(persoObj, config) {
             <div style="margin-top: auto; padding-top: 12px;">
                 <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-grey); margin-bottom:4px;">
                     <span>${t('advice.rng.efficiency')}</span>
-                    <span style="color:${color}; font-weight:bold;">${quality.toFixed(1)}%</span>
+                    <span style="color:${color};">${quality.toFixed(1)}%</span>
                 </div>
                 <div style="width:100%; height:6px; background:rgba(0,0,0,0.2); border-radius:3px;">
                     <div style="width:${Math.min(quality, 100)}%; height:100%; background:${color}; opacity:0.85; border-radius:3px;"></div>

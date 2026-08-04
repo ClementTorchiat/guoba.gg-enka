@@ -10,7 +10,7 @@ export function renderIdealPiecesAdvice(persoObj, config) {
     const ICON_BASE_PATH = "./assets/simulator/icons/";
     const SLOT_ORDER_WTL = ["EQUIP_BRACER", "EQUIP_NECKLACE", "EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
     const FIXED_MAIN = {
-        "EQUIP_BRACER":   { key: "hp",  get label() { return t('stat.hp'); } },
+        "EQUIP_BRACER": { key: "hp", get label() { return t('stat.hp'); } },
         "EQUIP_NECKLACE": { key: "atk", get label() { return t('stat.atk'); } }
     };
 
@@ -214,7 +214,7 @@ export function renderIdealPiecesAdvice(persoObj, config) {
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div style="display:flex; flex-direction:row; align-items:center; gap:5px;">
                             <img src="${ICON_BASE_PATH}${ICON_MAP[m.key] || ICON_MAP['unknown']}" style="width:15px; height:15px;" alt="">
-                            <p style="font-size:11px; color: var(--text-primary); font-weight:bold; margin:0;">${m.label}</p>
+                            <p style="font-size:11px; color: var(--text-primary); margin:0;">${m.label}</p>
                         </div>
                     </div>`;
             } else {
@@ -322,7 +322,7 @@ export function renderIdealPiecesAdvice(persoObj, config) {
                         <p style="position:absolute; bottom:7px; right:1px; background:rgba(0,0,0,0.4); color:rgba(255,255,255,0.8); font-size:10px; padding:1px 4px; border-radius:8px; margin:0;">+20</p>
                     </div>
                     <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center; gap:1px; min-width:0;">
-                        <p style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:12px; font-weight:bold; margin:0;">${card.pieceName}</p>
+                        <p style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:12px; margin:0;">${card.pieceName}</p>
                         <p style="font-size:11px; color:${isOffSet ? 'var(--accent-gold)' : 'var(--accent-gold)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin:0;">${card.setNameFR}</p>
                         <p style="font-size:10px; color:rgba(255,255,255,0.4); margin:0;">5★</p>
                     </div>

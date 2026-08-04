@@ -1,54 +1,94 @@
 ---
 // src/layouts/Layout.astro
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
+  description?: string;
+  schema?: Record<string, any> | Array<Record<string, any>>;
 }
 
-const { title = "guoba.gg - Simulateur Genshin Impact" } = Astro.props;
+const {
+  title = "guoba.gg - Simulateur Genshin Impact",
+  description = "guoba.gg est un outil d'analyse de builds et de statistiques pour Genshin Impact. Évaluez vos artéfacts, optimisez vos personnages et générez des vitrines à partir de votre UID.",
+  schema
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://guoba.clement-torchiat.fr').href;
+
+const defaultSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "guoba.gg",
+  "url": "https://guoba.clement-torchiat.fr/",
+  "description": description,
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "All",
+  "inLanguage": "fr",
+  "author": {
+    "@type": "Person",
+    "name": "Clem"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  }
+};
+
+const finalSchema = schema || defaultSchema;
 ---
 
 <!DOCTYPE html>
 <html lang="fr" data-theme="wish">
 <head>
     <meta charset="UTF-8">
+    <ClientRouter />
     <script is:inline>
-        (function () {
-            const W = window.screen.width;
-            if      (W >= 3840) document.documentElement.style.zoom = "1.5";
-            else if (W >= 2560) document.documentElement.style.zoom = "1.25";
-        })();
-    </script>
-    <script is:inline>
-        (function() {
-            const savedTheme = localStorage.getItem('guoba_theme') || 'wish';
-            document.documentElement.setAttribute('data-theme', savedTheme);
+        (function initThemeAndZoom() {
+            function apply() {
+                const W = window.screen.width;
+                if      (W >= 3840) document.documentElement.style.zoom = "1.5";
+                else if (W >= 2560) document.documentElement.style.zoom = "1.25";
+                const savedTheme = localStorage.getItem('guoba_theme') || 'wish';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            }
+            apply();
+            document.addEventListener('astro:after-swap', apply);
         })();
     </script>
     <title>{title}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Balise canonique dynamique -->
+    <link rel="canonical" href={canonicalURL}>
+
+    <!-- Données structurées Schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(finalSchema)} />
+
+    <!-- Preconnect & DNS-prefetch pour les connexions critiques -->
+    <link rel="preconnect" href="https://enka.network" crossorigin>
+    <link rel="dns-prefetch" href="https://enka.network">
+
     <link rel="icon" type="image/png" href="/assets/global/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="tdm-reservation" content="1">
     <meta property="og:locale" content="fr_FR">
     <meta name="robots" content="noindex, nofollow">
-    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image-more/2.9.5/dom-to-image-more.min.js"></script>
 
-    <meta name="description" content="guoba.gg est un outil d'analyse de builds et de statistiques pour Genshin Impact. Évaluez vos artéfacts, optimisez vos personnages et générez des vitrines à partir de votre UID.">
+    <meta name="description" content={description}>
     <meta name="keywords" content="Genshin Impact, build, simulateur, artéfacts, enka network, UID, statistiques, optimisation">
     <meta name="author" content="clem">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://guoba.clement-torchiat.fr/">
-    <meta property="og:title" content="guoba.gg - Simulateur Genshin Impact">
-    <meta property="og:description" content="guoba.gg est un outil d'analyse de builds et de statistiques pour Genshin Impact. Évaluez vos artéfacts, optimisez vos personnages et générez des vitrines à partir de votre UID.">
+    <meta property="og:url" content={canonicalURL}>
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
     <meta property="og:image" content="https://guoba.clement-torchiat.fr/assets/global/banner.png">
     <meta property="og:site_name" content="guoba.gg">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="guoba.gg - Simulateur Genshin Impact">
-    <meta name="twitter:description" content="guoba.gg est un outil d'analyse de builds et de statistiques pour Genshin Impact. Évaluez vos artéfacts, optimisez vos personnages et générez des vitrines à partir de votre UID.">
+    <meta name="twitter:title" content={title}>
+    <meta name="twitter:description" content={description}>
     <meta name="twitter:image" content="https://guoba.clement-torchiat.fr/assets/global/banner.png">
     <meta name="theme-color" content="#1e2024">
 

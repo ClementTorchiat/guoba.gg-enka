@@ -82,7 +82,7 @@ export function renderERAdvice(p, b) {
                 
                 <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-grey); margin-top: 4px;">
                     <span>100%</span>
-                    <span style="color:var(--text-always-white); font-weight:bold;">${t('advice.er.target')} ${targetER}%</span>
+                    <span style="color:var(--text-always-white);">${t('advice.er.target')} ${targetER}%</span>
                     <span>300%+</span>
                 </div>
             </div>

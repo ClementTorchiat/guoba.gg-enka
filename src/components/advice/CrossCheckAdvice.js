@@ -148,9 +148,9 @@ export function renderCrossCheckAdvice(charIndex) {
                 <div style="display:flex; flex-direction:column; gap:4px;">${deltasHtml}</div>
                 <div style="width:100%; height:1px; background:rgba(255,255,255,0.06);"></div>
                 <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <span style="font-size:13px; font-weight:bold; color:${(swap.currEvalOld.grade && swap.currEvalOld.grade.color) || '#888'};">${swap.currEvalOld.score}</span>
+                    <span style="font-size:13px; color:${(swap.currEvalOld.grade && swap.currEvalOld.grade.color) || '#888'};">${swap.currEvalOld.score}</span>
                     <span style="font-size:12px; color:#666;">→</span>
-                    <span style="font-size:13px; font-weight:bold; color:${(swap.currEvalNew.grade && swap.currEvalNew.grade.color) || '#888'};">${swap.currEvalNew.score} <span style="font-size:11px; color:#c8a96e; font-weight:normal;">(${scoreDiff > 0 ? '+' : ''}${scoreDiff} pts)</span></span>
+                    <span style="font-size:13px; color:${(swap.currEvalNew.grade && swap.currEvalNew.grade.color) || '#888'};">${swap.currEvalNew.score} <span style="font-size:11px; color:#c8a96e;">(${scoreDiff > 0 ? '+' : ''}${scoreDiff} pts)</span></span>
                 </div>
             </div>`;
     });

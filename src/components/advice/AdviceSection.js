@@ -3,6 +3,7 @@ import { renderScoreSection } from './ScoreSection.js';
 import { renderCombatStatsSection } from './CombatStatsSection.js';
 import { renderProgressionSection } from './ProgressionSection.js';
 import { renderSubstatQualitySection } from './SubstatQualitySection.js';
+import { renderRollDetailsSection } from './RollDetailsSection.js';
 import { renderRerollSection } from './RerollSection.js';
 
 export function renderAdviceSection(persoObj, config, charIndex = 0) {
@@ -26,6 +27,10 @@ export function renderAdviceSection(persoObj, config, charIndex = 0) {
                 ${dottedDivider}
                 
                 ${renderProgressionSection(persoObj, effectiveConfig, charIndex)}
+                
+                ${dottedDivider}
+                
+                ${renderRollDetailsSection(persoObj)}
                 
                 ${dottedDivider}
                 

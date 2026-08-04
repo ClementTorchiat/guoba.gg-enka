@@ -92,18 +92,18 @@ export function renderPrioritiesAdvice(persoObj) {
                     <div style="display:flex; flex-direction:column; flex:1; min-width:0; gap:4px;">
                         
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <p style="font-size: 14px; font-weight:600; color:var(--text-primary); margin:0;">${i + 1}. ${prio.piece}</p>
+                            <p style="font-size: 14px; color:var(--text-primary); margin:0;">${i + 1}. ${prio.piece}</p>
                             ${prio.isOffPiece ? `<span style="font-size:9px; color:#22c55e; background:rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); padding:2px 5px; border-radius:4px; text-transform:uppercase;">${t('ui.art.offPiece')}</span>` : ''}
                         </div>
                         
                         <div style="display:flex; align-items:center; gap:5px;">
                             <p style="font-size:11px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin:0;">${prio.setName} • </p>
                             <img src="${ICON_BASE_PATH}${ICON_MAP[prio.mainKey] || ICON_MAP['unknown']}" style="width:13px; height:13px; flex-shrink:0;" alt="${prio.mainKey}">
-                            <p style="font-size:11px; color:var(--text-primary); font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin:0;">${prio.mainLabel}</p>
+                            <p style="font-size:11px; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin:0;">${prio.mainLabel}</p>
                         </div>
                         
                         <div style="display:flex; align-items:center; gap: 8px;">
-                            <span style="font-size:10px; font-weight:600; padding:2px 6px; border-radius:4px; background:${difficulty.color}15; color:${difficulty.color}; border: 1px solid ${difficulty.color}30; cursor:pointer;"
+                            <span style="font-size:10px; padding:2px 6px; border-radius:4px; background:${difficulty.color}15; color:${difficulty.color}; border: 1px solid ${difficulty.color}30; cursor:pointer;"
                                   onmouseenter="showGlobalTooltip(this, '${tooltipDifficulty}', '${difficulty.color}')"
                                   onmouseleave="hideGlobalTooltip()">${difficulty.label}</span>
                             
@@ -129,8 +129,8 @@ export function renderPrioritiesAdvice(persoObj) {
                     </div>
                     
                     <div style="text-align:right; min-width:90px; flex-shrink:0; display:flex; flex-direction:column; justify-content:center; align-items:flex-end;">
-                        <p style="color:${prio.color}; font-size:16px; font-weight:bold; line-height:1.2; margin:0;">
-                            ${prio.score} <span style="font-size:12px; font-weight:normal; opacity:0.8;">(${prio.grade})</span>
+                        <p style="color:${prio.color}; font-size:16px; line-height:1.2; margin:0;">
+                            ${prio.score} <span style="font-size:12px; opacity:0.8;">(${prio.grade})</span>
                         </p>
                     </div>
                     

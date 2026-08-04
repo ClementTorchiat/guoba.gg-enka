@@ -151,7 +151,7 @@ export function renderMainStatsAdvice(persoObj, config) {
                                 <div style="position:absolute; bottom:2px; right:2px; background:rgba(0,0,0,0.4); border-radius:3px; padding:1px; display:flex; align-items:center; gap:1px; justify-content:center;">
                                     ${slot.allowedKeys.map(k => `<img src="${ICON_BASE_PATH}${ICON_MAP[k] || ICON_MAP['unknown']}" style="width:14px; height:14px;" title="${t('stat.' + k)}">`).join('')}
                                 </div>
-                                <div style="position:absolute; bottom:3px; left:50%; transform:translateX(-50%); color:var(--text-always-white); font-size:10px; font-weight:bold; text-shadow:0 0 3px rgba(0,0,0,0.9); line-height:1;">➔</div>
+                                <div style="position:absolute; bottom:3px; left:50%; transform:translateX(-50%); color:var(--text-always-white); font-size:10px; text-shadow:0 0 3px rgba(0,0,0,0.9); line-height:1;">➔</div>
                             `}
                         </div>
                     </div>
@@ -166,9 +166,9 @@ export function renderMainStatsAdvice(persoObj, config) {
                 <p style="font-size: 12px;color: var(--text-grey); text-transform: uppercase;margin-bottom: 12px;">${adv.title}</p>
                 <div style="display:flex; flex-direction:column; gap:6px;">
                     ${adv.type === 'success'
-                        ? `<p style="font-size:14px; color:var(--text-primary); margin:0; line-height:1.4;">${adv.msg}</p>`
-                        : adv.details.map(d => `<p style="font-size:14px; color:var(--text-primary); margin:0; line-height:1.4;">${t('analysis.s3.mainStatDetail', d.piece, d.better, d.current)}</p>`).join('')
-                    }
+            ? `<p style="font-size:14px; color:var(--text-primary); margin:0; line-height:1.4;">${adv.msg}</p>`
+            : adv.details.map(d => `<p style="font-size:14px; color:var(--text-primary); margin:0; line-height:1.4;">${t('analysis.s3.mainStatDetail', d.piece, d.better, d.current)}</p>`).join('')
+        }
                 </div>
             </div>
             ${circlesHtml}

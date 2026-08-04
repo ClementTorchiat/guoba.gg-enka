@@ -2,7 +2,7 @@
 import { BASE_ROLLS, MAX_ROLLS, BASE_ROLLS_4, MAX_ROLLS_4 } from './data.js';
 import { t } from './i18n.js';
 import KEY_TO_FIGHT_PROP_JSON from '../data/key_to_fight_prop.json';
-import ROLL_TABLE_JSON from '../data/rollTable.json';
+import { getLoadedRollTable } from './rollTableLoader.js';
 import SLOT_POSSIBLE_MAIN_STATS_JSON from '../data/slot_possible_main_stats.json';
 import SUBSTAT_RANGES_JSON from '../data/substat_ranges.json';
 import STAT_LABELS_JSON from '../data/stat_labels.json';
@@ -28,7 +28,7 @@ export function getRollDetails(key, value, rarity = 5) {
     if (_rollDetailsCache.has(cacheKey)) return _rollDetailsCache.get(cacheKey);
 
     const keyToProp = (typeof window !== 'undefined' && window.KEY_TO_FIGHT_PROP) ? window.KEY_TO_FIGHT_PROP : KEY_TO_FIGHT_PROP_JSON;
-    const rollTable = (typeof window !== 'undefined' && window.ROLL_TABLE) ? window.ROLL_TABLE : ROLL_TABLE_JSON;
+    const rollTable = (typeof window !== 'undefined' && window.ROLL_TABLE) ? window.ROLL_TABLE : getLoadedRollTable();
 
     const fightProp = keyToProp ? keyToProp[key] : null;
     const table = rollTable ? rollTable[String(rarity)]?.[fightProp] : null;

@@ -118,6 +118,7 @@ export const T = {
         "home.legal": "Ce site est un projet de fan indépendant et n'est en aucun cas affilié à, parrainé ou approuvé par HoYoverse. <br>Tous les contenus et actifs liés aux jeux sont la propriété exclusive de HoYoverse.",
         "home.enkaCredit": "Ce projet s'appuie sur l'API fournie par <a href='https://enka.network' style='color: inherit; text-decoration: underline;'>Enka.Network</a>, que nous remercions chaleureusement pour leur contribution indispensable à la communauté.",
         "home.designCredit": "Design de la fiche personnage inspiré par Fribbels HSR Optimizer.",
+        "home.madeWithAstro": "Fait avec Astro",
 
         // ── Mobile ───────────────────────────────────────
         "mobile.title": "Version Mobile Non Disponible",
@@ -765,6 +766,7 @@ export const T = {
         "home.legal": "This site is an independent fan project and is in no way affiliated with, sponsored by, or endorsed by HoYoverse. <br>All game-related content and assets are the exclusive property of HoYoverse.",
         "home.enkaCredit": "This project relies on the API provided by <a href='https://enka.network' style='color: inherit; text-decoration: underline;'>Enka.Network</a>, whom we warmly thank for their invaluable contribution to the community.",
         "home.designCredit": "Character sheet design inspired by Fribbels HSR Optimizer.",
+        "home.madeWithAstro": "Made with Astro",
 
         // ── Mobile ───────────────────────────────────────
         "mobile.title": "Mobile Version Not Available",
@@ -1348,6 +1350,7 @@ if (typeof window !== 'undefined') {
     };
 
     if (typeof document !== 'undefined') {
+        document.addEventListener('astro:page-load', initI18n);
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initI18n);
         } else {

@@ -58,7 +58,7 @@ export function renderShowcaseComponent(persoObj, charIndex) {
             <!-- Section Analyses et Conseils Découplée -->
             <div class="coaching-row" style="margin-top: 32px; width: 100%;">
                 <div style="padding: 20px;">
-                    <h2 style="color: var(--text-primary); margin-bottom: 25px; font-size: 32px; border-bottom: 2px solid var(--text-primary); padding-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                    <h2 style="color: var(--text-primary); margin-bottom: 25px; font-size: 32px; border-bottom: 2px solid var(--text-primary); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; font-weight: normal;">
                         ${t('analysis.title', persoObj.nom)}
                     </h2>
                     <div id="advice-section-container">

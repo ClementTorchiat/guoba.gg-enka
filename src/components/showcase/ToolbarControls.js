@@ -51,7 +51,7 @@ export function renderToolbarControls(persoObj, charIndex) {
         const charElement = persoObj.combatStats?.dmgBonusKey ? persoObj.combatStats.dmgBonusKey.replace('_dmg_', '') : 'pyro';
         const charBg = ELEMENT_COLORS[charElement] || '#333';
         const charImg = persoObj.image ? persoObj.image.replace('Side_', '') : '';
-        const charIcon = `<img src="${charImg}" style="width:40px; height:40px; border-radius:5px; border:1px solid rgba(255,255,255,0.5); box-shadow:0 0 5px rgba(0,0,0,0.5); object-fit:cover; background:${charBg};" title="${persoObj.nom}">`;
+        const charIcon = `<img src="${charImg}" style="width:40px; height:40px; border-radius:5px; border:1px solid rgba(255,255,255,0.5); box-shadow:0 0 5px rgba(0,0,0,0.5); object-fit:cover; background:${charBg};" title="${persoObj.nom}" decoding="async">`;
 
         const resolveTeammateNameFn = (typeof window !== 'undefined' && window.resolveTeammateName) ? window.resolveTeammateName : (n => n);
 
@@ -91,7 +91,8 @@ export function renderToolbarControls(persoObj, charIndex) {
                     <img src="${url}" 
                          style="${imgStyle}"
                          onerror="this.src='${fallback}'" 
-                         title="${mate.role}: ${names[0] ? resolveTeammateNameFn(names[0]) : (elems[0] || t('data.unknown'))}">
+                         title="${mate.role}: ${names[0] ? resolveTeammateNameFn(names[0]) : (elems[0] || t('data.unknown'))}"
+                         decoding="async">
                 `;
             } else {
                 const url1 = getIconUrl(names[0], elems[0], mate.role);
@@ -101,10 +102,10 @@ export function renderToolbarControls(persoObj, charIndex) {
 
                 innerHtml = `
                     <div style="position:absolute; inset:0; clip-path: polygon(0 0, 100% 0, 0 100%); z-index:2;">
-                        <img src="${url1}" onerror="this.src='${fb1}'" style="width:100%; height:100%; object-fit:cover;">
+                        <img src="${url1}" onerror="this.src='${fb1}'" style="width:100%; height:100%; object-fit:cover;" decoding="async">
                     </div>
                     <div style="position:absolute; inset:0; clip-path: polygon(100% 0, 100% 100%, 0 100%); z-index:1;">
-                        <img src="${url2}" onerror="this.src='${fb2}'" style="width:100%; height:100%; object-fit:cover;">
+                        <img src="${url2}" onerror="this.src='${fb2}'" style="width:100%; height:100%; object-fit:cover;" decoding="async">
                     </div>
                     <div style="position:absolute; inset:0; background:linear-gradient(to bottom right, transparent 49.5%, var(--text-primary) 49.5%, var(--text-primary) 50.5%, transparent 50.5%); z-index:3; pointer-events:none;"></div>
                 `;
@@ -145,11 +146,11 @@ export function renderToolbarControls(persoObj, charIndex) {
             const artifactName = mate.artifact ? getLocalizedName(mate.artifact).replace(/"/g, '&quot;') : '';
 
             const weaponBadge = weaponIcon
-                ? `<img src="${weaponIcon}" title="${weaponName}" style="position:absolute; bottom:0; left:0; width:16px; height:16px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'">`
+                ? `<img src="${weaponIcon}" title="${weaponName}" style="position:absolute; bottom:0; left:0; width:16px; height:16px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" decoding="async">`
                 : '';
 
             const artifactBadge = artifactIcon
-                ? `<img src="${artifactIcon}" title="${artifactName}" style="position:absolute; bottom:0; right:0; width:16px; height:16px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'">`
+                ? `<img src="${artifactIcon}" title="${artifactName}" style="position:absolute; bottom:0; right:0; width:16px; height:16px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" decoding="async">`
                 : '';
 
             const consBadge = (mate.cons && mate.cons > 0)

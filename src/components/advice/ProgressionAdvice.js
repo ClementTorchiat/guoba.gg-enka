@@ -76,7 +76,7 @@ export function renderLevelAdvice(persoObj) {
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
                     <img src="${persoObj.image}" style="width:60px; height:60px; border-radius:6px; background:rgba(0,0,0,0.1); object-fit:cover; align-self:flex-start;" alt="${persoObj.nom}">
                     <div style="flex:1;">
-                        <p style="font-size: 12px; color:var(--text-grey); margin:0 0 4px 0; font-weight:500;">${persoObj.nom}</p>
+                        <p style="font-size: 12px; color:var(--text-grey); margin:0 0 4px 0;">${persoObj.nom}</p>
                         <p style="font-size: 14px; color:var(--text-primary); margin:0; line-height:1.4;">${adv.msg}</p>
                     </div>
                 </div>
@@ -109,7 +109,7 @@ export function renderLevelAdvice(persoObj) {
                 
                 <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-grey); margin-top: 4px;">
                     <span>${t('analysis.s3.lvl.1')}</span>
-                    <span style="color:var(--text-always-white); font-weight:bold;">${t('analysis.s3.lvl.current', persoObj.level || 1)}</span>
+                    <span style="color:var(--text-always-white);">${t('analysis.s3.lvl.current', persoObj.level || 1)}</span>
                     <span>${t('analysis.s3.lvl.max', adv.maxLevel)}</span>
                 </div>
             </div>
@@ -132,7 +132,7 @@ export function renderWeaponAdvice(persoObj) {
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
                     <img src="${weaponIcon}" style="width:60px; height:60px; border-radius:6px; background:rgba(0,0,0,0.1); object-fit:cover; align-self:flex-start;" alt="Arme">
                     <div style="flex:1;">
-                        <p style="font-size: 12px; color:var(--text-grey); margin:0 0 4px 0; font-weight:500;">${persoObj.weapon ? persoObj.weapon.name : ''}</p>
+                        <p style="font-size: 12px; color:var(--text-grey); margin:0 0 4px 0;">${persoObj.weapon ? persoObj.weapon.name : ''}</p>
                         <p style="font-size: 14px; color:var(--text-primary); margin:0; line-height:1.4;">${adv.msg}</p>
                     </div>
                 </div>
@@ -165,7 +165,7 @@ export function renderWeaponAdvice(persoObj) {
                 
                 <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-grey); margin-top: 4px;">
                     <span>${t('analysis.s3.lvl.1')}</span>
-                    <span style="color:var(--text-always-white); font-weight:bold;">${t('analysis.s3.lvl.current', weaponLevel)}</span>
+                    <span style="color:var(--text-always-white);">${t('analysis.s3.lvl.current', weaponLevel)}</span>
                     <span>${t('analysis.s3.lvl.max', 90)}</span>
                 </div>
             </div>

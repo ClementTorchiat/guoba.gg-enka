@@ -73,14 +73,14 @@ export function renderCritAdvice(b, config) {
             <div style="padding-left: 16px; padding-bottom: 24px; padding-top: 32px; border-top:1px dashed rgba(255,255,255,0.1);">
                 <div style="width: 100%; aspect-ratio: ${Math.max(300, b.cd) / 100}; background: rgba(0,0,0,0.2); border-left: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2); position: relative; display: flex; align-items: flex-end;">
                     
-                    <span style="position:absolute; left:-18px; top:50%; font-size:10px; color:var(--text-grey); transform:translateY(-50%) rotate(-90deg); letter-spacing:1px; font-weight:bold;">CR</span>
+                    <span style="position:absolute; left:-18px; top:50%; font-size:10px; color:var(--text-grey); transform:translateY(-50%) rotate(-90deg); letter-spacing:1px;">CR</span>
                     <span style="position:absolute; left:-12px; top:-16px; font-size:9px; color:var(--text-grey);">100%</span>
                     
-                    <span style="position:absolute; bottom:-20px; left:50%; font-size:10px; color:var(--text-grey); transform:translateX(-50%); letter-spacing:1px; font-weight:bold;">CD</span>
+                    <span style="position:absolute; bottom:-20px; left:50%; font-size:10px; color:var(--text-grey); transform:translateX(-50%); letter-spacing:1px;">CD</span>
                     <span style="position:absolute; bottom:-20px; right:0; font-size:9px; color:var(--text-grey);">${Math.max(300, b.cd).toFixed(0)}%</span>
 
                     <div style="width: ${(b.cd / Math.max(300, b.cd)) * 100}%; height: ${Math.min(b.cr, 100)}%; background: ${critAdvice.color}; opacity: 0.85; border-radius: 0 3px 0 0; box-shadow: inset -1px 1px 2px rgba(255,255,255,0.3); position: relative;">
-                        <span style="position:absolute; top:-18px; right:0; font-size:10px; font-weight:bold; color:var(--text-always-white); text-shadow:0 0 3px rgba(0,0,0,0.8); white-space:nowrap;">
+                        <span style="position:absolute; top:-18px; right:0; font-size:10px; color:var(--text-always-white); text-shadow:0 0 3px rgba(0,0,0,0.8); white-space:nowrap;">
                             ${b.cr.toFixed(1)}% / ${b.cd.toFixed(1)}%
                         </span>
                     </div>
