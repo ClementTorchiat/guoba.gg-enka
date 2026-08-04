@@ -121,7 +121,9 @@
         "FragmentOfHarmonicWhimsy:2",
         "UnfinishedReverie:2",
         "ADayCarvedFromRisingWinds:2",
-        "DisenchantmentInDeepShadow:2"
+        "DisenchantmentInDeepShadow:2",
+        "ScarletProof:2",
+        "HeartOfTheFurnace:2"
       ],
       "er_req": 140,
       "team": [
@@ -203,6 +205,8 @@
         "UnfinishedReverie:2",
         "ADayCarvedFromRisingWinds:2",
         "DisenchantmentInDeepShadow:2",
+        "ScarletProof:2",
+        "HeartOfTheFurnace:2",
         "WanderersTroupe:2",
         "GildedDreams:2",
         "FlowerOfParadiseLost:2",

@@ -1,0 +1,16 @@
+{
+    "buffs": [
+        {
+            "label": {
+                "fr": "Si une réaction élémentaire est déclenchée (ATQ%)",
+                "en": "If an elemental reaction is triggered (ATK%)"
+            },
+            "stats": {
+                "atk_": [
+                    0.16,
+                    0.04
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,65 @@
+{
+    "selectMode": "exclusive",
+    "buffs": [
+        {
+            "label": {
+                "fr": "Aucun allié du même élément que le porteur (ATQ%)",
+                "en": "No ally of the same element as the wielder (ATK%)"
+            },
+            "active": false,
+            "stats": {
+                "atk_": [
+                    0.36,
+                    0.09
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "1 Allié du même élément que le porteur (ATQ%, Maîtrise élémentaire)",
+                "en": "1 ally of the same element as the wielder (ATK%, Elemental Mastery)"
+            },
+            "active": true,
+            "stats": {
+                "atk_": [
+                    0.24,
+                    0.06
+                ],
+                "eleMas": [
+                    64,
+                    16
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "2 Alliés du même élément que le porteur (ATQ%, Maîtrise élémentaire)",
+                "en": "2 allies of the same element as the wielder (ATK%, Elemental Mastery)"
+            },
+            "active": false,
+            "stats": {
+                "atk_": [
+                    0.12,
+                    0.03
+                ],
+                "eleMas": [
+                    128,
+                    32
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "3 Alliés du même élément que le porteur (Maîtrise élémentaire)",
+                "en": "3 allies of the same element as the wielder (Elemental Mastery)"
+            },
+            "active": false,
+            "stats": {
+                "eleMas": [
+                    192,
+                    48
+                ]
+            }
+        }
+    ]
+}

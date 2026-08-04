@@ -150,6 +150,8 @@
         "UnfinishedReverie:2",
         "ADayCarvedFromRisingWinds:2",
         "DisenchantmentInDeepShadow:2",
+        "ScarletProof:2",
+        "HeartOfTheFurnace:2",
         "FlowerOfParadiseLost:4"
       ],
       "er_req": 130,
@@ -231,6 +233,8 @@
         "UnfinishedReverie:2",
         "ADayCarvedFromRisingWinds:2",
         "DisenchantmentInDeepShadow:2",
+        "ScarletProof:2",
+        "HeartOfTheFurnace:2",
         "WanderersTroupe:2",
         "GildedDreams:2",
         "FlowerOfParadiseLost:2",
@@ -297,15 +301,31 @@
           "critRate_"
         ]
       },
-      "hideUIStats": [
-      ],
-      "showUIStats": [
-      ],
+      "hideUIStats": [],
+      "showUIStats": [],
       "bestSets": [
-        "DisenchantmentInDeepShadow:4", "GildedDreams:4"
+        "DisenchantmentInDeepShadow:4",
+        "GildedDreams:4"
       ],
       "goodSets": [
-        "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2"
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "ScarletProof:2",
+        "HeartOfTheFurnace:2",
+        "ScarletProof:2",
+        "HeartOfTheFurnace:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2"
       ],
       "er_req": 130,
       "team": [
@@ -315,15 +335,15 @@
           "element": "electro"
         },
         {
+          "role": "Sub-DPS",
+          "name": "Odette",
+          "element": "cryo"
+        },
+        {
           "role": "Support",
           "name": "Qiqi",
           "element": "cryo",
           "artifact": "TenacityOfTheMillelith"
-        },
-        {
-          "role": "DPS",
-          "name": "MarionetteNew",
-          "element": "cryo"
         }
       ]
     }

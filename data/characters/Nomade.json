@@ -73,8 +73,12 @@
           "critDMG_"
         ]
       },
-      "hideUIStats": ["heal_"],
-      "showUIStats": ["pyro_dmg_"],
+      "hideUIStats": [
+        "heal_"
+      ],
+      "showUIStats": [
+        "pyro_dmg_"
+      ],
       "bestSets": [
         "DesertPavilionChronicle:4"
       ],
@@ -90,6 +94,8 @@
         "UnfinishedReverie:2",
         "ADayCarvedFromRisingWinds:2",
         "DisenchantmentInDeepShadow:2",
+        "ScarletProof:2",
+        "HeartOfTheFurnace:2",
         "ViridescentVenerer:2",
         "DesertPavilionChronicle:2"
       ],

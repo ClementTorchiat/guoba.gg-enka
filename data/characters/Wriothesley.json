@@ -293,13 +293,30 @@
         "MarechausseeHunter:4"
       ],
       "goodSets": [
-        "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "WanderersTroupe:2", "GildedDreams:2", "FlowerOfParadiseLost:2", "NightOfTheSkysUnveiling:2", "AubadeOfMorningstarAndMoon:2", "BlizzardStrayer:2", "FinaleOfTheDeepGalleries:2"
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "ScarletProof:2",
+        "HeartOfTheFurnace:2",
+        "WanderersTroupe:2",
+        "GildedDreams:2",
+        "FlowerOfParadiseLost:2",
+        "NightOfTheSkysUnveiling:2",
+        "AubadeOfMorningstarAndMoon:2",
+        "BlizzardStrayer:2",
+        "FinaleOfTheDeepGalleries:2"
       ],
       "er_req": 140,
       "team": [
         {
-          "role": "DPS",
-          "name": "MarionetteNew",
+          "role": "Sub-DPS",
+          "name": "Odette",
           "element": "cryo"
         },
         {
@@ -309,9 +326,9 @@
         },
         {
           "role": "Support",
-          "name": "Nicole",
-          "element": "pyro",
-          "artifact": "CelestialGift"
+          "name": "Alyosha",
+          "element": "electro",
+          "cons": "6"
         }
       ]
     }

@@ -1,0 +1,29 @@
+{
+    "selectMode": "exclusive",
+    "buffs": [
+        {
+            "label": {
+                "fr": "Si une compétence élémentaire est déclenchée (ATQ% - courte distance)",
+                "en": "If an elemental skill is triggered (ATK% - short distance)"
+            },
+            "stats": {
+                "atk_": [
+                    0.18,
+                    0.045
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "Si une compétence élémentaire est déclenchée (ATQ% - longue distance)",
+                "en": "If an elemental skill is triggered (ATK% - long distance)"
+            },
+            "stats": {
+                "atk_": [
+                    0.36,
+                    0.09
+                ]
+            }
+        }
+    ]
+}

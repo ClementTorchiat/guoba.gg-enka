@@ -62,6 +62,8 @@
         "UnfinishedReverie:2",
         "ADayCarvedFromRisingWinds:2",
         "DisenchantmentInDeepShadow:2",
+        "ScarletProof:2",
+        "HeartOfTheFurnace:2",
         "MaidenBeloved:2",
         "OceanHuedClam:2",
         "SongOfDaysPast:2"
@@ -123,8 +125,12 @@
           "critDMG_"
         ]
       },
-      "hideUIStats": ["heal_"],
-      "showUIStats": ["physical_dmg_"],
+      "hideUIStats": [
+        "heal_"
+      ],
+      "showUIStats": [
+        "physical_dmg_"
+      ],
       "bestSets": [
         "PaleFlame:4",
         "GladiatorsFinale:4"
@@ -140,7 +146,9 @@
         "FragmentOfHarmonicWhimsy:2",
         "UnfinishedReverie:2",
         "ADayCarvedFromRisingWinds:2",
-        "DisenchantmentInDeepShadow:2"
+        "DisenchantmentInDeepShadow:2",
+        "ScarletProof:2",
+        "HeartOfTheFurnace:2"
       ],
       "er_req": 130,
       "team": [
@@ -209,7 +217,20 @@
         "NoblesseOblige:4"
       ],
       "goodSets": [
-        "GladiatorsFinale:2", "ShimenawasReminiscence:2", "VermillionHereafter:2", "EchoesOfAnOffering:2", "NighttimeWhispersInTheEchoingWoods:2", "FragmentOfHarmonicWhimsy:2", "UnfinishedReverie:2", "ADayCarvedFromRisingWinds:2","DisenchantmentInDeepShadow:2", "EmblemOfSeveredFate:2", "SilkenMoonsSerenade:2", "CelestialGift:2"
+        "GladiatorsFinale:2",
+        "ShimenawasReminiscence:2",
+        "VermillionHereafter:2",
+        "EchoesOfAnOffering:2",
+        "NighttimeWhispersInTheEchoingWoods:2",
+        "FragmentOfHarmonicWhimsy:2",
+        "UnfinishedReverie:2",
+        "ADayCarvedFromRisingWinds:2",
+        "DisenchantmentInDeepShadow:2",
+        "ScarletProof:2",
+        "HeartOfTheFurnace:2",
+        "EmblemOfSeveredFate:2",
+        "SilkenMoonsSerenade:2",
+        "CelestialGift:2"
       ],
       "er_req": 200,
       "team": [
@@ -225,9 +246,8 @@
         },
         {
           "role": "Sub-DPS",
-          "name": "Escoffier",
-          "element": "cryo",
-          "artifact": "TenacityOfTheMillelith"
+          "name": "Odette",
+          "element": "cryo"
         }
       ]
     }

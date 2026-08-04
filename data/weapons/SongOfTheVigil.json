@@ -1,0 +1,16 @@
+{
+    "buffs": [
+        {
+            "label": {
+                "fr": "Si une réaction Stellaire est déclenchée (ATQ%)",
+                "en": "If a Stellar reaction is triggered (ATK%)"
+            },
+            "stats": {
+                "atk_": [
+                    0.20,
+                    0.05
+                ]
+            }
+        }
+    ]
+}

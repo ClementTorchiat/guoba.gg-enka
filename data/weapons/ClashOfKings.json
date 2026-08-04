@@ -1,0 +1,20 @@
+{
+    "buffs": [
+        {
+            "label": {
+                "fr": "Si une compétence élémentaire est utilisée (ATQ%, Maîtrise élémentaire)",
+                "en": "If an elemental skill is used (ATK%, Elemental Mastery)"
+            },
+            "stats": {
+                "atk_": [
+                    0.20,
+                    0.05
+                ],
+                "eleMas": [
+                    100,
+                    25
+                ]
+            }
+        }
+    ]
+}

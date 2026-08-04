@@ -1,0 +1,16 @@
+{
+    "buffs": [
+        {
+            "label": {
+                "fr": "Si une réaction Cryo ou Hydro est déclenchée (ATQ%)",
+                "en": "If a Cryo or Hydro reaction is triggered (ATK%)"
+            },
+            "stats": {
+                "atk_": [
+                    0.20,
+                    0.05
+                ]
+            }
+        }
+    ]
+}

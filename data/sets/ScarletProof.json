@@ -1,0 +1,14 @@
+{
+    "4": [
+        {
+            "label": {
+                "fr": "Si une réaction d'Astrodispersion est déclenchée (16% Taux CRIT)",
+                "en": "If a Stellar-Swirl reaction is triggered (16% Crit Rate)"
+            },
+            "stats": {
+                "critRate_": 0.16
+            },
+            "active": true
+        }
+    ]
+}

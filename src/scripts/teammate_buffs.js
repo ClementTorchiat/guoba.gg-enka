@@ -104,6 +104,27 @@ window.TEAMMATE_BUFFS = {
             }
         ]
     },
+    "Alyosha": {
+        element: "electro",
+        buffs: [
+            {
+                label: { fr: "Précision du chasseur (ATQ%)", en: "Hunter's Precision (ATK%)" },
+                active: true,
+                stats: { atk_: 0.212 }
+            },
+            {
+                label: { fr: "C3 : Précision du chasseur (ATQ%)", en: "C3: Hunter's Precision (ATK%)" },
+                active: true,
+                stats: { atk_: 0.038 }
+            },
+            {
+                label: { fr: "C6 : 2ème Précision du chasseur (ATQ%, Maîtrise élémentaire)", en: "C6: 2nd Hunter's Precision (ATK%, EM)" },
+                cons: 6,
+                active: true,
+                stats: { atk_: 0.25, eleMas: 100 }
+            }
+        ]
+    },
     "Kazuha": {
         element: "anemo",
         buffs: [
@@ -274,13 +295,13 @@ window.TEAMMATE_BUFFS = {
                 label: { fr: "Théorie de l'entropie (DGT Élémentaires)", en: "Chaotic Entropy (Elemental DMG)" },
                 cons: 6,
                 active: true,
-                stats: {elemental_dmg_: 0.20 }
+                stats: { elemental_dmg_: 0.20 }
             },
             {
                 label: { fr: "Théorie de l'entropie (Hexerei uniquement - DGT Élémentaires)", en: "Chaotic Entropy (Hexerei only - Elemental DMG)" },
                 cons: 6,
                 active: false,
-                stats: {elemental_dmg_: 0.0857142 }
+                stats: { elemental_dmg_: 0.0857142 }
             }
         ]
     },
@@ -349,7 +370,7 @@ window.TEAMMATE_BUFFS = {
                 label: { fr: "Poursuite de l'anéantissement du mal (DGT Pyro, DGT Électro)", en: "In Pursuit of Ending Evil (Pyro DMG, Electro DMG)" },
                 cons: 6,
                 active: true,
-                stats: {pyro_dmg_: 0.60, electro_dmg_: 0.60 }
+                stats: { pyro_dmg_: 0.60, electro_dmg_: 0.60 }
             }
         ]
     },
@@ -471,8 +492,8 @@ window.TEAMMATE_BUFFS = {
 };
 
 window.TEAMMATE_NAME_ALIASES = {
-    "Qin":      { fr: "Jean",  en: "Jean" },
+    "Qin": { fr: "Jean", en: "Jean" },
     "SkirkNew": { fr: "Skirk", en: "Skirk" },
     "Liuyun": { fr: "Xianyun", en: "Xianyun" },
-    "Olorun": { fr: "Ororon", en: "Ororon"}
+    "Olorun": { fr: "Ororon", en: "Ororon" }
 };

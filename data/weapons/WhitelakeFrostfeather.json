@@ -1,0 +1,45 @@
+{
+    "selectMode": "cumulative",
+    "buffs": [
+        {
+            "label": {
+                "fr": "Si une compétence élémentaire touche un ennemi une 1ère fois (ATQ%)",
+                "en": "If an elemental skill hits an enemy a 1st time (ATK%)"
+            },
+            "stats": {
+                "atk_": [
+                    0.08,
+                    0.02
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "Si une compétence élémentaire touche un ennemi une 2ème fois (ATQ%)",
+                "en": "If an elemental skill hits an enemy a 2nd time (ATK%)"
+            },
+            "stats": {
+                "atk_": [
+                    0.08,
+                    0.02
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "Si une compétence élémentaire touche un ennemi une 3ème fois (ATQ% et DGT CRIT pour les dégâts Stellaires uniquement)",
+                "en": "If an elemental skill hits an enemy a 3rd time (ATK% & CRIT DMG for Stellar attacks only)"
+            },
+            "stats": {
+                "atk_": [
+                    0.08,
+                    0.02
+                ],
+                "critDMG": [
+                    0.50,
+                    0.15
+                ]
+            }
+        }
+    ]
+}

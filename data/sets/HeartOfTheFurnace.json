@@ -1,0 +1,14 @@
+{
+    "4": [
+        {
+            "label": {
+                "fr": "Si une réaction Stellaire est déclenchée ou inflige des dégâts (12% ATQ)",
+                "en": "If a Stellar reaction is triggered or deals damage (12% ATK)"
+            },
+            "stats": {
+                "atk_": 0.12
+            },
+            "active": true
+        }
+    ]
+}

@@ -1,0 +1,66 @@
+{
+    "buffs": [
+        {
+            "label": {
+                "fr": "Bonus 1 (ATQ%)",
+                "en": "Bonus 1 (ATK%)"
+            },
+            "stats": {
+                "atk_": [
+                    0.18,
+                    0.045
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "Bonus 2 (Maîtrise élémentaire)",
+                "en": "Bonus 2 (Elemental Mastery)"
+            },
+            "stats": {
+                "eleMas": [
+                    120,
+                    30
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "Bonus 3 (Bonus de DGTs Stellaires)",
+                "en": "Bonus 3 (Stellar DMG Bonus)"
+            },
+            "stats": {}
+        },
+        {
+            "label": {
+                "fr": "Copie du Bonus 1 si une réaction Stellaire est déclenchée (ATQ%)",
+                "en": "Bonus 1 copy if a Stellar reaction is triggered (ATK%)"
+            },
+            "stats": {
+                "atk_": [
+                    0.18,
+                    0.045
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "Copie du Bonus 2 si une réaction Stellaire est déclenchée (Maîtrise élémentaire)",
+                "en": "Bonus 2 copy if a Stellar reaction is triggered (Elemental Mastery)"
+            },
+            "stats": {
+                "eleMas": [
+                    120,
+                    30
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "Copie du Bonus 3 si une réaction Stellaire est déclenchée (Bonus de DGTs Stellaires)",
+                "en": "Bonus 3 copy if a Stellar reaction is triggered (Stellar DMG Bonus)"
+            },
+            "stats": {}
+        }
+    ]
+}

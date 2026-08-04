@@ -485,39 +485,106 @@ function showSkeletonCard() {
 }
 
 let gameDataReady = false;
+let gameDataPromise = null;
 
 async function loadGameData() {
-    const loader = document.getElementById('loading-msg');
-    if (loader) loader.innerText = t('error.loadingV2');
-    window.iconToNameHash = {};
+    if (gameDataReady) return true;
+    if (gameDataPromise) return gameDataPromise;
 
-    // ⚠️ TRÈS IMPORTANT : Passer en v4 pour vider l'ancien cache sans armes
-    const CACHE_KEY = 'guoba_gamedata_idb_v1';
-    const CACHE_TTL = 24 * 60 * 60 * 1000;
+    gameDataPromise = (async () => {
+        const loader = document.getElementById('loading-msg');
+        if (loader) loader.innerText = t('error.loadingV2');
+        window.iconToNameHash = {};
 
-    try {
-        const uidInput = document.getElementById('uidInput');
-        const searchBtn = document.getElementById('searchBtn');
-        if (uidInput) {
-            uidInput.disabled = true;
-            uidInput.placeholder = t('ui.search.loading');
-        }
-        if (searchBtn) {
-            searchBtn.disabled = true;
-        }
+        // ⚠️ TRÈS IMPORTANT : Passer en v4 pour vider l'ancien cache sans armes
+        const CACHE_KEY = 'guoba_gamedata_idb_v1';
+        const CACHE_TTL = 24 * 60 * 60 * 1000;
 
-        // 1. Lecture du cache asynchrone depuis IndexedDB
-        const cached = await idbGet(CACHE_KEY);
-        if (cached && (Date.now() - cached.ts < CACHE_TTL)) {
-            charData = cached.chars;
-            locData = cached.locs;
-            window.namecardsData = cached.namecards;
-            window.pfpsData = cached.pfps;
-            window.iconToNameHash = cached.iconToNameHash || {};
-            // Charge la table de rolls en tâche de fond si besoin
-            loadRollTable().catch(() => {});
+        try {
+            const uidInput = document.getElementById('uidInput');
+            const searchBtn = document.getElementById('searchBtn');
+            if (uidInput) {
+                uidInput.disabled = true;
+                uidInput.placeholder = t('ui.search.loading');
+            }
+            if (searchBtn) {
+                searchBtn.disabled = true;
+            }
+
+            // 1. Lecture du cache asynchrone depuis IndexedDB
+            const cached = await idbGet(CACHE_KEY);
+            if (cached && (Date.now() - cached.ts < CACHE_TTL)) {
+                charData = cached.chars;
+                locData = cached.locs;
+                window.namecardsData = cached.namecards;
+                window.pfpsData = cached.pfps;
+                window.iconToNameHash = cached.iconToNameHash || {};
+                // Charge la table de rolls en tâche de fond si besoin
+                loadRollTable().catch(() => {});
+                gameDataReady = true;
+                buildHashToKey();
+                if (uidInput) {
+                    uidInput.disabled = false;
+                    uidInput.placeholder = t('ui.search.placeholder');
+                }
+                if (searchBtn) {
+                    searchBtn.disabled = false;
+                }
+                if (loader) loader.innerText = "";
+                return true;
+            }
+
+            // 2. Téléchargement des dictionnaires et de la table de rolls
+            const [chars, locs, relics, namecards, pfps, weapons] = await Promise.all([
+                fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/avatars.json`).then(r => r.json()),
+                fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json`).then(r => r.json()),
+                fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/relics.json`).then(r => r.json()),
+                fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/namecards.json`).then(r => r.json()),
+                fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/pfps.json`).then(r => r.json()),
+                fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/weapons.json`).then(r => r.json()),
+                loadRollTable().catch(() => {})
+            ]);
+
+            charData = chars;
+            locData = locs;
+            window.namecardsData = namecards;
+            window.pfpsData = pfps;
+
+            // Remplissage du dictionnaire avec les Artéfacts
+            if (relics && relics.Items && relics.Sets) {
+                Object.values(relics.Items).forEach(item => {
+                    if (item.Icon && item.SetId && relics.Sets[item.SetId]) {
+                        const iconName = item.Icon.split('/').pop().replace('.png', '');
+                        const nameHash = relics.Sets[item.SetId].Name;
+                        if (iconName && nameHash) {
+                            window.iconToNameHash[iconName] = nameHash;
+                        }
+                    }
+                });
+            }
+
+            // Remplissage du dictionnaire avec les Armes
+            if (weapons) {
+                Object.values(weapons).forEach(weapon => {
+                    const iconName = weapon.Icon || weapon.icon;
+                    const nameHash = weapon.NameTextMapHash || weapon.nameTextMapHash;
+                    if (iconName && nameHash) {
+                        window.iconToNameHash[iconName] = nameHash;
+                    }
+                });
+            }
+
+            // 3. Stockage natif ultra-rapide dans IndexedDB (zéro limite 5Mo)
+            await idbSet(CACHE_KEY, {
+                ts: Date.now(),
+                chars, locs, namecards, pfps, weapons,
+                iconToNameHash: window.iconToNameHash
+            });
+
+            if (loader) loader.innerText = "";
             gameDataReady = true;
             buildHashToKey();
+
             if (uidInput) {
                 uidInput.disabled = false;
                 uidInput.placeholder = t('ui.search.placeholder');
@@ -525,79 +592,24 @@ async function loadGameData() {
             if (searchBtn) {
                 searchBtn.disabled = false;
             }
-            if (loader) loader.innerText = "";
-            return;
+            return true;
+        } catch (e) {
+            gameDataReady = false;
+            gameDataPromise = null;
+            if (loader) loader.innerText = t('error.filesErr');
+            if (uidInput) {
+                uidInput.placeholder = t('ui.search.error');
+                uidInput.style.color = "#ef4444";
+            }
+            if (searchBtn) {
+                searchBtn.disabled = false;
+            }
+            alert(t('error.gameData'));
+            throw e;
         }
+    })();
 
-        // 2. Téléchargement des dictionnaires et de la table de rolls
-        const [chars, locs, relics, namecards, pfps, weapons] = await Promise.all([
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/avatars.json`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/relics.json`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/namecards.json`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/pfps.json`).then(r => r.json()),
-            fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/weapons.json`).then(r => r.json()),
-            loadRollTable().catch(() => {})
-        ]);
-
-        charData = chars;
-        locData = locs;
-        window.namecardsData = namecards;
-        window.pfpsData = pfps;
-
-        // Remplissage du dictionnaire avec les Artéfacts
-        if (relics && relics.Items && relics.Sets) {
-            Object.values(relics.Items).forEach(item => {
-                if (item.Icon && item.SetId && relics.Sets[item.SetId]) {
-                    const iconName = item.Icon.split('/').pop().replace('.png', '');
-                    const nameHash = relics.Sets[item.SetId].Name;
-                    if (iconName && nameHash) {
-                        window.iconToNameHash[iconName] = nameHash;
-                    }
-                }
-            });
-        }
-
-        // Remplissage du dictionnaire avec les Armes
-        if (weapons) {
-            Object.values(weapons).forEach(weapon => {
-                const iconName = weapon.Icon || weapon.icon;
-                const nameHash = weapon.NameTextMapHash || weapon.nameTextMapHash;
-                if (iconName && nameHash) {
-                    window.iconToNameHash[iconName] = nameHash;
-                }
-            });
-        }
-
-        // 3. Stockage natif ultra-rapide dans IndexedDB (zéro limite 5Mo)
-        await idbSet(CACHE_KEY, {
-            ts: Date.now(),
-            chars, locs, namecards, pfps, weapons,
-            iconToNameHash: window.iconToNameHash
-        });
-
-        if (loader) loader.innerText = "";
-        gameDataReady = true;
-        buildHashToKey();
-
-        if (uidInput) {
-            uidInput.disabled = false;
-            uidInput.placeholder = t('ui.search.placeholder');
-        }
-        if (searchBtn) {
-            searchBtn.disabled = false;
-        }
-    } catch (e) {
-        if (loader) loader.innerText = t('error.filesErr');
-        if (uidInput) {
-            uidInput.placeholder = t('ui.search.error');
-            uidInput.style.color = "#ef4444";
-        }
-        if (searchBtn) {
-            searchBtn.disabled = false;
-        }
-        alert(t('error.gameData'))
-    }
+    return gameDataPromise;
 }
 
 function toggleSearchIcon(isLoaded) {
@@ -641,17 +653,33 @@ function clearSearch() {
     renderHome();
 }
 
+let inflightFetchPromise = null;
+let inflightUid = null;
+
 async function fetchUserData(optionalUid) {
-    const uid = (optionalUid || document.getElementById('uidInput').value).trim();
+    const uid = (optionalUid || document.getElementById('uidInput')?.value || '').trim();
     if (!uid) return alert(t('error.noUid'));
 
     if (!/^\d{9,10}$/.test(uid)) {
         return alert(t('error.invalidUid'));
     }
 
-    if (!gameDataReady) {
-        return alert(t('error.dataLoading'));
+    if (inflightFetchPromise && inflightUid === uid) {
+        return inflightFetchPromise;
     }
+
+    inflightUid = uid;
+    inflightFetchPromise = (async () => {
+        if (!gameDataReady) {
+            const loader = document.getElementById('loading-msg');
+            if (loader) loader.innerText = t('error.loadingV2');
+            try {
+                await loadGameData();
+            } catch (err) {
+                console.error("Erreur de chargement des données du jeu :", err);
+                return;
+            }
+        }
 
     const loader = document.getElementById('loading-msg');
 
@@ -720,22 +748,30 @@ async function fetchUserData(optionalUid) {
         if (loader) loader.innerText = "";
         toggleSearchIcon(true);
 
-    } catch (e) {
-        clearTimeout(timeoutId);
-        if (loader) loader.innerText = t('error.generic');
+        } catch (e) {
+            clearTimeout(timeoutId);
+            if (loader) loader.innerText = t('error.generic');
 
-        if (e.name === 'AbortError') {
-            alert(t('error.timeout'));
-        } else if (e.message === '404') {
-            alert(t('error.notFound'));
-        } else if (e.message === '429') {
-            alert(t('error.rateLimit'));
-        } else if (e.message === 'SERVER') {
-            alert(t('error.serverDown'));
-        } else {
-            alert(t('error.generic'));
+            if (e.name === 'AbortError') {
+                alert(t('error.timeout'));
+            } else if (e.message === '404') {
+                alert(t('error.notFound'));
+            } else if (e.message === '429') {
+                alert(t('error.rateLimit'));
+            } else if (e.message === 'SERVER') {
+                alert(t('error.serverDown'));
+            } else {
+                alert(t('error.generic'));
+            }
         }
-    }
+    })().finally(() => {
+        if (inflightUid === uid) {
+            inflightFetchPromise = null;
+            inflightUid = null;
+        }
+    });
+
+    return inflightFetchPromise;
 }
 
 function renderPlayerProfile(playerInfo, uid) {
