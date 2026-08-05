@@ -66,7 +66,7 @@ export const T = {
 
         "ui.setPieces": (n) => `${n} pièces`,
         // ── Sidebar & navigation ──────────────────────────
-        "ui.version": (ver, gi) => `Ver. ${ver} - Bêta Build (GI Ver. ${gi})`,
+        "ui.version": (ver, gi) => `Ver. ${ver} - Astro Build (GI Ver. ${gi})`,
         "ui.search.placeholder": "Entrez votre UID...",
         "ui.search.loading": "Chargement des données…",
         "ui.search.error": "Erreur de chargement — rechargez la page",
@@ -260,6 +260,9 @@ export const T = {
         "advice.talent.auto": "Attaque Normale",
         "advice.talent.skill": "Compétence",
         "advice.talent.burst": "Déchaînement",
+        "talents.auto": "Attaque Normale",
+        "talents.skill": "Compétence",
+        "talents.burst": "Déchaînement",
 
         // getSetForcingAdvice
         "advice.setForce.title.ok": "Pas de forçage de set d'artéfacts",
@@ -658,6 +661,115 @@ export const T = {
                 placeholder: false
             }
         ],
+
+        // ── Roadmap de Compte ─────────────────────────────
+        "roadmap.button.title": "Roadmap du compte",
+        "roadmap.button.subtitle": "Stratégie globale",
+        "roadmap.button.badge": (n) => `${n} actions`,
+        "roadmap.page.title": "Roadmap Stratégique du Compte",
+        "roadmap.page.subtitle": (count) => `Synthèse et plan d'action d'optimisation pour les ${count} personnages de votre vitrine.`,
+        "roadmap.nav.back": "Retour à la vitrine",
+        "roadmap.focus.label": "Focus :",
+        "roadmap.focus.all": "Tous",
+        "roadmap.focus.targetBadge": (char) => `Cible : ${char}`,
+        "roadmap.focus.domainPriority": "Donjon Prioritaire",
+        "roadmap.focus.strongboxPriority": "Synthèse Prioritaire",
+        "roadmap.toggleAllChars.label": "Tous les persos du jeu",
+        "roadmap.toggleAllChars.active": "Vitrine uniquement",
+        "roadmap.outsideShowcase": "Hors-vitrine",
+        "roadmap.noCharacters": "Aucun personnage chargé. Entrez votre UID pour afficher la Roadmap.",
+
+        // Module 1 : Baromètre de Maturité
+        "roadmap.maturity.title": "Baromètre de Maturité Globale",
+        "roadmap.maturity.desc": "Indicateur synthétique du niveau d'avancement et de complétion de vos personnages de vitrine.",
+        "roadmap.maturity.weapons": "Niv. Armes",
+        "roadmap.maturity.characters": "Niv. Personnages",
+        "roadmap.maturity.talents": "Aptitudes",
+        "roadmap.maturity.mainstats": "Stats Principales",
+        "roadmap.maturity.sets": "Sets d'Artéfacts",
+        "roadmap.maturity.avgScore": "Score Moyen Vitrine",
+        "roadmap.maturity.globalIndex": "Maturité Globale",
+
+        // Module 2 : Explications détaillées des 5 baromètres
+        "roadmap.breakdown.title": "Plan d'Action des 5 Baromètres",
+        "roadmap.breakdown.desc": "Détail précis des améliorations à apporter sur vos personnages pour atteindre 100% sur chaque indicateur.",
+        "roadmap.breakdown.weapons": "Armes à monter Niv. 90",
+        "roadmap.breakdown.weapons.ok": "Toutes vos armes équipées sont au niveau maximal.",
+        "roadmap.breakdown.levels": "Niveaux de Personnages",
+        "roadmap.breakdown.levels.ok": "Tous vos personnages sont au niveau maximal recommandé.",
+        "roadmap.breakdown.talents": "Aptitudes Clés à améliorer",
+        "roadmap.breakdown.talents.ok": "Toutes les aptitudes clés sont au niveau recommandé.",
+        "roadmap.breakdown.mainstats": "Stats Principales à corriger",
+        "roadmap.breakdown.mainstats.ok": "Toutes les statistiques principales sont optimales.",
+        "roadmap.breakdown.sets": "Sets d'Artéfacts à équiper",
+        "roadmap.breakdown.sets.ok": "Tous vos personnages sont équipés de leurs sets recommandés.",
+        "roadmap.breakdown.optimal": "Optimal",
+        "roadmap.breakdown.toDo": (n) => `${n} à faire`,
+        "roadmap.breakdown.moreItems": (n) => `+ ${n} autres`,
+        "roadmap.breakdown.noSetBonus": "Aucun bonus",
+        "roadmap.breakdown.setBonus2p": (n) => `${n} bonus 2p`,
+        "roadmap.breakdown.reason.base": "Stats de base & élévation",
+        "roadmap.breakdown.reason.hp": "Scaling PV% majeur",
+        "roadmap.breakdown.reason.def": "Scaling DÉF% majeur",
+        "roadmap.breakdown.reason.em": "Scaling ME & Réactions",
+        "roadmap.breakdown.reason.reactions": "Réactions élémentaires",
+        "roadmap.action.weaponLevel": (char, weapon, cur, target) => `Monter l'arme de ${char} (${weapon}) du Niv. ${cur} au Niv. ${target}`,
+        "roadmap.action.talentLevel": (char, talent, cur, target) => `Améliorer ${talent} de ${char} du Niv. ${cur} au Niv. ${target}`,
+        "roadmap.action.charLevel": (char, cur, reason) => `Élever ${char} du Niv. ${cur} au Niv. 90 (${reason})`,
+        "roadmap.action.replaceFlowerPlume": (char, slot, score) => `Remplacer la ${slot} de ${char} (score actuel: ${score})`,
+        "roadmap.action.fixMainStat": (char, slot, curStat, bestStat) => `Corriger la stat principale de la ${slot} de ${char} (${curStat} → ${bestStat})`,
+        "roadmap.action.completeSet": (char, neededSet) => `Compléter le set 4p de ${char} (${neededSet})`,
+        "roadmap.action.noActions": "Toutes les étapes prioritaires sont déjà accomplies !",
+
+        // Module 3 : Optimiseur de Swaps Croisés
+        "roadmap.swaps.title": "Optimiseur de Swaps Croisés",
+        "roadmap.swaps.desc": "Réallocations immédiates d'artéfacts entre vos personnages pour maximiser le score total du compte sans dépenser de résine.",
+        "roadmap.swaps.netGain": (gain) => `Gain net vitrine : +${gain} pts`,
+        "roadmap.swaps.noSwaps": "Aucune permutation profitable détectée : vos artéfacts sont déjà distribués de manière optimale !",
+        "roadmap.swaps.swapPiece": (charA, charB, pieceName) => `Échanger la ${pieceName} entre ${charA} et ${charB}`,
+        "roadmap.swaps.givesPiece": (charA, charB, pieceName) => `${charA} cède sa ${pieceName} à ${charB}`,
+        "roadmap.swaps.focusGain": (char) => `Gain pour ${char}`,
+
+        // Module 4 : Planificateur de Donjons
+        "roadmap.domains.title": "Planificateur de Donjons",
+        "roadmap.domains.desc": "Classement des donjons d'artéfacts selon le nombre de personnages de votre compte pouvant rentabiliser leurs sets.",
+        "roadmap.domains.efficiency.veryHigh": "Rentabilité Exceptionnelle",
+        "roadmap.domains.efficiency.high": "Haute Rentabilité",
+        "roadmap.domains.efficiency.medium": "Rentabilité Modérée",
+        "roadmap.domains.efficiency.low": "Faible Rentabilité",
+        "roadmap.domains.beneficiaries": "Personnages concernés :",
+        "roadmap.domains.bothSetsUseful": "Donjon doublement rentable (les 2 sets sont utiles !)",
+        "roadmap.domains.noPriorityChar": "Aucun perso prioritaire",
+        "roadmap.domains.empty": "Aucun donjon prioritaire identifié pour la vitrine actuelle.",
+        "roadmap.domains.optimalSet": "Set Optimal (Best in Slot)",
+
+        // Module 5 : Conseiller de Synthèse Mystique
+        "roadmap.strongbox.title": "Conseiller de Synthèse Mystique",
+        "roadmap.strongbox.desc": "Recyclez vos pièces 5★ inutiles pour fabriquer ces sets clés sans gaspiller de résine dans des donjons non rentables.",
+        "roadmap.strongbox.recommendedSets": "Sets prioritaires à synthétiser :",
+        "roadmap.strongbox.why": "Pourquoi ce set ?",
+        "roadmap.strongbox.targetChars": "Pour vos personnages :",
+        "roadmap.strongbox.avoidDomainNote": (domainName) => `Évite de dépenser de la résine dans « ${domainName} ».`,
+        "roadmap.strongbox.recommendedBadge": "Synthèse Recommandée",
+        "roadmap.strongbox.dedicatedDomain": "Donjon dédié",
+        "roadmap.strongbox.empty": "Vos personnages actuels utilisent principalement des sets récents non encore disponibles en synthèse mystique.",
+
+        // Module 6 : Audit des Maillons Faibles
+        "roadmap.worst.title": "Audit des « Maillons Faibles » du Compte",
+        "roadmap.worst.desc": "Les pièces d'artéfacts les plus faibles de votre vitrine qui brident les performances de vos personnages.",
+        "roadmap.worst.rank": "Rang",
+        "roadmap.worst.owner": "Personnage",
+        "roadmap.worst.piece": "Pièce & Stat",
+        "roadmap.worst.score": "Score actuel",
+        "roadmap.worst.cost": "Coût d'amélioration estimé",
+        "roadmap.worst.tip": "Conseil clé",
+        "roadmap.worst.offPieceBadge": "Hors-set",
+        "roadmap.worst.empty": "Aucune pièce défaillante détectée sur vos personnages !",
+        "roadmap.worst.tip.substats": "Substats faibles à améliorer",
+        "roadmap.worst.tip.flowerPlume": "Fleur/Plume très facile à upgrader (0% RNG de stat principale)",
+        "roadmap.worst.tip.badMainStat": "Stat principale inadaptée (impact majeur sur le perso)",
+        "roadmap.worst.tip.weakOffPiece": "Pièce hors-set faible, facile à remplacer depuis votre stock",
+        "roadmap.worst.resinEstimate": (resin, days) => `~${resin} résine (${days}j)`,
     },
 
 
@@ -714,7 +826,7 @@ export const T = {
 
         "ui.setPieces": (n) => `${n}-piece`,
         // ── Sidebar & navigation ──────────────────────────
-        "ui.version": (ver, gi) => `Ver. ${ver} - Beta Build (GI Ver. ${gi})`,
+        "ui.version": (ver, gi) => `Ver. ${ver} - Astro Build (GI Ver. ${gi})`,
         "ui.search.placeholder": "Enter your UID...",
         "ui.search.loading": "Loading data…",
         "ui.search.error": "Loading error — please reload the page",
@@ -903,6 +1015,9 @@ export const T = {
         "advice.talent.auto": "Normal Attack",
         "advice.talent.skill": "Elemental Skill",
         "advice.talent.burst": "Elemental Burst",
+        "talents.auto": "Normal Attack",
+        "talents.skill": "Elemental Skill",
+        "talents.burst": "Elemental Burst",
 
         "advice.setForce.title.ok": "No set forcing",
         "advice.setForce.title.warning": "Set forcing detected",
@@ -1293,6 +1408,115 @@ export const T = {
                 placeholder: false
             }
         ],
+
+        // ── Account Roadmap ───────────────────────────────
+        "roadmap.button.title": "Account Roadmap",
+        "roadmap.button.subtitle": "Global Optimization",
+        "roadmap.button.badge": (n) => `${n} actions`,
+        "roadmap.page.title": "Strategic Account Roadmap",
+        "roadmap.page.subtitle": (count) => `Comprehensive analysis and optimization roadmap for all ${count} showcase characters.`,
+        "roadmap.nav.back": "Back to Showcase",
+        "roadmap.focus.label": "Showcase Priority:",
+        "roadmap.focus.all": "All",
+        "roadmap.focus.targetBadge": (char) => `Target: ${char}`,
+        "roadmap.focus.domainPriority": "Priority Domain",
+        "roadmap.focus.strongboxPriority": "Priority Strongbox",
+        "roadmap.toggleAllChars.label": "All game characters",
+        "roadmap.toggleAllChars.active": "Showcase only",
+        "roadmap.outsideShowcase": "Outside showcase",
+        "roadmap.noCharacters": "No characters loaded. Enter your UID to view the Roadmap.",
+
+        // Module 1 : Maturity Barometer
+        "roadmap.maturity.title": "Global Maturity Barometer",
+        "roadmap.maturity.desc": "High-level summary of your showcase characters' build completeness and progression.",
+        "roadmap.maturity.weapons": "Weapons Lvl.",
+        "roadmap.maturity.characters": "Characters Lvl.",
+        "roadmap.maturity.talents": "Talents",
+        "roadmap.maturity.mainstats": "Main Stats",
+        "roadmap.maturity.sets": "Artifact Sets",
+        "roadmap.maturity.avgScore": "Showcase Average Score",
+        "roadmap.maturity.globalIndex": "Global Maturity",
+
+        // Module 2 : 5-Barometer Detailed Breakdown
+        "roadmap.breakdown.title": "5-Barometer Optimization Plan",
+        "roadmap.breakdown.desc": "Detailed breakdown of concrete upgrades needed across your characters to reach 100% on each indicator.",
+        "roadmap.breakdown.weapons": "Weapons to Level 90",
+        "roadmap.breakdown.weapons.ok": "All equipped weapons are at max level.",
+        "roadmap.breakdown.levels": "Character Levels",
+        "roadmap.breakdown.levels.ok": "All characters are at the recommended level.",
+        "roadmap.breakdown.talents": "Priority Talents to Upgrade",
+        "roadmap.breakdown.talents.ok": "All priority talents are at the recommended level.",
+        "roadmap.breakdown.mainstats": "Main Stats to Correct",
+        "roadmap.breakdown.mainstats.ok": "All artifact main stats are optimal.",
+        "roadmap.breakdown.sets": "Artifact Sets to Complete",
+        "roadmap.breakdown.sets.ok": "All characters are equipped with recommended sets.",
+        "roadmap.breakdown.optimal": "Optimal",
+        "roadmap.breakdown.toDo": (n) => `${n} to do`,
+        "roadmap.breakdown.moreItems": (n) => `+ ${n} more`,
+        "roadmap.breakdown.noSetBonus": "No bonus",
+        "roadmap.breakdown.setBonus2p": (n) => `${n} 2pc bonus`,
+        "roadmap.breakdown.reason.base": "Base stats & ascension",
+        "roadmap.breakdown.reason.hp": "Major HP% scaling",
+        "roadmap.breakdown.reason.def": "Major DEF% scaling",
+        "roadmap.breakdown.reason.em": "Major EM & Reactions scaling",
+        "roadmap.breakdown.reason.reactions": "Elemental reactions",
+        "roadmap.action.weaponLevel": (char, weapon, cur, target) => `Level ${char}'s weapon (${weapon}) from Lv. ${cur} to Lv. ${target}`,
+        "roadmap.action.talentLevel": (char, talent, cur, target) => `Upgrade ${talent} of ${char} from Lv. ${cur} to Lv. ${target}`,
+        "roadmap.action.charLevel": (char, cur, reason) => `Ascend ${char} from Lv. ${cur} to Lv. 90 (${reason})`,
+        "roadmap.action.replaceFlowerPlume": (char, slot, score) => `Replace ${char}'s ${slot} (current score: ${score})`,
+        "roadmap.action.fixMainStat": (char, slot, curStat, bestStat) => `Fix main stat on ${char}'s ${slot} (${curStat} ➔ ${bestStat})`,
+        "roadmap.action.completeSet": (char, neededSet) => `Complete 4pc set for ${char} (${neededSet})`,
+        "roadmap.action.noActions": "All priority steps are already completed!",
+
+        // Module 3 : Cross-Character Swap Optimizer
+        "roadmap.swaps.title": "Cross-Character Swap Optimizer",
+        "roadmap.swaps.desc": "Instant artifact reallocations between your characters to boost overall showcase score with 0 resin.",
+        "roadmap.swaps.netGain": (gain) => `Showcase Net Gain: +${gain} pts`,
+        "roadmap.swaps.noSwaps": "No profitable swaps found: your artifacts are already distributed optimally!",
+        "roadmap.swaps.swapPiece": (charA, charB, pieceName) => `Swap ${pieceName} between ${charA} and ${charB}`,
+        "roadmap.swaps.givesPiece": (charA, charB, pieceName) => `${charA} passes ${pieceName} to ${charB}`,
+        "roadmap.swaps.focusGain": (char) => `Upgrade for ${char}`,
+
+        // Module 4 : Domain Planner
+        "roadmap.domains.title": "Domain Value Index & Resin Planner",
+        "roadmap.domains.desc": "Artifact domains ranked by how many of your characters benefit from their sets.",
+        "roadmap.domains.efficiency.veryHigh": "Outstanding Efficiency",
+        "roadmap.domains.efficiency.high": "High Efficiency",
+        "roadmap.domains.efficiency.medium": "Moderate Efficiency",
+        "roadmap.domains.efficiency.low": "Low Efficiency",
+        "roadmap.domains.beneficiaries": "Benefiting Characters:",
+        "roadmap.domains.bothSetsUseful": "Dual-value domain (both sets are useful!)",
+        "roadmap.domains.noPriorityChar": "No priority character",
+        "roadmap.domains.empty": "No priority domain identified for the current showcase.",
+        "roadmap.domains.optimalSet": "Optimal Set (Best in Slot)",
+
+        // Module 5 : Artifact Strongbox Advisor
+        "roadmap.strongbox.title": "Artifact Strongbox Advisor",
+        "roadmap.strongbox.desc": "Smartly recycle junk 5★ artifacts to craft key sets without wasting resin in low-value domains.",
+        "roadmap.strongbox.recommendedSets": "Priority Sets to Strongbox:",
+        "roadmap.strongbox.why": "Why this set?",
+        "roadmap.strongbox.targetChars": "For your characters:",
+        "roadmap.strongbox.avoidDomainNote": (domainName) => `Saves resin by skipping the "${domainName}" domain.`,
+        "roadmap.strongbox.recommendedBadge": "Recommended Strongbox",
+        "roadmap.strongbox.dedicatedDomain": "Dedicated Domain",
+        "roadmap.strongbox.empty": "Your showcase characters primarily use recent sets not yet available in the Mystic Offering strongbox.",
+
+        // Module 6 : Worst Pieces Audit
+        "roadmap.worst.title": "Worst Pieces Audit & Bottlenecks",
+        "roadmap.worst.desc": "The lowest scoring artifact pieces in your showcase that are bottlenecking your characters.",
+        "roadmap.worst.rank": "Rank",
+        "roadmap.worst.owner": "Character",
+        "roadmap.worst.piece": "Piece & Stat",
+        "roadmap.worst.score": "Current Score",
+        "roadmap.worst.cost": "Upgrade Cost Estimate",
+        "roadmap.worst.tip": "Key Tip",
+        "roadmap.worst.offPieceBadge": "Off-set",
+        "roadmap.worst.empty": "No deficient artifacts detected on your characters!",
+        "roadmap.worst.tip.substats": "Weak substats to upgrade",
+        "roadmap.worst.tip.flowerPlume": "Flower/Plume very easy to upgrade (0% main stat RNG)",
+        "roadmap.worst.tip.badMainStat": "Suboptimal main stat (major performance loss)",
+        "roadmap.worst.tip.weakOffPiece": "Weak off-set piece, easily replaced from your inventory",
+        "roadmap.worst.resinEstimate": (resin, days) => `~${resin} resin (${days}d)`,
     }
 };
 export function t(key, ...args) {
@@ -1345,7 +1569,7 @@ if (typeof window !== 'undefined') {
         updateMeta('meta[property="og:locale"]', t('meta.locale'));
         const versionEl = document.querySelector('.sidebar-text');
         if (versionEl) {
-            versionEl.textContent = t('ui.version', '1.2.1', '6.7');
+            versionEl.textContent = t('ui.version', '2.0.0', '7.0');
         }
     };
 

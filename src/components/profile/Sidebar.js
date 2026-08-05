@@ -29,6 +29,8 @@ export function renderSidebarList(characters, activeOriginalIndex = 0, sortState
         div.dataset.originalIndex = originalIndex;
         div.onclick = () => {
             document.querySelectorAll('.char-card').forEach(c => c.classList.remove('active'));
+            const roadmapBtn = document.getElementById('roadmapSidebarBtn');
+            if (roadmapBtn) roadmapBtn.classList.remove('active');
             div.classList.add('active');
             if (typeof onSelectChar === 'function') {
                 onSelectChar(originalIndex);

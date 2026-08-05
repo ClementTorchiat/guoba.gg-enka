@@ -18,6 +18,7 @@ import { renderCombatStatsAdviceCards } from '../components/advice/CombatStatsSe
 import { renderPlayerProfileCard } from '../components/profile/PlayerHeader.js';
 import { renderGlobalEvaluation as renderGlobalEvaluationComponent } from '../components/profile/GlobalEvaluation.js';
 import { renderSidebarList } from '../components/profile/Sidebar.js';
+import { renderRoadmapContainer } from '../components/roadmap/RoadmapContainer.js';
 import { setUserData, setCharacterList, selectCharacter } from '../stores/appStore.js';
 import { preloadConfigsForShowcase, loadCharacterConfig } from './configLoader.js';
 import { idbGet, idbSet } from './db.js';
@@ -644,6 +645,9 @@ function clearSearch() {
 
     const evalContainer = document.getElementById('global-evaluation');
     if (evalContainer) evalContainer.style.display = 'none';
+
+    const roadmapArea = document.getElementById('roadmap-sidebar-area');
+    if (roadmapArea) roadmapArea.style.display = 'none';
 
     const topHeader = document.getElementById('top-header-area');
     if (topHeader) topHeader.style.display = 'none';
@@ -2494,6 +2498,7 @@ function processData(data) {
 
     setUserData(data, document.getElementById('uidInput')?.value.trim() || '');
     setCharacterList(globalPersoData);
+    window.globalPersoData = globalPersoData;
 
     renderSidebar();
     hideSidebarNav();
@@ -2570,6 +2575,11 @@ function renderSidebar(activeOriginalIndex = 0) {
         renderShowcase(charIdx);
     });
     updateSortArrows();
+
+    const roadmapArea = document.getElementById('roadmap-sidebar-area');
+    if (roadmapArea) {
+        roadmapArea.style.display = (globalPersoData && globalPersoData.length > 0) ? 'block' : 'none';
+    }
 }
 
 function renderToolbar(index) {
@@ -3124,6 +3134,9 @@ function renderShowcase(index) {
         }
     });
 
+    const roadmapBtn = document.getElementById('roadmapSidebarBtn');
+    if (roadmapBtn) roadmapBtn.classList.remove('active');
+
     const menu = document.querySelector('.main-content-menu') || document.getElementById('main-content-menu');
     const menuContainer = document.querySelector('.main-content-menu-container') || document.getElementById('main-content-menu-container');
 
@@ -3133,6 +3146,43 @@ function renderShowcase(index) {
     container.innerHTML = renderShowcaseComponent(p, index);
     renderToolbar(index);
     selectCharacter(index);
+}
+
+function showAccountRoadmap() {
+    const container = document.getElementById("main-container");
+    if (!container || !globalPersoData || globalPersoData.length === 0) return;
+
+    if (window.currentPlayerNickname) {
+        document.title = `${window.currentPlayerNickname} - ${t('roadmap.page.title')} - guoba.gg`;
+    }
+
+    const currentUid = new URLSearchParams(window.location.search).get('uid') || (document.getElementById('uidInput') ? document.getElementById('uidInput').value.trim() : '');
+    if (!window._isPopstate && currentUid) {
+        const lang = localStorage.getItem('guoba_lang') || 'fr';
+        window.history.replaceState({ uid: currentUid, view: 'roadmap' }, '', `/?uid=${encodeURIComponent(currentUid)}&view=roadmap&lang=${lang}`);
+    }
+
+    document.querySelectorAll('#sidebar-list .char-card').forEach((card) => {
+        card.classList.remove('active');
+    });
+
+    const roadmapBtn = document.getElementById('roadmapSidebarBtn');
+    if (roadmapBtn) roadmapBtn.classList.add('active');
+
+    const menu = document.querySelector('.main-content-menu') || document.getElementById('main-content-menu');
+    const menuContainer = document.querySelector('.main-content-menu-container') || document.getElementById('main-content-menu-container');
+
+    if (menu) menu.style.display = 'none';
+    if (menuContainer) menuContainer.style.display = 'none';
+
+    container.innerHTML = renderRoadmapContainer(globalPersoData);
+
+    const showcaseWrapper = document.querySelector('.main-content-showcase-wrapper');
+    if (showcaseWrapper) {
+        showcaseWrapper.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 }
 
 loadGameData();
@@ -3270,7 +3320,10 @@ function initMainPageApp() {
         fetchUserData(urlUid).then(() => {
             toggleSearchIcon(true);
 
-            if (urlChar && globalPersoData && globalPersoData.length > 0) {
+            const urlView = urlParams.get('view');
+            if (urlView === 'roadmap' && globalPersoData && globalPersoData.length > 0) {
+                showAccountRoadmap();
+            } else if (urlChar && globalPersoData && globalPersoData.length > 0) {
                 const targetIndex = globalPersoData.findIndex(p => p.nom.toLowerCase() === urlChar.toLowerCase());
 
                 if (targetIndex !== -1) {
@@ -3311,6 +3364,7 @@ window.addEventListener('popstate', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const uid = urlParams.get('uid');
     const char = urlParams.get('char');
+    const view = urlParams.get('view');
     const page = urlParams.get('page');
 
     if (page && STATIC_PAGES.includes(page)) {
@@ -3323,7 +3377,11 @@ window.addEventListener('popstate', () => {
         return;
     }
 
-    if (char && globalPersoData.length > 0) {
+    if (view === 'roadmap' && globalPersoData.length > 0) {
+        window._isPopstate = true;
+        showAccountRoadmap();
+        window._isPopstate = false;
+    } else if (char && globalPersoData.length > 0) {
         const targetIndex = globalPersoData.findIndex(
             p => p.nom.toLowerCase() === char.toLowerCase()
         );
@@ -3414,4 +3472,5 @@ if (typeof window !== 'undefined') {
     window.renderGlobalEvaluation = renderGlobalEvaluation;
     window.statLine = statLine;
     window.renderShowcase = renderShowcase;
+    window.showAccountRoadmap = showAccountRoadmap;
 }

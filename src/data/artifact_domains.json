@@ -1,0 +1,332 @@
+[
+  {
+    "id": "midsummer",
+    "name": {
+      "fr": "Jardin estival",
+      "en": "Midsummer Courtyard"
+    },
+    "region": {
+      "fr": "Mondstadt",
+      "en": "Mondstadt"
+    },
+    "sets": [
+      "ThunderingFury",
+      "Thundersoother"
+    ]
+  },
+  {
+    "id": "valley_remembrance",
+    "name": {
+      "fr": "Vallée de la réminiscence",
+      "en": "Valley of Remembrance"
+    },
+    "region": {
+      "fr": "Mondstadt",
+      "en": "Mondstadt"
+    },
+    "sets": [
+      "ViridescentVenerer",
+      "MaidenBeloved"
+    ]
+  },
+  {
+    "id": "peak_vindagnyr",
+    "name": {
+      "fr": "Pic de Vindagnyr",
+      "en": "Peak of Vindagnyr"
+    },
+    "region": {
+      "fr": "Dosdragon",
+      "en": "Dragonspine"
+    },
+    "sets": [
+      "BlizzardStrayer",
+      "HeartOfDepth"
+    ]
+  },
+  {
+    "id": "ridge_watch",
+    "name": {
+      "fr": "Garde de la montagne",
+      "en": "Ridge Watch"
+    },
+    "region": {
+      "fr": "Mondstadt",
+      "en": "Mondstadt"
+    },
+    "sets": [
+      "TenacityOfTheMillelith",
+      "PaleFlame"
+    ]
+  },
+  {
+    "id": "thorny_crown",
+    "name": {
+      "fr": "Couronne épineuse du vent des montagnes",
+      "en": "Thorny Crown of the Mountain Wind"
+    },
+    "region": {
+      "fr": "Mondstadt",
+      "en": "Mondstadt"
+    },
+    "sets": [
+      "CelestialGift",
+      "DisenchantmentInDeepShadow"
+    ]
+  },
+  {
+    "id": "domain_guyun",
+    "name": {
+      "fr": "Au-dessus des nuages",
+      "en": "Domain of Guyun"
+    },
+    "region": {
+      "fr": "Liyue",
+      "en": "Liyue"
+    },
+    "sets": [
+      "ArchaicPetra",
+      "RetracingBolide"
+    ]
+  },
+  {
+    "id": "zhou_formula",
+    "name": {
+      "fr": "Palais secret de la Formule Zhou",
+      "en": "Hidden Palace of Zhou Formula"
+    },
+    "region": {
+      "fr": "Liyue",
+      "en": "Liyue"
+    },
+    "sets": [
+      "CrimsonWitchOfFlames",
+      "Lavawalker"
+    ]
+  },
+  {
+    "id": "clear_pool",
+    "name": {
+      "fr": "Lagunes et montagnes",
+      "en": "Clear Pool and Mountain Cavern"
+    },
+    "region": {
+      "fr": "Liyue",
+      "en": "Liyue"
+    },
+    "sets": [
+      "NoblesseOblige",
+      "BloodstainedChivalry"
+    ]
+  },
+  {
+    "id": "lost_valley",
+    "name": {
+      "fr": "Vallée recluse",
+      "en": "The Lost Valley"
+    },
+    "region": {
+      "fr": "Liyue",
+      "en": "Liyue"
+    },
+    "sets": [
+      "VermillionHereafter",
+      "EchoesOfAnOffering"
+    ]
+  },
+  {
+    "id": "momiji",
+    "name": {
+      "fr": "Cour Momiji",
+      "en": "Momiji-Dyed Court"
+    },
+    "region": {
+      "fr": "Inazuma",
+      "en": "Inazuma"
+    },
+    "sets": [
+      "EmblemOfSeveredFate",
+      "ShimenawasReminiscence"
+    ]
+  },
+  {
+    "id": "slumbering_court",
+    "name": {
+      "fr": "Cour d'hibernation",
+      "en": "Slumbering Court"
+    },
+    "region": {
+      "fr": "Inazuma",
+      "en": "Inazuma"
+    },
+    "sets": [
+      "HuskOfOpulentDreams",
+      "OceanHuedClam"
+    ]
+  },
+  {
+    "id": "spire",
+    "name": {
+      "fr": "Tour de l'illumination",
+      "en": "Spire of Solitary Enlightenment"
+    },
+    "region": {
+      "fr": "Sumeru",
+      "en": "Sumeru"
+    },
+    "sets": [
+      "DeepwoodMemories",
+      "GildedDreams"
+    ]
+  },
+  {
+    "id": "city_gold",
+    "name": {
+      "fr": "Cité d'or",
+      "en": "City of Gold"
+    },
+    "region": {
+      "fr": "Sumeru",
+      "en": "Sumeru"
+    },
+    "sets": [
+      "DesertPavilionChronicle",
+      "FlowerOfParadiseLost"
+    ]
+  },
+  {
+    "id": "molten_iron",
+    "name": {
+      "fr": "Forteresse de fer en fusion",
+      "en": "Molten Iron Fortress"
+    },
+    "region": {
+      "fr": "Sumeru",
+      "en": "Sumeru"
+    },
+    "sets": [
+      "VourukashasGlow",
+      "NymphsDream"
+    ]
+  },
+  {
+    "id": "denouement",
+    "name": {
+      "fr": "Dénouement des péchés",
+      "en": "Denouement of Sin"
+    },
+    "region": {
+      "fr": "Fontaine",
+      "en": "Fontaine"
+    },
+    "sets": [
+      "MarechausseeHunter",
+      "GoldenTroupe"
+    ]
+  },
+  {
+    "id": "waterfall_wen",
+    "name": {
+      "fr": "Ville des cascades",
+      "en": "Waterfall Wen"
+    },
+    "region": {
+      "fr": "Fontaine",
+      "en": "Fontaine"
+    },
+    "sets": [
+      "SongOfDaysPast",
+      "NighttimeWhispersInTheEchoingWoods"
+    ]
+  },
+  {
+    "id": "faded_theater",
+    "name": {
+      "fr": "Théâtre fané",
+      "en": "Faded Theater"
+    },
+    "region": {
+      "fr": "Fontaine",
+      "en": "Fontaine"
+    },
+    "sets": [
+      "FragmentOfHarmonicWhimsy",
+      "UnfinishedReverie"
+    ]
+  },
+  {
+    "id": "rainbow_spirits",
+    "name": {
+      "fr": "Sanctuaire des esprits arc-en-ciel",
+      "en": "Sanctum of Rainbow Spirits"
+    },
+    "region": {
+      "fr": "Natlan",
+      "en": "Natlan"
+    },
+    "sets": [
+      "ObsidianCodex",
+      "ScrollOfTheHeroOfCinderCity"
+    ]
+  },
+  {
+    "id": "masonry_dock",
+    "name": {
+      "fr": "Quai de maçonnerie abandonné",
+      "en": "Derelict Masonry Dock"
+    },
+    "region": {
+      "fr": "Natlan",
+      "en": "Natlan"
+    },
+    "sets": [
+      "LongNightsOath",
+      "FinaleOfTheDeepGalleries"
+    ]
+  },
+  {
+    "id": "machinery",
+    "name": {
+      "fr": "Machinerie givrée",
+      "en": "Frostladen Machinery"
+    },
+    "region": {
+      "fr": "Nod-Krai",
+      "en": "Nod-Krai"
+    },
+    "sets": [
+      "NightOfTheSkysUnveiling",
+      "SilkenMoonsSerenade"
+    ]
+  },
+  {
+    "id": "moonchild",
+    "name": {
+      "fr": "Trésors des enfants-lunes",
+      "en": "Moonchild's Treasures"
+    },
+    "region": {
+      "fr": "Nod-Krai",
+      "en": "Nod-Krai"
+    },
+    "sets": [
+      "ADayCarvedFromRisingWinds",
+      "AubadeOfMorningstarAndMoon"
+    ]
+  },
+  {
+    "id": "glacier",
+    "name": {
+      "fr": "Glacier inversé",
+      "en": "Inverted Glacier"
+    },
+    "region": {
+      "fr": "Snezhnaya",
+      "en": "Snezhnaya"
+    },
+    "sets": [
+      "ScarletProof",
+      "HeartOfTheFurnace"
+    ]
+  }
+]
