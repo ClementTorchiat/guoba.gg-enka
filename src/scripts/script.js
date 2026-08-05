@@ -3392,11 +3392,9 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
                     </div>
                 </div>
 
-                ${rollsCount > 1 ? `
-                    <div style="display: flex; flex-direction: column; margin-top: 2px; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 4px;">
-                        ${rollsBreakdownListHtml}
-                    </div>
-                ` : ''}
+                <div style="display: flex; flex-direction: column; margin-top: 2px; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 4px;">
+                    ${rollsBreakdownListHtml}
+                </div>
             </div>
         `;
     }
