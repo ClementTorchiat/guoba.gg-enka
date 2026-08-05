@@ -1311,7 +1311,7 @@ main {
 #base-stat-tooltip {
     position: fixed;
     visibility: hidden;
-    background: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765);
+    background: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.6);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     color: var(--text-primary);
