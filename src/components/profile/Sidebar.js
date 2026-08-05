@@ -13,7 +13,8 @@ export function renderSidebarList(characters, activeOriginalIndex = 0, sortState
         if (direction === 'asc') entries.reverse();
     } else if (column === 'name') {
         entries.sort((a, b) => {
-            const cmp = a.p.nom.localeCompare(b.p.nom, 'fr', { sensitivity: 'base' });
+            const lang = (typeof window !== 'undefined' && window.GUOBA_LANG) || 'fr';
+            const cmp = a.p.nom.localeCompare(b.p.nom, lang, { sensitivity: 'base' });
             return direction === 'desc' ? cmp : -cmp;
         });
     } else if (column === 'score') {

@@ -75,9 +75,9 @@ export function getAccountBarometerDetails(characters, focusCharNom = null) {
             : (config.talents?.target || config.talents || { auto: 1, skill: 8, burst: 8 });
 
         const talentLabels = {
-            auto: t('talents.auto') || 'Attaque Normale',
-            skill: t('talents.skill') || 'Compétence',
-            burst: t('talents.burst') || 'Déchaînement'
+            auto: t('talents.auto'),
+            skill: t('talents.skill'),
+            burst: t('talents.burst')
         };
         const keyMap = ['auto', 'skill', 'burst'];
 

@@ -80,6 +80,7 @@ export const T = {
         "ui.noArchetype": "Aucun archétype disponible",
         "ui.exportBtn": "Exporter image",
         "ui.helpBtn": "Mode d'emploi",
+        "ui.coffee": "Offrir un café",
 
         // ── Fiche personnage ──────────────────────────────
         "ui.char.level": (n) => `Niv. ${n}`,
@@ -262,6 +263,7 @@ export const T = {
         "advice.offPiece.bad": (piece) => `Votre pièce hors-set <b style="color: #aaa;">(${piece})</b> pourrait être beaucoup mieux. Vous devriez en chercher une autre dans votre inventaire ou permettre à une autre pièce d'être hors-set.`,
 
         // getTalentAdvice
+        "advice.talent.title": "Aptitudes",
         "advice.talent.ok": "Vos aptitudes sont au niveau recommandé.",
         "advice.talent.critical": (str) => `Améliorer ${str} est important pour ce personnage.`,
         "advice.talent.info": (str) => `Améliorer ${str} est recommandé pour ce personnage.`,
@@ -295,8 +297,17 @@ export const T = {
 
         // getWeaponAdvice
         "advice.weapon.title": "Niveau de l'arme",
+        "advice.weapon.none": "Aucune arme équipée.",
         "advice.weapon.low": "Améliorez votre arme au niveau 90 pour maximiser son ATQ de base et sa statistique additionnelle.",
         "advice.weapon.ok": "Votre arme est au niveau maximum.",
+
+        // getRNGAdvice / RollEfficiency
+        "advice.rng.title": "Qualité des rolls",
+        "advice.rng.low": (pct) => `L'efficacité moyenne de vos rolls est faible (${pct}%). Vous perdez des statistiques potentielles.`,
+        "advice.rng.medium": (pct) => `L'efficacité moyenne de vos rolls est correcte (${pct}%).`,
+        "advice.rng.good": (pct) => `L'efficacité moyenne de vos rolls est bonne (${pct}%).`,
+        "advice.rng.high": (pct) => `L'efficacité moyenne de vos rolls est excellente (${pct}%). Très peu de pertes de valeur.`,
+        "advice.rng.efficiency": "Efficacité des rolls",
 
         // getERAdvice
         "advice.er.title.ok": "Recharge d'Énergie",
@@ -332,6 +343,7 @@ export const T = {
         "reroll.notWorth": "Peu rentable",
 
         // simulateDeadStatReplacements
+        "sim.title": "Optimisation des substats mortes",
         "sim.replace": (dead, target) => `Remplacer ${dead} par ${target} :`,
         "sim.range": "à",
         "ui.and": " et ",
@@ -485,6 +497,8 @@ export const T = {
         "ui.alt.theater": "Théâtre de l'Imaginarium",
         "ui.alt.abyss": "Profondeurs spiralées",
         "ui.alt.stygian": "Carnage Chtonien",
+        "ui.alt.kofi": "Icône Ko-fi",
+        "ui.alt.weapon": "Arme",
 
         // ── getText fallbacks ─────────────────────────────
         "data.unknown": "Inconnu",
@@ -746,6 +760,7 @@ export const T = {
         "roadmap.domains.efficiency.high": "Haute Rentabilité",
         "roadmap.domains.efficiency.medium": "Rentabilité Modérée",
         "roadmap.domains.efficiency.low": "Faible Rentabilité",
+        "roadmap.domains.efficiency.none": "Aucun",
         "roadmap.domains.beneficiaries": "Personnages concernés :",
         "roadmap.domains.bothSetsUseful": "Domaine doublement rentable (les 2 sets sont utiles !)",
         "roadmap.domains.noPriorityChar": "Aucun perso prioritaire",
@@ -849,6 +864,7 @@ export const T = {
         "ui.noArchetype": "No archetype available",
         "ui.exportBtn": "Export image",
         "ui.helpBtn": "Tutorial",
+        "ui.coffee": "Buy me a coffee",
 
         // ── Character sheet ───────────────────────────────
         "ui.char.level": (n) => `Lvl. ${n}`,
@@ -1026,6 +1042,7 @@ export const T = {
         "advice.offPiece.ok": (piece) => `Your off-set piece <b style="color: #aaa;">(${piece})</b> is acceptable for now given its main stat's rarity.`,
         "advice.offPiece.bad": (piece) => `Your off-set piece <b style="color: #aaa;">(${piece})</b> could be a lot better. Look for a better one in your inventory or let a different piece be off-set.`,
 
+        "advice.talent.title": "Talents",
         "advice.talent.ok": "Your talents are at the recommended level.",
         "advice.talent.critical": (str) => `Upgrading ${str} is important for this character.`,
         "advice.talent.info": (str) => `Upgrading ${str} is recommended for this character.`,
@@ -1056,8 +1073,17 @@ export const T = {
         "advice.metaSet.bad": (rec) => `Your current artifact set does not match the character's standards. You should switch to ${rec}.`,
 
         "advice.weapon.title": "Weapon Level",
+        "advice.weapon.none": "No weapon equipped.",
         "advice.weapon.low": "Upgrade your weapon to level 90 to maximize its base ATK and sub-stat.",
         "advice.weapon.ok": "Your weapon is at maximum level.",
+
+        // getRNGAdvice / RollEfficiency
+        "advice.rng.title": "Roll Quality",
+        "advice.rng.low": (pct) => `Average roll efficiency is low (${pct}%). You are losing potential stats.`,
+        "advice.rng.medium": (pct) => `Average roll efficiency is decent (${pct}%).`,
+        "advice.rng.good": (pct) => `Average roll efficiency is good (${pct}%).`,
+        "advice.rng.high": (pct) => `Average roll efficiency is excellent (${pct}%). Very low value loss.`,
+        "advice.rng.efficiency": "Roll Efficiency",
 
         "advice.er.title.ok": "Energy Recharge",
         "advice.er.title.low": "Insufficient Energy Recharge",
@@ -1088,6 +1114,8 @@ export const T = {
         "reroll.optimizable": "Optimizable",
         "reroll.notWorth": "Not worth it",
 
+        // simulateDeadStatReplacements
+        "sim.title": "Dead Substat Replacements",
         "sim.replace": (dead, target) => `Replace ${dead} with ${target}:`,
         "sim.range": "to",
         "ui.and": " and ",
@@ -1241,6 +1269,8 @@ export const T = {
         "ui.alt.theater": "Imaginarium Theater",
         "ui.alt.abyss": "Spiral Abyss",
         "ui.alt.stygian": "Stygian Onslaught",
+        "ui.alt.kofi": "Ko-fi icon",
+        "ui.alt.weapon": "Weapon",
 
         // ── getText fallbacks ─────────────────────────────
         "data.unknown": "Unknown",
@@ -1502,6 +1532,7 @@ export const T = {
         "roadmap.domains.efficiency.high": "High Efficiency",
         "roadmap.domains.efficiency.medium": "Moderate Efficiency",
         "roadmap.domains.efficiency.low": "Low Efficiency",
+        "roadmap.domains.efficiency.none": "None",
         "roadmap.domains.beneficiaries": "Benefiting Characters:",
         "roadmap.domains.bothSetsUseful": "Dual-value domain (both sets are useful!)",
         "roadmap.domains.noPriorityChar": "No priority character",

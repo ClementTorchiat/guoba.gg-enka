@@ -130,7 +130,7 @@ export function renderWeaponAdvice(persoObj) {
             <div>
                 <p style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; margin-bottom: 12px;">${adv.title}</p>
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-                    <img src="${weaponIcon}" style="width:60px; height:60px; border-radius:6px; background:rgba(0,0,0,0.1); object-fit:cover; align-self:flex-start;" alt="Arme">
+                    <img src="${weaponIcon}" style="width:60px; height:60px; border-radius:6px; background:rgba(0,0,0,0.1); object-fit:cover; align-self:flex-start;" alt="${t('ui.alt.weapon')}">
                     <div style="flex:1;">
                         <p style="font-size: 12px; color:var(--text-grey); margin:0 0 4px 0;">${persoObj.weapon ? persoObj.weapon.name : ''}</p>
                         <p style="font-size: 14px; color:var(--text-primary); margin:0; line-height:1.4;">${adv.msg}</p>
