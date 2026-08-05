@@ -3176,7 +3176,7 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
 
             <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: rgba(255, 255, 255, 0.7); margin-top: 2px;">
                 <span>${t('ui.statTooltip.unbuffed')}</span>
-                <span style="font-family: monospace; color: var(--text-always-white); font-weight: 500;">${breakdown.initialDisplay}</span>
+                <span style="font-family: 'ShinShin', sans-serif; color: var(--text-always-white); font-weight: 500;">${breakdown.initialDisplay}</span>
             </div>
 
             <div style="margin-top: 4px; margin-bottom: 2px;">
@@ -3191,8 +3191,8 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
             <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; border-top: 1px solid rgba(255, 255, 255, 0.15); padding-top: 6px; margin-top: 2px;">
                 <span style="font-weight: 600; color: var(--text-always-white);">${t('ui.statTooltip.buffedTotal')}</span>
                 <div style="text-align: right;">
-                    <span style="color: var(--accent-gold); font-weight: bold; font-size: 13px;">${breakdown.finalDisplay}</span>
-                    <span style="color: var(--accent-gold); font-size: 11px; opacity: 0.85; margin-left: 3px;">(${breakdown.totalGainDisplay})</span>
+                    <span style="color: var(--text-always-white); font-weight: bold; font-size: 13px;">${breakdown.finalDisplay}</span>
+                    <span style="color: rgba(255, 255, 255, 0.55); font-size: 11px; margin-left: 3px;">(${breakdown.totalGainDisplay})</span>
                 </div>
             </div>
         </div>
@@ -3378,14 +3378,14 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-top: 2px;">
                     <span style="color: rgba(255, 255, 255, 0.7); font-size: 11px;">${t('analysis.s5.title')}</span>
                     <div style="display: flex; align-items: center; gap: 6px;">
-                        <span style="color: var(--accent-gold); font-weight: bold; font-size: 13px;">${formatValueDisplay(sub.key, sub.value)}</span>
-                        <span style="font-size: 10px; background: rgba(255, 255, 255, 0.1); color: var(--text-always-white); padding: 1px 6px; border-radius: 4px; font-weight: 500;">${rollsCount} ${rollsCount > 1 ? 'rolls' : 'roll'}</span>
+                        <span style="color: var(--text-always-white); font-weight: bold; font-size: 13px;">${formatValueDisplay(sub.key, sub.value)}</span>
+                        <span style="font-size: 10px; background: rgba(255, 255, 255, 0.1); color: var(--text-always-white); padding: 1px 6px; border-radius: 4px; font-weight: 500;">${t('ui.statTooltip.rollCount', rollsCount)}</span>
                     </div>
                 </div>
 
                 <div style="background: rgba(0, 0, 0, 0.25); border-radius: 6px; padding: 6px 8px; margin-top: 2px; border: 1px solid rgba(255, 255, 255, 0.06);">
                     <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">
-                        ${t('analysis.s5.title')}
+                        ${t('ui.statTooltip.rollBreakdown')}
                     </div>
                     <div style="font-family: monospace; font-size: 12px; line-height: 1.3;">
                         ${rollsEquationHtml}
@@ -3526,14 +3526,14 @@ function getBaseStatBreakdown(persoObj, statKey) {
             type: 'composite',
             sections: [
                 {
-                    title: `${t('stat.hp')} ${t('ui.char.base').toLowerCase()}`,
+                    title: t('ui.statTooltip.baseStat', t('stat.hp')),
                     total: formatInt(baseHp),
                     items: [
                         { label: `${t('ui.char.character')} (${charName})`, value: formatInt(baseHp) }
                     ]
                 },
                 totalHpPct >= 0.1 || artHpPct > 0 || weaponHpPct > 0 ? {
-                    title: `Bonus de ${t('stat.hp_')}`,
+                    title: t('ui.statTooltip.bonusPct', t('stat.hp_')),
                     total: `+${totalHpPct.toFixed(1)}%`,
                     items: [
                         artHpPct > 0 ? {
@@ -3551,11 +3551,11 @@ function getBaseStatBreakdown(persoObj, statKey) {
                     ].filter(Boolean)
                 } : null,
                 totalFlatHp > 0 ? {
-                    title: `Bonus de ${t('stat.hp')} flat`,
+                    title: t('ui.statTooltip.bonusFlat', t('stat.hp')),
                     total: `+${formatInt(totalFlatHp)}`,
                     items: [
                         flowerFlat > 0 ? { label: t('artifact.EQUIP_BRACER'), value: `+${formatInt(flowerFlat)}` } : null,
-                        subsFlat > 0 ? { label: `Substats ${t('ui.char.artifacts').toLowerCase()}`, value: `+${formatInt(subsFlat)}` } : null
+                        subsFlat > 0 ? { label: t('ui.statTooltip.artifactSubstats'), value: `+${formatInt(subsFlat)}` } : null
                     ].filter(Boolean)
                 } : null
             ].filter(Boolean)
@@ -3615,7 +3615,7 @@ function getBaseStatBreakdown(persoObj, statKey) {
             type: 'composite',
             sections: [
                 {
-                    title: `${t('stat.atk')} ${t('ui.char.base').toLowerCase()}`,
+                    title: t('ui.statTooltip.baseStat', t('stat.atk')),
                     total: formatInt(totalBaseAtk),
                     items: [
                         { label: `${t('ui.char.character')} (${charName})`, value: formatInt(charBaseAtk) },
@@ -3623,7 +3623,7 @@ function getBaseStatBreakdown(persoObj, statKey) {
                     ].filter(Boolean)
                 },
                 totalAtkPct >= 0.1 || artAtkPct > 0 || weaponAtkPct > 0 ? {
-                    title: `Bonus d'${t('stat.atk_')}`,
+                    title: t('ui.statTooltip.bonusPct', t('stat.atk_')),
                     total: `+${totalAtkPct.toFixed(1)}%`,
                     items: [
                         artAtkPct > 0 ? {
@@ -3641,11 +3641,11 @@ function getBaseStatBreakdown(persoObj, statKey) {
                     ].filter(Boolean)
                 } : null,
                 totalFlatAtk > 0 ? {
-                    title: `Bonus d'${t('stat.atk')} flat`,
+                    title: t('ui.statTooltip.bonusFlat', t('stat.atk')),
                     total: `+${formatInt(totalFlatAtk)}`,
                     items: [
                         featherFlat > 0 ? { label: t('artifact.EQUIP_NECKLACE'), value: `+${formatInt(featherFlat)}` } : null,
-                        subsFlat > 0 ? { label: `Substats ${t('ui.char.artifacts').toLowerCase()}`, value: `+${formatInt(subsFlat)}` } : null
+                        subsFlat > 0 ? { label: t('ui.statTooltip.artifactSubstats'), value: `+${formatInt(subsFlat)}` } : null
                     ].filter(Boolean)
                 } : null
             ].filter(Boolean)
@@ -3698,14 +3698,14 @@ function getBaseStatBreakdown(persoObj, statKey) {
             type: 'composite',
             sections: [
                 {
-                    title: `${t('stat.def')} ${t('ui.char.base').toLowerCase()}`,
+                    title: t('ui.statTooltip.baseStat', t('stat.def')),
                     total: formatInt(baseDef),
                     items: [
                         { label: `${t('ui.char.character')} (${charName})`, value: formatInt(baseDef) }
                     ]
                 },
                 totalDefPct >= 0.1 || artDefPct > 0 || weaponDefPct > 0 ? {
-                    title: `Bonus de ${t('stat.def_')}`,
+                    title: t('ui.statTooltip.bonusPct', t('stat.def_')),
                     total: `+${totalDefPct.toFixed(1)}%`,
                     items: [
                         artDefPct > 0 ? {
@@ -3723,10 +3723,10 @@ function getBaseStatBreakdown(persoObj, statKey) {
                     ].filter(Boolean)
                 } : null,
                 totalFlatDef > 0 ? {
-                    title: `Bonus de ${t('stat.def')} flat`,
+                    title: t('ui.statTooltip.bonusFlat', t('stat.def')),
                     total: `+${formatInt(totalFlatDef)}`,
                     items: [
-                        { label: `Substats ${t('ui.char.artifacts').toLowerCase()}`, value: `+${formatInt(totalFlatDef)}` }
+                        { label: t('ui.statTooltip.artifactSubstats'), value: `+${formatInt(totalFlatDef)}` }
                     ]
                 } : null
             ].filter(Boolean)
@@ -3961,7 +3961,7 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
                         <span style="color: rgba(255, 255, 255, 0.35); flex-shrink: 0;">•</span>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.label}</span>
                     </div>
-                    <span style="font-family: monospace; font-weight: 600; color: var(--text-always-white); margin-left: 6px; flex-shrink: 0;">${item.value}</span>
+                    <span style="font-family: 'ShinShin', sans-serif; font-weight: normal; color: rgba(255, 255, 255, 0.75); margin-left: 6px; flex-shrink: 0;">${item.value}</span>
                 </div>
             `).join('');
 
@@ -3969,7 +3969,7 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
                 <div style="margin-bottom: 5px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 2px;">
                         <span>${section.title}</span>
-                        <span style="color: var(--accent-gold); font-family: monospace;">${section.total}</span>
+                        <span style="color: var(--text-always-white); font-weight: 600; font-family: 'ShinShin', sans-serif;">${section.total}</span>
                     </div>
                     <div style="display: flex; flex-direction: column;">
                         ${itemsHtml}
@@ -3984,7 +3984,7 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
                     <span style="color: rgba(255, 255, 255, 0.35); flex-shrink: 0;">•</span>
                     <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.label}</span>
                 </div>
-                <span style="font-family: monospace; font-weight: 600; color: var(--accent-gold); margin-left: 6px; flex-shrink: 0;">${item.value}</span>
+                <span style="font-family: 'ShinShin', sans-serif; font-weight: 600; color: var(--text-always-white); margin-left: 6px; flex-shrink: 0;">${item.value}</span>
             </div>
         `).join('');
 
@@ -4002,7 +4002,7 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
                     ${breakdown.statIcon}
                     <span>${breakdown.statLabel}</span>
                 </div>
-                <span style="color: var(--accent-gold); font-weight: bold; font-size: 13px; white-space: nowrap;">${breakdown.totalDisplay}</span>
+                <span style="color: var(--text-always-white); font-weight: bold; font-size: 13px; white-space: nowrap;">${breakdown.totalDisplay}</span>
             </div>
             ${contentHtml}
         </div>

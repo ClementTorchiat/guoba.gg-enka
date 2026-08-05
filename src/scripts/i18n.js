@@ -106,6 +106,12 @@ export const T = {
         "ui.statTooltip.unbuffed": "Sans buffs",
         "ui.statTooltip.activeBuffs": "Buffs actifs",
         "ui.statTooltip.buffedTotal": "Total sous buffs",
+        "ui.statTooltip.baseStat": (stat) => `${stat} de base`,
+        "ui.statTooltip.bonusPct": (stat) => (stat && /^[aeioué]/i.test(stat)) ? `Bonus d'${stat}` : `Bonus de ${stat}`,
+        "ui.statTooltip.bonusFlat": (stat) => (stat && /^[aeioué]/i.test(stat)) ? `Bonus d'${stat} flat` : `Bonus de ${stat} flat`,
+        "ui.statTooltip.artifactSubstats": "Substats des artéfacts",
+        "ui.statTooltip.rollCount": (c) => `${c} roll${c > 1 ? 's' : ''}`,
+        "ui.statTooltip.rollBreakdown": "Décomposition des rolls",
 
         // ── Artéfacts ─────────────────────────────────────
         "ui.art.baseAtk": "ATQ de base",
@@ -913,6 +919,12 @@ export const T = {
         "ui.statTooltip.unbuffed": "Unbuffed",
         "ui.statTooltip.activeBuffs": "Active buffs",
         "ui.statTooltip.buffedTotal": "Buffed total",
+        "ui.statTooltip.baseStat": (stat) => `Base ${stat}`,
+        "ui.statTooltip.bonusPct": (stat) => `${stat} Bonus`,
+        "ui.statTooltip.bonusFlat": (stat) => `Flat ${stat} Bonus`,
+        "ui.statTooltip.artifactSubstats": "Artifact substats",
+        "ui.statTooltip.rollCount": (c) => `${c} roll${c > 1 ? 's' : ''}`,
+        "ui.statTooltip.rollBreakdown": "Roll breakdown",
 
         // ── Artifacts ─────────────────────────────────────
         "ui.art.baseAtk": "Base ATK",
