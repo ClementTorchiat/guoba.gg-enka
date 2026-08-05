@@ -209,7 +209,7 @@ export function renderStatLine(iconHtml, label, value, isBuffed = false, statKey
         : '';
 
     return `
-        <div class="stat-row ${isBuffedClass}" ${hoverAttributes} style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box; transition: background 0.2s, padding 0.2s; border-radius: 4px; ${isBuffed ? 'cursor: pointer;' : ''}">
+        <div class="stat-row ${isBuffedClass}" ${hoverAttributes} style="filter: none; justify-content: space-between; align-items: center; display: flex;">
             ${iconHtml}
             <p>${label}</p>
             <div class="dotted-line"></div>
@@ -225,7 +225,7 @@ export function renderBaseStatLine(iconHtml, label, value, statKey, charIndex = 
              data-char-index="${charIndex}" 
              onmouseenter="window.showBaseStatTooltip && window.showBaseStatTooltip(this, ${charIndex}, '${statKey}')" 
              onmouseleave="window.hideBaseStatTooltip && window.hideBaseStatTooltip()" 
-             style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box; transition: background 0.2s, padding 0.2s; border-radius: 4px; cursor: pointer;">
+             style="filter: none; justify-content: space-between; align-items: center; display: flex;">
             ${iconHtml}
             <p>${label}</p>
             <div class="dotted-line"></div>

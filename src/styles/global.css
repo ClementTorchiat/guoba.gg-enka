@@ -1325,7 +1325,7 @@ main {
     max-width: 360px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75), inset 0 0 1px rgba(255, 255, 255, 0.2);
     pointer-events: none;
-    border: 1px solid var(--char-hex, var(--accent-gold));
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .stat-row.is-buffed {
@@ -1340,9 +1340,8 @@ main {
 
 .base-stat-row {
     cursor: pointer;
+    position: relative;
     border-radius: 4px;
-    padding: 1px 4px;
-    margin: 0 -4px;
     transition: background-color 0.15s ease;
 }
 

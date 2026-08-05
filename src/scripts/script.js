@@ -3154,7 +3154,7 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
         buffsGroupsHtml += `
             <div class="stat-tooltip-category-group" style="margin-bottom: 6px;">
                 <div style="font-size: 11px; font-weight: 600; color: rgba(255, 255, 255, 0.85); margin-bottom: 3px; display: flex; align-items: center; gap: 5px;">
-                    <span style="display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--char-hex, var(--accent-gold)); flex-shrink: 0;"></span>
+                    <span style="display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: currentColor; flex-shrink: 0;"></span>
                     <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${catName}</span>
                 </div>
                 <div style="display: flex; flex-direction: column; padding-left: 6px;">
