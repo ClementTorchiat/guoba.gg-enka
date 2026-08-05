@@ -6,6 +6,7 @@ import { renderGlobalSwapAdvisor } from './GlobalSwapAdvisor.js';
 import { renderDomainPlanner } from './DomainPlanner.js';
 import { renderStrongboxAdvisor } from './StrongboxAdvisor.js';
 import { renderWorstPiecesAudit } from './WorstPiecesAudit.js';
+import { renderElixirCraftAdvisor } from './ElixirCraftAdvisor.js';
 
 let cachedRoadmapCharacters = [];
 
@@ -54,6 +55,22 @@ if (typeof window !== 'undefined') {
                 e.preventDefault();
                 e.stopPropagation();
                 window.roadmapShowAllStrongboxChars = !window.roadmapShowAllStrongboxChars;
+                const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
+                    ? cachedRoadmapCharacters
+                    : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+                const container = document.getElementById('main-container');
+                if (container && chars.length > 0) {
+                    container.innerHTML = renderRoadmapContainer(chars, window.roadmapFocusCharNom);
+                }
+                return;
+            }
+
+            const elixirBudgetBtn = e.target.closest('[data-action="set-elixir-budget"]');
+            if (elixirBudgetBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const budget = elixirBudgetBtn.getAttribute('data-budget') || 'all';
+                window.roadmapElixirBudget = budget;
                 const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
                     ? cachedRoadmapCharacters
                     : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
@@ -143,6 +160,9 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
 
             <!-- Module 6 : Audit des Maillons Faibles -->
             ${renderWorstPiecesAudit(characters, focusCharNom)}
+
+            <!-- Module 7 : Conseiller d'Élixir Sanctifiant (Transmutateur) -->
+            ${renderElixirCraftAdvisor(characters, focusCharNom, typeof window !== 'undefined' ? (window.roadmapElixirBudget || 'all') : 'all')}
 
         </div>
     `;
