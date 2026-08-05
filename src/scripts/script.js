@@ -11,7 +11,7 @@ import {
 import { BASE_ROLLS, MAX_ROLLS, BASE_ROLLS_4, MAX_ROLLS_4 } from './data.js';
 import { renderShowcaseComponent } from '../components/showcase/ShowcaseContainer.js';
 import { renderToolbarControls } from '../components/showcase/ToolbarControls.js';
-import { renderCombatStatsList, updateCombatStatsDOM } from '../components/showcase/CombatStatsList.js';
+import { renderCombatStatsList, updateCombatStatsDOM, getStatBuffBreakdown } from '../components/showcase/CombatStatsList.js';
 import { renderBuffsPanel, updateBuffsPanelDOM } from '../components/showcase/BuffsPanel.js';
 import { renderAdviceSection } from '../components/advice/AdviceSection.js';
 import { renderCombatStatsAdviceCards } from '../components/advice/CombatStatsSection.js';
@@ -24,7 +24,7 @@ import { preloadConfigsForShowcase, loadCharacterConfig } from './configLoader.j
 import { idbGet, idbSet } from './db.js';
 import { loadRollTable } from './rollTableLoader.js';
 
-const t = (...args) => (window.t ? window.t(...args) : args[0]);
+import { t } from './i18n.js';
 
 const ICON_BASE_PATH = "./assets/simulator/icons/";
 
@@ -981,7 +981,7 @@ function toggleBuff(charIndex, buffIndex) {
     p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
 
     // Mise à jour 100% in-place du DOM pour supprimer tout flicker d'icônes et de composants
-    updateCombatStatsDOM(p);
+    updateCombatStatsDOM(p, charIndex);
     updateBuffsPanelDOM(p);
 
     let config = p.charConfig || {};
@@ -989,6 +989,14 @@ function toggleBuff(charIndex, buffIndex) {
     const cardsContainer = document.getElementById('combat-stats-advice-cards');
     if (cardsContainer) {
         cardsContainer.innerHTML = renderCombatStatsAdviceCards(p, config);
+    }
+
+    const statTooltip = document.getElementById('combat-stat-tooltip');
+    if (statTooltip && statTooltip.style.visibility === 'visible') {
+        const hoveredRow = document.querySelector('.showcase-area-combat-stats .stat-row:hover');
+        if (hoveredRow && hoveredRow.dataset.statKey) {
+            window.showCombatStatTooltip(hoveredRow, charIndex, hoveredRow.dataset.statKey);
+        }
     }
 }
 
@@ -2475,7 +2483,7 @@ function processData(data) {
 
         const persoObj = {
             id: id, nom, rarity, level, cons: constellations, talents,
-            image: sideIconUrl, splashArt: splashUrl, combatStats, buffedStats, baseStats,
+            image: sideIconUrl, splashArt: splashUrl, combatStats, buffedStats, baseStats, fightPropMap: fp,
             weapon, artefacts, setsCounter, buffs, evaluation: null, weights: null,
             charWeapon: charWeaponKey,
             charConfig: rawConfig,
@@ -3045,6 +3053,24 @@ if (!document.getElementById('global-tooltip')) {
     document.body.appendChild(tooltip);
 }
 
+if (!document.getElementById('combat-stat-tooltip')) {
+    const statTooltip = document.createElement('div');
+    statTooltip.id = 'combat-stat-tooltip';
+    document.body.appendChild(statTooltip);
+}
+
+if (!document.getElementById('artifact-stat-tooltip')) {
+    const artTooltip = document.createElement('div');
+    artTooltip.id = 'artifact-stat-tooltip';
+    document.body.appendChild(artTooltip);
+}
+
+if (!document.getElementById('base-stat-tooltip')) {
+    const baseTooltip = document.createElement('div');
+    baseTooltip.id = 'base-stat-tooltip';
+    document.body.appendChild(baseTooltip);
+}
+
 window.showGlobalTooltip = function (element, text, color) {
     const tooltip = document.getElementById('global-tooltip');
     tooltip.innerHTML = text;
@@ -3065,6 +3091,958 @@ window.hideGlobalTooltip = function () {
         tooltip.style.visibility = 'hidden';
         tooltip.style.opacity = '0';
     }
+};
+
+window.showCombatStatTooltip = function (element, charIndex, statKey) {
+    if (!element) return;
+
+    let charIdx = charIndex;
+    if (charIdx === null || charIdx === undefined || isNaN(charIdx)) {
+        charIdx = element.dataset.charIndex !== undefined && element.dataset.charIndex !== '' 
+            ? parseInt(element.dataset.charIndex) 
+            : 0;
+    }
+    const p = globalPersoData[charIdx];
+    if (!p) return;
+
+    const sKey = statKey || element.dataset.statKey;
+    if (!sKey) return;
+
+    const breakdown = getStatBuffBreakdown(p, sKey);
+    if (!breakdown || !breakdown.buffs || breakdown.buffs.length === 0) {
+        window.hideCombatStatTooltip();
+        return;
+    }
+
+    const tooltip = document.getElementById('combat-stat-tooltip');
+    if (!tooltip) return;
+
+    const showcaseWrapper = element.closest('.showcase-wrapper');
+    const charHex = (showcaseWrapper && showcaseWrapper.style.getPropertyValue('--char-hex'))
+        || getComputedStyle(element).getPropertyValue('--char-hex')
+        || 'var(--accent-gold)';
+    tooltip.style.setProperty('--char-hex', charHex);
+
+    const getDisplayCategory = (cat) => {
+        if (!cat) return t('ui.char.buffsTitle');
+        const translatedCat = t('buff.category.' + cat);
+        return (translatedCat === 'buff.category.' + cat) ? cat : translatedCat;
+    };
+
+    const grouped = {};
+    breakdown.buffs.forEach(b => {
+        const cat = getDisplayCategory(b.category);
+        if (!grouped[cat]) grouped[cat] = [];
+        grouped[cat].push(b);
+    });
+
+    let buffsGroupsHtml = '';
+    for (const [catName, buffsList] of Object.entries(grouped)) {
+        let catBuffsRows = '';
+        buffsList.forEach(b => {
+            catBuffsRows += `
+                <div class="stat-tooltip-buff-row" style="display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 11px; margin-bottom: 2px;">
+                    <div style="display: flex; align-items: center; gap: 5px; min-width: 0; flex: 1;">
+                        <span style="color: rgba(255, 255, 255, 0.4); flex-shrink: 0; font-size: 12px; line-height: 1;">-</span>
+                        <span style="color: var(--text-always-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${b.name}">${b.name}</span>
+                    </div>
+                    <span style="color: var(--accent-gold); font-weight: 600; flex-shrink: 0; white-space: nowrap; margin-left: 6px;">${b.displayValue}</span>
+                </div>
+            `;
+        });
+
+        buffsGroupsHtml += `
+            <div class="stat-tooltip-category-group" style="margin-bottom: 6px;">
+                <div style="font-size: 11px; font-weight: 600; color: rgba(255, 255, 255, 0.85); margin-bottom: 3px; display: flex; align-items: center; gap: 5px;">
+                    <span style="display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--char-hex, var(--accent-gold)); flex-shrink: 0;"></span>
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${catName}</span>
+                </div>
+                <div style="display: flex; flex-direction: column; padding-left: 6px;">
+                    ${catBuffsRows}
+                </div>
+            </div>
+        `;
+    }
+
+    const tooltipHtml = `
+        <div class="stat-tooltip-content" style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 5px;">
+                <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; color: var(--text-always-white); font-size: 12px;">
+                    ${breakdown.statIcon}
+                    <span>${breakdown.statLabel}</span>
+                </div>
+                <span style="font-size: 10px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 0.5px;">${t('ui.char.combatStats')}</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: rgba(255, 255, 255, 0.7); margin-top: 2px;">
+                <span>${t('ui.statTooltip.unbuffed')}</span>
+                <span style="font-family: monospace; color: var(--text-always-white); font-weight: 500;">${breakdown.initialDisplay}</span>
+            </div>
+
+            <div style="margin-top: 4px; margin-bottom: 2px;">
+                <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    ${t('ui.statTooltip.activeBuffs')} (${breakdown.buffs.length})
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    ${buffsGroupsHtml}
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; border-top: 1px solid rgba(255, 255, 255, 0.15); padding-top: 6px; margin-top: 2px;">
+                <span style="font-weight: 600; color: var(--text-always-white);">${t('ui.statTooltip.buffedTotal')}</span>
+                <div style="text-align: right;">
+                    <span style="color: var(--accent-gold); font-weight: bold; font-size: 13px;">${breakdown.finalDisplay}</span>
+                    <span style="color: var(--accent-gold); font-size: 11px; opacity: 0.85; margin-left: 3px;">(${breakdown.totalGainDisplay})</span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    tooltip.innerHTML = tooltipHtml;
+
+    tooltip.style.visibility = 'hidden';
+    tooltip.style.display = 'block';
+    tooltip.style.opacity = '0';
+
+    const rect = element.getBoundingClientRect();
+    const actualRect = tooltip.getBoundingClientRect();
+    const width = actualRect.width || 280;
+    const height = actualRect.height || 140;
+
+    let top = rect.top - height - 8;
+    if (top < 10) {
+        top = rect.bottom + 8;
+    }
+
+    let left = rect.left + (rect.width / 2) - (width / 2);
+    if (left < 10) left = 10;
+    if (left + width > window.innerWidth - 10) {
+        left = window.innerWidth - width - 10;
+    }
+
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+    tooltip.style.visibility = 'visible';
+    tooltip.style.opacity = '1';
+
+    // Cross-highlight in BuffsPanel
+    document.querySelectorAll('.buff-row.highlighted-by-stat').forEach(el => el.classList.remove('highlighted-by-stat'));
+    breakdown.buffs.forEach(b => {
+        const buffEl = document.querySelector(`.equipment-area .buff-row[data-buff-index="${b.buffIndex}"]`);
+        if (buffEl) {
+            buffEl.classList.add('highlighted-by-stat');
+        }
+    });
+};
+
+window.hideCombatStatTooltip = function () {
+    const tooltip = document.getElementById('combat-stat-tooltip');
+    if (tooltip) {
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+    }
+    document.querySelectorAll('.buff-row.highlighted-by-stat').forEach(el => el.classList.remove('highlighted-by-stat'));
+};
+
+window.showArtifactStatTooltip = function (element, charIndex, artIndex, subIndex) {
+    if (!element) return;
+
+    let charIdx = charIndex;
+    if (charIdx === null || charIdx === undefined || isNaN(charIdx)) {
+        charIdx = element.dataset.charIndex !== undefined && element.dataset.charIndex !== '' 
+            ? parseInt(element.dataset.charIndex) 
+            : 0;
+    }
+    const p = globalPersoData[charIdx];
+    if (!p || !p.artefacts) return;
+
+    let aIdx = artIndex !== undefined ? parseInt(artIndex) : parseInt(element.dataset.artIndex || 0);
+    let sIdx = subIndex !== undefined ? parseInt(subIndex) : parseInt(element.dataset.subIndex || 0);
+
+    const art = p.artefacts[aIdx];
+    if (!art || !art.subStats || !art.subStats[sIdx]) return;
+
+    const sub = art.subStats[sIdx];
+    const tooltip = document.getElementById('artifact-stat-tooltip');
+    if (!tooltip) return;
+
+    const showcaseWrapper = element.closest('.showcase-wrapper');
+    const charHex = (showcaseWrapper && showcaseWrapper.style.getPropertyValue('--char-hex'))
+        || getComputedStyle(element).getPropertyValue('--char-hex')
+        || 'var(--accent-gold)';
+    tooltip.style.setProperty('--char-hex', charHex);
+
+    const stars = art.stars || 5;
+    const pieceName = t('artifact.' + art.type);
+    const statIcon = createIcon(sub.key);
+
+    if (stars < 4) {
+        tooltip.innerHTML = `
+            <div class="stat-tooltip-content" style="display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 5px;">
+                    <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
+                        ${statIcon}
+                        <span>${sub.label}</span>
+                    </div>
+                    <span style="font-size: 10px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">${pieceName}</span>
+                </div>
+                <div style="font-size: 11px; color: rgba(255, 255, 255, 0.6); margin-top: 4px;">
+                    ${t('analysis.s5.unavailable', stars)}
+                </div>
+            </div>
+        `;
+    } else {
+        const details = (typeof window !== 'undefined' && window.getRollDetails)
+            ? window.getRollDetails(sub.key, sub.value, stars)
+            : (typeof getRollDetails === 'function' ? getRollDetails(sub.key, sub.value, stars) : { k: 1, rolls: [sub.value] });
+
+        const baseRollsRef = (stars === 4
+            ? ((typeof window !== 'undefined' && window.BASE_ROLLS_4) ? window.BASE_ROLLS_4 : BASE_ROLLS_4)
+            : ((typeof window !== 'undefined' && window.BASE_ROLLS) ? window.BASE_ROLLS : BASE_ROLLS));
+        const baseRolls = baseRollsRef?.[sub.key] || [];
+        const colors = ['#6CED75', '#00E497', '#00BFE9', '#EE72F7'];
+        const tierNames = [
+            t('analysis.s5.rollWeak'),
+            t('analysis.s5.rollMed'),
+            t('analysis.s5.rollStrong'),
+            t('analysis.s5.rollPerfect')
+        ];
+
+        const rollsArray = (details && details.rolls && details.rolls.length > 0) ? details.rolls : [sub.value];
+        const rollsCount = rollsArray.length;
+
+        const rollsEquationHtml = rollsArray.map((rollValue, index) => {
+            let tierIndex = baseRolls.indexOf(rollValue);
+            if (tierIndex === -1 && baseRolls.length > 0) {
+                let minDiff = Infinity;
+                baseRolls.forEach((br, i) => {
+                    const diff = Math.abs(br - rollValue);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        tierIndex = i;
+                    }
+                });
+            }
+            const color = (tierIndex >= 0 && tierIndex < colors.length) ? colors[tierIndex] : 'var(--text-always-white)';
+            const displayVal = (sub.key === "atk" || sub.key === "def" || sub.key === "hp")
+                ? Math.round(rollValue)
+                : (typeof rollValue === 'number' ? rollValue.toFixed(1) : rollValue);
+            const plusSign = (index < rollsArray.length - 1) ? ' <span style="color: rgba(255, 255, 255, 0.4); margin: 0 2px;">+</span> ' : '';
+            return `<span style="color:${color}; font-weight: 600;">${displayVal}</span>${plusSign}`;
+        }).join('');
+
+        let rollsBreakdownListHtml = '';
+        rollsArray.forEach((rollValue, idx) => {
+            let tierIndex = baseRolls.indexOf(rollValue);
+            if (tierIndex === -1 && baseRolls.length > 0) {
+                let minDiff = Infinity;
+                baseRolls.forEach((br, i) => {
+                    const diff = Math.abs(br - rollValue);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        tierIndex = i;
+                    }
+                });
+            }
+            const color = (tierIndex >= 0 && tierIndex < colors.length) ? colors[tierIndex] : 'var(--text-always-white)';
+            const tierLabel = (tierIndex >= 0 && tierIndex < tierNames.length) ? tierNames[tierIndex] : '';
+            const displayVal = (sub.key === "atk" || sub.key === "def" || sub.key === "hp")
+                ? Math.round(rollValue)
+                : (typeof rollValue === 'number' ? rollValue.toFixed(1) : rollValue);
+
+            const isPercentage = (sub.key !== "atk" && sub.key !== "def" && sub.key !== "hp" && sub.key !== "eleMas");
+            const formattedRollVal = isPercentage ? `+${displayVal}%` : `+${displayVal}`;
+
+            rollsBreakdownListHtml += `
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 2px 0;">
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                        <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: ${color};"></span>
+                        <span style="color: rgba(255, 255, 255, 0.85);">Roll ${idx + 1}</span>
+                        ${tierLabel ? `<span style="font-size: 10px; color: ${color}; opacity: 0.9; margin-left: 2px;">(${tierLabel})</span>` : ''}
+                    </div>
+                    <span style="font-family: monospace; font-weight: 600; color: ${color};">${formattedRollVal}</span>
+                </div>
+            `;
+        });
+
+        tooltip.innerHTML = `
+            <div class="stat-tooltip-content" style="display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 5px;">
+                    <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
+                        ${statIcon}
+                        <span>${sub.label}</span>
+                    </div>
+                    <span style="font-size: 10px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">${pieceName} (+${art.level || 0})</span>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-top: 2px;">
+                    <span style="color: rgba(255, 255, 255, 0.7); font-size: 11px;">${t('analysis.s5.title')}</span>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="color: var(--accent-gold); font-weight: bold; font-size: 13px;">${formatValueDisplay(sub.key, sub.value)}</span>
+                        <span style="font-size: 10px; background: rgba(255, 255, 255, 0.1); color: var(--text-always-white); padding: 1px 6px; border-radius: 4px; font-weight: 500;">${rollsCount} ${rollsCount > 1 ? 'rolls' : 'roll'}</span>
+                    </div>
+                </div>
+
+                <div style="background: rgba(0, 0, 0, 0.25); border-radius: 6px; padding: 6px 8px; margin-top: 2px; border: 1px solid rgba(255, 255, 255, 0.06);">
+                    <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">
+                        ${t('analysis.s5.title')}
+                    </div>
+                    <div style="font-family: monospace; font-size: 12px; line-height: 1.3;">
+                        ${rollsEquationHtml}
+                    </div>
+                </div>
+
+                ${rollsCount > 1 ? `
+                    <div style="display: flex; flex-direction: column; margin-top: 2px; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 4px;">
+                        ${rollsBreakdownListHtml}
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+
+    tooltip.style.visibility = 'hidden';
+    tooltip.style.display = 'block';
+    tooltip.style.opacity = '0';
+
+    const rect = element.getBoundingClientRect();
+    const actualRect = tooltip.getBoundingClientRect();
+    const width = actualRect.width || 260;
+    const height = actualRect.height || 140;
+
+    let top = rect.top - height - 8;
+    if (top < 10) {
+        top = rect.bottom + 8;
+    }
+
+    let left = rect.left + (rect.width / 2) - (width / 2);
+    if (left < 10) left = 10;
+    if (left + width > window.innerWidth - 10) {
+        left = window.innerWidth - width - 10;
+    }
+
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+    tooltip.style.visibility = 'visible';
+    tooltip.style.opacity = '1';
+};
+
+window.hideArtifactStatTooltip = function () {
+    const tooltip = document.getElementById('artifact-stat-tooltip');
+    if (tooltip) {
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+    }
+};
+
+function isArtifactStatMatching(artStatKey, targetBaseStatKey, dmgBonusKey) {
+    if (!artStatKey || !targetBaseStatKey) return false;
+    if (targetBaseStatKey === 'hp') return artStatKey === 'hp' || artStatKey === 'hp_';
+    if (targetBaseStatKey === 'atk') return artStatKey === 'atk' || artStatKey === 'atk_';
+    if (targetBaseStatKey === 'def') return artStatKey === 'def' || artStatKey === 'def_';
+    if (targetBaseStatKey === 'eleMas') return artStatKey === 'eleMas';
+    if (targetBaseStatKey === 'critRate_') return artStatKey === 'critRate_';
+    if (targetBaseStatKey === 'critDMG_') return artStatKey === 'critDMG_';
+    if (targetBaseStatKey === 'enerRech_') return artStatKey === 'enerRech_';
+    if (targetBaseStatKey === 'heal_') return artStatKey === 'heal_';
+    if (targetBaseStatKey === 'dmgBonus') {
+        if (dmgBonusKey && artStatKey === dmgBonusKey) return true;
+        return artStatKey.includes('dmg_');
+    }
+    return artStatKey === targetBaseStatKey;
+}
+
+function getBaseStatBreakdown(persoObj, statKey) {
+    if (!persoObj || !persoObj.combatStats) return null;
+    const s = persoObj.combatStats;
+    const fp = persoObj.fightPropMap || {};
+    const weapon = persoObj.weapon;
+    const artefacts = persoObj.artefacts || [];
+    const charName = persoObj.nom || t('ui.char.character');
+    const weaponName = weapon ? weapon.name : t('ui.char.weapon');
+
+    const formatPct = (val) => (typeof val === 'number' ? val.toFixed(1) + '%' : val);
+    const formatInt = (val) => (typeof val === 'number' ? Math.round(val).toLocaleString() : val);
+
+    const getArtifactLabel = (mainVal, subsVal, isPct = true) => {
+        const fmt = isPct ? ((v) => v.toFixed(1) + '%') : ((v) => Math.round(v).toLocaleString());
+        if (mainVal > 0 && subsVal > 0) {
+            return `${t('ui.char.artifacts')} (${fmt(mainVal)} + ${fmt(subsVal)})`;
+        }
+        if (mainVal > 0) {
+            return `${t('ui.char.artifacts')} (${fmt(mainVal)})`;
+        }
+        return `${t('ui.char.artifacts')} (${fmt(subsVal)})`;
+    };
+
+    if (statKey === 'hp') {
+        const totalHp = Math.round(fp[2000] !== undefined ? fp[2000] : s.hp);
+        const baseHp = Math.round(persoObj.baseStats?.hp || fp[1] || 0);
+
+        let artHpPctMain = 0;
+        let artHpPctSubs = 0;
+        let flowerFlat = 0;
+        let subsFlatHp = 0;
+
+        artefacts.forEach(art => {
+            if (art.mainStat) {
+                if (art.mainStat.key === 'hp_') {
+                    artHpPctMain += art.mainStat.value;
+                } else if (art.mainStat.key === 'hp') {
+                    if (art.type === 'EQUIP_BRACER') flowerFlat += art.mainStat.value;
+                }
+            }
+            (art.subStats || []).forEach(sub => {
+                if (sub.key === 'hp_') {
+                    artHpPctSubs += sub.value;
+                } else if (sub.key === 'hp') {
+                    subsFlatHp += sub.value;
+                }
+            });
+        });
+
+        const artHpPct = artHpPctMain + artHpPctSubs;
+        const artHpFlat = flowerFlat + subsFlatHp;
+
+        let weaponHpPct = 0;
+        if (weapon && weapon.subStat && weapon.subStat.key === 'hp_') {
+            weaponHpPct = weapon.subStat.value;
+        }
+
+        const totalFlatHp = fp[2] !== undefined ? Math.round(fp[2]) : artHpFlat;
+        const subsFlat = Math.max(0, totalFlatHp - Math.round(flowerFlat));
+
+        const rawTotalHpPct = (fp[3] !== undefined) 
+            ? (fp[3] * 100) 
+            : (baseHp > 0 ? (((totalHp - totalFlatHp) / baseHp - 1) * 100) : 0);
+        const totalHpPct = Math.max(0, rawTotalHpPct);
+        const residualHpPct = Math.max(0, totalHpPct - artHpPct - weaponHpPct);
+
+        return {
+            statKey: 'hp',
+            statLabel: t('stat.hp'),
+            statIcon: createIcon('hp'),
+            totalDisplay: formatInt(totalHp),
+            type: 'composite',
+            sections: [
+                {
+                    title: `${t('stat.hp')} ${t('ui.char.base').toLowerCase()}`,
+                    total: formatInt(baseHp),
+                    items: [
+                        { label: `${t('ui.char.character')} (${charName})`, value: formatInt(baseHp) }
+                    ]
+                },
+                totalHpPct >= 0.1 || artHpPct > 0 || weaponHpPct > 0 ? {
+                    title: `Bonus de ${t('stat.hp_')}`,
+                    total: `+${totalHpPct.toFixed(1)}%`,
+                    items: [
+                        artHpPct > 0 ? {
+                            label: getArtifactLabel(artHpPctMain, artHpPctSubs, true),
+                            value: `+${formatPct(artHpPct)}`
+                        } : null,
+                        weaponHpPct > 0 ? {
+                            label: `${t('ui.char.weapon')} (${weaponName})`,
+                            value: `+${formatPct(weaponHpPct)}`
+                        } : null,
+                        residualHpPct >= 0.1 ? {
+                            label: `${t('ui.buff.set2p')} / ${t('ui.char.ascension')}`,
+                            value: `+${formatPct(residualHpPct)}`
+                        } : null
+                    ].filter(Boolean)
+                } : null,
+                totalFlatHp > 0 ? {
+                    title: `Bonus de ${t('stat.hp')} flat`,
+                    total: `+${formatInt(totalFlatHp)}`,
+                    items: [
+                        flowerFlat > 0 ? { label: t('artifact.EQUIP_BRACER'), value: `+${formatInt(flowerFlat)}` } : null,
+                        subsFlat > 0 ? { label: `Substats ${t('ui.char.artifacts').toLowerCase()}`, value: `+${formatInt(subsFlat)}` } : null
+                    ].filter(Boolean)
+                } : null
+            ].filter(Boolean)
+        };
+    }
+
+    if (statKey === 'atk') {
+        const totalAtk = Math.round(fp[2001] !== undefined ? fp[2001] : s.atk);
+        const totalBaseAtk = Math.round(persoObj.baseStats?.atk || fp[4] || 0);
+        const weaponBaseAtk = Math.round(weapon?.baseAtk?.value || 0);
+        const charBaseAtk = Math.max(0, totalBaseAtk - weaponBaseAtk);
+
+        let artAtkPctMain = 0;
+        let artAtkPctSubs = 0;
+        let featherFlat = 0;
+        let subsFlatAtk = 0;
+
+        artefacts.forEach(art => {
+            if (art.mainStat) {
+                if (art.mainStat.key === 'atk_') {
+                    artAtkPctMain += art.mainStat.value;
+                } else if (art.mainStat.key === 'atk') {
+                    if (art.type === 'EQUIP_NECKLACE') featherFlat += art.mainStat.value;
+                }
+            }
+            (art.subStats || []).forEach(sub => {
+                if (sub.key === 'atk_') {
+                    artAtkPctSubs += sub.value;
+                } else if (sub.key === 'atk') {
+                    subsFlatAtk += sub.value;
+                }
+            });
+        });
+
+        const artAtkPct = artAtkPctMain + artAtkPctSubs;
+        const artAtkFlat = featherFlat + subsFlatAtk;
+
+        let weaponAtkPct = 0;
+        if (weapon && weapon.subStat && weapon.subStat.key === 'atk_') {
+            weaponAtkPct = weapon.subStat.value;
+        }
+
+        const totalFlatAtk = fp[5] !== undefined ? Math.round(fp[5]) : artAtkFlat;
+        const subsFlat = Math.max(0, totalFlatAtk - Math.round(featherFlat));
+
+        const rawTotalAtkPct = (fp[6] !== undefined) 
+            ? (fp[6] * 100) 
+            : (totalBaseAtk > 0 ? (((totalAtk - totalFlatAtk) / totalBaseAtk - 1) * 100) : 0);
+        const totalAtkPct = Math.max(0, rawTotalAtkPct);
+        const residualAtkPct = Math.max(0, totalAtkPct - artAtkPct - weaponAtkPct);
+
+        return {
+            statKey: 'atk',
+            statLabel: t('stat.atk'),
+            statIcon: createIcon('atk'),
+            totalDisplay: formatInt(totalAtk),
+            type: 'composite',
+            sections: [
+                {
+                    title: `${t('stat.atk')} ${t('ui.char.base').toLowerCase()}`,
+                    total: formatInt(totalBaseAtk),
+                    items: [
+                        { label: `${t('ui.char.character')} (${charName})`, value: formatInt(charBaseAtk) },
+                        weaponBaseAtk > 0 ? { label: `${t('ui.char.weapon')} (${weaponName})`, value: formatInt(weaponBaseAtk) } : null
+                    ].filter(Boolean)
+                },
+                totalAtkPct >= 0.1 || artAtkPct > 0 || weaponAtkPct > 0 ? {
+                    title: `Bonus d'${t('stat.atk_')}`,
+                    total: `+${totalAtkPct.toFixed(1)}%`,
+                    items: [
+                        artAtkPct > 0 ? {
+                            label: getArtifactLabel(artAtkPctMain, artAtkPctSubs, true),
+                            value: `+${formatPct(artAtkPct)}`
+                        } : null,
+                        weaponAtkPct > 0 ? {
+                            label: `${t('ui.char.weapon')} (${weaponName})`,
+                            value: `+${formatPct(weaponAtkPct)}`
+                        } : null,
+                        residualAtkPct >= 0.1 ? {
+                            label: `${t('ui.buff.set2p')} / ${t('ui.char.ascension')}`,
+                            value: `+${formatPct(residualAtkPct)}`
+                        } : null
+                    ].filter(Boolean)
+                } : null,
+                totalFlatAtk > 0 ? {
+                    title: `Bonus d'${t('stat.atk')} flat`,
+                    total: `+${formatInt(totalFlatAtk)}`,
+                    items: [
+                        featherFlat > 0 ? { label: t('artifact.EQUIP_NECKLACE'), value: `+${formatInt(featherFlat)}` } : null,
+                        subsFlat > 0 ? { label: `Substats ${t('ui.char.artifacts').toLowerCase()}`, value: `+${formatInt(subsFlat)}` } : null
+                    ].filter(Boolean)
+                } : null
+            ].filter(Boolean)
+        };
+    }
+
+    if (statKey === 'def') {
+        const totalDef = Math.round(fp[2002] !== undefined ? fp[2002] : s.def);
+        const baseDef = Math.round(persoObj.baseStats?.def || fp[7] || 0);
+
+        let artDefPctMain = 0;
+        let artDefPctSubs = 0;
+        let subsFlatDef = 0;
+
+        artefacts.forEach(art => {
+            if (art.mainStat) {
+                if (art.mainStat.key === 'def_') {
+                    artDefPctMain += art.mainStat.value;
+                }
+            }
+            (art.subStats || []).forEach(sub => {
+                if (sub.key === 'def_') {
+                    artDefPctSubs += sub.value;
+                } else if (sub.key === 'def') {
+                    subsFlatDef += sub.value;
+                }
+            });
+        });
+
+        const artDefPct = artDefPctMain + artDefPctSubs;
+        const artDefFlat = subsFlatDef;
+
+        let weaponDefPct = 0;
+        if (weapon && weapon.subStat && weapon.subStat.key === 'def_') {
+            weaponDefPct = weapon.subStat.value;
+        }
+
+        const totalFlatDef = fp[8] !== undefined ? Math.round(fp[8]) : artDefFlat;
+        const rawTotalDefPct = (fp[9] !== undefined) 
+            ? (fp[9] * 100) 
+            : (baseDef > 0 ? (((totalDef - totalFlatDef) / baseDef - 1) * 100) : 0);
+        const totalDefPct = Math.max(0, rawTotalDefPct);
+        const residualDefPct = Math.max(0, totalDefPct - artDefPct - weaponDefPct);
+
+        return {
+            statKey: 'def',
+            statLabel: t('stat.def'),
+            statIcon: createIcon('def'),
+            totalDisplay: formatInt(totalDef),
+            type: 'composite',
+            sections: [
+                {
+                    title: `${t('stat.def')} ${t('ui.char.base').toLowerCase()}`,
+                    total: formatInt(baseDef),
+                    items: [
+                        { label: `${t('ui.char.character')} (${charName})`, value: formatInt(baseDef) }
+                    ]
+                },
+                totalDefPct >= 0.1 || artDefPct > 0 || weaponDefPct > 0 ? {
+                    title: `Bonus de ${t('stat.def_')}`,
+                    total: `+${totalDefPct.toFixed(1)}%`,
+                    items: [
+                        artDefPct > 0 ? {
+                            label: getArtifactLabel(artDefPctMain, artDefPctSubs, true),
+                            value: `+${formatPct(artDefPct)}`
+                        } : null,
+                        weaponDefPct > 0 ? {
+                            label: `${t('ui.char.weapon')} (${weaponName})`,
+                            value: `+${formatPct(weaponDefPct)}`
+                        } : null,
+                        residualDefPct >= 0.1 ? {
+                            label: `${t('ui.buff.set2p')} / ${t('ui.char.ascension')}`,
+                            value: `+${formatPct(residualDefPct)}`
+                        } : null
+                    ].filter(Boolean)
+                } : null,
+                totalFlatDef > 0 ? {
+                    title: `Bonus de ${t('stat.def')} flat`,
+                    total: `+${formatInt(totalFlatDef)}`,
+                    items: [
+                        { label: `Substats ${t('ui.char.artifacts').toLowerCase()}`, value: `+${formatInt(totalFlatDef)}` }
+                    ]
+                } : null
+            ].filter(Boolean)
+        };
+    }
+
+    if (statKey === 'critRate_') {
+        const totalVal = fp[20] !== undefined ? (fp[20] * 100) : s.cr;
+        const baseNat = 5.0;
+
+        let weaponVal = (weapon && weapon.subStat && weapon.subStat.key === 'critRate_') ? weapon.subStat.value : 0;
+        let artMainVal = 0;
+        let artSubsVal = 0;
+
+        artefacts.forEach(art => {
+            if (art.mainStat && art.mainStat.key === 'critRate_') artMainVal += art.mainStat.value;
+            (art.subStats || []).forEach(sub => {
+                if (sub.key === 'critRate_') artSubsVal += sub.value;
+            });
+        });
+        const artVal = artMainVal + artSubsVal;
+        const residualVal = Math.max(0, totalVal - baseNat - weaponVal - artVal);
+
+        return {
+            statKey: 'critRate_',
+            statLabel: t('stat.critRate_'),
+            statIcon: createIcon('critRate_'),
+            totalDisplay: formatPct(totalVal),
+            type: 'simple',
+            items: [
+                { label: `${t('ui.char.base')} (${t('ui.char.character')})`, value: formatPct(baseNat) },
+                weaponVal > 0 ? { label: `${t('ui.char.weapon')} (${weaponName})`, value: `+${formatPct(weaponVal)}` } : null,
+                artVal > 0 ? { label: getArtifactLabel(artMainVal, artSubsVal, true), value: `+${formatPct(artVal)}` } : null,
+                residualVal >= 0.1 ? { label: `${t('ui.char.ascension')} / ${t('ui.buff.set2p')}`, value: `+${formatPct(residualVal)}` } : null
+            ].filter(Boolean)
+        };
+    }
+
+    if (statKey === 'critDMG_') {
+        const totalVal = fp[22] !== undefined ? (fp[22] * 100) : s.cd;
+        const baseNat = 50.0;
+
+        let weaponVal = (weapon && weapon.subStat && weapon.subStat.key === 'critDMG_') ? weapon.subStat.value : 0;
+        let artMainVal = 0;
+        let artSubsVal = 0;
+
+        artefacts.forEach(art => {
+            if (art.mainStat && art.mainStat.key === 'critDMG_') artMainVal += art.mainStat.value;
+            (art.subStats || []).forEach(sub => {
+                if (sub.key === 'critDMG_') artSubsVal += sub.value;
+            });
+        });
+        const artVal = artMainVal + artSubsVal;
+        const residualVal = Math.max(0, totalVal - baseNat - weaponVal - artVal);
+
+        return {
+            statKey: 'critDMG_',
+            statLabel: t('stat.critDMG_'),
+            statIcon: createIcon('critDMG_'),
+            totalDisplay: formatPct(totalVal),
+            type: 'simple',
+            items: [
+                { label: `${t('ui.char.base')} (${t('ui.char.character')})`, value: formatPct(baseNat) },
+                weaponVal > 0 ? { label: `${t('ui.char.weapon')} (${weaponName})`, value: `+${formatPct(weaponVal)}` } : null,
+                artVal > 0 ? { label: getArtifactLabel(artMainVal, artSubsVal, true), value: `+${formatPct(artVal)}` } : null,
+                residualVal >= 0.1 ? { label: `${t('ui.char.ascension')} / ${t('ui.buff.set2p')}`, value: `+${formatPct(residualVal)}` } : null
+            ].filter(Boolean)
+        };
+    }
+
+    if (statKey === 'enerRech_') {
+        const totalVal = fp[23] !== undefined ? (fp[23] * 100) : s.er;
+        const baseNat = 100.0;
+
+        let weaponVal = (weapon && weapon.subStat && weapon.subStat.key === 'enerRech_') ? weapon.subStat.value : 0;
+        let artMainVal = 0;
+        let artSubsVal = 0;
+
+        artefacts.forEach(art => {
+            if (art.mainStat && art.mainStat.key === 'enerRech_') artMainVal += art.mainStat.value;
+            (art.subStats || []).forEach(sub => {
+                if (sub.key === 'enerRech_') artSubsVal += sub.value;
+            });
+        });
+        const artVal = artMainVal + artSubsVal;
+        const residualVal = Math.max(0, totalVal - baseNat - weaponVal - artVal);
+
+        return {
+            statKey: 'enerRech_',
+            statLabel: t('stat.enerRech_'),
+            statIcon: createIcon('enerRech_'),
+            totalDisplay: formatPct(totalVal),
+            type: 'simple',
+            items: [
+                { label: `${t('ui.char.base')} (${t('ui.char.character')})`, value: formatPct(baseNat) },
+                weaponVal > 0 ? { label: `${t('ui.char.weapon')} (${weaponName})`, value: `+${formatPct(weaponVal)}` } : null,
+                artVal > 0 ? { label: getArtifactLabel(artMainVal, artSubsVal, true), value: `+${formatPct(artVal)}` } : null,
+                residualVal >= 0.1 ? { label: `${t('ui.buff.set2p')} / ${t('ui.char.ascension')}`, value: `+${formatPct(residualVal)}` } : null
+            ].filter(Boolean)
+        };
+    }
+
+    if (statKey === 'eleMas') {
+        const totalVal = Math.round(fp[28] !== undefined ? fp[28] : (s.em || s.eleMas || 0));
+
+        let weaponVal = (weapon && weapon.subStat && weapon.subStat.key === 'eleMas') ? Math.round(weapon.subStat.value) : 0;
+        let artMainVal = 0;
+        let artSubsVal = 0;
+
+        artefacts.forEach(art => {
+            if (art.mainStat && art.mainStat.key === 'eleMas') artMainVal += Math.round(art.mainStat.value);
+            (art.subStats || []).forEach(sub => {
+                if (sub.key === 'eleMas') artSubsVal += Math.round(sub.value);
+            });
+        });
+        const artVal = artMainVal + artSubsVal;
+        const residualVal = Math.max(0, totalVal - weaponVal - artVal);
+
+        return {
+            statKey: 'eleMas',
+            statLabel: t('stat.eleMas'),
+            statIcon: createIcon('eleMas'),
+            totalDisplay: formatInt(totalVal),
+            type: 'simple',
+            items: [
+                weaponVal > 0 ? { label: `${t('ui.char.weapon')} (${weaponName})`, value: `+${formatInt(weaponVal)}` } : null,
+                artVal > 0 ? { label: getArtifactLabel(artMainVal, artSubsVal, false), value: `+${formatInt(artVal)}` } : null,
+                residualVal >= 1 ? { label: `${t('ui.buff.set2p')} / ${t('ui.char.ascension')}`, value: `+${formatInt(residualVal)}` } : null
+            ].filter(Boolean)
+        };
+    }
+
+    if (statKey === 'heal_') {
+        const totalVal = fp[26] !== undefined ? (fp[26] * 100) : (s.hb || 0);
+
+        let artMainVal = 0;
+        artefacts.forEach(art => {
+            if (art.mainStat && art.mainStat.key === 'heal_') artMainVal += art.mainStat.value;
+        });
+        const residualVal = Math.max(0, totalVal - artMainVal);
+
+        return {
+            statKey: 'heal_',
+            statLabel: t('stat.heal_'),
+            statIcon: createIcon('heal_'),
+            totalDisplay: formatPct(totalVal),
+            type: 'simple',
+            items: [
+                artMainVal > 0 ? { label: `${t('ui.char.artifacts')} (${t('artifact.EQUIP_DRESS')})`, value: `+${formatPct(artMainVal)}` } : null,
+                residualVal >= 0.1 ? { label: `${t('ui.buff.set2p')} / ${t('ui.char.ascension')}`, value: `+${formatPct(residualVal)}` } : null
+            ].filter(Boolean)
+        };
+    }
+
+    if (statKey === 'dmgBonus') {
+        const totalVal = s.dmgBonus;
+        const dmgStat = formatStat(s.dmgBonusKey, s.dmgBonus / 100);
+
+        let weaponVal = (weapon && weapon.subStat && weapon.subStat.key === s.dmgBonusKey) ? weapon.subStat.value : 0;
+        let artMainVal = 0;
+        artefacts.forEach(art => {
+            if (art.mainStat && art.mainStat.key === s.dmgBonusKey) artMainVal += art.mainStat.value;
+        });
+        const residualVal = Math.max(0, totalVal - weaponVal - artMainVal);
+
+        return {
+            statKey: 'dmgBonus',
+            statLabel: dmgStat.label,
+            statIcon: dmgStat.icon,
+            totalDisplay: formatPct(totalVal),
+            type: 'simple',
+            items: [
+                artMainVal > 0 ? { label: `${t('ui.char.artifacts')} (${t('artifact.EQUIP_RING')})`, value: `+${formatPct(artMainVal)}` } : null,
+                weaponVal > 0 ? { label: `${t('ui.char.weapon')} (${weaponName})`, value: `+${formatPct(weaponVal)}` } : null,
+                residualVal >= 0.1 ? { label: `${t('ui.buff.set2p')} / ${t('ui.char.ascension')}`, value: `+${formatPct(residualVal)}` } : null
+            ].filter(Boolean)
+        };
+    }
+
+    return null;
+}
+
+window.showBaseStatTooltip = function (element, charIndex, statKey) {
+    if (!element) return;
+
+    let charIdx = charIndex;
+    if (charIdx === null || charIdx === undefined || isNaN(charIdx)) {
+        charIdx = element.dataset.charIndex !== undefined && element.dataset.charIndex !== '' 
+            ? parseInt(element.dataset.charIndex) 
+            : 0;
+    }
+    const p = globalPersoData[charIdx];
+    if (!p) return;
+
+    const sKey = statKey || element.dataset.statKey;
+    if (!sKey) return;
+
+    const breakdown = getBaseStatBreakdown(p, sKey);
+    if (!breakdown) return;
+
+    const tooltip = document.getElementById('base-stat-tooltip');
+    if (!tooltip) return;
+
+    const showcaseWrapper = element.closest('.showcase-wrapper');
+    const charHex = (showcaseWrapper && showcaseWrapper.style.getPropertyValue('--char-hex'))
+        || getComputedStyle(element).getPropertyValue('--char-hex')
+        || 'var(--accent-gold)';
+    tooltip.style.setProperty('--char-hex', charHex);
+
+    // Cross-highlight matching artifact main stats and substats
+    const dmgBonusKey = p.combatStats?.dmgBonusKey;
+    const equipArea = showcaseWrapper ? showcaseWrapper.querySelector('.equipment-area') : document.querySelector('.equipment-area');
+    if (equipArea) {
+        const artItems = equipArea.querySelectorAll('[data-stat-key]');
+        artItems.forEach(item => {
+            const itemKey = item.dataset.statKey;
+            if (isArtifactStatMatching(itemKey, sKey, dmgBonusKey)) {
+                item.classList.add('highlighted-by-base-stat');
+            } else {
+                item.classList.remove('highlighted-by-base-stat');
+            }
+        });
+    }
+
+    let contentHtml = '';
+    if (breakdown.type === 'composite') {
+        contentHtml = breakdown.sections.map(section => {
+            if (!section || !section.items || section.items.length === 0) return '';
+            const itemsHtml = section.items.map(item => `
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 1px 0 1px 8px; color: rgba(255, 255, 255, 0.75);">
+                    <div style="display: flex; align-items: center; gap: 5px; min-width: 0; flex: 1;">
+                        <span style="color: rgba(255, 255, 255, 0.35); flex-shrink: 0;">•</span>
+                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.label}</span>
+                    </div>
+                    <span style="font-family: monospace; font-weight: 600; color: var(--text-always-white); margin-left: 6px; flex-shrink: 0;">${item.value}</span>
+                </div>
+            `).join('');
+
+            return `
+                <div style="margin-bottom: 5px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 2px;">
+                        <span>${section.title}</span>
+                        <span style="color: var(--accent-gold); font-family: monospace;">${section.total}</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        ${itemsHtml}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    } else {
+        const itemsHtml = (breakdown.items || []).map(item => `
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 2px 0 2px 4px; color: rgba(255, 255, 255, 0.85);">
+                <div style="display: flex; align-items: center; gap: 5px; min-width: 0; flex: 1;">
+                    <span style="color: rgba(255, 255, 255, 0.35); flex-shrink: 0;">•</span>
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.label}</span>
+                </div>
+                <span style="font-family: monospace; font-weight: 600; color: var(--accent-gold); margin-left: 6px; flex-shrink: 0;">${item.value}</span>
+            </div>
+        `).join('');
+
+        contentHtml = `
+            <div style="display: flex; flex-direction: column; gap: 2px; margin-top: 2px;">
+                ${itemsHtml}
+            </div>
+        `;
+    }
+
+    tooltip.innerHTML = `
+        <div class="stat-tooltip-content" style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 5px;">
+                <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
+                    ${breakdown.statIcon}
+                    <span>${breakdown.statLabel}</span>
+                </div>
+                <span style="color: var(--accent-gold); font-weight: bold; font-size: 13px; white-space: nowrap;">${breakdown.totalDisplay}</span>
+            </div>
+            ${contentHtml}
+        </div>
+    `;
+
+    tooltip.style.visibility = 'hidden';
+    tooltip.style.display = 'block';
+    tooltip.style.opacity = '0';
+
+    const rect = element.getBoundingClientRect();
+    const actualRect = tooltip.getBoundingClientRect();
+    const width = actualRect.width || 260;
+    const height = actualRect.height || 140;
+
+    let top = rect.top - height - 8;
+    if (top < 10) {
+        top = rect.bottom + 8;
+    }
+
+    let left = rect.left + (rect.width / 2) - (width / 2);
+    if (left < 10) left = 10;
+    if (left + width > window.innerWidth - 10) {
+        left = window.innerWidth - width - 10;
+    }
+
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+    tooltip.style.visibility = 'visible';
+    tooltip.style.opacity = '1';
+};
+
+window.hideBaseStatTooltip = function () {
+    const tooltip = document.getElementById('base-stat-tooltip');
+    if (tooltip) {
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+    }
+    document.querySelectorAll('.highlighted-by-base-stat').forEach(el => {
+        el.classList.remove('highlighted-by-base-stat');
+    });
 };
 
 function renderGlobalEvaluation(playerInfo) {
@@ -3473,4 +4451,11 @@ if (typeof window !== 'undefined') {
     window.statLine = statLine;
     window.renderShowcase = renderShowcase;
     window.showAccountRoadmap = showAccountRoadmap;
+    window.showCombatStatTooltip = showCombatStatTooltip;
+    window.hideCombatStatTooltip = hideCombatStatTooltip;
+    window.showArtifactStatTooltip = showArtifactStatTooltip;
+    window.hideArtifactStatTooltip = hideArtifactStatTooltip;
+    window.showBaseStatTooltip = showBaseStatTooltip;
+    window.hideBaseStatTooltip = hideBaseStatTooltip;
+    window.showShowcaseTooltip = window.showCombatStatTooltip;
 }

@@ -41,16 +41,16 @@ export function renderShowcaseComponent(persoObj, charIndex) {
                 <!-- Colonne Milieu : Infos, Base Stats, Score, Aptitudes, Stats Combat -->
                 <div class="showcase-area" style="gap: 8px; justify-content: space-between; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box; z-index: 10;">
                     <div class="showcase-area-container" style="width: 299px; height: 100%; border-radius: 8px; flex: 1 1 0%; justify-content: space-between; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box;">
-                        ${renderBaseStatsList(persoObj, infoHeaderHtml)}
+                        ${renderBaseStatsList(persoObj, infoHeaderHtml, charIndex)}
                         ${renderCharacterScoreBadge(persoObj.evaluation)}
                         ${renderTalentsList(persoObj.talents)}
-                        ${renderCombatStatsList(persoObj)}
+                        ${renderCombatStatsList(persoObj, charIndex)}
                     </div>
                 </div>
 
                 <!-- Colonne Droite : Artéfacts et Panneau de Buffs -->
                 <div class="equipment-area" style="display: grid; grid-template-columns: repeat(2, 240px); gap: 8px; z-index: 10;">
-                    ${renderArtifactsGrid(persoObj)}
+                    ${renderArtifactsGrid(persoObj, charIndex)}
                     ${renderBuffsPanel(persoObj, charIndex)}
                 </div>
             </div>

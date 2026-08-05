@@ -835,6 +835,18 @@ main {
 
 
 
+.substat-row {
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 1px 4px;
+    margin: 0 -4px;
+    transition: background-color 0.15s ease;
+}
+
+.substat-row:hover {
+    background-color: rgb(from var(--char-hex, var(--accent-gold)) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.75);
+}
+
 .substat-row.dead {
     opacity: 0.4;
 }
@@ -1292,6 +1304,68 @@ main {
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent var(--tooltip-color, var(--accent-gold)) transparent;
+}
+
+#combat-stat-tooltip,
+#artifact-stat-tooltip,
+#base-stat-tooltip {
+    position: fixed;
+    visibility: hidden;
+    background: rgb(from var(--bg-panel) r g b / 0.60);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: var(--text-primary);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 11px;
+    opacity: 0;
+    transition: opacity 0.15s ease-out;
+    z-index: 999999;
+    min-width: 250px;
+    max-width: 360px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75), inset 0 0 1px rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+    border: 1px solid var(--char-hex, var(--accent-gold));
+}
+
+.stat-row.is-buffed {
+    cursor: pointer;
+    position: relative;
+}
+
+.stat-row.is-buffed:hover {
+    background-color: rgb(from var(--char-hex, var(--accent-gold)) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.75);
+    border-radius: 4px;
+}
+
+.base-stat-row {
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 1px 4px;
+    margin: 0 -4px;
+    transition: background-color 0.15s ease;
+}
+
+.base-stat-row:hover {
+    background-color: rgb(from var(--char-hex, var(--accent-gold)) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.75);
+}
+
+.main-stat-display {
+    border-radius: 4px;
+    padding: 2px 4px;
+    margin: 0 -4px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.main-stat-display.highlighted-by-base-stat,
+.substat-row.highlighted-by-base-stat {
+    background-color: rgb(from var(--char-hex, var(--accent-gold)) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.75) !important;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.buff-row.highlighted-by-stat {
+    background-color: rgb(from var(--char-hex, var(--accent-gold)) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.75) !important;
+    transition: background-color 0.2s ease-in-out;
 }
 
 .guoba-badge:hover .tooltip {

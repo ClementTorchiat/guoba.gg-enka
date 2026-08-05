@@ -3,12 +3,12 @@ import { t } from '../../scripts/i18n.js';
 import ICON_MAP from '../../data/icon_map.json';
 import { formatValueDisplay } from '../../scripts/data.js';
 
-export function renderArtifactCard(art, weights = {}) {
+export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 0) {
     if (!art) return '';
     const ICON_BASE_PATH = "./assets/simulator/icons/";
     let subsHtml = "";
 
-    (art.subStats || []).forEach(sub => {
+    (art.subStats || []).forEach((sub, subIndex) => {
         let w = weights[sub.key];
         if (w === undefined && sub.key.includes("dmg_")) w = weights["elemental_dmg_"] || 0;
         if (w === undefined) w = 0;
@@ -18,7 +18,14 @@ export function renderArtifactCard(art, weights = {}) {
             : 1;
 
         subsHtml += `
-            <div style="color: var(--text-always-white); display: flex; justify-content: space-between; align-items: center;" class="substat-row ${isDead ? 'dead' : ''}">
+            <div style="color: var(--text-always-white); display: flex; justify-content: space-between; align-items: center;" 
+                 class="substat-row ${isDead ? 'dead' : ''}"
+                 data-char-index="${charIndex}"
+                 data-art-index="${artIndex}"
+                 data-sub-index="${subIndex}"
+                 data-stat-key="${sub.key}"
+                 onmouseenter="showArtifactStatTooltip(this, ${charIndex}, ${artIndex}, ${subIndex})"
+                 onmouseleave="hideArtifactStatTooltip()">
                 <div style="display:flex; flex-direction: row; align-items:center; gap:5px;">
                     <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width: 17px; height: 17px;" alt="${sub.key}" decoding="async">
                     <p style="font-size: 12px; margin:0;">${sub.label}</p>
@@ -57,7 +64,7 @@ export function renderArtifactCard(art, weights = {}) {
                 
                 <div class="card-divider" style="margin: 8px 0px; display: flex; clear: both; width: 100%; box-sizing: border-box; color: var(--dotted-line); border-width: 1px 0 0; border-color: var(--dotted-line); border-block-start: 1px solid var(--dotted-line);"></div>
                 
-                <div class="main-stat-display" style="display: flex; flex-direction: row; justify-content:space-between; align-items: center;">
+                <div class="main-stat-display" data-stat-key="${art.mainStat?.key || ''}" style="display: flex; flex-direction: row; justify-content:space-between; align-items: center;">
                     <div style="display:flex; align-items:center; gap:5px; font-size:0.7rem; color:var(--text-grey); font-weight:normal;">
                         <img src="${ICON_BASE_PATH}${ICON_MAP[art.mainStat?.key] || ICON_MAP['unknown']}" style="width: 17px; height: 17px; margin-bottom: 1px;" alt="${art.mainStat?.key}" decoding="async">
                         <p style="font-size: 12px; color: var(--text-always-white); margin:0;">${art.mainStat?.label}</p>
