@@ -633,6 +633,11 @@ function clearSearch() {
     document.title = t('page.title.default');
     window.currentPlayerNickname = null;
     globalPersoData = [];
+    window.globalPersoData = [];
+    if (window.hideCombatStatTooltip) window.hideCombatStatTooltip();
+    if (window.hideBaseStatTooltip) window.hideBaseStatTooltip();
+    if (window.hideArtifactStatTooltip) window.hideArtifactStatTooltip();
+    if (window.hideGlobalTooltip) window.hideGlobalTooltip();
     if (typeof preloadedSplashUrls !== 'undefined') preloadedSplashUrls.clear();
     if (typeof decodedSplashImages !== 'undefined') decodedSplashImages.clear();
     sidebarSortState = { column: 'original', direction: 'desc' };
@@ -2281,6 +2286,16 @@ function processData(data) {
             dmgBonus: (fp[elemInfo.id] || 0) * 100,
             dmgBonusKey: elemInfo.key
         };
+        if (ELEMENT_DATA) {
+            Object.values(ELEMENT_DATA).forEach(el => {
+                if (el.key && el.id && fp[el.id] !== undefined) {
+                    combatStats[el.key] = (fp[el.id] || 0) * 100;
+                }
+            });
+        }
+        if (fp[30] !== undefined) {
+            combatStats['physical_dmg_'] = (fp[30] || 0) * 100;
+        }
 
         const artefacts = [];
         let weapon = null;
@@ -3047,32 +3062,29 @@ function renderHome() {
     `;
 }
 
-if (!document.getElementById('global-tooltip')) {
-    const tooltip = document.createElement('div');
-    tooltip.id = 'global-tooltip';
-    document.body.appendChild(tooltip);
+function getOrCreateTooltip(id) {
+    let el = document.getElementById(id);
+    if (!el && typeof document !== 'undefined') {
+        el = document.createElement('div');
+        el.id = id;
+        document.body.appendChild(el);
+    }
+    return el;
 }
 
-if (!document.getElementById('combat-stat-tooltip')) {
-    const statTooltip = document.createElement('div');
-    statTooltip.id = 'combat-stat-tooltip';
-    document.body.appendChild(statTooltip);
+function ensureAllTooltips() {
+    if (typeof document === 'undefined') return;
+    getOrCreateTooltip('global-tooltip');
+    getOrCreateTooltip('combat-stat-tooltip');
+    getOrCreateTooltip('artifact-stat-tooltip');
+    getOrCreateTooltip('base-stat-tooltip');
 }
 
-if (!document.getElementById('artifact-stat-tooltip')) {
-    const artTooltip = document.createElement('div');
-    artTooltip.id = 'artifact-stat-tooltip';
-    document.body.appendChild(artTooltip);
-}
-
-if (!document.getElementById('base-stat-tooltip')) {
-    const baseTooltip = document.createElement('div');
-    baseTooltip.id = 'base-stat-tooltip';
-    document.body.appendChild(baseTooltip);
-}
+ensureAllTooltips();
 
 window.showGlobalTooltip = function (element, text, color) {
-    const tooltip = document.getElementById('global-tooltip');
+    const tooltip = getOrCreateTooltip('global-tooltip');
+    if (!tooltip) return;
     tooltip.innerHTML = text;
     tooltip.style.setProperty('--tooltip-color', color);
 
@@ -3102,7 +3114,10 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
             ? parseInt(element.dataset.charIndex) 
             : 0;
     }
-    const p = globalPersoData[charIdx];
+    const dataList = (typeof globalPersoData !== 'undefined' && globalPersoData && globalPersoData.length > 0)
+        ? globalPersoData
+        : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+    const p = dataList[charIdx] || dataList[0];
     if (!p) return;
 
     const sKey = statKey || element.dataset.statKey;
@@ -3114,7 +3129,7 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
         return;
     }
 
-    const tooltip = document.getElementById('combat-stat-tooltip');
+    const tooltip = getOrCreateTooltip('combat-stat-tooltip');
     if (!tooltip) return;
 
     const showcaseWrapper = element.closest('.showcase-wrapper');
@@ -3253,7 +3268,10 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
             ? parseInt(element.dataset.charIndex) 
             : 0;
     }
-    const p = globalPersoData[charIdx];
+    const dataList = (typeof globalPersoData !== 'undefined' && globalPersoData && globalPersoData.length > 0)
+        ? globalPersoData
+        : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+    const p = dataList[charIdx] || dataList[0];
     if (!p || !p.artefacts) return;
 
     let aIdx = artIndex !== undefined ? parseInt(artIndex) : parseInt(element.dataset.artIndex || 0);
@@ -3263,7 +3281,7 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
     if (!art || !art.subStats || !art.subStats[sIdx]) return;
 
     const sub = art.subStats[sIdx];
-    const tooltip = document.getElementById('artifact-stat-tooltip');
+    const tooltip = getOrCreateTooltip('artifact-stat-tooltip');
     if (!tooltip) return;
 
     const showcaseWrapper = element.closest('.showcase-wrapper');
@@ -3916,7 +3934,10 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
             ? parseInt(element.dataset.charIndex) 
             : 0;
     }
-    const p = globalPersoData[charIdx];
+    const dataList = (typeof globalPersoData !== 'undefined' && globalPersoData && globalPersoData.length > 0)
+        ? globalPersoData
+        : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+    const p = dataList[charIdx] || dataList[0];
     if (!p) return;
 
     const sKey = statKey || element.dataset.statKey;
@@ -3925,7 +3946,7 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
     const breakdown = getBaseStatBreakdown(p, sKey);
     if (!breakdown) return;
 
-    const tooltip = document.getElementById('base-stat-tooltip');
+    const tooltip = getOrCreateTooltip('base-stat-tooltip');
     if (!tooltip) return;
 
     const showcaseWrapper = element.closest('.showcase-wrapper');
@@ -4274,6 +4295,7 @@ window.exportBuildAsImage = async function () {
 };
 
 function initMainPageApp() {
+    ensureAllTooltips();
     setupUidInputBinding();
 
     const isMainPage = !!document.getElementById('sort-col-original');

@@ -79,14 +79,22 @@ export function getStatBuffBreakdown(persoObj, statKey) {
         finalValue = buffedStats.hb || 0;
         isPct = true;
         targetBonusKeys = ['heal_'];
-    } else if (statKey === 'elemental_dmg_' || statKey === 'dmgBonus' || (persoObj.buffedStats && statKey === persoObj.buffedStats.dmgBonusKey)) {
-        const dmgStat = formatStat(buffedStats.dmgBonusKey || combatStats.dmgBonusKey, (buffedStats.dmgBonus || 0) / 100);
+    } else if (statKey === 'elemental_dmg_' || statKey === 'dmgBonus' || (persoObj.buffedStats && statKey === persoObj.buffedStats.dmgBonusKey) || (typeof statKey === 'string' && statKey.endsWith('_dmg_'))) {
+        const isNativeElem = (statKey === 'elemental_dmg_' || statKey === 'dmgBonus' || (persoObj.buffedStats && statKey === persoObj.buffedStats.dmgBonusKey));
+        const targetDmgKey = isNativeElem ? (buffedStats.dmgBonusKey || combatStats.dmgBonusKey) : statKey;
+        const currentVal = isNativeElem ? (buffedStats.dmgBonus || 0) : (buffedStats[targetDmgKey] || 0);
+        const initialDmgVal = isNativeElem ? (combatStats.dmgBonus || 0) : (combatStats[targetDmgKey] || 0);
+        const dmgStat = formatStat(targetDmgKey, currentVal / 100);
         statLabel = dmgStat.label;
         statIcon = dmgStat.icon;
-        initialValue = combatStats.dmgBonus || 0;
-        finalValue = buffedStats.dmgBonus || 0;
+        initialValue = initialDmgVal;
+        finalValue = currentVal;
         isPct = true;
-        targetBonusKeys = ['elemental_dmg_', 'dmgBonus', buffedStats.dmgBonusKey, combatStats.dmgBonusKey].filter(Boolean);
+        if (isNativeElem) {
+            targetBonusKeys = ['elemental_dmg_', 'dmgBonus', buffedStats.dmgBonusKey, combatStats.dmgBonusKey].filter(Boolean);
+        } else {
+            targetBonusKeys = [targetDmgKey];
+        }
     } else {
         return null;
     }
@@ -102,6 +110,12 @@ export function getStatBuffBreakdown(persoObj, statKey) {
         for (const [k, v] of Object.entries(buff.bonuses)) {
             if (typeof v === 'object' && k.endsWith('_scaling')) {
                 const targetStatRaw = k.replace('_bonus_scaling', '');
+                const normalizedTargetKey = targetStatRaw.endsWith('_') ? targetStatRaw : (targetStatRaw + '_');
+                const isElementalMatch = (statKey === 'elemental_dmg_' || statKey === 'dmgBonus' || (buffedStats.dmgBonusKey && statKey === buffedStats.dmgBonusKey)) &&
+                    (targetStatRaw === 'elemental_dmg' || targetStatRaw === 'elemental_dmg_' || targetStatRaw === buffedStats.dmgBonusKey || targetStatRaw.endsWith('_dmg_') || targetStatRaw.endsWith('_dmg'));
+                const isSpecificDmgMatch = typeof statKey === 'string' && statKey.endsWith('_dmg_') &&
+                    (normalizedTargetKey === statKey || targetStatRaw === 'elemental_dmg' || targetStatRaw === 'elemental_dmg_');
+
                 const matches = (
                     (statKey === 'atk' && targetStatRaw.startsWith('atk')) ||
                     (statKey === 'hp' && targetStatRaw.startsWith('hp')) ||
@@ -110,7 +124,8 @@ export function getStatBuffBreakdown(persoObj, statKey) {
                     ((statKey === 'critRate_' || statKey === 'cr') && targetStatRaw === 'critRate_') ||
                     ((statKey === 'critDMG_' || statKey === 'cd') && targetStatRaw === 'critDMG_') ||
                     ((statKey === 'enerRech_' || statKey === 'er') && targetStatRaw === 'enerRech_') ||
-                    (statKey === 'elemental_dmg_' && (targetStatRaw === 'elemental_dmg_' || targetStatRaw === buffedStats.dmgBonusKey || targetStatRaw.endsWith('_dmg_')))
+                    isElementalMatch ||
+                    isSpecificDmgMatch
                 );
 
                 if (matches) {
@@ -148,7 +163,9 @@ export function getStatBuffBreakdown(persoObj, statKey) {
                     }
                 }
             } else if (typeof v !== 'object') {
-                const isTarget = targetBonusKeys.includes(k) || (k.endsWith('_dmg_') && statKey === 'elemental_dmg_');
+                const isTarget = targetBonusKeys.includes(k) || 
+                    (k.endsWith('_dmg_') && (statKey === 'elemental_dmg_' || statKey === 'dmgBonus' || (buffedStats.dmgBonusKey && statKey === buffedStats.dmgBonusKey))) ||
+                    (k === 'elemental_dmg_' && typeof statKey === 'string' && statKey.endsWith('_dmg_'));
                 if (isTarget) {
                     if (k === 'atk_' && baseStats.atk) {
                         const absGain = baseStats.atk * v;
@@ -316,6 +333,18 @@ export function renderCombatStatsList(persoObj, charIndex = 0) {
         html += renderStatLine(dmgStat.icon, dmgStat.label, b.dmgBonus.toFixed(1) + '%', isDmgBuffed, 'elemental_dmg_', charIndex);
     }
 
+    if (persoObj.activeBuild && persoObj.activeBuild.showUIStats) {
+        persoObj.activeBuild.showUIStats.forEach(forcedKey => {
+            if (forcedKey.endsWith('_dmg_') && forcedKey !== b.dmgBonusKey && forcedKey !== 'elemental_dmg_') {
+                const val = b[forcedKey] || 0;
+                const oldVal = s[forcedKey] || 0;
+                const isBuffed = val > oldVal;
+                const statInfo = formatStat(forcedKey, val / 100);
+                html += renderStatLine(statInfo.icon, statInfo.label, val.toFixed(1) + '%', isBuffed, forcedKey, charIndex);
+            }
+        });
+    }
+
     return `
         <div class="showcase-area-combat-stats" style="border-radius: 8px; transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; padding-left: 2px; padding-right: 2px; padding-bottom: 3px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 1px solid rgba(255, 255, 255, 0.4); box-sizing: border-box;">
             <p style="margin-left: 10px; margin-right: 10px; margin-bottom: 9px; margin-top: 10px; font-size: 14px;">${t('ui.char.combatStats')}</p>
@@ -408,6 +437,17 @@ export function updateCombatStatsDOM(persoObj, charIndex = null) {
     if (!isDmgHidden) {
         const isDmgBuffed = b.dmgBonus > s.dmgBonus;
         updateRow(b.dmgBonus.toFixed(1) + '%', isDmgBuffed, 'elemental_dmg_');
+    }
+
+    if (persoObj.activeBuild && persoObj.activeBuild.showUIStats) {
+        persoObj.activeBuild.showUIStats.forEach(forcedKey => {
+            if (forcedKey.endsWith('_dmg_') && forcedKey !== b.dmgBonusKey && forcedKey !== 'elemental_dmg_') {
+                const val = b[forcedKey] || 0;
+                const oldVal = s[forcedKey] || 0;
+                const isBuffed = val > oldVal;
+                updateRow(val.toFixed(1) + '%', isBuffed, forcedKey);
+            }
+        });
     }
 }
 

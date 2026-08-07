@@ -1315,6 +1315,7 @@ main {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     color: var(--text-primary);
+    font-family: 'ShinShin', sans-serif;
     padding: 10px 14px;
     border-radius: 8px;
     font-size: 11px;

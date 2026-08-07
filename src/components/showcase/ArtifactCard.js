@@ -24,8 +24,8 @@ export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 
                  data-art-index="${artIndex}"
                  data-sub-index="${subIndex}"
                  data-stat-key="${sub.key}"
-                 onmouseenter="showArtifactStatTooltip(this, ${charIndex}, ${artIndex}, ${subIndex})"
-                 onmouseleave="hideArtifactStatTooltip()">
+                 onmouseenter="window.showArtifactStatTooltip && window.showArtifactStatTooltip(this, ${charIndex}, ${artIndex}, ${subIndex})"
+                 onmouseleave="window.hideArtifactStatTooltip && window.hideArtifactStatTooltip()">
                 <div style="display:flex; flex-direction: row; align-items:center; gap:5px;">
                     <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width: 17px; height: 17px;" alt="${sub.key}" decoding="async">
                     <p style="font-size: 12px; margin:0;">${sub.label}</p>
