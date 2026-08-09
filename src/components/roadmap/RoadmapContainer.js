@@ -35,6 +35,25 @@ if (typeof window !== 'undefined') {
                 return;
             }
 
+            const setDomainScopeBtn = e.target.closest('[data-action="set-domain-scope"]');
+            if (setDomainScopeBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const scope = setDomainScopeBtn.getAttribute('data-scope');
+                const shouldShowAll = (scope === 'all');
+                if (window.roadmapShowAllDomainChars !== shouldShowAll) {
+                    window.roadmapShowAllDomainChars = shouldShowAll;
+                    const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
+                        ? cachedRoadmapCharacters
+                        : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+                    const container = document.getElementById('main-container');
+                    if (container && chars.length > 0) {
+                        container.innerHTML = renderRoadmapContainer(chars, window.roadmapFocusCharNom);
+                    }
+                }
+                return;
+            }
+
             const toggleDomainBtn = e.target.closest('[data-action="toggle-domain-all-chars"]');
             if (toggleDomainBtn) {
                 e.preventDefault();
@@ -46,6 +65,25 @@ if (typeof window !== 'undefined') {
                 const container = document.getElementById('main-container');
                 if (container && chars.length > 0) {
                     container.innerHTML = renderRoadmapContainer(chars, window.roadmapFocusCharNom);
+                }
+                return;
+            }
+
+            const setStrongboxScopeBtn = e.target.closest('[data-action="set-strongbox-scope"]');
+            if (setStrongboxScopeBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const scope = setStrongboxScopeBtn.getAttribute('data-scope');
+                const shouldShowAll = (scope === 'all');
+                if (window.roadmapShowAllStrongboxChars !== shouldShowAll) {
+                    window.roadmapShowAllStrongboxChars = shouldShowAll;
+                    const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
+                        ? cachedRoadmapCharacters
+                        : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+                    const container = document.getElementById('main-container');
+                    if (container && chars.length > 0) {
+                        container.innerHTML = renderRoadmapContainer(chars, window.roadmapFocusCharNom);
+                    }
                 }
                 return;
             }

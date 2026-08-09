@@ -178,13 +178,21 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                     </div>
                     <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.domains.desc')}</p>
                 </div>
-                <!-- Toggle Tous les persos -->
-                <button data-action="toggle-domain-all-chars"
-                        type="button"
-                        title="${showAllChars ? t('roadmap.toggleAllChars.active') : t('roadmap.toggleAllChars.label')}"
-                        style="display:inline-flex; align-items:center; gap:6px; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${showAllChars ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${showAllChars ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.3)'}; color:${showAllChars ? '#60a5fa' : 'var(--text-grey)'};">
-                    <span>${showAllChars ? t('roadmap.toggleAllChars.active') : t('roadmap.toggleAllChars.label')}</span>
-                </button>
+                <!-- Sélecteur de portée : Vitrine vs Tous les persos -->
+                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <button data-action="set-domain-scope"
+                            data-scope="showcase"
+                            type="button"
+                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${!showAllChars ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${!showAllChars ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.25)'}; color:${!showAllChars ? '#60a5fa' : 'var(--text-grey)'};">
+                        <span>${t('roadmap.scope.showcase')}</span>
+                    </button>
+                    <button data-action="set-domain-scope"
+                            data-scope="all"
+                            type="button"
+                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${showAllChars ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${showAllChars ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.25)'}; color:${showAllChars ? '#60a5fa' : 'var(--text-grey)'};">
+                        <span>${t('roadmap.scope.allChars')}</span>
+                    </button>
+                </div>
             </div>
 
             ${domains.length === 0 ? `
