@@ -222,7 +222,7 @@ html[data-theme="abyssal"] {
     --bg-panel: #181818;
     --bg-hover: #1E1E1E;
     --bg-active: #252525;
-    --bg-card: #1e2024;
+    --bg-card: #111111;
 
     --text-always-white: #ffffff;
     --text-primary: #ffffff;
@@ -231,10 +231,10 @@ html[data-theme="abyssal"] {
     --text-strong: #e8ecf4;
     --text-muted: #9ca3af;
     --border-subtle: rgba(255, 255, 255, 0.4);
-    --border-color: #2d3342;
+    --border-color: #2a2a2a;
     --dotted-line: rgba(255, 255, 255, 0.25);
 
-    --ob-bg-button-dark: #1e2229;
+    --ob-bg-button-dark: #1E1E1E;
 
     --accent-gold: #FFB13B;
 }
@@ -244,7 +244,7 @@ html[data-theme="sea"] {
     --bg-panel: #1A2B49;
     --bg-hover: #223960;
     --bg-active: #1F3F69;
-    --bg-card: #1e2024;
+    --bg-card: #142038;
 
     --text-always-white: #ffffff;
     --text-primary: #ffffff;
@@ -253,10 +253,10 @@ html[data-theme="sea"] {
     --text-strong: #e8ecf4;
     --text-muted: #9ca3af;
     --border-subtle: rgba(255, 255, 255, 0.4);
-    --border-color: #2d3342;
+    --border-color: #243a60;
     --dotted-line: rgba(255, 255, 255, 0.25);
 
-    --ob-bg-button-dark: #1e2229;
+    --ob-bg-button-dark: #223960;
 
     --accent-gold: #FFB13B;
 }
@@ -266,7 +266,7 @@ html[data-theme="wish"] {
     --bg-panel: #242536;
     --bg-hover: #32344A;
     --bg-active: #3B3E5A;
-    --bg-card: #1e2024;
+    --bg-card: #1c1e2d;
 
     --text-always-white: #ffffff;
     --text-primary: #ffffff;
@@ -275,10 +275,10 @@ html[data-theme="wish"] {
     --text-strong: #e8ecf4;
     --text-muted: #9ca3af;
     --border-subtle: rgba(255, 255, 255, 0.4);
-    --border-color: #2d3342;
+    --border-color: #35374e;
     --dotted-line: rgba(255, 255, 255, 0.25);
 
-    --ob-bg-button-dark: #1e2229;
+    --ob-bg-button-dark: #32344A;
 
     --accent-gold: #FFB13B;
 }
@@ -288,7 +288,7 @@ html[data-theme="guild"] {
     --bg-panel: #3D332C;
     --bg-hover: #4E4238;
     --bg-active: #5C4F43;
-    --bg-card: #1e2024;
+    --bg-card: #362C26;
 
     --text-always-white: #ffffff;
     --text-primary: #ffffff;
@@ -297,10 +297,10 @@ html[data-theme="guild"] {
     --text-strong: #e8ecf4;
     --text-muted: #9ca3af;
     --border-subtle: rgba(255, 255, 255, 0.4);
-    --border-color: #2d3342;
+    --border-color: #54473C;
     --dotted-line: rgba(255, 255, 255, 0.25);
 
-    --ob-bg-button-dark: #1e2229;
+    --ob-bg-button-dark: #4E4238;
 
     --accent-gold: #FFB13B;
 }

@@ -367,7 +367,7 @@ function showSkeletonCard() {
     `).join('');
 
     const artifactCards = Array(5).fill(0).map(() => `
-        <div style="width:240px; min-width:240px; height:280px; border:1px solid #2d3342; border-radius:8px; padding:12px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
+        <div style="width:240px; min-width:240px; height:280px; border:1px solid var(--border-color); border-radius:8px; padding:12px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
             <div style="display:flex; gap:12px; align-items:center; height:50px;">
                 <div class="sk" style="width:48px; height:48px; border-radius:6px;"></div>
                 <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
@@ -376,12 +376,12 @@ function showSkeletonCard() {
                     <div class="sk" style="height:9px;  width:30%;"></div>
                 </div>
             </div>
-            <div style="border-top:1px solid #2d3342;"></div>
+            <div style="border-top:1px solid var(--border-color);"></div>
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <div class="sk" style="height:10px; width:45%;"></div>
                 <div class="sk" style="height:10px; width:28%;"></div>
             </div>
-            <div style="border-top:1px solid #2d3342;"></div>
+            <div style="border-top:1px solid var(--border-color);"></div>
             <div style="display:flex; flex-direction:column; gap:6px;">
                 ${Array(4).fill(0).map(() => `
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -393,7 +393,7 @@ function showSkeletonCard() {
                     </div>
                 `).join('')}
             </div>
-            <div style="border-top:1px solid #2d3342;"></div>
+            <div style="border-top:1px solid var(--border-color);"></div>
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <div class="sk" style="height:10px; width:45px;"></div>
                 <div class="sk" style="height:10px; width:55px;"></div>
@@ -402,13 +402,13 @@ function showSkeletonCard() {
     `).join('');
 
     const buffsCard = `
-        <div style="width:240px; min-width:240px; height:280px; border:1px solid #2d3342; border-radius:8px; padding:12px; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;">
+        <div style="width:240px; min-width:240px; height:280px; border:1px solid var(--border-color); border-radius:8px; padding:12px; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;">
             <div class="sk" style="height:14px; width:60%;"></div>
             <div class="sk" style="height:9px; width:90%;"></div>
             <div class="sk" style="height:9px; width:80%;"></div>
-            <div style="border-top:1px solid #2d3342; margin:2px 0;"></div>
+            <div style="border-top:1px solid var(--border-color); margin:2px 0;"></div>
             ${Array(5).fill(0).map(() => `
-                <div style="display:flex; justify-content:space-between; align-items:center; height:28px; background:rgba(0,0,0,0.2); border-radius:8px; padding:0 8px; box-sizing:border-box;">
+                <div style="display:flex; justify-content:space-between; align-items:center; height:28px; background:var(--bg-active); border-radius:8px; padding:0 8px; box-sizing:border-box;">
                     <div class="sk" style="height:10px; width:70%;"></div>
                     <div class="sk" style="width:30px; height:16px; border-radius:34px;"></div>
                 </div>
@@ -420,19 +420,19 @@ function showSkeletonCard() {
         <div class="top-row">
 
             <!-- Fond neutre -->
-            <div style="position:absolute; inset:0; z-index:0; background:#1e2024;"></div>
+            <div style="position:absolute; inset:0; z-index:0; background:var(--bg-card);"></div>
 
             <!-- Colonne gauche : portrait + arme -->
             <div style="display:flex; flex-direction:column; gap:8px; flex-shrink:0; position:relative; z-index:1;">
-                <div class="sk" style="width:350px; height:720px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);"></div>
-                <div class="sk" style="width:350px; height:128px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);"></div>
+                <div class="sk" style="width:350px; height:720px; border-radius:8px; border:1px solid var(--border-subtle);"></div>
+                <div class="sk" style="width:350px; height:128px; border-radius:8px; border:1px solid var(--border-subtle);"></div>
             </div>
 
             <!-- Colonne milieu : stats + score + skills + combat -->
             <div style="width:299px; flex-shrink:0; display:flex; flex-direction:column; gap:8px; position:relative; z-index:1;">
 
                 <!-- Stats de base -->
-                <div style="flex:1; border-radius:8px; border:1px solid rgba(255,255,255,0.15); padding:12px; display:flex; flex-direction:column; gap:11px; background:rgba(30,32,36,0.8);">
+                <div style="flex:1; border-radius:8px; border:1px solid var(--border-subtle); padding:12px; display:flex; flex-direction:column; gap:11px; background:var(--bg-panel);">
                     <div style="display:flex; justify-content:space-between; align-items:center; height:40px; margin-bottom:2px;">
                         <div style="display:flex; gap:4px; align-items:center;">
                             <div class="sk" style="width:25px; height:25px; border-radius:50%;"></div>
@@ -451,7 +451,7 @@ function showSkeletonCard() {
                 </div>
 
                 <!-- Score -->
-                <div style="border-radius:8px; border:1px solid rgba(255,255,255,0.15); padding:10px 10px 8px 7px; display:flex; flex-direction:column; gap:8px; background:rgba(30,32,36,0.8);">
+                <div style="border-radius:8px; border:1px solid var(--border-subtle); padding:10px 10px 8px 7px; display:flex; flex-direction:column; gap:8px; background:var(--bg-panel);">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <div class="sk" style="width:70px; height:12px;"></div>
                         <div class="sk" style="width:65px; height:12px;"></div>
@@ -460,7 +460,7 @@ function showSkeletonCard() {
                 </div>
 
                 <!-- Skills -->
-                <div style="border-radius:8px; border:1px solid rgba(255,255,255,0.15); padding:10px; display:flex; justify-content:space-around; align-items:center; background:rgba(30,32,36,0.8);">
+                <div style="border-radius:8px; border:1px solid var(--border-subtle); padding:10px; display:flex; justify-content:space-around; align-items:center; background:var(--bg-panel);">
                     ${Array(3).fill(0).map(() => `
                         <div style="display:flex; flex-direction:column; align-items:center; gap:8px; margin-bottom:11px;">
                             <div class="sk" style="width:64px; height:64px; border-radius:50%;"></div>
@@ -470,7 +470,7 @@ function showSkeletonCard() {
                 </div>
 
                 <!-- Stats en combat -->
-                <div style="border-radius:8px; border:1px solid rgba(255,255,255,0.15); padding:10px; display:flex; flex-direction:column; gap:9px; background:rgba(30,32,36,0.8);">
+                <div style="border-radius:8px; border:1px solid var(--border-subtle); padding:10px; display:flex; flex-direction:column; gap:9px; background:var(--bg-panel);">
                     ${combatRows}
                 </div>
             </div>
