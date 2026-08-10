@@ -1,0 +1,161 @@
+---
+import Layout from "../layouts/Layout.astro";
+import StaticLayout from "../layouts/StaticLayout.astro";
+
+const frLogs = await Astro.glob("../data/changelogs/fr/*.md");
+const enLogs = await Astro.glob("../data/changelogs/en/*.md");
+
+// Tri par date décroissante
+frLogs.sort(
+    (a, b) =>
+        new Date(b.frontmatter.date).valueOf() -
+        new Date(a.frontmatter.date).valueOf(),
+);
+enLogs.sort(
+    (a, b) =>
+        new Date(b.frontmatter.date).valueOf() -
+        new Date(a.frontmatter.date).valueOf(),
+);
+---
+
+<Layout
+    title="Patch Notes — guoba.gg"
+    titleKey="page.changelog.title"
+    description="Historique des mises à jour de guoba.gg"
+>
+    <style is:inline>
+        /* CSS logic to toggle language based on HTML root lang */
+        html[lang="en"] .lang-fr {
+            display: none !important;
+        }
+        html[lang="fr"] .lang-en {
+            display: none !important;
+        }
+
+        .changelog-entry {
+            background: var(--bg-panel);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .changelog-entry h1 {
+            margin-top: 32px;
+            margin-bottom: 8px;
+            padding-top: 32px;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            border-top: 1px solid var(--text-primary);
+        }
+
+        .changelog-entry h2 {
+            margin-top: 24px;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+        }
+        .changelog-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: block;
+            font-weight: 500;
+        }
+        .changelog-content {
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        .changelog-content h3 {
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+        .changelog-content ul {
+            padding-left: 20px;
+            margin-bottom: 16px;
+        }
+        .changelog-content li {
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            font-weight: normal;
+            font-size: 0.875rem;
+        }
+        .changelog-content li strong {
+            text-decoration: underline;
+        }
+        .changelog-content a {
+            color: #e2a25b;
+            text-decoration: none;
+        }
+        .changelog-content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <StaticLayout currentPage="changelog">
+        <div class="static-page">
+            <div class="static-page-hero">
+                <h1 class="static-page-title" data-i18n="page.changelog.title">
+                    Patch Notes
+                </h1>
+                <p class="static-page-lead" data-i18n="page.changelog.lead">
+                    Retrouvez ici l'historique des mises à jour et nouveautés de
+                    guoba.gg.
+                </p>
+            </div>
+
+            <div class="static-page-body">
+                <!-- French Version -->
+                <div class="lang-fr">
+                    {
+                        frLogs.map((log) => (
+                            <div class="changelog-entry">
+                                <h2 style="margin-top: 0px;">
+                                    {log.frontmatter.title}
+                                </h2>
+                                <span class="changelog-date">
+                                    {new Date(
+                                        log.frontmatter.date,
+                                    ).toLocaleDateString("fr-FR", {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                    })}
+                                </span>
+                                <div class="changelog-content">
+                                    <log.Content />
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+
+                <!-- English Version -->
+                <div class="lang-en">
+                    {
+                        enLogs.map((log) => (
+                            <div class="changelog-entry">
+                                <h2 style="margin-top: 0px;">
+                                    {log.frontmatter.title}
+                                </h2>
+                                <span class="changelog-date">
+                                    {new Date(
+                                        log.frontmatter.date,
+                                    ).toLocaleDateString("en-US", {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                    })}
+                                </span>
+                                <div class="changelog-content">
+                                    <log.Content />
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </StaticLayout>
+</Layout>

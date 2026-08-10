@@ -18,7 +18,7 @@ export const T = {
     // ══════════════════════════════════════════════════════
     fr: {
         // ── Titres de page (Meta) ─────────────────────────────
-        "page.title.default": "guoba.gg - Simulateur Genshin Impact",
+        "page.title.default": "guoba.gg — Simulateur Genshin Impact",
         "page.title.char": (char, player) => `${char} de ${player} - guoba.gg`,
         "meta.description": "guoba.gg est un outil d'analyse de builds et de statistiques pour Genshin Impact. Évaluez vos artéfacts, optimisez vos personnages...",
         "meta.keywords": "Genshin Impact, build, simulateur, artéfacts, enka network, UID, statistiques",
@@ -529,11 +529,14 @@ export const T = {
         // ── Menu statique ─────────────────────────────────
         "nav.home": "Accueil",
         "nav.about": "À propos",
+        "nav.changelog": "Notes de mise à jour",
         "nav.team": "L'équipe",
         "nav.privacy": "Confidentialité",
 
         // ── Pages statiques ───────────────────────────────
         "page.about.title": "guoba.gg",
+        "page.changelog.title": "Patch Notes",
+        "page.changelog.lead": "Retrouvez ici l'historique des mises à jour et nouveautés de guoba.gg.",
         "page.about.lead": "Un optimiseur de builds Genshin Impact indépendant, conçu par des joueurs, pour des joueurs.",
         "page.about.q1.title": "Qu'est-ce que guoba.gg ?",
         "page.about.q1.p1": "<strong>guoba.gg</strong> réinvente l'optimisation sur Genshin Impact. Bien plus qu'une simple calculatrice, c'est un véritable <strong>coach virtuel</strong> : en entrant votre UID, l'outil évalue la qualité mathématique pure de vos équipements via un double système de score et de grade, simule vos statistiques réelles en combat sous buffs, et vous guide pas à pas pour perfectionner votre personnage.",
@@ -833,7 +836,7 @@ export const T = {
     // ══════════════════════════════════════════════════════
     en: {
         // ── Page Titles (Meta) ────────────────────────────────
-        "page.title.default": "guoba.gg - Genshin Impact Simulator",
+        "page.title.default": "guoba.gg — Genshin Impact Simulator",
         "page.title.char": (char, player) => `${player}'s ${char} - guoba.gg`,
         "meta.description": "guoba.gg is a build analysis and statistics tool for Genshin Impact. Evaluate your artifacts, optimize your characters...",
         "meta.keywords": "Genshin Impact, build, simulator, artifacts, enka network, UID, stats",
@@ -1332,11 +1335,14 @@ export const T = {
         // ── Static menu ───────────────────────────────────
         "nav.home": "Home",
         "nav.about": "About",
+        "nav.changelog": "Patch Notes",
         "nav.team": "Team",
         "nav.privacy": "Privacy",
 
         // ── Static pages ──────────────────────────────────
         "page.about.title": "guoba.gg",
+        "page.changelog.title": "Patch Notes",
+        "page.changelog.lead": "Find the history of updates and new features for guoba.gg here.",
         "page.about.lead": "An independent Genshin Impact build optimizer, designed by players, for players.",
         "page.about.q1.title": "What is guoba.gg?",
         "page.about.q1.p1": "<strong>guoba.gg</strong> reinvents optimization in Genshin Impact. Much more than a simple calculator, it's a true <strong>virtual coach</strong>: by entering your UID, the tool evaluates the pure mathematical quality of your equipment via a dual score and grade system, simulates your real combat stats under buffs, and guides you step-by-step to perfect your character.",
@@ -1670,7 +1676,16 @@ if (typeof window !== 'undefined') {
         document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
             el.title = t(el.getAttribute('data-i18n-title'));
         });
-        document.title = t('page.title.default');
+        if (!window.currentPlayerNickname) {
+            const titleTag = document.querySelector('title[data-i18n-title-tag]');
+            if (titleTag && titleTag.getAttribute('data-i18n-title-tag')) {
+                const key = titleTag.getAttribute('data-i18n-title-tag');
+                document.title = key === 'page.title.default' ? t(key) : `${t(key)} — guoba.gg`;
+            } else {
+                document.title = t('page.title.default');
+            }
+        }
+
         function updateMeta(selector, value) {
             const el = document.querySelector(selector);
             if (el) el.setAttribute('content', value);

@@ -5,12 +5,14 @@ import '../styles/global.css';
 
 interface Props {
   title?: string;
+  titleKey?: string;
   description?: string;
   schema?: Record<string, any> | Array<Record<string, any>>;
 }
 
 const {
   title = "guoba.gg - Simulateur Genshin Impact",
+  titleKey,
   description = "guoba.gg est un outil d'analyse de builds et de statistiques pour Genshin Impact. Évaluez vos artéfacts, optimisez vos personnages et générez des vitrines à partir de votre UID.",
   schema
 } = Astro.props;
@@ -46,19 +48,24 @@ const finalSchema = schema || defaultSchema;
     <meta charset="UTF-8">
     <ClientRouter />
     <script is:inline>
-        (function initThemeAndZoom() {
+        (function initThemeLangAndZoom() {
             function apply() {
                 const W = window.screen.width;
                 if      (W >= 3840) document.documentElement.style.zoom = "1.5";
                 else if (W >= 2560) document.documentElement.style.zoom = "1.25";
                 const savedTheme = localStorage.getItem('guoba_theme') || 'wish';
                 document.documentElement.setAttribute('data-theme', savedTheme);
+                
+                const storedLang = localStorage.getItem('guoba_lang');
+                const browserLang = navigator.language ? navigator.language.slice(0, 2) : 'fr';
+                const lang = ['fr', 'en'].includes(storedLang) ? storedLang : (['fr', 'en'].includes(browserLang) ? browserLang : 'fr');
+                document.documentElement.lang = lang;
             }
             apply();
             document.addEventListener('astro:after-swap', apply);
         })();
     </script>
-    <title>{title}</title>
+    <title data-i18n-title-tag={titleKey}>{title}</title>
 
     <!-- Balise canonique dynamique -->
     <link rel="canonical" href={canonicalURL}>

@@ -44,7 +44,7 @@ const onboardingImages = {
 };
 ---
 
-<Layout>
+<Layout titleKey="page.title.default">
     <script is:inline define:vars={{ onboardingImages }}>
         window.OB_OPTIMIZED_IMAGES = onboardingImages;
     </script>
@@ -317,6 +317,26 @@ const onboardingImages = {
 
                         <a
                             class="char-card snav-item"
+                            data-page="changelog"
+                            href="/changelog"
+                            data-astro-prefetch
+                            style="text-decoration:none;"
+                        >
+                            <div
+                                style="width:52px;height:52px;border-radius:8px;background-color: rgba(0, 0, 0, 0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"
+                            >
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/>
+                                </svg>
+                            </div>
+                            <div class="char-card-container">
+                                <p class="char-card-name" data-i18n="nav.changelog">
+                                </p>
+                            </div>
+                        </a>
+
+                        <a
+                            class="char-card snav-item"
                             data-page="team"
                             href="/team"
                             data-astro-prefetch
@@ -390,7 +410,7 @@ const onboardingImages = {
                     <div id="player-profile"></div>
                     <div
                         class="main-content-menu"
-                        style="display: flex; justify-content: space-between; align-items: flex-end; gap: 8px;"
+                        style="display: none; justify-content: space-between; align-items: flex-end; gap: 8px;"
                     >
                         <div class="main-content-menu-container">
                             <div
