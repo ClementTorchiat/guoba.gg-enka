@@ -2873,18 +2873,18 @@ function renderHome() {
 
     if (!container) return;
 
+    let profilesContentHtml = '';
+
     if (profiles.length === 0) {
-        container.innerHTML = `
-            <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0.5;">
+        profilesContentHtml = `
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0.5; margin: 80px 0;">
                 <img src="${ICON_BASE_PATH}icon_score.webp" style="width: 64px; height: 64px; margin-bottom: 20px; filter: grayscale(100%);">
                 <h2 style="color: var(--text-primary); font-size: 24px; margin-bottom: 8px;">${t('home.empty')}</h2>
                 <p style="color: var(--text-grey); font-size: 14px;">${t('home.emptyHint')}</p>
             </div>
         `;
-        return;
-    }
-
-    const serverMap = {
+    } else {
+        const serverMap = {
         '1': 'CN',
         '2': 'CN',
         '3': 'CN',
@@ -2941,25 +2941,19 @@ function renderHome() {
         const row2 = row2Items.join('');
 
         return `
-        <div onclick="document.getElementById('uidInput').value = '${p.uid}'; fetchUserData();" 
-            style="width: 480px; height: 82px; position: relative; cursor: pointer; transition: transform 0.2s;"             
-            onmouseover="this.style.transform='scale(1.02)';"
-            onmouseout="this.style.transform='scale(1)';">
+        <div class="recent-account-card-wrapper" onclick="document.getElementById('uidInput').value = '${p.uid}'; fetchUserData();">
              
             <!-- Bouton Favori -->
             <div onclick="toggleFavoriteProfile('${p.uid}', event)"
                  title="${isFav ? t('home.unpinAccount') : t('home.pinAccount')}"
-                 style="position: absolute; top: -6px; left: -6px; width: 22px; height: 22px; display: ${isFav || !favUid ? 'flex' : 'none'}; align-items: center; justify-content: center; border-radius: 50%; background: ${isFav ? 'rgba(255,177,59,0.95)' : 'rgba(60,62,70,0.92)'}; color: ${isFav ? 'var(--text-primary)' : 'var(--text-muted)'}; font-size: 11px; z-index: 50; box-shadow: 0 2px 4px rgba(0,0,0,0.5); transition: 0.2s; cursor: pointer;"
-                 onmouseover="this.style.background='${isFav ? 'rgba(220,140,0,1)' : 'rgba(90,92,100,1)'}'; this.style.transform='scale(1.15)';"
-                 onmouseout="this.style.background='${isFav ? 'rgba(255,177,59,0.95)' : 'rgba(60,62,70,0.92)'}'; this.style.transform='scale(1)';">
+                 class="recent-action-btn fav-btn ${isFav ? 'active' : ''}"
+                 style="display: ${isFav || !favUid ? 'flex' : 'none'};">
                  ${isFav ? '★' : '☆'}
             </div>
 
             <!-- Bouton Supprimer -->
             <div onclick="deleteRecentProfile('${p.uid}', event)" 
-                 style="position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(239, 68, 68, 0.9); color: var(--text-primary); font-size: 12px; z-index: 50; box-shadow: 0 2px 4px rgba(0,0,0,0.5); transition: 0.2s;"
-                 onmouseover="this.style.background='rgba(220, 38, 38, 1)'; this.style.transform='scale(1.1)';"
-                 onmouseout="this.style.background='rgba(239, 68, 68, 0.9)'; this.style.transform='scale(1)';">
+                 class="recent-action-btn del-btn">
                  ✕
             </div>
 
@@ -2984,15 +2978,23 @@ function renderHome() {
         </div>
         `;
     }).join('');
-    const savedTheme = localStorage.getItem('guoba_theme') || 'wish';
-    container.innerHTML = `
-        <div style="padding-left: 20px; padding-top: 40px;">
-            <h2 style="color: var(--text-primary); font-size: 28px; margin-bottom: 10px;">${t('home.title')}</h2>
-            <p style="max-width:980px; color: var(--text-grey); font-size: 14px; margin-bottom: 30px;">${t('home.subtitle')}</p>
+        profilesContentHtml = `
             <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-left: 20px;">
                 ${cardsHtml}
             </div>
-            <p style="color: var(--text-grey); font-size: 12px; margin-bottom: 16px; margin-top: 32px; margin-left: 12px;">
+        `;
+    }
+
+    const savedTheme = localStorage.getItem('guoba_theme') || 'wish';
+    container.innerHTML = `
+        <div style="padding-left: 20px; padding-top: 40px; display: flex; flex-direction: column; min-height: calc(100vh - 80px);">
+            <div style="flex: 1;">
+                <h2 style="color: var(--text-primary); font-size: 28px; margin-bottom: 10px;">${t('home.title')}</h2>
+                <p style="max-width:980px; color: var(--text-grey); font-size: 14px; margin-bottom: 30px;">${t('home.subtitle')}</p>
+                ${profilesContentHtml}
+            </div>
+            <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 24px; margin-top: 40px; margin-right: 20px;">
+                <p style="color: var(--text-grey); font-size: 12px; margin-bottom: 16px; margin-left: 12px;">
                 ${t('home.legal')} <br><br>
                 ${t('home.enkaCredit')} <br>
                 ${t('home.designCredit')}
