@@ -8,5 +8,3 @@ import './teammate_buffs.js';
 import './pages.js';
 import './onboarding.js';
 import './script.js';
-
-console.log('🍜 guoba.gg initialisé avec succès sous Astro !');

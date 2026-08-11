@@ -521,7 +521,7 @@ async function loadGameData() {
                 window.pfpsData = cached.pfps;
                 window.iconToNameHash = cached.iconToNameHash || {};
                 // Charge la table de rolls en tâche de fond si besoin
-                loadRollTable().catch(() => {});
+                loadRollTable().catch(() => { });
                 gameDataReady = true;
                 buildHashToKey();
                 if (uidInput) {
@@ -543,7 +543,7 @@ async function loadGameData() {
                 fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/namecards.json`).then(r => r.json()),
                 fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/pfps.json`).then(r => r.json()),
                 fetch(`https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/weapons.json`).then(r => r.json()),
-                loadRollTable().catch(() => {})
+                loadRollTable().catch(() => { })
             ]);
 
             charData = chars;
@@ -692,72 +692,71 @@ async function fetchUserData(optionalUid) {
             }
         }
 
-    const loader = document.getElementById('loading-msg');
+        const loader = document.getElementById('loading-msg');
 
-    if (apiSessionCache[uid] && (Date.now() - apiSessionCache[uid].timestamp < 180000)) {
-        console.log("⚡ Instant load from cache!");
-        const cachedData = apiSessionCache[uid].data;
-        window.currentPlayerNickname = cachedData.playerInfo.nickname || t('data.unknownPlayer');
-        await preloadConfigsForShowcase(cachedData, charData, locData, window.HASH_TO_KEY);
-        processData(cachedData);
-        renderPlayerProfile(cachedData.playerInfo, uid);
-        renderGlobalEvaluation(cachedData.playerInfo);
-        toggleSearchIcon(true);
-        return;
-    }
-
-    showSkeletonCard();
-
-
-    if (loader) loader.innerText = t('export.processing');
-
-    // Ancien proxy
-    // const urlCible = `https://enka.network/api/uid/${uid}?t=${Date.now()}`;
-    // const proxy = `https://corsproxy.io/?${encodeURIComponent(urlCible)}`;
-
-    // Nouveau proxy
-    const proxy = `https://guobagg.clement-torchiat.workers.dev/?uid=${uid}`;
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000);
-
-    try {
-        const res = await fetch(proxy, { signal: controller.signal });
-        clearTimeout(timeoutId);
-        if (!res.ok) {
-            if (res.status === 404) throw new Error("404");
-            else if (res.status === 429) throw new Error("429");
-            else throw new Error("SERVER");
-        }
-
-        const data = await res.json();
-
-        if (!data.avatarInfoList || data.avatarInfoList.length === 0) {
-            alert(t('error.emptyShowcase'));
-            clearSearch();
-
-            const loader = document.getElementById('loading-msg');
-            if (loader) loader.innerText = "";
-
+        if (apiSessionCache[uid] && (Date.now() - apiSessionCache[uid].timestamp < 180000)) {
+            const cachedData = apiSessionCache[uid].data;
+            window.currentPlayerNickname = cachedData.playerInfo.nickname || t('data.unknownPlayer');
+            await preloadConfigsForShowcase(cachedData, charData, locData, window.HASH_TO_KEY);
+            processData(cachedData);
+            renderPlayerProfile(cachedData.playerInfo, uid);
+            renderGlobalEvaluation(cachedData.playerInfo);
+            toggleSearchIcon(true);
             return;
         }
 
-        apiSessionCache[uid] = {
-            data: data,
-            timestamp: Date.now()
-        };
+        showSkeletonCard();
 
-        window.currentPlayerNickname = data.playerInfo.nickname || t('data.unknownPlayer');
 
-        // Préchargement ultra-rapide des configurations nécessaires pour le showcase
-        await preloadConfigsForShowcase(data, charData, locData, window.HASH_TO_KEY);
+        if (loader) loader.innerText = t('export.processing');
 
-        processData(data);
-        renderPlayerProfile(data.playerInfo, uid);
+        // Ancien proxy
+        // const urlCible = `https://enka.network/api/uid/${uid}?t=${Date.now()}`;
+        // const proxy = `https://corsproxy.io/?${encodeURIComponent(urlCible)}`;
 
-        renderGlobalEvaluation(data.playerInfo);
+        // Nouveau proxy
+        const proxy = `https://guobagg.clement-torchiat.workers.dev/?uid=${uid}`;
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
 
-        if (loader) loader.innerText = "";
-        toggleSearchIcon(true);
+        try {
+            const res = await fetch(proxy, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            if (!res.ok) {
+                if (res.status === 404) throw new Error("404");
+                else if (res.status === 429) throw new Error("429");
+                else throw new Error("SERVER");
+            }
+
+            const data = await res.json();
+
+            if (!data.avatarInfoList || data.avatarInfoList.length === 0) {
+                alert(t('error.emptyShowcase'));
+                clearSearch();
+
+                const loader = document.getElementById('loading-msg');
+                if (loader) loader.innerText = "";
+
+                return;
+            }
+
+            apiSessionCache[uid] = {
+                data: data,
+                timestamp: Date.now()
+            };
+
+            window.currentPlayerNickname = data.playerInfo.nickname || t('data.unknownPlayer');
+
+            // Préchargement ultra-rapide des configurations nécessaires pour le showcase
+            await preloadConfigsForShowcase(data, charData, locData, window.HASH_TO_KEY);
+
+            processData(data);
+            renderPlayerProfile(data.playerInfo, uid);
+
+            renderGlobalEvaluation(data.playerInfo);
+
+            if (loader) loader.innerText = "";
+            toggleSearchIcon(true);
 
         } catch (e) {
             clearTimeout(timeoutId);
@@ -2553,7 +2552,7 @@ function preloadSplashArts(characters, activeIndex = 0) {
         priorityImg.src = activeSplash;
         decodedSplashImages.set(activeSplash, priorityImg);
         if ('decode' in priorityImg) {
-            priorityImg.decode().catch(() => {});
+            priorityImg.decode().catch(() => { });
         }
     }
 
@@ -2885,62 +2884,62 @@ function renderHome() {
         `;
     } else {
         const serverMap = {
-        '1': 'CN',
-        '2': 'CN',
-        '3': 'CN',
-        '4': 'CN',
-        '5': 'TW',
-        '6': 'NA',
-        '7': 'EU',
-        '8': 'Asia',
-        '9': 'TW'
-    };
-    const ICON = './assets/simulator/icons/';
+            '1': 'CN',
+            '2': 'CN',
+            '3': 'CN',
+            '4': 'CN',
+            '5': 'TW',
+            '6': 'NA',
+            '7': 'EU',
+            '8': 'Asia',
+            '9': 'TW'
+        };
+        const ICON = './assets/simulator/icons/';
 
-    const favUid = getFavoriteUid();
+        const favUid = getFavoriteUid();
 
-    const sortedProfiles = [
-        ...profiles.filter(p => p.uid === favUid),
-        ...profiles.filter(p => p.uid !== favUid)
-    ];
+        const sortedProfiles = [
+            ...profiles.filter(p => p.uid === favUid),
+            ...profiles.filter(p => p.uid !== favUid)
+        ];
 
-    let cardsHtml = sortedProfiles.map(p => {
-        const isFav = p.uid === favUid;
-        const server = serverMap[String(p.uid)[0]] || 'CN';
+        let cardsHtml = sortedProfiles.map(p => {
+            const isFav = p.uid === favUid;
+            const server = serverMap[String(p.uid)[0]] || 'CN';
 
-        function stygianIcon() {
-            if (p.stygianIndex === null) return '';
-            if (p.stygianIndex === 6 && p.stygianSec !== null && p.stygianSec < 180) {
-                return `<img src="${ICON}stygian_difficulty_6_minus_180.webp" class="pp-icon" alt="${t('ui.alt.stygian')}" decoding="async">`;
+            function stygianIcon() {
+                if (p.stygianIndex === null) return '';
+                if (p.stygianIndex === 6 && p.stygianSec !== null && p.stygianSec < 180) {
+                    return `<img src="${ICON}stygian_difficulty_6_minus_180.webp" class="pp-icon" alt="${t('ui.alt.stygian')}" decoding="async">`;
+                }
+                if (p.stygianIndex >= 1 && p.stygianIndex <= 6) {
+                    return `<img src="${ICON}stygian_difficulty_${p.stygianIndex}.webp" class="pp-icon" alt="${t('ui.alt.stygian')}" decoding="async">`;
+                }
+                return '';
             }
-            if (p.stygianIndex >= 1 && p.stygianIndex <= 6) {
-                return `<img src="${ICON}stygian_difficulty_${p.stygianIndex}.webp" class="pp-icon" alt="${t('ui.alt.stygian')}" decoding="async">`;
-            }
-            return '';
-        }
 
-        const row1 = [
-            `<span class="pp-badge pp-badge-server">${server}</span>`,
-            p.achievements != null
-                ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="${t('ui.alt.achievements')}" decoding="async">${p.achievements.toLocaleString(window.GUOBA_LANG)}</span>`
-                : '',
-            p.ar ? `<span class="pp-badge pp-badge-ar">AR${p.ar}</span>` : '',
-        ].filter(Boolean).join('');
+            const row1 = [
+                `<span class="pp-badge pp-badge-server">${server}</span>`,
+                p.achievements != null
+                    ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="${t('ui.alt.achievements')}" decoding="async">${p.achievements.toLocaleString(window.GUOBA_LANG)}</span>`
+                    : '',
+                p.ar ? `<span class="pp-badge pp-badge-ar">AR${p.ar}</span>` : '',
+            ].filter(Boolean).join('');
 
-        const row2Items = [
-            p.stygianSec != null
-                ? `<span class="pp-badge pp-badge-stygian">${stygianIcon()}${p.stygianSec}s</span>`
-                : '',
-            p.theaterStars != null
-                ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.webp" class="pp-icon" alt="${t('ui.alt.theater')}" decoding="async">${p.theaterStars}</span>`
-                : '',
-            p.abyssStars != null
-                ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.webp" class="pp-icon" alt="${t('ui.alt.abyss')}" decoding="async">${p.abyssStars}</span>`
-                : '',
-        ].filter(Boolean);
-        const row2 = row2Items.join('');
+            const row2Items = [
+                p.stygianSec != null
+                    ? `<span class="pp-badge pp-badge-stygian">${stygianIcon()}${p.stygianSec}s</span>`
+                    : '',
+                p.theaterStars != null
+                    ? `<span class="pp-badge pp-badge-theater"><img src="${ICON}icon_theater_star.webp" class="pp-icon" alt="${t('ui.alt.theater')}" decoding="async">${p.theaterStars}</span>`
+                    : '',
+                p.abyssStars != null
+                    ? `<span class="pp-badge pp-badge-abyss"><img src="${ICON}icon_abyss_star.webp" class="pp-icon" alt="${t('ui.alt.abyss')}" decoding="async">${p.abyssStars}</span>`
+                    : '',
+            ].filter(Boolean);
+            const row2 = row2Items.join('');
 
-        return `
+            return `
         <div class="recent-account-card-wrapper" onclick="document.getElementById('uidInput').value = '${p.uid}'; fetchUserData();">
              
             <!-- Bouton Favori -->
@@ -2977,7 +2976,7 @@ function renderHome() {
             
         </div>
         `;
-    }).join('');
+        }).join('');
         profilesContentHtml = `
             <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-left: 20px;">
                 ${cardsHtml}
@@ -3112,8 +3111,8 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
 
     let charIdx = charIndex;
     if (charIdx === null || charIdx === undefined || isNaN(charIdx)) {
-        charIdx = element.dataset.charIndex !== undefined && element.dataset.charIndex !== '' 
-            ? parseInt(element.dataset.charIndex) 
+        charIdx = element.dataset.charIndex !== undefined && element.dataset.charIndex !== ''
+            ? parseInt(element.dataset.charIndex)
             : 0;
     }
     const dataList = (typeof globalPersoData !== 'undefined' && globalPersoData && globalPersoData.length > 0)
@@ -3266,8 +3265,8 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
 
     let charIdx = charIndex;
     if (charIdx === null || charIdx === undefined || isNaN(charIdx)) {
-        charIdx = element.dataset.charIndex !== undefined && element.dataset.charIndex !== '' 
-            ? parseInt(element.dataset.charIndex) 
+        charIdx = element.dataset.charIndex !== undefined && element.dataset.charIndex !== ''
+            ? parseInt(element.dataset.charIndex)
             : 0;
     }
     const dataList = (typeof globalPersoData !== 'undefined' && globalPersoData && globalPersoData.length > 0)
@@ -3530,8 +3529,8 @@ function getBaseStatBreakdown(persoObj, statKey) {
         const totalFlatHp = fp[2] !== undefined ? Math.round(fp[2]) : artHpFlat;
         const subsFlat = Math.max(0, totalFlatHp - Math.round(flowerFlat));
 
-        const rawTotalHpPct = (fp[3] !== undefined) 
-            ? (fp[3] * 100) 
+        const rawTotalHpPct = (fp[3] !== undefined)
+            ? (fp[3] * 100)
             : (baseHp > 0 ? (((totalHp - totalFlatHp) / baseHp - 1) * 100) : 0);
         const totalHpPct = Math.max(0, rawTotalHpPct);
         const residualHpPct = Math.max(0, totalHpPct - artHpPct - weaponHpPct);
@@ -3619,8 +3618,8 @@ function getBaseStatBreakdown(persoObj, statKey) {
         const totalFlatAtk = fp[5] !== undefined ? Math.round(fp[5]) : artAtkFlat;
         const subsFlat = Math.max(0, totalFlatAtk - Math.round(featherFlat));
 
-        const rawTotalAtkPct = (fp[6] !== undefined) 
-            ? (fp[6] * 100) 
+        const rawTotalAtkPct = (fp[6] !== undefined)
+            ? (fp[6] * 100)
             : (totalBaseAtk > 0 ? (((totalAtk - totalFlatAtk) / totalBaseAtk - 1) * 100) : 0);
         const totalAtkPct = Math.max(0, rawTotalAtkPct);
         const residualAtkPct = Math.max(0, totalAtkPct - artAtkPct - weaponAtkPct);
@@ -3702,8 +3701,8 @@ function getBaseStatBreakdown(persoObj, statKey) {
         }
 
         const totalFlatDef = fp[8] !== undefined ? Math.round(fp[8]) : artDefFlat;
-        const rawTotalDefPct = (fp[9] !== undefined) 
-            ? (fp[9] * 100) 
+        const rawTotalDefPct = (fp[9] !== undefined)
+            ? (fp[9] * 100)
             : (baseDef > 0 ? (((totalDef - totalFlatDef) / baseDef - 1) * 100) : 0);
         const totalDefPct = Math.max(0, rawTotalDefPct);
         const residualDefPct = Math.max(0, totalDefPct - artDefPct - weaponDefPct);
@@ -3932,8 +3931,8 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
 
     let charIdx = charIndex;
     if (charIdx === null || charIdx === undefined || isNaN(charIdx)) {
-        charIdx = element.dataset.charIndex !== undefined && element.dataset.charIndex !== '' 
-            ? parseInt(element.dataset.charIndex) 
+        charIdx = element.dataset.charIndex !== undefined && element.dataset.charIndex !== ''
+            ? parseInt(element.dataset.charIndex)
             : 0;
     }
     const dataList = (typeof globalPersoData !== 'undefined' && globalPersoData && globalPersoData.length > 0)
