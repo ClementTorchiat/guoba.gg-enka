@@ -1381,13 +1381,13 @@ main {
     border-radius: 6px;
     font-size: 11px;
     opacity: 0;
-    transition: opacity 0.2s;
+    transition: opacity 0.3s ease, visibility 0.3s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 999999;
     white-space: nowrap;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
     pointer-events: none;
     border: 1px solid var(--tooltip-color, var(--accent-gold));
-    transform: translate(-50%, 10px);
+    transform: translate(-50%, 10px) scale(0.95);
 }
 
 #global-tooltip::after {
@@ -1415,7 +1415,8 @@ main {
     border-radius: 8px;
     font-size: 11px;
     opacity: 0;
-    transition: opacity 0.15s ease-out;
+    transition: opacity 0.3s ease, visibility 0.3s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateY(10px) scale(0.98);
     z-index: 999999;
     min-width: 250px;
     max-width: 360px;

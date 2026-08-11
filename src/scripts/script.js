@@ -3096,6 +3096,7 @@ window.showGlobalTooltip = function (element, text, color) {
 
     tooltip.style.visibility = 'visible';
     tooltip.style.opacity = '1';
+    tooltip.style.transform = 'translate(-50%, 0) scale(1)';
 };
 
 window.hideGlobalTooltip = function () {
@@ -3103,6 +3104,7 @@ window.hideGlobalTooltip = function () {
     if (tooltip) {
         tooltip.style.visibility = 'hidden';
         tooltip.style.opacity = '0';
+        tooltip.style.transform = 'translate(-50%, 10px) scale(0.95)';
     }
 };
 
@@ -3219,6 +3221,7 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
     tooltip.style.visibility = 'hidden';
     tooltip.style.display = 'block';
     tooltip.style.opacity = '0';
+    tooltip.style.transform = 'translateY(10px) scale(0.98)';
 
     const rect = element.getBoundingClientRect();
     const actualRect = tooltip.getBoundingClientRect();
@@ -3240,6 +3243,7 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
     tooltip.style.top = `${top}px`;
     tooltip.style.visibility = 'visible';
     tooltip.style.opacity = '1';
+    tooltip.style.transform = 'translateY(0) scale(1)';
 
     // Cross-highlight in BuffsPanel
     document.querySelectorAll('.buff-row.highlighted-by-stat').forEach(el => el.classList.remove('highlighted-by-stat'));
@@ -3256,6 +3260,7 @@ window.hideCombatStatTooltip = function () {
     if (tooltip) {
         tooltip.style.visibility = 'hidden';
         tooltip.style.opacity = '0';
+        tooltip.style.transform = 'translateY(10px) scale(0.98)';
     }
     document.querySelectorAll('.buff-row.highlighted-by-stat').forEach(el => el.classList.remove('highlighted-by-stat'));
 };
@@ -3421,6 +3426,7 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
     tooltip.style.visibility = 'hidden';
     tooltip.style.display = 'block';
     tooltip.style.opacity = '0';
+    tooltip.style.transform = 'translateY(10px) scale(0.98)';
 
     const rect = element.getBoundingClientRect();
     const actualRect = tooltip.getBoundingClientRect();
@@ -3442,6 +3448,7 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
     tooltip.style.top = `${top}px`;
     tooltip.style.visibility = 'visible';
     tooltip.style.opacity = '1';
+    tooltip.style.transform = 'translateY(0) scale(1)';
 };
 
 window.hideArtifactStatTooltip = function () {
@@ -3449,6 +3456,7 @@ window.hideArtifactStatTooltip = function () {
     if (tooltip) {
         tooltip.style.visibility = 'hidden';
         tooltip.style.opacity = '0';
+        tooltip.style.transform = 'translateY(10px) scale(0.98)';
     }
 };
 
@@ -4031,6 +4039,7 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
     tooltip.style.visibility = 'hidden';
     tooltip.style.display = 'block';
     tooltip.style.opacity = '0';
+    tooltip.style.transform = 'translateY(10px) scale(0.98)';
 
     const rect = element.getBoundingClientRect();
     const actualRect = tooltip.getBoundingClientRect();
@@ -4052,6 +4061,7 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
     tooltip.style.top = `${top}px`;
     tooltip.style.visibility = 'visible';
     tooltip.style.opacity = '1';
+    tooltip.style.transform = 'translateY(0) scale(1)';
 };
 
 window.hideBaseStatTooltip = function () {
@@ -4059,6 +4069,7 @@ window.hideBaseStatTooltip = function () {
     if (tooltip) {
         tooltip.style.visibility = 'hidden';
         tooltip.style.opacity = '0';
+        tooltip.style.transform = 'translateY(10px) scale(0.98)';
     }
     document.querySelectorAll('.highlighted-by-base-stat').forEach(el => {
         el.classList.remove('highlighted-by-base-stat');
