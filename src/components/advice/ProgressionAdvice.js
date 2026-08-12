@@ -123,7 +123,7 @@ export function renderWeaponAdvice(persoObj) {
     const weaponLevel = persoObj.weapon ? persoObj.weapon.level : 1;
     const pctCurrent = (weaponLevel / 90) * 100;
     const pctTarget = 100;
-    const weaponIcon = persoObj.weapon ? persoObj.weapon.icon : './assets/simulator/icons/icon_unknown.webp';
+    const weaponIcon = persoObj.weapon ? persoObj.weapon.icon : '/assets/simulator/icons/icon_unknown.webp';
 
     return `
         <div style="background:var(--bg-panel); padding:15px; border-radius:8px; border-left:3px solid ${color}; display:flex; flex-direction:column; justify-content:space-between; min-height:165px; box-sizing:border-box;">

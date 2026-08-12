@@ -86,7 +86,7 @@ export function getAccountWorstPieces(characters, focusCharNom = null) {
 
 export function renderWorstPiecesAudit(characters, focusCharNom = null) {
     const worstPieces = getAccountWorstPieces(characters, focusCharNom);
-    const ICON_BASE_PATH = "./assets/simulator/icons/";
+    const ICON_BASE_PATH = "/assets/simulator/icons/";
 
     return `
         <div class="roadmap-card" style="background:var(--bg-panel); border-radius:8px; padding:20px; display:flex; flex-direction:column; gap:16px; justify-content: space-between;">

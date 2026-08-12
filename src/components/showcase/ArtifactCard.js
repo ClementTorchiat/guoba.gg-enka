@@ -5,7 +5,7 @@ import { formatValueDisplay } from '../../scripts/data.js';
 
 export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 0) {
     if (!art) return '';
-    const ICON_BASE_PATH = "./assets/simulator/icons/";
+    const ICON_BASE_PATH = "/assets/simulator/icons/";
     let subsHtml = "";
 
     (art.subStats || []).forEach((sub, subIndex) => {
@@ -80,7 +80,7 @@ export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 
                 
                 <div style="font-size: 12px; display:flex; justify-content:space-between; align-items: center;" class="art-score-footer">
                     <div style="display:flex; align-items:center; gap: 5px;">
-                        <img src="./assets/simulator/icons/icon_score_white.webp" style="width: 19px; height: 19px;" alt="Score" decoding="async">
+                        <img src="/assets/simulator/icons/icon_score_white.webp" style="width: 19px; height: 19px;" alt="Score" decoding="async">
                         <p style="margin:0;">${t('ui.char.score')}</p>
                     </div>
                     <div style="display: flex; flex-direction: row; gap: 4px;">

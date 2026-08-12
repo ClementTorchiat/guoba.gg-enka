@@ -19,7 +19,7 @@ export function getAccountBarometerDetails(characters, focusCharNom = null) {
     const talents = [];
     const mainstats = [];
     const sets = [];
-    const ICON_BASE_PATH = "./assets/simulator/icons/";
+    const ICON_BASE_PATH = "/assets/simulator/icons/";
 
     characters.forEach(perso => {
         const charName = perso.nom;

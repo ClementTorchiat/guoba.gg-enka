@@ -63,7 +63,7 @@ export function renderPrioritiesAdvice(persoObj) {
     if (!persoObj.artefacts || persoObj.artefacts.length === 0) return '';
 
     const priorities = getPriorities(persoObj);
-    const ICON_BASE_PATH = "./assets/simulator/icons/";
+    const ICON_BASE_PATH = "/assets/simulator/icons/";
     let contentHtml = '';
 
     if (!priorities || priorities.length === 0) {

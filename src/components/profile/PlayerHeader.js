@@ -43,7 +43,7 @@ export function renderPlayerProfileCard(playerInfo, uid, charData = {}) {
     const stygianIndex = playerInfo.stygianIndex ?? null;
     const stygianSec = (playerInfo.stygianSeconds > 0) ? playerInfo.stygianSeconds : null;
 
-    const ICON = './assets/simulator/icons/';
+    const ICON = '/assets/simulator/icons/';
 
     function stygianIcon() {
         if (stygianIndex === null) return '';

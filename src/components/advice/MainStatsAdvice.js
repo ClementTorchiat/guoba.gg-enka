@@ -100,7 +100,7 @@ export function renderMainStatsAdvice(persoObj, config) {
     const adv = getMainStatAdvice(persoObj, config);
     if (!adv) return '';
 
-    const ICON_BASE_PATH = "./assets/simulator/icons/";
+    const ICON_BASE_PATH = "/assets/simulator/icons/";
 
     if (adv.isEmpty) {
         return `

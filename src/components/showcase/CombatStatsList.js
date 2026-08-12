@@ -4,7 +4,7 @@ import ICON_MAP from '../../data/icon_map.json';
 import { formatStat } from '../../scripts/data.js';
 
 export function createStatIcon(key) {
-    const ICON_BASE_PATH = "./assets/simulator/icons/";
+    const ICON_BASE_PATH = "/assets/simulator/icons/";
     const iconFile = ICON_MAP[key] || "icon_unknown.webp";
     return `<img src="${ICON_BASE_PATH}${iconFile}" style="width: 19px; height: 19px; object-fit: contain; vertical-align: middle; margin-right: 5px; display: inline-block; margin-bottom: 2px;" alt="${key}" decoding="async">`;
 }

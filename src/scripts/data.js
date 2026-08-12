@@ -56,7 +56,7 @@ export const MAX_ROLLS_4 = {
 };
 
 export function createIcon(key) {
-    const ICON_BASE_PATH = "./assets/simulator/icons/";
+    const ICON_BASE_PATH = "/assets/simulator/icons/";
     const iconFile = ICON_MAP_JSON[key] || "icon_unknown.webp";
     return `<img src="${ICON_BASE_PATH}${iconFile}" style="width: 19px; height: 19px; object-fit: contain; vertical-align: middle; margin-right: 5px; display: inline-block; margin-bottom: 2px;" alt="${key}" decoding="async">`;
 }

@@ -101,7 +101,7 @@ export function renderMetaSetsAdvice(persoObj, config) {
     if (adv.type === 'success') color = '#22c55e';
     if (adv.type === 'info') color = '#f97316';
 
-    const ICON_BASE_PATH = "./assets/simulator/icons/";
+    const ICON_BASE_PATH = "/assets/simulator/icons/";
 
     const setsHtml = adv.targetSets.map(targetSet => {
         let baseIconStr = null;

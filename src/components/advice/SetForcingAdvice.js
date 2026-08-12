@@ -129,7 +129,7 @@ export function renderSetForcingAdvice(persoObj, config) {
     if (adv.type === 'warning') color = '#eab308';
     if (adv.type === 'info') color = '#3b82f6';
 
-    const ICON_BASE_PATH = "./assets/simulator/icons/";
+    const ICON_BASE_PATH = "/assets/simulator/icons/";
 
     const getSetIcon = (hash) => {
         let baseIconStr = null;

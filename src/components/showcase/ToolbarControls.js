@@ -3,7 +3,7 @@ import { t } from '../../scripts/i18n.js';
 import { calculateCharacterScore, calculateMaxTheoreticalScore } from '../../scripts/scoring.js';
 import { getLabel } from '../../scripts/data.js';
 
-const ICON_BASE_PATH = "./assets/simulator/icons/";
+const ICON_BASE_PATH = "/assets/simulator/icons/";
 
 export function renderToolbarControls(persoObj, charIndex) {
     if (!persoObj) return '';
@@ -183,7 +183,7 @@ export function renderToolbarControls(persoObj, charIndex) {
         <div class="data-select-container main-content-menu-team" style="padding:0; border:none; background:transparent;">
             <button class="custom-dropdown-btn" onclick="toggleBuildMenu(event)" style="width: 100%; display: flex; justify-content: space-between; align-items: center; border: none; background: var(--bg-panel); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; height: 100%; box-sizing: border-box;">
                 <span id="active-build-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;">${activeBuildTextHtml}</span>
-                <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; margin-left: 8px; flex-shrink: 0;">
+                <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; margin-left: 8px; flex-shrink: 0;">
             </button>
             <div id="build-custom-menu" class="data-select-menu">
                 ${buildOptionsHtml}
@@ -195,7 +195,7 @@ export function renderToolbarControls(persoObj, charIndex) {
         <div class="data-select-container main-content-menu-er" style="padding:0; border:none; background:transparent;">
             <button class="custom-dropdown-btn" onclick="toggleErMenu(event)" style="width: 100%; display: flex; justify-content: space-between; align-items: center; border: none; background: var(--bg-panel); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; height: 100%; box-sizing: border-box; min-width: 106px;">
                 <span id="active-er-text" style="white-space: nowrap;">${activeERTextHtml}</span>
-                <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; margin-left: 8px; flex-shrink: 0;">
+                <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; margin-left: 8px; flex-shrink: 0;">
             </button>
             <div id="er-custom-menu" class="data-select-menu" style="min-width: 110px;">
                 ${erOptionsHtml}

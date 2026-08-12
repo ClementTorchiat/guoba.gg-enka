@@ -26,7 +26,7 @@ import { loadRollTable } from './rollTableLoader.js';
 
 import { t } from './i18n.js';
 
-const ICON_BASE_PATH = "./assets/simulator/icons/";
+const ICON_BASE_PATH = "/assets/simulator/icons/";
 
 const ICON_MAP = window.ICON_MAP;
 
@@ -621,7 +621,7 @@ function toggleSearchIcon(isLoaded) {
         searchBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-always-white)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
         searchBtn.onclick = clearSearch;
     } else {
-        searchBtn.innerHTML = `<img src="assets/simulator/icons/icon_search_white.svg" alt="Valider" style="width: 20px; height: 20px;">`;
+        searchBtn.innerHTML = `<img src="/assets/simulator/icons/icon_search_white.svg" alt="Valider" style="width: 20px; height: 20px;">`;
         searchBtn.onclick = () => fetchUserData();
     }
 }
@@ -2894,7 +2894,7 @@ function renderHome() {
             '8': 'Asia',
             '9': 'TW'
         };
-        const ICON = './assets/simulator/icons/';
+        const ICON = '/assets/simulator/icons/';
 
         const favUid = getFavoriteUid();
 
@@ -3019,7 +3019,7 @@ function renderHome() {
                                 <span class="theme-dot" id="active-theme-dot" style="background: ${THEME_COLORS[savedTheme] || THEME_COLORS['wish']};"></span>
                                 <span id="active-theme-text">${t('theme.' + savedTheme)}</span>
                             </div>
-                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; margin-left: 8px;">
+                            <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; margin-left: 8px;">
                         </button>
 
                         <div id="theme-custom-menu" class="custom-select-menu">
@@ -3044,7 +3044,7 @@ function renderHome() {
                     <div class="custom-select-container">
                         <button onclick="toggleLangMenu(event)" class="link-button" style="justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; outline: none; height: 38px; display: flex; align-items: center;">
                             <span>${window.GUOBA_LANG.toUpperCase()}</span>
-                            <img src="assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; margin-left: 8px;">
+                            <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; margin-left: 8px;">
                         </button>
 
                         <div id="lang-custom-menu" class="custom-select-menu" style="min-width: 69px;">

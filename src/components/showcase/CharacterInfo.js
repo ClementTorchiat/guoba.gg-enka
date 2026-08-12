@@ -4,7 +4,7 @@ import ICON_MAP from '../../data/icon_map.json';
 
 export function renderCharacterInfo(persoObj) {
     if (!persoObj) return '';
-    const ICON_BASE_PATH = "./assets/simulator/icons/";
+    const ICON_BASE_PATH = "/assets/simulator/icons/";
     const s = persoObj.combatStats;
 
     return `
