@@ -80,6 +80,7 @@ export const T = {
         "ui.noArchetype": "Aucun archétype disponible",
         "ui.exportBtn": "Exporter image",
         "ui.helpBtn": "Mode d'emploi",
+        "ui.searchBtn": "Rechercher",
         "ui.coffee": "Offrir un café",
 
         // ── Fiche personnage ──────────────────────────────
@@ -505,6 +506,7 @@ export const T = {
         "ui.alt.stygian": "Carnage Chtonien",
         "ui.alt.kofi": "Icône Ko-fi",
         "ui.alt.weapon": "Arme",
+        "ui.alt.avatar": "Avatar du joueur",
 
         // ── getText fallbacks ─────────────────────────────
         "data.unknown": "Inconnu",
@@ -900,7 +902,8 @@ export const T = {
         // ── Toolbar & main menu ───────────────────────────
         "ui.noArchetype": "No archetype available",
         "ui.exportBtn": "Export image",
-        "ui.helpBtn": "Tutorial",
+        "ui.helpBtn": "Help",
+        "ui.searchBtn": "Search",
         "ui.coffee": "Buy me a coffee",
 
         // ── Character sheet ───────────────────────────────
@@ -1311,9 +1314,10 @@ export const T = {
         "ui.alt.achievements": "Achievements",
         "ui.alt.theater": "Imaginarium Theater",
         "ui.alt.abyss": "Spiral Abyss",
-        "ui.alt.stygian": "Stygian Onslaught",
+        "ui.alt.stygian": "Stygian Carnage",
         "ui.alt.kofi": "Ko-fi icon",
         "ui.alt.weapon": "Weapon",
+        "ui.alt.avatar": "Player avatar",
 
         // ── getText fallbacks ─────────────────────────────
         "data.unknown": "Unknown",
@@ -1681,6 +1685,9 @@ if (typeof window !== 'undefined') {
         });
         document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
             el.title = t(el.getAttribute('data-i18n-title'));
+        });
+        document.querySelectorAll('[data-i18n-aria-label]').forEach(function (el) {
+            el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria-label')));
         });
         if (!window.currentPlayerNickname) {
             const titleTag = document.querySelector('title[data-i18n-title-tag]');

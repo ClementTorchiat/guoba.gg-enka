@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import { Image, getImage } from "astro:assets";
 import guobaLogo from "../assets/global/favicon.png";
 
-import step1Img from "../assets/onboarding/step1.gif";
+import step1Img from "../assets/onboarding/step1.webp";
 import step2Img from "../assets/onboarding/step2.png";
 import step3Img from "../assets/onboarding/step3.png";
 import step4Img from "../assets/onboarding/step4.png";
@@ -103,6 +103,7 @@ const onboardingImages = {
                                 id="searchBtn"
                                 onclick="fetchUserData()"
                                 class="search-btn"
+                                data-i18n-aria-label="ui.searchBtn"
                                 ><img
                                     src="/assets/simulator/icons/icon_search_white.svg"
                                     alt=""
@@ -490,6 +491,7 @@ const onboardingImages = {
                             <button
                                 onclick="openOnboarding()"
                                 data-i18n-title="ui.helpBtn"
+                                data-i18n-aria-label="ui.helpBtn"
                                 style="
                             background: var(--bg-panel);
                             border: none;
@@ -575,6 +577,7 @@ const onboardingImages = {
                 class="ob-close-btn"
                 onclick="closeOnboarding()"
                 data-i18n-title="ob.close"
+                data-i18n-aria-label="ob.close"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
