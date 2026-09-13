@@ -1215,7 +1215,7 @@ main {
 
 /* --- Recent Accounts Hover & Action Buttons --- */
 .recent-account-card-wrapper {
-    width: 480px;
+    width: calc(50% - 10px);
     height: 82px;
     position: relative;
     cursor: pointer;
