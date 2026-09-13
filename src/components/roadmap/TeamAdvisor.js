@@ -199,12 +199,12 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
         }
 
     return `
-        <div class="roadmap-module" style="background:var(--bg-panel); border-radius:8px; padding:20px; display:flex; flex-direction:column; gap:16px;">
+        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
                 <div style="display:flex; flex-direction:column; gap:4px;">
-                    <h2 style="font-size:16px; font-weight:700; color:var(--text-always-white); margin:0;">
+                    <h3 style="font-size:24px; font-weight:normal; color:var(--text-primary); margin:0;">
                         ${t('roadmap.teams.title')}
-                    </h2>
+                    </h3>
                     <p style="font-size:13px; color:var(--text-grey); margin:0;">
                         ${t('roadmap.teams.desc')}
                     </p>
@@ -224,7 +224,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                     const dpsIconPath = dps.image ? dps.image.replace('Side_', '') : `https://enka.network/ui/UI_AvatarIcon_${dps.nom}.png`;
 
                     const isFocusTeam = focusCharNom && build.containsFocus && index === 0;
-                    const cardBg = isFocusTeam ? 'rgba(59,130,246,0.08)' : 'rgba(0,0,0,0.2)';
+                    const cardBg = isFocusTeam ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)';
                     const cardBorder = isFocusTeam ? '1px solid rgba(59,130,246,0.4)' : '1px solid rgba(255,255,255,0)';
 
                     return `

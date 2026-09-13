@@ -160,7 +160,7 @@ button[title="Mode d'emploi"]:hover,
     gap: 4px;
     max-height: 250px;
     overflow-y: auto;
-    
+
     opacity: 0;
     transform: translateY(-10px);
     pointer-events: none;
@@ -1215,10 +1215,10 @@ main {
 
 /* --- Recent Accounts Hover & Action Buttons --- */
 .recent-account-card-wrapper {
-    width: 480px; 
-    height: 82px; 
-    position: relative; 
-    cursor: pointer; 
+    width: 480px;
+    height: 82px;
+    position: relative;
+    cursor: pointer;
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
     border-radius: 12px;
 }
@@ -1226,9 +1226,12 @@ main {
 .recent-account-card-wrapper::after {
     content: "";
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     pointer-events: none;
     z-index: 10;
@@ -1236,7 +1239,7 @@ main {
 
 .recent-account-card-wrapper:hover {
     transform: scale(1.02) translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .recent-account-card-wrapper:hover::after {
@@ -1254,7 +1257,7 @@ main {
     border-radius: 50%;
     font-size: 12px;
     z-index: 50;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
     opacity: 0;
     transform: scale(0.8);
@@ -1271,25 +1274,30 @@ main {
 }
 
 .recent-action-btn.fav-btn {
-    top: -8px; left: -8px;
-    background: rgba(60,62,70,0.9);
+    top: -8px;
+    left: -8px;
+    background: rgba(60, 62, 70, 0.9);
     color: var(--text-muted);
 }
+
 .recent-action-btn.fav-btn.active {
-    background: rgba(255,177,59,0.95);
+    background: rgba(255, 177, 59, 0.95);
     color: var(--text-primary);
 }
+
 .recent-action-btn.fav-btn:hover {
-    background: rgba(255,177,59,1);
+    background: rgba(255, 177, 59, 1);
     color: var(--text-primary);
     transform: scale(1.15) !important;
 }
 
 .recent-action-btn.del-btn {
-    top: -8px; right: -8px;
+    top: -8px;
+    right: -8px;
     background: rgba(239, 68, 68, 0.9);
     color: var(--text-primary);
 }
+
 .recent-action-btn.del-btn:hover {
     background: rgba(220, 38, 38, 1);
     transform: scale(1.15) !important;
@@ -2636,10 +2644,9 @@ input:checked+.toggle-track .star-4 {
     }
 }
 
-/* Generic Roadmap Card */
 .roadmap-card {
     border-radius: 8px;
-    padding: 20px;
+    padding: 40px 0;
     display: flex;
     flex-direction: column;
     gap: 18px;

@@ -81,11 +81,11 @@ export function renderGlobalSwapAdvisor(characters, focusCharNom = null) {
     const swaps = findGlobalProfitableSwaps(characters, focusCharNom);
 
     return `
-        <div class="roadmap-card" style="background:var(--bg-panel); border-radius:8px; padding:20px; display:flex; flex-direction:column; gap:16px;">
+        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
                 <div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <h2 style="font-size:16px; font-weight:700; color:var(--text-primary); margin:0;">${t('roadmap.swaps.title')}</h2>
+                        <h3 style="font-size:24px; font-weight:normal; color:var(--text-primary); margin:0;">${t('roadmap.swaps.title')}</h3>
                     </div>
                     <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.swaps.desc')}</p>
                 </div>
@@ -98,7 +98,7 @@ export function renderGlobalSwapAdvisor(characters, focusCharNom = null) {
             ` : `
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:12px;">
                     ${swaps.slice(0, 4).map(swap => `
-                        <div style="background:${swap.isFocusGain ? 'rgba(59,130,246,0.08)' : 'rgba(0,0,0,0.2)'}; border:${swap.isFocusGain ? '1px solid rgba(59,130,246,0.4)' : '0'}; border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:10px; position:relative;">
+                        <div style="background:${swap.isFocusGain ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${swap.isFocusGain ? '1px solid rgba(59,130,246,0.4)' : '0'}; border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:10px; position:relative;">
                             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
                                 <div style="display:flex; align-items:center; gap:8px;">
                                     ${swap.artA.icon || swap.artB.icon ? `

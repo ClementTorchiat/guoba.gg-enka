@@ -795,6 +795,11 @@ export const T = {
         "roadmap.strongbox.empty": "Vos personnages actuels utilisent principalement des sets récents non encore disponibles en synthèse mystique.",
 
         // Module 6 : Audit des Maillons Faibles
+        "roadmap.best.title": "Hall of Fame",
+        "roadmap.best.desc": "Vos 6 meilleurs artéfacts équipés, filtrés par Crit Value ou par score sur un personnage donné.",
+        "roadmap.best.modeCV": "Crit Value",
+        "roadmap.best.modeScore": "Score Global",
+        "roadmap.best.empty": "Aucun artéfact équipé trouvé.",
         "roadmap.worst.title": "Audit des « Maillons Faibles » du Compte",
         "roadmap.worst.desc": "Les pièces d'artéfacts les plus faibles de votre vitrine qui brident les performances de vos personnages.",
         "roadmap.worst.rank": "Rang",
@@ -1606,6 +1611,11 @@ export const T = {
         "roadmap.strongbox.empty": "Your showcase characters primarily use recent sets not yet available in the Mystic Offering strongbox.",
 
         // Module 6 : Worst Pieces Audit
+        "roadmap.best.title": "Hall of Fame",
+        "roadmap.best.desc": "Your Top 6 equipped artifacts, filtered by Crit Value or by score on a given character.",
+        "roadmap.best.modeCV": "Crit Value",
+        "roadmap.best.modeScore": "Global Score",
+        "roadmap.best.empty": "No equipped artifacts found.",
         "roadmap.worst.title": "Worst Pieces Audit & Bottlenecks",
         "roadmap.worst.desc": "The lowest scoring artifact pieces in your showcase that are bottlenecking your characters.",
         "roadmap.worst.rank": "Rank",

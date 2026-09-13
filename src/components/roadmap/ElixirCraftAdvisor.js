@@ -313,15 +313,15 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
     ];
 
     return `
-        <div class="roadmap-card" style="background:var(--bg-panel); border-radius:8px; padding:20px; display:flex; flex-direction:column; gap:16px;">
+        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
             
             <!-- Header du Module avec Filtres de Budget -->
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
                 <div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <h2 style="font-size:16px; font-weight:700; color:var(--text-primary); margin:0;">
+                        <h3 style="font-size:24px; font-weight:normal; color:var(--text-primary); margin:0;">
                             ${t('roadmap.elixir.title')}
-                        </h2>
+                        </h3>
                     </div>
                     <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">
                         ${t('roadmap.elixir.desc')}
@@ -348,13 +348,13 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
 
             <!-- Grille des Recommandations de Craft -->
             ${recs.length === 0 ? `
-                <div style="padding:16px; background:rgba(255,255,255,0.02); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
+                <div style="padding:16px; background:rgba(0,0,0,0.2); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
                     ${t('roadmap.elixir.empty')}
                 </div>
             ` : `
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:12px;">
                     ${recs.map(rec => `
-                        <div style="background:${rec.isFocus ? 'rgba(59,130,246,0.08)' : 'rgba(0,0,0,0.2)'}; border:${rec.isFocus ? '1px solid rgba(59,130,246,0.4)' : 'none'}; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:12px; position:relative;">
+                        <div style="background:${rec.isFocus ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${rec.isFocus ? '1px solid rgba(59,130,246,0.4)' : 'none'}; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:12px; position:relative;">
                             
                             <!-- Ligne 1 : Perso + Build + Coût Élixir -->
                             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
@@ -389,10 +389,10 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                             </div>
 
                             <!-- Ligne 2 : Détail du Craft Prévu (Set, Slot, Mainstat & Substats) -->
-                            <div style="display:flex; flex-direction:column; gap:8px; background:rgba(255,255,255,0.02); padding:10px; border-radius:8px;">
+                            <div style="display:flex; flex-direction:column; gap:8px; background:rgba(0,0,0,0.2); padding:10px; border-radius:8px;">
                                 <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
                                     <div style="display:flex; align-items:center; gap:8px; min-width:0;">
-                                        ${rec.pieceIcon ? `<img src="${rec.pieceIcon}" alt="${rec.setName}" style="width:28px; height:28px; border-radius:4px; object-fit:contain; flex-shrink:0;" onerror="this.style.display='none'">` : ''}
+                                        ${rec.pieceIcon ? `<img src="${rec.pieceIcon}" alt="${rec.setName}" style="width:28px; height:28px; border-radius:4px; background:rgba(0,0,0,0.2); object-fit:contain; flex-shrink:0;" onerror="this.style.display='none'">` : ''}
                                         <div style="display:flex; flex-direction:column; min-width:0;">
                                             <span style="font-size:12px; font-weight:700; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                                                 ${rec.slotName}

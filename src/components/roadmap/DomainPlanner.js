@@ -170,11 +170,11 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
     const domains = calculateDomainRankings(characters, focusCharNom);
 
     return `
-        <div class="roadmap-card" style="background:var(--bg-panel); border-radius:8px; padding:20px; display:flex; flex-direction:column; gap:16px;">
+        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
                 <div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <h2 style="font-size:16px; font-weight:700; color:var(--text-primary); margin:0;">${t('roadmap.domains.title')}</h2>
+                        <h3 style="font-size:24px; font-weight:normal; color:var(--text-primary); margin:0;">${t('roadmap.domains.title')}</h3>
                     </div>
                     <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.domains.desc')}</p>
                 </div>
@@ -196,7 +196,7 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
             </div>
 
             ${domains.length === 0 ? `
-                <div style="padding:16px; background:rgba(255,255,255,0.02); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
+                <div style="padding:16px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
                     ${t('roadmap.domains.empty')}
                 </div>
             ` : `
@@ -206,7 +206,7 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
         const nonVitrine2 = showAllChars ? getNonVitrineCharactersForSet(d.set2.key, characters) : [];
 
         return `
-                            <div style="background:${d.isFocusTarget ? 'rgba(59,130,246,0.08)' : 'rgba(0,0,0,0.2)'}; border:${d.isFocusTarget ? '1px solid rgba(59,130,246,0.4)' : '1px solid rgba(255,255,255,0)'}; border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:12px; position:relative;">
+                            <div style="background:${d.isFocusTarget ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${d.isFocusTarget ? '1px solid rgba(59,130,246,0.4)' : '1px solid rgba(255,255,255,0)'}; border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:12px; position:relative;">
                                 <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
                                     <div>
                                         <div style="font-size:14px; font-weight:700; color:var(--text-primary);">${d.domainName}</div>
@@ -233,7 +233,7 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                                 <!-- Détail des 2 sets -->
                                 <div style="display:flex; flex-direction:column; gap:8px; font-size:11px;">
                                     <!-- Set 1 -->
-                                    <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0);">
+                                    <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0);">
                                         <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
                                             ${d.set1.icon ? `<img src="${d.set1.icon}" alt="${d.set1.name}" style="width:22px; height:22px; border-radius:4px; object-fit:contain; background:rgba(0,0,0,0.3);" onerror="this.style.display='none'">` : ''}
                                             <span style="font-weight:600; color:var(--text-primary);">${d.set1.name}</span>
@@ -254,7 +254,7 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                                     </div>
 
                                     <!-- Set 2 -->
-                                    <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0);">
+                                    <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0);">
                                         <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
                                             ${d.set2.icon ? `<img src="${d.set2.icon}" alt="${d.set2.name}" style="width:22px; height:22px; border-radius:4px; object-fit:contain; background:rgba(0,0,0,0.3);" onerror="this.style.display='none'">` : ''}
                                             <span style="font-weight:600; color:var(--text-primary);">${d.set2.name}</span>

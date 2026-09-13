@@ -198,11 +198,11 @@ export function renderMaturityBarometer(characters) {
     ];
 
     return `
-        <div class="roadmap-card" style="background:var(--bg-panel); border-radius:8px; padding:20px; display:flex; flex-direction:column; gap:8px;">
+        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:12px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
                 <div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <h2 style="font-size:16px; font-weight:700; color:var(--text-primary); margin:0;">${t('roadmap.maturity.title')}</h2>
+                        <h3 style="font-size:24px; font-weight:normal; color:var(--text-primary); margin:0;">${t('roadmap.maturity.title')}</h3>
                     </div>
                     <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.maturity.desc')}</p>
                 </div>
@@ -223,7 +223,7 @@ export function renderMaturityBarometer(characters) {
             <!-- Grille des jauges de maturité -->
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-top:6px;">
                 ${metricItems.map(item => `
-                    <div style="background:rgba(0,0,0,0.2); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:6px; justify-content: space-between;">
+                    <div style="background:var(--bg-panel); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:6px; justify-content: space-between;">
                         <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px;">
                             <span style="color:var(--text-primary); font-weight:500;">
                                 ${item.label}

@@ -204,17 +204,17 @@ export function renderQuickWinsPlan(characters, focusCharNom = null) {
     ];
 
     return `
-        <div class="roadmap-card" style="background:var(--bg-panel); border-radius:8px; padding:20px; display:flex; flex-direction:column; gap:16px;">
+        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
             <div>
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <h2 style="font-size:16px; font-weight:700; color:var(--text-primary); margin:0;">${t('roadmap.breakdown.title')}</h2>
+                    <h3 style="font-size:24px; font-weight:normal; color:var(--text-primary); margin:0;">${t('roadmap.breakdown.title')}</h3>
                 </div>
                 <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.breakdown.desc')}</p>
             </div>
 
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
                 ${sections.map(sec => `
-                    <div style="background:rgba(0,0,0,0.2); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:12px;">
+                    <div style="background:var(--bg-panel); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:12px;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="font-size:13px; font-weight:700; color:var(--text-primary);">${sec.title}</span>
                             <span style="font-size:10px; font-weight:600; padding:2px 7px; border-radius:10px; background:${sec.items.length === 0 ? 'rgba(34,197,94,0.15)' : `${sec.badgeColor}20`}; color:${sec.items.length === 0 ? '#22c55e' : sec.badgeColor}; border:1px solid ${sec.items.length === 0 ? 'rgba(34,197,94,0.3)' : `${sec.badgeColor}40`};">
@@ -228,7 +228,7 @@ export function renderQuickWinsPlan(characters, focusCharNom = null) {
                                     ${sec.okText}
                                 </div>
                             ` : sec.items.slice(0, 5).map(item => `
-                                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px; background:${item.isFocus ? 'rgba(59,130,246,0.1)' : 'rgba(255, 255, 255, 0.02);'}; border:${item.isFocus ? '1px solid rgba(59,130,246,0.35)' : '0'}; border-radius:6px; gap:8px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px; background:${item.isFocus ? 'rgba(59,130,246,0.1)' : 'rgba(0, 0, 0, 0.2)'}; border:${item.isFocus ? '1px solid rgba(59,130,246,0.35)' : '0'}; border-radius:6px; gap:8px;">
                                     <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
                                         <img src="${item.charAvatar}" alt="${item.charName}" style="width:32px; height:32px; border-radius:5px; background:rgba(0,0,0,0.2); flex-shrink:0; border:${item.isFocus ? '1px solid #60a5fa' : 'none'};">
                                         <div style="min-width:0; flex:1;">

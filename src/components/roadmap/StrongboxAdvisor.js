@@ -76,11 +76,11 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, showAllC
     const recs = getStrongboxRecommendations(characters, focusCharNom);
 
     return `
-        <div class="roadmap-card" style="background:var(--bg-panel); border-radius:8px; padding:20px; display:flex; flex-direction:column; gap:16px;">
+        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
                 <div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <h2 style="font-size:16px; font-weight:700; color:var(--text-primary); margin:0;">${t('roadmap.strongbox.title')}</h2>
+                        <h3 style="font-size:24px; font-weight:normal; color:var(--text-primary); margin:0;">${t('roadmap.strongbox.title')}</h3>
                     </div>
                     <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.strongbox.desc')}</p>
                 </div>
@@ -102,7 +102,7 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, showAllC
             </div>
 
             ${recs.length === 0 ? `
-                <div style="padding:16px; background:rgba(255,255,255,0.02); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
+                <div style="padding:16px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
                     ${t('roadmap.strongbox.empty')}
                 </div>
             ` : `
@@ -111,7 +111,7 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, showAllC
         const nonVitrine = showAllChars ? getNonVitrineCharactersForSet(rec.setKey, characters) : [];
 
         return `
-                            <div style="background:${rec.isFocusTarget ? 'rgba(168,85,247,0.08)' : 'rgba(0,0,0,0.2)'}; border:${rec.isFocusTarget ? '1px solid rgba(168,85,247,0.4)' : '1px solid rgba(255,255,255,0)'}; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:10px; position:relative;">
+                            <div style="background:${rec.isFocusTarget ? 'rgba(168,85,247,0.08)' : 'var(--bg-panel)'}; border:${rec.isFocusTarget ? '1px solid rgba(168,85,247,0.4)' : '1px solid rgba(255,255,255,0)'}; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:10px; position:relative;">
                                 <div style="display:flex; justify-content:space-between; align-items:center;">
                                     <div style="display:flex; align-items:center; gap:8px;">
                                         ${rec.icon ? `<img src="${rec.icon}" alt="${rec.setName}" style="width:22px; height:22px; border-radius:4px; object-fit:contain; background:rgba(0,0,0,0.2);" onerror="this.style.display='none'">` : ''}
@@ -132,7 +132,7 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, showAllC
                                     </div>
                                 </div>
 
-                                <div style="font-size:11px; color:var(--text-grey); background:rgba(255,255,255,0.02); padding:6px 10px; border-radius:6px;">
+                                <div style="font-size:11px; color:var(--text-grey); background:rgba(0,0,0,0.2); padding:6px 10px; border-radius:6px;">
                                     ${t('roadmap.strongbox.avoidDomainNote', rec.domainName)}
                                 </div>
 
@@ -140,7 +140,7 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, showAllC
                                     <div style="font-size:11px; color:var(--text-grey); margin-bottom:6px;">${t('roadmap.strongbox.targetChars')}</div>
                                     <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                                         ${rec.chars.map(c => `
-                                            <div style="display:flex; align-items:center; gap:5px; background:${c.isFocus ? 'rgba(168,85,247,0.15)' : 'rgba(255,255,255,0.03)'}; padding:3px 8px 3px 3px; border-radius:6px; border:${c.isFocus ? '1px solid rgba(168,85,247,0.4)' : '1px solid rgba(255,255,255,0)'};">
+                                            <div style="display:flex; align-items:center; gap:5px; background:${c.isFocus ? 'rgba(168,85,247,0.15)' : 'rgba(0,0,0,0.2)'}; padding:3px 8px 3px 3px; border-radius:6px; border:${c.isFocus ? '1px solid rgba(168,85,247,0.4)' : '1px solid rgba(255,255,255,0)'};">
                                                 <img src="${c.image}" alt="${c.nom}" style="width:24px; height:24px; border-radius:4px; background:rgba(0,0,0,0.2);">
                                                 <span style="font-size:11px; color:${c.isFocus ? '#d8b4fe' : 'var(--text-primary)'}; font-weight:${c.isFocus ? '700' : '500'};">${c.nom}</span>
                                             </div>
@@ -148,7 +148,7 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, showAllC
                                         ${nonVitrine.map(c => {
             const cName = (LANG === 'fr' ? c.nom : (c.enName || c.nom));
             return `
-                                            <div style="display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.02); padding:3px 8px 3px 3px; border-radius:6px; border:1px dashed rgba(255,255,255,0.15); opacity:0.45; filter:grayscale(20%);" title="${cName} (${t('roadmap.outsideShowcase')})">
+                                            <div style="display:flex; align-items:center; gap:5px; background:rgba(0,0,0,0.2); padding:3px 8px 3px 3px; border-radius:6px; border:1px dashed rgba(255,255,255,0.15); opacity:0.45; filter:grayscale(20%);" title="${cName} (${t('roadmap.outsideShowcase')})">
                                                 <img src="${c.image}" alt="${cName}" style="width:24px; height:24px; border-radius:4px; background:rgba(0,0,0,0.2);">
                                                 <span style="font-size:11px; color:var(--text-grey); font-weight:500;">${cName}</span>
                                             </div>
