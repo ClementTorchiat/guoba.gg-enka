@@ -69,17 +69,6 @@ const { currentPage } = Astro.props;
                         </div>
                     </a>
 
-                    <a class={`char-card snav-item ${currentPage === 'changelog' ? 'snav-item--active' : ''}`} href="/changelog" data-astro-prefetch style="text-decoration:none;">
-                        <div style="width:52px; height:52px; border-radius:8px; background-color: rgba(0, 0, 0, 0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-                            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/>
-                            </svg>
-                        </div>
-                        <div class="char-card-container">
-                            <p class="char-card-name" data-i18n="nav.changelog">Notes de mise à jour</p>
-                        </div>
-                    </a>
-
                     <a class={`char-card snav-item ${currentPage === 'team' ? 'snav-item--active' : ''}`} href="/team" data-astro-prefetch style="text-decoration:none;">
                         <div style="width:52px; height:52px; border-radius:8px; background-color: rgba(0, 0, 0, 0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                             <svg width="26" height="26" viewBox="0 0 261 331" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -91,6 +80,17 @@ const { currentPage } = Astro.props;
                         </div>
                         <div class="char-card-container">
                             <p class="char-card-name" data-i18n="nav.team">L'équipe</p>
+                        </div>
+                    </a>
+
+                    <a class={`char-card snav-item ${currentPage === 'changelog' ? 'snav-item--active' : ''}`} href="/changelog" data-astro-prefetch style="text-decoration:none;">
+                        <div style="width:52px; height:52px; border-radius:8px; background-color: rgba(0, 0, 0, 0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/>
+                            </svg>
+                        </div>
+                        <div class="char-card-container">
+                            <p class="char-card-name" data-i18n="nav.changelog">Notes de mise à jour</p>
                         </div>
                     </a>
 
