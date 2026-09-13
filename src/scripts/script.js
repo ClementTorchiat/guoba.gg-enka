@@ -304,6 +304,26 @@ function showSkeletonCard() {
         `).join('');
     }
 
+    const roadmapArea = document.getElementById('roadmap-sidebar-area');
+    if (roadmapArea) {
+        roadmapArea.style.display = 'block';
+        const btn = document.getElementById('roadmapSidebarBtn');
+        if (btn) btn.style.display = 'none';
+        
+        let sk = document.getElementById('roadmap-skeleton-tmp');
+        if (!sk) {
+            sk = document.createElement('div');
+            sk.id = 'roadmap-skeleton-tmp';
+            sk.className = 'sk';
+            sk.style.width = '100%';
+            sk.style.height = '62px';
+            sk.style.borderRadius = '8px';
+            sk.style.margin = '0';
+            roadmapArea.appendChild(sk);
+        }
+        sk.style.display = 'block';
+    }
+
     let topHeader = document.getElementById('top-header-area');
     const pp = document.getElementById('player-profile');
     if (!topHeader && pp) {
@@ -2601,6 +2621,10 @@ function renderSidebar(activeOriginalIndex = 0) {
     const roadmapArea = document.getElementById('roadmap-sidebar-area');
     if (roadmapArea) {
         roadmapArea.style.display = (globalPersoData && globalPersoData.length > 0) ? 'block' : 'none';
+        const btn = document.getElementById('roadmapSidebarBtn');
+        if (btn) btn.style.display = 'flex';
+        const sk = document.getElementById('roadmap-skeleton-tmp');
+        if (sk) sk.style.display = 'none';
     }
 }
 
