@@ -1,0 +1,16 @@
+{
+    "buffs": [
+        {
+            "label": {
+                "fr": "Si une compétence ou un déchaînement élémentaire est utilisé (DGT CRIT - Premier buff)",
+                "en": "If an elemental skill or burst is used (Crit DMG - First buff)"
+            },
+            "stats": {
+                "critDMG_": [
+                    0.56,
+                    0.16
+                ]
+            }
+        }
+    ]
+}

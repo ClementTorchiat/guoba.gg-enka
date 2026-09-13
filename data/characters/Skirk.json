@@ -108,10 +108,10 @@
         },
         {
           "role": "Support",
-          "name": "Citlali",
-          "element": "cryo",
+          "name": "Vodyanitsa",
+          "element": "hydro",
           "weapon": "ThrillingTalesOfDragonSlayers",
-          "artifact": "ScrollOfTheHeroOfCinderCity"
+          "artifact": "TenacityOfTheMillelith"
         }
       ]
     }

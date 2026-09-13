@@ -1,0 +1,37 @@
+{
+    "buffs": [
+        {
+            "category": {
+                "fr": "Après utilisation d'une compétence élémentaire",
+                "en": "After using an Elemental Skill"
+            },
+            "selectMode": "exclusive",
+            "buffs": [
+                {
+                    "label": {
+                        "fr": "1 cumul (Maîtrise élémentaire)",
+                        "en": "1 stack (Elemental Mastery)"
+                    },
+                    "stats": {
+                        "eleMas": [
+                            52,
+                            13
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "2 cumuls (Maîtrise élémentaire)",
+                        "en": "2 stacks (Elemental Mastery)"
+                    },
+                    "stats": {
+                        "eleMas": [
+                            104,
+                            26
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

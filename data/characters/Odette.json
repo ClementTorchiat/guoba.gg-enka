@@ -219,7 +219,7 @@
             "team": [
                 {
                     "role": "DPS",
-                    "name": "Mizuki",
+                    "name": "Vesna",
                     "element": "anemo"
                 },
                 {
@@ -229,9 +229,9 @@
                 },
                 {
                     "role": "Support",
-                    "name": "Sucrose",
-                    "element": "anemo",
-                    "artifact": "Instructor"
+                    "name": "Vodyanitsa",
+                    "element": "hydro",
+                    "artifact": "TenacityOfTheMillelith"
                 }
             ]
         }

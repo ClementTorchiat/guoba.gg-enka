@@ -1,0 +1,97 @@
+{
+    "buffs": [
+        {
+            "category": {
+                "fr": "En attaquant un ennemi après avoir utilisé une compétence élémentaire",
+                "en": "When hitting an enemy after using an elemental skill"
+            },
+            "selectMode": "exclusive",
+            "buffs": [
+                {
+                    "label": {
+                        "fr": "1 cumul de l'effet Verdoyant (ATQ% et ME)",
+                        "en": "1 stack of Verdant effect (ATK% & EM)"
+                    },
+                    "stats": {
+                        "atk_": [
+                            0.04,
+                            0.01
+                        ],
+                        "eleMas": [
+                            20,
+                            5
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "2 cumuls de l'effet Verdoyant (ATQ% et ME)",
+                        "en": "2 stacks of Verdant effect (ATK% & EM)"
+                    },
+                    "stats": {
+                        "atk_": [
+                            0.08,
+                            0.02
+                        ],
+                        "eleMas": [
+                            40,
+                            10
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "3 cumuls de l'effet Verdoyant (ATQ% et ME)",
+                        "en": "3 stacks of Verdant effect (ATK% & EM)"
+                    },
+                    "stats": {
+                        "atk_": [
+                            0.12,
+                            0.03
+                        ],
+                        "eleMas": [
+                            60,
+                            15
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "1 cumul (Sous Radiance : Lueur astrale - ATQ%)",
+                        "en": "1 stack (Under Radiance: Stellar Glimmer - ATK%)"
+                    },
+                    "stats": {
+                        "atk_": [
+                            0.06,
+                            0.015
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "2 cumuls (Sous Radiance : Lueur astrale - ATQ%)",
+                        "en": "2 stacks (Under Radiance: Stellar Glimmer - ATK%)"
+                    },
+                    "stats": {
+                        "atk_": [
+                            0.12,
+                            0.03
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "3 cumuls (Sous Radiance : Lueur astrale - ATQ%)",
+                        "en": "3 stacks (Under Radiance: Stellar Glimmer - ATK%)"
+                    },
+                    "stats": {
+                        "atk_": [
+                            0.18,
+                            0.045
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

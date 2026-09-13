@@ -136,8 +136,8 @@
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
-        "atk_": 0.8,
-        "atk": 0.1,
+        "atk_": 0,
+        "atk": 0,
         "hp_": 0,
         "hp": 0,
         "def_": 0,
@@ -169,9 +169,10 @@
       "hideUIStats": [],
       "showUIStats": [],
       "bestSets": [
-        "ScarletProof:4"
+        "ViridescentVenerer:4"
       ],
       "goodSets": [
+        "ScarletProof:4",
         "GladiatorsFinale:2",
         "ShimenawasReminiscence:2",
         "VermillionHereafter:2",
@@ -193,18 +194,22 @@
       "team": [
         {
           "role": "Sub-DPS",
-          "name": "Odette",
-          "element": "cryo"
-        },
-        {
-          "role": "Sub-DPS",
           "name": "PlayerBoy",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "NoblesseOblige",
+          "cons": "6"
         },
         {
           "role": "Support",
-          "name": "Sucrose",
-          "element": "anemo"
+          "name": "Vodyanitsa",
+          "element": "hydro",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "TenacityOfTheMillelith"
+        },
+        {
+          "role": "Support",
+          "name": "Odette",
+          "element": "cryo"
         }
       ]
     }

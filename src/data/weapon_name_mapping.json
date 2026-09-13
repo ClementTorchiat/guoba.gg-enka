@@ -63,6 +63,8 @@
   "Aube du tisse-lune": "MoonweaversDawn",
   "Puits-de-braises": "Emberwell",
   "Lame de lave de l'hérétique": "HereticsMoltenBlade",
+  "Nouvelle branche": "NewBough",
+  "Lumière argentée": "SilverLight",
   "Espadon de Favonius": "FavoniusGreatsword",
   "Épée-horloge": "TheBell",
   "Espadon rituel": "SacrificialGreatsword",
@@ -120,6 +122,7 @@
   "Arc pluvial du serpent arc-en-ciel": "RainbowSerpentsRainBow",
   "Alliance du givre et de la neige": "CovenantOfFrostAndSnow",
   "Vue de jade": "JadeVista",
+  "Refrain porté par la brise": "BreezeborneRefrain",
   "Fléau du dragon": "DragonsBane",
   "Guisarme stellaire (prototype)": "PrototypeStarglitter",
   "Pique du croissant de lune": "CrescentPike",
@@ -172,6 +175,7 @@
   "Frimas d’aube": "DawningFrost",
   "Écho du cœur": "EchoesOfTheHeart",
   "Choc des rois": "ClashOfKings",
+  "Le cœur lourd de l'hiver": "WintersHeavyHeart",
   "Épée du faucon": "AquilaFavonia",
   "Lame de la Voûte d'Azur": "SkywardBlade",
   "Serment de la liberté": "FreedomSworn",
@@ -190,6 +194,7 @@
   "Éclat lunaire luminescent": "LightbearingMoonshard",
   "Plume hivernale du lac blanc": "WhitelakeFrostfeather",
   "Lame exaphane": "ExaiphanesBlade",
+  "Au-delà de la chrysalide": "BeyondTheChrysalis",
   "Fierté de la Voûte d'Azur": "SkywardPride",
   "Mort-du-loup": "WolfsGravestone",
   "Ode au chant du vent": "SongOfBrokenPines",
@@ -244,5 +249,6 @@
   "Miroir du tisse-nuit": "NightweaversLookingGlass",
   "Reliquaire de la vérité": "ReliquaryOfTruth",
   "Rappel de la nocturne": "NocturnesCurtainCall",
-  "Heptades des anges": "AngelosHeptades"
+  "Heptades des anges": "AngelosHeptades",
+  "Hymne dans le maelström": "HymnOfTheMaelstrom"
 }

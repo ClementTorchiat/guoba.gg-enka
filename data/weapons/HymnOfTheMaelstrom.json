@@ -1,0 +1,28 @@
+{
+    "buffs": [
+        {
+            "label": {
+                "fr": "Si le personnage effectue un soin (PV%)",
+                "en": "If the character performs healing (HP%)"
+            },
+            "stats": {
+                "hp_": [
+                    0.04,
+                    0.01
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "Si un allié déclenche une réaction Gel ou Astrodispersion (PV%)",
+                "en": "If a party member triggers a Frozen or Stellar Swirl reaction (HP%)"
+            },
+            "stats": {
+                "hp_": [
+                    0.03,
+                    0.0075
+                ]
+            }
+        }
+    ]
+}

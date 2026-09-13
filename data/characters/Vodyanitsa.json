@@ -1,0 +1,221 @@
+{
+    "color": "#3e9cea",
+    "portraitOffset": -36,
+    "talents": {
+        "auto": 1,
+        "skill": 10,
+        "burst": 8
+    },
+    "buffs": [
+        {
+            "category": {
+                "fr": "Constellation 2 : Des échos qui percent la neige",
+                "en": "Constellation 2: Echoes That Pierce the Snow"
+            },
+            "selectMode": "exclusive",
+            "buffs": [
+                {
+                    "label": {
+                        "fr": "Si la compétence élémentaire touche un ennemi (DGT CRIT - DGTs Hydro et Cryo uniquement)",
+                        "en": "If the elemental skill hits an opponent (CRIT DMG - Hydro and Cryo DMG only)"
+                    },
+                    "cons": 2,
+                    "stats": {
+                        "critDMG_": 0.5
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "Si un vortex Astrodispersion est sur le terrrain (DGT CRIT - DGTs d'Astrodispersion uniquement)",
+                        "en": "If a Stellar-swirl vortex is on the field (CRIT DMG - Stellar-swirl DMG only)"
+                    },
+                    "cons": 2,
+                    "stats": {
+                        "critDMG_": 0.6
+                    }
+                }
+            ]
+        },
+        {
+            "category": {
+                "fr": "Constellation 4 : Voix mélancolique sur les eaux paisibles",
+                "en": "Constellation 4: Melancholic Voice Upon the Gentle Waters"
+            },
+            "selectMode": "exclusive",
+            "buffs": [
+                {
+                    "label": {
+                        "fr": "Si les PV du personnages sont inférieur à 40% (Bonus de soins)",
+                        "en": "If HP is below 40% (Healing Bonus)"
+                    },
+                    "cons": 4,
+                    "stats": {
+                        "heal_": 0.5
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "Si les PV du personnages sont supérieur à 40% (PV)",
+                        "en": "If HP is above 40% (HP)"
+                    },
+                    "cons": 4,
+                    "stats": {
+                        "hp_": 0.6
+                    }
+                }
+            ]
+        }
+    ],
+    "builds": {
+        "Support Astrodispersion": {
+            "name": {
+                "fr": "Support Astrodispersion",
+                "en": "Stellar-swirl Support"
+            },
+            "weights": {
+                "critRate_": 0,
+                "critDMG_": 0,
+                "atk_": 0,
+                "atk": 0,
+                "hp_": 1,
+                "hp": 0.8,
+                "def_": 0,
+                "def": 0,
+                "eleMas": 0,
+                "enerRech_": 0.1,
+                "pyro_dmg_": 0,
+                "hydro_dmg_": 0,
+                "cryo_dmg_": 0,
+                "geo_dmg_": 0,
+                "anemo_dmg_": 0,
+                "electro_dmg_": 0,
+                "dendro_dmg_": 0,
+                "physical_dmg_": 0,
+                "heal_": 1
+            },
+            "idealMainStats": {
+                "EQUIP_SHOES": [
+                    "hp_"
+                ],
+                "EQUIP_RING": [
+                    "hp_"
+                ],
+                "EQUIP_DRESS": [
+                    "hp_",
+                    "heal_"
+                ]
+            },
+            "hideUIStats": [],
+            "showUIStats": [],
+            "bestSets": [
+                "TenacityOfTheMillelith:4",
+                "Instructor:4",
+                "SongOfDaysPast:4"
+            ],
+            "goodSets": [
+                "TenacityOfTheMillelith:2",
+                "VourukashasGlow:2",
+                "MaidenBeloved:2",
+                "OceanHuedClam:2",
+                "SongOfDaysPast:2",
+                "EmblemOfSeveredFate:2",
+                "SilkenMoonsSerenade:2",
+                "CelestialGift:2"
+            ],
+            "er_req": 100,
+            "team": [
+                {
+                    "role": "DPS",
+                    "name": "Vesna",
+                    "element": "anemo"
+                },
+                {
+                    "role": "Sub-DPS",
+                    "name": "PlayerBoy",
+                    "element": "cryo",
+                    "artifact": "NoblesseOblige",
+                    "cons": "6"
+                },
+                {
+                    "role": "Support",
+                    "name": "Odette",
+                    "element": "cryo"
+                }
+            ]
+        },
+        "Support Gel": {
+            "name": {
+                "fr": "Support Gel",
+                "en": "Freeze Support"
+            },
+            "weights": {
+                "critRate_": 0,
+                "critDMG_": 0,
+                "atk_": 0,
+                "atk": 0,
+                "hp_": 1,
+                "hp": 0.8,
+                "def_": 0,
+                "def": 0,
+                "eleMas": 0,
+                "enerRech_": 0.1,
+                "pyro_dmg_": 0,
+                "hydro_dmg_": 0,
+                "cryo_dmg_": 0,
+                "geo_dmg_": 0,
+                "anemo_dmg_": 0,
+                "electro_dmg_": 0,
+                "dendro_dmg_": 0,
+                "physical_dmg_": 0,
+                "heal_": 1
+            },
+            "idealMainStats": {
+                "EQUIP_SHOES": [
+                    "hp_"
+                ],
+                "EQUIP_RING": [
+                    "hp_"
+                ],
+                "EQUIP_DRESS": [
+                    "hp_",
+                    "heal_"
+                ]
+            },
+            "hideUIStats": [],
+            "showUIStats": [],
+            "bestSets": [
+                "TenacityOfTheMillelith:4",
+                "ScrollOfTheHeroOfCinderCity:4",
+                "SongOfDaysPast:4"
+            ],
+            "goodSets": [
+                "TenacityOfTheMillelith:2",
+                "VourukashasGlow:2",
+                "MaidenBeloved:2",
+                "OceanHuedClam:2",
+                "SongOfDaysPast:2",
+                "EmblemOfSeveredFate:2",
+                "SilkenMoonsSerenade:2",
+                "CelestialGift:2"
+            ],
+            "er_req": 100,
+            "team": [
+                {
+                    "role": "DPS",
+                    "name": "SkirkNew",
+                    "element": "cryo"
+                },
+                {
+                    "role": "Sub-DPS",
+                    "name": "Furina",
+                    "element": "hydro"
+                },
+                {
+                    "role": "Sub-DPS",
+                    "name": "Escoffier",
+                    "element": "cryo"
+                }
+            ]
+        }
+    }
+}

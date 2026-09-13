@@ -1,0 +1,187 @@
+{
+    "buffs": [
+        {
+            "category": {
+                "fr": "Pacte de sang (Alliés Cryo - EM)",
+                "en": "Silver-Tinged Blood Pact (Cryo allies - EM)"
+            },
+            "selectMode": "exclusive",
+            "buffs": [
+                {
+                    "label": {
+                        "fr": "1 Allié Cryo",
+                        "en": "1 Cryo ally"
+                    },
+                    "active": false,
+                    "stats": {
+                        "eleMas": [
+                            24,
+                            6
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "2 Alliés Cryo",
+                        "en": "2 Cryo allies"
+                    },
+                    "active": false,
+                    "stats": {
+                        "eleMas": [
+                            48,
+                            12
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "3 Alliés Cryo",
+                        "en": "3 Cryo allies"
+                    },
+                    "active": false,
+                    "stats": {
+                        "eleMas": [
+                            72,
+                            18
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "4 Alliés Cryo",
+                        "en": "4 Cryo allies"
+                    },
+                    "active": false,
+                    "stats": {
+                        "eleMas": [
+                            96,
+                            24
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "category": {
+                "fr": "Pacte de sang (Alliés Électro - ATQ%)",
+                "en": "Silver-Tinged Blood Pact (Electro allies - ATK%)"
+            },
+            "selectMode": "exclusive",
+            "buffs": [
+                {
+                    "label": {
+                        "fr": "1 Allié Électro",
+                        "en": "1 Electro ally"
+                    },
+                    "active": false,
+                    "stats": {
+                        "atk_": [
+                            0.048,
+                            0.012
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "2 Alliés Électro",
+                        "en": "2 Electro allies"
+                    },
+                    "active": false,
+                    "stats": {
+                        "atk_": [
+                            0.096,
+                            0.024
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "3 Alliés Électro",
+                        "en": "3 Electro allies"
+                    },
+                    "active": false,
+                    "stats": {
+                        "atk_": [
+                            0.144,
+                            0.036
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "4 Alliés Électro",
+                        "en": "4 Electro allies"
+                    },
+                    "active": false,
+                    "stats": {
+                        "atk_": [
+                            0.192,
+                            0.048
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "category": {
+                "fr": "Radiance : Lueur astrale (Alliés Cryo ou Électro - EM)",
+                "en": "Radiance: Stellar Glimmer (Cryo or Electro allies - EM)"
+            },
+            "selectMode": "exclusive",
+            "buffs": [
+                {
+                    "label": {
+                        "fr": "1 Allié Cryo ou Électro",
+                        "en": "1 Cryo or Electro ally"
+                    },
+                    "active": false,
+                    "stats": {
+                        "eleMas": [
+                            20,
+                            5
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "2 Alliés Cryo ou Électro",
+                        "en": "2 Cryo or Electro allies"
+                    },
+                    "active": false,
+                    "stats": {
+                        "eleMas": [
+                            40,
+                            10
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "3 Alliés Cryo ou Électro",
+                        "en": "3 Cryo or Electro allies"
+                    },
+                    "active": false,
+                    "stats": {
+                        "eleMas": [
+                            60,
+                            15
+                        ]
+                    }
+                },
+                {
+                    "label": {
+                        "fr": "4 Alliés Cryo ou Électro",
+                        "en": "4 Cryo or Electro allies"
+                    },
+                    "active": false,
+                    "stats": {
+                        "eleMas": [
+                            80,
+                            20
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
