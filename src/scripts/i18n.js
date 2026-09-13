@@ -18,10 +18,10 @@ export const T = {
     // ══════════════════════════════════════════════════════
     fr: {
         // ── Titres de page (Meta) ─────────────────────────────
-        "page.title.default": "guoba.gg — Simulateur Genshin Impact",
+        "page.title.default": "guoba.gg — Compagnon Genshin Impact",
         "page.title.char": (char, player) => `${char} de ${player} - guoba.gg`,
         "meta.description": "guoba.gg est un outil d'analyse de builds et de statistiques pour Genshin Impact. Évaluez vos artéfacts, optimisez vos personnages...",
-        "meta.keywords": "Genshin Impact, build, simulateur, artéfacts, enka network, UID, statistiques",
+        "meta.keywords": "Genshin Impact, build, compagnon, artéfacts, enka network, UID, statistiques",
         "meta.og.title.char": (char, player) => `Build de ${char} (${player}) - guoba.gg`,
         "meta.og.description.char": (char) => `Découvrez l'analyse complète du build, l'efficacité des artéfacts et les conseils d'optimisation pour ${char}.`,
         "meta.locale": "fr_FR",
@@ -138,7 +138,7 @@ export const T = {
 
         // ── Mobile ───────────────────────────────────────
         "mobile.title": "Version Mobile Non Disponible",
-        "mobile.body": "L'interface de ce simulateur a été conçue exclusivement pour les ordinateurs afin de garantir la meilleure expérience possible et d'afficher toutes les statistiques correctement.",
+        "mobile.body": "L'interface de ce compagnon a été conçue exclusivement pour les ordinateurs afin de garantir la meilleure expérience possible et d'afficher toutes les statistiques correctement.",
         "mobile.wip": "Une version mobile du site est actuellement en cours de création.",
         "mobile.hint": "Pour l'instant, veuillez y accéder depuis un ordinateur.",
 
@@ -836,10 +836,10 @@ export const T = {
     // ══════════════════════════════════════════════════════
     en: {
         // ── Page Titles (Meta) ────────────────────────────────
-        "page.title.default": "guoba.gg — Genshin Impact Simulator",
+        "page.title.default": "guoba.gg — Genshin Impact Companion",
         "page.title.char": (char, player) => `${player}'s ${char} - guoba.gg`,
         "meta.description": "guoba.gg is a build analysis and statistics tool for Genshin Impact. Evaluate your artifacts, optimize your characters...",
-        "meta.keywords": "Genshin Impact, build, simulator, artifacts, enka network, UID, stats",
+        "meta.keywords": "Genshin Impact, build, companion, artifacts, enka network, UID, stats",
         "meta.og.title.char": (char, player) => `${player}'s ${char} Build - guoba.gg`,
         "meta.og.description.char": (char) => `Check out the complete build analysis, artifact efficiency, and optimization tips for ${char}.`,
         "meta.locale": "en_US",
@@ -956,7 +956,7 @@ export const T = {
 
         // ── Mobile ───────────────────────────────────────
         "mobile.title": "Mobile Version Not Available",
-        "mobile.body": "This simulator's interface was designed exclusively for desktop to ensure the best experience and correctly display all statistics.",
+        "mobile.body": "This companion's interface was designed exclusively for desktop to ensure the best experience and correctly display all statistics.",
         "mobile.wip": "A mobile version is currently in development.",
         "mobile.hint": "For now, please access it from a desktop computer.",
 

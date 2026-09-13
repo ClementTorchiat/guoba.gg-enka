@@ -6,8 +6,8 @@
  */
 function formatNumber(num, lang = 'fr') {
     if (typeof num !== 'number' || isNaN(num)) return '0';
-    return lang === 'fr' 
-        ? Math.round(num).toLocaleString('fr-FR').replace(/\s/g, ' ') 
+    return lang === 'fr'
+        ? Math.round(num).toLocaleString('fr-FR').replace(/\s/g, ' ')
         : Math.round(num).toLocaleString('en-US');
 }
 
@@ -34,8 +34,8 @@ function normalizeName(str) {
  */
 export function generateEmbedMeta(enkaData, charParam = null, lang = 'fr', extraConfigs = {}) {
     const isEn = lang === 'en';
-    const defaultTitle = isEn ? 'guoba.gg — Genshin Impact Simulator & Build Optimizer' : 'guoba.gg — Simulateur & Optimiseur Genshin Impact';
-    const defaultDesc = isEn 
+    const defaultTitle = isEn ? 'guoba.gg — Genshin Impact Companion & Build Optimizer' : 'guoba.gg — Compagnon & Optimiseur Genshin Impact';
+    const defaultDesc = isEn
         ? 'Analyze your builds, rate your artifacts and simulate combat buffs directly from your UID.'
         : 'Évaluez vos artéfacts, optimisez vos statistiques et simulez vos buffs en combat directement depuis votre UID.';
     const defaultImage = 'https://guoba.clement-torchiat.fr/assets/global/banner.png';
@@ -73,8 +73,8 @@ export function generateEmbedMeta(enkaData, charParam = null, lang = 'fr', extra
     }
 
     const avatarId = selectedAvatar.avatarId;
-    const charName = (extraConfigs.charIdToName && extraConfigs.charIdToName[avatarId]) 
-        || selectedAvatar._name 
+    const charName = (extraConfigs.charIdToName && extraConfigs.charIdToName[avatarId])
+        || selectedAvatar._name
         || `Personnage #${avatarId}`;
 
     // 2. Niveau et Constellations
@@ -142,7 +142,7 @@ export function generateEmbedMeta(enkaData, charParam = null, lang = 'fr', extra
     const em = Math.round(fp[28] || 0);
 
     // Déterminer la stat offensive prioritaire (ATQ, PV ou DÉF)
-    const mainPowerStat = (fp[2000] > 32000 && fp[2001] < 1400) 
+    const mainPowerStat = (fp[2000] > 32000 && fp[2001] < 1400)
         ? `${hp} ${isEn ? 'HP' : 'PV'}`
         : (fp[2002] > 1800 && fp[2001] < 1400)
             ? `${def} ${isEn ? 'DEF' : 'DÉF'}`
@@ -168,7 +168,7 @@ export function generateEmbedMeta(enkaData, charParam = null, lang = 'fr', extra
     }
 
     // 7. Formatage du Titre et de la Description (sans emoji)
-    const title = isEn 
+    const title = isEn
         ? `${nickname}'s ${charName} — guoba.gg`
         : `${charName} de ${nickname} — guoba.gg`;
 
