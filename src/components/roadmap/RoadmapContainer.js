@@ -7,6 +7,7 @@ import { renderDomainPlanner } from './DomainPlanner.js';
 import { renderStrongboxAdvisor } from './StrongboxAdvisor.js';
 import { renderWorstPiecesAudit } from './WorstPiecesAudit.js';
 import { renderElixirCraftAdvisor } from './ElixirCraftAdvisor.js';
+import { renderTeamAdvisor } from './TeamAdvisor.js';
 
 let cachedRoadmapCharacters = [];
 
@@ -118,6 +119,21 @@ if (typeof window !== 'undefined') {
                 }
                 return;
             }
+
+            const toggleDuplicateTeamsBtn = e.target.closest('[data-action="toggle-roadmap-duplicate-teams"]');
+            if (toggleDuplicateTeamsBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.roadmapNoDuplicateTeams = !window.roadmapNoDuplicateTeams;
+                const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
+                    ? cachedRoadmapCharacters
+                    : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+                const container = document.getElementById('main-container');
+                if (container && chars.length > 0) {
+                    container.innerHTML = renderRoadmapContainer(chars, window.roadmapFocusCharNom);
+                }
+                return;
+            }
         });
     }
 }
@@ -159,7 +175,7 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                     <button data-action="set-roadmap-focus"
                             data-char=""
                             type="button"
-                            style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:8px; font-size:11px; cursor:pointer; transition:all 0.2s ease; border:${!focusCharNom ? '1px solid var(--accent-gold, #f59e0b)' : '1px solid rgba(255,255,255,0)'}; background:${!focusCharNom ? 'rgba(245,158,11,0.15)' : 'rgba(0,0,0,0.2)'}; color:${!focusCharNom ? 'var(--accent-gold, #f59e0b)' : 'var(--text-grey)'};">
+                            style="display:inline-flex; align-items:center; justify-content:center; height:32px; padding:0 12px; box-sizing:border-box; border-radius:8px; font-size:11px; cursor:pointer; transition:all 0.2s ease; border:${!focusCharNom ? '1px solid var(--accent-gold, #f59e0b)' : '1px solid rgba(255,255,255,0)'}; background:${!focusCharNom ? 'rgba(245,158,11,0.15)' : 'rgba(0,0,0,0.2)'}; color:${!focusCharNom ? 'var(--accent-gold, #f59e0b)' : 'var(--text-grey)'};">
                         <span>${t('roadmap.focus.all')}</span>
                     </button>
                     ${characters.map(c => {
@@ -169,7 +185,7 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                                     data-char="${c.nom}"
                                     type="button"
                                     title="${c.nom}"
-                                    style="display:inline-flex; align-items:center; gap:5px; padding:3px 8px 3px 3px; border-radius:8px; font-size:11px; cursor:pointer; transition:all 0.2s ease; border:${isSelected ? '1px solid #3b82f6' : '1px solid rgba(0,0,0,0)'}; background:${isSelected ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.2)'}; color:${isSelected ? '#60a5fa' : 'var(--text-primary)'};">
+                                    style="display:inline-flex; align-items:center; gap:5px; height:32px; padding:3px 8px 3px 3px; box-sizing:border-box; border-radius:8px; font-size:11px; cursor:pointer; transition:all 0.2s ease; border:${isSelected ? '1px solid #3b82f6' : '1px solid rgba(0,0,0,0)'}; background:${isSelected ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.2)'}; color:${isSelected ? '#60a5fa' : 'var(--text-primary)'};">
                                 <img src="${c.image}" alt="${c.nom}" style="width:24px; height:24px; border-radius:5px; object-fit:cover; background:rgba(0,0,0,0.2); pointer-events:none;">
                                 <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; pointer-events:none;">${c.nom}</span>
                             </button>
@@ -186,6 +202,9 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
 
             <!-- Module 3 : Optimiseur de Swaps Croisés -->
             ${renderGlobalSwapAdvisor(characters, focusCharNom)}
+            
+            <!-- NOUVEAU : Equipes Recommandées -->
+            ${renderTeamAdvisor(characters, focusCharNom)}
 
             <!-- Deux colonnes pour Donjons & Synthèse Mystique -->
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:8px;">

@@ -59,8 +59,9 @@ const AVG_BASE_ROLLS = {
 };
 
 // SVG minimaliste d'une fiole d'élixir
-export function getFlaskSvg(size = 12, color = 'currentColor') {
-    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-1px; flex-shrink:0;"><path d="M9 3h6v4.5l4 7.5a3 3 0 0 1-2.6 4.5H7.6A3 3 0 0 1 5 15l4-7.5V3z"/><line x1="8" y1="3" x2="16" y2="3"/><path d="M7 14.5h10" stroke-width="1.5"/></svg>`;
+export function getFlaskSvg(size = 12, color = '#f59e0b') {
+    const imgSize = size + 4;
+    return `<img src="https://static.wikia.nocookie.net/gensin-impact/images/8/82/Item_Sanctifying_Elixir.png/revision/latest?cb=20240828021725" style="width:${imgSize}px; height:${imgSize}px; display:inline-block; vertical-align:-3px; flex-shrink:0; object-fit:contain;" alt="Elixir">`;
 }
 
 // Détermination de l'icône exacte de la pièce selon son slot (Fleur, Plume, Sablier, Coupe, Casque)
