@@ -1,1 +1,46 @@
-{}
+{
+    "selectMode": "standard",
+    "buffs": [
+        {
+            "label": {
+                "fr": "Voie du pèlerinage (ATQ)",
+                "en": "Traveler's Path (ATK)"
+            },
+            "condition": "traveler_only_r1",
+            "active": true,
+            "stats": {
+                "atk_": [
+                    0.16,
+                    0.20,
+                    0.24,
+                    0.32,
+                    0.40
+                ]
+            }
+        },
+        {
+            "label": {
+                "fr": "Voie du pèlerinage (ATQ et DGT CRIT)",
+                "en": "Traveler's Path (ATK & CRIT DMG)"
+            },
+            "condition": "traveler_only_r2+",
+            "active": true,
+            "stats": {
+                "atk_": [
+                    0.16,
+                    0.20,
+                    0.24,
+                    0.32,
+                    0.40
+                ],
+                "critDMG_": [
+                    0,
+                    0.42,
+                    0.42,
+                    0.42,
+                    0.42
+                ]
+            }
+        }
+    ]
+}

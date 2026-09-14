@@ -2152,8 +2152,12 @@ function calculateRerollMetrics(artifact, config) {
 }
 
 function getRefinedValue(val, rank) {
-    if (Array.isArray(val) && val.length === 2 && typeof val[0] === 'number') {
-        return val[0] + (rank - 1) * val[1];
+    if (Array.isArray(val)) {
+        if (val.length === 2 && typeof val[0] === 'number') {
+            return val[0] + (rank - 1) * val[1];
+        } else if (val.length === 5) {
+            return val[rank - 1];
+        }
     }
     return val;
 }
@@ -2163,7 +2167,10 @@ const CONFIG_NAME_ALIASES_EN_TO_FR = window.CONFIG_NAME_ALIASES_EN_TO_FR;
 function resolveCharConfig(nom) {
     const charConfig = window.CHARACTER_CONFIG || {};
     const defaultConfig = window.DEFAULT_CONFIG || { weights: {}, bestSets: [], goodSets: [] };
-    const safeNom = nom || "";
+    let safeNom = nom || "";
+    if (safeNom.includes("Voyageuse")) {
+        safeNom = safeNom.replace("Voyageuse", "Voyageur");
+    }
     const configKey = safeNom.replace(/\s+/g, '') || "Default";
     const aliases = window.CONFIG_NAME_ALIASES_EN_TO_FR || {};
     const norm = safeNom.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
@@ -2208,21 +2215,62 @@ function processData(data) {
             || getKey(info, "iconName")
             || getKey(info, "icon");
 
+        const elemKey = getKey(info, "Element");
+        const elemInfo = ELEMENT_DATA[elemKey] || { id: 30, key: "physical_dmg_" };
+
         if (!nom || nom === t('data.unknown')) {
             if (iconNameRaw) {
                 const clean = iconNameRaw.replace(/\.png$/i, "");
                 nom = clean.split('_').pop();
-                if (nom.includes("Player")) nom = t('data.traveler');
             } else {
                 nom = t('data.unknown');
             }
         }
+
+        if (nom && (id === 10000005 || id === 10000007 || nom.includes("Player") || nom === "Traveler" || nom === "Voyageur" || nom.includes("Voyageur"))) {
+            const isFr = (window.GUOBA_LANG === 'fr' || (!window.GUOBA_LANG && document.documentElement.lang === 'fr'));
+            let baseName = t('data.traveler');
+            
+            if (isFr) {
+                if (id === 10000007) {
+                    baseName = "Voyageuse";
+                } else if (id === 10000005) {
+                    baseName = "Voyageur";
+                }
+            }
+
+            const elementToSuffix = {
+                "Wind": "Anemo",
+                "Rock": "Geo",
+                "Electric": "Electro",
+                "Grass": "Dendro",
+                "Water": "Hydro",
+                "Fire": "Pyro",
+                "Ice": "Cryo"
+            };
+            const frElementToSuffix = {
+                "Wind": "Anémo",
+                "Rock": "Géo",
+                "Electric": "Électro",
+                "Grass": "Dendro",
+                "Water": "Hydro",
+                "Fire": "Pyro",
+                "Ice": "Cryo"
+            };
+            
+            const suffix = isFr ? frElementToSuffix[elemKey] : elementToSuffix[elemKey];
+            
+            if (suffix) {
+                nom = isFr ? `${baseName} ${suffix}` : `${suffix} ${baseName}`;
+            } else {
+                nom = baseName;
+            }
+        }
+
         const qualityType = getKey(info, "QualityType");
         const rarity = qualityType === "QUALITY_ORANGE" ? 5 : 4;
         const level = perso.propMap['4001'] ? parseInt(perso.propMap['4001'].val) : 0;
         const constellations = perso.talentIdList ? perso.talentIdList.length : 0;
-        const elemKey = getKey(info, "Element");
-        const elemInfo = ELEMENT_DATA[elemKey] || { id: 30, key: "physical_dmg_" };
 
         const WEAPON_TYPE_MAP = {
             "WEAPON_SWORD_ONE_HAND": "sword",
@@ -2401,6 +2449,14 @@ function processData(data) {
             if (Array.isArray(configData)) {
                 configData.forEach((item, idx) => {
                     if (!item) return;
+
+                    if (item.condition) {
+                        const isTraveler = (id === 10000005 || id === 10000007 || nom === "Traveler" || nom === "Voyageur" || nom.includes("Voyageur") || nom.includes("Traveler"));
+                        if (item.condition === "traveler_only" && !isTraveler) return;
+                        if (item.condition === "traveler_only_r1" && (!isTraveler || weaponRank > 1)) return;
+                        if (item.condition === "traveler_only_r2+" && (!isTraveler || weaponRank < 2)) return;
+                    }
+
                     const finalStats = resolveStats(item.stats);
                     let name = getLabel(item.label, idx);
                     let isActive = item.active !== undefined ? item.active : true;
@@ -2417,6 +2473,12 @@ function processData(data) {
                     });
                 });
             } else {
+                if (configData.condition) {
+                    const isTraveler = (id === 10000005 || id === 10000007 || nom === "Traveler" || nom === "Voyageur" || nom.includes("Voyageur") || nom.includes("Traveler"));
+                    if (configData.condition === "traveler_only" && !isTraveler) return;
+                    if (configData.condition === "traveler_only_r1" && (!isTraveler || weaponRank > 1)) return;
+                    if (configData.condition === "traveler_only_r2+" && (!isTraveler || weaponRank < 2)) return;
+                }
                 const finalStats = resolveStats(configData);
                 let isActive = configData.active !== undefined ? configData.active : true;
                 for (const [statKey, val] of Object.entries(finalStats)) {

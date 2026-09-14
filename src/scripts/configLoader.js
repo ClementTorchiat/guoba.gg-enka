@@ -55,6 +55,14 @@ for (const path in charLoaders) {
     charLoaderMap[cleanNoUnderscore] = charLoaders[path];
     charLoaderMap[norm] = charLoaders[path];
     charLoaderMap[fileName.toLowerCase()] = charLoaders[path];
+    
+    if (fileName.startsWith("Traveler_")) {
+        const elem = fileName.split("_")[1];
+        const reverseName = `${elem} Traveler`;
+        const reverseNorm = normalizeKey(reverseName);
+        charLoaderMap[reverseName] = charLoaders[path];
+        charLoaderMap[reverseNorm] = charLoaders[path];
+    }
 }
 
 // Indexation des alias FR vers les chargeurs
@@ -208,12 +216,30 @@ export async function preloadConfigsForShowcase(data, charData, locData, HASH_TO
         const info = (charData && charData[infoKey]) || {};
         const nameHash = info.NameTextMapHash || info.nameTextMapHash;
 
+        let nomFr = null;
+        let nomEn = null;
+        
         if (nameHash && locData) {
-            const nomFr = locData['fr'] ? locData['fr'][nameHash] : null;
-            const nomEn = locData['en'] ? locData['en'][nameHash] : null;
-            if (nomFr) promises.push(loadCharacterConfig(nomFr));
-            if (nomEn && nomEn !== nomFr) promises.push(loadCharacterConfig(nomEn));
+            nomFr = locData['fr'] ? locData['fr'][nameHash] : null;
+            nomEn = locData['en'] ? locData['en'][nameHash] : null;
         }
+
+        if (perso.avatarId === 10000005 || perso.avatarId === 10000007) {
+            nomFr = "Voyageur";
+            nomEn = "Traveler";
+            
+            const elemKey = info.Element || info.element;
+            if (elemKey) {
+                const enSuffix = { "Wind": "Anemo", "Rock": "Geo", "Electric": "Electro", "Grass": "Dendro", "Water": "Hydro", "Fire": "Pyro", "Ice": "Cryo" }[elemKey];
+                const frSuffix = { "Wind": "Anémo", "Rock": "Géo", "Electric": "Électro", "Grass": "Dendro", "Water": "Hydro", "Fire": "Pyro", "Ice": "Cryo" }[elemKey];
+                
+                if (nomFr.includes("Voyageur") && frSuffix) nomFr = `Voyageur ${frSuffix}`;
+                if (nomEn.includes("Traveler") && enSuffix) nomEn = `${enSuffix} Traveler`;
+            }
+        }
+
+        if (nomFr) promises.push(loadCharacterConfig(nomFr));
+        if (nomEn && nomEn !== nomFr) promises.push(loadCharacterConfig(nomEn));
 
         // Arme et Artéfacts équipés
         if (perso.equipList) {
