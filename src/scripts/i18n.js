@@ -1718,7 +1718,7 @@ if (typeof window !== 'undefined') {
         updateMeta('meta[property="og:locale"]', t('meta.locale'));
         const versionEl = document.querySelector('.sidebar-text');
         if (versionEl) {
-            versionEl.textContent = t('ui.version', '2.0.0', '7.0');
+            versionEl.textContent = t('ui.version', '2.0.1', '7.1');
         }
     };
 
