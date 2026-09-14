@@ -10,8 +10,6 @@ export function getAllCrossCheckAdvice(charIndex) {
     if (!currChar || !currChar.artefacts) return SLOT_ORDER.map(() => null);
 
     const scoringConfig = { ...(currChar.charConfig || {}), ...(currChar.activeBuild || {}) };
-    const active4pSet = Object.keys(currChar.setsCounter || {}).find(key => currChar.setsCounter[key] >= 4);
-    const active4pCount = active4pSet ? currChar.setsCounter[active4pSet] : 0;
 
     return SLOT_ORDER.map(slotType => {
         const currArtIndex = currChar.artefacts.findIndex(a => a.type === slotType);
@@ -33,10 +31,12 @@ export function getAllCrossCheckAdvice(charIndex) {
                 }
                 if (!mWeight || mWeight < 1) return;
 
-                if (active4pSet) {
-                    const isCurrArtSetPiece = (currArt.setKey === active4pSet);
-                    if (isCurrArtSetPiece && active4pCount === 4) {
-                        if (otherArt.setKey !== active4pSet) return;
+                if (otherArt.mainStat.key !== currArt.mainStat.key) return;
+
+                if (currArt.setKey) {
+                    const currSetCount = (currChar.setsCounter && currChar.setsCounter[currArt.setKey]) || 0;
+                    if ((currSetCount === 4 || currSetCount === 2) && otherArt.setKey !== currArt.setKey) {
+                        return;
                     }
                 }
 

@@ -29,6 +29,18 @@ export function findGlobalProfitableSwaps(characters, focusCharNom = null) {
                 const artA = charA.artefacts[artIndexA];
                 const artB = charB.artefacts[artIndexB];
 
+                if (artA.mainStat.key !== artB.mainStat.key) return;
+
+                if (artA.setKey && artB.setKey !== artA.setKey) {
+                    const countA = (charA.setsCounter && charA.setsCounter[artA.setKey]) || 0;
+                    if (countA === 4 || countA === 2) return;
+                }
+
+                if (artB.setKey && artA.setKey !== artB.setKey) {
+                    const countB = (charB.setsCounter && charB.setsCounter[artB.setKey]) || 0;
+                    if (countB === 4 || countB === 2) return;
+                }
+
                 // Échange A prend B, B prend A
                 const fakeArtsA = charA.artefacts.map(a => ({ ...a }));
                 fakeArtsA[artIndexA] = JSON.parse(JSON.stringify(artB));
