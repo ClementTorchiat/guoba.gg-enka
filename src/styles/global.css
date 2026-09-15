@@ -3349,6 +3349,15 @@ input:checked+.toggle-track .star-4 {
     gap: 0;
 }
 
+#sidebar-collapse-btn {
+    transition: background 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#sidebar-collapse-btn:hover,
+.sidebar.sidebar-collapsed #sidebar-collapse-btn:hover {
+    background: var(--bg-hover) !important;
+}
+
 .sidebar.sidebar-collapsed #sidebar-collapse-btn {
     display: flex !important;
     position: static;
