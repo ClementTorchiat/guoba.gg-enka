@@ -3375,6 +3375,8 @@ input:checked+.toggle-track .star-4 {
 .sidebar.sidebar-collapsed .character-header-section-1 {
     width: 100%;
     justify-content: center;
+    display: flex;
+    gap: 6px;
 }
 
 /* 50x50 Morphing for Char Card */
