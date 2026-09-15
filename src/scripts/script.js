@@ -2171,6 +2171,9 @@ function resolveCharConfig(nom) {
     if (safeNom.includes("Voyageuse")) {
         safeNom = safeNom.replace("Voyageuse", "Voyageur");
     }
+    if (safeNom.includes("Manekin") || safeNom.includes("Manekina")) {
+        safeNom = "Manekin";
+    }
     const configKey = safeNom.replace(/\s+/g, '') || "Default";
     const aliases = window.CONFIG_NAME_ALIASES_EN_TO_FR || {};
     const norm = safeNom.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
@@ -2202,7 +2205,7 @@ function processData(data) {
             return undefined;
         };
         let infoKey = String(id);
-        if ((id === 10000005 || id === 10000007) && perso.skillDepotId) {
+        if ([10000005, 10000007, 10000117, 10000118].includes(id) && perso.skillDepotId) {
             const compoundKey = `${id}-${perso.skillDepotId}`;
             if (charData[compoundKey]) infoKey = compoundKey;
         }
@@ -2227,11 +2230,15 @@ function processData(data) {
             }
         }
 
-        if (nom && (id === 10000005 || id === 10000007 || nom.includes("Player") || nom === "Traveler" || nom === "Voyageur" || nom.includes("Voyageur"))) {
+        if (nom && ([10000005, 10000007, 10000117, 10000118].includes(id) || nom.includes("Player") || nom === "Traveler" || nom === "Voyageur" || nom.includes("Voyageur") || nom.includes("Manekin"))) {
             const isFr = (window.GUOBA_LANG === 'fr' || (!window.GUOBA_LANG && document.documentElement.lang === 'fr'));
             let baseName = t('data.traveler');
 
-            if (isFr) {
+            if (id === 10000117) {
+                baseName = "Manekin";
+            } else if (id === 10000118) {
+                baseName = "Manekina";
+            } else if (isFr) {
                 if (id === 10000007) {
                     baseName = "Voyageuse";
                 } else if (id === 10000005) {
@@ -2451,7 +2458,7 @@ function processData(data) {
                     if (!item) return;
 
                     if (item.condition) {
-                        const isTraveler = (id === 10000005 || id === 10000007 || nom === "Traveler" || nom === "Voyageur" || nom.includes("Voyageur") || nom.includes("Traveler"));
+                        const isTraveler = ([10000005, 10000007, 10000117, 10000118].includes(id) || nom === "Traveler" || nom === "Voyageur" || nom.includes("Voyageur") || nom.includes("Traveler") || nom.includes("Manekin"));
                         if (item.condition === "traveler_only" && !isTraveler) return;
                         if (item.condition === "traveler_only_r1" && (!isTraveler || weaponRank > 1)) return;
                         if (item.condition === "traveler_only_r2+" && (!isTraveler || weaponRank < 2)) return;
@@ -2474,7 +2481,7 @@ function processData(data) {
                 });
             } else {
                 if (configData.condition) {
-                    const isTraveler = (id === 10000005 || id === 10000007 || nom === "Traveler" || nom === "Voyageur" || nom.includes("Voyageur") || nom.includes("Traveler"));
+                    const isTraveler = ([10000005, 10000007, 10000117, 10000118].includes(id) || nom === "Traveler" || nom === "Voyageur" || nom.includes("Voyageur") || nom.includes("Traveler") || nom.includes("Manekin"));
                     if (configData.condition === "traveler_only" && !isTraveler) return;
                     if (configData.condition === "traveler_only_r1" && (!isTraveler || weaponRank > 1)) return;
                     if (configData.condition === "traveler_only_r2+" && (!isTraveler || weaponRank < 2)) return;

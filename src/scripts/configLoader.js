@@ -209,7 +209,7 @@ export async function preloadConfigsForShowcase(data, charData, locData, HASH_TO
     for (const perso of data.avatarInfoList) {
         // Nom du personnage
         let infoKey = String(perso.avatarId);
-        if ((perso.avatarId === 10000005 || perso.avatarId === 10000007) && perso.skillDepotId) {
+        if ([10000005, 10000007, 10000117, 10000118].includes(perso.avatarId) && perso.skillDepotId) {
             const compoundKey = `${perso.avatarId}-${perso.skillDepotId}`;
             if (charData && charData[compoundKey]) infoKey = compoundKey;
         }
@@ -224,9 +224,17 @@ export async function preloadConfigsForShowcase(data, charData, locData, HASH_TO
             nomEn = locData['en'] ? locData['en'][nameHash] : null;
         }
 
-        if (perso.avatarId === 10000005 || perso.avatarId === 10000007) {
-            nomFr = "Voyageur";
-            nomEn = "Traveler";
+        if ([10000005, 10000007, 10000117, 10000118].includes(perso.avatarId)) {
+            if (perso.avatarId === 10000117) {
+                nomFr = "Manekin";
+                nomEn = "Manekin";
+            } else if (perso.avatarId === 10000118) {
+                nomFr = "Manekina";
+                nomEn = "Manekina";
+            } else {
+                nomFr = "Voyageur";
+                nomEn = "Traveler";
+            }
             
             const elemKey = info.Element || info.element;
             if (elemKey) {
@@ -234,12 +242,19 @@ export async function preloadConfigsForShowcase(data, charData, locData, HASH_TO
                 const frSuffix = { "Wind": "Anémo", "Rock": "Géo", "Electric": "Électro", "Grass": "Dendro", "Water": "Hydro", "Fire": "Pyro", "Ice": "Cryo" }[elemKey];
                 
                 if (nomFr.includes("Voyageur") && frSuffix) nomFr = `Voyageur ${frSuffix}`;
+                else if (frSuffix) nomFr = `${nomFr} ${frSuffix}`;
+
                 if (nomEn.includes("Traveler") && enSuffix) nomEn = `${enSuffix} Traveler`;
+                else if (enSuffix) nomEn = `${nomEn} ${enSuffix}`;
             }
         }
 
-        if (nomFr) promises.push(loadCharacterConfig(nomFr));
-        if (nomEn && nomEn !== nomFr) promises.push(loadCharacterConfig(nomEn));
+        if (perso.avatarId === 10000117 || perso.avatarId === 10000118) {
+            promises.push(loadCharacterConfig("Manekin"));
+        } else {
+            if (nomFr) promises.push(loadCharacterConfig(nomFr));
+            if (nomEn && nomEn !== nomFr) promises.push(loadCharacterConfig(nomEn));
+        }
 
         // Arme et Artéfacts équipés
         if (perso.equipList) {
