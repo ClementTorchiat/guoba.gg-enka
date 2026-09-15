@@ -309,7 +309,7 @@ function showSkeletonCard() {
         roadmapArea.style.display = 'block';
         const btn = document.getElementById('roadmapSidebarBtn');
         if (btn) btn.style.display = 'none';
-        
+
         let sk = document.getElementById('roadmap-skeleton-tmp');
         if (!sk) {
             sk = document.createElement('div');
@@ -2230,7 +2230,7 @@ function processData(data) {
         if (nom && (id === 10000005 || id === 10000007 || nom.includes("Player") || nom === "Traveler" || nom === "Voyageur" || nom.includes("Voyageur"))) {
             const isFr = (window.GUOBA_LANG === 'fr' || (!window.GUOBA_LANG && document.documentElement.lang === 'fr'));
             let baseName = t('data.traveler');
-            
+
             if (isFr) {
                 if (id === 10000007) {
                     baseName = "Voyageuse";
@@ -2257,9 +2257,9 @@ function processData(data) {
                 "Fire": "Pyro",
                 "Ice": "Cryo"
             };
-            
+
             const suffix = isFr ? frElementToSuffix[elemKey] : elementToSuffix[elemKey];
-            
+
             if (suffix) {
                 nom = isFr ? `${baseName} ${suffix}` : `${suffix} ${baseName}`;
             } else {
@@ -2931,6 +2931,12 @@ function showSidebarNav() {
     if (nav) nav.style.display = 'flex';
     const charSidebar = document.querySelector('.sidebar-characters');
     if (charSidebar) charSidebar.style.display = 'none';
+    const collapseBtn = document.getElementById('sidebar-collapse-btn');
+    if (collapseBtn) collapseBtn.style.display = 'none';
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) sidebar.classList.remove('sidebar-collapsed');
+    const icon = document.getElementById('sidebar-collapse-icon');
+    if (icon) icon.style.transform = 'rotate(90deg)';
 }
 
 function hideSidebarNav() {
@@ -2938,7 +2944,21 @@ function hideSidebarNav() {
     if (nav) nav.style.display = 'none';
     const charSidebar = document.querySelector('.sidebar-characters');
     if (charSidebar) charSidebar.style.display = 'flex';
+    const collapseBtn = document.getElementById('sidebar-collapse-btn');
+    if (collapseBtn) collapseBtn.style.display = 'flex';
 }
+
+window.toggleSidebarCollapse = function() {
+    const sidebar = document.querySelector('.sidebar');
+    const icon = document.getElementById('sidebar-collapse-icon');
+    if (sidebar.classList.contains('sidebar-collapsed')) {
+        sidebar.classList.remove('sidebar-collapsed');
+        if (icon) icon.style.transform = 'rotate(90deg)';
+    } else {
+        sidebar.classList.add('sidebar-collapsed');
+        if (icon) icon.style.transform = 'rotate(-90deg)';
+    }
+};
 
 function updateSidebarNavActive(activePage) {
     document.querySelectorAll('.snav-item').forEach(item => {

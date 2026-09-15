@@ -72,24 +72,43 @@ const onboardingImages = {
         <div class="layout-flex">
             <div class="layout-content">
                 <aside class="sidebar">
-                    <div class="sidebar-title">
-                        <div
-                            class="sidebar-title-container"
-                            onclick="clearSearch()"
-                            style="cursor: pointer;"
-                        >
-                            <Image
-                                src={guobaLogo}
-                                alt="guoba"
-                                width={32}
-                                height={32}
-                                style="border-radius: 100%;"
-                            />
-                            <h2 style="color: var(--text-primary)">guoba.gg</h2>
+                    <div
+                        class="sidebar-top-wrapper"
+                        style="display: flex; align-items: center; justify-content: space-between; position: relative;"
+                    >
+                        <div class="sidebar-title">
+                            <div
+                                class="sidebar-title-container"
+                                onclick="clearSearch()"
+                                style="cursor: pointer;"
+                            >
+                                <Image
+                                    src={guobaLogo}
+                                    alt="guoba"
+                                    width={32}
+                                    height={32}
+                                    style="border-radius: 100%;"
+                                />
+                                <h2 style="color: var(--text-primary)">
+                                    guoba.gg
+                                </h2>
+                            </div>
+                            <p class="sidebar-text" style="margin-left: 0;">
+                                Ver. -- - Bêta Build (GI Ver. --)
+                            </p>
                         </div>
-                        <p class="sidebar-text">
-                            Ver. -- - Bêta Build (GI Ver. --)
-                        </p>
+                        <button
+                            id="sidebar-collapse-btn"
+                            onclick="window.toggleSidebarCollapse();"
+                            style="display: none; align-items: center; justify-content: center; background: var(--bg-panel); border: none; border-radius: 8px; cursor: pointer; height: 76px; width: 40px; padding: 0; flex-shrink: 0; margin-left: 10px;"
+                        >
+                            <img
+                                src="/assets/simulator/icons/icon_arrow_down_white.svg"
+                                alt=""
+                                style="width: 14px; height: 14px; transform: rotate(90deg); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);"
+                                id="sidebar-collapse-icon"
+                            />
+                        </button>
                     </div>
                     <div class="sidebar-search">
                         <div class="search-container">

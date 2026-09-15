@@ -3284,3 +3284,152 @@ input:checked+.toggle-track .star-4 {
     font-size: 12px;
     color: var(--text-muted, #94a3b8);
 }
+
+/* Base Transitions for Morphing */
+.sidebar {
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.char-card,
+.roadmap-sidebar-btn,
+.char-card-avatar,
+.roadmap-btn-icon,
+.search-container,
+.search-input {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sidebar Collapsed State (50px width for perfect flush squares) */
+.sidebar.sidebar-collapsed {
+    width: 50px;
+}
+
+/* Remove padding and hide scrollbars to give exact 64px canvas for perfectly centered 50x50 blocks */
+.sidebar.sidebar-collapsed .char-list,
+.sidebar.sidebar-collapsed #sidebar-static-nav {
+    padding: 0 !important;
+    scrollbar-width: none;
+}
+
+.sidebar.sidebar-collapsed .char-list::-webkit-scrollbar,
+.sidebar.sidebar-collapsed #sidebar-static-nav::-webkit-scrollbar {
+    display: none;
+}
+
+/* Smoothly hide texts */
+.sidebar.sidebar-collapsed .sidebar-title h2,
+.sidebar.sidebar-collapsed .sidebar-text,
+.sidebar.sidebar-collapsed .character-header-section-2,
+.sidebar.sidebar-collapsed .character-header-section-3,
+.sidebar.sidebar-collapsed .char-card-container {
+    visibility: hidden;
+    max-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    opacity: 0;
+}
+
+/* Instantly hide arrows and specific texts */
+.sidebar.sidebar-collapsed .roadmap-btn-texts,
+.sidebar.sidebar-collapsed .roadmap-btn-arrow {
+    display: none !important;
+}
+
+/* Hide title/logo entirely to make room for the 50x76 button */
+.sidebar.sidebar-collapsed .sidebar-title {
+    display: none !important;
+}
+
+.sidebar.sidebar-collapsed .sidebar-top-wrapper {
+    justify-content: center !important;
+    flex-direction: column;
+    gap: 0;
+}
+
+.sidebar.sidebar-collapsed #sidebar-collapse-btn {
+    display: flex !important;
+    position: static;
+    margin: 0 !important;
+    height: 76px !important;
+    width: 50px !important;
+    background: var(--bg-panel) !important;
+}
+
+/* Prevent list shrinking */
+.sidebar.sidebar-collapsed .sidebar-characters {
+    min-width: 0 !important;
+}
+
+.sidebar.sidebar-collapsed .character-header-section-1 {
+    width: 100%;
+    justify-content: center;
+}
+
+/* 50x50 Morphing for Char Card */
+.sidebar.sidebar-collapsed .char-card {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 0;
+}
+
+.sidebar.sidebar-collapsed .char-card-avatar {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+}
+
+/* 50x50 Morphing for Roadmap Button */
+.sidebar.sidebar-collapsed .roadmap-sidebar-btn {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    justify-content: center;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.sidebar.sidebar-collapsed .roadmap-btn-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+}
+
+.sidebar.sidebar-collapsed .roadmap-btn-left {
+    margin: 0;
+    gap: 0;
+    justify-content: center;
+}
+
+/* Search bar morphing */
+.sidebar.sidebar-collapsed .search-container {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar.sidebar-collapsed .search-input {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    color: transparent;
+}
+
+.sidebar.sidebar-collapsed .search-input::placeholder {
+    color: transparent;
+}
+
+.sidebar.sidebar-collapsed .search-btn,
+.sidebar.sidebar-collapsed .clear-search-btn {
+    right: 50%;
+    top: 50%;
+    transform: translate(50%, -50%);
+}
