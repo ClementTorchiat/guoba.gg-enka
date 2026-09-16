@@ -117,6 +117,17 @@ export function renderGlobalEvaluation(playerInfo, globalPersoData, uidStr = '')
     let adeptiCount = 0;
     let sumeruCount = 0;
 
+    let hasXianglingCatch = false;
+    let hasMagieInterdite = false;
+    let hasBennettC6 = false;
+    let enfantCount = 0;
+    let animalCount = 0;
+    let hasZibaiAube = false;
+    let hasDonutHonte = false;
+
+    const enfantNames = ["Klee", "Qiqi", "Diona", "Sayu", "Nahida", "Dori", "Yaoyao", "Sigewinne", "Kachina", "Iansan", "Prune"];
+    const animalNames = ["Tighnari", "Gorou", "Kirara", "Lynette", "Diona", "Yae Miko", "Sigewinne"];
+
     globalPersoData.forEach(p => {
         if (p.level === 89) level89Syndrome = true;
         if (p.level === 67) level67EasterEgg = true;
@@ -224,6 +235,14 @@ export function renderGlobalEvaluation(playerInfo, globalPersoData, uidStr = '')
         if (adeptiNames.includes(p.nom)) adeptiCount++;
         if (sumeruNames.includes(p.nom)) sumeruCount++;
         if (mermoniaNames.includes(p.nom)) mermoniaCount++;
+
+        if (p.nom === "Xiangling" && p.weapon && p.weapon.key === "TheCatch") hasXianglingCatch = true;
+        if (p.weapon && p.weapon.key === "ThrillingTalesOfDragonSlayers") hasMagieInterdite = true;
+        if (p.nom === "Bennett" && p.cons === 6) hasBennettC6 = true;
+        if (enfantNames.includes(p.nom)) enfantCount++;
+        if (animalNames.includes(p.nom)) animalCount++;
+        if (p.nom === "Zibai" && p.weapon && p.weapon.key === "HarbingerOfDawn") hasZibaiAube = true;
+        if (p.weapon && (p.weapon.key === "EverlastingMoonglow" || p.weapon.key === "JadefallsSplendor")) hasDonutHonte = true;
     });
 
     if (creatorUIDs.includes(uidStr)) {
@@ -279,6 +298,15 @@ export function renderGlobalEvaluation(playerInfo, globalPersoData, uidStr = '')
     if (hasFurinaWithPipe) addBadge("🪠", t('badge.plombier.name'), t('badge.plombier.desc'), "linear-gradient(135deg, #1e3a8a, #d97706)");
     if (hasRaidenCatch) addBadge("🐟", t('badge.raidenCatch.name'), t('badge.raidenCatch.desc'), "linear-gradient(135deg, #7c3aed, #0ea5e9)");
     if (hasZhongliTassel) addBadge("🪨", t('badge.zhongliTassel.name'), t('badge.zhongliTassel.desc'), "linear-gradient(135deg, #ca8a04, #475569)");
+
+    if (hasXianglingCatch) addBadge("🌶️", t('badge.xianglingCatch.name'), t('badge.xianglingCatch.desc'), "linear-gradient(135deg, #ef4444, #f59e0b)");
+    if (hasMagieInterdite) addBadge("📖", t('badge.magieInterdite.name'), t('badge.magieInterdite.desc'), "linear-gradient(135deg, #a855f7, #ec4899)");
+    if (hasBennettC6) addBadge("🔴", t('badge.bennettC6.name'), t('badge.bennettC6.desc'), "rgba(220, 38, 38, 0.6)");
+    if (hasZibaiAube) addBadge("🐴", t('badge.zibaiAube.name'), t('badge.zibaiAube.desc'), "linear-gradient(135deg, #54cabb, #2c786c)");
+    if (hasDonutHonte) addBadge("🍩", t('badge.donutHonte.name'), t('badge.donutHonte.desc'), "linear-gradient(135deg, #ec4899, #8b5cf6)");
+    if (enfantCount >= 3) addBadge("🍼", t('badge.creche.name'), t('badge.creche.desc'), "linear-gradient(135deg, #fbcfe8, #f472b6)");
+    if (animalCount >= 3) addBadge("🐾", t('badge.animalier.name'), t('badge.animalier.desc'), "linear-gradient(135deg, #b45309, #d97706)");
+
     if (fatuiCount >= 3) addBadge("❄️", t('badge.fatui.name'), t('badge.fatui.desc'), "linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(22, 78, 99, 0.9), rgba(8, 145, 178, 0.8))");
     if (mermoniaCount >= 3) addBadge("⚖️", t('badge.mermonia.name'), t('badge.mermonia.desc'), "linear-gradient(135deg, rgba(20, 83, 101, 0.9) 0%, rgba(139, 131, 118, 0.95) 100%)");
     if (hearthCount >= 3) addBadge("🎩", t('badge.hearth.name'), t('badge.hearth.desc'), "linear-gradient(135deg, #7f1d1d, #1c1917, #f5f5f4)");
