@@ -31,6 +31,7 @@
             "en": "C6: The Heart Lingers Long (Crit Rate, Crit DMG)"
           },
           "active": true,
+          "cons": 6,
           "stats": {
             "critRate__bonus_scaling": {
               "source": "eleMas",
@@ -116,7 +117,7 @@
         },
         {
           "role": "Sub-DPS",
-          "name": "Ororon",
+          "name": "Olorun",
           "element": "electro",
           "artifact": "ScrollOfTheHeroOfCinderCity",
           "cons": "6"
@@ -167,7 +168,9 @@
         ]
       },
       "hideUIStats": [],
-      "showUIStats": [],
+      "showUIStats": [
+        "atk"
+      ],
       "bestSets": [
         "ViridescentVenerer:4"
       ],
