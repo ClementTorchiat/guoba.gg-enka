@@ -78,7 +78,8 @@ export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 
                 
                 <div class="card-divider" style="margin: 8px 0px; display: flex; clear: both; width: 100%; box-sizing: border-box; color: var(--dotted-line); border-width: 1px 0 0; border-color: var(--dotted-line); border-block-start: 1px solid var(--dotted-line);"></div>
                 
-                <div style="font-size: 12px; display:flex; justify-content:space-between; align-items: center;" class="art-score-footer">
+                <div style="font-size: 12px; display:flex; justify-content:space-between; align-items: center;${art.rawScore ? ' cursor: pointer;' : ''}" class="art-score-footer"
+                     ${art.rawScore ? `onmouseenter="window.showArtifactScoreTooltip && window.showArtifactScoreTooltip(this, ${charIndex}, ${artIndex})" onmouseleave="window.hideArtifactScoreTooltip && window.hideArtifactScoreTooltip()"` : ''}>
                     <div style="display:flex; align-items:center; gap: 5px;">
                         <img src="/assets/simulator/icons/icon_score_white.webp" style="width: 19px; height: 19px;" alt="Score" decoding="async">
                         <p style="margin:0;">${t('ui.char.score')}</p>

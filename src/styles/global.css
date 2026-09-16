@@ -1428,6 +1428,7 @@ main {
 
 #combat-stat-tooltip,
 #artifact-stat-tooltip,
+#artifact-score-tooltip,
 #base-stat-tooltip {
     position: fixed;
     visibility: hidden;

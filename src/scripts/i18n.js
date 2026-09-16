@@ -117,6 +117,9 @@ export const T = {
         // ── Artéfacts ─────────────────────────────────────
         "ui.art.baseAtk": "ATQ de base",
         "ui.art.score": "Score",
+        "ui.art.rawScore.title": "Brut",
+        "ui.art.rawScore.desc": "Ce score brut est celui qui alimente le calcul du Rang du personnage.",
+        "ui.art.rawScore.total": "Total :",
 
         // ── Évaluation globale ────────────────────────────
         "ui.eval.globalGrade": "Note Globale",
@@ -959,6 +962,9 @@ export const T = {
         // ── Artifacts ─────────────────────────────────────
         "ui.art.baseAtk": "Base ATK",
         "ui.art.score": "Score",
+        "ui.art.rawScore.title": "Raw",
+        "ui.art.rawScore.desc": "This raw score is used to calculate the character's global Rank.",
+        "ui.art.rawScore.total": "Total:",
 
         // ── Global evaluation ─────────────────────────────
         "ui.eval.globalGrade": "Global Rating",

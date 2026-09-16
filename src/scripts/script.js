@@ -659,6 +659,7 @@ function clearSearch() {
     if (window.hideCombatStatTooltip) window.hideCombatStatTooltip();
     if (window.hideBaseStatTooltip) window.hideBaseStatTooltip();
     if (window.hideArtifactStatTooltip) window.hideArtifactStatTooltip();
+    if (window.hideArtifactScoreTooltip) window.hideArtifactScoreTooltip();
     if (window.hideGlobalTooltip) window.hideGlobalTooltip();
     if (typeof preloadedSplashUrls !== 'undefined') preloadedSplashUrls.clear();
     if (typeof decodedSplashImages !== 'undefined') decodedSplashImages.clear();
@@ -3193,6 +3194,7 @@ function ensureAllTooltips() {
     getOrCreateTooltip('global-tooltip');
     getOrCreateTooltip('combat-stat-tooltip');
     getOrCreateTooltip('artifact-stat-tooltip');
+    getOrCreateTooltip('artifact-score-tooltip');
     getOrCreateTooltip('base-stat-tooltip');
 }
 
@@ -3573,6 +3575,90 @@ window.hideArtifactStatTooltip = function () {
         tooltip.style.opacity = '0';
         tooltip.style.transform = 'translateY(10px) scale(0.98)';
     }
+};
+
+window.hideArtifactScoreTooltip = function () {
+    const tooltip = document.getElementById('artifact-score-tooltip');
+    if (tooltip) {
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+        tooltip.style.transform = 'translateY(10px) scale(0.98)';
+    }
+};
+
+window.showArtifactScoreTooltip = function (element, charIndex, artIndex) {
+    if (!element) return;
+
+    let charIdx = charIndex !== undefined ? parseInt(charIndex) : 0;
+    const dataList = (typeof globalPersoData !== 'undefined' && globalPersoData && globalPersoData.length > 0)
+        ? globalPersoData
+        : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+    const p = dataList[charIdx] || dataList[0];
+    if (!p || !p.artefacts) return;
+
+    let aIdx = artIndex !== undefined ? parseInt(artIndex) : 0;
+    const art = p.artefacts[aIdx];
+    if (!art) return;
+
+    const tooltip = getOrCreateTooltip('artifact-score-tooltip');
+    if (!tooltip) return;
+
+    const showcaseWrapper = element.closest('.showcase-wrapper');
+    const charHex = (showcaseWrapper && showcaseWrapper.style.getPropertyValue('--char-hex'))
+        || getComputedStyle(element).getPropertyValue('--char-hex')
+        || 'var(--accent-gold)';
+    tooltip.style.setProperty('--char-hex', charHex);
+
+    const pieceName = t('artifact.' + art.type);
+    const rawScore = art.rawScore !== undefined ? art.rawScore : art.score;
+
+    tooltip.innerHTML = `
+        <div class="stat-tooltip-content" style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 5px;">
+                <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
+                    <img src="/assets/simulator/icons/icon_score_white.webp" style="width: 17px; height: 17px;" alt="Score">
+                    <span>${t('ui.char.score')} ${t('ui.art.rawScore.title')}</span>
+                </div>
+                <span style="font-size: 10px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;">${pieceName}</span>
+            </div>
+            
+            <div style="font-size: 11px; color: rgba(255, 255, 255, 0.7); margin-top: 2px; line-height: 1.4;">
+                ${t('ui.art.rawScore.desc')}
+            </div>
+            
+            <div style="background: rgba(0, 0, 0, 0.25); border-radius: 6px; padding: 6px 8px; margin-top: 4px; border: 1px solid rgba(255, 255, 255, 0.06); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11px; color: rgba(255, 255, 255, 0.8);">${t('ui.art.rawScore.total')}</span>
+                <span style="font-family: monospace; font-size: 14px; font-weight: bold; color: var(--text-always-white);">${rawScore}</span>
+            </div>
+        </div>
+    `;
+
+    tooltip.style.visibility = 'hidden';
+    tooltip.style.display = 'block';
+    tooltip.style.opacity = '0';
+    tooltip.style.transform = 'translateY(10px) scale(0.98)';
+
+    const rect = element.getBoundingClientRect();
+    const actualRect = tooltip.getBoundingClientRect();
+    const width = actualRect.width || 260;
+    const height = actualRect.height || 100;
+
+    let top = rect.top - height - 8;
+    if (top < 10) {
+        top = rect.bottom + 8;
+    }
+
+    let left = rect.left + (rect.width / 2) - (width / 2);
+    if (left < 10) left = 10;
+    if (left + width > window.innerWidth - 10) {
+        left = window.innerWidth - width - 10;
+    }
+
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+    tooltip.style.visibility = 'visible';
+    tooltip.style.opacity = '1';
+    tooltip.style.transform = 'translateY(0) scale(1)';
 };
 
 function isArtifactStatMatching(artStatKey, targetBaseStatKey, dmgBonusKey) {
@@ -4602,6 +4688,8 @@ if (typeof window !== 'undefined') {
     window.hideCombatStatTooltip = hideCombatStatTooltip;
     window.showArtifactStatTooltip = showArtifactStatTooltip;
     window.hideArtifactStatTooltip = hideArtifactStatTooltip;
+    window.showArtifactScoreTooltip = showArtifactScoreTooltip;
+    window.hideArtifactScoreTooltip = hideArtifactScoreTooltip;
     window.showBaseStatTooltip = showBaseStatTooltip;
     window.hideBaseStatTooltip = hideBaseStatTooltip;
     window.showShowcaseTooltip = window.showCombatStatTooltip;

@@ -92,20 +92,19 @@ export function getRollCount(key, value, rarity = 5) {
 
 /* 
 ===========================================================================
-[FUTURE FEATURE] ARTIFACT /100 RELATIVE SCORING
+[LEGACY FEATURE] ARTIFACT RAW SCORING
 ===========================================================================
-La fonction ci-dessous `getMaxTheoreticalScoreForPiece` et le bloc commenté 
-dans `calculateCharacterScore` permettent de convertir le score brut d'un 
-artéfact en pourcentage (/100) selon le maximum absolu théorique pour cette pièce.
+Le système utilise actuellement le calcul relatif (/100) pour l'affichage 
+du score des artéfacts. 
 
-Pour activer cette fonctionnalité le moment venu :
-1. Décommente la fonction `getMaxTheoreticalScoreForPiece` ci-dessous.
-2. Dans `calculateCharacterScore`, remplace l'affectation de `art.score` par le bloc préparé.
-3. Modifie l'ajout au `totalScore` pour utiliser `art.rawScore`.
-4. Décommente l'export `window.getMaxTheoreticalScoreForPiece` en bas du fichier.
+Pour revenir à l'ancien système (score brut) :
+1. Commente la fonction `getMaxTheoreticalScoreForPiece` ci-dessous.
+2. Dans `calculateCharacterScore`, remplace le bloc d'affectation de `art.score` par l'ancien système.
+3. Modifie l'ajout au `totalScore` pour utiliser `art.score`.
+4. Commente l'export `window.getMaxTheoreticalScoreForPiece` en bas du fichier.
 ===========================================================================
 */
-/*
+
 export function getMaxTheoreticalScoreForPiece(artType, mainStatKey, config) {
     const maxRolls = (typeof window !== 'undefined' && window.MAX_ROLLS) ? window.MAX_ROLLS : MAX_ROLLS;
     if (!config || !config.weights || !maxRolls) return 100;
@@ -142,7 +141,6 @@ export function getMaxTheoreticalScoreForPiece(artType, mainStatKey, config) {
     const powerResult = scoreArtifact(fakeArt, config.weights);
     return powerResult.score;
 }
-*/
 
 export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
     if (!config || !config.weights) {
@@ -156,18 +154,20 @@ export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
     perso.artefacts.forEach(art => {
         if ((art.stars || 5) < 4) {
             art.score = 0;
-            // art.rawScore = 0; // [FUTURE FEATURE] Décommenter pour le score /100
+            art.rawScore = 0; 
             art.grade = { letter: '—', color: '#6b7280', points: 0 };
             return;
         }
         const powerResult = scoreArtifact(art, config.weights);
         
-        // --- SYSTÈME ACTUEL (Score Brut) ---
-        art.score = powerResult.score;
-
         /*
-        // --- [FUTURE FEATURE] SYSTÈME RELATIF /100 ---
-        // Remplacer `art.score = powerResult.score;` par ce bloc :
+        // --- [LEGACY FEATURE] SYSTÈME ACTUEL (Score Brut) ---
+        // Remplacer le bloc du système /100 ci-dessous par :
+        art.score = powerResult.score;
+        // ---------------------------------------------
+        */
+
+        // --- SYSTÈME RELATIF /100 ---
         art.rawScore = powerResult.score;
         const maxPieceScore = getMaxTheoreticalScoreForPiece(art.type, art.mainStat.key, config);
         let percentageScore = 0;
@@ -175,8 +175,6 @@ export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
             percentageScore = Math.min(100, (art.rawScore / maxPieceScore) * 100);
         }
         art.score = parseFloat(percentageScore.toFixed(1));
-        // ---------------------------------------------
-        */
 
         const qualityPoints = calculateArtifactRollQuality(art, config.weights);
         const availableWeights = Object.entries(config.weights)
@@ -202,10 +200,13 @@ export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
             points: qualityPoints
         };
 
-        // --- SYSTÈME ACTUEL ---
-        totalScore += art.score;
-        // --- [FUTURE FEATURE] ---
-        // totalScore += art.rawScore; 
+        /*
+        // --- [LEGACY FEATURE] ---
+        // totalScore += art.score;
+        */
+        
+        // --- SYSTÈME RELATIF /100 ---
+        totalScore += art.rawScore; 
 
         totalRolls += qualityPoints;
 
@@ -807,7 +808,7 @@ if (typeof window !== 'undefined') {
     window.SCORING_NORMS = SCORING_NORMS;
     window.getRollDetails = getRollDetails;
     window.getRollCount = getRollCount;
-    // window.getMaxTheoreticalScoreForPiece = getMaxTheoreticalScoreForPiece; // [FUTURE FEATURE]
+    window.getMaxTheoreticalScoreForPiece = getMaxTheoreticalScoreForPiece; 
     window.calculateMaxTheoreticalScore = calculateMaxTheoreticalScore;
     window.calculateRollDistribution = calculateRollDistribution;
     window.calculateDeadRolls = calculateDeadRolls;
