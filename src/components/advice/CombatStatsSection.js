@@ -29,7 +29,7 @@ export function renderCombatStatsSection(p, config) {
             </h3>
             <p style="border-left: 3px solid var(--text-grey); padding-left: 12px; color: var(--text-grey); font-size: 16px; margin-bottom: 24px;">${t('analysis.s2.desc')}</p>
             
-            <div id="combat-stats-advice-cards" style="display:flex; gap:20px; align-items:stretch;">
+            <div id="combat-stats-advice-cards" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:20px; align-items:stretch;">
                 ${renderCombatStatsAdviceCards(p, config)}
             </div>
         </div>

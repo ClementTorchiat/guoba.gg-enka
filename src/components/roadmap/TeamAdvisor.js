@@ -213,7 +213,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                     ${t('roadmap.teams.noDuplicates')}
                 </button>
             </div>
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:12px;">
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;">
                 ${topTeams.map((teamData, index) => {
                     const dps = teamData.dps;
                     const build = teamData.build;

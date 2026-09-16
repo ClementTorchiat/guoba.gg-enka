@@ -352,7 +352,7 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                     ${t('roadmap.elixir.empty')}
                 </div>
             ` : `
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:12px;">
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;">
                     ${recs.map(rec => `
                         <div style="background:${rec.isFocus ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${rec.isFocus ? '1px solid rgba(59,130,246,0.4)' : 'none'}; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:12px; position:relative;">
                             

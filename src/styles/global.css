@@ -473,6 +473,23 @@ main {
     cursor: pointer;
 }
 
+.search-btn.is-clear {
+    top: 5px;
+    right: 5px;
+    height: calc(100% - 10px);
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.search-btn.is-clear:hover {
+    background-color: var(--bg-hover);
+}
+
 .sidebar-characters {
     min-width: 240px;
     box-sizing: border-box;

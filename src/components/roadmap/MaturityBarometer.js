@@ -221,7 +221,7 @@ export function renderMaturityBarometer(characters) {
             </div>
 
             <!-- Grille des jauges de maturité -->
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-top:6px;">
+            <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:12px; margin-top:6px;">
                 ${metricItems.map(item => `
                     <div style="background:var(--bg-panel); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:6px; justify-content: space-between;">
                         <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px;">

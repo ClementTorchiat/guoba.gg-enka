@@ -108,7 +108,7 @@ export function renderGlobalSwapAdvisor(characters, focusCharNom = null) {
                     ${t('roadmap.swaps.noSwaps')}
                 </div>
             ` : `
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:12px;">
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;">
                     ${swaps.slice(0, 4).map(swap => `
                         <div style="background:${swap.isFocusGain ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${swap.isFocusGain ? '1px solid rgba(59,130,246,0.4)' : '0'}; border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:10px; position:relative;">
                             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">

@@ -248,7 +248,7 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                             <button data-action="toggle-roadmap-focus-dropdown"
                                     type="button"
                                     style="display:inline-flex; align-items:center; gap:6px; height:36px; padding:3px 12px 3px 4px; box-sizing:border-box; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(59, 130, 246, 0.4); background:rgba(59, 130, 246, 0.08); color:var(--text-primary); box-shadow:none; backdrop-filter:blur(4px);">
-                                <img src="${activeChar.image}" alt="${activeChar.nom}" style="width:26px; height:26px; border-radius:6px; object-fit:cover; pointer-events:none;">
+                                <img src="${activeChar.image}" alt="${activeChar.nom}" style="width:26px; height:26px; border-radius:6px; object-fit:cover; pointer-events:none;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                 <span style="white-space:nowrap; pointer-events:none;">${activeChar.nom}</span>
                                 <svg class="focus-chevron" style="width:14px; height:14px; transition:transform 0.2s ease; margin-left:4px; opacity:0.6; pointer-events:none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
@@ -291,7 +291,7 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                                          data-char="${c.nom}"
                                          title="${c.nom}"
                                          style="margin:0;">
-                                        <img src="${c.image}" alt="${c.nom}" class="char-card-avatar" style="object-fit:cover; pointer-events:none;">
+                                        <img src="${c.image}" alt="${c.nom}" class="char-card-avatar" style="object-fit:cover; pointer-events:none;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                         <div class="char-card-container">
                                             <p class="char-card-name" style="margin:0; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.nom}</p>
                                         </div>

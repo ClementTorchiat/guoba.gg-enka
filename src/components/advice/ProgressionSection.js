@@ -32,7 +32,7 @@ export function renderProgressionSection(persoObj, config, charIndex = 0) {
                 ${t('analysis.s3.desc')}
             </p>
             
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
                 <div style="grid-column: 1 / -1; margin-top: 10px; margin-bottom: -5px;">
                     <p style="font-size:12px; color:var(--text-grey); text-transform:uppercase; letter-spacing:0.05em; margin:0;">${t('analysis.s3.p1.title')}</p>
                 </div>

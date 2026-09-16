@@ -212,9 +212,9 @@ export function renderQuickWinsPlan(characters, focusCharNom = null) {
                 <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.breakdown.desc')}</p>
             </div>
 
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px;">
-                ${sections.map(sec => `
-                    <div style="background:var(--bg-panel); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:12px;">
+            <div style="display:grid; grid-template-columns: repeat(6, 1fr); gap:14px;">
+                ${sections.map((sec, index) => `
+                    <div style="grid-column: span ${index < 3 ? 2 : 3}; background:var(--bg-panel); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:12px;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="font-size:13px; font-weight:700; color:var(--text-primary);">${sec.title}</span>
                             <span style="font-size:10px; font-weight:600; padding:2px 7px; border-radius:10px; background:${sec.items.length === 0 ? 'rgba(34,197,94,0.15)' : `${sec.badgeColor}20`}; color:${sec.items.length === 0 ? '#22c55e' : sec.badgeColor}; border:1px solid ${sec.items.length === 0 ? 'rgba(34,197,94,0.3)' : `${sec.badgeColor}40`};">

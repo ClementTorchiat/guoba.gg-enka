@@ -25,16 +25,19 @@ const ENKA_ICON_MAP = {
     "Ororon": "Olorun",
     "Rosalia": "Rosaria",
     "Rosaria": "Rosaria",
-    "Sandrone": "Sandrone",
+    "Sandrone": "MarionetteNew",
     "Sangonomiya_Kokomi": "Kokomi",
     "Shikanoin_Heizou": "Heizo",
     "Shogun_Raiden": "Shougun",
-    "Thomas": "Thoma",
+    "Thomas": "Tohma",
+    "Thoma": "Tohma",
     "Xianyun": "Liuyun",
     "Yae_Miko": "Yae",
     "Yanfei": "Feiyan",
     "Yumemizuki_Mizuki": "Mizuki",
     "Yun_Jin": "Yunjin",
+    "Lynette": "Linette",
+    "Skirk": "SkirkNew",
     "Émilie": "Emilie"
 };
 
@@ -58,7 +61,10 @@ for (const path in charJsonFiles) {
         });
     }
 
-    const iconKey = ENKA_ICON_MAP[fileName] || ENKA_ICON_MAP[cleanNoUnderscore] || fileName;
+    let iconKey = ENKA_ICON_MAP[fileName] || ENKA_ICON_MAP[cleanNoUnderscore] || fileName;
+    if (fileName.startsWith('Traveler_') || fileName === 'Manekin') {
+        iconKey = 'PlayerBoy';
+    }
     const image = `https://enka.network/ui/UI_AvatarIcon_Side_${iconKey}.png`;
 
     ALL_GAME_CHARACTERS.push({

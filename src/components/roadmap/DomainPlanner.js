@@ -170,7 +170,7 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
     const domains = calculateDomainRankings(characters, focusCharNom);
 
     return `
-        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
+        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px; height: 100%; box-sizing: border-box;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
                 <div>
                     <div style="display:flex; align-items:center; gap:8px;">
@@ -196,17 +196,17 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
             </div>
 
             ${domains.length === 0 ? `
-                <div style="padding:16px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
+                <div style="padding:16px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center; flex-grow: 1;">
                     ${t('roadmap.domains.empty')}
                 </div>
             ` : `
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:14px;">
+                <div style="display:flex; flex-direction:column; gap:14px; flex-grow: 1;">
                     ${domains.slice(0, 3).map(d => {
         const nonVitrine1 = showAllChars ? getNonVitrineCharactersForSet(d.set1.key, characters) : [];
         const nonVitrine2 = showAllChars ? getNonVitrineCharactersForSet(d.set2.key, characters) : [];
 
         return `
-                            <div style="background:${d.isFocusTarget ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${d.isFocusTarget ? '1px solid rgba(59,130,246,0.4)' : '1px solid rgba(255,255,255,0)'}; border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:12px; position:relative;">
+                            <div style="background:${d.isFocusTarget ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${d.isFocusTarget ? '1px solid rgba(59,130,246,0.4)' : '1px solid rgba(255,255,255,0)'}; border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:12px; position:relative; flex-grow: 1;">
                                 <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
                                     <div>
                                         <div style="font-size:14px; font-weight:700; color:var(--text-primary);">${d.domainName}</div>
@@ -241,12 +241,12 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                                         ${(d.set1.chars.length > 0 || nonVitrine1.length > 0) ? `
                                             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                                                 ${d.set1.chars.map(c => `
-                                                    <img src="${c.perso.image}" alt="${c.perso.nom}" title="${c.perso.nom} (${c.label})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:${c.isFocus ? '2px solid #60a5fa' : '1px solid rgba(255,255,255,0)'}; cursor:pointer;">
+                                                    <img src="${c.perso.image}" alt="${c.perso.nom}" title="${c.perso.nom} (${c.label})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:${c.isFocus ? '2px solid #60a5fa' : '1px solid rgba(255,255,255,0)'}; cursor:pointer;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                                 `).join('')}
                                                 ${nonVitrine1.map(c => {
             const cName = (LANG === 'fr' ? c.nom : (c.enName || c.nom));
             return `
-                                                    <img src="${c.image}" alt="${cName}" title="${cName} (${t('roadmap.outsideShowcase')})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.15); opacity:0.45; filter:grayscale(20%);">
+                                                    <img src="${c.image}" alt="${cName}" title="${cName} (${t('roadmap.outsideShowcase')})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.15); opacity:0.45; filter:grayscale(20%);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                                 `;
         }).join('')}
                                             </div>
@@ -262,12 +262,12 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                                         ${(d.set2.chars.length > 0 || nonVitrine2.length > 0) ? `
                                             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                                                 ${d.set2.chars.map(c => `
-                                                    <img src="${c.perso.image}" alt="${c.perso.nom}" title="${c.perso.nom} (${c.label})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:${c.isFocus ? '2px solid #60a5fa' : '1px solid rgba(255,255,255,0)'}; cursor:pointer;">
+                                                    <img src="${c.perso.image}" alt="${c.perso.nom}" title="${c.perso.nom} (${c.label})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:${c.isFocus ? '2px solid #60a5fa' : '1px solid rgba(255,255,255,0)'}; cursor:pointer;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                                 `).join('')}
                                                 ${nonVitrine2.map(c => {
             const cName = (LANG === 'fr' ? c.nom : (c.enName || c.nom));
             return `
-                                                    <img src="${c.image}" alt="${cName}" title="${cName} (${t('roadmap.outsideShowcase')})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.15); opacity:0.45; filter:grayscale(20%);">
+                                                    <img src="${c.image}" alt="${cName}" title="${cName} (${t('roadmap.outsideShowcase')})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.15); opacity:0.45; filter:grayscale(20%);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                                 `;
         }).join('')}
                                             </div>

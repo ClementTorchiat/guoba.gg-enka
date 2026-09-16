@@ -76,7 +76,7 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, showAllC
     const recs = getStrongboxRecommendations(characters, focusCharNom);
 
     return `
-        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
+        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px; height: 100%; box-sizing: border-box;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
                 <div>
                     <div style="display:flex; align-items:center; gap:8px;">
@@ -102,16 +102,16 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, showAllC
             </div>
 
             ${recs.length === 0 ? `
-                <div style="padding:16px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
+                <div style="padding:16px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center; flex-grow: 1;">
                     ${t('roadmap.strongbox.empty')}
                 </div>
             ` : `
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:12px;">
+                <div style="display:flex; flex-direction:column; gap:12px; flex-grow: 1;">
                     ${recs.slice(0, 4).map(rec => {
         const nonVitrine = showAllChars ? getNonVitrineCharactersForSet(rec.setKey, characters) : [];
 
         return `
-                            <div style="background:${rec.isFocusTarget ? 'rgba(168,85,247,0.08)' : 'var(--bg-panel)'}; border:${rec.isFocusTarget ? '1px solid rgba(168,85,247,0.4)' : '1px solid rgba(255,255,255,0)'}; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:10px; position:relative;">
+                            <div style="background:${rec.isFocusTarget ? 'rgba(168,85,247,0.08)' : 'var(--bg-panel)'}; border:${rec.isFocusTarget ? '1px solid rgba(168,85,247,0.4)' : '1px solid rgba(255,255,255,0)'}; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:10px; position:relative; flex-grow: 1;">
                                 <div style="display:flex; justify-content:space-between; align-items:center;">
                                     <div style="display:flex; align-items:center; gap:8px;">
                                         ${rec.icon ? `<img src="${rec.icon}" alt="${rec.setName}" style="width:22px; height:22px; border-radius:4px; object-fit:contain; background:rgba(0,0,0,0.2);" onerror="this.style.display='none'">` : ''}
@@ -141,7 +141,7 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, showAllC
                                     <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                                         ${rec.chars.map(c => `
                                             <div style="display:flex; align-items:center; gap:5px; background:${c.isFocus ? 'rgba(168,85,247,0.15)' : 'rgba(0,0,0,0.2)'}; padding:3px 8px 3px 3px; border-radius:6px; border:${c.isFocus ? '1px solid rgba(168,85,247,0.4)' : '1px solid rgba(255,255,255,0)'};">
-                                                <img src="${c.image}" alt="${c.nom}" style="width:24px; height:24px; border-radius:4px; background:rgba(0,0,0,0.2);">
+                                                <img src="${c.image}" alt="${c.nom}" style="width:24px; height:24px; border-radius:4px; background:rgba(0,0,0,0.2);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                                 <span style="font-size:11px; color:${c.isFocus ? '#d8b4fe' : 'var(--text-primary)'}; font-weight:${c.isFocus ? '700' : '500'};">${c.nom}</span>
                                             </div>
                                         `).join('')}
@@ -149,7 +149,7 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, showAllC
             const cName = (LANG === 'fr' ? c.nom : (c.enName || c.nom));
             return `
                                             <div style="display:flex; align-items:center; gap:5px; background:rgba(0,0,0,0.2); padding:3px 8px 3px 3px; border-radius:6px; border:1px dashed rgba(255,255,255,0.15); opacity:0.45; filter:grayscale(20%);" title="${cName} (${t('roadmap.outsideShowcase')})">
-                                                <img src="${c.image}" alt="${cName}" style="width:24px; height:24px; border-radius:4px; background:rgba(0,0,0,0.2);">
+                                                <img src="${c.image}" alt="${cName}" style="width:24px; height:24px; border-radius:4px; background:rgba(0,0,0,0.2);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                                 <span style="font-size:11px; color:var(--text-grey); font-weight:500;">${cName}</span>
                                             </div>
                                         `;
