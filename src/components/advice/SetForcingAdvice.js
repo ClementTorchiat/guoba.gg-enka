@@ -64,7 +64,7 @@ export function getSetForcingAdvice(persoObj, config) {
     }
 
     const setPieces = (persoObj.artefacts || []).filter(a => a.setKey === active4pSet);
-    const totalScore = setPieces.reduce((sum, art) => sum + (art.score || 0), 0);
+    const totalScore = setPieces.reduce((sum, art) => sum + (art.rawScore !== undefined ? art.rawScore : (art.score || 0)), 0);
     const avgScore = setPieces.length > 0 ? (totalScore / setPieces.length) : 0;
     const setHash = Object.keys((typeof window !== 'undefined' && window.HASH_TO_KEY) || {}).find(h => window.HASH_TO_KEY[h] === active4pSet);
 

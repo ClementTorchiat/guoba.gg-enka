@@ -24,11 +24,15 @@ export function getOffPieceAdvice(persoObj) {
 
     if (fullSetKey) {
         const setPieces = persoObj.artefacts.filter(art => art.setKey === fullSetKey);
-        setPieces.sort((a, b) => (a.score || 0) - (b.score || 0));
+        setPieces.sort((a, b) => {
+            const aRaw = a.rawScore !== undefined ? a.rawScore : (a.score || 0);
+            const bRaw = b.rawScore !== undefined ? b.rawScore : (b.score || 0);
+            return aRaw - bRaw;
+        });
         const worstPiece = setPieces[0];
 
         const otherPieces = setPieces.slice(1);
-        const avgSetScore = otherPieces.length > 0 ? (otherPieces.reduce((a, b) => a + (b.score || 0), 0) / otherPieces.length) : 0;
+        const avgSetScore = otherPieces.length > 0 ? (otherPieces.reduce((a, b) => a + (b.rawScore !== undefined ? b.rawScore : (b.score || 0)), 0) / otherPieces.length) : 0;
 
         const rawName = t('artifact.' + worstPiece.type);
         const hash = Object.keys((typeof window !== 'undefined' && window.HASH_TO_KEY) || {}).find(h => window.HASH_TO_KEY[h] === fullSetKey);
@@ -37,7 +41,7 @@ export function getOffPieceAdvice(persoObj) {
         return {
             type: "info",
             msg: t('advice.offPiece.5of5', setNameTranslated, rawName, worstPiece.score),
-            data: { offPiece: worstPiece, avgScore: avgSetScore, is5of5: true }
+            data: { offPiece: worstPiece, avgScore: avgSetScore, is5of5: true, offPieceRawScore: worstPiece.rawScore !== undefined ? worstPiece.rawScore : (worstPiece.score || 0) }
         };
     }
 
@@ -48,7 +52,7 @@ export function getOffPieceAdvice(persoObj) {
 
     (persoObj.artefacts || []).forEach(art => {
         if (activeSetKeys.includes(art.setKey)) {
-            setPiecesScores.push(art.score || 0);
+            setPiecesScores.push(art.rawScore !== undefined ? art.rawScore : (art.score || 0));
         } else {
             offPiece = art;
         }
@@ -68,10 +72,12 @@ export function getOffPieceAdvice(persoObj) {
     let type = "error";
     let msg = t('advice.offPiece.bad', t('artifact.' + offPiece.type));
 
-    if (offPiece.score > avgSetScore) {
+    const offPieceRawScore = offPiece.rawScore !== undefined ? offPiece.rawScore : (offPiece.score || 0);
+
+    if (offPieceRawScore > avgSetScore) {
         type = "success";
         msg = t('advice.offPiece.good', t('artifact.' + offPiece.type));
-    } else if (isHardMainStat && offPiece.score > (avgSetScore * 0.8)) {
+    } else if (isHardMainStat && offPieceRawScore > (avgSetScore * 0.8)) {
         type = "warning";
         msg = t('advice.offPiece.ok', t('artifact.' + offPiece.type));
     }
@@ -79,7 +85,7 @@ export function getOffPieceAdvice(persoObj) {
     return {
         type: type,
         msg: msg,
-        data: { offPiece: offPiece, avgScore: avgSetScore, is5of5: false }
+        data: { offPiece: offPiece, avgScore: avgSetScore, is5of5: false, offPieceRawScore }
     };
 }
 
@@ -96,9 +102,9 @@ export function renderOffPieceAdvice(persoObj) {
     let innerHtml = '';
 
     if (offPieceAdvice.data) {
-        const { offPiece, avgScore, is5of5 } = offPieceAdvice.data;
-        const maxScale = Math.max(offPiece.score || 0, avgScore || 0, 55);
-        const offPct = Math.min(((offPiece.score || 0) / maxScale) * 100, 100);
+        const { offPiece, avgScore, is5of5, offPieceRawScore } = offPieceAdvice.data;
+        const maxScale = Math.max(offPieceRawScore || 0, avgScore || 0, 55);
+        const offPct = Math.min(((offPieceRawScore || 0) / maxScale) * 100, 100);
         const avgPct = Math.min((avgScore / maxScale) * 100, 100);
 
         const innerColor = offPieceAdvice.type === 'success' ? '#22c55e' : (offPieceAdvice.type === 'warning' ? '#eab308' : (offPieceAdvice.type === 'info' ? '#f97316' : '#ef4444'));

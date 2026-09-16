@@ -22,16 +22,17 @@ export function getAccountWorstPieces(characters, focusCharNom = null, mode = 's
 
         (perso.artefacts || []).forEach(art => {
             const isOffPiece = !activeSets.includes(art.setKey);
-            const score = art.score || 0;
+            const curScoreRaw = art.rawScore !== undefined ? art.rawScore : (art.score || 0);
+            const score = art.score || 0; // Displayed string/percentage
             const mainKey = art.mainStat?.key || 'unknown';
-            const estimate = getResinCostEstimate(art.type, mainKey, score);
+            const estimate = getResinCostEstimate(art.type, mainKey, curScoreRaw);
 
             // Diagnostic tip
             let tip = t('roadmap.worst.tip.substats');
             let tipColor = '#eab308';
 
             if (art.type === 'EQUIP_BRACER' || art.type === 'EQUIP_NECKLACE') {
-                if (score < 25) {
+                if (curScoreRaw < 25) {
                     tip = t('roadmap.worst.tip.flowerPlume');
                     tipColor = '#22c55e';
                 }
@@ -43,7 +44,7 @@ export function getAccountWorstPieces(characters, focusCharNom = null, mode = 's
                 }
             }
 
-            if (isOffPiece && score < 20) {
+            if (isOffPiece && curScoreRaw < 20) {
                 tip = t('roadmap.worst.tip.weakOffPiece');
                 tipColor = '#3b82f6';
             }
@@ -66,6 +67,7 @@ export function getAccountWorstPieces(characters, focusCharNom = null, mode = 's
                 mainStatKey: mainKey,
                 mainStatLabel: t('stat.' + mainKey) || art.mainStat?.label || mainKey,
                 score,
+                rawScore: curScoreRaw,
                 grade: art.grade?.letter || '?',
                 gradeColor: art.grade?.color || '#aaa',
                 isOffPiece,
@@ -94,7 +96,9 @@ export function getAccountWorstPieces(characters, focusCharNom = null, mode = 's
             const rankA = GRADE_RANKS[a.grade] !== undefined ? GRADE_RANKS[a.grade] : 99;
             const rankB = GRADE_RANKS[b.grade] !== undefined ? GRADE_RANKS[b.grade] : 99;
             if (rankA !== rankB) return rankA - rankB;
-            return a.score - b.score; // Worst score first
+            const aRaw = a.rawScore !== undefined ? a.rawScore : (a.score || 0);
+            const bRaw = b.rawScore !== undefined ? b.rawScore : (b.score || 0);
+            return aRaw - bRaw; // Worst raw score first
         }
     });
 

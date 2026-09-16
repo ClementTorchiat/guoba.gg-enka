@@ -1,8 +1,8 @@
 // src/components/roadmap/ElixirCraftAdvisor.js
 import { t, LANG } from '../../scripts/i18n.js';
 import { getLocalizedSetName } from './DomainPlanner.js';
+import { getMaxTheoreticalScoreForPiece, SCORING_NORMS, MAINSTAT_ROLL_VALUE, VARIABLE_PIECES, calculateMainStatBonus } from '../../scripts/scoring.js';
 import { ICON_MAP, ICON_BASE_PATH } from '../../scripts/icons.js';
-import { SCORING_NORMS, MAINSTAT_ROLL_VALUE, VARIABLE_PIECES, calculateMainStatBonus } from '../../scripts/scoring.js';
 import SLOT_POSSIBLE_MAIN_STATS from '../../data/slot_possible_main_stats.json';
 
 const ELIXIR_COSTS = {
@@ -149,7 +149,8 @@ export function getElixirCraftRecommendations(characters, focusCharNom = null, b
 
             // Pièce actuellement équipée
             const curArt = (perso.artefacts || []).find(a => a.type === slotType);
-            const curScore = curArt ? (curArt.score || 0) : 0;
+            const curScoreRaw = curArt ? (curArt.rawScore !== undefined ? curArt.rawScore : (curArt.score || 0)) : 0;
+            const curScore100 = curArt ? (curArt.score || 0) : 0;
             const curGrade = curArt?.grade?.letter || '?';
             const curGradeColor = curArt?.grade?.color || '#888';
 
@@ -220,43 +221,48 @@ export function getElixirCraftRecommendations(characters, focusCharNom = null, b
             // ~2.5 rolls dans les 2 substats BiS choisies + ~0.8 roll résiduel utile
             const upgradeScore = (2.5 * avgBiSRollPts) + (0.8 * avgBiSRollPts * 0.6);
 
-            const expectedScore = parseFloat((baseMainScore + baseSubScore + upgradeScore).toFixed(1));
-            const deltaScore = parseFloat((expectedScore - curScore).toFixed(1));
+            const expectedScoreRaw = parseFloat((baseMainScore + baseSubScore + upgradeScore).toFixed(1));
+            const deltaScoreRaw = parseFloat((expectedScoreRaw - curScoreRaw).toFixed(1));
 
             // Si la pièce actuelle est déjà aussi bonne ou meilleure que le craft espéré, ne pas recommander ce craft
-            if (deltaScore < 1.0) {
+            if (deltaScoreRaw < 1.0) {
                 return;
             }
 
             // Probabilité de surclassement
             let upgradeChance = 95;
-            if (curScore >= 42) upgradeChance = 25;
-            else if (curScore >= 35) upgradeChance = 50;
-            else if (curScore >= 28) upgradeChance = 75;
-            else if (curScore >= 20) upgradeChance = 90;
+            if (curScoreRaw >= 42) upgradeChance = 25;
+            else if (curScoreRaw >= 35) upgradeChance = 50;
+            else if (curScoreRaw >= 28) upgradeChance = 75;
+            else if (curScoreRaw >= 20) upgradeChance = 90;
 
             // Score d'Efficacité ROI pondéré par la rareté naturelle de drop
             const rarityFactor = NATURAL_RARITY_MULTIPLIER[slotType] || 1.0;
-            const rawRoi = cost > 0 ? (deltaScore / cost) : 0;
+            const rawRoi = cost > 0 ? (deltaScoreRaw / cost) : 0;
             const roiComposite = parseFloat((rawRoi * rarityFactor).toFixed(1));
 
             // Estimation de résine économisée
             const baseResin = BASE_RESIN_ESTIMATE[slotType] || 2000;
-            const savedResin = Math.max(800, Math.round(baseResin * (deltaScore / 20)));
+            const savedResin = Math.max(800, Math.round(baseResin * (deltaScoreRaw / 20)));
 
             // Détermination du verdict
             let verdict = 'moderate';
             let verdictColor = '#3b82f6';
-            if (roiComposite >= 30 || (deltaScore >= 16 && cost <= 2)) {
+            if (roiComposite >= 30 || (deltaScoreRaw >= 16 && cost <= 2)) {
                 verdict = 'exceptional';
                 verdictColor = '#f59e0b';
-            } else if (roiComposite >= 18 || deltaScore >= 10) {
+            } else if (roiComposite >= 18 || deltaScoreRaw >= 10) {
                 verdict = 'high';
                 verdictColor = '#c084fc';
-            } else if (upgradeChance >= 80 && deltaScore >= 5) {
+            } else if (upgradeChance >= 80 && deltaScoreRaw >= 5) {
                 verdict = 'safe';
                 verdictColor = '#22c55e';
             }
+
+            // Conversion en score / 100 pour l'affichage
+            const maxScore = getMaxTheoreticalScoreForPiece(slotType, mainStatKey, config);
+            const expectedScore100 = parseFloat(((expectedScoreRaw / (maxScore || 1)) * 100).toFixed(1));
+            const deltaScore100 = parseFloat((expectedScore100 - curScore100).toFixed(1));
 
             recommendations.push({
                 persoNom: perso.nom,
@@ -272,11 +278,11 @@ export function getElixirCraftRecommendations(characters, focusCharNom = null, b
                 chosenSub1: { key: chosenSub1.key, label: t('stat.' + chosenSub1.key) },
                 chosenSub2: { key: chosenSub2.key, label: t('stat.' + chosenSub2.key) },
                 cost,
-                curScore,
+                curScore: curScore100,
                 curGrade,
                 curGradeColor,
-                expectedScore,
-                deltaScore,
+                expectedScore: expectedScore100,
+                deltaScore: deltaScore100,
                 upgradeChance,
                 rawRoi,
                 roiComposite,

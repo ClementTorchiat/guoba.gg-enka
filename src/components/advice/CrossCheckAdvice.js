@@ -46,7 +46,7 @@ export function getAllCrossCheckAdvice(charIndex) {
                 const fakePerso = { ...currChar, artefacts: fakeArtefacts };
                 const newCurrEval = calculateCharacterScore(fakePerso, scoringConfig);
                 const scoredNewArt = fakePerso.artefacts[currArtIndex];
-                const diff = (scoredNewArt.score || 0) - (currArt.score || 0);
+                const diff = (scoredNewArt.rawScore !== undefined ? scoredNewArt.rawScore : (scoredNewArt.score || 0)) - (currArt.rawScore !== undefined ? currArt.rawScore : (currArt.score || 0));
 
                 if (diff > maxDiff) {
                     if (currChar.evaluation && newCurrEval.score <= currChar.evaluation.score) return;

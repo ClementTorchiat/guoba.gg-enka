@@ -39,7 +39,11 @@ export function getPriorities(persoObj) {
     if (!persoObj.artefacts || persoObj.artefacts.length === 0) return [];
 
     const activeSets = Object.keys(persoObj.setsCounter || {}).filter(key => persoObj.setsCounter[key] >= 2);
-    const sorted = [...persoObj.artefacts].sort((a, b) => (a.score || 0) - (b.score || 0));
+    const sorted = [...persoObj.artefacts].sort((a, b) => {
+        const aRaw = a.rawScore !== undefined ? a.rawScore : (a.score || 0);
+        const bRaw = b.rawScore !== undefined ? b.rawScore : (b.score || 0);
+        return aRaw - bRaw;
+    });
 
     return sorted.slice(0, 3).map(art => {
         const typeName = t('artifact.' + art.type);
