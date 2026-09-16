@@ -90,6 +90,60 @@ export function getRollCount(key, value, rarity = 5) {
     return getRollDetails(key, value, rarity).k;
 }
 
+/* 
+===========================================================================
+[FUTURE FEATURE] ARTIFACT /100 RELATIVE SCORING
+===========================================================================
+La fonction ci-dessous `getMaxTheoreticalScoreForPiece` et le bloc commenté 
+dans `calculateCharacterScore` permettent de convertir le score brut d'un 
+artéfact en pourcentage (/100) selon le maximum absolu théorique pour cette pièce.
+
+Pour activer cette fonctionnalité le moment venu :
+1. Décommente la fonction `getMaxTheoreticalScoreForPiece` ci-dessous.
+2. Dans `calculateCharacterScore`, remplace l'affectation de `art.score` par le bloc préparé.
+3. Modifie l'ajout au `totalScore` pour utiliser `art.rawScore`.
+4. Décommente l'export `window.getMaxTheoreticalScoreForPiece` en bas du fichier.
+===========================================================================
+*/
+/*
+export function getMaxTheoreticalScoreForPiece(artType, mainStatKey, config) {
+    const maxRolls = (typeof window !== 'undefined' && window.MAX_ROLLS) ? window.MAX_ROLLS : MAX_ROLLS;
+    if (!config || !config.weights || !maxRolls) return 100;
+
+    const forbiddenSubStats = ["heal_", "physical_dmg_"];
+    const sortedSubWeights = Object.entries(config.weights)
+        .filter(([key, w]) => w > 0 && !key.includes("_dmg_") && !forbiddenSubStats.includes(key) && key !== mainStatKey)
+        .sort((a, b) => b[1] - a[1]);
+
+    const topStats = sortedSubWeights.slice(0, 4);
+    let fakeSubStats = [];
+
+    if (topStats.length > 0) {
+        const bestStat = topStats[0];
+        fakeSubStats.push({
+            key: bestStat[0],
+            value: (maxRolls[bestStat[0]] || 3.89) * 6
+        });
+
+        for (let i = 1; i < topStats.length; i++) {
+            fakeSubStats.push({
+                key: topStats[i][0],
+                value: (maxRolls[topStats[i][0]] || 3.89) * 1
+            });
+        }
+    }
+
+    const fakeArt = {
+        type: artType,
+        mainStat: { key: mainStatKey, value: 0 },
+        subStats: fakeSubStats
+    };
+
+    const powerResult = scoreArtifact(fakeArt, config.weights);
+    return powerResult.score;
+}
+*/
+
 export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
     if (!config || !config.weights) {
         return { score: 0, grade: { letter: "?", color: "#888" }, totalRolls: 0 };
@@ -102,11 +156,27 @@ export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
     perso.artefacts.forEach(art => {
         if ((art.stars || 5) < 4) {
             art.score = 0;
+            // art.rawScore = 0; // [FUTURE FEATURE] Décommenter pour le score /100
             art.grade = { letter: '—', color: '#6b7280', points: 0 };
             return;
         }
         const powerResult = scoreArtifact(art, config.weights);
+        
+        // --- SYSTÈME ACTUEL (Score Brut) ---
         art.score = powerResult.score;
+
+        /*
+        // --- [FUTURE FEATURE] SYSTÈME RELATIF /100 ---
+        // Remplacer `art.score = powerResult.score;` par ce bloc :
+        art.rawScore = powerResult.score;
+        const maxPieceScore = getMaxTheoreticalScoreForPiece(art.type, art.mainStat.key, config);
+        let percentageScore = 0;
+        if (maxPieceScore > 0) {
+            percentageScore = Math.min(100, (art.rawScore / maxPieceScore) * 100);
+        }
+        art.score = parseFloat(percentageScore.toFixed(1));
+        // ---------------------------------------------
+        */
 
         const qualityPoints = calculateArtifactRollQuality(art, config.weights);
         const availableWeights = Object.entries(config.weights)
@@ -132,7 +202,11 @@ export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
             points: qualityPoints
         };
 
+        // --- SYSTÈME ACTUEL ---
         totalScore += art.score;
+        // --- [FUTURE FEATURE] ---
+        // totalScore += art.rawScore; 
+
         totalRolls += qualityPoints;
 
         if (VARIABLE_PIECES.includes(art.type)) {
@@ -733,6 +807,7 @@ if (typeof window !== 'undefined') {
     window.SCORING_NORMS = SCORING_NORMS;
     window.getRollDetails = getRollDetails;
     window.getRollCount = getRollCount;
+    // window.getMaxTheoreticalScoreForPiece = getMaxTheoreticalScoreForPiece; // [FUTURE FEATURE]
     window.calculateMaxTheoreticalScore = calculateMaxTheoreticalScore;
     window.calculateRollDistribution = calculateRollDistribution;
     window.calculateDeadRolls = calculateDeadRolls;
