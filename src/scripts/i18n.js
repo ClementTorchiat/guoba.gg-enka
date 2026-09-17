@@ -118,7 +118,7 @@ export const T = {
         "ui.art.baseAtk": "ATQ de base",
         "ui.art.score": "Score",
         "ui.art.rawScore.title": "Brut",
-        "ui.art.rawScore.desc": "Ce score brut est celui qui alimente le calcul du Rang du personnage.",
+        "ui.art.rawScore.desc": "Le score brut est celui qui alimente le calcul du score du personnage.",
         "ui.art.rawScore.total": "Score brut réel :",
         "ui.art.rawScore.displayed": "Score affiché :",
 
@@ -964,7 +964,7 @@ export const T = {
         "ui.art.baseAtk": "Base ATK",
         "ui.art.score": "Score",
         "ui.art.rawScore.title": "Raw",
-        "ui.art.rawScore.desc": "This raw score is used to calculate the character's global Rank.",
+        "ui.art.rawScore.desc": "The raw score is the one used to calculate the character's global score.",
         "ui.art.rawScore.total": "Real raw score:",
         "ui.art.rawScore.displayed": "Displayed score:",
 
