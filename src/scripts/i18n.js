@@ -119,7 +119,8 @@ export const T = {
         "ui.art.score": "Score",
         "ui.art.rawScore.title": "Brut",
         "ui.art.rawScore.desc": "Ce score brut est celui qui alimente le calcul du Rang du personnage.",
-        "ui.art.rawScore.total": "Total :",
+        "ui.art.rawScore.total": "Score brut réel :",
+        "ui.art.rawScore.displayed": "Score affiché :",
 
         // ── Évaluation globale ────────────────────────────
         "ui.eval.globalGrade": "Note Globale",
@@ -964,7 +965,8 @@ export const T = {
         "ui.art.score": "Score",
         "ui.art.rawScore.title": "Raw",
         "ui.art.rawScore.desc": "This raw score is used to calculate the character's global Rank.",
-        "ui.art.rawScore.total": "Total:",
+        "ui.art.rawScore.total": "Real raw score:",
+        "ui.art.rawScore.displayed": "Displayed score:",
 
         // ── Global evaluation ─────────────────────────────
         "ui.eval.globalGrade": "Global Rating",

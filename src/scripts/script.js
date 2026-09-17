@@ -3626,9 +3626,15 @@ window.showArtifactScoreTooltip = function (element, charIndex, artIndex) {
                 ${t('ui.art.rawScore.desc')}
             </div>
             
-            <div style="background: rgba(0, 0, 0, 0.25); border-radius: 6px; padding: 6px 8px; margin-top: 4px; border: 1px solid rgba(255, 255, 255, 0.06); display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 11px; color: rgba(255, 255, 255, 0.8);">${t('ui.art.rawScore.total')}</span>
-                <span style="font-family: monospace; font-size: 14px; font-weight: bold; color: var(--text-always-white);">${rawScore}</span>
+            <div style="background: rgba(0, 0, 0, 0.25); border-radius: 6px; padding: 6px 8px; margin-top: 4px; border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px;">
+                    <span style="font-size: 11px; color: rgba(255, 255, 255, 0.8);">${t('ui.art.rawScore.total')}</span>
+                    <span style="font-family: monospace; font-size: 14px; font-weight: bold; color: var(--text-always-white);">${rawScore}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 11px; color: rgba(255, 255, 255, 0.8);">${t('ui.art.rawScore.displayed')}</span>
+                    <span style="font-family: monospace; font-size: 14px; font-weight: bold; color: var(--text-always-white);">${art.score}/100</span>
+                </div>
             </div>
         </div>
     `;
