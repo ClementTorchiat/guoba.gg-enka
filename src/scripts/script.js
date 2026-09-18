@@ -518,7 +518,7 @@ async function loadGameData() {
         window.iconToNameHash = {};
 
         // ⚠️ TRÈS IMPORTANT : Passer en v4 pour vider l'ancien cache sans armes
-        const CACHE_KEY = 'guoba_gamedata_idb_v1';
+        const CACHE_KEY = 'guoba_gamedata_idb_v2';
         const CACHE_TTL = 24 * 60 * 60 * 1000;
 
         try {
@@ -2958,7 +2958,7 @@ function hideSidebarNav() {
     if (collapseBtn) collapseBtn.style.display = 'flex';
 }
 
-window.toggleSidebarCollapse = function() {
+window.toggleSidebarCollapse = function () {
     const sidebar = document.querySelector('.sidebar');
     const icon = document.getElementById('sidebar-collapse-icon');
     if (sidebar.classList.contains('sidebar-collapsed')) {
