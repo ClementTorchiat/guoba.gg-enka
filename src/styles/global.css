@@ -1326,33 +1326,39 @@ main {
 }
 
 .pp-badge-server-EU {
-    background: #5566fd;
+    background: rgb(85 102 253 / 80%);
     color: #ffffff;
+    border: 1px solid var(--border-subtle);
 }
 
 .pp-badge-server-NA {
-    background: #ffb13b;
-    color: #1a1000;
+    background: rgb(255 177 59 / 80%);
+    color: #ffffff;
+    border: 1px solid var(--border-subtle);
 }
 
 .pp-badge-server-CN {
-    background: #ff6161;
-    color: #1a1000;
+    background: rgb(255 97 97 / 80%);
+    color: #ffffff;
+    border: 1px solid var(--border-subtle);
 }
 
 .pp-badge-server-Asia {
-    background: #ff995f;
-    color: #1a1000;
+    background: rgba(242, 131, 66, 0.8);
+    color: #ffffff;
+    border: 1px solid var(--border-subtle);
 }
 
 .pp-badge-achievements {
-    background: #2e8492;
+    background: rgb(46 132 146 / 80%);
     color: var(--text-always-white);
+    border: 1px solid var(--border-subtle);
 }
 
 .pp-badge-ar {
-    background: var(--accent-gold);
-    color: #160e00;
+    background: rgb(72 72 72 / 80%);
+    color: var(--text-always-white);
+    border: 1px solid var(--border-subtle);
 }
 
 .pp-badge-stygian {
