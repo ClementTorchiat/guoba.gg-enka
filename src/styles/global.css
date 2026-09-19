@@ -1325,6 +1325,26 @@ main {
     color: #1a1000;
 }
 
+.pp-badge-server-EU {
+    background: #5566fd;
+    color: #ffffff;
+}
+
+.pp-badge-server-NA {
+    background: #ffb13b;
+    color: #1a1000;
+}
+
+.pp-badge-server-CN {
+    background: #ff6161;
+    color: #1a1000;
+}
+
+.pp-badge-server-Asia {
+    background: #ff995f;
+    color: #1a1000;
+}
+
 .pp-badge-achievements {
     background: #2e8492;
     color: var(--text-always-white);

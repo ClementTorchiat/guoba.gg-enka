@@ -3035,7 +3035,7 @@ function renderHome() {
             }
 
             const row1 = [
-                `<span class="pp-badge pp-badge-server">${server}</span>`,
+                `<span class="pp-badge pp-badge-server pp-badge-server-${server}">${server}</span>`,
                 p.achievements != null
                     ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="${t('ui.alt.achievements')}" decoding="async">${p.achievements.toLocaleString(window.GUOBA_LANG)}</span>`
                     : '',

@@ -57,7 +57,7 @@ export function renderPlayerProfileCard(playerInfo, uid, charData = {}) {
     }
 
     const row1 = [
-        `<span class="pp-badge pp-badge-server">${server}</span>`,
+        `<span class="pp-badge pp-badge-server pp-badge-server-${server}">${server}</span>`,
         achievements !== null
             ? `<span class="pp-badge pp-badge-achievements"><img src="${ICON}icon_achievements.webp" class="pp-icon" alt="${t('ui.alt.achievements')}">${achievements.toLocaleString(window.GUOBA_LANG || 'fr')}</span>`
             : '',
