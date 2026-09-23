@@ -113,7 +113,12 @@ function cleanSingleCharConfig(charVal) {
 export async function loadCharacterConfig(name) {
     if (!name) return DEFAULT_CONFIG;
     const safeNom = String(name).trim();
-    const alias = CONFIG_NAME_ALIASES_EN_TO_FR[safeNom] || safeNom;
+    let alias = CONFIG_NAME_ALIASES_EN_TO_FR[safeNom] || safeNom;
+    
+    if (typeof window !== 'undefined' && window.TEAMMATE_NAME_ALIASES && window.TEAMMATE_NAME_ALIASES[safeNom]) {
+        alias = window.TEAMMATE_NAME_ALIASES[safeNom].en || alias;
+    }
+
     const cleanKey = alias.replace(/\s+/g, '');
     const norm = normalizeKey(safeNom);
     const normAlias = normalizeKey(alias);
@@ -287,7 +292,14 @@ export async function preloadConfigsForShowcase(data, charData, locData, HASH_TO
             Object.values(cfg.builds).forEach(b => {
                 if (b.team) {
                     b.team.forEach(m => {
-                        if (m.name) tmPromises.push(loadCharacterConfig(m.name));
+                        let nameToLoad = m.name;
+                        if (nameToLoad === "PlayerBoy" || nameToLoad === "PlayerGirl" || nameToLoad === "Traveler" || nameToLoad === "Voyageur") {
+                            if (m.element) {
+                                const capElem = m.element.charAt(0).toUpperCase() + m.element.slice(1).toLowerCase();
+                                nameToLoad = `Traveler ${capElem}`;
+                            }
+                        }
+                        if (nameToLoad) tmPromises.push(loadCharacterConfig(nameToLoad));
                     });
                 }
             });

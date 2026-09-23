@@ -2777,7 +2777,14 @@ function updateResonanceBuffs(p, teamData) {
     p.buffedStats = calculateBuffedStats(p.baseStats, p.combatStats, p.buffs);
 }
 
-function resolveTeammateName(name) {
+function resolveTeammateName(name, element = null) {
+    if (name === "PlayerBoy" || name === "PlayerGirl" || name === "Traveler" || name === "Voyageur") {
+        if (element) {
+            const capElem = element.charAt(0).toUpperCase() + element.slice(1).toLowerCase();
+            name = `Traveler ${capElem}`;
+        }
+    }
+
     const alias = window.TEAMMATE_NAME_ALIASES?.[name];
     if (alias) return alias[window.GUOBA_LANG] ?? alias.en ?? name;
 
@@ -2799,7 +2806,7 @@ function updateTeammateBuffs(p, teamData) {
     resolveTeammateNames(teamData).forEach(mate => {
         const name = mate.name;
         const tmCons = mate.cons !== undefined ? parseInt(mate.cons) : 6;
-        const categoryName = `${t('buff.category.teammate')} : ${resolveTeammateName(name)}`;
+        const categoryName = `${t('buff.category.teammate')} : ${resolveTeammateName(name, mate.element)}`;
 
         const tmData = window.TEAMMATE_BUFFS?.[name];
         if (tmData) {
