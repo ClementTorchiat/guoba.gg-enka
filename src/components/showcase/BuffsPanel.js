@@ -1,21 +1,18 @@
 // src/components/showcase/BuffsPanel.js
 import { t } from '../../scripts/i18n.js';
+import { renderSpiderChartContent, updateSpiderChartDOM } from './SpiderChart.js';
 
 export function renderBuffsPanel(persoObj, charIndex) {
-    if (!persoObj || !persoObj.buffs || persoObj.buffs.length === 0) return '';
-
     return `
-        <div class="card buffs-card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid rgba(255, 255, 255, 0.4); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset;">
-            <div class="card-container" style="height: 100%; padding: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;">
+        <div class="card buffs-card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid rgba(255, 255, 255, 0.4); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; position: relative; overflow: hidden;">
+            <div class="card-container" style="padding: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; position: relative; z-index: 10;">
                 <div style="font-size:14px; flex-shrink: 0;">
-                    <p style="margin-bottom: 2px; margin-top:0;">${t('ui.char.buffsTitle')}</p>
-                    <p style="font-size: 12px; color: rgba(255, 255, 255, 0.4); margin:0;">${t('ui.char.buffsHint')}</p>
+                    <p style="margin-bottom: 2px; margin-top:0;">${t('ui.char.spiderTitle')}</p>
+                    <p style="font-size: 11px; color: rgba(255, 255, 255, 0.4); margin:0; line-height: 1.25;">${t('ui.char.spiderHint')}</p>
                 </div>
                 <div class="card-divider" style="flex-shrink: 0; margin: 9px 0px; display: flex; clear: both; width: 100%; box-sizing: border-box; color: var(--dotted-line); border-width: 1px 0 0; border-color: var(--dotted-line); border-block-start: 1px solid var(--dotted-line);"></div>
-                <div style="flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; color: rgba(255,255,255,0.4); font-size: 12px; padding: 20px;">
-                    ${t('ui.char.buffsMoved') || 'Les buffs actifs ont été déplacés ci-dessous.'}
-                </div>
             </div>
+            ${renderSpiderChartContent(persoObj)}
         </div>
     `;
 }
@@ -299,4 +296,6 @@ export function updateBuffsPanelDOM(persoObj) {
             }
         }
     });
+
+    updateSpiderChartDOM(persoObj);
 }
