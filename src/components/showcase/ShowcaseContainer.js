@@ -6,7 +6,7 @@ import { renderBaseStatsList, renderCombatStatsList } from './CombatStatsList.js
 import { renderCharacterScoreBadge } from './CharacterScoreBadge.js';
 import { renderTalentsList } from './TalentsList.js';
 import { renderArtifactsGrid } from './ArtifactsGrid.js';
-import { renderBuffsPanel } from './BuffsPanel.js';
+import { renderBuffsPanel, renderActiveBuffsSection } from './BuffsPanel.js';
 import { renderAdviceSection } from '../advice/AdviceSection.js';
 import { t } from '../../scripts/i18n.js';
 
@@ -54,6 +54,9 @@ export function renderShowcaseComponent(persoObj, charIndex) {
                     ${renderBuffsPanel(persoObj, charIndex)}
                 </div>
             </div>
+
+            <!-- Nouvelle Section : Buffs Actifs Détaillés -->
+            ${renderActiveBuffsSection(persoObj, charIndex)}
 
             <!-- Section Analyses et Conseils Découplée -->
             <div class="coaching-row" style="margin-top: 32px; width: 100%;">

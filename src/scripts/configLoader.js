@@ -280,6 +280,20 @@ export async function preloadConfigsForShowcase(data, charData, locData, HASH_TO
     }
 
     await Promise.all(promises);
+
+    const tmPromises = [];
+    Object.values(CHARACTER_CONFIG).forEach(cfg => {
+        if (cfg.builds) {
+            Object.values(cfg.builds).forEach(b => {
+                if (b.team) {
+                    b.team.forEach(m => {
+                        if (m.name) tmPromises.push(loadCharacterConfig(m.name));
+                    });
+                }
+            });
+        }
+    });
+    await Promise.all(tmPromises);
 }
 
 import { t } from './i18n.js';
