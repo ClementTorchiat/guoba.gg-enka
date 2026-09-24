@@ -820,6 +820,18 @@ function renderPlayerProfile(playerInfo, uid) {
     if (pp.id) {
         const pfp = (window.pfpsData || {})[String(pp.id)];
         if (pfp && pfp.IconPath) profilePicUrl = `https://enka.network${pfp.IconPath}`;
+    } else if (pp.avatarId && charData && charData[pp.avatarId]) {
+        const info = charData[pp.avatarId];
+        const getKey = (o, k) => o?.[k] !== undefined ? o[k] : o?.[k[0].toLowerCase() + k.slice(1)];
+        let raw = getKey(info, 'IconName') || getKey(info, 'SideIconName') || getKey(info, 'icon');
+        if (raw) {
+            if (raw.startsWith('/ui/')) {
+                profilePicUrl = `https://enka.network${raw.replace('UI_AvatarIcon_Side_', 'UI_AvatarIcon_').replace(/\.png$/i, '_Circle.png')}`;
+            } else {
+                const n = raw.replace(/^.*UI_AvatarIcon_Side_/, '').replace(/^.*UI_AvatarIcon_/, '').replace(/\.png$/i, '');
+                profilePicUrl = `https://enka.network/ui/UI_AvatarIcon_${n}_Circle.png`;
+            }
+        }
     }
 
     saveRecentProfile(uid, playerInfo, profilePicUrl, bannerUrl);

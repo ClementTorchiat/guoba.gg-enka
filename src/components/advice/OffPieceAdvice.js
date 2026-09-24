@@ -138,7 +138,7 @@ export function renderOffPieceAdvice(persoObj) {
     }
 
     return `
-        <div style="flex:1; background:var(--bg-panel); padding:15px; border-radius:8px; border: 1px solid rgba(255, 255, 255, 0.05); border-left:3px solid ${borderColor}; display:flex; flex-direction:column; justify-content:space-between;">
+        <div style="flex:1; background:var(--bg-panel); padding:15px; border-radius:8px; border-left:3px solid ${borderColor}; display:flex; flex-direction:column; justify-content:space-between;">
             <div>
                 <p style="font-size:12px; color:var(--text-grey); text-transform:uppercase; margin-bottom:12px;">${t('analysis.s2.offPiece')}</p>
                 <p style="font-size:14px; color:var(--text-primary); line-height:1.4; margin-bottom: 20px;">${offPieceAdvice.msg}</p>

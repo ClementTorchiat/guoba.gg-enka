@@ -167,7 +167,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
                 const knobTransform = buff.active ? 'transform:translateX(12px);' : '';
 
                 html += `
-                    <div class="buff-row" data-buff-index="${bIndex}" data-hex-color="${hexColor}" style="display:flex; flex-direction: row; gap: 8px; align-items:center; background:rgba(0,0,0,0.2); padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(4px);">
+                    <div class="buff-row" data-buff-index="${bIndex}" data-hex-color="${hexColor}" style="display:flex; flex-direction: row; gap: 8px; align-items:center; background:rgba(0,0,0,0.2); padding: 8px 10px; border-radius: 8px; backdrop-filter: blur(4px);">
                         <p style="font-size:12px; color:${textColor}; margin: 0; white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">${displayName}</p>
                         <label class="switch" style="position:relative; display:inline-block; width:26px; min-width: 26px; height:14px; box-sizing: border-box; flex-shrink: 0; margin-left: 4px;">
                             <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${charIndex}, ${bIndex})" style="opacity:0; width:0; height:0;">
