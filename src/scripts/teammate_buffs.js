@@ -1,11 +1,11 @@
 window.TEAMMATE_WEAPON_BUFFS = {
     "ThrillingTalesOfDragonSlayers": {
-        label: { fr: "Contes : ATQ% à l'allié suivant", en: "Thrilling Tales: ATK% to next ally" },
+        label: { fr: "Contes des chasseurs de dragons : ATQ% à l'allié suivant", en: "Thrilling Tales Of Dragon Slayers: ATK% to next ally" },
         active: true,
         stats: { atk_: 0.48 }
     },
     "XiphosMoonlight": {
-        label: { fr: "Xiphos : ER à l'équipe", en: "Xiphos: ER to team" },
+        label: { fr: "Clair de lune de Xiphos : ER à l'équipe", en: "Xiphos' Moonlight: ER to team" },
         active: true,
         stats: { enerRech_: 0.108 }
     }
@@ -23,22 +23,22 @@ window.TEAMMATE_SET_BUFFS = {
         isDynamicElementBuff: true
     },
     "NoblesseOblige": {
-        label: { fr: "Noblesse : ATQ% à l'équipe", en: "Noblesse: ATK% to team" },
+        label: { fr: "Ancien rituel royal : ATQ% à l'équipe", en: "Noblesse Oblige: ATK% to team" },
         active: true,
         stats: { atk_: 0.20 }
     },
     "TenacityOfTheMillelith": {
-        label: { fr: "Millelithe : ATQ% à l'équipe", en: "Millelith: ATK% to team" },
+        label: { fr: "Ténacité du Millelithe : ATQ% à l'équipe", en: "Tenacity Of The Millelith: ATK% to team" },
         active: true,
         stats: { atk_: 0.20 }
     },
     "ScrollOfTheHeroOfCinderCity": {
-        label: { fr: "Parchemin : Bonus de DGT Élémentaire", en: "Scroll: Elemental DMG Bonus" },
+        label: { fr: "Parchemin du héro de la cité de braise : Bonus de DGT Élémentaire", en: "Scroll Of The Hero Of Cinder City: Elemental DMG Bonus" },
         active: true,
         stats: { elemental_dmg_: 0.40 }
     },
     "SilkenMoonsSerenade": {
-        label: { fr: "Sérénade : EM à l'équipe", en: "Serenade: EM to team" },
+        label: { fr: "Sérénade de la lune soyeuse : EM à l'équipe", en: "Silken Moon Serenade: EM to team" },
         active: true,
         stats: { eleMas: 120 }
     }

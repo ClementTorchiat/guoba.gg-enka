@@ -99,12 +99,14 @@
         {
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "GoldenTroupe"
         },
         {
           "role": "Sub-DPS",
           "name": "Escoffier",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "NoblesseOblige"
         },
         {
           "role": "Support",

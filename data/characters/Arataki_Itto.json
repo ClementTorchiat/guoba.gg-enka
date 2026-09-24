@@ -76,8 +76,12 @@
           "critDMG_"
         ]
       },
-      "hideUIStats": [],
-      "showUIStats": [],
+      "hideUIStats": [
+        "heal_"
+      ],
+      "showUIStats": [
+        "atk"
+      ],
       "bestSets": [
         "HuskOfOpulentDreams:4"
       ],
@@ -91,18 +95,21 @@
         {
           "role": "Sub-DPS",
           "name": "Albedo",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "HuskOfOpulentDreams"
         },
         {
           "role": "Support",
           "name": "Gorou",
           "element": "geo",
+          "artifact": "TheExile",
           "cons": "6"
         },
         {
           "role": "Support",
           "name": "Zhongli",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "TenacityOfTheMillelith"
         }
       ]
     },
@@ -145,8 +152,12 @@
           "critDMG_"
         ]
       },
-      "hideUIStats": [],
-      "showUIStats": [],
+      "hideUIStats": [
+        "heal_"
+      ],
+      "showUIStats": [
+        "atk"
+      ],
       "bestSets": [
         "HuskOfOpulentDreams:4",
         "NightOfTheSkysUnveiling:4"
@@ -179,7 +190,8 @@
         {
           "role": "Sub-DPS",
           "name": "Linnea",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "AubadeOfMorningstarAndMoon"
         }
       ]
     }

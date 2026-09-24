@@ -76,12 +76,14 @@
         {
           "role": "DPS",
           "name": "Kinich",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "ObsidianCodex"
         },
         {
           "role": "Sub-DPS",
           "name": "Durin",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ADayCarvedFromRisingWinds"
         },
         {
           "role": "Support",

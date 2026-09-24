@@ -170,7 +170,8 @@
         {
           "role": "Support",
           "name": "Nahida",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "DeepwoodMemories"
         }
       ]
     }

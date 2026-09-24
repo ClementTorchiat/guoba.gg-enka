@@ -102,13 +102,15 @@
         {
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "GoldenTroupe"
         },
         {
           "role": "Support",
           "name": "Kazuha",
           "element": "anemo",
-          "weapon": "XiphosMoonlight"
+          "weapon": "XiphosMoonlight",
+          "artifact": "ViridescentVenerer"
         },
         {
           "role": "Support",
@@ -172,12 +174,14 @@
         {
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "GoldenTroupe"
         },
         {
           "role": "Sub-DPS",
           "name": "Escoffier",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "GoldenTroupe"
         },
         {
           "role": "Support",
@@ -242,12 +246,14 @@
         {
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "GoldenTroupe"
         },
         {
           "role": "Sub-DPS",
           "name": "Ineffa",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "AubadeOfMorningstarAndMoon"
         },
         {
           "role": "Sub-DPS",

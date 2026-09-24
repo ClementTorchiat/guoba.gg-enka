@@ -169,19 +169,22 @@
         {
           "role": "Support",
           "name": "Nahida",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "DeepwoodMemories"
         },
         {
           "role": "Sub-DPS",
           "name": "Fischl",
           "element": "electro",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "CelestialGift"
         },
         {
           "role": "Support",
           "name": "Prune",
           "element": "anemo",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "ViridescentVenerer"
         }
       ]
     },
@@ -257,13 +260,14 @@
           "role": "Sub-DPS",
           "name": "Fischl",
           "element": "electro",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "CelestialGift"
         },
         {
           "role": "Sub-DPS",
-          "name": "Xiangling",
+          "name": "Durin",
           "element": "pyro",
-          "cons": "6"
+          "artifact": "ADayCarvedFromRisingWinds"
         }
       ]
     },
@@ -339,17 +343,22 @@
         {
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "TenacityOfTheMillelith"
         },
         {
           "role": "Sub-DPS",
           "name": "Ineffa",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "AubadeOfMorningstarAndMoon"
         },
         {
           "role": "Support",
-          "name": "",
-          "element": "anemo"
+          "name": "Sucrose",
+          "cons": "6",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "element": "anemo",
+          "artifact": "ViridescentVenerer"
         }
       ]
     }

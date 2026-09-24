@@ -90,17 +90,21 @@
                 {
                     "role": "DPS",
                     "name": "Sandrone",
-                    "element": "cryo"
+                    "element": "cryo",
+                    "artifact": "DisenchantmentInDeepShadow"
                 },
                 {
                     "role": "Sub-DPS",
                     "name": "Yae",
-                    "element": "electro"
+                    "cons": "1",
+                    "element": "electro",
+                    "artifact": "DisenchantmentInDeepShadow"
                 },
                 {
                     "role": "Sub-DPS",
                     "name": "Odette",
-                    "element": "cryo"
+                    "element": "cryo",
+                    "artifact": "HeartOfTheFurnace"
                 }
             ]
         }

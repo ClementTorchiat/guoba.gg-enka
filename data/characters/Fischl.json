@@ -130,12 +130,14 @@
         {
           "role": "DPS",
           "name": "Clorinde",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "FragmentOfHarmonicWhimsy"
         },
         {
           "role": "Sub-DPS",
           "name": "Durin",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ADayCarvedFromRisingWinds"
         },
         {
           "role": "Support",
@@ -218,19 +220,22 @@
         {
           "role": "DPS",
           "name": "Tighnari",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "DeepwoodMemories"
         },
         {
           "role": "Sub-DPS",
           "name": "Shinobu",
           "element": "electro",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "GildedDreams"
         },
         {
           "role": "Support",
           "name": "Kazuha",
           "element": "anemo",
-          "weapon": "XiphosMoonlight"
+          "weapon": "XiphosMoonlight",
+          "artifact": "ViridescentVenerer"
         }
       ]
     }

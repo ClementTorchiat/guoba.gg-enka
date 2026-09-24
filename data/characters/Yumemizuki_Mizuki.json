@@ -172,7 +172,8 @@
         "atk"
       ],
       "bestSets": [
-        "ViridescentVenerer:4"
+        "ViridescentVenerer:4",
+        "GildedDreams:4"
       ],
       "goodSets": [
         "ScarletProof:4",
@@ -212,7 +213,8 @@
         {
           "role": "Support",
           "name": "Odette",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "HeartOfTheFurnace"
         }
       ]
     }

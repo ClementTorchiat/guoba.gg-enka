@@ -106,12 +106,15 @@
         {
           "role": "Sub-DPS",
           "name": "Yelan",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "EmblemOfSeveredFate"
         },
         {
           "role": "Sub-DPS",
           "name": "Xingqiu",
-          "element": "hydro"
+          "element": "hydro",
+          "cons": "6",
+          "artifact": "EmblemOfSeveredFate"
         },
         {
           "role": "Support",
@@ -181,23 +184,23 @@
       "team": [
         {
           "role": "Support",
-          "name": "Rosaria",
+          "name": "Citlali",
           "element": "cryo",
-          "artifact": "Instructor",
-          "cons": "6"
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "ScrollOfTheHeroOfCinderCity"
+        },
+        {
+          "role": "Support",
+          "name": "Xilonen",
+          "element": "geo",
+          "artifact": "Instructor"
         },
         {
           "role": "Support",
           "name": "Kazuha",
           "element": "anemo",
-          "weapon": "XiphosMoonlight"
-        },
-        {
-          "role": "Support",
-          "name": "Citlali",
-          "element": "cryo",
-          "weapon": "ThrillingTalesOfDragonSlayers",
-          "artifact": "ScrollOfTheHeroOfCinderCity"
+          "weapon": "XiphosMoonlight",
+          "artifact": "ViridescentVenerer"
         }
       ]
     }

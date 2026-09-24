@@ -142,23 +142,21 @@
         {
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "GoldenTroupe"
         },
         {
           "role": "Sub-DPS",
           "name": "Escoffier",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "NoblesseOblige"
         },
         {
-          "role": "Flex",
-          "name": [
-            "Yelan",
-            "Citlali"
-          ],
-          "element": [
-            "hydro",
-            "cryo"
-          ]
+          "role": "Support",
+          "name": "Vodyanitsa",
+          "element": "hydro",
+          "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "TenacityOfTheMillelith"
         }
       ]
     },
@@ -231,12 +229,14 @@
         {
           "role": "Sub-DPS",
           "name": "Emilie",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "DeepwoodMemories"
         },
         {
           "role": "Sub-DPS",
           "name": "Durin",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ADayCarvedFromRisingWinds"
         },
         {
           "role": "Support",
@@ -317,12 +317,15 @@
         {
           "role": "Sub-DPS",
           "name": "Odette",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "HeartOfTheFurnace"
         },
         {
           "role": "Sub-DPS",
           "name": "Yae",
-          "element": "electro"
+          "cons": "1",
+          "element": "electro",
+          "artifact": "DisenchantmentInDeepShadow"
         },
         {
           "role": "Support",

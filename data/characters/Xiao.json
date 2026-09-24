@@ -110,6 +110,7 @@
           "role": "Support",
           "name": "Faruzan",
           "element": "anemo",
+          "artifact": "ViridescentVenerer",
           "cons": "6"
         },
         {
@@ -122,7 +123,8 @@
         {
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "TenacityOfTheMillelith"
         }
       ]
     }

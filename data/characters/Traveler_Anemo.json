@@ -1,6 +1,16 @@
 {
   "color": "#2ccac0",
-  "portraitOffset": -37,
+  "portraitOffset": -15,
+  "skins": {
+    "200501": {
+      "color": "#2ccac0",
+      "portraitOffset": -37
+    },
+    "200701": {
+      "color": "#2ccac0",
+      "portraitOffset": -37
+    }
+  },
   "talents": {
     "auto": 1,
     "skill": 8,

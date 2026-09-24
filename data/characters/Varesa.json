@@ -116,7 +116,8 @@
         {
           "role": "Sub-DPS",
           "name": "Mavuika",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ObsidianCodex"
         },
         {
           "role": "Support",
@@ -199,12 +200,14 @@
         {
           "role": "Support",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "TenacityOfTheMillelith"
         },
         {
           "role": "Support",
           "name": "Liuyun",
           "element": "anemo",
+          "artifact": "ViridescentVenerer",
           "weapon": "ThrillingTalesOfDragonSlayers"
         },
         {
@@ -292,7 +295,8 @@
         {
           "role": "Sub-DPS",
           "name": "Ineffa",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "AubadeOfMorningstarAndMoon"
         },
         {
           "role": "Support",
@@ -378,12 +382,14 @@
         {
           "role": "Sub-DPS",
           "name": "Ineffa",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "AubadeOfMorningstarAndMoon"
         },
         {
           "role": "Support",
           "name": "Liuyun",
           "element": "anemo",
+          "artifact": "ViridescentVenerer",
           "weapon": "ThrillingTalesOfDragonSlayers"
         }
       ]

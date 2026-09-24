@@ -154,7 +154,7 @@ export function getStatBuffBreakdown(persoObj, statKey) {
                         buffContributionGain += absGain;
                         buffContributionDisplay = `+${(bonusValue * 100).toFixed(1)}% (+${Math.round(absGain)})`;
                     } else if (isPct) {
-                        const pctGain = bonusValue * 100;
+                        const pctGain = bonusValue;
                         buffContributionGain += pctGain;
                         buffContributionDisplay = `+${pctGain.toFixed(1)}%`;
                     } else {

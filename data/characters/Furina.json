@@ -84,7 +84,8 @@
         {
           "role": "DPS",
           "name": "Neuvillette",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "MarechausseeHunter"
         },
         {
           "role": "Support",
@@ -96,7 +97,8 @@
           "role": "Support",
           "name": "Kazuha",
           "element": "anemo",
-          "weapon": "XiphosMoonlight"
+          "weapon": "XiphosMoonlight",
+          "artifact": "ViridescentVenerer"
         }
       ]
     }

@@ -123,7 +123,8 @@
         {
           "role": "Support",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "TenacityOfTheMillelith"
         },
         {
           "role": "Support",
@@ -212,12 +213,14 @@
         {
           "role": "Sub-DPS",
           "name": "Linnea",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "AubadeOfMorningstarAndMoon"
         },
         {
           "role": "Support",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "TenacityOfTheMillelith"
         }
       ]
     }

@@ -187,18 +187,20 @@
         {
           "role": "DPS",
           "name": "Xiao",
-          "element": "anemo"
+          "element": "anemo",
+          "artifact": "LongNightsOath"
         },
         {
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "GoldenTroupe"
         },
         {
           "role": "Support",
           "name": "Faruzan",
           "element": "anemo",
-          "artifact": "NoblesseOblige",
+          "artifact": "ViridescentVenerer",
           "cons": "6"
         }
       ]

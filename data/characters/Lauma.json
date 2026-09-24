@@ -71,7 +71,8 @@
         {
           "role": "DPS",
           "name": "Nefer",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "NightOfTheSkysUnveiling"
         },
         {
           "role": "Sub-DPS",
@@ -162,7 +163,8 @@
         {
           "role": "Support",
           "name": "Nahida",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "DeepwoodMemories"
         }
       ]
     },
@@ -229,17 +231,20 @@
         {
           "role": "DPS",
           "name": "Neuvillette",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "MarechausseeHunter"
         },
         {
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "GoldenTroupe"
         },
         {
           "role": "Sub-DPS",
           "name": "Ineffa",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "AubadeOfMorningstarAndMoon"
         }
       ]
     }

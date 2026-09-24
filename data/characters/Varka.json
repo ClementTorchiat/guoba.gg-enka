@@ -239,18 +239,21 @@
           "role": "Support",
           "name": "Prune",
           "element": "anemo",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "ViridescentVenerer"
         },
         {
           "role": "Sub-DPS",
           "name": "Durin",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ADayCarvedFromRisingWinds"
         },
         {
           "role": "Support",
           "name": "Nicole",
           "element": "pyro",
-          "artifact": "CelestialGift"
+          "artifact": "CelestialGift",
+          "weapon": "ThrillingTalesOfDragonSlayers"
         }
       ]
     },
@@ -328,12 +331,15 @@
           "role": "Support",
           "name": "Prune",
           "element": "anemo",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "ViridescentVenerer",
+          "weapon": "ThrillingTalesOfDragonSlayers"
         },
         {
           "role": "Sub-DPS",
           "name": "Escoffier",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "TenacityOfTheMillelith"
         },
         {
           "role": "Support",
@@ -416,13 +422,16 @@
           "role": "Support",
           "name": "Prune",
           "element": "anemo",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "ViridescentVenerer",
+          "weapon": "ThrillingTalesOfDragonSlayers"
         },
         {
           "role": "Sub-DPS",
           "name": "Fischl",
           "element": "electro",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "CelestialGift"
         },
         {
           "role": "Support",
@@ -507,18 +516,21 @@
           "role": "Support",
           "name": "Prune",
           "element": "anemo",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "ViridescentVenerer"
         },
         {
           "role": "Sub-DPS",
           "name": "Yelan",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "NoblesseOblige"
         },
         {
           "role": "Support",
           "name": "Mona",
           "element": "hydro",
-          "artifact": "NoblesseOblige"
+          "artifact": "CelestialGift",
+          "weapon": "ThrillingTalesOfDragonSlayers"
         }
       ]
     }

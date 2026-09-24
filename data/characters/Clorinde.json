@@ -117,7 +117,8 @@
         {
           "role": "Sub-DPS",
           "name": "Durin",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ADayCarvedFromRisingWinds"
         },
         {
           "role": "Support",
@@ -130,7 +131,8 @@
           "role": "Sub-DPS",
           "name": "Fischl",
           "element": "electro",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "CelestialGift"
         }
       ]
     },
@@ -205,7 +207,8 @@
         {
           "role": "Support",
           "name": "Nahida",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "DeepwoodMemories"
         },
         {
           "role": "Support",
@@ -217,7 +220,8 @@
           "role": "Sub-DPS",
           "name": "Fischl",
           "element": "electro",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "GoldenTroupe"
         }
       ]
     },
@@ -292,7 +296,8 @@
         {
           "role": "Sub-DPS",
           "name": "Ineffa",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "AubadeOfMorningstarAndMoon"
         },
         {
           "role": "Sub-DPS",
@@ -305,6 +310,7 @@
           "name": "Sucrose",
           "element": "anemo",
           "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "ViridescentVenerer",
           "cons": "6"
         }
       ]

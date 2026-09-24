@@ -159,17 +159,20 @@
         {
           "role": "Sub-DPS",
           "name": "Nahida",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "DeepwoodMemories"
         },
         {
           "role": "Sub-DPS",
           "name": "Yelan",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "EmblemOfSeveredFate"
         },
         {
           "role": "Sub-DPS",
           "name": "Shinobu",
           "element": "electro",
+          "artifact": "GildedDreams",
           "cons": "6"
         }
       ]
@@ -246,12 +249,14 @@
         {
           "role": "Sub-DPS",
           "name": "Nahida",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "DeepwoodMemories"
         },
         {
           "role": "Support",
           "name": "Baizhuer",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "Instructor"
         },
         {
           "role": "Sub-DPS",
@@ -332,18 +337,22 @@
         {
           "role": "Sub-DPS",
           "name": "Yae",
-          "element": "electro"
+          "element": "electro",
+          "cons": "1",
+          "artifact": "DisenchantmentInDeepShadow"
         },
         {
           "role": "Sub-DPS",
           "name": "Odette",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "HeartOfTheFurnace"
         },
         {
           "role": "Support",
           "name": "Qiqi",
           "element": "cryo",
-          "artifact": "TenacityOfTheMillelith"
+          "artifact": "TenacityOfTheMillelith",
+          "cons": "6"
         }
       ]
     }

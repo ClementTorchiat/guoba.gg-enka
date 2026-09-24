@@ -72,7 +72,8 @@
         {
           "role": "Sub-DPS",
           "name": "Mavuika",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ObsidianCodex"
         },
         {
           "role": "Support",
@@ -84,6 +85,7 @@
           "role": "Flex",
           "name": "Sucrose",
           "element": "anemo",
+          "artifact": "ViridescentVenerer",
           "cons": "6"
         }
       ]
@@ -153,17 +155,20 @@
         {
           "role": "Sub-DPS",
           "name": "Mavuika",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ObsidianCodex"
         },
         {
           "role": "Support",
           "name": "Mona",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "CelestialGift"
         },
         {
           "role": "Support",
           "name": "Sucrose",
           "element": "anemo",
+          "artifact": "ViridescentVenerer",
           "cons": "6"
         }
       ]

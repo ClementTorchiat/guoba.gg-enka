@@ -274,12 +274,14 @@
         {
           "role": "DPS",
           "name": "MarionetteNew",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "DisenchantmentInDeepShadow"
         },
         {
           "role": "Sub-DPS",
           "name": "Odette",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "HeartOfTheFurnace"
         },
         {
           "role": "Support",

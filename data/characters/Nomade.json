@@ -105,12 +105,14 @@
           "role": "Support",
           "name": "Faruzan",
           "element": "anemo",
+          "artifact": "ViridescentVenerer",
           "cons": "6"
         },
         {
           "role": "Sub-DPS",
           "name": "Durin",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ADayCarvedFromRisingWinds"
         },
         {
           "role": "Support",

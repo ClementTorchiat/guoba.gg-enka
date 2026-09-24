@@ -99,7 +99,7 @@
         "atk": 0,
         "hp_": 0,
         "hp": 0,
-        "def_": 0.8,
+        "def_": 0.9,
         "def": 0.1,
         "eleMas": 0.4,
         "enerRech_": 0.3,
@@ -149,12 +149,14 @@
         {
           "role": "Sub-DPS",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "AubadeOfMorningstarAndMoon"
         },
         {
           "role": "Sub-DPS",
           "name": "Linnea",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "AubadeOfMorningstarAndMoon"
         }
       ]
     }

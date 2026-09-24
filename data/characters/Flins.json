@@ -114,7 +114,8 @@
         {
           "role": "Sub-DPS",
           "name": "Ineffa",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "AubadeOfMorningstarAndMoon"
         },
         {
           "role": "Support",
@@ -127,6 +128,7 @@
           "name": "Sucrose",
           "element": "anemo",
           "weapon": "ThrillingTalesOfDragonSlayers",
+          "artifact": "ViridescentVenerer",
           "cons": "6"
         }
       ]

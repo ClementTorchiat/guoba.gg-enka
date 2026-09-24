@@ -205,7 +205,8 @@
         {
           "role": "Support",
           "name": "Odette",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "HeartOfTheFurnace"
         }
       ]
     }
