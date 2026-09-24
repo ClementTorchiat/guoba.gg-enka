@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Test - Liste des Leaderboards" description="Page de test pour intégrer le design de la liste des personnages et archétypes.">
+  
+  <div class="test-container" style="padding: 40px; color: white;">
+    <h1>[TEST] Liste des Leaderboards (Personnages)</h1>
+    <p>C'est ici que tu peux intégrer ta maquette Figma pour la page qui liste tous les personnages et leurs archétypes de leaderboard disponibles.</p>
+    
+    <!-- 
+      TODO: Intégrer ici le HTML/CSS de la maquette Figma.
+      Plus tard, je bouclerai sur la liste de tous les personnages depuis les fichiers JSON 
+      pour générer cette grille dynamiquement !
+    -->
+    <div class="mock-grid" style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
+        
+        <!-- Exemple de Card -->
+        <div class="mock-card" style="border: 1px solid #444; padding: 20px; border-radius: 12px; background: #1e1e1e;">
+            <h2>Arlecchino</h2>
+            <ul>
+                <li><a href="/test-leaderboard-detail" style="color: #ffaa00;">DPS Fonte</a></li>
+                <li><a href="/test-leaderboard-detail" style="color: #ffaa00;">DPS Surcharge</a></li>
+            </ul>
+        </div>
+
+    </div>
+  </div>
+
+</Layout>

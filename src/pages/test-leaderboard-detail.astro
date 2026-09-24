@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Test - Détail d'un Leaderboard" description="Page de test pour intégrer le design du classement d'un archétype.">
+  
+  <div class="test-container" style="padding: 40px; color: white;">
+    <h1>[TEST] Classement : Arlecchino - DPS Fonte</h1>
+    <p>C'est ici que tu peux intégrer ta maquette Figma pour l'affichage d'un classement d'archétype avec le Top 1, 2, 3, etc.</p>
+    
+    <!-- 
+      TODO: Intégrer ici le HTML/CSS de la maquette Figma.
+      Plus tard, je ferai une requête Supabase vers la table `builds` 
+      (filtrée par avatar_id = 'Arlecchino' et archetype = 'DPS Fonte', triée par score DESC) 
+      pour injecter les vrais joueurs et leurs scores !
+    -->
+
+    <div class="mock-leaderboard" style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px;">
+        
+        <!-- Exemple de Ligne Leaderboard -->
+        <div class="mock-row" style="display: flex; justify-content: space-between; border: 1px solid #444; padding: 15px 20px; border-radius: 8px; background: #222; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <h2 style="margin: 0; color: #ffd700;">#1</h2>
+                <div style="width: 40px; height: 40px; background: #555; border-radius: 50%;"></div>
+                <strong>Guoba_Tester</strong>
+            </div>
+            <div style="text-align: right;">
+                <span style="font-size: 1.2rem; font-weight: bold; color: #ffaa00;">288.7</span>
+                <span style="display: block; font-size: 0.8rem; color: #aaa;">Grade S+</span>
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+</Layout>
