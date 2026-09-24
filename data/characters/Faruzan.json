@@ -32,8 +32,8 @@
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
-        "atk_": 1,
-        "atk": 0.8,
+        "atk_": 0,
+        "atk": 0,
         "hp_": 0,
         "hp": 0,
         "def_": 0,
@@ -52,14 +52,13 @@
       },
       "idealMainStats": {
         "EQUIP_SHOES": [
-          "enerRech_",
-          "atk_"
+          "enerRech_"
         ],
         "EQUIP_RING": [
+          "anemo_dmg_",
           "atk_"
         ],
         "EQUIP_DRESS": [
-          "atk_",
           "critRate_"
         ]
       },
@@ -77,7 +76,7 @@
         "SilkenMoonsSerenade:2",
         "CelestialGift:2"
       ],
-      "er_req": 220,
+      "er_req": 240,
       "team": [
         {
           "role": "Flex",
