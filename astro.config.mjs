@@ -1,9 +1,12 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import viteCompression from 'vite-plugin-compression';
+import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'static',
+  adapter: cloudflare(),
   site: 'https://guoba.clement-torchiat.fr',
   integrations: [sitemap()],
   prefetch: {
