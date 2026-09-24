@@ -68,20 +68,27 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                 if (!slot.name) return;
                 
                 const names = Array.isArray(slot.name) ? slot.name : [slot.name];
+                const elems = slot.element ? (Array.isArray(slot.element) ? slot.element : [slot.element]) : [];
                 
                 let usedName = names[0];
-                for(const n of names) {
-                    const resolvedName = resolveTeammateNameFn(n);
+                let usedElem = elems[0];
+                for(let i = 0; i < names.length; i++) {
+                    const n = names[i];
+                    const e = elems[i] || elems[0];
+                    const resolvedName = resolveTeammateNameFn(n, e);
                     if (showcaseNames.includes(resolvedName)) {
                         usedName = n;
+                        usedElem = e;
                         break;
                     }
                 }
-                activeTeamNames.push(resolveTeammateNameFn(usedName));
+                activeTeamNames.push(resolveTeammateNameFn(usedName, usedElem));
 
                 let inShowcase = false;
-                for(const n of names) {
-                    const resolvedName = resolveTeammateNameFn(n);
+                for(let i = 0; i < names.length; i++) {
+                    const n = names[i];
+                    const e = elems[i] || elems[0];
+                    const resolvedName = resolveTeammateNameFn(n, e);
                     if (showcaseNames.includes(resolvedName)) {
                         inShowcase = true;
                         break;
@@ -92,8 +99,10 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                 }
 
                 if (!containsFocus && focusCharNom) {
-                    for(const n of names) {
-                        const resolvedName = resolveTeammateNameFn(n);
+                    for(let i = 0; i < names.length; i++) {
+                        const n = names[i];
+                        const e = elems[i] || elems[0];
+                        const resolvedName = resolveTeammateNameFn(n, e);
                         if (getInternalName(resolvedName) === getInternalName(focusCharNom)) {
                             containsFocus = true;
                             break;
@@ -163,10 +172,11 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
         let showcaseChar = null;
         
         for (let i = 0; i < names.length; i++) {
-            const resolvedName = resolveTeammateNameFn(names[i]);
+            const currentElem = elems[i] || elems[0];
+            const resolvedName = resolveTeammateNameFn(names[i], currentElem);
             if (showcaseNames.includes(resolvedName)) {
                 displayedName = names[i];
-                displayedElem = elems[i] || elems[0];
+                displayedElem = currentElem;
                 inShowcase = true;
                 showcaseChar = characters.find(c => c.nom === resolvedName);
                 break;
@@ -185,8 +195,8 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
 
         return `
             <div style="display:flex; flex-direction:column; align-items:center; gap:4px; opacity: ${opacity}; filter: ${filter};">
-                <img src="${iconPath}" alt="${displayedName}" style="width:48px; height:48px; border-radius:6px; ${bgStyle}; border: 2px solid var(--border-color); object-fit:cover;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'" decoding="async" title="${resolveTeammateNameFn(displayedName)}">
-                <span style="font-size:11px; color:var(--text-grey); white-space:nowrap;">${resolveTeammateNameFn(displayedName)}</span>
+                <img src="${iconPath}" alt="${displayedName}" style="width:48px; height:48px; border-radius:6px; ${bgStyle}; border: 2px solid var(--border-color); object-fit:cover;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'" decoding="async" title="${resolveTeammateNameFn(displayedName, displayedElem)}">
+                <span style="font-size:11px; color:var(--text-grey); white-space:nowrap;">${resolveTeammateNameFn(displayedName, displayedElem)}</span>
             </div>
         `;
     };

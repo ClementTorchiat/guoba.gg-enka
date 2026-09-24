@@ -109,7 +109,8 @@
         {
           "role": "Driver",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "NightOfTheSkysUnveiling"
         },
         {
           "role": "Sub-DPS",
@@ -120,7 +121,8 @@
         {
           "role": "Support",
           "name": "Nahida",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "DeepwoodMemories"
         }
       ]
     }

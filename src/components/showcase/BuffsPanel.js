@@ -58,15 +58,31 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
             charImg = `https://enka.network/ui/UI_AvatarIcon_${internalName}.png`;
             charSplash = `https://enka.network/ui/UI_Gacha_AvatarImg_${internalName}.webp`;
 
+            const mate = persoObj.activeBuild?.team?.find(m => m.name === internalName);
+            if (mate && mate.role) charRole = mate.role;
+
+            let queryName = internalName;
+            if (internalName.startsWith('Player') || internalName === 'Traveler' || internalName === 'Voyageur') {
+                const elementMap = { "Wind": "Anemo", "Rock": "Geo", "Electric": "Electro", "Grass": "Dendro", "Water": "Hydro", "Fire": "Pyro", "Ice": "Cryo" };
+                let elemSuffix = "";
+                for (const [key, val] of Object.entries(elementMap)) {
+                    if (internalName.includes(key)) {
+                        elemSuffix = val;
+                        break;
+                    }
+                }
+                if (!elemSuffix && mate && mate.element) {
+                    elemSuffix = mate.element.charAt(0).toUpperCase() + mate.element.slice(1).toLowerCase();
+                }
+                if (elemSuffix) queryName = `Traveler ${elemSuffix}`;
+            }
+
             if (typeof window !== 'undefined' && window.resolveCharConfig) {
-                const mateConfig = window.resolveCharConfig(internalName) || window.resolveCharConfig(charName);
+                const mateConfig = window.resolveCharConfig(queryName) || window.resolveCharConfig(charName);
                 if (mateConfig && mateConfig.color) {
                     charHex = mateConfig.color;
                 }
             }
-
-            const mate = persoObj.activeBuild?.team?.find(m => m.name === internalName);
-            if (mate && mate.role) charRole = mate.role;
 
             if (buff.id.includes('_wpn_')) {
                 let wpnName = buff.name.includes(':') ? buff.name.split(':')[0].trim() : '';
@@ -178,7 +194,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
                     <div class="buff-row" data-buff-index="${bIndex}" data-hex-color="${hexColor}" style="display:flex; flex-direction: row; gap: 8px; align-items:center; background:rgba(0,0,0,0.2); padding: 8px 10px; border-radius: 8px; backdrop-filter: blur(4px);">
                         <div style="display: flex; align-items: center; gap: 4px;">
                             ${iconHtml}
-                            <p style="font-size:12px; color:${textColor}; margin: 0; white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">${displayName}</p>
+                            <p style="font-size:12px; color:${textColor}; margin: 0; white-space: nowrap;">${displayName}</p>
                         </div>
                         <label class="switch" style="position:relative; display:inline-block; width:26px; min-width: 26px; height:14px; box-sizing: border-box; flex-shrink: 0; margin-left: 4px;">
                             <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${charIndex}, ${bIndex})" style="opacity:0; width:0; height:0;">
@@ -216,7 +232,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
                 <div style="display: flex; align-items: center; gap: 10px; padding: 12px 12px 0 12px; z-index: 2; position: relative;">
                     ${charAvatarHtml}
                     <div style="display: flex; flex-direction: column; overflow: hidden;">
-                        <h3 style="margin: 0; font-size: 15px; color: var(--text-always-white); text-shadow: 0 2px 4px rgba(0,0,0,0.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${charName}</h3>
+                        <h3 style="margin: 0; font-size: 15px; color: var(--text-always-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight:normal;">${charName}</h3>
                         ${charData.role ? `<span style="font-size: 11px; color: var(--text-grey); margin-top: 2px;">${charData.role}</span>` : ''}
                     </div>
                 </div>
