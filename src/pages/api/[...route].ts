@@ -1,6 +1,29 @@
 import { Hono } from 'hono';
 import type { APIRoute } from 'astro';
 import { createClient } from '@supabase/supabase-js';
+import { parseEnkaData } from '../../server/enkaParser';
+import { calculateCharacterScore, calculateMaxTheoreticalScore } from '../../scripts/scoring.js';
+
+// Chargement en mémoire vive de toutes les configs de tes persos !
+const charConfigsLoaders = import.meta.glob('../../../data/characters/*.json', { eager: true });
+// On crée un dictionnaire rapide : { "Hu_Tao": {...}, "Arlecchino": {...} }
+const CHAR_CONFIGS: Record<string, any> = {};
+for (const path in charConfigsLoaders) {
+    const fileName = path.split('/').pop()?.replace('.json', '') || "";
+    CHAR_CONFIGS[fileName] = (charConfigsLoaders[path] as any).default || charConfigsLoaders[path];
+}
+
+const ENKA_TO_LOCAL_NAME: Record<string, string> = {
+    "Alhatham": "Alhaitham", "Ambor": "Amber", "Itto": "Arataki_Itto", "Baizhuer": "Baizhu",
+    "Freminet": "Fréminet", "Hutao": "Hu_Tao", "Qin": "Jean", "Kazuha": "Kaedehara_Kazuha",
+    "Ayaka": "Kamisato_Ayaka", "Ayato": "Kamisato_Ayato", "Momoka": "Kirara", "Sara": "Kujou_Sara",
+    "Shinobu": "Kuki_Shinobu", "Lanyan": "Lan_Yan", "Liney": "Lyney", "Wanderer": "Nomade",
+    "Noel": "Noëlle", "Olorun": "Ororon", "Rosaria": "Rosalia", "MarionetteNew": "Sandrone",
+    "Kokomi": "Sangonomiya_Kokomi", "Heizo": "Shikanoin_Heizou", "Shougun": "Shogun_Raiden",
+    "Tohma": "Thomas", "Liuyun": "Xianyun", "Yae": "Yae_Miko", "Feiyan": "Yanfei",
+    "Mizuki": "Yumemizuki_Mizuki", "Yunjin": "Yun_Jin", "Linette": "Lynette", "SkirkNew": "Skirk",
+    "Emilie": "Émilie"
+};
 
 export const prerender = false;
 
@@ -81,12 +104,90 @@ app.get('/player/:uid', async (c) => {
 
     const enkaData = await enkaRes.json();
 
-    // On renvoie fièrement le résultat au format JSON
+    // 1. Parsing brut -> Objet Guoba
+    const persos = await parseEnkaData(enkaData);
+
+    // 2. Calcul du score pour chaque personnage
+    const results = persos.map((perso: any) => {
+        // Enka donne des noms comme "MarionetteNew", on les traduit avec notre dictionnaire ENKA_TO_LOCAL_NAME
+        const localName = ENKA_TO_LOCAL_NAME[perso.name] || perso.name;
+        
+        let config = CHAR_CONFIGS[localName];
+        if (!config) {
+            const fuzzyKey = Object.keys(CHAR_CONFIGS).find(k => 
+                k.replace(/_/g, '').toLowerCase() === localName.toLowerCase()
+            );
+            if (fuzzyKey) config = CHAR_CONFIGS[fuzzyKey];
+        }
+
+        if (!config) {
+            return {
+                id: perso.id,
+                name: perso.name,
+                localName: localName,
+                error: 'Configuration non trouvée dans /data/characters/'
+            };
+        }
+
+        let bestBuildKey = Object.keys(config.builds)[0];
+        let maxEfficiency = -1;
+        let bestScoringConfig = null;
+
+        // On simule chaque build pour trouver celui qui matche le mieux avec l'équipement actuel (Efficiency)
+        Object.entries(config.builds).forEach(([key, build]: [string, any]) => {
+            const scoringConfig = {
+                weights: build.weights,
+                idealMainStats: build.idealMainStats,
+                bestSets: build.bestSets || [],
+                goodSets: build.goodSets || []
+            };
+
+            const simulation = calculateCharacterScore(perso, scoringConfig, 45); // Max rolls n'a pas d'importance pour ce ratio
+            const potential = calculateMaxTheoreticalScore(perso, scoringConfig);
+            
+            let efficiency = 0;
+            if (potential && potential.score > 0) {
+                efficiency = simulation.score / potential.score;
+            }
+
+            if (efficiency > maxEfficiency) {
+                maxEfficiency = efficiency;
+                bestBuildKey = key;
+                bestScoringConfig = scoringConfig;
+            }
+        });
+
+        // Sécurité si aucun build n'a pu être sélectionné
+        if (!bestScoringConfig) {
+            bestScoringConfig = {
+                weights: config.builds[bestBuildKey].weights,
+                idealMainStats: config.builds[bestBuildKey].idealMainStats,
+                bestSets: config.builds[bestBuildKey].bestSets || [],
+                goodSets: config.builds[bestBuildKey].goodSets || []
+            };
+        }
+
+        // LE CŒUR DU RÉACTEUR : On calcule d'abord le max dynamique !
+        const potentialMax = calculateMaxTheoreticalScore(perso, bestScoringConfig);
+        
+        // Puis on passe ce max dynamique à ton algorithme
+        const score = calculateCharacterScore(perso, bestScoringConfig, potentialMax.totalRolls);
+
+        return {
+            id: perso.id,
+            name: perso.name,
+            archetype: bestBuildKey,
+            score: score.score, // Le vrai score brut
+            grade: score.grade
+        };
+    });
+
+    // On renvoie fièrement le résultat
     return c.json({
-      status: 'succès',
-      message: 'Données Enka récupérées avec succès par Hono !',
-      uid: uid,
-      raw_data: enkaData
+        status: 'succès',
+        message: 'Scores calculés avec succès par l\'Arbitre !',
+        uid: uid,
+        scores: results
     });
 
   } catch (err) {
