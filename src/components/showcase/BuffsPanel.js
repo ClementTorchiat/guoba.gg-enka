@@ -166,9 +166,20 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
                 const knobColor = buff.active ? 'var(--text-always-white)' : 'rgba(255, 255, 255, 0.6)';
                 const knobTransform = buff.active ? 'transform:translateX(12px);' : '';
 
+                let iconHtml = '';
+                if (buff.id && buff.id.startsWith('res_')) {
+                    const element = buff.id.split('_')[1];
+                    if (element && element !== 'divers') {
+                        iconHtml = `<img src="assets/simulator/icons/icon_${element.toLowerCase()}.webp" style="width: 16px; height: 16px; object-fit: contain; flex-shrink: 0;" alt="${element}" onerror="this.style.display='none'">`;
+                    }
+                }
+
                 html += `
                     <div class="buff-row" data-buff-index="${bIndex}" data-hex-color="${hexColor}" style="display:flex; flex-direction: row; gap: 8px; align-items:center; background:rgba(0,0,0,0.2); padding: 8px 10px; border-radius: 8px; backdrop-filter: blur(4px);">
-                        <p style="font-size:12px; color:${textColor}; margin: 0; white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">${displayName}</p>
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            ${iconHtml}
+                            <p style="font-size:12px; color:${textColor}; margin: 0; white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">${displayName}</p>
+                        </div>
                         <label class="switch" style="position:relative; display:inline-block; width:26px; min-width: 26px; height:14px; box-sizing: border-box; flex-shrink: 0; margin-left: 4px;">
                             <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${charIndex}, ${bIndex})" style="opacity:0; width:0; height:0;">
                             <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:${trackColor}; transition:.4s; border-radius:34px; width: 100%;"></span>
