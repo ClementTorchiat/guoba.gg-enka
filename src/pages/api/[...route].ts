@@ -40,12 +40,61 @@ app.get('/test-db', async (c) => {
   });
 });
 
-app.get('/player/:uid', (c) => {
+app.get('/player/:uid', async (c) => {
   const uid = c.req.param('uid');
-  return c.json({
-    message: `Prêt à fetch l'UID : ${uid}`,
-    status: 'en attente'
-  });
+
+  // --- 1. Vérification anti-spam (Rate Limiting via Supabase) ---
+  const { data: player } = await supabase
+    .from('players')
+    .select('last_updated')
+    .eq('uid', uid)
+    .maybeSingle(); // maybeSingle évite de lever une erreur si le joueur n'existe pas encore
+
+  if (player && player.last_updated) {
+    const lastUpdated = new Date(player.last_updated).getTime();
+    const now = Date.now();
+    const diffMinutes = (now - lastUpdated) / (1000 * 60);
+
+    // Si mis à jour il y a moins de 2 minutes, on bloque
+    if (diffMinutes < 2) {
+      return c.json({
+        status: 'rate_limited',
+        message: 'Ce profil a été mis à jour trop récemment. Veuillez patienter 2 minutes.'
+      }, 429);
+    }
+  }
+
+  // --- 2. Le Fetch vers Enka.Network ---
+  try {
+    const enkaRes = await fetch(`https://enka.network/api/uid/${uid}`, {
+      headers: {
+        'User-Agent': 'guoba.gg-backend/1.0 (https://guoba.gg)'
+      }
+    });
+    
+    if (!enkaRes.ok) {
+      return c.json({
+        status: 'erreur_enka',
+        message: `Impossible de récupérer les données Enka (Code ${enkaRes.status})`
+      }, enkaRes.status as any);
+    }
+
+    const enkaData = await enkaRes.json();
+
+    // On renvoie fièrement le résultat au format JSON
+    return c.json({
+      status: 'succès',
+      message: 'Données Enka récupérées avec succès par Hono !',
+      uid: uid,
+      raw_data: enkaData
+    });
+
+  } catch (err) {
+    return c.json({
+      status: 'erreur_serveur',
+      message: 'Une erreur est survenue lors du fetch vers Enka.'
+    }, 500);
+  }
 });
 
 export const ALL: APIRoute = (context) => app.fetch(context.request);
