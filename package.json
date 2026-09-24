@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.13",
+    "@supabase/supabase-js": "^2.117.1",
     "astro": "^5.0.0",
     "hono": "^4.13.9",
     "nanostores": "^1.4.2"
