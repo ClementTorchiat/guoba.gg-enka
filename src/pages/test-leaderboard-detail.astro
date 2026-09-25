@@ -1,36 +1,211 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import StaticLayout from "../layouts/StaticLayout.astro";
 ---
 
-<Layout title="Test - Détail d'un Leaderboard" description="Page de test pour intégrer le design du classement d'un archétype.">
-  
-  <div class="test-container" style="padding: 40px; color: white;">
-    <h1>[TEST] Classement : Arlecchino - DPS Fonte</h1>
-    <p>C'est ici que tu peux intégrer ta maquette Figma pour l'affichage d'un classement d'archétype avec le Top 1, 2, 3, etc.</p>
-    
-    <!-- 
-      TODO: Intégrer ici le HTML/CSS de la maquette Figma.
-      Plus tard, je ferai une requête Supabase vers la table `builds` 
-      (filtrée par avatar_id = 'Arlecchino' et archetype = 'DPS Fonte', triée par score DESC) 
-      pour injecter les vrais joueurs et leurs scores !
-    -->
-
-    <div class="mock-leaderboard" style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px;">
-        
-        <!-- Exemple de Ligne Leaderboard -->
-        <div class="mock-row" style="display: flex; justify-content: space-between; border: 1px solid #444; padding: 15px 20px; border-radius: 8px; background: #222; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <h2 style="margin: 0; color: #ffd700;">#1</h2>
-                <div style="width: 40px; height: 40px; background: #555; border-radius: 50%;"></div>
-                <strong>Guoba_Tester</strong>
-            </div>
-            <div style="text-align: right;">
-                <span style="font-size: 1.2rem; font-weight: bold; color: #ffaa00;">288.7</span>
-                <span style="display: block; font-size: 0.8rem; color: #aaa;">Grade S+</span>
-            </div>
+<!-- Revoir les paramètres du Layout et StaticLayout -->
+<Layout title="Classements — guoba.gg" titleKey="nav.leaderboards" description="Découvrez guoba.gg, l'optimiseur de builds et coach virtuel indépendant pour Genshin Impact. Comprenez le fonctionnement des scores, grades et recommandations de farm.">
+  <StaticLayout currentPage="?">
+    <!-- On utilise le même hero pour donner l'impression d'un one page fluide -->
+    <div class="static-page">
+      <div class="static-page-hero">
+        <h1 class="static-page-title">Classements</h1>
+        <p class="static-page-lead">Parcourez les classements basés sur le score et le grade.</p>
+      </div>
+      <div class="leaderboard-content" style="margin-top: 20px;">
+        <!-- Ici dans les tools, on a juste un bouton pour revenir à la liste de tous les personnages et leurs classements -->
+        <div class="leaderboard-details-tools" style="display: flex; flex-direction: row; justify-content: space-between;">
+          <button style="font-family: Shinshin, sans-serif; display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(255,255,255,0); background: var(--bg-panel); color:var(--text-primary);">
+            <span>Revenir aux classements</span>
+          </button>
         </div>
+        <!-- Les infos du classement, séparés en 3 -->
+        <div class="leaderboard-info" style="display: flex; flex-direction: row; position:relative; padding:7px; overflow:hidden; background-color: rgb(from #5053bb calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); margin-top: 8px;">
+          <!-- On utilise le même style que pour les fiches de personnages avec le splash art du personnage -->
+          <div style="position: absolute; inset: 0; background-image: url('https://enka.network/ui/UI_Gacha_AvatarImg_MarionetteNew.webp'); background-position: center center; background-repeat: no-repeat; background-size: 200%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);"></div>
+          <!-- Comme dit dans l'autre fichier statique, #5053bb est en fait le --char-hex du personnage qu'on consulte -->
+          <div style="position: absolute; inset: 0; background-color: rgb(from #5053bb calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); transition: background-color 0.35s; z-index: 1;"></div>
+          <div class="leaderboard-info-left" style="display: flex; flex-direction: column; gap: 16px; z-index: 1;">
+            <div class="leaderboard-info-left-name" style="display: flex; flex-direction: row; gap: 18px; align-items: center;">
+              <!-- Avatar de face du personnage -->
+              <img src="https://enka.network/ui/UI_AvatarIcon_MarionetteNew.png" style="width: 86px; height:86px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" />
+              <div class="leaderboard-info-left-name-container" style="display:flex; flex-direction: column;">
+                <!-- Les icônes de l'élément et de l'arme du personnage -->
+                <div class="leaderboard-info-left-name-container-icons" style="display: flex; flex-direction: row;">
+                  <img src="/assets/simulator/icons/icon_cryo.webp" style="width: 21px; height: 21px;" />
+                  <img src="/assets/simulator/icons/icon_claymore.webp" style="width: 21px; height: 21px;" />
+                </div>
+                <!-- Le nom du personnage -->
+                <p style="font-size: 22px;">Sandrone</p>
+                <!-- Le nom du dictionnaire lié au leaderboard_id qu'on consulte -->
+                <p style="font-size: 18px; opacity: 0.5;">DPS Astroconduction</p>
+              </div>
+            </div>
+            <!-- Ici les alliés du personnage -->
+            <div class="leaderboard-info-left-team" style="border-radius: 8px; background-color: rgba(0, 0, 0, 0.4); padding-top: 8px;padding-left: 18px;padding-bottom: 18px; padding-right: 18px; display:flex; flex-direction: column; gap: 16px;">
+              <div class="leaderboard-info-left-team-title" style="display:flex; flex-direction: row; justify-content: space-between; gap:16px;">
+                <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                  <p>Équipe associée</p>
+                  <!-- Icône d'information, on parlera de ce qu'il fait plus tard -->
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 7.5C14 3.91015 11.0899 1 7.5 1C3.91015 1 1 3.91015 1 7.5C1 11.0899 3.91015 14 7.5 14V15C3.35786 15 0 11.6421 0 7.5C0 3.35786 3.35786 0 7.5 0C11.6421 0 15 3.35786 15 7.5C15 11.6421 11.6421 15 7.5 15V14C11.0899 14 14 11.0899 14 7.5Z" fill="white"></path>
+                    <path d="M9.95301 5.49967C9.84324 4.97607 9.53223 4.5997 9.03915 4.35734C8.52821 4.10547 7.97109 4.03764 7.43358 4C6.49445 4.01613 5.75831 4.35072 5.24519 5.08029C5.11582 5.26434 4.97469 5.45211 5.00387 5.69488C5.03393 5.94345 5.28004 6.07994 5.50741 5.95751C5.65464 5.87852 5.79926 5.7776 5.90902 5.65725C6.29626 5.23208 6.76321 5.0104 7.36563 5.06747C7.74676 5.10387 8.10656 5.37642 8.16449 5.68909C8.23244 6.05719 8.04296 6.35332 7.62131 6.51172C7.43532 6.58162 7.23713 6.62174 7.04765 6.6846C6.68742 6.80413 6.44915 7.02498 6.36203 7.39391C6.21524 8.01553 6.4387 8.53003 6.84074 8.99821C6.95356 9.12932 7.1095 9.19095 7.28678 9.15579C7.46276 9.12105 7.5538 8.98953 7.60433 8.83898C7.65093 8.69919 7.67881 8.55361 7.71192 8.40968C7.81167 7.97872 7.99635 7.81287 8.45721 7.73305C9.074 7.62634 9.57492 7.35958 9.82321 6.78262C10.0005 6.37069 10.0458 5.94138 9.95301 5.49967Z" fill="white"></path>
+                    <path d="M7.21796 9.29683C6.68263 9.30096 6.31586 9.64879 6.31804 10.1501C6.32022 10.6542 6.68567 10.9971 7.22362 11C7.7546 11.0029 8.11875 10.6542 8.11745 10.1451C8.11571 9.63349 7.7546 9.29269 7.21796 9.29683Z" fill="white"></path>
+                  </svg>
+                </div>
+                <!-- Ce bouton sera un dropdown (même style et fonctionnement que le dropdown "custom-dropdown-btn" de la fiche personnage qui permet de sélectioner la team) -->
+                <!-- Ce bouton servira à choisir la team affichée si le leaderboard_id qu'on consulte est associé à deux teams ou plus dans le json de personnage -->
+                <!-- Si le leaderboard_id n'est associé qu'à une team dans le json du personnage, alors le bouton n'apparaît pas du tout -->
+                <button type="button" style="display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 14px; box-sizing:border-box; border-radius:8px; font-size:12px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid transparent; background:rgba(0, 0, 0, 0.25); color:var(--text-always-white); box-shadow:none; font-family: Shinshin, sans-serif;">
+                  <span style="pointer-events:none;">DPS Astroconduction</span>
+                  <svg class="focus-chevron" style="width:14px; height:14px; transition:transform 0.2s ease; margin-left:4px; opacity:0.8; pointer-events:none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+              </div>
+              <!-- Ici les alliés du personnage. Je ne l'ai pas fait, mais l'objectif est que ça contienne toutes les mêmes infos que l'endroit où on montre les teams au dessus de la fiche personnage (à savoir l'artéfact équipé, l'arme et la constellation) -->
+              <div class="leaderboard-info-left-teammates" style="display: flex; flex-direction: row; gap: 8px;">
+                <!-- Les couleurs de fond dépendant de l'élément des personnages. Le fonctionnement est le même que l'endroit où on montre les teams au dessus de la fiche personnage -->
+                <img style="width: 80px; height: 80px; border-radius: 8px; background: #1B7A92; border: 2px solid rgba(255, 255, 255, 0.5);" src="https://enka.network/ui/UI_AvatarIcon_MarionetteNew.png" />
+                <img style="width: 80px; height: 80px; border-radius: 8px; background: #512C88;" src="https://enka.network/ui/UI_AvatarIcon_Yae.png" />
+                <img style="width: 80px; height: 80px; border-radius: 8px; background: #1B7A92;" src="https://enka.network/ui/UI_AvatarIcon_Odette.png" />
+                <img style="width: 80px; height: 80px; border-radius: 8px; background: #512C88;" src="https://enka.network/ui/UI_AvatarIcon_Alyosha.png" />
+              </div>
+            </div>
 
+            <!-- Ici, on sépare le leaderboard en caps d'ER. Il y a un classement par cap d'ER. Ces catégories sont générées intelligemment. -->
+            <!-- ER Recommandée correspond à "er_req" associé à la team dans le json du personnage. Si un leaderboard_id est associé à deux teams et que les deux ont un er_req différent, on affiche les deux options -->
+            <!-- Les autres caps d'ER sont générés en fonction du er_req le plus bas. Par exemple, si le er_req est à 150%, on aura 140%, 130% et 120% (les 3 caps sont générés en soustrayant 10% à l'er_req à chaque fois)  -->
+            <!-- Pour le style actif et inactif des boutons, ils ont le même style que ceux de la roadmap -->
+            <div class="leaderboard-info-left-er" style="display:flex; flex-direction: column; gap: 8px; margin-left: 10px;">
+              <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                <p style="font-size: 14px;">ER Recommandée :</p>
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 7.5C14 3.91015 11.0899 1 7.5 1C3.91015 1 1 3.91015 1 7.5C1 11.0899 3.91015 14 7.5 14V15C3.35786 15 0 11.6421 0 7.5C0 3.35786 3.35786 0 7.5 0C11.6421 0 15 3.35786 15 7.5C15 11.6421 11.6421 15 7.5 15V14C11.0899 14 14 11.0899 14 7.5Z" fill="white"></path>
+                  <path d="M9.95301 5.49967C9.84324 4.97607 9.53223 4.5997 9.03915 4.35734C8.52821 4.10547 7.97109 4.03764 7.43358 4C6.49445 4.01613 5.75831 4.35072 5.24519 5.08029C5.11582 5.26434 4.97469 5.45211 5.00387 5.69488C5.03393 5.94345 5.28004 6.07994 5.50741 5.95751C5.65464 5.87852 5.79926 5.7776 5.90902 5.65725C6.29626 5.23208 6.76321 5.0104 7.36563 5.06747C7.74676 5.10387 8.10656 5.37642 8.16449 5.68909C8.23244 6.05719 8.04296 6.35332 7.62131 6.51172C7.43532 6.58162 7.23713 6.62174 7.04765 6.6846C6.68742 6.80413 6.44915 7.02498 6.36203 7.39391C6.21524 8.01553 6.4387 8.53003 6.84074 8.99821C6.95356 9.12932 7.1095 9.19095 7.28678 9.15579C7.46276 9.12105 7.5538 8.98953 7.60433 8.83898C7.65093 8.69919 7.67881 8.55361 7.71192 8.40968C7.81167 7.97872 7.99635 7.81287 8.45721 7.73305C9.074 7.62634 9.57492 7.35958 9.82321 6.78262C10.0005 6.37069 10.0458 5.94138 9.95301 5.49967Z" fill="white"></path>
+                  <path d="M7.21796 9.29683C6.68263 9.30096 6.31586 9.64879 6.31804 10.1501C6.32022 10.6542 6.68567 10.9971 7.22362 11C7.7546 11.0029 8.11875 10.6542 8.11745 10.1451C8.11571 9.63349 7.7546 9.29269 7.21796 9.29683Z" fill="white"></path>
+                </svg>
+                <button style="font-family: Shinshin, sans-serif; display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid #3b82f6; background: rgba(59,130,246,0.18); color:var(--text-primary);">
+                  <span style="color: #60a5fa;">≥130%</span>
+                </button>
+              </div>
+              <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                <p style="font-size: 14px; opacity: 0.5;">Autres ER :</p>
+                <button style="font-family: Shinshin, sans-serif; display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(255,255,255,0); background: rgba(0, 0, 0, 0.25); color:var(--text-primary);">
+                  <span>≥100%</span>
+                </button>
+                <button style="font-family: Shinshin, sans-serif; display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(255,255,255,0); background: rgba(0, 0, 0, 0.25); color:var(--text-primary);">
+                  <span>≥110%</span>
+                </button>
+                <button style="font-family: Shinshin, sans-serif; display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(255,255,255,0); background: rgba(0, 0, 0, 0.25); color:var(--text-primary);">
+                  <span>≥120%</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Fonctionnalité vide, pour plus tard -->
+          <div class="leaderboard-info-right"></div>
+        </div>
+        <!-- Ici le leaderboard et ses entrées -->
+        <div class="leaderboards-container" style="background: var(--bg-panel); border-radius: 8px; margin-top: 24px; padding: 5px;">
+          <!-- en-tête du leaderboard. Comme pour la liste, j'ai mis des justify-content: space-between, mais il faut régler tout ça pour faire coincider les colonnes et les données -->
+          <div class="leaderboards-head" style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px 20px 10px 10px">
+            <p style="font-size: 12px;">#</p>
+            <p style="font-size: 12px;">Propriétaire</p>
+            <p style="font-size: 12px;">Set</p>
+            <p style="font-size: 12px;">Ratio de CRIT</p>
+            <p style="font-size: 12px;">Recharge d'énergie</p>
+            <p style="font-size: 12px;">Score</p>
+          </div>
+          <div class="leaderboard-list-rows" style="display: flex; flex-direction: column; gap: 5px;">
+            <!-- On alterne la couleur de fond des leaderboard-list-row -->
+            <div class="leaderboard-list-row" style="position: relative; overflow: hidden; padding: 10px; padding-right: 20px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.2); display:flex; flex-direction: row; gap: 13px; align-items: center; justify-content: space-between;">
+              <!-- Position dans le classement -->
+              <span>1</span>
+              <!-- Badge serveur du joueur et son nom -->
+              <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                <span class="pp-badge pp-badge-server pp-badge-server-EU">EU</span>
+                <span>clem</span>
+              </div>
+              <!-- Image du set d'artefacts équipé. Si 2p2p, il y aura 2 images côte à côte -->
+              <img src="https://enka.network/ui/UI_RelicIcon_15046_4.png" style="width: 36px; height: 36px; border-radius: 6px; background-color: rgba(0, 0, 0, 0.2); padding:2px;" />
+              <!-- Ratio de CRIT et crit value calculée -->
+              <div style="display: flex; flex-direction: row; align-items: end; gap:8px;">
+                <div style="display: flex; flex-direction: row; align-items: center; opacity:0.5; font-size: 12px;">
+                  <span>60.7%</span>
+                  <span>: 263.6%</span>
+                </div>
+                <span style="font-size: 14px; color: var(--accent-gold)">242.5 CV</span>
+              </div>
+              <!-- Recharge d'énergie du build -->
+              <div style="display:flex; flex-direction: row; align-items: center; gap:6px;">
+                <img src="/assets/simulator/icons/icon_er.webp" style="width: 22px; height: 22px;" />
+                <span style="font-size: 14px;">133.7%</span>
+              </div>
+              <!-- Score et grade du build. J'ai mis accent-gold mais utiliser la bonne couleur correspondant au grade -->
+              <span style="font-size: 14px; color: var(--accent-gold)">432.5 (SS)</span>
+            </div>
+            <div class="leaderboard-list-row" style="position: relative; overflow: hidden; padding: 10px; padding-right: 20px; border-radius: 8px; background-color: var(--bg-panel); display:flex; flex-direction: row; gap: 13px; align-items: center; justify-content: space-between;">
+              <span>2</span>
+              <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                <span class="pp-badge pp-badge-server pp-badge-server-EU">EU</span>
+                <span>clem</span>
+              </div>
+              <img src="https://enka.network/ui/UI_RelicIcon_15046_4.png" style="width: 36px; height: 36px; border-radius: 6px; background-color: rgba(0, 0, 0, 0.2); padding:2px;" />
+              <div style="display: flex; flex-direction: row; align-items: end; gap:8px;">
+                <div style="display: flex; flex-direction: row; align-items: center; opacity:0.5; font-size: 12px;">
+                  <span>60.7%</span>
+                  <span>: 263.6%</span>
+                </div>
+                <span style="font-size: 14px; color: var(--accent-gold)">242.5 CV</span>
+              </div>
+              <div style="display:flex; flex-direction: row; align-items: center; gap:6px;">
+                <img src="/assets/simulator/icons/icon_er.webp" style="width: 22px; height: 22px;" />
+                <span style="font-size: 14px;">133.7%</span>
+              </div>
+              <span style="font-size: 14px; color: var(--accent-gold)">432.5 (SS)</span>
+            </div>
+            <div class="leaderboard-list-row" style="position: relative; overflow: hidden; padding: 10px; padding-right: 20px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.2); display:flex; flex-direction: row; gap: 13px; align-items: center; justify-content: space-between;">
+              <span>3</span>
+              <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                <span class="pp-badge pp-badge-server pp-badge-server-EU">EU</span>
+                <span>clem</span>
+              </div>
+              <img src="https://enka.network/ui/UI_RelicIcon_15046_4.png" style="width: 36px; height: 36px; border-radius: 6px; background-color: rgba(0, 0, 0, 0.2); padding:2px;" />
+              <div style="display: flex; flex-direction: row; align-items: end; gap:8px;">
+                <div style="display: flex; flex-direction: row; align-items: center; opacity:0.5; font-size: 12px;">
+                  <span>60.7%</span>
+                  <span>: 263.6%</span>
+                </div>
+                <span style="font-size: 14px; color: var(--accent-gold)">242.5 CV</span>
+              </div>
+              <div style="display:flex; flex-direction: row; align-items: center; gap:6px;">
+                <img src="/assets/simulator/icons/icon_er.webp" style="width: 22px; height: 22px;" />
+                <span style="font-size: 14px;">133.7%</span>
+              </div>
+              <span style="font-size: 14px; color: var(--accent-gold)">432.5 (SS)</span>
+            </div>
+            <div class="leaderboard-list-row" style="position: relative; overflow: hidden; padding: 10px; padding-right: 20px; border-radius: 8px; background-color: var(--bg-panel); display:flex; flex-direction: row; gap: 13px; align-items: center; justify-content: space-between;">
+              <span>4</span>
+              <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                <span class="pp-badge pp-badge-server pp-badge-server-EU">EU</span>
+                <span>clem</span>
+              </div>
+              <img src="https://enka.network/ui/UI_RelicIcon_15046_4.png" style="width: 36px; height: 36px; border-radius: 6px; background-color: rgba(0, 0, 0, 0.2); padding:2px;" />
+              <div style="display: flex; flex-direction: row; align-items: end; gap:8px;">
+                <div style="display: flex; flex-direction: row; align-items: center; opacity:0.5; font-size: 12px;">
+                  <span>60.7%</span>
+                  <span>: 263.6%</span>
+                </div>
+                <span style="font-size: 14px; color: var(--accent-gold)">242.5 CV</span>
+              </div>
+              <div style="display:flex; flex-direction: row; align-items: center; gap:6px;">
+                <img src="/assets/simulator/icons/icon_er.webp" style="width: 22px; height: 22px;" />
+                <span style="font-size: 14px;">133.7%</span>
+              </div>
+              <span style="font-size: 14px; color: var(--accent-gold)">432.5 (SS)</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-
+  </StaticLayout>
 </Layout>

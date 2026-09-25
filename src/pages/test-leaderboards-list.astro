@@ -1,30 +1,159 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import StaticLayout from "../layouts/StaticLayout.astro";
 ---
 
-<Layout title="Test - Liste des Leaderboards" description="Page de test pour intégrer le design de la liste des personnages et archétypes.">
-  
-  <div class="test-container" style="padding: 40px; color: white;">
-    <h1>[TEST] Liste des Leaderboards (Personnages)</h1>
-    <p>C'est ici que tu peux intégrer ta maquette Figma pour la page qui liste tous les personnages et leurs archétypes de leaderboard disponibles.</p>
-    
-    <!-- 
-      TODO: Intégrer ici le HTML/CSS de la maquette Figma.
-      Plus tard, je bouclerai sur la liste de tous les personnages depuis les fichiers JSON 
-      pour générer cette grille dynamiquement !
-    -->
-    <div class="mock-grid" style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
-        
-        <!-- Exemple de Card -->
-        <div class="mock-card" style="border: 1px solid #444; padding: 20px; border-radius: 12px; background: #1e1e1e;">
-            <h2>Arlecchino</h2>
-            <ul>
-                <li><a href="/test-leaderboard-detail" style="color: #ffaa00;">DPS Fonte</a></li>
-                <li><a href="/test-leaderboard-detail" style="color: #ffaa00;">DPS Surcharge</a></li>
-            </ul>
+<!-- Revoir les paramètres du Layout et StaticLayout -->
+<Layout title="Classements — guoba.gg" titleKey="nav.leaderboards" description="Découvrez guoba.gg, l'optimiseur de builds et coach virtuel indépendant pour Genshin Impact. Comprenez le fonctionnement des scores, grades et recommandations de farm.">
+  <StaticLayout currentPage="leaderboards">
+    <!-- J'ai gardé les classes des autres pages au début pour garder le tout cohérent -->
+    <div class="static-page">
+      <div class="static-page-hero">
+        <h1 class="static-page-title">Classements</h1>
+        <p class="static-page-lead">Parcourez les classements basés sur le score et le grade.</p>
+      </div>
+      <!-- Début de la liste des leaderboards -->
+      <div class="leaderboards-content" style="margin-top: 20px;">
+        <!-- Ceci est le header de la liste, avec barre de recherche par nom de personnage et des infos comme nombre de classements différents (nombre de leaderboard_id) etle nombre d'entrées au total (nombre de builds enregistrés en database) -->
+        <div class="leaderboards-tools" style="display: flex; flex-direction: row; justify-content: space-between;">
+          <!-- Barre de recherche copiée depuis la barre de recherche d'UID -->
+          <form style="position: relative; width: 423px;">
+            <input style="width: 100%; background: var(--bg-panel); border: none; border-radius: 8px; font-family: 'ShinShin', sans-serif; font-size: 14px; padding-left: 15px; padding-top: 17px; padding-bottom: 14px; color: var(--text-primary);" placeholder="Rechercher par nom de personnage..." />
+            <button type="submit" style="position: absolute; right: 15px; top: 15px; background: none; border: none; cursor: pointer;">
+              <img src="/assets/simulator/icons/icon_search_white.svg" alt="" style="width: 20px; height: 20px;" />
+            </button>
+          </form>
+          <!-- Infos -->
+          <div style="display: flex; color: var(--text-grey); font-size: 14px; align-items: center;">
+            <p>XXX classements |</p>
+            <p>XXXXXXX entrées</p>
+          </div>
         </div>
+        <!-- Conteneur principal de la liste des classements -->
+        <div class="leaderboards-container" style="background: var(--bg-panel); border-radius: 8px; margin-top: 8px; padding: 5px;">
+          <!-- Header de la liste. Il est en justify-content: space-between, mais l'objectif est de faire coincider chaque colonne avec les données d'en dessous, ce que je n'ai pas réussi à faire -->
+          <div class="leaderboards-head" style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px 20px 10px 10px">
+            <p style="font-size: 12px;">Classement</p>
+            <p style="font-size: 12px;">Équipe</p>
+            <p style="font-size: 12px;">Entrées</p>
+            <p style="font-size: 12px;">Dernière MàJ</p>
+          </div>
+          <!-- La liste est séparée en deux, en statique pour montrer ce que j'attend. On a la liste de tous les personnages (leaderboards-list-row) par ordre alphabétique.  -->
+          <div class="leaderboards-list-rows" style="display: flex; flex-direction: column; gap: 5px;">
+            <!-- Ici un exemple de row pour un personnage. On utilisera le --char-hex à la place du #5053bb (ce sera le cas partout ailleurs où #5053bb apparaît). -->
+            <div class="leaderboard-list-row" style="position: relative; overflow: hidden; padding: 2px; padding-right: 20px; border-radius: 8px; background-color: rgb(from #5053bb calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); display:flex; flex-direction: row; gap: 13px; align-items: center;">
+              <!-- On utilise un système similaire à la fiche personnage pour donner du style en prenant le splash art du personnage en question -->
+              <div style="position: absolute; inset: 0; background-image: url('https://enka.network/ui/UI_Gacha_AvatarImg_MarionetteNew.webp'); background-position: center center; background-repeat: no-repeat; background-size: 100%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);"></div>
+              <div style="position: absolute; inset: 0; background-color: rgb(from #5053bb calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); transition: background-color 0.35s; z-index: 1;"></div>
 
+              <!-- Avatar de face du personnage -->
+              <img src="https://enka.network/ui/UI_AvatarIcon_MarionetteNew.png" style="z-index: 1; width: 52px; height: 52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" />
+              <!-- Comme dit plus haut, j'ai utilisé justify-content: space-between, mais j'ai pas réussi à aligner les données comme je le voudrais avec le nom des colonnes -->
+              <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; width: 100%;">
+                <!-- Nom du personnage -->
+                <p style="font-size: 16px;">Sandrone</p>
+                <!-- Nombre de classements associés au personnage (nombre de leaderboard_id différents dans son json) -->
+                <!-- Tu peux aussi remarquer une flèche retournée ici, c'est lié à comment je veux que cette page fonctionne. En gros cliquer une leaderboard-list-row déploie les classements (leaderboard_id) de ce dernier. Le style que je veux pour les classements disponibles est le faux "leaderboard-list-row-details", trois dans cet exemple statique -->
+                <!-- Le déploiement doit d'ailleurs se faire avec une animation fluide, comme une sorte de slide-down -->
+                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 20px;">
+                  <p style="font-size: 14px;">2 classements</p>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; flex-shrink: 0; transform: rotate(180deg);" />
+                </div>
+              </div>
+            </div>
+            <!-- Ici un faux leaderboard-list-row-details. Il est là pour montrer le style que je veux pour les classements disponibles qui se déploient sous un leaderboard-list-row quand on clique l'un de ces dernier -->
+            <!-- La couleur de background alterne entre rgba(0,0,0,0.2) et --bg-panel entre chaque classement -->
+            <!-- Cliquer sur un leaderboard-list-row-details doit nous rediriger vers la page correspondant au classement de leaderboard_id (l'autre page statique que j'ai fait pour les styles) -->
+            <div class="leaderboard-list-row-details" style="position: relative; overflow: hidden; padding: 8px; padding-right: 20px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.2); display:flex; flex-direction: row; gap: 20px; align-items: center;">
+              <!-- Icône de l'élément du personnage -->
+              <img src="/assets/simulator/icons/icon_cryo.webp" style="z-index: 1; width: 38px; height: 38px; margin: 1px;" />
+              <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center;">
+                <!-- Nom du classement (ceux du dictionnaire que j'ai créé) -->
+                <p style="font-size: 14px;">DPS Astroconduction</p>
+                <!-- L'équipe liée à ce classement. Si un leaderboard_id est lié à deux ou plus de deux teams dans un json de personnage, on fait alterner les images des alliés avec une animation fluide pour montrer toutes les équipes possibles pour ce leaderboard_id -->
+                <div class="leaderboard-list-row-details-team" style="display:flex; flex-direction: row; gap:5px;">
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #1B7A92; border: 1px solid rgba(255, 255, 255, 0.5);" src="https://enka.network/ui/UI_AvatarIcon_MarionetteNew.png" />
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #512C88;" src="https://enka.network/ui/UI_AvatarIcon_Yae.png" />
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #1B7A92;" src="https://enka.network/ui/UI_AvatarIcon_Odette.png" />
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #512C88;" src="https://enka.network/ui/UI_AvatarIcon_Alyosha.png" />
+                </div>
+                <!-- Nombre d'entrées / de builds soumis sous ce leaderboard -->
+                <p style="font-size: 14px;">1553</p>
+                <!-- Date de dernière mise à jour de ce leaderboard (on parle de mise à jour genre dernière modification de la team dans le json du personnage) -->
+                <p style="font-size: 14px;">17/09/2026</p>
+              </div>
+            </div>
+            <!-- La suite sont des autres exemples de leaderboard-list-row-details et de leaderboard-list-row. Tu peux voir que le prochain leaderboard-list-row-details a une couleur de background différente (alterne comme mentionné précédemment) -->
+            <div class="leaderboard-list-row-details" style="position: relative; overflow: hidden; padding: 8px; padding-right: 20px; border-radius: 8px; background-color: var(--bg-panel); display:flex; flex-direction: row; gap: 20px; align-items: center;">
+              <img src="/assets/simulator/icons/icon_cryo.webp" style="z-index: 1; width: 38px; height: 38px; margin: 1px;" />
+              <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center;">
+                <p style="font-size: 14px;">DPS Astroconduction</p>
+                <div class="leaderboard-list-row-details-team" style="display:flex; flex-direction: row; gap:5px;">
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #1B7A92; border: 1px solid rgba(255, 255, 255, 0.5);" src="https://enka.network/ui/UI_AvatarIcon_MarionetteNew.png" />
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #512C88;" src="https://enka.network/ui/UI_AvatarIcon_Yae.png" />
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #1B7A92;" src="https://enka.network/ui/UI_AvatarIcon_Odette.png" />
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #512C88;" src="https://enka.network/ui/UI_AvatarIcon_Alyosha.png" />
+                </div>
+                <p style="font-size: 14px;">1553</p>
+                <p style="font-size: 14px;">17/09/2026</p>
+              </div>
+            </div>
+            <div class="leaderboard-list-row-details" style="position: relative; overflow: hidden; padding: 8px; padding-right: 20px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.2); display:flex; flex-direction: row; gap: 20px; align-items: center;">
+              <img src="/assets/simulator/icons/icon_cryo.webp" style="z-index: 1; width: 38px; height: 38px; margin: 1px;" />
+              <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center;">
+                <p style="font-size: 14px;">DPS Astroconduction</p>
+                <div class="leaderboard-list-row-details-team" style="display:flex; flex-direction: row; gap:5px;">
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #1B7A92; border: 1px solid rgba(255, 255, 255, 0.5);" src="https://enka.network/ui/UI_AvatarIcon_MarionetteNew.png" />
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #512C88;" src="https://enka.network/ui/UI_AvatarIcon_Yae.png" />
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #1B7A92;" src="https://enka.network/ui/UI_AvatarIcon_Odette.png" />
+                  <img style="width: 40px; height: 40px; border-radius: 5px; background: #512C88;" src="https://enka.network/ui/UI_AvatarIcon_Alyosha.png" />
+                </div>
+                <p style="font-size: 14px;">1553</p>
+                <p style="font-size: 14px;">17/09/2026</p>
+              </div>
+            </div>
+            <div class="leaderboard-list-row" style="position: relative; overflow: hidden; padding: 2px; padding-right: 20px; border-radius: 8px; background-color: rgb(from #5053bb calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); display:flex; flex-direction: row; gap: 13px; align-items: center;">
+              <div style="position: absolute; inset: 0; background-image: url('https://enka.network/ui/UI_Gacha_AvatarImg_MarionetteNew.webp'); background-position: center center; background-repeat: no-repeat; background-size: 100%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);"></div>
+              <div style="position: absolute; inset: 0; background-color: rgb(from #5053bb calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); transition: background-color 0.35s; z-index: 1;"></div>
+
+              <img src="https://enka.network/ui/UI_AvatarIcon_MarionetteNew.png" style="z-index: 1; width: 52px; height: 52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" />
+              <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; width: 100%;">
+                <p style="font-size: 16px;">Sandrone</p>
+                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 20px;">
+                  <p style="font-size: 14px;">2 classements</p>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; flex-shrink: 0;" />
+                </div>
+              </div>
+            </div>
+            <div class="leaderboard-list-row" style="position: relative; overflow: hidden; padding: 2px; padding-right: 20px; border-radius: 8px; background-color: rgb(from #5053bb calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); display:flex; flex-direction: row; gap: 13px; align-items: center;">
+              <div style="position: absolute; inset: 0; background-image: url('https://enka.network/ui/UI_Gacha_AvatarImg_MarionetteNew.webp'); background-position: center center; background-repeat: no-repeat; background-size: 100%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);"></div>
+              <div style="position: absolute; inset: 0; background-color: rgb(from #5053bb calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); transition: background-color 0.35s; z-index: 1;"></div>
+
+              <img src="https://enka.network/ui/UI_AvatarIcon_MarionetteNew.png" style="z-index: 1; width: 52px; height: 52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" />
+              <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; width: 100%;">
+                <p style="font-size: 16px;">Sandrone</p>
+                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 20px;">
+                  <p style="font-size: 14px;">2 classements</p>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; flex-shrink: 0;" />
+                </div>
+              </div>
+            </div>
+            <div class="leaderboard-list-row" style="position: relative; overflow: hidden; padding: 2px; padding-right: 20px; border-radius: 8px; background-color: rgb(from #5053bb calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); display:flex; flex-direction: row; gap: 13px; align-items: center;">
+              <div style="position: absolute; inset: 0; background-image: url('https://enka.network/ui/UI_Gacha_AvatarImg_MarionetteNew.webp'); background-position: center center; background-repeat: no-repeat; background-size: 100%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);"></div>
+              <div style="position: absolute; inset: 0; background-color: rgb(from #5053bb calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); transition: background-color 0.35s; z-index: 1;"></div>
+
+              <img src="https://enka.network/ui/UI_AvatarIcon_MarionetteNew.png" style="z-index: 1; width: 52px; height: 52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" />
+              <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; width: 100%;">
+                <p style="font-size: 16px;">Sandrone</p>
+                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 20px;">
+                  <p style="font-size: 14px;">2 classements</p>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; flex-shrink: 0;" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-
+  </StaticLayout>
 </Layout>
