@@ -29,6 +29,7 @@
         "fr": "DPS Brûlure",
         "en": "Burning DPS"
       },
+      "leaderboard_id": "kinich_burning_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

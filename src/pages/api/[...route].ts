@@ -179,7 +179,7 @@ app.get('/player/:uid', async (c) => {
       return {
         id: perso.id,
         name: perso.name,
-        archetype: bestBuildKey,
+        archetype: config.builds[bestBuildKey].leaderboard_id || bestBuildKey,
         score: score.score, // Le vrai score brut
         grade: score.grade,
         persoData: perso // Tout le détail (stats, armes, artéfacts avec sub-scores) à sauvegarder !

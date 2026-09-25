@@ -81,6 +81,7 @@
         "fr": "DPS Évaporation",
         "en": "Vape DPS"
       },
+      "leaderboard_id": "yanfei_vape_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -172,6 +173,7 @@
         "fr": "DPS Fonte",
         "en": "Melt DPS"
       },
+      "leaderboard_id": "yanfei_melt_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -265,6 +267,7 @@
         "fr": "DPS Surcharge",
         "en": "Overload DPS"
       },
+      "leaderboard_id": "yanfei_overload_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -351,6 +354,7 @@
         "fr": "DPS Bourgeonnement",
         "en": "Burgeon DPS"
       },
+      "leaderboard_id": "yanfei_burgeon_dps",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

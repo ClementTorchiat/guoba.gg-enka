@@ -50,6 +50,7 @@
         "fr": "DPS Hypercarry Hydro",
         "en": "Hypercarry Hydro DPS"
       },
+      "leaderboard_id": "neuvillette_hydro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -125,6 +126,7 @@
         "fr": "DPS Gel",
         "en": "Freeze DPS"
       },
+      "leaderboard_id": "neuvillette_hydro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -196,6 +198,7 @@
         "fr": "DPS Exubérance",
         "en": "Hyperbloom DPS"
       },
+      "leaderboard_id": "neuvillette_hyperbloom_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

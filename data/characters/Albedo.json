@@ -44,6 +44,7 @@
         "fr": "Sub-DPS Géo",
         "en": "Geo Sub-DPS"
       },
+      "leaderboard_id": "albedo_geo_subdps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

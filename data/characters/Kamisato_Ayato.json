@@ -29,6 +29,7 @@
         "fr": "DPS Hydro",
         "en": "Hydro DPS"
       },
+      "leaderboard_id": "ayato_hydro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -115,6 +116,7 @@
         "fr": "DPS Gel",
         "en": "Freeze DPS"
       },
+      "leaderboard_id": "ayato_freeze_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -201,6 +203,7 @@
         "fr": "Driver Exubérance",
         "en": "Hyperbloom Driver"
       },
+      "leaderboard_id": "ayato_hyperbloom_driver",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -291,6 +294,7 @@
         "fr": "Driver Fleurissement",
         "en": "Bloom Driver"
       },
+      "leaderboard_id": "ayato_bloom_driver",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,
@@ -366,6 +370,7 @@
         "fr": "DPS Électrocution",
         "en": "Electro-Charged DPS"
       },
+      "leaderboard_id": "ayato_hydro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -452,6 +457,7 @@
         "fr": "DPS Évaporation",
         "en": "Vape DPS"
       },
+      "leaderboard_id": "ayato_vape_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

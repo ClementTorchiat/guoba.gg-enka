@@ -7,11 +7,12 @@
     "burst": 9
   },
   "builds": {
-    "Burst Support": {
+    "Anemo Support": {
       "name": {
-        "fr": "Burst Support",
-        "en": "Burst Support"
+        "fr": "Support Anémo",
+        "en": "Anemo Support"
       },
+      "leaderboard_id": "sayu_anemo_support",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -105,6 +106,7 @@
         "fr": "Driver Dispersion",
         "en": "Swirl Driver"
       },
+      "leaderboard_id": "sayu_swirl_driver",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

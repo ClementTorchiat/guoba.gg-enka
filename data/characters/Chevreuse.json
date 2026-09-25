@@ -72,6 +72,7 @@
         "fr": "Support Surcharge",
         "en": "Overload Support"
       },
+      "leaderboard_id": "chevreuse_overload_support",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

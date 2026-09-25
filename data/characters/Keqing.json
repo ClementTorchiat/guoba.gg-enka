@@ -103,6 +103,7 @@
         "fr": "DPS Suractivation",
         "en": "Aggravate DPS"
       },
+      "leaderboard_id": "keqing_aggravate_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -193,6 +194,7 @@
         "fr": "DPS Surcharge",
         "en": "Overload DPS"
       },
+      "leaderboard_id": "keqing_overload_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -276,6 +278,7 @@
         "fr": "DPS Sélénocution",
         "en": "Lunar-Charged DPS"
       },
+      "leaderboard_id": "keqing_lunar_charged_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

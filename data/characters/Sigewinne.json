@@ -62,6 +62,7 @@
         "fr": "Healeuse universelle",
         "en": "Universal Healer"
       },
+      "leaderboard_id": "sigewinne_universal_healer",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,
@@ -133,6 +134,7 @@
         "fr": "Sub-DPS Burst",
         "en": "Burst Sub-DPS"
       },
+      "leaderboard_id": "sigewinne_burst_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -54,6 +54,7 @@
         "fr": "DPS Fonte",
         "en": "Melt DPS"
       },
+      "leaderboard_id": "mavuika_melt_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -143,6 +144,7 @@
         "fr": "DPS Surcharge",
         "en": "Overload DPS"
       },
+      "leaderboard_id": "mavuika_overload_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

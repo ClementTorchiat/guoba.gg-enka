@@ -45,6 +45,7 @@
         "fr": "DPS Surcharge Hexerei",
         "en": "Hexerei Overload DPS"
       },
+      "leaderboard_id": "klee_atk_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -125,6 +126,7 @@
         "fr": "DPS Évaporation Hexerei",
         "en": "Hexerei Vape DPS"
       },
+      "leaderboard_id": "klee_vape_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -211,6 +213,7 @@
         "fr": "DPS Mono-pyro Hexerei",
         "en": "Hexerei Mono-pyro DPS"
       },
+      "leaderboard_id": "klee_atk_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

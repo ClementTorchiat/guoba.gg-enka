@@ -49,6 +49,7 @@
         "fr": "Support Cryo",
         "en": "Cryo Support"
       },
+      "leaderboard_id": "shenhe_cryo_support",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

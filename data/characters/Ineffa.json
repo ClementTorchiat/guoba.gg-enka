@@ -32,6 +32,7 @@
         "fr": "Sub-DPS Sélénocution",
         "en": "Lunar-Charged Sub-DPS"
       },
+      "leaderboard_id": "ineffa_lunar_charged_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

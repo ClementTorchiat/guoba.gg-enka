@@ -54,6 +54,7 @@
         "fr": "DPS Sélénocution",
         "en": "Lunar-Charged DPS"
       },
+      "leaderboard_id": "flins_lunar_charged_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

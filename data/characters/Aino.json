@@ -29,6 +29,7 @@
         "fr": "Support sélène",
         "en": "Lunar support"
       },
+      "leaderboard_id": "aino_lunar_support",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

@@ -91,6 +91,7 @@
         "fr": "DPS Exubérance",
         "en": "Hyperbloom DPS"
       },
+      "leaderboard_id": "cyno_transformative_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -182,6 +183,7 @@
         "fr": "DPS Suractivation",
         "en": "Aggravate DPS"
       },
+      "leaderboard_id": "cyno_transformative_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -271,6 +273,7 @@
         "fr": "DPS Astroconduction",
         "en": "Stellar-Conduct DPS"
       },
+      "leaderboard_id": "cyno_stellar_conduct_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

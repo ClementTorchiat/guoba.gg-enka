@@ -57,6 +57,7 @@
         "fr": "DPS Surcharge Hexerei",
         "en": "Hexerei Overload DPS"
       },
+      "leaderboard_id": "razor_overload_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -138,6 +139,7 @@
         "fr": "DPS Physique",
         "en": "Physical DPS"
       },
+      "leaderboard_id": "razor_physical_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

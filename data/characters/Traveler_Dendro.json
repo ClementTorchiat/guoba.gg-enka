@@ -54,6 +54,7 @@
         "fr": "Sub-DPS Dendro",
         "en": "Dendro Sub-DPS"
       },
+      "leaderboard_id": "traveler_dendro_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

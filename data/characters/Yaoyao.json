@@ -51,6 +51,7 @@
         "fr": "Healeuse universelle",
         "en": "Universal Healer"
       },
+      "leaderboard_id": "yaoyao_universal_healer",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -125,6 +126,7 @@
         "fr": "Sub-DPS Propagation",
         "en": "Spread Sub-DPS"
       },
+      "leaderboard_id": "yaoyao_spread_sub_dps",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -204,6 +206,7 @@
         "fr": "Sub-DPS Fleurissement",
         "en": "Bloom Sub-DPS"
       },
+      "leaderboard_id": "yaoyao_bloom_sub_dps",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

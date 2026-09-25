@@ -54,6 +54,7 @@
         "fr": "DPS Évaporation",
         "en": "Vape DPS"
       },
+      "leaderboard_id": "yoimiya_vape_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -91,7 +92,8 @@
       "bestSets": [
         "ShimenawasReminiscence:4",
         "CrimsonWitchOfFlames:4",
-        "EchoesOfAnOffering:4"
+        "EchoesOfAnOffering:4",
+        "MarechausseeHunter:4"
       ],
       "goodSets": [
         "CrimsonWitchOfFlames:2",
@@ -138,6 +140,7 @@
         "fr": "DPS Fonte",
         "en": "Melt DPS"
       },
+      "leaderboard_id": "yoimiya_melt_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -226,6 +229,7 @@
         "fr": "DPS Surcharge",
         "en": "Overload DPS"
       },
+      "leaderboard_id": "yoimiya_overload_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

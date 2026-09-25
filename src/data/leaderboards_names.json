@@ -1,0 +1,838 @@
+{
+  "nilou_bloom": {
+    "fr": "Fleurissement (Points de Vie)",
+    "en": "Bloom (HP)"
+  },
+  "aino_lunar_support": {
+    "fr": "Support sélène",
+    "en": "Lunar support"
+  },
+  "albedo_geo_subdps": {
+    "fr": "Sub-DPS Géo",
+    "en": "Geo Sub-DPS"
+  },
+  "alhaitham_dendro_dps": {
+    "fr": "DPS Dendro",
+    "en": "Dendro DPS"
+  },
+  "aloy_melt_dps": {
+    "fr": "DPS Fonte",
+    "en": "Melt DPS"
+  },
+  "aloy_freeze_dps": {
+    "fr": "DPS Gel",
+    "en": "Freeze DPS"
+  },
+  "alyosha_stellar_superconduct_support": {
+    "fr": "Support Astroconduction",
+    "en": "Stellar-Conduct Support"
+  },
+  "amber_amplifying_dps": {
+    "fr": "DPS Amplification",
+    "en": "Amplifying DPS"
+  },
+  "amber_burgeon_dps": {
+    "fr": "DPS Bourgeonnement",
+    "en": "Burgeon DPS"
+  },
+  "arataki_itto_geo_dps": {
+    "fr": "DPS Géo",
+    "en": "Geo DPS"
+  },
+  "arataki_itto_lunar_crystallize_dps": {
+    "fr": "DPS Sélénocristallisation",
+    "en": "Lunar-Crystallize DPS"
+  },
+  "arlecchino_amplifying_dps": {
+    "fr": "DPS Amplification",
+    "en": "Amplifying DPS"
+  },
+  "arlecchino_atk_dps": {
+    "fr": "DPS ATQ",
+    "en": "ATK DPS"
+  },
+  "baizhu_universal_healer": {
+    "fr": "Healer et applicateur universel",
+    "en": "Universal healer and enabler"
+  },
+  "barbara_universal_healer": {
+    "fr": "Healeuse universelle",
+    "en": "Universal healer"
+  },
+  "beidou_atk_sub_dps": {
+    "fr": "Sub-DPS ATQ",
+    "en": "ATK Sub-DPS"
+  },
+  "beidou_additive_sub_dps": {
+    "fr": "Sub-DPS Additive",
+    "en": "Additive Sub-DPS"
+  },
+  "bennett_universal_buffer": {
+    "fr": "Buffer universel",
+    "en": "Universal buffer"
+  },
+  "candace_bloom_driver": {
+    "fr": "Driver Fleurissement",
+    "en": "Bloom Driver"
+  },
+  "candace_universal_support": {
+    "fr": "Support universel",
+    "en": "Universal support"
+  },
+  "candace_vape_enabler": {
+    "fr": "Applicatrice Évaporation",
+    "en": "Vape Enabler"
+  },
+  "charlotte_universal_healer": {
+    "fr": "Healeuse universelle",
+    "en": "Universal healer"
+  },
+  "chasca_swirl_dps": {
+    "fr": "DPS Dispersion",
+    "en": "Swirl DPS"
+  },
+  "chevreuse_overload_support": {
+    "fr": "Support Surcharge",
+    "en": "Overload Support"
+  },
+  "chiori_geo_sub_dps": {
+    "fr": "Sub-DPS Géo",
+    "en": "Geo Sub-DPS"
+  },
+  "chongyun_melt_dps": {
+    "fr": "DPS Fonte",
+    "en": "Melt DPS"
+  },
+  "chongyun_freeze_dps": {
+    "fr": "DPS Gel",
+    "en": "Freeze DPS"
+  },
+  "citlali_universal_support": {
+    "fr": "Support universel",
+    "en": "Universal Support"
+  },
+  "clorinde_overload_dps": {
+    "fr": "DPS Surcharge",
+    "en": "Overload DPS"
+  },
+  "clorinde_aggravate_dps": {
+    "fr": "DPS Suractivation",
+    "en": "Aggravate DPS"
+  },
+  "clorinde_lunar_charged_dps": {
+    "fr": "DPS Sélénocution",
+    "en": "Lunar-Charged DPS"
+  },
+  "collei_universal_sub_dps": {
+    "fr": "Sub-DPS universelle",
+    "en": "Universal Sub-DPS"
+  },
+  "collei_bloom_driver": {
+    "fr": "Driver Fleurissement",
+    "en": "Bloom Driver"
+  },
+  "columbina_lunar_bloom_support": {
+    "fr": "Support Sélénofleurissement",
+    "en": "Lunar-Bloom Support"
+  },
+  "columbina_lunar_bloom_driver": {
+    "fr": "Driver Sélénofleurissement",
+    "en": "Lunar-Bloom Driver"
+  },
+  "columbina_lunar_charged_support": {
+    "fr": "Support Sélénocution",
+    "en": "Lunar-Charged Support"
+  },
+  "columbina_lunar_crystallize_support": {
+    "fr": "Support Sélénocristallisation",
+    "en": "Lunar-Crystallize Support"
+  },
+  "cyno_transformative_dps": {
+    "fr": "DPS Transformatif",
+    "en": "Transformative DPS"
+  },
+  "cyno_stellar_conduct_dps": {
+    "fr": "DPS Astroconduction",
+    "en": "Stellar-Conduct DPS"
+  },
+  "dahlia_freeze_support": {
+    "fr": "Support Gel",
+    "en": "Freeze Support"
+  },
+  "dehya_sub_dps": {
+    "fr": "Sub-DPS",
+    "en": "Sub-DPS"
+  },
+  "dehya_amplifying_dps": {
+    "fr": "DPS Amplification",
+    "en": "Amplifying DPS"
+  },
+  "diluc_vape_dps": {
+    "fr": "DPS Évaporation",
+    "en": "Vape DPS"
+  },
+  "diluc_melt_dps": {
+    "fr": "DPS Fonte",
+    "en": "Melt DPS"
+  },
+  "diluc_atk_dps": {
+    "fr": "DPS ATQ",
+    "en": "ATK DPS"
+  },
+  "diona_universal_shielder": {
+    "fr": "Shieldeuse universelle",
+    "en": "Universal Shielder"
+  },
+  "dori_aggravate_driver": {
+    "fr": "Driver Suractivation",
+    "en": "Aggravate Driver"
+  },
+  "dori_hyperbloom_driver": {
+    "fr": "Driver Exubérance",
+    "en": "Hyperbloom Driver"
+  },
+  "durin_universal_sub_dps": {
+    "fr": "Sub-DPS universel",
+    "en": "Universal Sub-DPS"
+  },
+  "emilie_burning_sub_dps": {
+    "fr": "Sub-DPS Brûlure",
+    "en": "Burning Sub-DPS"
+  },
+  "escoffier_freeze_sub_dps": {
+    "fr": "Sub-DPS Gel",
+    "en": "Freeze Sub-DPS"
+  },
+  "eula_physical_dps": {
+    "fr": "DPS Physique",
+    "en": "Physical DPS"
+  },
+  "faruzan_anemo_support": {
+    "fr": "Support Anémo",
+    "en": "Anemo Support"
+  },
+  "fischl_overload_sub_dps": {
+    "fr": "Sub-DPS Surcharge Hexerei",
+    "en": "Hexerei Overload Sub-DPS"
+  },
+  "fischl_aggravate_sub_dps": {
+    "fr": "Sub-DPS Suractivation",
+    "en": "Aggravate Sub-DPS"
+  },
+  "flins_lunar_charged_dps": {
+    "fr": "DPS Sélénocution",
+    "en": "Lunar-Charged DPS"
+  },
+  "freminet_physical_dps": {
+    "fr": "DPS Physique",
+    "en": "Physical DPS"
+  },
+  "freminet_cryo_dps": {
+    "fr": "DPS Cryo",
+    "en": "Cryo DPS"
+  },
+  "furina_universal_support_sub_dps": {
+    "fr": "Support et Sub-DPS universel",
+    "en": "Universal Support & Sub-DPS"
+  },
+  "gaming_vape_dps": {
+    "fr": "DPS Évaporation",
+    "en": "Vape DPS"
+  },
+  "gaming_melt_dps": {
+    "fr": "DPS Fonte",
+    "en": "Melt DPS"
+  },
+  "gaming_atk_dps": {
+    "fr": "DPS ATQ",
+    "en": "ATK DPS"
+  },
+  "ganyu_freeze_dps": {
+    "fr": "DPS Gel",
+    "en": "Freeze DPS"
+  },
+  "ganyu_melt_dps": {
+    "fr": "DPS Fonte",
+    "en": "Melt DPS"
+  },
+  "gorou_geo_support": {
+    "fr": "Support Géo",
+    "en": "Geo Support"
+  },
+  "hu_tao_vape_dps": {
+    "fr": "DPS Évaporation",
+    "en": "Vape DPS"
+  },
+  "hu_tao_melt_dps": {
+    "fr": "DPS Fonte",
+    "en": "Melt DPS"
+  },
+  "iansan_universal_support": {
+    "fr": "Support universel",
+    "en": "Universal Support"
+  },
+  "ifa_swirl_driver": {
+    "fr": "Driver Dispersion",
+    "en": "Swirl Driver"
+  },
+  "illuga_lunar_crystallize_support": {
+    "fr": "Support Sélénocristallisation",
+    "en": "Lunar-Crystallize Support"
+  },
+  "ineffa_lunar_charged_sub_dps": {
+    "fr": "Sub-DPS Sélénocution",
+    "en": "Lunar-Charged Sub-DPS"
+  },
+  "jahoda_lunar_healer": {
+    "fr": "Healer Sélène",
+    "en": "Lunar Healer"
+  },
+  "jean_universal_support": {
+    "fr": "Support universel",
+    "en": "Universal Support"
+  },
+  "jean_sunfire": {
+    "fr": "Sunfire",
+    "en": "Sunfire"
+  },
+  "kachina_universal_support": {
+    "fr": "Support universel",
+    "en": "Universal Support"
+  },
+  "kazuha_universal_support": {
+    "fr": "Support universel",
+    "en": "Universal Support"
+  },
+  "kaeya_melt_sub_dps": {
+    "fr": "Sub-DPS Fonte",
+    "en": "Melt Sub-DPS"
+  },
+  "kaeya_freeze_sub_dps": {
+    "fr": "Sub-DPS Gel",
+    "en": "Freeze Sub-DPS"
+  },
+  "ayaka_freeze_dps": {
+    "fr": "DPS Gel",
+    "en": "Freeze DPS"
+  },
+  "ayato_hydro_dps": {
+    "fr": "DPS Hydro",
+    "en": "Hydro DPS"
+  },
+  "ayato_freeze_dps": {
+    "fr": "DPS Gel",
+    "en": "Freeze DPS"
+  },
+  "ayato_hyperbloom_driver": {
+    "fr": "Driver Exubérance",
+    "en": "Hyperbloom Driver"
+  },
+  "ayato_bloom_driver": {
+    "fr": "Driver Fleurissement",
+    "en": "Bloom Driver"
+  },
+  "ayato_vape_dps": {
+    "fr": "DPS Évaporation",
+    "en": "Vape DPS"
+  },
+  "kaveh_dendro_driver": {
+    "fr": "Driver Dendro",
+    "en": "Dendro Driver"
+  },
+  "keqing_aggravate_dps": {
+    "fr": "DPS Suractivation",
+    "en": "Aggravate DPS"
+  },
+  "keqing_overload_dps": {
+    "fr": "DPS Surcharge",
+    "en": "Overload DPS"
+  },
+  "keqing_lunar_charged_dps": {
+    "fr": "DPS Sélénocution",
+    "en": "Lunar-Charged DPS"
+  },
+  "kinich_burning_dps": {
+    "fr": "DPS Brûlure",
+    "en": "Burning DPS"
+  },
+  "kirara_universal_shielder": {
+    "fr": "Shieldeuse universelle",
+    "en": "Universal Shielder"
+  },
+  "klee_atk_dps": {
+    "fr": "DPS ATQ",
+    "en": "ATK DPS"
+  },
+  "klee_vape_dps": {
+    "fr": "DPS Évaporation",
+    "en": "Vape DPS"
+  },
+  "sara_electro_support": {
+    "fr": "Support Électro",
+    "en": "Electro Support"
+  },
+  "shinobu_hyperbloom_sub_dps": {
+    "fr": "Sub-DPS Exubérance",
+    "en": "Hyperbloom Sub-DPS"
+  },
+  "shinobu_aggravate_sub_dps": {
+    "fr": "Sub-DPS Suractivation",
+    "en": "Aggravate Sub-DPS"
+  },
+  "lanyan_universal_shielder": {
+    "fr": "Shieldeuse universelle",
+    "en": "Universal Shielder"
+  },
+  "lauma_lunar_bloom_sub_dps": {
+    "fr": "Sub-DPS Sélénofleurissement",
+    "en": "Lunar-Bloom Sub-DPS"
+  },
+  "lauma_dendro_sub_dps": {
+    "fr": "Sub-DPS Dendro",
+    "en": "Dendro Sub-DPS"
+  },
+  "layla_universal_shielder": {
+    "fr": "Shieldeuse universelle",
+    "en": "Universal Shielder"
+  },
+  "linnea_lunar_crystallize_sub_dps": {
+    "fr": "Sub-DPS Sélénocristallisation",
+    "en": "Lunar-Crystallize Sub-DPS"
+  },
+  "lisa_aggravate_dps": {
+    "fr": "DPS Suractivation",
+    "en": "Aggravate DPS"
+  },
+  "lisa_lunar_charged_dps": {
+    "fr": "DPS Sélénocution",
+    "en": "Lunar-Charged DPS"
+  },
+  "lisa_spread_sub_dps": {
+    "fr": "Sub-DPS Propagation",
+    "en": "Spread Sub-DPS"
+  },
+  "lohen_melt_dps": {
+    "fr": "DPS Fonte",
+    "en": "Melt DPS"
+  },
+  "lynette_universal_support": {
+    "fr": "Support universel",
+    "en": "Universal Support"
+  },
+  "lyney_mono_pyro_dps": {
+    "fr": "DPS Mono-pyro",
+    "en": "Mono-pyro DPS"
+  },
+  "manekin": {
+    "fr": "Manekin/Manekina",
+    "en": "Manekin/Manekina"
+  },
+  "mavuika_melt_dps": {
+    "fr": "DPS Fonte",
+    "en": "Melt DPS"
+  },
+  "mavuika_overload_dps": {
+    "fr": "DPS Surcharge",
+    "en": "Overload DPS"
+  },
+  "mika_physical_support": {
+    "fr": "Support Physique",
+    "en": "Physical Support"
+  },
+  "mona_hexerei_support": {
+    "fr": "Support Hexerei",
+    "en": "Hexerei Support"
+  },
+  "mona_vape_nuke": {
+    "fr": "Nuke Évaporation",
+    "en": "Vape Nuke"
+  },
+  "mualani_vape_dps": {
+    "fr": "DPS Évaporation",
+    "en": "Vape DPS"
+  },
+  "nahida_dendro_sub_dps": {
+    "fr": "Sub-DPS Dendro",
+    "en": "Dendro Sub-DPS"
+  },
+  "navia_crystallize_dps": {
+    "fr": "DPS Cristallisation",
+    "en": "Crystallize DPS"
+  },
+  "navia_lunar_crystallize_dps": {
+    "fr": "DPS Sélénocristallisation",
+    "en": "Lunar-Crystallize DPS"
+  },
+  "nefer_lunar_bloom_dps": {
+    "fr": "DPS Sélénofleurissement",
+    "en": "Lunar-Bloom DPS"
+  },
+  "neuvillette_hydro_dps": {
+    "fr": "DPS Hydro",
+    "en": "Hydro DPS"
+  },
+  "neuvillette_hyperbloom_dps": {
+    "fr": "DPS Exubérance",
+    "en": "Hyperbloom DPS"
+  },
+  "nicole_hexerei_support": {
+    "fr": "Support Hexerei",
+    "en": "Hexerei Support"
+  },
+  "nilou_bloom_enabler": {
+    "fr": "Enabler Fleurissement",
+    "en": "Bloom Enabler"
+  },
+  "ningguang_geo_dps": {
+    "fr": "DPS Géo",
+    "en": "Geo DPS"
+  },
+  "noelle_geo_dps": {
+    "fr": "DPS Géo",
+    "en": "Geo DPS"
+  },
+  "noelle_lunar_crystallize_dps": {
+    "fr": "DPS Sélénocristallisation",
+    "en": "Lunar-Crystallize DPS"
+  },
+  "wanderer_swirl_dps": {
+    "fr": "DPS Dispersion",
+    "en": "Swirl DPS"
+  },
+  "odette_stellar_conduct_sub_dps": {
+    "fr": "Sub-DPS Astroconduction",
+    "en": "Stellar-Conduct Sub-DPS"
+  },
+  "odette_stellar_swirl_sub_dps": {
+    "fr": "Sub-DPS Astrodispersion",
+    "en": "Stellar-Swirl Sub-DPS"
+  },
+  "ororon_electro_sub_dps": {
+    "fr": "Sub-DPS Électro",
+    "en": "Electro Sub-DPS"
+  },
+  "prune_hexerei_support": {
+    "fr": "Support Hexerei",
+    "en": "Hexerei Support"
+  },
+  "qiqi_universal_healer": {
+    "fr": "Healer universel",
+    "en": "Universal Healer"
+  },
+  "qiqi_physical_dps": {
+    "fr": "DPS Physique",
+    "en": "Physical DPS"
+  },
+  "qiqi_stellar_conduct_support": {
+    "fr": "Support Astroconduction",
+    "en": "Stellar-Conduct Support"
+  },
+  "razor_overload_dps": {
+    "fr": "DPS Surcharge",
+    "en": "Overload DPS"
+  },
+  "razor_physical_dps": {
+    "fr": "DPS Physique",
+    "en": "Physical DPS"
+  },
+  "rosaria_melt_sub_dps": {
+    "fr": "Sub-DPS Fonte",
+    "en": "Melt Sub-DPS"
+  },
+  "rosaria_freeze_sub_dps": {
+    "fr": "Sub-DPS Gel",
+    "en": "Freeze Sub-DPS"
+  },
+  "sandrone_stellar_conduct_dps": {
+    "fr": "DPS Astroconduction",
+    "en": "Stellar-Conduct DPS"
+  },
+  "kokomi_universal_healer": {
+    "fr": "Healeuse universelle",
+    "en": "Universal Healer"
+  },
+  "kokomi_bloom_driver": {
+    "fr": "Driver Fleurissement",
+    "en": "Bloom Driver"
+  },
+  "sayu_anemo_support": {
+    "fr": "Support Anémo",
+    "en": "Anemo Support"
+  },
+  "sayu_swirl_driver": {
+    "fr": "Driver Dispersion",
+    "en": "Swirl Driver"
+  },
+  "sethos_aggravate_dps": {
+    "fr": "DPS Suractivation",
+    "en": "Aggravate DPS"
+  },
+  "shenhe_cryo_support": {
+    "fr": "Support Cryo",
+    "en": "Cryo Support"
+  },
+  "heizou_anemo_dps": {
+    "fr": "DPS Anémo",
+    "en": "Anemo DPS"
+  },
+  "raiden_electro_dps": {
+    "fr": "DPS Électro",
+    "en": "Electro DPS"
+  },
+  "raiden_hyperbloom_dps": {
+    "fr": "DPS Exubérance",
+    "en": "Hyperbloom DPS"
+  },
+  "sigewinne_universal_healer": {
+    "fr": "Healeuse universelle",
+    "en": "Universal Healer"
+  },
+  "sigewinne_burst_sub_dps": {
+    "fr": "Sub-DPS Burst",
+    "en": "Burst Sub-DPS"
+  },
+  "skirk_freeze_dps": {
+    "fr": "DPS Gel",
+    "en": "Freeze DPS"
+  },
+  "sucrose_universal_support": {
+    "fr": "Support universel",
+    "en": "Universal Support"
+  },
+  "tartaglia_reverse_vape_dps": {
+    "fr": "DPS Évaporation inversée",
+    "en": "Reverse Vape DPS"
+  },
+  "tartaglia_electro_charged_dps": {
+    "fr": "DPS Électrocution",
+    "en": "Electro-Charged DPS"
+  },
+  "tartaglia_freeze_dps": {
+    "fr": "DPS Gel",
+    "en": "Freeze DPS"
+  },
+  "thomas_universal_shielder": {
+    "fr": "Shielder universel",
+    "en": "Universal Shielder"
+  },
+  "thomas_burgeon_sub_dps": {
+    "fr": "Sub-DPS Bourgeonnement",
+    "en": "Burgeon Sub-DPS"
+  },
+  "tighnari_spread_dps": {
+    "fr": "DPS Propagation",
+    "en": "Spread DPS"
+  },
+  "traveler_anemo": {
+    "fr": "DPS Anémo",
+    "en": "Anemo DPS"
+  },
+  "traveler_cryo_stellar_conduct_dps": {
+    "fr": "DPS Astroconduction",
+    "en": "Stellar-Conduct DPS"
+  },
+  "traveler_cryo_stellar_swirl_sub_dps": {
+    "fr": "Sub-DPS Astrodispersion",
+    "en": "Stellar-Swirl Sub-DPS"
+  },
+  "traveler_dendro_sub_dps": {
+    "fr": "Sub-DPS Dendro",
+    "en": "Dendro Sub-DPS"
+  },
+  "travaler_electro_sub_dps": {
+    "fr": "Sub-DPS Électro",
+    "en": "Electro Sub-DPS"
+  },
+  "traveler_geo_sub_dps": {
+    "fr": "Sub-DPS Géo",
+    "en": "Geo Sub-DPS"
+  },
+  "traveler_hydro_sub_dps": {
+    "fr": "Sub-DPS Hydro",
+    "en": "Hydro Sub-DPS"
+  },
+  "traveler_pyro_dps": {
+    "fr": "DPS Pyro",
+    "en": "Pyro DPS"
+  },
+  "varesa_electro_dps": {
+    "fr": "DPS Électro",
+    "en": "Electro DPS"
+  },
+  "varesa_aggravate_dps": {
+    "fr": "DPS Suractivation",
+    "en": "Aggravate DPS"
+  },
+  "varesa_lunar_charged_dps": {
+    "fr": "DPS Sélénocution",
+    "en": "Lunar-Charged DPS"
+  },
+  "varka_anemo_pyro_dps": {
+    "fr": "DPS Anémo/Pyro",
+    "en": "Anemo/Pyro DPS"
+  },
+  "varka_anemo_cryo_dps": {
+    "fr": "DPS Anémo/Cryo",
+    "en": "Anemo/Cryo DPS"
+  },
+  "varka_anemo_electro_dps": {
+    "fr": "DPS Anémo/Électro",
+    "en": "Anemo/Electro DPS"
+  },
+  "varka_anemo_hydro_dps": {
+    "fr": "DPS Anémo/Hydro",
+    "en": "Anemo/Hydro DPS"
+  },
+  "venti_swirl_support": {
+    "fr": "Support Dispersion",
+    "en": "Swirl Support"
+  },
+  "venti_anemo_dps": {
+    "fr": "DPS Anémo",
+    "en": "Anemo DPS"
+  },
+  "vesna_stellar_swirl_dps": {
+    "fr": "DPS Astrodispersion",
+    "en": "Stellar-swirl DPS"
+  },
+  "vodyanitsa_stellar_swirl_support": {
+    "fr": "Support Astrodispersion",
+    "en": "Stellar-swirl Support"
+  },
+  "vodyanitsa_freeze_support": {
+    "fr": "Support Gel",
+    "en": "Freeze Support"
+  },
+  "wriothesley_freeze_dps": {
+    "fr": "DPS Gel",
+    "en": "Freeze DPS"
+  },
+  "wriothesley_reverse_melt_dps": {
+    "fr": "DPS Fonte inversée",
+    "en": "Reverse Melt DPS"
+  },
+  "wriothesley_stellar_conduct_dps": {
+    "fr": "DPS Astroconduction",
+    "en": "Stellar-Conduct DPS"
+  },
+  "xiangling_amplifying_sub_dps": {
+    "fr": "Sub-DPS Amplification",
+    "en": "Amplifying Sub-DPS"
+  },
+  "xiangling_atk_sub_dps": {
+    "fr": "Sub-DPS ATQ",
+    "en": "ATK Sub-DPS"
+  },
+  "xianyun_plunging_support": {
+    "fr": "Support attaques plongeantes",
+    "en": "Plunging attacks Support"
+  },
+  "xiao_plunge_dps": {
+    "fr": "DPS Plunge",
+    "en": "Plunge DPS"
+  },
+  "xilonen_universal_support": {
+    "fr": "Support universel",
+    "en": "Universal Support"
+  },
+  "xingqiu_vape_sub_dps": {
+    "fr": "Sub-DPS Évaporation",
+    "en": "Vape Sub-DPS"
+  },
+  "xingqiu_atk_sub_dps": {
+    "fr": "Sub-DPS ATQ",
+    "en": "ATK Sub-DPS"
+  },
+  "xingqiu_bloom_sub_dps": {
+    "fr": "Sub-DPS Fleurissement",
+    "en": "Bloom Sub-DPS"
+  },
+  "xinyan_universal_shielder": {
+    "fr": "Shielder universelle",
+    "en": "Universal Shielder"
+  },
+  "xinyan_physical_dps": {
+    "fr": "DPS Physique",
+    "en": "Physical DPS"
+  },
+  "xinyan_melt_dps": {
+    "fr": "DPS Fonte",
+    "en": "Melt DPS"
+  },
+  "yae_miko_aggravate_sub_dps": {
+    "fr": "Sub-DPS Suractivation",
+    "en": "Aggravate Sub-DPS"
+  },
+  "yae_miko_stellar_conduct_sub_dps": {
+    "fr": "Sub-DPS Astroconduction",
+    "en": "Stellar-Conduct Sub-DPS"
+  },
+  "yanfei_vape_dps": {
+    "fr": "DPS Évaporation",
+    "en": "Vape DPS"
+  },
+  "yanfei_melt_dps": {
+    "fr": "DPS Fonte",
+    "en": "Melt DPS"
+  },
+  "yanfei_overload_dps": {
+    "fr": "DPS Surcharge",
+    "en": "Overload DPS"
+  },
+  "yanfei_burgeon_dps": {
+    "fr": "DPS Bourgeonnement",
+    "en": "Burgeon DPS"
+  },
+  "yaoyao_universal_healer": {
+    "fr": "Healeuse universelle",
+    "en": "Universal Healer"
+  },
+  "yaoyao_spread_sub_dps": {
+    "fr": "Sub-DPS Propagation",
+    "en": "Spread Sub-DPS"
+  },
+  "yaoyao_bloom_sub_dps": {
+    "fr": "Sub-DPS Fleurissement",
+    "en": "Bloom Sub-DPS"
+  },
+  "yelan_hydro_sub_dps": {
+    "fr": "Sub-DPS Hydro",
+    "en": "Hydro Sub-DPS"
+  },
+  "yelan_vape_sub_dps": {
+    "fr": "Sub-DPS Évaporation",
+    "en": "Vape Sub-DPS"
+  },
+  "yoimiya_vape_dps": {
+    "fr": "DPS Évaporation",
+    "en": "Vape DPS"
+  },
+  "yoimiya_melt_dps": {
+    "fr": "DPS Fonte",
+    "en": "Melt DPS"
+  },
+  "yoimiya_overload_dps": {
+    "fr": "DPS Surcharge",
+    "en": "Overload DPS"
+  },
+  "mizuki_swirl_driver": {
+    "fr": "Driver Dispersion",
+    "en": "Swirl Driver"
+  },
+  "mizuki_stellar_swirl_dps": {
+    "fr": "DPS Astrodispersion",
+    "en": "Stellar-Swirl DPS"
+  },
+  "yunjin_universal_support": {
+    "fr": "Support universel",
+    "en": "Universal Support"
+  },
+  "zhongli_universal_shielder": {
+    "fr": "Shielder universel",
+    "en": "Universal Shielder"
+  },
+  "zibai_lunar_crystallize_dps": {
+    "fr": "DPS Sélénocristallisation",
+    "en": "Lunar-Crystallize DPS"
+  }
+}

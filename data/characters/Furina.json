@@ -29,6 +29,7 @@
         "fr": "Support et Sub-DPS universel",
         "en": "Universal Support & Sub-DPS"
       },
+      "leaderboard_id": "furina_universal_support_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

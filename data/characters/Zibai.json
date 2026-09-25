@@ -92,6 +92,7 @@
         "fr": "DPS Sélénocristallisation",
         "en": "Lunar-Crystallize DPS"
       },
+      "leaderboard_id": "zibai_lunar_crystallize_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

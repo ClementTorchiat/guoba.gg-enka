@@ -12,6 +12,7 @@
         "fr": "DPS Évaporation",
         "en": "Vape DPS"
       },
+      "leaderboard_id": "mualani_vape_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -92,9 +93,10 @@
     },
     "DPS Hexerei": {
       "name": {
-        "fr": "DPS Hexerei",
-        "en": "Hexerei DPS"
+        "fr": "DPS Vape Hexerei",
+        "en": "Hexerei Vape DPS"
       },
+      "leaderboard_id": "mualani_vape_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

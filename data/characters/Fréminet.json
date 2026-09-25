@@ -101,6 +101,7 @@
         "fr": "DPS Physique",
         "en": "Physical DPS"
       },
+      "leaderboard_id": "freminet_physical_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -188,6 +189,7 @@
         "fr": "DPS Cryo",
         "en": "Cryo DPS"
       },
+      "leaderboard_id": "freminet_cryo_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

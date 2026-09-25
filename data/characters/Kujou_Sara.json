@@ -30,6 +30,7 @@
         "fr": "Support Électro",
         "en": "Electro Support"
       },
+      "leaderboard_id": "sara_electro_support",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -12,6 +12,7 @@
         "fr": "Sub-DPS Brûlure",
         "en": "Burning Sub-DPS"
       },
+      "leaderboard_id": "emilie_burning_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

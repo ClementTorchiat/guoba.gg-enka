@@ -51,6 +51,7 @@
         "fr": "DPS Évaporation",
         "en": "Vape DPS"
       },
+      "leaderboard_id": "hu_tao_vape_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -129,6 +130,7 @@
         "fr": "DPS Fonte",
         "en": "Melt DPS"
       },
+      "leaderboard_id": "hu_tao_melt_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -166,8 +168,7 @@
       },
       "bestSets": [
         "CrimsonWitchOfFlames:4",
-        "ShimenawasReminiscence:4",
-        "MarechausseeHunter:4"
+        "ShimenawasReminiscence:4"
       ],
       "goodSets": [
         "CrimsonWitchOfFlames:2",

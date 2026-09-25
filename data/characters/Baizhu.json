@@ -58,6 +58,7 @@
         "fr": "Healer et applicateur universel",
         "en": "Universal healer and enabler"
       },
+      "leaderboard_id": "baizhu_universal_healer",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

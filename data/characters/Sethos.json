@@ -52,6 +52,7 @@
         "fr": "DPS Suractivation",
         "en": "Aggravate DPS"
       },
+      "leaderboard_id": "sethos_aggravate_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -29,6 +29,7 @@
         "fr": "Support Anémo",
         "en": "Anemo Support"
       },
+      "leaderboard_id": "faruzan_anemo_support",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

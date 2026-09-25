@@ -22,6 +22,7 @@
         "fr": "Voyageur/euse Hydro",
         "en": "Hydro Traveler"
       },
+      "leaderboard_id": "traveler_hydro_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

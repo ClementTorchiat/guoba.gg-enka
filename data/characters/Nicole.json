@@ -40,6 +40,7 @@
         "fr": "Support Hexerei",
         "en": "Hexerei Support"
       },
+      "leaderboard_id": "nicole_hexerei_support",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

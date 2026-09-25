@@ -78,6 +78,7 @@
         "fr": "Support universel",
         "en": "Universal Support"
       },
+      "leaderboard_id": "lynette_universal_support",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

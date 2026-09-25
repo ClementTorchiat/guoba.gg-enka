@@ -22,6 +22,7 @@
         "fr": "Voyageur/euse Anémo",
         "en": "Anemo Traveler"
       },
+      "leaderboard_id": "traveler_anemo",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

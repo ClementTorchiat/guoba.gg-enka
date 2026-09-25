@@ -30,6 +30,7 @@
         "fr": "Healer Sélène",
         "en": "Lunar Healer"
       },
+      "leaderboard_id": "jahoda_lunar_healer",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

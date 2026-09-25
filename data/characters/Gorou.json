@@ -68,6 +68,7 @@
         "fr": "Support Géo",
         "en": "Geo Support"
       },
+      "leaderboard_id": "gorou_geo_support",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

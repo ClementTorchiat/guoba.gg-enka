@@ -47,6 +47,7 @@
         "fr": "Buffer universel",
         "en": "Universal buffer"
       },
+      "leaderboard_id": "bennett_universal_buffer",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

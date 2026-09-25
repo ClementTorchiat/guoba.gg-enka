@@ -39,6 +39,7 @@
         "fr": "Voyageur/euse Géo",
         "en": "Geo Traveler"
       },
+      "leaderboard_id": "traveler_geo_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

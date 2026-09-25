@@ -70,6 +70,7 @@
         "fr": "Sub-DPS Surcharge Hexerei",
         "en": "Hexerei Overload Sub-DPS"
       },
+      "leaderboard_id": "fischl_overload_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -153,6 +154,7 @@
         "fr": "Sub-DPS Suractivation",
         "en": "Aggravate Sub-DPS"
       },
+      "leaderboard_id": "fischl_aggravate_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

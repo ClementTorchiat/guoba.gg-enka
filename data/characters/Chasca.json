@@ -12,6 +12,7 @@
         "fr": "DPS Dispersion",
         "en": "Swirl DPS"
       },
+      "leaderboard_id": "chasca_swirl_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

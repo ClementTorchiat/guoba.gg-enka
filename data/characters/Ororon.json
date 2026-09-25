@@ -63,6 +63,7 @@
         "fr": "Sub-DPS Électrocution",
         "en": "Electro-Charged Sub-DPS"
       },
+      "leaderboard_id": "ororon_electro_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -147,6 +148,7 @@
         "fr": "Sub-DPS Surcharge",
         "en": "Overload Sub-DPS"
       },
+      "leaderboard_id": "ororon_electro_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

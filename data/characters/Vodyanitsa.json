@@ -72,6 +72,7 @@
                 "fr": "Support Astrodispersion",
                 "en": "Stellar-swirl Support"
             },
+            "leaderboard_id": "vodyanitsa_stellar_swirl_support",
             "weights": {
                 "critRate_": 0,
                 "critDMG_": 0,
@@ -148,6 +149,7 @@
                 "fr": "Support Gel",
                 "en": "Freeze Support"
             },
+            "leaderboard_id": "vodyanitsa_freeze_support",
             "weights": {
                 "critRate_": 0,
                 "critDMG_": 0,

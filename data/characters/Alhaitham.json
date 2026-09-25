@@ -129,6 +129,7 @@
         "fr": "DPS Exubérance",
         "en": "Hyperbloom DPS"
       },
+      "leaderboard_id": "alhaitham_dendro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -223,6 +224,7 @@
         "fr": "DPS Propagation",
         "en": "Spead DPS"
       },
+      "leaderboard_id": "alhaitham_dendro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -310,6 +312,7 @@
         "fr": "Driver Fleurissement",
         "en": "Bloom Driver"
       },
+      "leaderboard_id": "alhaitham_dendro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -53,6 +53,7 @@
         "fr": "DPS Mono-pyro",
         "en": "Mono-pyro DPS"
       },
+      "leaderboard_id": "lyney_mono_pyro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

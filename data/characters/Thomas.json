@@ -12,6 +12,7 @@
         "fr": "Shielder universel",
         "en": "Universal Shielder"
       },
+      "leaderboard_id": "thomas_universal_shielder",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -82,6 +83,7 @@
         "fr": "Sub-DPS Bourgeonnement",
         "en": "Burgeon Sub-DPS"
       },
+      "leaderboard_id": "thomas_burgeon_sub_dps",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

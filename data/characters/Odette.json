@@ -86,6 +86,7 @@
                 "fr": "Sub-DPS Astroconduction",
                 "en": "Stellar-Conduct Sub-DPS"
             },
+            "leaderboard_id": "odette_stellar_conduct_sub_dps",
             "weights": {
                 "critRate_": 1,
                 "critDMG_": 1,
@@ -167,6 +168,7 @@
                 "fr": "Sub-DPS Astrodispersion",
                 "en": "Stellar-Swirl Sub-DPS"
             },
+            "leaderboard_id": "odette_stellar_swirl_sub_dps",
             "weights": {
                 "critRate_": 1,
                 "critDMG_": 1,

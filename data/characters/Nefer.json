@@ -44,6 +44,7 @@
         "fr": "DPS Sélénofleurissement",
         "en": "Lunar-Bloom DPS"
       },
+      "leaderboard_id": "nefer_lunar_bloom_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

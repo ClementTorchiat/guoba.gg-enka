@@ -75,6 +75,7 @@
         "fr": "Support Sélénofleurissement",
         "en": "Lunar-Bloom Support"
       },
+      "leaderboard_id": "columbina_lunar_bloom_support",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -154,6 +155,7 @@
         "fr": "Driver Sélénofleurissement",
         "en": "Lunar-Bloom Driver"
       },
+      "leaderboard_id": "columbina_lunar_bloom_driver",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -233,6 +235,7 @@
         "fr": "Support Sélénocution",
         "en": "Lunar-Charged Support"
       },
+      "leaderboard_id": "columbina_lunar_charged_support",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -313,6 +316,7 @@
         "fr": "Support Sélénocristallisation",
         "en": "Lunar-Crystallize Support"
       },
+      "leaderboard_id": "columbina_lunar_crystallize_support",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

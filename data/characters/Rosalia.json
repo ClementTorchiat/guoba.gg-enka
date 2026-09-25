@@ -29,6 +29,7 @@
         "fr": "Sub-DPS Fonte",
         "en": "Melt Sub-DPS"
       },
+      "leaderboard_id": "rosaria_melt_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -118,6 +119,7 @@
         "fr": "Sub-DPS Gel",
         "en": "Freeze Sub-DPS"
       },
+      "leaderboard_id": "rosaria_freeze_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

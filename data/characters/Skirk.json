@@ -39,6 +39,7 @@
         "fr": "DPS Gel",
         "en": "Freeze DPS"
       },
+      "leaderboard_id": "skirk_freeze_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

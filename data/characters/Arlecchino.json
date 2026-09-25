@@ -45,6 +45,7 @@
         "fr": "DPS Fonte",
         "en": "Melt DPS"
       },
+      "leaderboard_id": "arlecchino_amplifying_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -133,6 +134,7 @@
         "fr": "DPS Surcharge",
         "en": "Overload DPS"
       },
+      "leaderboard_id": "arlecchino_atk_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -55,6 +55,7 @@
         "fr": "DPS Fonte",
         "en": "Melt DPS"
       },
+      "leaderboard_id": "amber_amplifying_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -149,6 +150,7 @@
         "fr": "DPS Bourgeonnement",
         "en": "Burgeon DPS"
       },
+      "leaderboard_id": "amber_burgeon_dps",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

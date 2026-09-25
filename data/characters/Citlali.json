@@ -29,6 +29,7 @@
         "fr": "Support universel (Fonte et Gel)",
         "en": "Universal Support (Melt & Freeze)"
       },
+      "leaderboard_id": "citlali_universal_support",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

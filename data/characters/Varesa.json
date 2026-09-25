@@ -57,6 +57,7 @@
         "fr": "DPS Surcharge",
         "en": "Overload DPS"
       },
+      "leaderboard_id": "varesa_electro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -140,6 +141,7 @@
         "fr": "DPS Hypercarry",
         "en": "Hypercarry DPS"
       },
+      "leaderboard_id": "varesa_electro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -224,11 +226,12 @@
         "fr": "DPS Suractivation",
         "en": "Aggravate DPS"
       },
+      "leaderboard_id": "varesa_aggravate_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
-        "atk_": 0.8,
-        "atk": 0.1,
+        "atk_": 0.5,
+        "atk": 0.05,
         "hp_": 0,
         "hp": 0,
         "def_": 0,
@@ -312,11 +315,12 @@
         "fr": "DPS Sélénocution",
         "en": "Lunar-Charged DPS"
       },
+      "leaderboard_id": "varesa_lunar_charged_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
-        "atk_": 0.8,
-        "atk": 0.1,
+        "atk_": 0.6,
+        "atk": 0.06,
         "hp_": 0,
         "hp": 0,
         "def_": 0,

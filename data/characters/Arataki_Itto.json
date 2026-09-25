@@ -42,6 +42,7 @@
         "fr": "DPS Géo",
         "en": "Geo DPS"
       },
+      "leaderboard_id": "arataki_itto_geo_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -118,6 +119,7 @@
         "fr": "DPS Sélénocristallisation",
         "en": "Lunar-Crystallize DPS"
       },
+      "leaderboard_id": "arataki_itto_lunar_crystallize_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

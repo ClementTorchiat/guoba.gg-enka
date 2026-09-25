@@ -29,6 +29,7 @@
         "fr": "DPS Physique",
         "en": "Physical DPS"
       },
+      "leaderboard_id": "eula_physical_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -95,6 +95,7 @@
         "fr": "DPS Propagation",
         "en": "Spread DPS"
       },
+      "leaderboard_id": "tighnari_spread_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

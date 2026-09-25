@@ -45,6 +45,7 @@
         "fr": "DPS Fonte",
         "en": "Melt DPS"
       },
+      "leaderboard_id": "lohen_melt_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

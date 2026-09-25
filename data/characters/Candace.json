@@ -29,6 +29,7 @@
         "fr": "Driver Fleurissement",
         "en": "Bloom Driver"
       },
+      "leaderboard_id": "candace_bloom_driver",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -104,6 +105,7 @@
         "fr": "Support universel",
         "en": "Universal support"
       },
+      "leaderboard_id": "candace_universal_support",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -179,6 +181,7 @@
         "fr": "Applicatrice Évaporation",
         "en": "Vape Enabler"
       },
+      "leaderboard_id": "candace_vape_enabler",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

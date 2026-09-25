@@ -45,6 +45,7 @@
         "fr": "DPS Gel",
         "en": "Freeze DPS"
       },
+      "leaderboard_id": "ganyu_freeze_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -128,6 +129,7 @@
         "fr": "DPS Fonte",
         "en": "Melt DPS"
       },
+      "leaderboard_id": "ganyu_melt_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

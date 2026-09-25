@@ -12,6 +12,7 @@
         "fr": "Healeuse universelle",
         "en": "Universel Healer"
       },
+      "leaderboard_id": "qiqi_universal_healer",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,
@@ -92,6 +93,7 @@
         "fr": "DPS Physique",
         "en": "Physical DPS"
       },
+      "leaderboard_id": "qiqi_physical_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -177,6 +179,7 @@
         "fr": "Support Astroconduction",
         "en": "Stellar-Conduct Support"
       },
+      "leaderboard_id": "qiqi_stellar_conduct_support",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

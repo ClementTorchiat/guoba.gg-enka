@@ -49,6 +49,7 @@
         "fr": "Voyageur/euse Pyro",
         "en": "Pyro Traveler"
       },
+      "leaderboard_id": "traveler_pyro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

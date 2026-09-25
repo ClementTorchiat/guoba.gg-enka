@@ -42,6 +42,7 @@
         "fr": "DPS Évaporation",
         "en": "Vape DPS"
       },
+      "leaderboard_id": "gaming_vape_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -135,6 +136,7 @@
         "fr": "DPS Fonte",
         "en": "Melt DPS"
       },
+      "leaderboard_id": "gaming_melt_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -229,6 +231,7 @@
         "fr": "DPS Surcharge",
         "en": "Overload DPS"
       },
+      "leaderboard_id": "gaming_atk_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

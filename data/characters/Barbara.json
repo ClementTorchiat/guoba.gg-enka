@@ -35,6 +35,7 @@
         "fr": "Healeuse universelle",
         "en": "Universal healer"
       },
+      "leaderboard_id": "barbara_universal_healer",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

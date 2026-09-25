@@ -30,6 +30,7 @@
         "fr": "Driver Suractivation",
         "en": "Aggravate Driver"
       },
+      "leaderboard_id": "dori_aggravate_driver",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -124,6 +125,7 @@
         "fr": "Driver Exubérance",
         "en": "Hyperbloom Driver"
       },
+      "leaderboard_id": "dori_hyperbloom_driver",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,

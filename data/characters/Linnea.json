@@ -61,6 +61,7 @@
         "fr": "Sub-DPS Sélénocristallisation",
         "en": "Lunar-Crystallize Sub-DPS"
       },
+      "leaderboard_id": "linnea_lunar_crystallize_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -112,7 +113,8 @@
         {
           "role": "DPS",
           "name": "Zibai",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "NightOfTheSkysUnveiling"
         },
         {
           "role": "Support",
@@ -124,7 +126,8 @@
         {
           "role": "Sub-DPS",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "AubadeOfMorningstarAndMoon"
         }
       ]
     }

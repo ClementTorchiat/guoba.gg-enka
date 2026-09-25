@@ -34,11 +34,12 @@
     }
   ],
   "builds": {
-    "Hypercarry Plunge DPS": {
+    "Plunge DPS": {
       "name": {
-        "fr": "Hypercarry Plunge DPS",
-        "en": "Hypercarry Plunge DPS"
+        "fr": "DPS Plunge",
+        "en": "Plunge DPS"
       },
+      "leaderboard_id": "xiao_plunge_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

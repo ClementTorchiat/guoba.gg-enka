@@ -69,6 +69,7 @@
         "fr": "DPS Astroconduction",
         "en": "Stellar-Conduct DPS"
       },
+      "leaderboard_id": "traveler_cryo_stellar_conduct_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -154,6 +155,7 @@
         "fr": "Sub-DPS Astrodispersion",
         "en": "Stellar-Swirl Sub-DPS"
       },
+      "leaderboard_id": "traveler_cryo_stellar_swirl_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

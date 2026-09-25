@@ -73,6 +73,7 @@
         "fr": "DPS Astroconduction",
         "en": "Stellar-Conduct DPS"
       },
+      "leaderboard_id": "sandrone_stellar_conduct_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

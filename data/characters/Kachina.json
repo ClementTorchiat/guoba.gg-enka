@@ -82,6 +82,7 @@
         "fr": "Support universel",
         "en": "Universal Support"
       },
+      "leaderboard_id": "kachina_universal_support",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

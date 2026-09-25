@@ -119,6 +119,7 @@
         "fr": "Sub-DPS Suractivation",
         "en": "Aggravate Sub-DPS"
       },
+      "leaderboard_id": "yae_miko_aggravate_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -205,6 +206,7 @@
         "fr": "Sub-DPS Astroconduction",
         "en": "Stellar-Conduct Sub-DPS"
       },
+      "leaderboard_id": "yae_miko_stellar_conduct_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

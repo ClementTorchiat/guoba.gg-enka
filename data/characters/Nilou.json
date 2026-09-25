@@ -60,6 +60,7 @@
         "fr": "Enabler Fleurissement",
         "en": "Bloom Enabler"
       },
+      "leaderboard_id": "nilou_bloom_enabler",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

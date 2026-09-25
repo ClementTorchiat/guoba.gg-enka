@@ -81,6 +81,7 @@
         "fr": "Sub-DPS Exubérance",
         "en": "Hyperbloom Sub-DPS"
       },
+      "leaderboard_id": "yelan_hydro_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -163,6 +164,7 @@
         "fr": "Sub-DPS Gel",
         "en": "Freeze Sub-DPS"
       },
+      "leaderboard_id": "yelan_hydro_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -239,6 +241,7 @@
         "fr": "Sub-DPS Évaporation",
         "en": "Vape Sub-DPS"
       },
+      "leaderboard_id": "yelan_vape_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

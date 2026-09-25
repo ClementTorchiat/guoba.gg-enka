@@ -171,6 +171,7 @@
         "fr": "DPS Anémo/Pyro",
         "en": "Anemo/Pyro DPS"
       },
+      "leaderboard_id": "varka_anemo_pyro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -262,6 +263,7 @@
         "fr": "DPS Anémo/Cryo",
         "en": "Anemo/Cryo DPS"
       },
+      "leaderboard_id": "varka_anemo_cryo_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -354,6 +356,7 @@
         "fr": "DPS Anémo/Électro",
         "en": "Anemo/Electro DPS"
       },
+      "leaderboard_id": "varka_anemo_electro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -447,6 +450,7 @@
         "fr": "DPS Anémo/Hydro",
         "en": "Anemo/Hydro DPS"
       },
+      "leaderboard_id": "varka_anemo_hydro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

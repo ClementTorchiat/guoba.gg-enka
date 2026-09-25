@@ -82,6 +82,7 @@
         "fr": "DPS Gel",
         "en": "Freeze DPS"
       },
+      "leaderboard_id": "wriothesley_freeze_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -165,6 +166,7 @@
         "fr": "DPS Fonte inversée",
         "en": "Reverse Melt DPS"
       },
+      "leaderboard_id": "wriothesley_reverse_melt_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -251,6 +253,7 @@
         "fr": "DPS Astroconduction",
         "en": "Stellar-Conduct DPS"
       },
+      "leaderboard_id": "wriothesley_stellar_conduct_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

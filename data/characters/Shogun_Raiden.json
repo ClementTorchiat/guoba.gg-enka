@@ -32,6 +32,7 @@
         "fr": "DPS Électro",
         "en": "Electro DPS"
       },
+      "leaderboard_id": "raiden_electro_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -119,6 +120,7 @@
         "fr": "DPS Exubérance",
         "en": "Hyperbloom DPS"
       },
+      "leaderboard_id": "raiden_hyperbloom_dps",
       "weights": {
         "critRate_": 0,
         "critDMG_": 0,

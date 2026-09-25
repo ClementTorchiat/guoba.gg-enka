@@ -50,6 +50,7 @@
         "fr": "Sub-DPS Évaporation",
         "en": "Vape Sub-DPS"
       },
+      "leaderboard_id": "xiangling_amplifying_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -141,6 +142,7 @@
         "fr": "Sub-DPS Fonte",
         "en": "Melt Sub-DPS"
       },
+      "leaderboard_id": "xiangling_amplifying_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -234,6 +236,7 @@
         "fr": "Sub-DPS Mono-pyro",
         "en": "Mono-pyro Sub-DPS"
       },
+      "leaderboard_id": "xiangling_atk_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -318,6 +321,7 @@
         "fr": "Sub-DPS Surcharge",
         "en": "Overload Sub-DPS"
       },
+      "leaderboard_id": "xiangling_atk_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

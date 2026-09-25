@@ -65,6 +65,7 @@
         "fr": "DPS Anémo",
         "en": "Anemo DPS"
       },
+      "leaderboard_id": "heizou_anemo_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

@@ -128,6 +128,7 @@
         "fr": "DPS Astrodispersion",
         "en": "Stellar-swirl DPS"
       },
+      "leaderboard_id": "vesna_stellar_swirl_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

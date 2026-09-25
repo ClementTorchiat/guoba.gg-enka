@@ -12,6 +12,7 @@
                 "fr": "Manekin/Manekina",
                 "en": "Manekin/Manekina"
             },
+            "leaderboard_id": "manekin",
             "weights": {
                 "critRate_": 1,
                 "critDMG_": 1,

@@ -18,6 +18,7 @@
         "fr": "Sub-DPS Évaporation",
         "en": "Vape Sub-DPS"
       },
+      "leaderboard_id": "xingqiu_vape_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -106,6 +107,7 @@
         "fr": "Sub-DPS Gel",
         "en": "Freeze Sub-DPS"
       },
+      "leaderboard_id": "xingqiu_atk_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -188,6 +190,7 @@
         "fr": "Sub-DPS Fleurissement",
         "en": "Bloom Sub-DPS"
       },
+      "leaderboard_id": "xingqiu_bloom_sub_dps",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -265,6 +268,7 @@
         "fr": "Sub-DPS Électrocution",
         "en": "Electro-Charged Sub-DPS"
       },
+      "leaderboard_id": "xingqiu_atk_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

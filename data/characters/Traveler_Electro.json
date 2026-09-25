@@ -22,6 +22,7 @@
         "fr": "Voyageur/euse Électro",
         "en": "Electro Traveler"
       },
+      "leaderboard_id": "traveler_electro_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

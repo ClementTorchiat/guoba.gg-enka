@@ -36,11 +36,12 @@
     }
   ],
   "builds": {
-    "Support Dispersion off-field": {
+    "Support Dispersion": {
       "name": {
-        "fr": "Support Dispersion off-field",
-        "en": "Off-field Swirl Support"
+        "fr": "Support Dispersion",
+        "en": "Swirl Support"
       },
+      "leaderboard_id": "venti_swirl_support",
       "weights": {
         "critRate_": 0.4,
         "critDMG_": 0,
@@ -118,6 +119,7 @@
         "fr": "DPS Anémo",
         "en": "Anemo DPS"
       },
+      "leaderboard_id": "venti_anemo_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

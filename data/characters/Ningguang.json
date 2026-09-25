@@ -35,6 +35,7 @@
         "fr": "DPS Géo",
         "en": "Geo DPS"
       },
+      "leaderboard_id": "ningguang_geo_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

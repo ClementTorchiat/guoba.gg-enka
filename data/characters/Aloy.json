@@ -39,6 +39,7 @@
         "fr": "DPS Fonte",
         "en": "Melt DPS"
       },
+      "leaderboard_id": "aloy_melt_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -133,6 +134,7 @@
         "fr": "DPS Gel",
         "en": "Freeze DPS"
       },
+      "leaderboard_id": "aloy_freeze_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

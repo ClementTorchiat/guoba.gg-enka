@@ -35,6 +35,7 @@
         "fr": "DPS Suractivation",
         "en": "Aggravate DPS"
       },
+      "leaderboard_id": "lisa_aggravate_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -119,6 +120,7 @@
         "fr": "DPS Sélénocution",
         "en": "Lunar-Charged DPS"
       },
+      "leaderboard_id": "lisa_lunar_charged_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -208,6 +210,7 @@
         "fr": "Sub-DPS Propagation",
         "en": "Spread Sub-DPS"
       },
+      "leaderboard_id": "lisa_spread_sub_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,

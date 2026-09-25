@@ -74,6 +74,7 @@
         "fr": "DPS Évaporation",
         "en": "Vape DPS"
       },
+      "leaderboard_id": "diluc_vape_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -161,6 +162,7 @@
         "fr": "DPS Fonte",
         "en": "Melt DPS"
       },
+      "leaderboard_id": "diluc_melt_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -250,6 +252,7 @@
         "fr": "DPS Mono-pyro",
         "en": "Mono-pyro DPS"
       },
+      "leaderboard_id": "diluc_atk_dps",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
