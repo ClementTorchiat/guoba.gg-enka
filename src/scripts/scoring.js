@@ -143,6 +143,7 @@ export function getMaxTheoreticalScoreForPiece(artType, mainStatKey, config) {
 }
 
 export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
+    if (typeof window === "undefined" && !perso.isSimulation) console.log("CALCULATING SCORE FOR:", perso.name, "CR:", perso.buffedStats?.cr, "isSim:", perso.isSimulation, "CR weight:", config?.weights?.["critRate_"]);
     if (!config || !config.weights) {
         return { score: 0, grade: { letter: "?", color: "#888" }, totalRolls: 0 };
     }
@@ -227,7 +228,7 @@ export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
         const excessCR = perso.buffedStats.cr - 100;
         const crWeight = config.weights["critRate_"];
 
-        overcapScorePenalty = excessCR * crWeight * (SCORING_NORMS["critRate_"] || 2);
+        overcapScorePenalty = excessCR * crWeight * (SCORING_NORMS["critRate_"] || 2); console.log("OVERCAP PENALTY APPLIED:", overcapScorePenalty, "isSim:", perso.isSimulation, "CR:", perso.buffedStats.cr);
 
         const currentMaxRolls = (typeof window !== 'undefined' && window.MAX_ROLLS) ? window.MAX_ROLLS : MAX_ROLLS;
         const maxCrRoll = currentMaxRolls["critRate_"] || 3.89;

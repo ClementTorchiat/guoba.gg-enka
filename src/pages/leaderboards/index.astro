@@ -1,0 +1,337 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import StaticLayout from "../../layouts/StaticLayout.astro";
+import { createClient } from '@supabase/supabase-js';
+
+// Dictionnaire de traduction des noms de leaderboards
+import leaderboardsNames from "../../data/leaderboards_names.json";
+import { getEnkaAvatars } from "../../server/enkaParser";
+// Désactiver le prerendering car on a besoin d'interroger Supabase en temps réel
+export const prerender = false;
+
+// 1. Initialisation de Supabase
+const supabase = createClient(
+  import.meta.env.SUPABASE_URL,
+  import.meta.env.SUPABASE_SERVICE_KEY
+);
+
+const ENKA_TO_LOCAL_NAME: Record<string, string> = {
+  "Alhatham": "Alhaitham", "Ambor": "Amber", "Itto": "Arataki_Itto", "Baizhuer": "Baizhu",
+  "Freminet": "Fréminet", "Hutao": "Hu_Tao", "Qin": "Jean", "Kazuha": "Kaedehara_Kazuha",
+  "Ayaka": "Kamisato_Ayaka", "Ayato": "Kamisato_Ayato", "Momoka": "Kirara", "Sara": "Kujou_Sara",
+  "Shinobu": "Kuki_Shinobu", "Lanyan": "Lan_Yan", "Liney": "Lyney", "Wanderer": "Nomade",
+  "Noel": "Noëlle", "Olorun": "Ororon", "Rosaria": "Rosalia", "MarionetteNew": "Sandrone",
+  "Kokomi": "Sangonomiya_Kokomi", "Heizo": "Shikanoin_Heizou", "Shougun": "Shogun_Raiden",
+  "Tohma": "Thomas", "Liuyun": "Xianyun", "Yae": "Yae_Miko", "Feiyan": "Yanfei",
+  "Mizuki": "Yumemizuki_Mizuki", "Yunjin": "Yun_Jin", "Linette": "Lynette", "SkirkNew": "Skirk",
+  "Emilie": "Émilie"
+};
+
+const LOCAL_TO_ENKA_NAME: Record<string, string> = {};
+for (const [enka, local] of Object.entries(ENKA_TO_LOCAL_NAME)) {
+  LOCAL_TO_ENKA_NAME[local] = enka;
+}
+
+// 2. Chargement de toutes les configs de personnages
+const charConfigsLoaders = import.meta.glob('../../../data/characters/*.json', { eager: true });
+
+const avatarsDb = await getEnkaAvatars();
+const enkaAvatarMap: Record<string, any> = {};
+for (const avatarId in avatarsDb) {
+  const avatar = avatarsDb[avatarId];
+  if (avatar.SideIconName) {
+    let cleanName = avatar.SideIconName.replace("/ui/UI_AvatarIcon_Side_", "").replace(".png", "");
+    enkaAvatarMap[cleanName] = avatar;
+  }
+}
+
+const CHAR_CONFIGS: Record<string, any> = {};
+for (const path in charConfigsLoaders) {
+  const fileName = path.split('/').pop()?.replace('.json', '') || "";
+  CHAR_CONFIGS[fileName] = (charConfigsLoaders[path] as any).default || charConfigsLoaders[path];
+}
+
+// 3. Extraction des leaderboards par personnage
+const characterList: any[] = [];
+let totalLeaderboards = 0;
+
+for (const charName in CHAR_CONFIGS) {
+  const config = CHAR_CONFIGS[charName];
+  const color = config.color || "#5053bb";
+  
+  // Utilisation d'une Map pour dédoublonner les leaderboard_id
+  const leaderboardsMap = new Map();
+
+  for (const [buildName, buildData] of Object.entries(config.builds)) {
+    const data = buildData as any;
+    const lbId = data.leaderboard_id || buildName;
+    
+    if (!leaderboardsMap.has(lbId)) {
+      leaderboardsMap.set(lbId, {
+        id: lbId,
+        teams: []
+      });
+      totalLeaderboards++;
+    }
+    
+    // On sauvegarde toutes les variantes d'équipes pour ce leaderboard_id
+    if (data.team) {
+      leaderboardsMap.get(lbId).teams.push(data.team);
+    }
+  }
+
+  // Si le personnage n'a aucun build configuré, on l'ignore (optionnel)
+  if (leaderboardsMap.size === 0) continue;
+
+  const enkaName = LOCAL_TO_ENKA_NAME[charName] || charName;
+  const isTraveler = enkaName.includes("Traveler") || enkaName.includes("Voyageur") || enkaName.includes("Manekin") || enkaName.includes("Player");
+  const finalEnkaName = isTraveler ? "PlayerBoy" : enkaName;
+  const enkaAvatarImg = `https://enka.network/ui/UI_AvatarIcon_${finalEnkaName}.png`;
+  const enkaGachaImg = `https://enka.network/ui/UI_Gacha_AvatarImg_${finalEnkaName}.webp`;
+
+  let mainElem = 'physical';
+  const enkaMap: Record<string, string> = { "Fire": "pyro", "Water": "hydro", "Grass": "dendro", "Electric": "electro", "Wind": "anemo", "Ice": "cryo", "Rock": "geo" };
+  
+  if (enkaAvatarMap[finalEnkaName] && enkaAvatarMap[finalEnkaName].Element) {
+    const enkaElem = enkaAvatarMap[finalEnkaName].Element;
+    mainElem = enkaMap[enkaElem] || enkaElem.toLowerCase();
+  }
+
+  characterList.push({
+    name: charName.replace(/_/g, ' '),
+    originalName: charName,
+    color: color,
+    element: mainElem,
+    avatarImg: enkaAvatarImg,
+    gachaImg: enkaGachaImg,
+    leaderboards: Array.from(leaderboardsMap.values())
+  });
+}
+
+// Tri alphabétique des personnages
+characterList.sort((a, b) => a.name.localeCompare(b.name));
+
+// 4. Récupération des statistiques depuis Supabase
+let totalEntries = 0;
+const archetypeCounts: Record<string, number> = {};
+
+// Note: sur une très grosse DB on utiliserait une fonction RPC (Stored Procedure)
+// pour faire le GROUP BY coté serveur SQL. 
+// Pour l'instant, on récupère juste la colonne archetype de toutes les entrées.
+const { data: buildsData } = await supabase.from('builds').select('archetype');
+
+const ELEMENT_COLORS: Record<string, string> = {
+  "pyro": "#884A20", "hydro": "#195293", "dendro": "#516514", "electro": "#512C88",
+  "anemo": "#2B7C6C", "cryo": "#1B7A92", "geo": "#886D01", "physical": "#cccccc"
+};
+
+if (buildsData) {
+  totalEntries = buildsData.length;
+  for (const b of buildsData) {
+    archetypeCounts[b.archetype] = (archetypeCounts[b.archetype] || 0) + 1;
+  }
+}
+
+---
+
+<Layout title="Classements — guoba.gg" titleKey="nav.leaderboards" description="Découvrez guoba.gg, l'optimiseur de builds et coach virtuel indépendant pour Genshin Impact. Comprenez le fonctionnement des scores, grades et recommandations de farm.">
+  <StaticLayout currentPage="leaderboards">
+    <div class="static-page">
+      <div class="static-page-hero">
+        <h1 class="static-page-title">Classements</h1>
+        <p class="static-page-lead">Parcourez les classements basés sur le score et le grade.</p>
+      </div>
+
+      <div class="leaderboards-content" style="margin-top: 20px;">
+        <div class="leaderboards-tools" style="display: flex; flex-direction: row; justify-content: space-between;">
+          <form id="searchForm" style="position: relative; width: 423px;">
+            <input id="searchInput" style="width: 100%; background: var(--bg-panel); border: none; border-radius: 8px; font-family: 'ShinShin', sans-serif; font-size: 14px; padding-left: 15px; padding-top: 17px; padding-bottom: 14px; color: var(--text-primary);" placeholder="Rechercher par nom de personnage..." />
+            <button type="submit" style="position: absolute; right: 15px; top: 15px; background: none; border: none; cursor: pointer;">
+              <img src="/assets/simulator/icons/icon_search_white.svg" alt="" style="width: 20px; height: 20px;" />
+            </button>
+          </form>
+
+          <div style="display: flex; color: var(--text-grey); font-size: 14px; align-items: center; gap: 5px;">
+            <p>{totalLeaderboards} classements |</p>
+            <p>{totalEntries} entrées</p>
+          </div>
+        </div>
+
+        <div class="leaderboards-container" style="background: var(--bg-panel); border-radius: 8px; margin-top: 8px; padding: 5px;">
+          <div class="leaderboards-head" style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px 20px 10px 10px">
+            <p style="font-size: 12px; flex: 1;">Classement</p>
+            <p style="font-size: 12px; flex: 1; text-align: center;">Équipe</p>
+            <p style="font-size: 12px; flex: 0.5; text-align: center;">Entrées</p>
+            <p style="font-size: 12px; flex: 0.5; text-align: right;">Dernière MàJ</p>
+          </div>
+
+          <div class="leaderboards-list-rows" style="display: flex; flex-direction: column; gap: 5px;">
+            {characterList.map((char) => (
+              <div class="character-group" data-char-name={char.name.toLowerCase()}>
+                <!-- Ligne principale du Personnage -->
+                <div class="leaderboard-list-row cursor-pointer" data-char={char.originalName} style={`position: relative; overflow: hidden; padding: 2px; padding-right: 20px; border-radius: 8px; background-color: rgb(from ${char.color} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); display:flex; flex-direction: row; gap: 13px; align-items: center; cursor: pointer;`}>
+                  <div style={`position: absolute; inset: 0; background-image: url('${char.gachaImg}'); background-position: center center; background-repeat: no-repeat; background-size: 100%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);`}></div>
+                  <div class="row-overlay" style={`position: absolute; inset: 0; background-color: rgb(from ${char.color} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); transition: background-color 0.35s; z-index: 1;`}></div>
+
+                  <img src={char.avatarImg} onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${char.originalName.split('_')[0]}.png'`} style="z-index: 1; width: 52px; height: 52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" />
+                  
+                  <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; width: 100%;">
+                    <p style="font-size: 16px; font-weight: bold;">{char.name}</p>
+                    <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 20px;">
+                      <p style="font-size: 14px;">{char.leaderboards.length} classement{char.leaderboards.length > 1 ? 's' : ''}</p>
+                      <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; flex-shrink: 0; transform: rotate(0deg); transition: transform 0.3s ease;" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Conteneur déployable pour ses leaderboards -->
+                <div class="leaderboards-details-container" id={`details-${char.originalName}`} style="display: none; flex-direction: column; gap: 5px; margin-top: 5px; margin-bottom: 5px;">
+                  {char.leaderboards.map((lb: any, index: number) => {
+                    const count = archetypeCounts[lb.id] || 0;
+                    const lbNameObj = leaderboardsNames[lb.id as keyof typeof leaderboardsNames];
+                    const lbName = lbNameObj ? lbNameObj.fr : lb.id;
+                    const bgColor = index % 2 === 0 ? 'rgba(0, 0, 0, 0.2)' : 'var(--bg-panel)';
+                    
+                    // On prend la première team associée à ce leaderboard_id pour l'aperçu
+                    const previewTeam = lb.teams.length > 0 ? lb.teams[0] : [];
+                    
+                    return (
+                      <a href={`/leaderboards/${lb.id}`} style="text-decoration: none; color: inherit; display: block;">
+                        <div class="leaderboard-list-row-details hover-highlight" style={`position: relative; overflow: hidden; padding: 8px; padding-right: 20px; padding-left: 20px; border-radius: 8px; background-color: ${bgColor}; display:flex; flex-direction: row; gap: 20px; align-items: center; transition: background-color 0.2s ease;`}>
+                          
+                          <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center;">
+                            <p style="font-size: 14px; flex: 1;">{lbName}</p>
+                            
+                            <div class="leaderboard-list-row-details-team" style="display:flex; flex-direction: row; justify-content: center; gap:5px; flex: 1;">
+                              {(() => {
+                                const mainCharBg = ELEMENT_COLORS[char.element] || "#333";
+                                const teamDisplay: any[] = [];
+                                teamDisplay.push({
+                                  isMain: true,
+                                  iconUrl: char.avatarImg,
+                                  bg: mainCharBg
+                                });
+
+                                for (let i = 0; i < 3; i++) {
+                                  const ally = previewTeam[i];
+                                  if (ally) {
+                                    const rawName = Array.isArray(ally.name) ? (ally.name[0] || "") : (ally.name || "");
+                                    const allyImgName = rawName ? rawName.replace(/ /g, '_') : "";
+                                    const allyEnkaName = LOCAL_TO_ENKA_NAME[allyImgName] || allyImgName;
+                                    const isAllyTraveler = allyEnkaName.includes("Traveler") || allyEnkaName.includes("Voyageur") || allyEnkaName.includes("Manekin") || allyEnkaName.includes("Player");
+                                    const finalAllyEnkaName = isAllyTraveler ? "PlayerBoy" : allyEnkaName;
+                                    
+                                    const allyElem = Array.isArray(ally.element) ? ally.element[0] : ally.element;
+                                    const bg = allyElem ? (ELEMENT_COLORS[allyElem.toLowerCase()] || "#333") : "#333";
+                                    
+                                    let iconUrl = "";
+                                    if (finalAllyEnkaName && !['Unknown', '?', ''].includes(finalAllyEnkaName)) {
+                                      iconUrl = `https://enka.network/ui/UI_AvatarIcon_${finalAllyEnkaName}.png`;
+                                    } else if (allyElem) {
+                                      iconUrl = `/assets/simulator/icons/icon_${allyElem.toLowerCase()}.webp`;
+                                    } else {
+                                      iconUrl = `/assets/simulator/icons/icon_empty_slot.svg`;
+                                    }
+                                    
+                                    teamDisplay.push({ isMain: false, iconUrl, bg });
+                                  } else {
+                                    teamDisplay.push({ isMain: false, iconUrl: `/assets/simulator/icons/icon_empty_slot.svg`, bg: "rgba(0,0,0,0.4)" });
+                                  }
+                                }
+
+                                return teamDisplay.map(member => (
+                                  <img 
+                                    style={`width: 40px; height: 40px; border-radius: 5px; background: ${member.bg}; ${member.isMain ? 'border: 2px solid rgba(255, 255, 255, 0.5);' : ''}`} 
+                                    src={member.iconUrl}
+                                    onerror="this.onerror=null; this.style.display='none'"
+                                  />
+                                ));
+                              })()}
+                            </div>
+                            
+                            <p style="font-size: 14px; flex: 0.5; text-align: center;">{count}</p>
+                            
+                            <!-- Placeholder pour la date -->
+                            <p style="font-size: 14px; flex: 0.5; text-align: right; opacity: 0.5;">N/A</p>
+                          </div>
+                        </div>
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </StaticLayout>
+</Layout>
+
+<style>
+  .hover-highlight:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
+</style>
+
+<script>
+  function setupLeaderboardsList() {
+    // Logique de déploiement des lignes (Accordéon)
+    document.querySelectorAll('.leaderboard-list-row').forEach(row => {
+      // Pour éviter d'ajouter plusieurs fois le même event listener, on le retire d'abord (ou on clone le noeud, mais cloner perdrait d'autres events).
+      // Le plus simple avec astro:page-load est que les éléments du DOM sont récréés, mais c'est bien de s'assurer de ne pas s'abonner en double si ce n'est pas le cas.
+      row.removeEventListener('click', toggleRow);
+      row.addEventListener('click', toggleRow);
+    });
+
+    function toggleRow(e: Event) {
+      const row = e.currentTarget as HTMLElement;
+      const charId = row.getAttribute('data-char');
+      const details = document.getElementById(`details-${charId}`) as HTMLElement | null;
+      const arrow = row.querySelector('.sort-arrow') as HTMLElement | null;
+      
+      if (details) {
+        if (details.style.display === 'none') {
+          details.style.display = 'flex';
+          if (arrow) arrow.style.transform = 'rotate(180deg)';
+        } else {
+          details.style.display = 'none';
+          if (arrow) arrow.style.transform = 'rotate(0deg)';
+        }
+      }
+    }
+
+    // Logique de recherche simple
+    function searchCharacter() {
+      const input = document.getElementById('searchInput') as HTMLInputElement | null;
+      if(!input) return;
+      const filter = input.value.toLowerCase();
+      
+      document.querySelectorAll('.character-group').forEach((group) => {
+        const htmlGroup = group as HTMLElement;
+        const charName = htmlGroup.getAttribute('data-char-name');
+        if (charName && charName.includes(filter)) {
+          htmlGroup.style.display = 'block';
+        } else {
+          htmlGroup.style.display = 'none';
+        }
+      });
+    }
+
+    const searchForm = document.getElementById('searchForm');
+    if (searchForm) {
+      searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        searchCharacter();
+      });
+    }
+    
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', searchCharacter);
+    }
+  }
+
+  // Initialisation lors des navigations Astro (View Transitions)
+  document.addEventListener('astro:page-load', setupLeaderboardsList);
+</script>

@@ -4,13 +4,67 @@ import { createClient } from '@supabase/supabase-js';
 import { parseEnkaData } from '../../server/enkaParser';
 import { calculateCharacterScore, calculateMaxTheoreticalScore } from '../../scripts/scoring.js';
 
-// Chargement en mémoire vive de toutes les configs de tes persos !
 const charConfigsLoaders = import.meta.glob('../../../data/characters/*.json', { eager: true });
+const setsConfigsLoaders = import.meta.glob('../../../data/sets/*.json', { eager: true });
+
 // On crée un dictionnaire rapide : { "Hu_Tao": {...}, "Arlecchino": {...} }
 const CHAR_CONFIGS: Record<string, any> = {};
 for (const path in charConfigsLoaders) {
   const fileName = path.split('/').pop()?.replace('.json', '') || "";
   CHAR_CONFIGS[fileName] = (charConfigsLoaders[path] as any).default || charConfigsLoaders[path];
+}
+
+const SET_CONFIGS: Record<string, any> = {};
+for (const path in setsConfigsLoaders) {
+  const fileName = path.split('/').pop()?.replace('.json', '') || "";
+  SET_CONFIGS[fileName] = (setsConfigsLoaders[path] as any).default || setsConfigsLoaders[path];
+}
+
+// Fonction utilitaire pour simuler les buffs de Taux Crit actifs par défaut
+function getSimulatedCritRateBuff(perso: any, charConfig: any) {
+  let extraCR = 0;
+  
+  const parseBuffsArray = (buffArray: any[], selectMode: string) => {
+    buffArray.forEach((item, idx) => {
+      if (!item) return;
+      if (item.cons !== undefined && (perso.cons || 0) < item.cons) return;
+      
+      let isActive = item.active !== undefined ? item.active : true;
+      if (selectMode === 'exclusive' && item.active === undefined) {
+          isActive = (idx === buffArray.length - 1);
+      }
+      if (isActive && item.stats && item.stats.critRate_) {
+          extraCR += item.stats.critRate_;
+      }
+    });
+  };
+
+  // 1. Buffs de personnage
+  if (charConfig && charConfig.buffs) {
+    charConfig.buffs.forEach((cat: any) => {
+      if (cat.buffs) parseBuffsArray(cat.buffs, cat.selectMode);
+    });
+  }
+
+  // 2. Buffs de sets d'artéfacts
+  if (perso.artefacts) {
+    const setsCount: Record<string, number> = {};
+    perso.artefacts.forEach((art: any) => {
+      if (art.setKey) {
+        setsCount[art.setKey] = (setsCount[art.setKey] || 0) + 1;
+      }
+    });
+    
+    Object.entries(setsCount).forEach(([setKey, count]) => {
+      const setConfig = SET_CONFIGS[setKey];
+      if (setConfig) {
+        if (count >= 2 && setConfig["2"]) parseBuffsArray(setConfig["2"], setConfig.selectMode);
+        if (count >= 4 && setConfig["4"]) parseBuffsArray(setConfig["4"], setConfig.selectMode);
+      }
+    });
+  }
+  
+  return extraCR * 100; // En format pourcentage
 }
 
 const ENKA_TO_LOCAL_NAME: Record<string, string> = {
@@ -142,6 +196,10 @@ app.get('/player/:uid', async (c) => {
           goodSets: build.goodSets || []
         };
 
+        // On applique les buffs de Taux Crit actifs par défaut pour l'évaluation de la pénalité d'overcap
+        const simulatedExtraCR = getSimulatedCritRateBuff(perso, config);
+        perso.buffedStats.cr = (perso.stats.critRate * 100) + simulatedExtraCR;
+
         const simulation = calculateCharacterScore(perso, scoringConfig, 45); // Max rolls n'a pas d'importance pour ce ratio
         const potential = calculateMaxTheoreticalScore(perso, scoringConfig);
 
@@ -170,7 +228,8 @@ app.get('/player/:uid', async (c) => {
       // LE CŒUR DU RÉACTEUR : On calcule d'abord le max dynamique !
       const potentialMax = calculateMaxTheoreticalScore(perso, bestScoringConfig);
 
-      // Puis on passe ce max dynamique à ton algorithme
+      // Puis on passe ce max dynamique à ton algorithme (le buffedStats.cr est déjà ajusté par la boucle ci-dessus)
+      perso.buffedStats.cr = (perso.stats.critRate * 100) + getSimulatedCritRateBuff(perso, config);
       const score = calculateCharacterScore(perso, bestScoringConfig, potentialMax.totalRolls);
 
       // On sauvegarde le résultat complet de l'évaluation dans l'objet perso !

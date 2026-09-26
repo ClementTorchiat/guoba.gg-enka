@@ -263,7 +263,7 @@ window.TEAMMATE_BUFFS = {
         buffs: [
             {
                 label: { fr: "Samaritain de l'ombre (Taux Crit)", en: "Shadow Samaritan (Crit Rate)" },
-                active: true,
+                active: false,
                 stats: { critRate_: 0.15 }
             }
         ]

@@ -26,7 +26,7 @@ let cachedAvatars: any = null;
 let HASH_TO_KEY: Record<string, string> = {};
 let ICON_TO_NAME_HASH: Record<string, string> = {};
 
-async function getEnkaAvatars() {
+export async function getEnkaAvatars() {
     if (!cachedAvatars) {
         const res = await fetch('https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/avatars.json');
         cachedAvatars = await res.json();
@@ -103,9 +103,10 @@ export async function parseEnkaData(enkaRawData: any) {
                 
                 // Set Key (Hash du set -> Clé locale de Guoba)
                 let targetHash = flat.setNameTextMapHash || "";
+                let iconClean = "";
                 
                 if (flat.icon) {
-                    const iconClean = flat.icon.replace('.png', '');
+                    iconClean = flat.icon.replace('.png', '');
                     if (iconToNameHashDb[iconClean]) {
                         targetHash = iconToNameHashDb[iconClean];
                     }
@@ -135,19 +136,37 @@ export async function parseEnkaData(enkaRawData: any) {
                     type: flat.equipType, // "EQUIP_SHOES", "EQUIP_RING", etc.
                     stars: stars,
                     setKey: String(setKey),
+                    icon: iconClean,
                     mainStat: { key: mainStatKey, value: mainProp.statValue },
                     subStats: subStats
                 });
             }
         });
 
+        // Extraction des stats globales du perso pour l'affichage (depuis Enka)
+        const totalCritDMG = (avatar.fightPropMap && avatar.fightPropMap["22"]) ? avatar.fightPropMap["22"] : 0.5;
+        const totalER = (avatar.fightPropMap && avatar.fightPropMap["23"]) ? avatar.fightPropMap["23"] : 1.0;
+
+        // Extraction de l'arme et de l'élément depuis avatarsDb
+        const weaponTypeRaw = avatarInfo.WeaponType || "WEAPON_SWORD_ONE_HAND";
+        const elementRaw = avatarInfo.Element || "None";
+        const cons = avatar.talentIdList ? avatar.talentIdList.length : 0;
+
         // Objet final formaté pour `calculateCharacterScore`
         return {
             id: avatarId,
             name: nom,
+            element: elementRaw,
+            weapon: weaponTypeRaw,
+            cons: cons,
             isSimulation: false,
             buffedStats: {
                 cr: totalCritRate // Nécessaire pour la pénalité d'overcap CR de scoring.js
+            },
+            stats: {
+                critRate: totalCritRate / 100, // On le garde au format 0.X
+                critDMG: totalCritDMG,
+                enerRech: totalER
             },
             artefacts: artefacts
         };
