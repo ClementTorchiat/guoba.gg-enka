@@ -55,9 +55,9 @@ let offset = 0;
 
 try {
   // 1. Setup Supabase
-  const supabaseUrl = import.meta.env.SUPABASE_URL;
-  const supabaseKey = import.meta.env.SUPABASE_SERVICE_KEY;
-  if (!supabaseUrl) throw new Error("SUPABASE_URL is missing");
+  const supabaseUrl = import.meta.env.SUPABASE_URL || (Astro.locals as any)?.runtime?.env?.SUPABASE_URL;
+  const supabaseKey = import.meta.env.SUPABASE_SERVICE_KEY || (Astro.locals as any)?.runtime?.env?.SUPABASE_SERVICE_KEY;
+  if (!supabaseUrl) throw new Error("SUPABASE_URL is missing in both import.meta.env and Astro.locals.runtime.env");
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   // 2. Charger les configs pour trouver à quel perso appartient cet ID
