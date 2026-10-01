@@ -67,7 +67,7 @@ button[title="Mode d'emploi"]:hover,
     src: url("/assets/global/typo/ShinShin.ttf") format('truetype');
     font-weight: normal;
     font-style: normal;
-    font-display: swap;
+    font-display: block;
 }
 
 @keyframes spin {

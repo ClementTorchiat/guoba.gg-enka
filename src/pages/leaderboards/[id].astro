@@ -16,6 +16,9 @@ for (const [fr, eng] of Object.entries(SET_NAME_MAPPING)) {
 
 export const prerender = false;
 
+// Optimisation : Mise en cache CDN pour limiter les requêtes Supabase
+Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=600');
+
 const { id } = Astro.params;
 if (!id) {
   return Astro.redirect("/leaderboards");
@@ -88,13 +91,37 @@ if (!sortedErReqs.includes(100) && !otherErs.includes(100)) {
 }
 otherErs.sort((a, b) => b - a);
 
-// 4. Récupérer les données Supabase du classement
-const { data: builds, error } = await supabase.from("builds").select("*, players(nickname, profile_picture)").eq("archetype", id).order("score", { ascending: false }).limit(100);
+// Pagination (Idée 5)
+const pageParam = Astro.url.searchParams.get('page');
+const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+const limit = 100;
+const offset = (currentPage - 1) * limit;
+
+// 4. Récupération des données Supabase du classement avec `.range()`
+const { data: builds, error, count } = await supabase
+  .from("builds")
+  .select("*, players(nickname, profile_picture)", { count: 'exact' })
+  .eq("archetype", id)
+  .order("score", { ascending: false })
+  .range(offset, offset + limit - 1);
 
 const entries = builds || [];
+const totalEntries = count || 0;
+const totalPages = Math.ceil(totalEntries / limit);
+
+function getPaginationItems(current: number, total: number) {
+  if (total <= 1) return [];
+  if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
+  if (current <= 3) return [1, 2, 3, '...', total];
+  if (current >= total - 2) return [1, '...', total - 2, total - 1, total];
+  return [1, '...', current - 1, current, current + 1, '...', total];
+}
+const paginationItems = getPaginationItems(currentPage, totalPages);
 
 // Data pour le graphique de répartition des grades
-const { data: allGradesRaw } = await supabase.from("builds").select("data").eq("archetype", id);
+// Optimisation : On ne télécharge PLUS tout le JSON 'data' (qui contient les artéfacts, etc.) pour tous les builds.
+// On extrait uniquement le grade et l'Energy Recharge directement depuis PostgreSQL. C'est infiniment plus rapide et léger.
+const { data: allGradesRaw } = await supabase.from("builds").select("grade:data->evaluation->grade->>letter, er:data->stats->>enerRech").eq("archetype", id);
 const ALL_GRADES = ["F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+", "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"];
 const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
 
@@ -104,13 +131,13 @@ for (const b of allBuckets) {
 }
 
 if (allGradesRaw) {
-  allGradesRaw.forEach((build) => {
-    let grade = build?.data?.evaluation?.grade?.letter;
+  allGradesRaw.forEach((build: any) => {
+    let grade = build?.grade;
     if (grade) {
       if (grade.startsWith("ARCHON")) grade = "ARCHON";
 
-      const stats = build?.data?.stats || { enerRech: 1.0 };
-      const rowEr = Math.round((stats.enerRech || 1) * 100);
+      const enerRech = build?.er ? parseFloat(build.er) : 1.0;
+      const rowEr = Math.round(enerRech * 100);
 
       let maxBucket = 100;
       for (const b of allBuckets) {
@@ -440,7 +467,7 @@ if (enkaAvatarMap[finalEnkaName]) {
                   return (
                     <a href={`/?uid=${build.uid}&char=${targetCharName}`} class="leaderboard-list-row" data-er={Math.round((stats.enerRech || 1) * 100)} data-build-info={JSON.stringify(tooltipPayload)} style={`position: relative; overflow: hidden; padding: 10px; padding-right: 20px; padding-left: 10px; border-radius: 8px; background-color: ${bgColor}; display:flex; flex-direction: row; align-items: center; justify-content: space-between; cursor: pointer; text-decoration: none; color: inherit; transition: background-color 0.2s ease;`}>
                       <span class="rank-number" style="flex: 0.2;">
-                        {index + 1}
+                        {offset + index + 1}
                       </span>
 
                       <div style="flex: 1; display: flex; flex-direction: row; align-items: center; gap: 8px;">
@@ -507,6 +534,48 @@ if (enkaAvatarMap[finalEnkaName]) {
             }
           </div>
         </div>
+          
+        {totalPages > 1 && (
+          <>
+            <div id="pagination-data" data-offset={offset} class="pagination-container" style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 5px; height: 50px;">
+                <a href={`?page=1`} class="pag-btn" style={`display: ${currentPage === 1 ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(90deg); opacity: 0.8;" />
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(90deg); opacity: 0.8; margin-left: -6px;" />
+                </a>
+                
+                <a href={`?page=${Math.max(1, currentPage - 1)}`} class="pag-btn" style={`display: ${currentPage === 1 ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(90deg); opacity: 0.8;" />
+                </a>
+
+                {paginationItems.map((p) => {
+                  if (p === '...') {
+                    return <div style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; color: var(--text-primary); font-family: 'Shinshin', sans-serif; font-size: 16px; font-weight: normal;">...</div>;
+                  }
+                  const isActive = p === currentPage;
+                  const bg = isActive ? 'var(--bg-active)' : 'var(--bg-panel)';
+                  return (
+                    <a href={`?page=${p}`} class={`pag-btn ${isActive ? 'active' : ''}`} style={`display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 8px; background: ${bg}; text-decoration: none; color: var(--text-primary); transition: background 0.2s; font-family: 'Shinshin', sans-serif; font-size: 16px; font-weight: normal;`}>
+                      {p}
+                    </a>
+                  );
+                })}
+
+                <a href={`?page=${Math.min(totalPages, currentPage + 1)}`} class="pag-btn" style={`display: ${currentPage === totalPages ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(-90deg); opacity: 0.8;" />
+                </a>
+                
+                <a href={`?page=${totalPages}`} class="pag-btn" style={`display: ${currentPage === totalPages ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(-90deg); opacity: 0.8;" />
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(-90deg); opacity: 0.8; margin-left: -6px;" />
+                </a>
+              </div>
+              <style>
+                .pag-btn:hover {
+                  background-color: var(--bg-hover) !important;
+                }
+              </style>
+            </>
+          )}
       </div>
     </div>
 
@@ -667,7 +736,10 @@ if (enkaAvatarMap[finalEnkaName]) {
             .map((b) => parseInt(b.getAttribute("data-filter-er") || "100", 10))
             .sort((a, b) => b - a);
 
-          let currentRank = 1;
+          const paginationData = document.getElementById('pagination-data');
+          const offset = paginationData ? parseInt(paginationData.getAttribute('data-offset') || '0', 10) : 0;
+          let currentRank = offset + 1;
+          
           rows.forEach((row) => {
             const rowEr = parseInt(row.getAttribute("data-er") || "100", 10);
 
