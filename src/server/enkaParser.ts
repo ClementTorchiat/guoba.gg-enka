@@ -53,11 +53,20 @@ async function getIconToNameHash() {
     return ICON_TO_NAME_HASH;
 }
 
-async function getHashToKey() {
-    if (Object.keys(HASH_TO_KEY).length === 0) {
+let LOC_FR: Record<string, string> = {};
+
+async function getLocFr() {
+    if (Object.keys(LOC_FR).length === 0) {
         const res = await fetch('https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json');
         const loc = await res.json();
-        const frLoc = loc["fr"] || {};
+        LOC_FR = loc["fr"] || {};
+    }
+    return LOC_FR;
+}
+
+async function getHashToKey() {
+    if (Object.keys(HASH_TO_KEY).length === 0) {
+        const frLoc = await getLocFr();
         for (const [hash, nom] of Object.entries(frLoc)) {
             if ((SET_NAME_MAPPING as any)[nom as string]) {
                 HASH_TO_KEY[hash] = (SET_NAME_MAPPING as any)[nom as string];
@@ -78,6 +87,7 @@ export async function parseEnkaData(enkaRawData: any) {
     const avatarsDb = await getEnkaAvatars();
     const hashToKeyDb = await getHashToKey();
     const iconToNameHashDb = await getIconToNameHash();
+    const locFrDb = await getLocFr();
 
     const persos = enkaRawData.avatarInfoList.map((avatar: any) => {
         // Enka stocke le taux critique total du perso à l'index "20"
@@ -93,9 +103,9 @@ export async function parseEnkaData(enkaRawData: any) {
         let nom = clean.split('_').pop() || "Unknown";
 
         const artefacts: any[] = [];
-
+        let equippedWeapon: any = null;
         
-        // On récupère uniquement les artéfacts dans l'equipList
+        // On récupère les artéfacts et l'arme dans l'equipList
         const equips = avatar.equipList || [];
         equips.forEach((equip: any) => {
             if (equip.flat && equip.flat.itemType === "ITEM_RELIQUARY") {
@@ -140,12 +150,45 @@ export async function parseEnkaData(enkaRawData: any) {
                     mainStat: { key: mainStatKey, value: mainProp.statValue },
                     subStats: subStats
                 });
+            } else if (equip.flat && equip.flat.itemType === "ITEM_WEAPON") {
+                const flat = equip.flat;
+                const weaponData = equip.weapon || {};
+                let refinement = 1;
+                if (weaponData.affixMap) {
+                    const keys = Object.keys(weaponData.affixMap);
+                    if (keys.length > 0) {
+                        refinement = weaponData.affixMap[keys[0]] + 1;
+                    }
+                }
+                
+                equippedWeapon = {
+                    nameText: locFrDb[String(flat.nameTextMapHash)] || String(flat.nameTextMapHash || ""),
+                    icon: flat.icon ? flat.icon.replace('.png', '') : "",
+                    level: weaponData.level || 1,
+                    refinement: refinement
+                };
             }
         });
 
         // Extraction des stats globales du perso pour l'affichage (depuis Enka)
         const totalCritDMG = (avatar.fightPropMap && avatar.fightPropMap["22"]) ? avatar.fightPropMap["22"] : 0.5;
         const totalER = (avatar.fightPropMap && avatar.fightPropMap["23"]) ? avatar.fightPropMap["23"] : 1.0;
+        
+        const maxHp = (avatar.fightPropMap && avatar.fightPropMap["2000"]) ? avatar.fightPropMap["2000"] : 0;
+        const curAttack = (avatar.fightPropMap && avatar.fightPropMap["2001"]) ? avatar.fightPropMap["2001"] : 0;
+        const curDefense = (avatar.fightPropMap && avatar.fightPropMap["2002"]) ? avatar.fightPropMap["2002"] : 0;
+        const eleMas = (avatar.fightPropMap && avatar.fightPropMap["28"]) ? avatar.fightPropMap["28"] : 0;
+
+        const dmgKeys = ["30", "40", "41", "42", "43", "44", "45", "46"];
+        let maxDmgBonus = 0;
+        if (avatar.fightPropMap) {
+            for (const key of dmgKeys) {
+                if (avatar.fightPropMap[key] > maxDmgBonus) {
+                    maxDmgBonus = avatar.fightPropMap[key];
+                }
+            }
+        }
+        const charLevel = (avatar.propMap && avatar.propMap["4001"] && avatar.propMap["4001"].val) ? avatar.propMap["4001"].val : 90;
 
         // Extraction de l'arme et de l'élément depuis avatarsDb
         const weaponTypeRaw = avatarInfo.WeaponType || "WEAPON_SWORD_ONE_HAND";
@@ -156,14 +199,21 @@ export async function parseEnkaData(enkaRawData: any) {
         return {
             id: avatarId,
             name: nom,
+            level: charLevel,
             element: elementRaw,
-            weapon: weaponTypeRaw,
+            weaponType: weaponTypeRaw, // Keep the old property as weaponType
+            weapon: equippedWeapon, // The newly parsed weapon details
             cons: cons,
             isSimulation: false,
             buffedStats: {
                 cr: totalCritRate // Nécessaire pour la pénalité d'overcap CR de scoring.js
             },
             stats: {
+                maxHp,
+                curAttack,
+                curDefense,
+                eleMas,
+                dmgBonus: maxDmgBonus,
                 critRate: totalCritRate / 100, // On le garde au format 0.X
                 critDMG: totalCritDMG,
                 enerRech: totalER

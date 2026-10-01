@@ -2960,8 +2960,6 @@ function showSidebarNav() {
     if (nav) nav.style.display = 'flex';
     const charSidebar = document.querySelector('.sidebar-characters');
     if (charSidebar) charSidebar.style.display = 'none';
-    const collapseBtn = document.getElementById('sidebar-collapse-btn');
-    if (collapseBtn) collapseBtn.style.display = 'none';
     const sidebar = document.querySelector('.sidebar');
     if (sidebar) sidebar.classList.remove('sidebar-collapsed');
     const icon = document.getElementById('sidebar-collapse-icon');
@@ -2973,21 +2971,9 @@ function hideSidebarNav() {
     if (nav) nav.style.display = 'none';
     const charSidebar = document.querySelector('.sidebar-characters');
     if (charSidebar) charSidebar.style.display = 'flex';
-    const collapseBtn = document.getElementById('sidebar-collapse-btn');
-    if (collapseBtn) collapseBtn.style.display = 'flex';
 }
 
-window.toggleSidebarCollapse = function () {
-    const sidebar = document.querySelector('.sidebar');
-    const icon = document.getElementById('sidebar-collapse-icon');
-    if (sidebar.classList.contains('sidebar-collapsed')) {
-        sidebar.classList.remove('sidebar-collapsed');
-        if (icon) icon.style.transform = 'rotate(90deg)';
-    } else {
-        sidebar.classList.add('sidebar-collapsed');
-        if (icon) icon.style.transform = 'rotate(-90deg)';
-    }
-};
+
 
 function updateSidebarNavActive(activePage) {
     document.querySelectorAll('.snav-item').forEach(item => {

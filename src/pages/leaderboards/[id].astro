@@ -1,74 +1,50 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import StaticLayout from "../../layouts/StaticLayout.astro";
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
 // Dictionnaire
 import leaderboardsNames from "../../data/leaderboards_names.json";
-import { getEnkaAvatars } from "../../server/enkaParser";
+import { getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getAssetTranslations, getCharNamesTranslations, getIconTranslationMap } from "../../server/characters";
+import teammateAssets from "../../data/teammate_assets.json";
+import SET_NAME_MAPPING from "../../data/set_name_mapping.json";
+
+const LOCALIZED_SETS: Record<string, string> = {};
+for (const [fr, eng] of Object.entries(SET_NAME_MAPPING)) {
+  LOCALIZED_SETS[eng as string] = fr;
+}
+
 export const prerender = false;
 
 const { id } = Astro.params;
 if (!id) {
-  return Astro.redirect('/leaderboards');
+  return Astro.redirect("/leaderboards");
 }
 
 // 1. Setup Supabase
-const supabase = createClient(
-  import.meta.env.SUPABASE_URL,
-  import.meta.env.SUPABASE_SERVICE_KEY
-);
-
-const ENKA_TO_LOCAL_NAME: Record<string, string> = {
-  "Alhatham": "Alhaitham", "Ambor": "Amber", "Itto": "Arataki_Itto", "Baizhuer": "Baizhu",
-  "Freminet": "Fréminet", "Hutao": "Hu_Tao", "Qin": "Jean", "Kazuha": "Kaedehara_Kazuha",
-  "Ayaka": "Kamisato_Ayaka", "Ayato": "Kamisato_Ayato", "Momoka": "Kirara", "Sara": "Kujou_Sara",
-  "Shinobu": "Kuki_Shinobu", "Lanyan": "Lan_Yan", "Liney": "Lyney", "Wanderer": "Nomade",
-  "Noel": "Noëlle", "Olorun": "Ororon", "Rosaria": "Rosalia", "MarionetteNew": "Sandrone",
-  "Kokomi": "Sangonomiya_Kokomi", "Heizo": "Shikanoin_Heizou", "Shougun": "Shogun_Raiden",
-  "Tohma": "Thomas", "Liuyun": "Xianyun", "Yae": "Yae_Miko", "Feiyan": "Yanfei",
-  "Mizuki": "Yumemizuki_Mizuki", "Yunjin": "Yun_Jin", "Linette": "Lynette", "SkirkNew": "Skirk",
-  "Emilie": "Émilie"
-};
-
-const LOCAL_TO_ENKA_NAME: Record<string, string> = {};
-for (const [enka, local] of Object.entries(ENKA_TO_LOCAL_NAME)) {
-  LOCAL_TO_ENKA_NAME[local] = enka;
-}
+const supabase = createClient(import.meta.env.SUPABASE_URL, import.meta.env.SUPABASE_SERVICE_KEY);
 
 // 2. Charger les configs pour trouver à quel perso appartient cet ID
-const charConfigsLoaders = import.meta.glob('../../../data/characters/*.json', { eager: true });
-const CHAR_CONFIGS: Record<string, any> = {};
-for (const path in charConfigsLoaders) {
-  const fileName = path.split('/').pop()?.replace('.json', '') || "";
-  CHAR_CONFIGS[fileName] = (charConfigsLoaders[path] as any).default || charConfigsLoaders[path];
-}
-
-const avatarsDb = await getEnkaAvatars();
-const enkaAvatarMap: Record<string, any> = {};
-for (const avatarId in avatarsDb) {
-  const avatar = avatarsDb[avatarId];
-  if (avatar.SideIconName) {
-    let cleanName = avatar.SideIconName.replace("/ui/UI_AvatarIcon_Side_", "").replace(".png", "");
-    enkaAvatarMap[cleanName] = avatar;
-  }
-}
+const CHAR_CONFIGS = await getCharConfigs();
+const enkaAvatarMap = await getEnkaAvatarMap();
+const assetTranslations = await getAssetTranslations(teammateAssets);
+const iconTranslations = await getIconTranslationMap();
 
 let targetCharName = "";
 let targetCharConfig: any = null;
-let allTeamsForThisId: any[] = [];
+let allVariantsForThisId: any[] = [];
 let allErReqs = new Set<number>();
 
 for (const charName in CHAR_CONFIGS) {
   const config = CHAR_CONFIGS[charName];
   let found = false;
-  
+
   for (const [buildName, buildData] of Object.entries(config.builds)) {
     const data = buildData as any;
     const lbId = data.leaderboard_id || buildName;
     if (lbId === id) {
       found = true;
-      if (data.team) allTeamsForThisId.push(data.team);
+      if (data.team) allVariantsForThisId.push({ team: data.team, name: data.name });
       if (data.er_req) allErReqs.add(data.er_req);
     }
   }
@@ -82,35 +58,28 @@ for (const charName in CHAR_CONFIGS) {
 
 // Redirection si le leaderboard n'existe pas
 if (!targetCharConfig) {
-  return Astro.redirect('/leaderboards');
+  return Astro.redirect("/leaderboards");
 }
 
 // Données du personnage
 const charColor = targetCharConfig.color || "#5053bb";
-const enkaName = LOCAL_TO_ENKA_NAME[targetCharName] || targetCharName;
-const isTraveler = enkaName.includes("Traveler") || enkaName.includes("Voyageur") || enkaName.includes("Manekin") || enkaName.includes("Player");
-const finalEnkaName = isTraveler ? "PlayerBoy" : enkaName;
-const enkaAvatarImg = `https://enka.network/ui/UI_AvatarIcon_${finalEnkaName}.png`;
-const enkaGachaImg = `https://enka.network/ui/UI_Gacha_AvatarImg_${finalEnkaName}.webp`;
-
-const ELEMENT_COLORS: Record<string, string> = {
-  "pyro": "#884A20", "hydro": "#195293", "dendro": "#516514", "electro": "#512C88",
-  "anemo": "#2B7C6C", "cryo": "#1B7A92", "geo": "#886D01", "physical": "#cccccc"
-};
+const finalEnkaName = getFinalEnkaName(targetCharName);
+const { avatarImg: enkaAvatarImg, gachaImg: enkaGachaImg } = getEnkaImages(targetCharName);
+const targetCharTranslations = await getCharNamesTranslations(targetCharName);
 
 const lbNameObj = leaderboardsNames[id as keyof typeof leaderboardsNames];
 const lbDisplayName = lbNameObj ? lbNameObj.fr : id;
 
 // 3. Traiter les teams et les ER Recommandées
 // Si plusieurs teams, on utilisera la première par défaut
-const defaultTeam = allTeamsForThisId.length > 0 ? allTeamsForThisId[0] : [];
+const defaultTeam = allVariantsForThisId.length > 0 ? allVariantsForThisId[0].team : [];
 const sortedErReqs = Array.from(allErReqs).sort((a, b) => b - a);
 const lowestEr = sortedErReqs.length > 0 ? sortedErReqs[sortedErReqs.length - 1] : null;
 
 const otherErs: number[] = [];
 if (lowestEr) {
   for (let i = 1; i <= 3; i++) {
-    const nextEr = lowestEr - (10 * i);
+    const nextEr = lowestEr - 10 * i;
     if (nextEr >= 100) otherErs.push(nextEr);
   }
 }
@@ -120,46 +89,79 @@ if (!sortedErReqs.includes(100) && !otherErs.includes(100)) {
 otherErs.sort((a, b) => b - a);
 
 // 4. Récupérer les données Supabase du classement
-const { data: builds, error } = await supabase
-  .from('builds')
-  .select('*, players(nickname, profile_picture)')
-  .eq('archetype', id)
-  .order('score', { ascending: false })
-  .limit(100);
+const { data: builds, error } = await supabase.from("builds").select("*, players(nickname, profile_picture)").eq("archetype", id).order("score", { ascending: false }).limit(100);
 
 const entries = builds || [];
 
-let mainElem = 'physical';
-let mainWeapon = 'sword';
-const enkaMap: Record<string, string> = { "Fire": "pyro", "Water": "hydro", "Grass": "dendro", "Electric": "electro", "Wind": "anemo", "Ice": "cryo", "Rock": "geo" };
+// Data pour le graphique de répartition des grades
+const { data: allGradesRaw } = await supabase.from("builds").select("data").eq("archetype", id);
+const ALL_GRADES = ["F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+", "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"];
+const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
 
+const distributionsByBucket = {};
+for (const b of allBuckets) {
+  distributionsByBucket[b] = Object.fromEntries(ALL_GRADES.map((g) => [g, 0]));
+}
+
+if (allGradesRaw) {
+  allGradesRaw.forEach((build) => {
+    let grade = build?.data?.evaluation?.grade?.letter;
+    if (grade) {
+      if (grade.startsWith("ARCHON")) grade = "ARCHON";
+
+      const stats = build?.data?.stats || { enerRech: 1.0 };
+      const rowEr = Math.round((stats.enerRech || 1) * 100);
+
+      let maxBucket = 100;
+      for (const b of allBuckets) {
+        if (rowEr >= b) {
+          maxBucket = b;
+          break;
+        }
+      }
+
+      if (distributionsByBucket[maxBucket] && distributionsByBucket[maxBucket][grade] !== undefined) {
+        distributionsByBucket[maxBucket][grade]++;
+      }
+    }
+  });
+}
+
+const chartLabels = ALL_GRADES;
+const chartDataByBucket = {};
+for (const b of allBuckets) {
+  chartDataByBucket[b] = ALL_GRADES.map((g) => distributionsByBucket[b][g]);
+}
+
+let mainElem = "physical";
+let mainWeapon = "sword";
 // On cherche les infos officielles depuis Enka
 if (enkaAvatarMap[finalEnkaName]) {
   const enkaAvatar = enkaAvatarMap[finalEnkaName];
-  
+
   if (enkaAvatar.Element) {
-    mainElem = enkaMap[enkaAvatar.Element] || enkaAvatar.Element.toLowerCase();
+    mainElem = ENKA_ELEMENT_MAP[enkaAvatar.Element] || enkaAvatar.Element.toLowerCase();
   }
   if (enkaAvatar.WeaponType) {
-    mainWeapon = enkaAvatar.WeaponType.toLowerCase().replace('weapon_', '').replace('_one_hand', '').replace('pole', 'polearm');
+    mainWeapon = enkaAvatar.WeaponType.toLowerCase().replace("weapon_", "").replace("_one_hand", "").replace("pole", "polearm");
   }
 }
-
 ---
 
-<Layout title={`${lbDisplayName} - ${targetCharName.replace(/_/g, ' ')} — guoba.gg`} titleKey="nav.leaderboards" description="Consultez les meilleurs builds sur guoba.gg.">
+<Layout title={`${lbDisplayName} - ${targetCharName.replace(/_/g, " ")} — guoba.gg`} titleKey="nav.leaderboards" description="Consultez les meilleurs builds sur guoba.gg.">
   <StaticLayout currentPage="leaderboards">
     <div class="static-page">
       <div class="static-page-hero">
-        <h1 class="static-page-title">Classements</h1>
-        <p class="static-page-lead">Parcourez les classements basés sur le score et le grade.</p>
+        <h1 class="static-page-title" data-i18n="lb.title">Classements</h1>
+        <p class="static-page-lead" data-i18n="lb.lead">Parcourez les classements basés sur le score et le grade.</p>
       </div>
 
       <div class="leaderboard-content" style="margin-top: 20px;">
         <div class="leaderboard-details-tools" style="display: flex; flex-direction: row; justify-content: space-between;">
-          <a href="/leaderboards" style="text-decoration: none;">
-            <button style="font-family: Shinshin, sans-serif; display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(255,255,255,0); background: var(--bg-panel); color:var(--text-primary);">
-              <span>Revenir aux classements</span>
+          <a href="/leaderboards" data-astro-reload style="text-decoration: none;">
+            <button class="lb-back-btn" style="font-family: Shinshin, sans-serif; display:inline-flex; gap: 9px; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(255,255,255,0); background: var(--bg-panel); color:var(--text-primary);">
+              <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 10px; height: 10px; transform: rotate(90deg);" />
+              <span data-i18n="lb.back">Revenir aux classements</span>
             </button>
           </a>
         </div>
@@ -167,246 +169,508 @@ if (enkaAvatarMap[finalEnkaName]) {
         <div class="leaderboard-info" style={`display: flex; flex-direction: row; position:relative; padding:7px; overflow:hidden; background-color: rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); margin-top: 8px; border-radius: 8px;`}>
           <div style={`position: absolute; inset: 0; background-image: url('${enkaGachaImg}'); background-position: center center; background-repeat: no-repeat; background-size: 200%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);`}></div>
           <div style={`position: absolute; inset: 0; background-color: rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); transition: background-color 0.35s; z-index: 1;`}></div>
-          
+
           <div class="leaderboard-info-left" style="display: flex; flex-direction: column; gap: 16px; z-index: 1;">
             <div class="leaderboard-info-left-name" style="display: flex; flex-direction: row; gap: 18px; align-items: center;">
-              <img src={enkaAvatarImg} style="width: 86px; height:86px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${targetCharName.split('_')[0]}.png'`} />
+              <img src={enkaAvatarImg} style="width: 86px; height:86px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${targetCharName.split("_")[0]}.png'`} />
               <div class="leaderboard-info-left-name-container" style="display:flex; flex-direction: column;">
                 <div class="leaderboard-info-left-name-container-icons" style="display: flex; flex-direction: row;">
                   <img src={`/assets/simulator/icons/icon_${mainElem}.webp`} style="width: 21px; height: 21px;" />
                   <img src={`/assets/simulator/icons/icon_${mainWeapon}.webp`} style="width: 21px; height: 21px;" />
                 </div>
-                <p style="font-size: 22px;">{targetCharName.replace(/_/g, ' ')}</p>
-                <p style="font-size: 18px; opacity: 0.5;">{lbDisplayName}</p>
+                <p style="font-size: 22px;" class="dynamic-i18n" data-fr={targetCharTranslations.fr} data-en={targetCharTranslations.en}>{targetCharName.replace(/_/g, " ")}</p>
+                <p style="font-size: 18px; opacity: 0.5;" class="dynamic-i18n" data-fr={lbNameObj ? lbNameObj.fr : lbDisplayName} data-en={lbNameObj ? lbNameObj.en : lbDisplayName}>{lbDisplayName}</p>
               </div>
             </div>
 
             <div class="leaderboard-info-left-team" style="border-radius: 8px; background-color: rgba(0, 0, 0, 0.4); padding: 8px 18px 18px 18px; display:flex; flex-direction: column; gap: 16px;">
-              <div class="leaderboard-info-left-team-title" style="display:flex; flex-direction: row; justify-content: space-between; gap:16px;">
+              <div class="leaderboard-info-left-team-title" style="display:flex; flex-direction: row; justify-content: space-between; gap:16px; position: relative; z-index: 20;">
                 <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
-                  <p>Équipe associée</p>
-                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <p data-i18n="lb.associatedTeam">Équipe associée</p>
+                  <svg onmouseenter={"showGlobalTooltip(this, window.t('lb.associatedTeamTooltip'), `rgba(255,255,255,0.4)`)"} onmouseleave="hideGlobalTooltip()" style="cursor: pointer;" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M14 7.5C14 3.91015 11.0899 1 7.5 1C3.91015 1 1 3.91015 1 7.5C1 11.0899 3.91015 14 7.5 14V15C3.35786 15 0 11.6421 0 7.5C0 3.35786 3.35786 0 7.5 0C11.6421 0 15 3.35786 15 7.5C15 11.6421 11.6421 15 7.5 15V14C11.0899 14 14 11.0899 14 7.5Z" fill="white"></path>
                     <path d="M9.95301 5.49967C9.84324 4.97607 9.53223 4.5997 9.03915 4.35734C8.52821 4.10547 7.97109 4.03764 7.43358 4C6.49445 4.01613 5.75831 4.35072 5.24519 5.08029C5.11582 5.26434 4.97469 5.45211 5.00387 5.69488C5.03393 5.94345 5.28004 6.07994 5.50741 5.95751C5.65464 5.87852 5.79926 5.7776 5.90902 5.65725C6.29626 5.23208 6.76321 5.0104 7.36563 5.06747C7.74676 5.10387 8.10656 5.37642 8.16449 5.68909C8.23244 6.05719 8.04296 6.35332 7.62131 6.51172C7.43532 6.58162 7.23713 6.62174 7.04765 6.6846C6.68742 6.80413 6.44915 7.02498 6.36203 7.39391C6.21524 8.01553 6.4387 8.53003 6.84074 8.99821C6.95356 9.12932 7.1095 9.19095 7.28678 9.15579C7.46276 9.12105 7.5538 8.98953 7.60433 8.83898C7.65093 8.69919 7.67881 8.55361 7.71192 8.40968C7.81167 7.97872 7.99635 7.81287 8.45721 7.73305C9.074 7.62634 9.57492 7.35958 9.82321 6.78262C10.0005 6.37069 10.0458 5.94138 9.95301 5.49967Z" fill="white"></path>
                     <path d="M7.21796 9.29683C6.68263 9.30096 6.31586 9.64879 6.31804 10.1501C6.32022 10.6542 6.68567 10.9971 7.22362 11C7.7546 11.0029 8.11875 10.6542 8.11745 10.1451C8.11571 9.63349 7.7546 9.29269 7.21796 9.29683Z" fill="white"></path>
                   </svg>
                 </div>
-                {allTeamsForThisId.length > 1 && (
-                  <button type="button" style="display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 14px; box-sizing:border-box; border-radius:8px; font-size:12px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid transparent; background:rgba(0, 0, 0, 0.25); color:var(--text-always-white); font-family: Shinshin, sans-serif;">
-                    <span style="pointer-events:none;">Variante 1</span>
-                    <svg class="focus-chevron" style="width:14px; height:14px; transition:transform 0.2s ease; margin-left:4px; opacity:0.8; pointer-events:none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                  </button>
-                )}
+                {
+                  allVariantsForThisId.length > 1 && (
+                    <div class="team-variant-dropdown-container data-select-container" style="position: relative; padding:0; border:none; background:transparent; height: 36px;">
+                      <button type="button" class="team-variant-btn custom-dropdown-btn" style="display: flex; justify-content: space-between; align-items: center; border: none; background: rgba(0, 0, 0, 0.25); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: normal; height: 36px; box-sizing: border-box; min-width: 150px; max-width: 250px;">
+                        <span class="team-variant-label dynamic-i18n" data-fr={allVariantsForThisId[0].name?.fr || "Variante 1"} data-en={allVariantsForThisId[0].name?.en || "Variant 1"} style="pointer-events:none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;">
+                          {allVariantsForThisId[0].name?.fr || "Variante 1"}
+                        </span>
+                        <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px; flex-shrink: 0; pointer-events:none; width: 12px; height: 12px;" />
+                      </button>
+                      <div class="team-variant-menu data-select-menu" style="text-transform: capitalize; width: 150%;">
+                        {allVariantsForThisId.map((variant, i) => {
+                          const vNameFr = variant.name?.fr || `Variante ${i + 1}`;
+                          const vNameEn = variant.name?.en || `Variant ${i + 1}`;
+                          return (
+                            <div class={`team-variant-option data-select-item dynamic-i18n ${i === 0 ? "active-item" : ""}`} data-index={i} data-fr={vNameFr} data-en={vNameEn} style="text-align: left;">
+                              {vNameFr}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )
+                }
               </div>
-              <div class="leaderboard-info-left-teammates" style="display: flex; flex-direction: row; gap: 8px;">
-                {(() => {
-                  const mainCharBg = ELEMENT_COLORS[mainElem] || "#333";
-                  
-                  const teamDisplay: { isMain: boolean; iconUrl: string; bg: string; }[] = [];
-                  teamDisplay.push({
-                    isMain: true,
-                    iconUrl: enkaAvatarImg,
-                    bg: mainCharBg
-                  });
+              <div class="leaderboard-info-left-teammates-wrapper" style="position: relative;">
+                {
+                  (allVariantsForThisId.length > 0 ? allVariantsForThisId : [{ team: [] }]).map((variant, teamIndex) => {
+                    const mainCharBg = ELEMENT_COLORS[mainElem] || "#333";
 
-                  for (let i = 0; i < 3; i++) {
-                    const ally = defaultTeam[i];
-                    if (ally) {
-                      const rawName = Array.isArray(ally.name) ? (ally.name[0] || "") : (ally.name || "");
-                      const allyImgName = rawName ? rawName.replace(/ /g, '_') : "";
-                      const allyEnkaName = LOCAL_TO_ENKA_NAME[allyImgName] || allyImgName;
-                      const isAllyTraveler = allyEnkaName.includes("Traveler") || allyEnkaName.includes("Voyageur") || allyEnkaName.includes("Manekin") || allyEnkaName.includes("Player");
-                      const finalAllyEnkaName = isAllyTraveler ? "PlayerBoy" : allyEnkaName;
-                      
-                      const allyElem = Array.isArray(ally.element) ? ally.element[0] : ally.element;
-                      const bg = allyElem ? (ELEMENT_COLORS[allyElem.toLowerCase()] || "#333") : "#333";
-                      
-                      let iconUrl = "";
-                      if (finalAllyEnkaName && !['Unknown', '?', ''].includes(finalAllyEnkaName)) {
-                        iconUrl = `https://enka.network/ui/UI_AvatarIcon_${finalAllyEnkaName}.png`;
-                      } else if (allyElem) {
-                        iconUrl = `/assets/simulator/icons/icon_${allyElem.toLowerCase()}.webp`;
+                    const teamDisplay: { isMain: boolean; iconUrl: string; bg: string; weapon?: string; set?: string; cons?: number }[] = [];
+                    teamDisplay.push({
+                      isMain: true,
+                      iconUrl: enkaAvatarImg,
+                      bg: mainCharBg,
+                    });
+
+                    for (let i = 0; i < 3; i++) {
+                      const ally = variant.team[i];
+                      if (ally) {
+                        const rawName = Array.isArray(ally.name) ? ally.name[0] || "" : ally.name || "";
+                        const allyImgName = rawName ? rawName.replace(/ /g, "_") : "";
+                        const finalAllyEnkaName = getFinalEnkaName(allyImgName);
+
+                        const allyElem = Array.isArray(ally.element) ? ally.element[0] : ally.element;
+                        const bg = allyElem ? ELEMENT_COLORS[allyElem.toLowerCase()] || "#333" : "#333";
+
+                        const weapon = ally.weapon || "";
+                        const set = ally.artifact ? ally.artifact.split(":")[0] : ally.set ? ally.set.split(":")[0] : "";
+                        const cons = ally.cons !== undefined ? ally.cons : -1;
+
+                        let iconUrl = "";
+                        if (finalAllyEnkaName && !["Unknown", "?", ""].includes(finalAllyEnkaName)) {
+                          iconUrl = `https://enka.network/ui/UI_AvatarIcon_${finalAllyEnkaName}.png`;
+                        } else if (allyElem) {
+                          iconUrl = `/assets/simulator/icons/icon_${allyElem.toLowerCase()}.webp`;
+                        } else {
+                          iconUrl = `/assets/simulator/icons/icon_empty_slot.svg`;
+                        }
+
+                        teamDisplay.push({ isMain: false, iconUrl, bg, weapon, set, cons });
                       } else {
-                        iconUrl = `/assets/simulator/icons/icon_empty_slot.svg`;
+                        teamDisplay.push({ isMain: false, iconUrl: `/assets/simulator/icons/icon_empty_slot.svg`, bg: "rgba(0,0,0,0.4)" });
                       }
-                      
-                      teamDisplay.push({ isMain: false, iconUrl, bg });
-                    } else {
-                      teamDisplay.push({ isMain: false, iconUrl: `/assets/simulator/icons/icon_empty_slot.svg`, bg: "rgba(0,0,0,0.4)" });
                     }
-                  }
 
-                  return teamDisplay.map(member => (
-                    <img 
-                      style={`width: 80px; height: 80px; border-radius: 8px; background: ${member.bg}; ${member.isMain ? 'border: 2px solid rgba(255, 255, 255, 0.5);' : ''}`} 
-                      src={member.iconUrl} 
-                      onerror="this.onerror=null; this.style.display='none'"
-                    />
-                  ));
-                })()}
+                    return (
+                      <div class="leaderboard-info-left-teammates" data-team-index={teamIndex} style={`display: ${teamIndex === 0 ? "flex" : "none"}; flex-direction: row; gap: 8px;`}>
+                        {teamDisplay.map((member) => (
+                          <div style="position: relative; width: 80px; height: 80px; flex-shrink: 0;">
+                            <img style={`width: 100%; height: 100%; border-radius: 8px; background: ${member.bg}; ${member.isMain ? "border: 2px solid rgba(255, 255, 255, 0.5);" : ""}`} src={member.iconUrl} onerror="this.onerror=null; this.style.display='none'" />
+                            {member.weapon && teammateAssets[member.weapon as keyof typeof teammateAssets] && <img src={teammateAssets[member.weapon as keyof typeof teammateAssets]} title={member.weapon} class="dynamic-i18n-title" data-fr={assetTranslations[member.weapon]?.fr || member.weapon} data-en={assetTranslations[member.weapon]?.en || member.weapon} style="position:absolute; bottom:0; left:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" decoding="async" />}
+                            {member.set && teammateAssets[member.set as keyof typeof teammateAssets] && <img src={teammateAssets[member.set as keyof typeof teammateAssets]} title={member.set} class="dynamic-i18n-title" data-fr={assetTranslations[member.set]?.fr || member.set} data-en={assetTranslations[member.set]?.en || member.set} style="position:absolute; bottom:0; right:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" decoding="async" />}
+                            {member.cons !== undefined && member.cons > 0 && <span style="position:absolute; top:2px; right:4px; font-size:12px; font-weight:700; color:#fff; text-shadow:0 0 3px #000; z-index:10;">C{member.cons}</span>}
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })
+                }
               </div>
             </div>
 
             <div class="leaderboard-info-left-er" style="display:flex; flex-direction: column; gap: 8px; margin-left: 10px;">
-              {sortedErReqs.length > 0 && (
-                <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
-                  <p style="font-size: 14px;">ER Recommandée :</p>
-                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 7.5C14 3.91015 11.0899 1 7.5 1C3.91015 1 1 3.91015 1 7.5C1 11.0899 3.91015 14 7.5 14V15C3.35786 15 0 11.6421 0 7.5C0 3.35786 3.35786 0 7.5 0C11.6421 0 15 3.35786 15 7.5C15 11.6421 11.6421 15 7.5 15V14C11.0899 14 14 11.0899 14 7.5Z" fill="white"></path>
-                    <path d="M9.95301 5.49967C9.84324 4.97607 9.53223 4.5997 9.03915 4.35734C8.52821 4.10547 7.97109 4.03764 7.43358 4C6.49445 4.01613 5.75831 4.35072 5.24519 5.08029C5.11582 5.26434 4.97469 5.45211 5.00387 5.69488C5.03393 5.94345 5.28004 6.07994 5.50741 5.95751C5.65464 5.87852 5.79926 5.7776 5.90902 5.65725C6.29626 5.23208 6.76321 5.0104 7.36563 5.06747C7.74676 5.10387 8.10656 5.37642 8.16449 5.68909C8.23244 6.05719 8.04296 6.35332 7.62131 6.51172C7.43532 6.58162 7.23713 6.62174 7.04765 6.6846C6.68742 6.80413 6.44915 7.02498 6.36203 7.39391C6.21524 8.01553 6.4387 8.53003 6.84074 8.99821C6.95356 9.12932 7.1095 9.19095 7.28678 9.15579C7.46276 9.12105 7.5538 8.98953 7.60433 8.83898C7.65093 8.69919 7.67881 8.55361 7.71192 8.40968C7.81167 7.97872 7.99635 7.81287 8.45721 7.73305C9.074 7.62634 9.57492 7.35958 9.82321 6.78262C10.0005 6.37069 10.0458 5.94138 9.95301 5.49967Z" fill="white"></path>
-                    <path d="M7.21796 9.29683C6.68263 9.30096 6.31586 9.64879 6.31804 10.1501C6.32022 10.6542 6.68567 10.9971 7.22362 11C7.7546 11.0029 8.11875 10.6542 8.11745 10.1451C8.11571 9.63349 7.7546 9.29269 7.21796 9.29683Z" fill="white"></path>
-                  </svg>
-                  {sortedErReqs.map((er, index) => {
-                    const isDefault = index === 0;
-                    return (
-                      <button data-filter-er={er} class="er-filter-btn" style={`font-family: Shinshin, sans-serif; display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid ${isDefault ? '#3b82f6' : 'rgba(255,255,255,0)'}; background: ${isDefault ? 'rgba(59,130,246,0.18)' : 'rgba(0, 0, 0, 0.25)'}; color:var(--text-primary);`}>
-                        <span style={`color: ${isDefault ? '#60a5fa' : 'var(--text-primary)'};`}>≥{er}%</span>
+              {
+                sortedErReqs.length > 0 && (
+                  <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                    <p style="font-size: 14px;" data-i18n="lb.erRecommended">
+                      ER Recommandée :
+                    </p>
+                    <svg onmouseenter="showGlobalTooltip(this, window.t('lb.erTooltip'), 'rgba(255,255,255,0.4)')" onmouseleave="hideGlobalTooltip()" style="cursor: pointer;" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14 7.5C14 3.91015 11.0899 1 7.5 1C3.91015 1 1 3.91015 1 7.5C1 11.0899 3.91015 14 7.5 14V15C3.35786 15 0 11.6421 0 7.5C0 3.35786 3.35786 0 7.5 0C11.6421 0 15 3.35786 15 7.5C15 11.6421 11.6421 15 7.5 15V14C11.0899 14 14 11.0899 14 7.5Z" fill="white" />
+                      <path d="M9.95301 5.49967C9.84324 4.97607 9.53223 4.5997 9.03915 4.35734C8.52821 4.10547 7.97109 4.03764 7.43358 4C6.49445 4.01613 5.75831 4.35072 5.24519 5.08029C5.11582 5.26434 4.97469 5.45211 5.00387 5.69488C5.03393 5.94345 5.28004 6.07994 5.50741 5.95751C5.65464 5.87852 5.79926 5.7776 5.90902 5.65725C6.29626 5.23208 6.76321 5.0104 7.36563 5.06747C7.74676 5.10387 8.10656 5.37642 8.16449 5.68909C8.23244 6.05719 8.04296 6.35332 7.62131 6.51172C7.43532 6.58162 7.23713 6.62174 7.04765 6.6846C6.68742 6.80413 6.44915 7.02498 6.36203 7.39391C6.21524 8.01553 6.4387 8.53003 6.84074 8.99821C6.95356 9.12932 7.1095 9.19095 7.28678 9.15579C7.46276 9.12105 7.5538 8.98953 7.60433 8.83898C7.65093 8.69919 7.67881 8.55361 7.71192 8.40968C7.81167 7.97872 7.99635 7.81287 8.45721 7.73305C9.074 7.62634 9.57492 7.35958 9.82321 6.78262C10.0005 6.37069 10.0458 5.94138 9.95301 5.49967Z" fill="white" />
+                      <path d="M7.21796 9.29683C6.68263 9.30096 6.31586 9.64879 6.31804 10.1501C6.32022 10.6542 6.68567 10.9971 7.22362 11C7.7546 11.0029 8.11875 10.6542 8.11745 10.1451C8.11571 9.63349 7.7546 9.29269 7.21796 9.29683Z" fill="white" />
+                    </svg>
+                    {sortedErReqs.map((er, index) => {
+                      const isDefault = index === 0;
+                      return (
+                        <button data-filter-er={er} class={`er-filter-btn ${isDefault ? "active-er-btn" : ""}`} style={`font-family: Shinshin, sans-serif; display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; color:var(--text-primary);`}>
+                          <span>≥{er}%</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )
+              }
+              {
+                otherErs.length > 0 && (
+                  <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                    <p style="font-size: 14px; opacity: 0.5;" data-i18n="lb.otherErs">
+                      Autres ER :
+                    </p>
+                    {otherErs.map((er) => (
+                      <button data-filter-er={er} class="er-filter-btn" style="font-family: Shinshin, sans-serif; display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; color:var(--text-primary);">
+                        <span>≥{er}%</span>
                       </button>
-                    );
-                  })}
-                </div>
-              )}
-              {otherErs.length > 0 && (
-                <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
-                  <p style="font-size: 14px; opacity: 0.5;">Autres ER :</p>
-                  {otherErs.map(er => (
-                    <button data-filter-er={er} class="er-filter-btn" style="font-family: Shinshin, sans-serif; display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(255,255,255,0); background: rgba(0, 0, 0, 0.25); color:var(--text-primary);">
-                      <span>≥{er}%</span>
-                    </button>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </div>
+                )
+              }
             </div>
           </div>
-          <div class="leaderboard-info-right"></div>
+          <div class="leaderboard-info-right" style="width: 100%; max-width: 550px; background: rgba(0, 0, 0, 0.4); border-radius: 8px; z-index: 1; flex: 1; margin-left: auto; position: relative;">
+            <div style="position: absolute; top: 15px; left: 15px; right: 15px; bottom: 15px;">
+              <canvas id="gradeDistributionChart" style="width: 100%; height: 100%;" data-labels={JSON.stringify(chartLabels)} data-values-by-er={JSON.stringify(chartDataByBucket)}></canvas>
+            </div>
+          </div>
         </div>
 
         <div class="leaderboards-container" style="background: var(--bg-panel); border-radius: 8px; margin-top: 24px; padding: 5px;">
           <div class="leaderboards-head" style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px 20px 10px 10px">
             <p style="font-size: 12px; flex: 0.2;">#</p>
-            <p style="font-size: 12px; flex: 1;">Propriétaire</p>
-            <p style="font-size: 12px; flex: 0.5; text-align: center;">Set</p>
-            <p style="font-size: 12px; flex: 1; text-align: center;">Ratio de CRIT</p>
-            <p style="font-size: 12px; flex: 1; text-align: center;">Recharge</p>
-            <p style="font-size: 12px; flex: 0.5; text-align: right;">Score</p>
+            <p style="font-size: 12px; flex: 1;" data-i18n="lb.owner">Propriétaire</p>
+            <p style="font-size: 12px; flex: 0.5; text-align: center;" data-i18n="lb.set">Set</p>
+            <p style="font-size: 12px; flex: 1; text-align: center;" data-i18n="lb.critRatio">Ratio de CRIT</p>
+            <p style="font-size: 12px; flex: 1; text-align: center;" data-i18n="lb.recharge">Recharge</p>
+            <p style="font-size: 12px; flex: 0.5; text-align: right;" data-i18n="lb.score">Score</p>
           </div>
 
           <div class="leaderboard-list-rows" style="display: flex; flex-direction: column; gap: 5px;">
-            {entries.length === 0 ? (
-              <div style="padding: 20px; text-align: center; color: var(--text-grey);">
-                Aucune entrée trouvée pour ce classement pour le moment.
-              </div>
-            ) : entries.map((build: any, index: number) => {
-              const player = build.players;
-              const data = build.data;
-              const evalData = data.evaluation || {};
-              
-              // Fallback pour les stats globales
-              const stats = data.stats || { critRate: 0.05, critDMG: 0.50, enerRech: 1.00 };
-              
-              // Calcul manuel du CV et des sets à partir des artefacts
-              let totalCV = 0;
-              const setsCounter: { [key: string]: number } = {};
-              
-              if (data.artefacts) {
-                data.artefacts.forEach((art: any) => {
-                  if (art.setKey) setsCounter[art.setKey] = (setsCounter[art.setKey] || 0) + 1;
-                  
-                  if (art.mainStat) {
-                    if (art.mainStat.key === 'critRate_') totalCV += art.mainStat.value * 2;
-                    if (art.mainStat.key === 'critDMG_') totalCV += art.mainStat.value;
-                  }
-                  
-                  if (art.subStats) {
-                    art.subStats.forEach((sub: any) => {
-                      if (sub.key === 'critRate_') totalCV += sub.value * 2;
-                      if (sub.key === 'critDMG_') totalCV += sub.value;
-                    });
-                  }
-                });
-              }
-              
-              const sortedSets = Object.entries(setsCounter).sort((a,b) => b[1] - a[1]);
-              const bestSetName = sortedSets.length > 0 ? sortedSets[0][0] : null;
-              const bestSetCount = sortedSets.length > 0 ? sortedSets[0][1] : 0;
-              
-              const bgColor = index % 2 === 0 ? 'rgba(0, 0, 0, 0.2)' : 'var(--bg-panel)';
-              
-              // Helper pour le serveur
-              const serverPrefix = build.uid ? build.uid[0] : '7';
-              const serverName = serverPrefix === '7' ? 'EU' : serverPrefix === '6' ? 'NA' : 'AS';
-              
-              return (
-                <div class="leaderboard-list-row" data-er={Math.round((stats.enerRech || 1) * 100)} style={`position: relative; overflow: hidden; padding: 10px; padding-right: 20px; padding-left: 10px; border-radius: 8px; background-color: ${bgColor}; display:flex; flex-direction: row; gap: 13px; align-items: center; justify-content: space-between;`}>
-                  
-                  <span class="rank-number" style="flex: 0.2; font-weight: bold;">{index + 1}</span>
-                  
-                  <div style="flex: 1; display: flex; flex-direction: row; align-items: center; gap: 8px;">
-                    <span class={`pp-badge pp-badge-server pp-badge-server-${serverName}`} style="font-size: 10px; padding: 2px 5px; border-radius: 4px; flex-shrink: 0;">{serverName}</span>
-                    <span style="font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{player?.nickname || 'Voyageur'}</span>
-                  </div>
-                  
-                  <div style="flex: 0.5; display: flex; justify-content: center;">
-                    {(() => {
-                      let setIcon = null;
-                      if (bestSetName && data.artefacts) {
-                        const art = data.artefacts.find((a: any) => a.setKey === bestSetName && a.icon);
-                        if (art) setIcon = art.icon;
-                      }
-                      if (bestSetName && setIcon) {
-                        return <img src={`https://enka.network/ui/${setIcon}.png`} style="width: 36px; height: 36px; border-radius: 6px; background-color: rgba(0, 0, 0, 0.2); padding:2px;" alt={bestSetName} />;
-                      } else if (bestSetName) {
-                        return <span style="font-size: 12px; background: rgba(0,0,0,0.4); padding: 4px; border-radius: 4px; text-align: center;">{bestSetName.substring(0, 8)}.. ({bestSetCount}p)</span>;
-                      } else {
-                        return <span>-</span>;
-                      }
-                    })()}
-                  </div>
-                  
-                  <div style="flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center; gap:8px;">
-                    <div style="display: flex; flex-direction: row; align-items: center; opacity:0.5; font-size: 12px;">
-                      <span>{(stats.critRate * 100).toFixed(1)}%</span>
-                      <span> : {(stats.critDMG * 100).toFixed(1)}%</span>
-                    </div>
-                    <span style="font-size: 14px; color: var(--accent-gold);">{totalCV.toFixed(1)} CV</span>
-                  </div>
-                  
-                  <div style="flex: 1; display:flex; flex-direction: row; align-items: center; justify-content: center; gap:6px;">
-                    <img src="/assets/simulator/icons/icon_er.webp" style="width: 22px; height: 22px;" />
-                    <span style="font-size: 14px;">{(stats.enerRech * 100).toFixed(1)}%</span>
-                  </div>
-                  
-                  <div style="flex: 0.5; text-align: right;">
-                    <span style={`font-size: 14px; font-weight: bold; color: ${evalData.grade?.color || 'var(--accent-gold)'}`}>
-                      {build.score.toFixed(1)} ({evalData.grade?.letter || '?'})
-                    </span>
-                  </div>
+            {
+              entries.length === 0 ? (
+                <div style="padding: 20px; text-align: center; color: var(--text-grey);" data-i18n="lb.noEntries">
+                  Aucune entrée trouvée pour ce classement pour le moment.
                 </div>
-              );
-            })}
+              ) : (
+                entries.map((build: any, index: number) => {
+                  const player = build.players;
+                  const data = build.data;
+                  const evalData = data.evaluation || {};
+
+                  // Fallback pour les stats globales
+                  const stats = data.stats || { critRate: 0.05, critDMG: 0.5, enerRech: 1.0 };
+
+                  // Calcul manuel du CV et des sets à partir des artefacts
+                  let totalCV = 0;
+                  let bestSetName: string | null = null;
+                  let bestSetCount = 0;
+                  let secondBestSetName: string | null = null;
+                  let secondBestSetCount = 0;
+
+                  if (data.artefacts) {
+                    const setsCounter: { [key: string]: number } = {};
+                    data.artefacts.forEach((art: any) => {
+                      if (art.setKey) setsCounter[art.setKey] = (setsCounter[art.setKey] || 0) + 1;
+                    });
+                    const sortedSets = Object.entries(setsCounter).sort((a, b) => b[1] - a[1]);
+                    if (sortedSets.length > 0) {
+                      bestSetName = sortedSets[0][0];
+                      bestSetCount = sortedSets[0][1];
+                    }
+                    if (sortedSets.length > 1) {
+                      secondBestSetName = sortedSets[1][0];
+                      secondBestSetCount = sortedSets[1][1];
+                    }
+                  }
+
+                  // 1. On privilégie les données pré-calculées par l'API (nouveaux builds)
+                  if (data.computed) {
+                    totalCV = data.computed.totalCV || 0;
+                    if (!data.artefacts) {
+                      bestSetName = data.computed.bestSetName || null;
+                      bestSetCount = data.computed.bestSetCount || 0;
+                    }
+                  }
+                  // 2. Fallback pour les anciens builds déjà en base de données
+                  else {
+                    if (data.artefacts) {
+                      data.artefacts.forEach((art: any) => {
+                        if (art.mainStat) {
+                          if (art.mainStat.key === "critRate_") totalCV += art.mainStat.value * 2;
+                          if (art.mainStat.key === "critDMG_") totalCV += art.mainStat.value;
+                        }
+
+                        if (art.subStats) {
+                          art.subStats.forEach((sub: any) => {
+                            if (sub.key === "critRate_") totalCV += sub.value * 2;
+                            if (sub.key === "critDMG_") totalCV += sub.value;
+                          });
+                        }
+                      });
+                    }
+                  }
+
+                  const bgColor = index % 2 === 0 ? "rgba(0, 0, 0, 0.2)" : "var(--bg-panel)";
+
+                  // Helper pour le serveur
+                  const serverPrefix = build.uid ? build.uid[0] : "7";
+                  const serverName = serverPrefix === "7" ? "EU" : serverPrefix === "6" ? "NA" : "AS";
+
+                  let setIcon1 = null;
+                  let setIcon2 = null;
+
+                  if (bestSetName && data.artefacts) {
+                    const art1 = data.artefacts.find((a: any) => a.setKey === bestSetName && a.icon);
+                    if (art1) setIcon1 = art1.icon;
+                  }
+                  if (secondBestSetName && data.artefacts) {
+                    const art2 = data.artefacts.find((a: any) => a.setKey === secondBestSetName && a.icon);
+                    if (art2) setIcon2 = art2.icon;
+                  }
+
+                  const tooltipPayload = {
+                    stats: {
+                      hp: stats.maxHp || stats.hp || 0,
+                      atk: stats.curAttack || stats.atk || 0,
+                      def: stats.curDefense || stats.def || 0,
+                      em: stats.eleMas || stats.em || 0,
+                      cr: (stats.critRate || 0) * 100,
+                      cd: (stats.critDMG || 0) * 100,
+                      er: (stats.enerRech || 0) * 100,
+                      dmg: (stats.dmgBonus || 0) * 100,
+                    },
+                    weapon: {
+                      ...data.weapon,
+                      nameTranslations: data.weapon && data.weapon.icon ? iconTranslations[data.weapon.icon] : null,
+                    },
+                    level: data.level || 90,
+                    cons: data.cons || 0,
+                    sets: {
+                      best: { name: bestSetName ? assetTranslations[bestSetName] || { fr: LOCALIZED_SETS[bestSetName] || bestSetName, en: bestSetName } : null, count: bestSetCount, icon: setIcon1 },
+                      second: { name: secondBestSetName ? assetTranslations[secondBestSetName] || { fr: LOCALIZED_SETS[secondBestSetName] || secondBestSetName, en: secondBestSetName } : null, count: secondBestSetCount, icon: setIcon2 },
+                    },
+                  };
+
+                  return (
+                    <a href={`/?uid=${build.uid}&char=${targetCharName}`} class="leaderboard-list-row" data-er={Math.round((stats.enerRech || 1) * 100)} data-build-info={JSON.stringify(tooltipPayload)} style={`position: relative; overflow: hidden; padding: 10px; padding-right: 20px; padding-left: 10px; border-radius: 8px; background-color: ${bgColor}; display:flex; flex-direction: row; align-items: center; justify-content: space-between; cursor: pointer; text-decoration: none; color: inherit; transition: background-color 0.2s ease;`}>
+                      <span class="rank-number" style="flex: 0.2;">
+                        {index + 1}
+                      </span>
+
+                      <div style="flex: 1; display: flex; flex-direction: row; align-items: center; gap: 8px;">
+                        <span class={`pp-badge pp-badge-server pp-badge-server-${serverName}`} style="flex: initial; font-size: 10px; padding: 2px 5px; border-radius: 4px; flex-shrink: 0;">
+                          {serverName}
+                        </span>
+                        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" class="dynamic-i18n" data-fr={player?.nickname || "Voyageur"} data-en={player?.nickname || "Traveler"}>
+                          {player?.nickname || "Voyageur"}
+                        </span>
+                      </div>
+
+                      <div style="flex: 0.5; display: flex; justify-content: center;">
+                        {(() => {
+                          const is2p2p = bestSetCount >= 2 && secondBestSetCount >= 2 && bestSetCount < 4;
+
+                          if (is2p2p && setIcon1 && setIcon2) {
+                            return (
+                              <div style="width: 36px; height: 36px; border-radius: 6px; background-color: rgba(0, 0, 0, 0.2); position: relative; overflow: hidden; box-sizing: border-box;" title={`${bestSetName} (2p) / ${secondBestSetName} (2p)`}>
+                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; clip-path: polygon(0 0, 100% 0, 0 100%);">
+                                  <img src={`https://enka.network/ui/${setIcon1}.png`} style="width: 25px; height: 25px; position: absolute; top: 1px; left: 1px;" alt={bestSetName} />
+                                </div>
+                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; clip-path: polygon(100% 100%, 100% 0, 0 100%);">
+                                  <img src={`https://enka.network/ui/${setIcon2}.png`} style="width: 25px; height: 25px; position: absolute; bottom: 1px; right: 1px;" alt={secondBestSetName} />
+                                </div>
+                                <div style="position: absolute; top: 100%; left: 0; width: 150%; height: 1.5px; background-color: rgba(255,255,255,0.3); transform: rotate(-45deg); transform-origin: top left;" />
+                              </div>
+                            );
+                          } else if (bestSetName && setIcon1) {
+                            return <img src={`https://enka.network/ui/${setIcon1}.png`} style="width: 36px; height: 36px; border-radius: 6px; background-color: rgba(0, 0, 0, 0.2); padding:2px;" alt={bestSetName} title={`${bestSetName} (${bestSetCount}p)`} />;
+                          } else if (bestSetName) {
+                            return (
+                              <span style="font-size: 12px; background: rgba(0,0,0,0.4); padding: 4px; border-radius: 4px; text-align: center;" title={`${bestSetName} (${bestSetCount}p)`}>
+                                {bestSetName.substring(0, 8)}.. ({bestSetCount}p)
+                              </span>
+                            );
+                          } else {
+                            return <span>-</span>;
+                          }
+                        })()}
+                      </div>
+
+                      <div style="flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center; gap:8px;">
+                        <div style="display: flex; flex-direction: row; align-items: center; opacity:0.5; font-size: 12px;">
+                          <span>{(stats.critRate * 100).toFixed(1)}%</span>
+                          <span> : {(stats.critDMG * 100).toFixed(1)}%</span>
+                        </div>
+                        <span style="font-size: 14px; color: var(--accent-gold);">{totalCV.toFixed(1)} CV</span>
+                      </div>
+
+                      <div style="flex: 1; display:flex; flex-direction: row; align-items: center; justify-content: center; gap:6px;">
+                        <img src="/assets/simulator/icons/icon_er.webp" style="width: 22px; height: 22px;" />
+                        <span style="font-size: 14px;">{(stats.enerRech * 100).toFixed(1)}%</span>
+                      </div>
+
+                      <div style="flex: 0.5; text-align: right;">
+                        <span style={`font-size: 14px; color: ${evalData.grade?.color || "var(--accent-gold)"}`}>
+                          {build.score.toFixed(1)} ({evalData.grade?.letter || "?"})
+                        </span>
+                      </div>
+                    </a>
+                  );
+                })
+              )
+            }
           </div>
         </div>
       </div>
     </div>
-    
+
+    <!-- Tooltip Global pour Mini Fiche -->
+    <div id="mini-showcase-tooltip" data-element={mainElem} style={`position: fixed; pointer-events: none; opacity: 0; z-index: 99999; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; width: 300px; overflow: hidden; background-color: rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); border-radius: 12px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 1px solid rgba(255, 255, 255, 0.4);`}>
+      <div style={`position: absolute; inset: 0; background-image: url('${enkaGachaImg}'); background-position: center center; background-repeat: no-repeat; background-size: 200%; z-index: 0; filter: blur(10px) brightness(0.6) saturate(0.8);`}></div>
+      <div style={`position: absolute; inset: 0; background-color: rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.85); z-index: 1;`}></div>
+
+      <div style="position: relative; z-index: 2; padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+        <!-- HEADER -->
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Character Info -->
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <img src={enkaAvatarImg} style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" onerror="this.style.display='none'" />
+              <div style="display: flex; align-items: baseline; gap: 6px;">
+                <span style="font-size: 15px; color: white; letter-spacing: 0.2px;" class="dynamic-i18n" data-fr={targetCharTranslations.fr} data-en={targetCharTranslations.en}>{targetCharName.replace(/_/g, " ")}</span>
+                <span id="tt-char-cons" style="font-size: 13px; color: rgba(255,255,255,0.5);"></span>
+              </div>
+            </div>
+            <span id="tt-char-level" style="font-size: 13px; color: rgba(255,255,255,0.7);" data-i18n-format="lb.level">Niv.-</span>
+          </div>
+
+          <!-- Weapon Info -->
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <img id="tt-weapon-icon" src="" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px; display: none;" />
+              <div style="display: flex; align-items: baseline; gap: 6px;">
+                <span id="tt-weapon-name" style="font-size: 14px; color: white;">-</span>
+                <span id="tt-weapon-refinement" style="font-size: 13px; color: rgba(255,255,255,0.5);"></span>
+              </div>
+            </div>
+            <span id="tt-weapon-level" style="font-size: 13px; color: rgba(255,255,255,0.7);"></span>
+          </div>
+        </div>
+
+        <!-- SEPARATOR -->
+        <div style="height: 1px; background: rgba(255,255,255,0.15); width: 100%; margin: 6px 0;"></div>
+
+        <!-- STATS -->
+        <div id="tt-stats-container" style="display: flex; flex-direction: column; gap: 6px;">
+          <!-- Filled by JS -->
+        </div>
+
+        <!-- SEPARATOR -->
+        <div style="height: 1px; background: rgba(255,255,255,0.15); width: 100%; margin: 6px 0;"></div>
+
+        <!-- ARTIFACTS -->
+        <div id="tt-artifacts-container" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
     <script is:inline>
+      if (window.__teamVariantClickHandler) {
+        document.removeEventListener("click", window.__teamVariantClickHandler);
+      }
+
+      window.__teamVariantClickHandler = (e) => {
+        // Toggle menu
+        const btn = e.target.closest(".team-variant-btn");
+        if (btn) {
+          e.stopPropagation();
+          const container = btn.closest(".team-variant-dropdown-container");
+          const menu = container.querySelector(".team-variant-menu");
+
+          // Close all other menus
+          document.querySelectorAll(".team-variant-menu").forEach((m) => {
+            if (m !== menu) {
+              m.classList.remove("show");
+            }
+          });
+
+          if (menu) {
+            menu.classList.toggle("show");
+          }
+          return;
+        }
+
+        // Select option
+        const opt = e.target.closest(".team-variant-option");
+        if (opt) {
+          e.stopPropagation();
+          const index = opt.getAttribute("data-index");
+          const teamName = opt.getAttribute("data-name");
+          const teamContainer = opt.closest(".leaderboard-info-left-team");
+
+          if (teamContainer) {
+            // Update label
+            const label = teamContainer.querySelector(".team-variant-label");
+            if (label) {
+                label.setAttribute("data-fr", opt.getAttribute("data-fr"));
+                label.setAttribute("data-en", opt.getAttribute("data-en"));
+                applyDynamicTranslations();
+            }
+
+            // Update active class
+            const menu = teamContainer.querySelector(".team-variant-menu");
+            if (menu) {
+              menu.querySelectorAll(".team-variant-option").forEach((o) => {
+                o.classList.remove("active-item");
+              });
+              opt.classList.add("active-item");
+              menu.classList.remove("show");
+            }
+
+            // Show correct team
+            const wrapper = teamContainer.querySelector(".leaderboard-info-left-teammates-wrapper");
+            if (wrapper) {
+              const teams = wrapper.querySelectorAll(".leaderboard-info-left-teammates");
+              teams.forEach((t) => {
+                if (t.getAttribute("data-team-index") === index) {
+                  t.style.display = "flex";
+                } else {
+                  t.style.display = "none";
+                }
+              });
+            }
+          }
+          return;
+        }
+
+        // Click outside
+        document.querySelectorAll(".team-variant-menu").forEach((m) => {
+          m.classList.remove("show");
+        });
+      };
+
+      document.addEventListener("click", window.__teamVariantClickHandler);
+
+      function applyDynamicTranslations() {
+        const lang = window.GUOBA_LANG || (typeof localStorage !== "undefined" ? localStorage.getItem("guoba_lang") : "fr") || "fr";
+        const actualLang = ["fr", "en"].includes(lang) ? lang : "fr";
+
+        document.querySelectorAll(".dynamic-i18n").forEach((el) => {
+          if (el.hasAttribute("data-" + actualLang)) {
+            el.textContent = el.getAttribute("data-" + actualLang);
+          }
+        });
+        document.querySelectorAll(".dynamic-i18n-title").forEach((el) => {
+          if (el.hasAttribute("data-" + actualLang)) {
+            el.setAttribute("title", el.getAttribute("data-" + actualLang));
+          }
+        });
+      }
+
       function initErFilters() {
-        const erButtons = document.querySelectorAll('.er-filter-btn');
-        const rows = document.querySelectorAll('.leaderboard-list-row[data-er]');
-        const defaultBtn = document.querySelector('.er-filter-btn');
+        const erButtons = document.querySelectorAll(".er-filter-btn");
+        const rows = document.querySelectorAll(".leaderboard-list-row[data-er]");
+        const defaultBtn = document.querySelector(".er-filter-btn");
 
         if (erButtons.length === 0 || rows.length === 0) return;
 
         function applyFilter(targetEr) {
           // Extraire tous les paliers disponibles et les trier du plus grand au plus petit
           const allBuckets = Array.from(erButtons)
-            .map(b => parseInt(b.getAttribute('data-filter-er') || "100", 10))
+            .map((b) => parseInt(b.getAttribute("data-filter-er") || "100", 10))
             .sort((a, b) => b - a);
 
           let currentRank = 1;
-          rows.forEach(row => {
-            const rowEr = parseInt(row.getAttribute('data-er') || "100", 10);
-            
+          rows.forEach((row) => {
+            const rowEr = parseInt(row.getAttribute("data-er") || "100", 10);
+
             // Trouver le palier maximal que ce build peut atteindre
             let maxBucket = 100;
             for (const b of allBuckets) {
@@ -418,48 +682,453 @@ if (enkaAvatarMap[finalEnkaName]) {
 
             // Afficher uniquement si le build appartient à ce palier maximal
             if (maxBucket === targetEr) {
-              row.style.display = 'flex';
-              const rankSpan = row.querySelector('.rank-number');
+              row.style.display = "flex";
+              const rankSpan = row.querySelector(".rank-number");
               if (rankSpan) rankSpan.textContent = currentRank.toString();
               currentRank++;
             } else {
-              row.style.display = 'none';
+              row.style.display = "none";
             }
           });
+
+          if (window.__gradeChartInstance) {
+            const canvas = document.getElementById("gradeDistributionChart");
+            if (canvas) {
+              const dataByEr = JSON.parse(canvas.getAttribute("data-values-by-er") || "{}");
+              if (dataByEr[targetEr]) {
+                window.__gradeChartInstance.data.datasets[0].data = dataByEr[targetEr];
+                window.__gradeChartInstance.update();
+              }
+            }
+          }
         }
 
         if (defaultBtn) {
-          const defaultEr = parseInt(defaultBtn.getAttribute('data-filter-er') || "100", 10);
+          const defaultEr = parseInt(defaultBtn.getAttribute("data-filter-er") || "100", 10);
           applyFilter(defaultEr);
         }
 
-        erButtons.forEach(btn => {
-          btn.addEventListener('click', () => {
+        erButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
             // Reset all buttons
-            erButtons.forEach(b => {
-              b.style.background = 'rgba(0, 0, 0, 0.25)';
-              b.style.borderColor = 'rgba(255,255,255,0)';
-              const span = b.querySelector('span');
-              if (span) span.style.color = 'var(--text-primary)';
+            erButtons.forEach((b) => {
+              b.classList.remove("active-er-btn");
             });
-            
-            // Set active state on clicked button
-            btn.style.background = 'rgba(59,130,246,0.18)';
-            btn.style.borderColor = '#3b82f6';
-            const span = btn.querySelector('span');
-            if (span) span.style.color = '#60a5fa';
 
-            const targetEr = parseInt(btn.getAttribute('data-filter-er') || "100", 10);
+            // Set active state on clicked button
+            btn.classList.add("active-er-btn");
+
+            const targetEr = parseInt(btn.getAttribute("data-filter-er") || "100", 10);
             applyFilter(targetEr);
           });
         });
       }
 
+      function resolveTeammateIcons() {
+        const resolveIconFromKey = (key) => {
+          if (!key || !window.HASH_TO_KEY || !window.iconToNameHash) return null;
+          const hash = Object.keys(window.HASH_TO_KEY).find((h) => window.HASH_TO_KEY[h] === key);
+          if (!hash) return null;
+          for (let [icon, h] of Object.entries(window.iconToNameHash)) {
+            if (String(h) === String(hash)) {
+              let cleanIcon = icon.split("/").pop().replace(".png", "");
+              if (cleanIcon.startsWith("UI_RelicIcon")) {
+                const base = cleanIcon.substring(0, cleanIcon.lastIndexOf("_"));
+                return `https://enka.network/ui/${base}_4.png`;
+              } else {
+                return `https://enka.network/ui/${cleanIcon}.png`;
+              }
+            }
+          }
+          return null;
+        };
+
+        let allResolved = true;
+
+        document.querySelectorAll("[data-weapon-icon]").forEach((img) => {
+          if (img.style.display === "block") return; // already resolved
+          const key = img.getAttribute("data-weapon-icon");
+          const url = (window.ITEM_ICON_MAP && window.ITEM_ICON_MAP[key]) || resolveIconFromKey(key);
+          if (url) {
+            img.src = url;
+            img.style.display = "block";
+          } else {
+            allResolved = false;
+          }
+        });
+
+        document.querySelectorAll("[data-set-icon]").forEach((img) => {
+          if (img.style.display === "block") return; // already resolved
+          const key = img.getAttribute("data-set-icon");
+          const url = (window.ITEM_ICON_MAP && window.ITEM_ICON_MAP[key]) || resolveIconFromKey(key);
+          if (url) {
+            img.src = url;
+            img.style.display = "block";
+          } else {
+            allResolved = false;
+          }
+        });
+
+        if (!allResolved) {
+          window._iconRetryCount = (window._iconRetryCount || 0) + 1;
+          if (window._iconRetryCount < 20) {
+            setTimeout(resolveTeammateIcons, 500);
+          }
+        }
+      }
+
+      window.showGlobalTooltip = function (element, text, color) {
+        const tooltip = document.getElementById("global-tooltip");
+        if (!tooltip) return;
+        tooltip.innerHTML = text;
+        tooltip.style.setProperty("--tooltip-color", color);
+
+        const rect = element.getBoundingClientRect();
+
+        tooltip.style.left = rect.left + rect.width / 2 + "px";
+        tooltip.style.top = rect.bottom + "px";
+
+        tooltip.style.visibility = "visible";
+        tooltip.style.opacity = "1";
+        tooltip.style.transform = "translate(-50%, 0) scale(1)";
+      };
+
+      window.hideGlobalTooltip = function () {
+        const tooltip = document.getElementById("global-tooltip");
+        if (tooltip) {
+          tooltip.style.visibility = "hidden";
+          tooltip.style.opacity = "0";
+          tooltip.style.transform = "translate(-50%, 10px) scale(0.95)";
+        }
+      };
+
+      function initMiniTooltip() {
+        const tooltip = document.getElementById("mini-showcase-tooltip");
+        if (!tooltip) return;
+
+        const charLevel = document.getElementById("tt-char-level");
+        const statsContainer = document.getElementById("tt-stats-container");
+        const weaponIcon = document.getElementById("tt-weapon-icon");
+        const weaponName = document.getElementById("tt-weapon-name");
+        const weaponDetails = document.getElementById("tt-weapon-details");
+        const artifactsContainer = document.getElementById("tt-artifacts-container");
+
+        const renderStat = (icon, label, value) => `
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <img src="/assets/simulator/icons/${icon}" style="width: 18px; height: 18px; object-fit: contain; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.5));">
+                    <span style="font-size: 14px; color: rgba(255,255,255,0.85);">${label}</span>
+                </div>
+                <div style="flex: 1; border-bottom: 1px dashed rgba(255,255,255,0.2); margin: 0 8px; transform: translateY(4px);"></div>
+                <span style="font-size: 14px; color: white;">${value}</span>
+            </div>
+        `;
+
+        const resolveIconFromKey = (key) => {
+          if (!key || !window.HASH_TO_KEY || !window.iconToNameHash) return null;
+          const hash = Object.keys(window.HASH_TO_KEY).find((h) => window.HASH_TO_KEY[h] === key);
+          if (!hash) return null;
+          for (let [icon, h] of Object.entries(window.iconToNameHash)) {
+            if (String(h) === String(hash)) {
+              let cleanIcon = icon.split("/").pop().replace(".png", "");
+              if (cleanIcon.startsWith("UI_RelicIcon")) {
+                const base = cleanIcon.substring(0, cleanIcon.lastIndexOf("_"));
+                return `https://enka.network/ui/${base}_4.png`;
+              } else {
+                return `https://enka.network/ui/${cleanIcon}.png`;
+              }
+            }
+          }
+          return null;
+        };
+
+        const getIconUrl = (iconStr) => {
+          if (!iconStr) return "";
+          if (iconStr.startsWith("http")) return iconStr;
+          if (window.ITEM_ICON_MAP && window.ITEM_ICON_MAP[iconStr]) return window.ITEM_ICON_MAP[iconStr];
+          const resolved = resolveIconFromKey(iconStr);
+          if (resolved) return resolved;
+          return `https://enka.network/ui/${iconStr}.png`;
+        };
+
+        // On récupère l'élément du perso depuis l'attribut de la div tooltip
+        const mainElem = document.getElementById("mini-showcase-tooltip")?.getAttribute("data-element") || "physical";
+
+        document.querySelectorAll(".leaderboard-list-row").forEach((row) => {
+          if (row.dataset.tooltipBound) return;
+          row.dataset.tooltipBound = "true";
+
+          row.addEventListener("mouseenter", (e) => {
+            const rawData = row.getAttribute("data-build-info");
+            if (!rawData) return;
+            try {
+              const data = JSON.parse(rawData);
+
+              if (data.level && charLevel) {
+                charLevel.textContent = (window.t && window.t("lb.levelFormatMax", data.level)) || `Niv.${data.level}`;
+              }
+              if (data.cons !== undefined) {
+                const consEl = document.getElementById("tt-char-cons");
+                if (consEl) consEl.textContent = `C${data.cons}`;
+              }
+
+              let statsHtml = "";
+              statsHtml += renderStat("icon_hp.webp", (window.t && window.t("lb.statHp")) || "PV max", Math.round(data.stats.hp).toLocaleString("en-US").replace(/,/g, " "));
+              statsHtml += renderStat("icon_atk.webp", (window.t && window.t("lb.statAtk")) || "ATQ", Math.round(data.stats.atk).toLocaleString("en-US").replace(/,/g, " "));
+              statsHtml += renderStat("icon_def.webp", (window.t && window.t("lb.statDef")) || "DÉF", Math.round(data.stats.def).toLocaleString("en-US").replace(/,/g, " "));
+              statsHtml += renderStat("icon_em.webp", (window.t && window.t("lb.statEm")) || "Maîtrise élémentaire", Math.round(data.stats.em));
+              statsHtml += renderStat("icon_crit_rate.webp", (window.t && window.t("lb.statCr")) || "Taux CRIT", data.stats.cr.toFixed(1).replace(".", ",") + " %");
+              statsHtml += renderStat("icon_crit_dmg.webp", (window.t && window.t("lb.statCd")) || "DGT CRIT", data.stats.cd.toFixed(1).replace(".", ",") + " %");
+              statsHtml += renderStat("icon_er.webp", (window.t && window.t("lb.statEr")) || "Recharge d'énergie", data.stats.er.toFixed(1).replace(".", ",") + " %");
+
+              const elemIcon = `icon_${mainElem.toLowerCase()}.webp`;
+              const elemFr = { pyro: "Pyro", hydro: "Hydro", anemo: "Anémo", electro: "Électro", dendro: "Dendro", cryo: "Cryo", geo: "Géo", physical: "Physique" };
+              const elemEn = { pyro: "Pyro", hydro: "Hydro", anemo: "Anemo", electro: "Electro", dendro: "Dendro", cryo: "Cryo", geo: "Geo", physical: "Physical" };
+
+              const lang = window.GUOBA_LANG || (typeof localStorage !== "undefined" ? localStorage.getItem("guoba_lang") : "fr") || "fr";
+              const actualLang = ["fr", "en"].includes(lang) ? lang : "fr";
+              const elemMap = actualLang === "en" ? elemEn : elemFr;
+
+              const dmgLabel = (window.t && window.t("lb.dmgBonus", elemMap[mainElem.toLowerCase()] || "")) || `Bonus de DGT ${elemMap[mainElem.toLowerCase()] || ""}`.trim();
+              statsHtml += renderStat(elemIcon, dmgLabel, data.stats.dmg.toFixed(1).replace(".", ",") + " %");
+
+              statsContainer.innerHTML = statsHtml;
+
+              if (data.weapon && data.weapon.nameText) {
+                const translatedWepName = data.weapon.nameTranslations ? data.weapon.nameTranslations[actualLang] : data.weapon.nameText;
+
+                weaponName.textContent = translatedWepName || (window.t && window.t("lb.unknownWeapon")) || "Arme inconnue";
+                const refEl = document.getElementById("tt-weapon-refinement");
+                if (refEl) refEl.textContent = `R${data.weapon.refinement || 1}`;
+                const wLvlEl = document.getElementById("tt-weapon-level");
+                if (wLvlEl) wLvlEl.textContent = (window.t && window.t("lb.levelFormat", data.weapon.level || 90)) || `Niv.${data.weapon.level || 90}`;
+
+                const wIconStr = data.weapon.icon || data.weapon.nameText;
+                const wUrl = getIconUrl(wIconStr);
+                if (wUrl) {
+                  weaponIcon.src = wUrl;
+                  weaponIcon.style.display = "block";
+                } else {
+                  weaponIcon.style.display = "none";
+                }
+              } else {
+                weaponName.textContent = (window.t && window.t("lb.unspecifiedWeapon")) || "Arme non renseignée";
+                weaponIcon.style.display = "none";
+                const refEl = document.getElementById("tt-weapon-refinement");
+                if (refEl) refEl.textContent = "";
+                const wLvlEl = document.getElementById("tt-weapon-level");
+                if (wLvlEl) wLvlEl.textContent = "";
+              }
+
+              let setsHtml = "";
+
+              if (data.sets && data.sets.best && data.sets.best.name) {
+                const bestName = typeof data.sets.best.name === "object" ? data.sets.best.name[actualLang] : data.sets.best.name;
+                const sUrl = getIconUrl(data.sets.best.icon) || (data.sets.best.icon ? `https://enka.network/ui/${data.sets.best.icon}.png` : "");
+                setsHtml += `
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            ${sUrl ? `<img src="${sUrl}" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" />` : ""}
+                            <span style="font-size: 14px; color: white;">${bestName}</span>
+                        </div>
+                        <span style="font-size: 14px; color: white;">${data.sets.best.count}${(window.t && window.t("lb.piecesShort")) || "P"}</span>
+                    </div>
+                  `;
+
+                if (data.sets.second && data.sets.second.name && data.sets.best.count < 4) {
+                  const secondName = typeof data.sets.second.name === "object" ? data.sets.second.name[actualLang] : data.sets.second.name;
+                  const sUrl2 = getIconUrl(data.sets.second.icon) || (data.sets.second.icon ? `https://enka.network/ui/${data.sets.second.icon}.png` : "");
+                  setsHtml += `
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                ${sUrl2 ? `<img src="${sUrl2}" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" />` : ""}
+                                <span style="font-size: 14px; color: white;">${secondName}</span>
+                            </div>
+                            <span style="font-size: 14px; color: white;">${data.sets.second.count}${(window.t && window.t("lb.piecesShort")) || "P"}</span>
+                        </div>
+                      `;
+                }
+              } else {
+                setsHtml = `<span style="font-size: 13px; color: rgba(255,255,255,0.5); text-align: center;">${(window.t && window.t("lb.noSetEquipped")) || "Aucun set équipé"}</span>`;
+              }
+              artifactsContainer.innerHTML = setsHtml;
+
+              tooltip.style.visibility = "visible";
+              tooltip.style.opacity = "1";
+            } catch (err) {
+              console.error("Error parsing tooltip data", err);
+            }
+          });
+
+          row.addEventListener("mousemove", (e) => {
+            if (tooltip.style.visibility !== "visible") return;
+            let x = e.clientX + 15;
+            let y = e.clientY + 15;
+
+            const rect = tooltip.getBoundingClientRect();
+            if (x + rect.width > window.innerWidth) {
+              x = e.clientX - rect.width - 15;
+            }
+            if (y + rect.height > window.innerHeight) {
+              y = e.clientY - rect.height - 15;
+            }
+
+            tooltip.style.left = x + "px";
+            tooltip.style.top = y + "px";
+          });
+
+          row.addEventListener("mouseleave", () => {
+            tooltip.style.visibility = "hidden";
+            tooltip.style.opacity = "0";
+          });
+        });
+      }
+
       // Run on first load
+      applyDynamicTranslations();
       initErFilters();
-      
+      window._iconRetryCount = 0;
+      resolveTeammateIcons();
+      initMiniTooltip();
+
       // Run on view transitions if enabled
-      document.addEventListener('astro:page-load', initErFilters);
+      document.addEventListener("astro:page-load", () => {
+        applyDynamicTranslations();
+        initErFilters();
+        window._iconRetryCount = 0;
+        resolveTeammateIcons();
+        initMiniTooltip();
+      });
+    </script>
+
+    <script>
+      import Chart from "chart.js/auto";
+
+      function initGradeChart() {
+        const canvas = document.getElementById("gradeDistributionChart") as HTMLCanvasElement;
+        if (!canvas) return;
+
+        const existingChart = Chart.getChart(canvas);
+        if (existingChart) {
+          existingChart.destroy();
+        }
+
+        const labels = JSON.parse(canvas.getAttribute("data-labels") || "[]");
+        const dataByEr = JSON.parse(canvas.getAttribute("data-values-by-er") || "{}");
+
+        // Récupérer la valeur ER active
+        const defaultBtn = document.querySelector('.er-filter-btn[style*="rgba(59,130,246,0.18)"]') || document.querySelector(".er-filter-btn");
+        let activeEr = "100";
+        if (defaultBtn) {
+          activeEr = defaultBtn.getAttribute("data-filter-er") || "100";
+        }
+        const dataVals = dataByEr[activeEr] || [];
+
+        (window as any).__gradeChartInstance = new Chart(canvas, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                data: dataVals,
+                borderColor: "#ffffff",
+                borderWidth: 2,
+                tension: 0.4,
+                pointRadius: 0,
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                mode: "index",
+                intersect: false,
+                backgroundColor: "rgba(0,0,0,0.8)",
+                titleFont: { family: "Shinshin, sans-serif" },
+                bodyFont: { family: "Shinshin, sans-serif" },
+              },
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                border: { display: true, color: "#ffffff", width: 1.5 },
+                ticks: {
+                  color: "#ffffff",
+                  font: { family: "Shinshin, sans-serif", size: 14, weight: "bold" },
+                  maxRotation: 0,
+                  autoSkip: false,
+                  callback: function (val) {
+                    const label = this.getLabelForValue(val as number);
+                    if (["F+", "B", "S", "ARCHON"].includes(label)) {
+                      return label;
+                    }
+                    return "";
+                  },
+                },
+              },
+              y: {
+                grid: { display: false },
+                border: { display: true, color: "#ffffff", width: 1.5 },
+                beginAtZero: true,
+                ticks: {
+                  color: "#ffffff",
+                  font: { family: "Shinshin, sans-serif", size: 14, weight: "bold" },
+                  callback: function (value, index, values) {
+                    if (index === 0) return "0";
+                    if (index === values.length - 1) {
+                      const num = Number(value);
+                      return num >= 1000 ? (num / 1000).toFixed(num % 1000 === 0 ? 0 : 1) + "k" : num.toString();
+                    }
+                    return "";
+                  },
+                  maxTicksLimit: 5,
+                },
+              },
+            },
+          },
+        });
+      }
+
+      document.addEventListener("astro:page-load", initGradeChart);
+      initGradeChart();
     </script>
   </StaticLayout>
 </Layout>
+
+<style is:global>
+  .leaderboard-list-row:hover {
+    background-color: var(--bg-hover) !important;
+  }
+
+  .lb-back-btn:hover {
+    background: var(--bg-hover) !important;
+  }
+
+  .er-filter-btn {
+    border: 1px solid rgba(255,255,255,0);
+    background: rgba(0, 0, 0, 0.25);
+  }
+
+  .er-filter-btn:hover {
+    background: var(--bg-hover);
+    transform: translateY(-1px);
+  }
+
+  .er-filter-btn.active-er-btn {
+    background: rgba(59,130,246,0.18);
+    border-color: #3b82f6;
+  }
+
+  .er-filter-btn.active-er-btn:hover {
+    background: rgba(59, 130, 246, 0.25);
+  }
+
+  .er-filter-btn.active-er-btn span {
+    color: #60a5fa;
+  }
+</style>
+

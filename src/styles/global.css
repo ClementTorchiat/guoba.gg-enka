@@ -3411,7 +3411,8 @@ input:checked+.toggle-track .star-4 {
 }
 
 /* Prevent list shrinking */
-.sidebar.sidebar-collapsed .sidebar-characters {
+.sidebar.sidebar-collapsed .sidebar-characters,
+.sidebar.sidebar-collapsed #sidebar-static-nav {
     min-width: 0 !important;
 }
 
@@ -3434,9 +3435,10 @@ input:checked+.toggle-track .star-4 {
     gap: 0;
 }
 
-.sidebar.sidebar-collapsed .char-card-avatar {
-    width: 44px;
-    height: 44px;
+.sidebar.sidebar-collapsed .char-card-avatar,
+.sidebar.sidebar-collapsed .snav-item > div:first-child {
+    width: 44px !important;
+    height: 44px !important;
     flex-shrink: 0;
 }
 

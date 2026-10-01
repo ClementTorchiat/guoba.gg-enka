@@ -100,6 +100,39 @@ const finalSchema = schema || defaultSchema;
     <meta name="theme-color" content="#1e2024">
 
     <link rel="apple-touch-icon" href="/assets/global/favicon.png">
+
+    <script is:inline>
+        window.toggleSidebarCollapse = function () {
+            const sidebar = document.querySelector('.sidebar');
+            const icon = document.getElementById('sidebar-collapse-icon');
+            if (sidebar && sidebar.classList.contains('sidebar-collapsed')) {
+                sidebar.classList.remove('sidebar-collapsed');
+                if (icon) icon.style.transform = 'rotate(90deg)';
+                localStorage.setItem('sidebarCollapsed', 'false');
+            } else if (sidebar) {
+                sidebar.classList.add('sidebar-collapsed');
+                if (icon) icon.style.transform = 'rotate(-90deg)';
+                localStorage.setItem('sidebarCollapsed', 'true');
+            }
+        };
+
+        function restoreSidebarState() {
+            const sidebar = document.querySelector('.sidebar');
+            if (!sidebar) return;
+            const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+            const icon = document.getElementById('sidebar-collapse-icon');
+            if (isCollapsed) {
+                sidebar.classList.add('sidebar-collapsed');
+                if (icon) icon.style.transform = 'rotate(-90deg)';
+            } else {
+                sidebar.classList.remove('sidebar-collapsed');
+                if (icon) icon.style.transform = 'rotate(90deg)';
+            }
+        }
+
+        document.addEventListener('astro:page-load', restoreSidebarState);
+        document.addEventListener('astro:after-swap', restoreSidebarState);
+    </script>
 </head>
 <body>
     <slot />

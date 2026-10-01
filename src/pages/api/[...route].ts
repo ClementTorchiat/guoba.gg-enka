@@ -266,13 +266,50 @@ app.get('/player/:uid', async (c) => {
     }
 
     // Upsert des builds
-    const buildsToInsert = results.filter((r: any) => !r.error).map((res: any) => ({
-      uid: uid,
-      avatar_id: String(res.id),
-      archetype: res.archetype,
-      score: res.score,
-      data: res.persoData
-    }));
+    const buildsToInsert = results.filter((r: any) => !r.error).map((res: any) => {
+      // Pré-calcul du CV et du Set pour alléger le front-end
+      let totalCV = 0;
+      const setsCounter: { [key: string]: number } = {};
+
+      if (res.persoData && res.persoData.artefacts) {
+        res.persoData.artefacts.forEach((art: any) => {
+          if (art.setKey) setsCounter[art.setKey] = (setsCounter[art.setKey] || 0) + 1;
+
+          if (art.mainStat) {
+            if (art.mainStat.key === "critRate_") totalCV += art.mainStat.value * 2;
+            if (art.mainStat.key === "critDMG_") totalCV += art.mainStat.value;
+          }
+
+          if (art.subStats) {
+            art.subStats.forEach((sub: any) => {
+              if (sub.key === "critRate_") totalCV += sub.value * 2;
+              if (sub.key === "critDMG_") totalCV += sub.value;
+            });
+          }
+        });
+      }
+
+      const sortedSets = Object.entries(setsCounter).sort((a, b) => b[1] - a[1]);
+      const bestSetName = sortedSets.length > 0 ? sortedSets[0][0] : null;
+      const bestSetCount = sortedSets.length > 0 ? sortedSets[0][1] : 0;
+      
+      // Ajout de ces calculs dans un objet 'computed'
+      if (res.persoData) {
+        res.persoData.computed = {
+          totalCV,
+          bestSetName,
+          bestSetCount
+        };
+      }
+
+      return {
+        uid: uid,
+        avatar_id: String(res.id),
+        archetype: res.archetype,
+        score: res.score,
+        data: res.persoData
+      };
+    });
 
     if (buildsToInsert.length > 0) {
       const { error: buildsError } = await supabase
