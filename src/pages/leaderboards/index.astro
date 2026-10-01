@@ -24,7 +24,11 @@ try {
   // 1. Initialisation de Supabase
   const supabaseUrl = import.meta.env.SUPABASE_URL || (Astro.locals as any)?.runtime?.env?.SUPABASE_URL;
   const supabaseKey = import.meta.env.SUPABASE_SERVICE_KEY || (Astro.locals as any)?.runtime?.env?.SUPABASE_SERVICE_KEY;
-  if (!supabaseUrl) throw new Error("SUPABASE_URL is missing in both import.meta.env and Astro.locals.runtime.env");
+  if (!supabaseUrl) {
+    const localKeys = Object.keys(Astro.locals || {}).join(', ');
+    const envKeys = Object.keys((Astro.locals as any)?.runtime?.env || {}).join(', ');
+    throw new Error(`DEBUG INFO: SUPABASE_URL is missing.\nlocals keys: [${localKeys}]\nruntime.env keys: [${envKeys}]`);
+  }
   
   const supabase = createClient(supabaseUrl, supabaseKey);
 
