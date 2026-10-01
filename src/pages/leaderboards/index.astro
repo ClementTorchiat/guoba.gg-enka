@@ -13,100 +13,112 @@ export const prerender = false;
 // Optimisation : Mise en cache CDN pour limiter les requêtes Supabase (économise la bande passante et les DB reads)
 Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=600');
 
-// 1. Initialisation de Supabase
-const supabase = createClient(
-  import.meta.env.SUPABASE_URL,
-  import.meta.env.SUPABASE_SERVICE_KEY
-);
-
-// 2. Chargement de toutes les configs de personnages
-const CHAR_CONFIGS = await getCharConfigs();
-const enkaAvatarMap = await getEnkaAvatarMap();
-const assetTranslations = await getAssetTranslations(teammateAssets);
-
-// 3. Extraction des leaderboards par personnage
-const characterList: any[] = [];
+let pageError = "";
+let characterList: any[] = [];
 let totalLeaderboards = 0;
-
-for (const charName in CHAR_CONFIGS) {
-  const config = CHAR_CONFIGS[charName];
-  const color = config.color || "#5053bb";
-  
-  // Utilisation d'une Map pour dédoublonner les leaderboard_id
-  const leaderboardsMap = new Map();
-
-  for (const [buildName, buildData] of Object.entries(config.builds)) {
-    const data = buildData as any;
-    const lbId = data.leaderboard_id || buildName;
-    
-    if (!leaderboardsMap.has(lbId)) {
-      leaderboardsMap.set(lbId, {
-        id: lbId,
-        teams: []
-      });
-      totalLeaderboards++;
-    }
-    
-    // On sauvegarde toutes les variantes d'équipes pour ce leaderboard_id
-    if (data.team) {
-      leaderboardsMap.get(lbId).teams.push(data.team);
-    }
-  }
-
-  // Si le personnage n'a aucun build configuré, on l'ignore (optionnel)
-  if (leaderboardsMap.size === 0) continue;
-
-  const finalEnkaName = getFinalEnkaName(charName);
-  const { avatarImg: enkaAvatarImg, gachaImg: enkaGachaImg } = getEnkaImages(charName);
-
-  let mainElem = 'physical';
-  
-  if (enkaAvatarMap[finalEnkaName] && enkaAvatarMap[finalEnkaName].Element) {
-    const enkaElem = enkaAvatarMap[finalEnkaName].Element;
-    mainElem = ENKA_ELEMENT_MAP[enkaElem] || enkaElem.toLowerCase();
-  }
-
-  const charTranslations = await getCharNamesTranslations(charName);
-
-  let lastUpdateFr = "N/A";
-  let lastUpdateEn = "N/A";
-
-  characterList.push({
-    name: charName.replace(/_/g, ' '),
-    originalName: charName,
-    translations: charTranslations,
-    color: color,
-    element: mainElem,
-    avatarImg: enkaAvatarImg,
-    gachaImg: enkaGachaImg,
-    leaderboards: Array.from(leaderboardsMap.values()),
-    lastUpdateFr,
-    lastUpdateEn
-  });
-}
-
-// Tri alphabétique des personnages
-characterList.sort((a, b) => a.name.localeCompare(b.name));
-
-// 4. Récupération des statistiques depuis Supabase
 let totalEntries = 0;
-const archetypeCounts: Record<string, number> = {};
+let archetypeCounts: Record<string, number> = {};
+let assetTranslations: any = {};
 
-// Utilisation de la vue SQL 'build_counts_by_archetype' pour optimiser les performances
-const { data: buildsData, error } = await supabase.from('build_counts_by_archetype').select('*');
+try {
+  // 1. Initialisation de Supabase
+  const supabaseUrl = import.meta.env.SUPABASE_URL;
+  const supabaseKey = import.meta.env.SUPABASE_SERVICE_KEY;
+  if (!supabaseUrl) throw new Error("SUPABASE_URL is missing");
+  
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
-if (buildsData && !error) {
-  for (const b of buildsData) {
-    const count = Number(b.count); // Conversion au cas où PostgreSQL renvoie un bigint(string)
-    archetypeCounts[b.archetype] = count;
-    totalEntries += count;
+  // 2. Chargement de toutes les configs de personnages
+  const CHAR_CONFIGS = await getCharConfigs();
+  const enkaAvatarMap = await getEnkaAvatarMap();
+  assetTranslations = await getAssetTranslations(teammateAssets);
+
+  // 3. Extraction des leaderboards par personnage
+  for (const charName in CHAR_CONFIGS) {
+    const config = CHAR_CONFIGS[charName];
+    const color = config.color || "#5053bb";
+    
+    // Utilisation d'une Map pour dédoublonner les leaderboard_id
+    const leaderboardsMap = new Map();
+
+    for (const [buildName, buildData] of Object.entries(config.builds)) {
+      const data = buildData as any;
+      const lbId = data.leaderboard_id || buildName;
+      
+      if (!leaderboardsMap.has(lbId)) {
+        leaderboardsMap.set(lbId, {
+          id: lbId,
+          teams: []
+        });
+        totalLeaderboards++;
+      }
+      
+      // On sauvegarde toutes les variantes d'équipes pour ce leaderboard_id
+      if (data.team) {
+        leaderboardsMap.get(lbId).teams.push(data.team);
+      }
+    }
+
+    // Si le personnage n'a aucun build configuré, on l'ignore (optionnel)
+    if (leaderboardsMap.size === 0) continue;
+
+    const finalEnkaName = getFinalEnkaName(charName);
+    const { avatarImg: enkaAvatarImg, gachaImg: enkaGachaImg } = getEnkaImages(charName);
+
+    let mainElem = 'physical';
+    
+    if (enkaAvatarMap[finalEnkaName] && enkaAvatarMap[finalEnkaName].Element) {
+      const enkaElem = enkaAvatarMap[finalEnkaName].Element;
+      mainElem = ENKA_ELEMENT_MAP[enkaElem] || enkaElem.toLowerCase();
+    }
+
+    const charTranslations = await getCharNamesTranslations(charName);
+
+    let lastUpdateFr = "N/A";
+    let lastUpdateEn = "N/A";
+
+    characterList.push({
+      name: charName.replace(/_/g, ' '),
+      originalName: charName,
+      translations: charTranslations,
+      color: color,
+      element: mainElem,
+      avatarImg: enkaAvatarImg,
+      gachaImg: enkaGachaImg,
+      leaderboards: Array.from(leaderboardsMap.values()),
+      lastUpdateFr,
+      lastUpdateEn
+    });
   }
-} else if (error) {
-  console.error("Erreur lors de la récupération des statistiques:", error);
-}
 
+  // Tri alphabétique des personnages
+  characterList.sort((a, b) => a.name.localeCompare(b.name));
+
+  // 4. Récupération des statistiques depuis Supabase
+  const { data: buildsData, error } = await supabase.from('build_counts_by_archetype').select('*');
+
+  if (buildsData && !error) {
+    for (const b of buildsData) {
+      const count = Number(b.count); // Conversion au cas où PostgreSQL renvoie un bigint(string)
+      archetypeCounts[b.archetype] = count;
+      totalEntries += count;
+    }
+  } else if (error) {
+    console.error("Erreur lors de la récupération des statistiques:", error);
+  }
+} catch (e: any) {
+  pageError = e.message || String(e);
+}
 ---
 
+{pageError ? (
+  <div style="padding: 50px; background: #fff; color: #f00; font-family: sans-serif;">
+    <h1 style="color: #f00;">Erreur Serveur (500)</h1>
+    <p>Une erreur s'est produite lors du rendu côté serveur sur Cloudflare :</p>
+    <pre style="background: #eee; padding: 15px; overflow-x: auto; color: #333;">{pageError}</pre>
+    <p>Vérifiez que les variables d'environnement SUPABASE sont bien configurées dans Cloudflare, et que les APIs GitHub ne bloquent pas les requêtes (429).</p>
+  </div>
+) : (
 <Layout title="Classements — guoba.gg" titleKey="nav.leaderboards" description="Découvrez guoba.gg, l'optimiseur de builds et coach virtuel indépendant pour Genshin Impact. Comprenez le fonctionnement des scores, grades et recommandations de farm.">
   <StaticLayout currentPage="leaderboards">
     <div class="static-page">
@@ -254,6 +266,7 @@ if (buildsData && !error) {
     </div>
   </StaticLayout>
 </Layout>
+)}
 
 <style>
   .hover-highlight:hover {

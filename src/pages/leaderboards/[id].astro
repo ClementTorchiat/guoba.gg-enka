@@ -24,157 +24,193 @@ if (!id) {
   return Astro.redirect("/leaderboards");
 }
 
-// 1. Setup Supabase
-const supabase = createClient(import.meta.env.SUPABASE_URL, import.meta.env.SUPABASE_SERVICE_KEY);
-
-// 2. Charger les configs pour trouver à quel perso appartient cet ID
-const CHAR_CONFIGS = await getCharConfigs();
-const enkaAvatarMap = await getEnkaAvatarMap();
-const assetTranslations = await getAssetTranslations(teammateAssets);
-const iconTranslations = await getIconTranslationMap();
-
+let pageError = "";
 let targetCharName = "";
 let targetCharConfig: any = null;
 let allVariantsForThisId: any[] = [];
 let allErReqs = new Set<number>();
-
-for (const charName in CHAR_CONFIGS) {
-  const config = CHAR_CONFIGS[charName];
-  let found = false;
-
-  for (const [buildName, buildData] of Object.entries(config.builds)) {
-    const data = buildData as any;
-    const lbId = data.leaderboard_id || buildName;
-    if (lbId === id) {
-      found = true;
-      if (data.team) allVariantsForThisId.push({ team: data.team, name: data.name });
-      if (data.er_req) allErReqs.add(data.er_req);
-    }
-  }
-
-  if (found) {
-    targetCharName = charName;
-    targetCharConfig = config;
-    break; // On a trouvé le propriétaire du leaderboard
-  }
-}
-
-// Redirection si le leaderboard n'existe pas
-if (!targetCharConfig) {
-  return Astro.redirect("/leaderboards");
-}
-
-// Données du personnage
-const charColor = targetCharConfig.color || "#5053bb";
-const finalEnkaName = getFinalEnkaName(targetCharName);
-const { avatarImg: enkaAvatarImg, gachaImg: enkaGachaImg } = getEnkaImages(targetCharName);
-const targetCharTranslations = await getCharNamesTranslations(targetCharName);
-
-const lbNameObj = leaderboardsNames[id as keyof typeof leaderboardsNames];
-const lbDisplayName = lbNameObj ? lbNameObj.fr : id;
-
-// 3. Traiter les teams et les ER Recommandées
-// Si plusieurs teams, on utilisera la première par défaut
-const defaultTeam = allVariantsForThisId.length > 0 ? allVariantsForThisId[0].team : [];
-const sortedErReqs = Array.from(allErReqs).sort((a, b) => b - a);
-const lowestEr = sortedErReqs.length > 0 ? sortedErReqs[sortedErReqs.length - 1] : null;
-
-const otherErs: number[] = [];
-if (lowestEr) {
-  for (let i = 1; i <= 3; i++) {
-    const nextEr = lowestEr - 10 * i;
-    if (nextEr >= 100) otherErs.push(nextEr);
-  }
-}
-if (!sortedErReqs.includes(100) && !otherErs.includes(100)) {
-  otherErs.push(100);
-}
-otherErs.sort((a, b) => b - a);
-
-// Pagination (Idée 5)
-const pageParam = Astro.url.searchParams.get('page');
-const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
-const limit = 100;
-const offset = (currentPage - 1) * limit;
-
-// 4. Récupération des données Supabase du classement avec `.range()`
-const { data: builds, error, count } = await supabase
-  .from("builds")
-  .select("*, players(nickname, profile_picture)", { count: 'exact' })
-  .eq("archetype", id)
-  .order("score", { ascending: false })
-  .range(offset, offset + limit - 1);
-
-const entries = builds || [];
-const totalEntries = count || 0;
-const totalPages = Math.ceil(totalEntries / limit);
-
-function getPaginationItems(current: number, total: number) {
-  if (total <= 1) return [];
-  if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
-  if (current <= 3) return [1, 2, 3, '...', total];
-  if (current >= total - 2) return [1, '...', total - 2, total - 1, total];
-  return [1, '...', current - 1, current, current + 1, '...', total];
-}
-const paginationItems = getPaginationItems(currentPage, totalPages);
-
-// Data pour le graphique de répartition des grades
-// Optimisation : On ne télécharge PLUS tout le JSON 'data' (qui contient les artéfacts, etc.) pour tous les builds.
-// On extrait uniquement le grade et l'Energy Recharge directement depuis PostgreSQL. C'est infiniment plus rapide et léger.
-const { data: allGradesRaw } = await supabase.from("builds").select("grade:data->evaluation->grade->>letter, er:data->stats->>enerRech").eq("archetype", id);
-const ALL_GRADES = ["F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+", "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"];
-const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
-
-const distributionsByBucket = {};
-for (const b of allBuckets) {
-  distributionsByBucket[b] = Object.fromEntries(ALL_GRADES.map((g) => [g, 0]));
-}
-
-if (allGradesRaw) {
-  allGradesRaw.forEach((build: any) => {
-    let grade = build?.grade;
-    if (grade) {
-      if (grade.startsWith("ARCHON")) grade = "ARCHON";
-
-      const enerRech = build?.er ? parseFloat(build.er) : 1.0;
-      const rowEr = Math.round(enerRech * 100);
-
-      let maxBucket = 100;
-      for (const b of allBuckets) {
-        if (rowEr >= b) {
-          maxBucket = b;
-          break;
-        }
-      }
-
-      if (distributionsByBucket[maxBucket] && distributionsByBucket[maxBucket][grade] !== undefined) {
-        distributionsByBucket[maxBucket][grade]++;
-      }
-    }
-  });
-}
-
-const chartLabels = ALL_GRADES;
-const chartDataByBucket = {};
-for (const b of allBuckets) {
-  chartDataByBucket[b] = ALL_GRADES.map((g) => distributionsByBucket[b][g]);
-}
-
+let charColor = "#5053bb";
+let finalEnkaName = "";
+let enkaAvatarImg = "";
+let enkaGachaImg = "";
+let targetCharTranslations: any = {};
+let lbDisplayName = id;
+let defaultTeam: any[] = [];
+let sortedErReqs: number[] = [];
+let otherErs: number[] = [];
+let entries: any[] = [];
+let totalEntries = 0;
+let totalPages = 1;
+let paginationItems: any[] = [];
+let chartLabels: string[] = [];
+let chartDataByBucket: any = {};
 let mainElem = "physical";
 let mainWeapon = "sword";
-// On cherche les infos officielles depuis Enka
-if (enkaAvatarMap[finalEnkaName]) {
-  const enkaAvatar = enkaAvatarMap[finalEnkaName];
+let lbNameObj: any = null;
+let assetTranslations: any = {};
+let iconTranslations: any = {};
+let currentPage = 1;
+let limit = 100;
+let offset = 0;
 
-  if (enkaAvatar.Element) {
-    mainElem = ENKA_ELEMENT_MAP[enkaAvatar.Element] || enkaAvatar.Element.toLowerCase();
+try {
+  // 1. Setup Supabase
+  const supabaseUrl = import.meta.env.SUPABASE_URL;
+  const supabaseKey = import.meta.env.SUPABASE_SERVICE_KEY;
+  if (!supabaseUrl) throw new Error("SUPABASE_URL is missing");
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  // 2. Charger les configs pour trouver à quel perso appartient cet ID
+  const CHAR_CONFIGS = await getCharConfigs();
+  const enkaAvatarMap = await getEnkaAvatarMap();
+  assetTranslations = await getAssetTranslations(teammateAssets);
+  iconTranslations = await getIconTranslationMap();
+
+  for (const charName in CHAR_CONFIGS) {
+    const config = CHAR_CONFIGS[charName];
+    let found = false;
+
+    for (const [buildName, buildData] of Object.entries(config.builds)) {
+      const data = buildData as any;
+      const lbId = data.leaderboard_id || buildName;
+      if (lbId === id) {
+        found = true;
+        if (data.team) allVariantsForThisId.push({ team: data.team, name: data.name });
+        if (data.er_req) allErReqs.add(data.er_req);
+      }
+    }
+
+    if (found) {
+      targetCharName = charName;
+      targetCharConfig = config;
+      break; // On a trouvé le propriétaire du leaderboard
+    }
   }
-  if (enkaAvatar.WeaponType) {
-    mainWeapon = enkaAvatar.WeaponType.toLowerCase().replace("weapon_", "").replace("_one_hand", "").replace("pole", "polearm");
+
+  if (targetCharConfig) {
+    // Données du personnage
+    charColor = targetCharConfig.color || "#5053bb";
+    finalEnkaName = getFinalEnkaName(targetCharName);
+    const images = getEnkaImages(targetCharName);
+    enkaAvatarImg = images.avatarImg;
+    enkaGachaImg = images.gachaImg;
+    targetCharTranslations = await getCharNamesTranslations(targetCharName);
+
+    lbNameObj = leaderboardsNames[id as keyof typeof leaderboardsNames];
+    lbDisplayName = lbNameObj ? lbNameObj.fr : id;
+
+    // 3. Traiter les teams et les ER Recommandées
+    defaultTeam = allVariantsForThisId.length > 0 ? allVariantsForThisId[0].team : [];
+    sortedErReqs = Array.from(allErReqs).sort((a, b) => b - a);
+    const lowestEr = sortedErReqs.length > 0 ? sortedErReqs[sortedErReqs.length - 1] : null;
+
+    if (lowestEr) {
+      for (let i = 1; i <= 3; i++) {
+        const nextEr = lowestEr - 10 * i;
+        if (nextEr >= 100) otherErs.push(nextEr);
+      }
+    }
+    if (!sortedErReqs.includes(100) && !otherErs.includes(100)) {
+      otherErs.push(100);
+    }
+    otherErs.sort((a, b) => b - a);
+
+    // Pagination (Idée 5)
+    const pageParam = Astro.url.searchParams.get('page');
+    currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+    limit = 100;
+    offset = (currentPage - 1) * limit;
+
+    // 4. Récupération des données Supabase du classement avec `.range()`
+    const { data: builds, error, count } = await supabase
+      .from("builds")
+      .select("*, players(nickname, profile_picture)", { count: 'exact' })
+      .eq("archetype", id)
+      .order("score", { ascending: false })
+      .range(offset, offset + limit - 1);
+
+    entries = builds || [];
+    totalEntries = count || 0;
+    totalPages = Math.ceil(totalEntries / limit);
+
+    function getPaginationItems(current: number, total: number) {
+      if (total <= 1) return [];
+      if (total <= 5) return Array.from({ length: total }, (_, i) => i + 1);
+      if (current <= 3) return [1, 2, 3, '...', total];
+      if (current >= total - 2) return [1, '...', total - 2, total - 1, total];
+      return [1, '...', current - 1, current, current + 1, '...', total];
+    }
+    paginationItems = getPaginationItems(currentPage, totalPages);
+
+    // Data pour le graphique de répartition des grades
+    const { data: allGradesRaw } = await supabase.from("builds").select("grade:data->evaluation->grade->>letter, er:data->stats->>enerRech").eq("archetype", id);
+    const ALL_GRADES = ["F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+", "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"];
+    const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
+
+    const distributionsByBucket: any = {};
+    for (const b of allBuckets) {
+      distributionsByBucket[b] = Object.fromEntries(ALL_GRADES.map((g) => [g, 0]));
+    }
+
+    if (allGradesRaw) {
+      allGradesRaw.forEach((build: any) => {
+        let grade = build?.grade;
+        if (grade) {
+          if (grade.startsWith("ARCHON")) grade = "ARCHON";
+
+          const enerRech = build?.er ? parseFloat(build.er) : 1.0;
+          const rowEr = Math.round(enerRech * 100);
+
+          let maxBucket = 100;
+          for (const b of allBuckets) {
+            if (rowEr >= b) {
+              maxBucket = b;
+              break;
+            }
+          }
+
+          if (distributionsByBucket[maxBucket] && distributionsByBucket[maxBucket][grade] !== undefined) {
+            distributionsByBucket[maxBucket][grade]++;
+          }
+        }
+      });
+    }
+
+    chartLabels = ALL_GRADES;
+    for (const b of allBuckets) {
+      chartDataByBucket[b] = ALL_GRADES.map((g) => distributionsByBucket[b][g]);
+    }
+
+    // On cherche les infos officielles depuis Enka
+    if (enkaAvatarMap[finalEnkaName]) {
+      const enkaAvatar = enkaAvatarMap[finalEnkaName];
+
+      if (enkaAvatar.Element) {
+        mainElem = ENKA_ELEMENT_MAP[enkaAvatar.Element] || enkaAvatar.Element.toLowerCase();
+      }
+      if (enkaAvatar.WeaponType) {
+        mainWeapon = enkaAvatar.WeaponType.toLowerCase().replace("weapon_", "").replace("_one_hand", "").replace("pole", "polearm");
+      }
+    }
   }
+} catch (e: any) {
+  pageError = e.message || String(e);
+}
+
+// Redirection si le leaderboard n'existe pas, et pas d'erreur critique
+if (!pageError && !targetCharConfig) {
+  return Astro.redirect("/leaderboards");
 }
 ---
 
+{pageError ? (
+  <div style="padding: 50px; background: #fff; color: #f00; font-family: sans-serif;">
+    <h1 style="color: #f00;">Erreur Serveur (500)</h1>
+    <p>Une erreur s'est produite lors du rendu côté serveur sur Cloudflare :</p>
+    <pre style="background: #eee; padding: 15px; overflow-x: auto; color: #333;">{pageError}</pre>
+    <p>Vérifiez que les variables d'environnement SUPABASE sont bien configurées dans Cloudflare, et que les APIs GitHub ne bloquent pas les requêtes (429).</p>
+  </div>
+) : (
 <Layout title={`${lbDisplayName} - ${targetCharName.replace(/_/g, " ")} — guoba.gg`} titleKey="nav.leaderboards" description="Consultez les meilleurs builds sur guoba.gg.">
   <StaticLayout currentPage="leaderboards">
     <div class="static-page">
@@ -1170,6 +1206,7 @@ if (enkaAvatarMap[finalEnkaName]) {
     </script>
   </StaticLayout>
 </Layout>
+)}
 
 <style is:global>
   .leaderboard-list-row:hover {
