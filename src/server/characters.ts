@@ -109,8 +109,7 @@ export function getEnkaImages(localName: string) {
   };
 }
 
-import fs from 'fs';
-import path from 'path';
+import locsData from "../../locs.json";
 
 let cachedLocs: any = null;
 let assetToLocalizedNames: Record<string, { fr: string, en: string }> | null = null;
@@ -118,8 +117,7 @@ let cachedIconToHash: Record<string, string> | null = null;
 
 export function getLocs() {
   if (!cachedLocs) {
-    const filePath = path.resolve(process.cwd(), 'locs.json');
-    cachedLocs = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    cachedLocs = locsData;
   }
   return cachedLocs;
 }

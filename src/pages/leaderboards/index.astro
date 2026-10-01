@@ -7,8 +7,6 @@ import { createClient } from '@supabase/supabase-js';
 import leaderboardsNames from "../../data/leaderboards_names.json";
 import { getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getCharNamesTranslations, getAssetTranslations } from "../../server/characters";
 import teammateAssets from "../../data/teammate_assets.json";
-import fs from 'fs';
-import path from 'path';
 // Désactiver le prerendering car on a besoin d'interroger Supabase en temps réel
 export const prerender = false;
 
@@ -70,20 +68,8 @@ for (const charName in CHAR_CONFIGS) {
 
   const charTranslations = await getCharNamesTranslations(charName);
 
-  const filePath = path.resolve(process.cwd(), 'data/characters', `${charName}.json`);
   let lastUpdateFr = "N/A";
   let lastUpdateEn = "N/A";
-  try {
-    const stat = fs.statSync(filePath);
-    const d = stat.mtime;
-    const day = String(d.getDate()).padStart(2, '0');
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const year = d.getFullYear();
-    lastUpdateFr = `${day}/${month}/${year}`;
-    lastUpdateEn = `${month}/${day}/${year}`;
-  } catch (e) {
-    console.error("Erreur lors de la récupération de la date pour", charName, e);
-  }
 
   characterList.push({
     name: charName.replace(/_/g, ' '),
@@ -172,7 +158,8 @@ if (buildsData && !error) {
                 </div>
 
                 <!-- Conteneur déployable pour ses leaderboards -->
-                <div class="leaderboards-details-container" id={`details-${char.originalName}`} style="display: none; flex-direction: column; gap: 5px; margin-top: 5px; margin-bottom: 5px;">
+                <div class="leaderboards-details-wrapper" id={`details-${char.originalName}`}>
+                  <div class="leaderboards-details-inner">
                   {char.leaderboards.map((lb: any, index: number) => {
                     const count = archetypeCounts[lb.id] || 0;
                     const lbNameObj = leaderboardsNames[lb.id as keyof typeof leaderboardsNames];
@@ -257,6 +244,7 @@ if (buildsData && !error) {
                       </a>
                     );
                   })}
+                  </div>
                 </div>
               </div>
             ))}
@@ -270,6 +258,29 @@ if (buildsData && !error) {
 <style>
   .hover-highlight:hover {
     background-color: rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  .leaderboards-details-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin-bottom 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  
+  .leaderboards-details-wrapper.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .leaderboards-details-inner {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
 </style>
 
@@ -379,11 +390,11 @@ if (buildsData && !error) {
       const arrow = row.querySelector('.sort-arrow') as HTMLElement | null;
       
       if (details) {
-        if (details.style.display === 'none') {
-          details.style.display = 'flex';
+        if (!details.classList.contains('is-open')) {
+          details.classList.add('is-open');
           if (arrow) arrow.style.transform = 'rotate(180deg)';
         } else {
-          details.style.display = 'none';
+          details.classList.remove('is-open');
           if (arrow) arrow.style.transform = 'rotate(0deg)';
         }
       }
