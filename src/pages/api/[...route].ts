@@ -83,11 +83,18 @@ export const prerender = false;
 
 const app = new Hono().basePath('/api');
 
-// Hono lit les variables d'environnement via import.meta.env dans Astro
-const supabase = createClient(
-  import.meta.env.SUPABASE_URL,
-  import.meta.env.SUPABASE_SERVICE_KEY
-);
+// Fonction utilitaire pour initialiser Supabase dynamiquement à chaque requête
+// (Nécessaire sur Cloudflare car les variables d'environnement ne sont pas disponibles au top-level)
+function getSupabase(c: any) {
+  const env = c.env || {};
+  const supabaseUrl = import.meta.env.SUPABASE_URL || env.SUPABASE_URL;
+  const supabaseKey = import.meta.env.SUPABASE_SERVICE_KEY || env.SUPABASE_SERVICE_KEY;
+  
+  if (!supabaseUrl) {
+    throw new Error("SUPABASE_URL is missing in API route");
+  }
+  return createClient(supabaseUrl, supabaseKey);
+}
 
 app.get('/hello', (c) => {
   return c.json({
@@ -96,6 +103,7 @@ app.get('/hello', (c) => {
 });
 
 app.get('/test-db', async (c) => {
+  const supabase = getSupabase(c);
   // On insère un joueur factice pour vérifier que la connexion et l'écriture fonctionnent
   const { data, error } = await supabase
     .from('players')
@@ -119,6 +127,7 @@ app.get('/test-db', async (c) => {
 
 app.get('/player/:uid', async (c) => {
   const uid = c.req.param('uid');
+  const supabase = getSupabase(c);
 
   // --- 1. Vérification anti-spam (Rate Limiting via Supabase) ---
   const { data: player } = await supabase
@@ -344,4 +353,8 @@ app.get('/player/:uid', async (c) => {
   }
 });
 
-export const ALL: APIRoute = (context) => app.fetch(context.request);
+export const ALL: APIRoute = (context) => {
+  // On passe l'environnement Cloudflare à Hono pour qu'il puisse y accéder via `c.env`
+  const env = (context.locals as any)?.runtime?.env || {};
+  return app.fetch(context.request, env);
+};
