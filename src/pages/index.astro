@@ -1,6 +1,11 @@
 ---
 // src/pages/index.astro
 import Layout from "../layouts/Layout.astro";
+import HalloweenDecorations from "../components/HalloweenDecorations.astro";
+import ChristmasDecorations from "../components/ChristmasDecorations.astro";
+import LanternRiteDecorations from "../components/LanternRiteDecorations.astro";
+import EasterDecorations from "../components/EasterDecorations.astro";
+import AnniversaryDecorations from "../components/AnniversaryDecorations.astro";
 import { Image, getImage } from "astro:assets";
 import guobaLogo from "../assets/global/favicon.png";
 
@@ -45,6 +50,11 @@ const onboardingImages = {
 ---
 
 <Layout titleKey="page.title.default">
+    <HalloweenDecorations />
+    <!-- <ChristmasDecorations /> -->
+    <!-- <LanternRiteDecorations /> -->
+    <!-- <EasterDecorations /> -->
+    <!-- <AnniversaryDecorations /> -->
     <script is:inline define:vars={{ onboardingImages }}>
         window.OB_OPTIMIZED_IMAGES = onboardingImages;
     </script>

@@ -1,0 +1,191 @@
+---
+// src/components/AnniversaryDecorations.astro
+// Composant temporaire pour l'anniversaire du site.
+
+const confetti = Array.from({ length: 60 });
+const pennants = Array.from({ length: 15 });
+const colors = ["#f44336", "#2196f3", "#4caf50", "#ffeb3b", "#9c27b0", "#ff9800"];
+---
+
+<div id="anniversary-decorations" aria-hidden="true">
+    <div class="confetti-container">
+        {
+            confetti.map((_, i) => (
+                <div
+                    class="confetti-piece"
+                    style={`
+                left: ${Math.random() * 100}%;
+                background-color: ${colors[i % colors.length]};
+                animation-duration: ${Math.random() * 3 + 3}s;
+                animation-delay: ${Math.random() * 3}s;
+                transform: scale(${Math.random() * 0.5 + 0.5}) rotate(${Math.random() * 360}deg);
+            `}
+                />
+            ))
+        }
+    </div>
+</div>
+
+<template id="anniversary-garland-template">
+    <div class="pennants-container" aria-hidden="true">
+        <div class="pennants-wire"></div>
+        {
+            pennants.map((_, i) => (
+                <div
+                    class="pennant"
+                    style={`
+                border-top-color: ${colors[i % colors.length]};
+            `}
+                ></div>
+            ))
+        }
+    </div>
+</template>
+
+<template id="anniversary-logo-template">
+    <div class="party-hat-icon">
+        <svg viewBox="0 0 32 32" width="28" height="28" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg">
+            <!-- Hat cone -->
+            <path d="M 4 28 L 16 4 L 28 28 Z" fill="#2196f3"></path>
+            <!-- Patterns -->
+            <circle cx="16" cy="14" r="2" fill="#ffeb3b"></circle>
+            <circle cx="12" cy="20" r="2" fill="#ffeb3b"></circle>
+            <circle cx="20" cy="20" r="2" fill="#ffeb3b"></circle>
+            <circle cx="16" cy="26" r="2" fill="#ffeb3b"></circle>
+            <circle cx="8" cy="26" r="2" fill="#ffeb3b"></circle>
+            <circle cx="24" cy="26" r="2" fill="#ffeb3b"></circle>
+            <!-- Pompom -->
+            <circle cx="16" cy="4" r="5" fill="#f44336"></circle>
+        </svg>
+    </div>
+</template>
+
+<style>
+    #anniversary-decorations {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9999;
+        overflow: hidden;
+    }
+
+    .confetti-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .confetti-piece {
+        position: absolute;
+        top: -20px;
+        width: 8px;
+        height: 16px;
+        opacity: 0.8;
+        animation: fall-confetti linear infinite;
+    }
+
+    .confetti-piece:nth-child(even) {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+
+    @keyframes fall-confetti {
+        0% {
+            transform: translateY(-20px) rotate(0deg) scale(1);
+        }
+        50% {
+            transform: translateY(50vh) rotate(180deg) scale(1.2);
+        }
+        100% {
+            transform: translateY(105vh) rotate(360deg) scale(1);
+        }
+    }
+
+    /* --- Guirlande Fanions (Sera injectée dans main-content) --- */
+    :global(.pennants-container) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        pointer-events: none;
+        z-index: 50;
+        overflow: hidden;
+    }
+
+    :global(.pennants-wire) {
+        position: absolute;
+        top: 0px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    :global(.pennant) {
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-top: 30px solid; /* color set via JS */
+        margin-top: 0;
+        filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+    }
+
+    :global(.party-hat-icon) {
+        position: absolute;
+        top: -8px;
+        left: 12px;
+        transform: rotate(20deg);
+        pointer-events: none;
+        z-index: 10;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+</style>
+
+<script>
+    (function () {
+        const logoContainer = document.querySelector(".sidebar-title-container") as HTMLElement | null;
+        if (logoContainer) {
+            logoContainer.style.position = "relative";
+            const iconTemplate = document.getElementById("anniversary-logo-template") as HTMLTemplateElement | null;
+            if (iconTemplate) {
+                logoContainer.appendChild(iconTemplate.content.cloneNode(true));
+            }
+        }
+
+        const mainContent = document.querySelector(".main-content") as HTMLElement | null;
+        if (mainContent) {
+            mainContent.style.position = "relative";
+            const garlandTemplate = document.getElementById("anniversary-garland-template") as HTMLTemplateElement | null;
+            if (garlandTemplate) {
+                mainContent.appendChild(garlandTemplate.content.cloneNode(true));
+            }
+        }
+
+        const observer = new MutationObserver(() => {
+            const profile = document.getElementById("player-profile");
+            const decorations = document.getElementById("anniversary-decorations");
+            const garland = document.querySelector(".pennants-container") as HTMLElement | null;
+            const icon = document.querySelector(".party-hat-icon") as HTMLElement | null;
+
+            if (profile) {
+                const isProfileActive = profile.innerHTML.trim().length > 0;
+                if (decorations) decorations.style.display = isProfileActive ? "none" : "block";
+                if (garland) garland.style.display = isProfileActive ? "none" : "flex";
+                if (icon) icon.style.display = isProfileActive ? "none" : "block";
+            }
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    })();
+</script>

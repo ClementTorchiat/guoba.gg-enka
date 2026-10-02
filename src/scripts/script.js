@@ -4665,7 +4665,9 @@ function initMainPageApp() {
             }
         });
     } else {
-        if (!globalPersoData || globalPersoData.length === 0) {
+        if (globalPersoData && globalPersoData.length > 0) {
+            clearSearch();
+        } else {
             renderHome();
         }
     }

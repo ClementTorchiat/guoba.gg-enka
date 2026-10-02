@@ -1,0 +1,208 @@
+---
+// src/components/ChristmasDecorations.astro
+// Composant temporaire pour les festivités de Noël.
+// Il suffit de le commenter ou de le supprimer de src/pages/index.astro pour retirer le thème.
+
+const snowflakes = Array.from({ length: 40 });
+const bulbs = Array.from({ length: 30 });
+---
+
+<div id="christmas-decorations" aria-hidden="true">
+    <!-- Flocons de neige -->
+    <div class="snow-container">
+        {
+            snowflakes.map((_, i) => (
+                <div
+                    class="snowflake"
+                    style={`
+                left: ${Math.random() * 100}%;
+                animation-duration: ${Math.random() * 3 + 2}s;
+                animation-delay: ${Math.random() * 2}s;
+                opacity: ${Math.random() * 0.6 + 0.4};
+                font-size: ${Math.random() * 10 + 10}px;
+            `}
+                >
+                    ❅
+                </div>
+            ))
+        }
+    </div>
+</div>
+
+<template id="garland-template">
+    <div class="garland-container" aria-hidden="true">
+        <div class="garland-wire"></div>
+        {
+            bulbs.map((_, i) => (
+                <div
+                    class="garland-bulb"
+                    style={`
+                background-color: ${["#ff0000", "#00ff00", "#ffff00", "#0000ff", "#ff00ff"][i % 5]};
+                color: ${["#ff0000", "#00ff00", "#ffff00", "#0000ff", "#ff00ff"][i % 5]};
+                animation-delay: ${Math.random() * 2}s;
+            `}
+                />
+            ))
+        }
+    </div>
+</template>
+
+<template id="santa-hat-template">
+    <div class="santa-hat-icon">
+        <svg viewBox="0 0 100 100" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 25,65 Q 45,5 75,30 L 85,65 Z" fill="#d32f2f"></path>
+            <circle cx="75" cy="30" r="12" fill="#ffffff"></circle>
+            <rect x="15" y="60" width="80" height="22" rx="10" fill="#ffffff"></rect>
+        </svg>
+    </div>
+</template>
+
+<style>
+    #christmas-decorations {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9999;
+        overflow: hidden;
+    }
+
+    /* --- Neige --- */
+    .snow-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .snowflake {
+        position: absolute;
+        top: -30px;
+        color: white;
+        user-select: none;
+        animation: fall linear infinite;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+
+    @keyframes fall {
+        0% {
+            transform: translateY(-30px) rotate(0deg);
+        }
+        100% {
+            transform: translateY(105vh) rotate(360deg);
+        }
+    }
+
+    /* --- Guirlande (Sera injectée dans main-content) --- */
+    :global(.garland-container) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        pointer-events: none;
+        z-index: 50;
+        overflow: hidden;
+    }
+
+    :global(.garland-wire) {
+        position: absolute;
+        top: -30px;
+        left: -5%;
+        width: 110%;
+        height: 50px;
+        border-bottom: 2px solid #145a32;
+        border-radius: 50%;
+    }
+
+    :global(.garland-bulb) {
+        width: 12px;
+        height: 18px;
+        border-radius: 50%;
+        margin-top: 15px;
+        position: relative;
+        box-shadow: 0 0 15px currentColor;
+        animation: blink 1.5s infinite alternate;
+        z-index: 2;
+    }
+
+    :global(.garland-bulb::before) {
+        content: "";
+        position: absolute;
+        top: -4px;
+        left: 3px;
+        width: 6px;
+        height: 5px;
+        background: #333;
+        border-radius: 2px;
+    }
+
+    @keyframes blink {
+        0% {
+            opacity: 0.4;
+            filter: brightness(0.8);
+        }
+        100% {
+            opacity: 1;
+            filter: brightness(1.5);
+        }
+    }
+
+    /* --- Chapeau --- */
+    :global(.santa-hat-icon) {
+        position: absolute;
+        top: -12px;
+        left: -6px;
+        transform: rotate(-20deg);
+        pointer-events: none;
+        z-index: 10;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+</style>
+
+<script>
+    (function () {
+        // 1. Ajouter le chapeau de noël au logo
+        const logoContainer = document.querySelector(".sidebar-title-container") as HTMLElement | null;
+        if (logoContainer) {
+            logoContainer.style.position = "relative";
+            const hatTemplate = document.getElementById("santa-hat-template") as HTMLTemplateElement | null;
+            if (hatTemplate) {
+                logoContainer.appendChild(hatTemplate.content.cloneNode(true));
+            }
+        }
+
+        // 2. Ajouter la guirlande dans main-content
+        const mainContent = document.querySelector(".main-content") as HTMLElement | null;
+        if (mainContent) {
+            mainContent.style.position = "relative";
+            const garlandTemplate = document.getElementById("garland-template") as HTMLTemplateElement | null;
+            if (garlandTemplate) {
+                mainContent.appendChild(garlandTemplate.content.cloneNode(true));
+            }
+        }
+
+        // 3. Observer pour masquer si on affiche un profil
+        const observer = new MutationObserver(() => {
+            const profile = document.getElementById("player-profile");
+            const decorations = document.getElementById("christmas-decorations");
+            const garland = document.querySelector(".garland-container") as HTMLElement | null;
+            const hat = document.querySelector(".santa-hat-icon") as HTMLElement | null;
+
+            if (profile) {
+                const isProfileActive = profile.innerHTML.trim().length > 0;
+                if (decorations) decorations.style.display = isProfileActive ? "none" : "block";
+                if (garland) garland.style.display = isProfileActive ? "none" : "flex";
+                if (hat) hat.style.display = isProfileActive ? "none" : "block";
+            }
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    })();
+</script>
