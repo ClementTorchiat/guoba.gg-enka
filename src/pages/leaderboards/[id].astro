@@ -466,8 +466,12 @@ if (!pageError && !targetCharConfig) {
                   const bgColor = index % 2 === 0 ? "rgba(0, 0, 0, 0.2)" : "var(--bg-panel)";
 
                   // Helper pour le serveur
-                  const serverPrefix = build.uid ? build.uid[0] : "7";
-                  const serverName = serverPrefix === "7" ? "EU" : serverPrefix === "6" ? "NA" : "AS";
+                  const serverPrefix = build.uid ? String(build.uid)[0] : "7";
+                  const serverMap = {
+                    '1': 'CN', '2': 'CN', '3': 'CN', '4': 'CN',
+                    '5': 'TW', '6': 'NA', '7': 'EU', '8': 'Asia', '9': 'TW'
+                  } as any;
+                  const serverName = serverMap[serverPrefix] || "CN";
 
                   let setIcon1 = null;
                   let setIcon2 = null;
@@ -514,7 +518,7 @@ if (!pageError && !targetCharConfig) {
                         <span class={`pp-badge pp-badge-server pp-badge-server-${serverName}`} style="flex: initial; font-size: 10px; padding: 2px 5px; border-radius: 4px; flex-shrink: 0;">
                           {serverName}
                         </span>
-                        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" class="dynamic-i18n" data-fr={player?.nickname || "Voyageur"} data-en={player?.nickname || "Traveler"}>
+                        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size:14px;" class="dynamic-i18n" data-fr={player?.nickname || "Voyageur"} data-en={player?.nickname || "Traveler"}>
                           {player?.nickname || "Voyageur"}
                         </span>
                       </div>
@@ -628,27 +632,31 @@ if (!pageError && !targetCharConfig) {
         <!-- HEADER -->
         <div style="display: flex; flex-direction: column; gap: 8px;">
           <!-- Character Info -->
-          <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 10px;">
               <img src={enkaAvatarImg} style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" onerror="this.style.display='none'" />
               <div style="display: flex; align-items: baseline; gap: 6px;">
                 <span style="font-size: 15px; color: white; letter-spacing: 0.2px;" class="dynamic-i18n" data-fr={targetCharTranslations.fr} data-en={targetCharTranslations.en}>{targetCharName.replace(/_/g, " ")}</span>
-                <span id="tt-char-cons" style="font-size: 13px; color: rgba(255,255,255,0.5);"></span>
               </div>
             </div>
-            <span id="tt-char-level" style="font-size: 13px; color: rgba(255,255,255,0.7);" data-i18n-format="lb.level">Niv.-</span>
+            <div style="display: flex; align-items: baseline; white-space: nowrap;">
+              <span id="tt-char-level" style="font-size: 12px; color: rgba(255,255,255,0.7);" data-i18n-format="lb.level">Niv.-</span>
+              <span id="tt-char-cons" style="font-size: 12px; color: rgba(255,255,255,0.7);"></span>
+            </div>
           </div>
 
           <!-- Weapon Info -->
-          <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 10px;">
               <img id="tt-weapon-icon" src="" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px; display: none;" />
               <div style="display: flex; align-items: baseline; gap: 6px;">
-                <span id="tt-weapon-name" style="font-size: 14px; color: white;">-</span>
-                <span id="tt-weapon-refinement" style="font-size: 13px; color: rgba(255,255,255,0.5);"></span>
+                <span id="tt-weapon-name" style="font-size: 12px; color: white;">-</span>
               </div>
             </div>
-            <span id="tt-weapon-level" style="font-size: 13px; color: rgba(255,255,255,0.7);"></span>
+            <div style="display: flex; align-items: baseline; white-space: nowrap;">
+              <span id="tt-weapon-level" style="font-size: 12px; color: rgba(255,255,255,0.7);"></span>
+              <span id="tt-weapon-refinement" style="font-size: 12px; color: rgba(255,255,255,0.7);"></span>
+            </div>
           </div>
         </div>
 
@@ -656,7 +664,7 @@ if (!pageError && !targetCharConfig) {
         <div style="height: 1px; background: rgba(255,255,255,0.15); width: 100%; margin: 6px 0;"></div>
 
         <!-- STATS -->
-        <div id="tt-stats-container" style="display: flex; flex-direction: column; gap: 6px;">
+        <div id="tt-stats-container" style="display: flex; flex-direction: column; gap: 8px;">
           <!-- Filled by JS -->
         </div>
 
@@ -981,7 +989,7 @@ if (!pageError && !targetCharConfig) {
               }
               if (data.cons !== undefined) {
                 const consEl = document.getElementById("tt-char-cons");
-                if (consEl) consEl.textContent = `C${data.cons}`;
+                if (consEl) consEl.innerHTML = `&nbsp;- C${data.cons}`;
               }
 
               let statsHtml = "";
@@ -1011,7 +1019,7 @@ if (!pageError && !targetCharConfig) {
 
                 weaponName.textContent = translatedWepName || (window.t && window.t("lb.unknownWeapon")) || "Arme inconnue";
                 const refEl = document.getElementById("tt-weapon-refinement");
-                if (refEl) refEl.textContent = `R${data.weapon.refinement || 1}`;
+                if (refEl) refEl.innerHTML = `&nbsp;- R${data.weapon.refinement || 1}`;
                 const wLvlEl = document.getElementById("tt-weapon-level");
                 if (wLvlEl) wLvlEl.textContent = (window.t && window.t("lb.levelFormat", data.weapon.level || 90)) || `Niv.${data.weapon.level || 90}`;
 
@@ -1038,12 +1046,12 @@ if (!pageError && !targetCharConfig) {
                 const bestName = typeof data.sets.best.name === "object" ? data.sets.best.name[actualLang] : data.sets.best.name;
                 const sUrl = getIconUrl(data.sets.best.icon) || (data.sets.best.icon ? `https://enka.network/ui/${data.sets.best.icon}.png` : "");
                 setsHtml += `
-                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             ${sUrl ? `<img src="${sUrl}" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" />` : ""}
-                            <span style="font-size: 14px; color: white;">${bestName}</span>
+                            <span style="font-size: 12px; color: white;">${bestName}</span>
                         </div>
-                        <span style="font-size: 14px; color: white;">${data.sets.best.count}${(window.t && window.t("lb.piecesShort")) || "P"}</span>
+                        <span style="font-size: 12px; color: rgba(255,255,255,0.7); white-space: nowrap;">${data.sets.best.count}${(window.t && window.t("lb.piecesShort")) || "P"}</span>
                     </div>
                   `;
 
@@ -1051,12 +1059,12 @@ if (!pageError && !targetCharConfig) {
                   const secondName = typeof data.sets.second.name === "object" ? data.sets.second.name[actualLang] : data.sets.second.name;
                   const sUrl2 = getIconUrl(data.sets.second.icon) || (data.sets.second.icon ? `https://enka.network/ui/${data.sets.second.icon}.png` : "");
                   setsHtml += `
-                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 ${sUrl2 ? `<img src="${sUrl2}" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" />` : ""}
-                                <span style="font-size: 14px; color: white;">${secondName}</span>
+                                <span style="font-size: 12px; color: white;">${secondName}</span>
                             </div>
-                            <span style="font-size: 14px; color: white;">${data.sets.second.count}${(window.t && window.t("lb.piecesShort")) || "P"}</span>
+                            <span style="font-size: 12px; color: rgba(255,255,255,0.7); white-space: nowrap;">${data.sets.second.count}${(window.t && window.t("lb.piecesShort")) || "P"}</span>
                         </div>
                       `;
                 }

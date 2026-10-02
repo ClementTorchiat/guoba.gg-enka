@@ -78,9 +78,6 @@ try {
 
     const charTranslations = await getCharNamesTranslations(charName);
 
-    let lastUpdateFr = "N/A";
-    let lastUpdateEn = "N/A";
-
     characterList.push({
       name: charName.replace(/_/g, ' '),
       originalName: charName,
@@ -90,13 +87,16 @@ try {
       avatarImg: enkaAvatarImg,
       gachaImg: enkaGachaImg,
       leaderboards: Array.from(leaderboardsMap.values()),
-      lastUpdateFr,
-      lastUpdateEn
+      isNew: config.isNew || false
     });
   }
 
-  // Tri alphabétique des personnages
-  characterList.sort((a, b) => a.name.localeCompare(b.name));
+  // Tri alphabétique des personnages (avec les "New" en premier)
+  characterList.sort((a, b) => {
+    if (a.isNew && !b.isNew) return -1;
+    if (!a.isNew && b.isNew) return 1;
+    return a.name.localeCompare(b.name);
+  });
 
   // 4. Récupération des statistiques depuis Supabase
   const { data: buildsData, error } = await supabase.from('build_counts_by_archetype').select('*');
@@ -132,13 +132,37 @@ try {
       </div>
 
       <div class="leaderboards-content" style="margin-top: 20px;">
-        <div class="leaderboards-tools" style="display: flex; flex-direction: row; justify-content: space-between;">
-          <form id="searchForm" style="position: relative; width: 423px;">
-            <input id="searchInput" data-i18n-placeholder="lb.search.placeholder" style="width: 100%; background: var(--bg-panel); border: none; border-radius: 8px; font-family: 'ShinShin', sans-serif; font-size: 14px; padding-left: 15px; padding-top: 17px; padding-bottom: 14px; color: var(--text-primary);" placeholder="Rechercher par nom de personnage..." />
-            <button type="submit" style="position: absolute; right: 15px; top: 15px; background: none; border: none; cursor: pointer;">
-              <img src="/assets/simulator/icons/icon_search_white.svg" alt="" style="width: 20px; height: 20px;" />
-            </button>
-          </form>
+        <div class="leaderboards-tools" style="display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; gap: 8px; align-items: center; flex: 1;">
+            <form id="searchForm" style="position: relative; width: 100%; max-width: 423px;">
+              <input id="searchInput" data-i18n-placeholder="lb.search.placeholder" style="width: 100%; background: var(--bg-panel); border: none; border-radius: 8px; font-family: 'ShinShin', sans-serif; font-size: 14px; padding-left: 15px; padding-top: 17px; padding-bottom: 14px; color: var(--text-primary);" placeholder="Rechercher par nom de personnage..." />
+              <button type="submit" style="position: absolute; right: 15px; top: 15px; background: none; border: none; cursor: pointer;">
+                <img src="/assets/simulator/icons/icon_search_white.svg" alt="" style="width: 20px; height: 20px;" />
+              </button>
+            </form>
+            
+            <div class="custom-select-container" style="position: relative; flex-shrink: 0; z-index: 50;">
+              <button id="sortDropdownBtn" type="button" style="justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 15px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; outline: none; height: 100%; min-height: 50px; display: flex; align-items: center; width: 100%; min-width: 220px;">
+                <span id="sort-current-label" class="dynamic-i18n" data-fr="Nom (A-Z)" data-en="Name (A-Z)">Nom (A-Z)</span>
+                <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 10px; height: 10px; opacity: 0.6; margin-left: 8px;">
+              </button>
+
+              <div id="sort-custom-menu" class="custom-select-menu" style="min-width: 100%; top: calc(100% + 5px); bottom: auto; margin-bottom: 0; right: 0; border: none;">
+                <div class="custom-select-item" data-value="name-asc" data-fr="Nom (A-Z)" data-en="Name (A-Z)" style="background: var(--bg-active);">
+                  <span class="dynamic-i18n" data-fr="Nom (A-Z)" data-en="Name (A-Z)">Nom (A-Z)</span>
+                </div>
+                <div class="custom-select-item" data-value="name-desc" data-fr="Nom (Z-A)" data-en="Name (Z-A)">
+                  <span class="dynamic-i18n" data-fr="Nom (Z-A)" data-en="Name (Z-A)">Nom (Z-A)</span>
+                </div>
+                <div class="custom-select-item" data-value="entries-desc" data-fr="Entrées (Décroissant)" data-en="Entries (Descending)">
+                  <span class="dynamic-i18n" data-fr="Entrées (Décroissant)" data-en="Entries (Descending)">Entrées (Décroissant)</span>
+                </div>
+                <div class="custom-select-item" data-value="entries-asc" data-fr="Entrées (Croissant)" data-en="Entries (Ascending)">
+                  <span class="dynamic-i18n" data-fr="Entrées (Croissant)" data-en="Entries (Ascending)">Entrées (Croissant)</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div style="display: flex; color: var(--text-grey); font-size: 14px; align-items: center; gap: 5px;">
             <p><span class="dynamic-i18n-count-lb" data-count={totalLeaderboards}>{totalLeaderboards} classements</span> |</p>
@@ -150,13 +174,14 @@ try {
           <div class="leaderboards-head" style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px 20px 10px 10px">
             <p style="font-size: 12px; flex: 1;" data-i18n="lb.rank">Classement</p>
             <p style="font-size: 12px; flex: 1; text-align: center;" data-i18n="lb.team">Équipe</p>
-            <p style="font-size: 12px; flex: 0.5; text-align: center;" data-i18n="lb.entries">Entrées</p>
-            <p style="font-size: 12px; flex: 0.5; text-align: right;" data-i18n="lb.lastUpdate">Dernière MàJ</p>
+            <p style="font-size: 12px; flex: 1; text-align: right;" data-i18n="lb.entries">Entrées</p>
           </div>
 
-          <div class="leaderboards-list-rows" style="display: flex; flex-direction: column; gap: 5px;">
-            {characterList.map((char) => (
-              <div class="character-group" data-char-name={char.name.toLowerCase()}>
+          <div class="leaderboards-list-rows" id="leaderboardsList" style="display: flex; flex-direction: column; gap: 5px;">
+            {characterList.map((char) => {
+              const charTotalEntries = char.leaderboards.reduce((acc: number, lb: any) => acc + (archetypeCounts[lb.id] || 0), 0);
+              return (
+              <div class="character-group" data-char-name={char.name.toLowerCase()} data-entries={charTotalEntries} data-is-new={char.isNew ? "true" : "false"}>
                 <!-- Ligne principale du Personnage -->
                 <div class="leaderboard-list-row cursor-pointer" data-char={char.originalName} style={`position: relative; overflow: hidden; padding: 2px; padding-right: 20px; border-radius: 8px; background-color: rgb(from ${char.color} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); display:flex; flex-direction: row; gap: 13px; align-items: center; cursor: pointer;`}>
                   <div style={`position: absolute; inset: 0; background-image: url('${char.gachaImg}'); background-position: center center; background-repeat: no-repeat; background-size: 100%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);`}></div>
@@ -164,8 +189,13 @@ try {
 
                   <img src={char.avatarImg} onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${char.originalName.split('_')[0]}.png'`} style="z-index: 1; width: 52px; height: 52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" />
                   
-                  <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; width: 100%;">
-                    <p style="font-size: 16px;" class="dynamic-i18n" data-fr={char.translations.fr} data-en={char.translations.en}>{char.name}</p>
+                  <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <p style="font-size: 16px; margin: 0;" class="dynamic-i18n" data-fr={char.translations.fr} data-en={char.translations.en}>{char.name}</p>
+                      {char.isNew && (
+                        <div class="dynamic-i18n" data-fr="Nouveau !" data-en="New!" style="background: var(--accent-gold); color: #000; font-family: 'ShinShin', sans-serif; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 4px;">Nouveau !</div>
+                      )}
+                    </div>
                     <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 20px;">
                       <p style="font-size: 14px;"><span class="dynamic-i18n-count" data-count={char.leaderboards.length}>{char.leaderboards.length} classement{char.leaderboards.length > 1 ? 's' : ''}</span></p>
                       <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; flex-shrink: 0; transform: rotate(0deg); transition: transform 0.3s ease;" />
@@ -251,10 +281,7 @@ try {
                               })()}
                             </div>
                             
-                            <p style="font-size: 14px; flex: 0.5; text-align: center;">{count}</p>
-                            
-                            <!-- Date de dernière modification du json -->
-                            <p style="font-size: 14px; flex: 0.5; text-align: right; opacity: 0.5;" class="dynamic-i18n" data-fr={char.lastUpdateFr} data-en={char.lastUpdateEn}>{char.lastUpdateFr}</p>
+                            <p style="font-size: 14px; flex: 1; text-align: right;">{count}</p>
                           </div>
                         </div>
                       </a>
@@ -263,7 +290,8 @@ try {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
@@ -445,6 +473,74 @@ try {
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
       searchInput.addEventListener('input', searchCharacter);
+    }
+
+    // Logique de tri (Custom Dropdown)
+    const sortDropdownBtn = document.getElementById('sortDropdownBtn');
+    const sortCustomMenu = document.getElementById('sort-custom-menu');
+    
+    if (sortDropdownBtn && sortCustomMenu) {
+      sortDropdownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sortCustomMenu.classList.toggle('show');
+      });
+      
+      document.addEventListener('click', () => {
+        sortCustomMenu.classList.remove('show');
+      });
+
+      document.querySelectorAll('#sort-custom-menu .custom-select-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          const val = item.getAttribute('data-value');
+          const frLabel = item.getAttribute('data-fr');
+          const enLabel = item.getAttribute('data-en');
+          
+          const labelEl = document.getElementById('sort-current-label');
+          if (labelEl) {
+            labelEl.setAttribute('data-fr', frLabel || '');
+            labelEl.setAttribute('data-en', enLabel || '');
+            const w = window as any;
+            const lang = w.GUOBA_LANG || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_lang') : 'fr') || 'fr';
+            labelEl.textContent = (lang === 'en' ? enLabel : frLabel) || '';
+          }
+          
+          document.querySelectorAll('#sort-custom-menu .custom-select-item').forEach(el => el.setAttribute('style', ''));
+          item.setAttribute('style', 'background: var(--bg-active);');
+          
+          sortCustomMenu.classList.remove('show');
+          
+          const list = document.getElementById('leaderboardsList');
+          if (!list) return;
+          
+          const groups = Array.from(list.querySelectorAll('.character-group')) as HTMLElement[];
+          
+          groups.sort((a, b) => {
+            const aIsNew = a.getAttribute('data-is-new') === 'true';
+            const bIsNew = b.getAttribute('data-is-new') === 'true';
+            
+            if (val === 'name-asc') {
+              if (aIsNew && !bIsNew) return -1;
+              if (!aIsNew && bIsNew) return 1;
+              return (a.getAttribute('data-char-name') || '').localeCompare(b.getAttribute('data-char-name') || '');
+            } else if (val === 'name-desc') {
+              if (aIsNew && !bIsNew) return -1;
+              if (!aIsNew && bIsNew) return 1;
+              return (b.getAttribute('data-char-name') || '').localeCompare(a.getAttribute('data-char-name') || '');
+            } else if (val === 'entries-desc') {
+              const ea = parseInt(a.getAttribute('data-entries') || '0', 10);
+              const eb = parseInt(b.getAttribute('data-entries') || '0', 10);
+              return eb - ea;
+            } else if (val === 'entries-asc') {
+              const ea = parseInt(a.getAttribute('data-entries') || '0', 10);
+              const eb = parseInt(b.getAttribute('data-entries') || '0', 10);
+              return ea - eb;
+            }
+            return 0;
+          });
+          
+          groups.forEach(g => list.appendChild(g));
+        });
+      });
     }
   }
 
