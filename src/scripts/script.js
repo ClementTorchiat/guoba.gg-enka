@@ -763,6 +763,10 @@ async function fetchUserData(optionalUid) {
                 return;
             }
 
+            // Envoi des données en tâche de fond pour mettre à jour le leaderboard (Fire and Forget)
+            // On stocke la Promise dans une variable globale pour pouvoir l'attendre au moment d'afficher le classement
+            window.leaderboardUpdatePromise = fetch(`/api/player/${uid}`).catch(e => console.log('Mise à jour du leaderboard ignorée (ou erreur) :', e));
+
             apiSessionCache[uid] = {
                 data: data,
                 timestamp: Date.now()
@@ -4418,6 +4422,11 @@ async function updateLeaderboardRank(index) {
     }
     
     try {
+        // On attend que la mise à jour en tâche de fond soit terminée avant de demander le rang (si elle est en cours)
+        if (window.leaderboardUpdatePromise) {
+            await window.leaderboardUpdatePromise;
+        }
+        
         const res = await fetch(`/api/rank/${leaderboardId}/${uid}`);
         if (!res.ok) throw new Error("Rank API returned error");
         const data = await res.json();

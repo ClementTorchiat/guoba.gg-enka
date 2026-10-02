@@ -375,7 +375,7 @@ app.get('/rank/:leaderboard_id/:uid', async (c) => {
 
   const { data: userScore, error: scoreError } = await supabase
     .from('leaderboard_scores')
-    .select('score')
+    .select('score, er')
     .eq('uid', uid)
     .eq('leaderboard_id', leaderboard_id)
     .maybeSingle();
@@ -384,21 +384,93 @@ app.get('/rank/:leaderboard_id/:uid', async (c) => {
      return c.json({ rank: 0, total: 0 }); 
   }
 
-  const { count: rankCount } = await supabase
+  // --- 1. Reconstruire les buckets d'ER comme sur le front-end ---
+  let allErReqs = new Set<number>();
+  for (const charName in CHAR_CONFIGS) {
+    const config = CHAR_CONFIGS[charName];
+    if (config.builds) {
+      for (const [buildName, buildData] of Object.entries(config.builds)) {
+        const data = buildData as any;
+        const lbId = data.leaderboard_id || buildName;
+        if (lbId === leaderboard_id && data.er_req) {
+          allErReqs.add(data.er_req);
+        }
+      }
+    }
+  }
+
+  const sortedErReqs = Array.from(allErReqs).sort((a, b) => b - a);
+  let otherErs: number[] = [];
+  const lowestEr = sortedErReqs.length > 0 ? sortedErReqs[sortedErReqs.length - 1] : null;
+  
+  if (lowestEr) {
+    for (let i = 1; i <= 3; i++) {
+      const nextEr = lowestEr - 10 * i;
+      if (nextEr >= 100) otherErs.push(nextEr);
+    }
+  }
+  if (!sortedErReqs.includes(100) && !otherErs.includes(100)) {
+    otherErs.push(100);
+  }
+
+  // Exemple: [140, 130, 120, 100]
+  const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
+  const smallestBucket = allBuckets[allBuckets.length - 1] || 100;
+
+  // --- 2. Trouver dans quel bucket se trouve l'utilisateur ---
+  const userEnerRech = userScore.er ? parseFloat(userScore.er as string) : 1.0;
+  const userRowEr = Math.round(userEnerRech * 100);
+  
+  let userBucket = smallestBucket;
+  let nextHigherBucket: number | null = null;
+
+  if (userRowEr < smallestBucket) {
+     userBucket = smallestBucket;
+     if (allBuckets.length > 1) {
+         nextHigherBucket = allBuckets[allBuckets.length - 2];
+     }
+  } else {
+    for (let i = 0; i < allBuckets.length; i++) {
+      if (userRowEr >= allBuckets[i]) {
+        userBucket = allBuckets[i];
+        if (i > 0) nextHigherBucket = allBuckets[i - 1];
+        break;
+      }
+    }
+  }
+
+  // --- 3. Filtrer Supabase pour ce bucket précis ---
+  let rankQuery = supabase
     .from('leaderboard_scores')
     .select('*', { count: 'exact', head: true })
     .eq('leaderboard_id', leaderboard_id)
     .gt('score', userScore.score);
-
-  const { count: totalCount } = await supabase
+    
+  let totalQuery = supabase
     .from('leaderboard_scores')
     .select('*', { count: 'exact', head: true })
     .eq('leaderboard_id', leaderboard_id);
 
+  if (userBucket !== smallestBucket) {
+    // Si ce n'est pas le plus petit bucket, il y a une limite inférieure
+    rankQuery = rankQuery.gte('er', userBucket / 100);
+    totalQuery = totalQuery.gte('er', userBucket / 100);
+  }
+  
+  if (nextHigherBucket !== null) {
+    // Il y a toujours une limite supérieure sauf si on est dans le plus grand bucket
+    rankQuery = rankQuery.lt('er', nextHigherBucket / 100);
+    totalQuery = totalQuery.lt('er', nextHigherBucket / 100);
+  }
+
+  const { count: rankCount } = await rankQuery;
+  const { count: totalCount } = await totalQuery;
+
   return c.json({
     rank: (rankCount || 0) + 1,
     total: totalCount || 0,
-    score: userScore.score
+    score: userScore.score,
+    bucket: userBucket // Utile pour débugger
   });
 });
 
