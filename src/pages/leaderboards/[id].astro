@@ -127,9 +127,9 @@ try {
 
     // 4. Récupération des données Supabase du classement avec `.range()`
     const { data: builds, error, count } = await supabase
-      .from("builds")
-      .select("*, players(nickname, profile_picture)", { count: 'exact' })
-      .eq("archetype", id)
+      .from("v_leaderboard_scores")
+      .select("*", { count: 'exact' })
+      .eq("leaderboard_id", id)
       .order("score", { ascending: false })
       .range(offset, offset + limit - 1);
 
@@ -147,7 +147,7 @@ try {
     paginationItems = getPaginationItems(currentPage, totalPages);
 
     // Data pour le graphique de répartition des grades
-    const { data: allGradesRaw } = await supabase.from("builds").select("grade:data->evaluation->grade->>letter, er:data->stats->>enerRech").eq("archetype", id);
+    const { data: allGradesRaw } = await supabase.from("leaderboard_scores").select("grade->>letter as grade, er").eq("leaderboard_id", id);
     const ALL_GRADES = ["F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+", "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"];
     const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
 
@@ -406,9 +406,9 @@ if (!pageError && !targetCharConfig) {
                 </div>
               ) : (
                 entries.map((build: any, index: number) => {
-                  const player = build.players;
-                  const data = build.data;
-                  const evalData = data.evaluation || {};
+                  const player = { nickname: build.nickname, profile_picture: build.profile_picture };
+                  const data = build.build_data;
+                  const evalData = { grade: build.grade || {} };
 
                   // Fallback pour les stats globales
                   const stats = data.stats || { critRate: 0.05, critDMG: 0.5, enerRech: 1.0 };

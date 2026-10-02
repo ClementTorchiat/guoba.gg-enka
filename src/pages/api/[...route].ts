@@ -171,7 +171,7 @@ app.get('/player/:uid', async (c) => {
     const persos = await parseEnkaData(enkaData);
 
     // 2. Calcul du score pour chaque personnage
-    const results = persos.map((perso: any) => {
+    const results = persos.flatMap((perso: any) => {
       // Enka donne des noms comme "MarionetteNew", on les traduit avec notre dictionnaire ENKA_TO_LOCAL_NAME
       const localName = ENKA_TO_LOCAL_NAME[perso.name] || perso.name;
 
@@ -184,20 +184,16 @@ app.get('/player/:uid', async (c) => {
       }
 
       if (!config) {
-        return {
+        return [{
           id: perso.id,
           name: perso.name,
           localName: localName,
           error: 'Configuration non trouvée dans /data/characters/'
-        };
+        }];
       }
 
-      let bestBuildKey = Object.keys(config.builds)[0];
-      let maxEfficiency = -1;
-      let bestScoringConfig = null;
-
-      // On simule chaque build pour trouver celui qui matche le mieux avec l'équipement actuel (Efficiency)
-      Object.entries(config.builds).forEach(([key, build]: [string, any]) => {
+      // On calcule le score pour TOUS les builds de ce personnage
+      const evaluatedBuilds = Object.entries(config.builds).map(([key, build]: [string, any]) => {
         const scoringConfig = {
           weights: build.weights,
           idealMainStats: build.idealMainStats,
@@ -205,53 +201,40 @@ app.get('/player/:uid', async (c) => {
           goodSets: build.goodSets || []
         };
 
-        // On applique les buffs de Taux Crit actifs par défaut pour l'évaluation de la pénalité d'overcap
-        const simulatedExtraCR = getSimulatedCritRateBuff(perso, config);
-        perso.buffedStats.cr = (perso.stats.critRate * 100) + simulatedExtraCR;
-
-        const simulation = calculateCharacterScore(perso, scoringConfig, 45); // Max rolls n'a pas d'importance pour ce ratio
-        const potential = calculateMaxTheoreticalScore(perso, scoringConfig);
+        const potentialMax = calculateMaxTheoreticalScore(perso, scoringConfig);
+        
+        // On clone le perso pour ne pas écraser les stats buffées entre chaque leaderboard
+        const persoClone = JSON.parse(JSON.stringify(perso));
+        persoClone.buffedStats.cr = (persoClone.stats.critRate * 100) + getSimulatedCritRateBuff(persoClone, config);
+        
+        const score = calculateCharacterScore(persoClone, scoringConfig, potentialMax.totalRolls);
 
         let efficiency = 0;
-        if (potential && potential.score > 0) {
-          efficiency = simulation.score / potential.score;
+        if (potentialMax && potentialMax.score > 0) {
+          efficiency = score.score / potentialMax.score;
         }
 
-        if (efficiency > maxEfficiency) {
-          maxEfficiency = efficiency;
-          bestBuildKey = key;
-          bestScoringConfig = scoringConfig;
+        return {
+          id: perso.id,
+          name: perso.name,
+          archetype: build.leaderboard_id || key,
+          score: score.score, // Le vrai score brut
+          grade: score.grade, // L'objet complet { letter, color }
+          er: persoClone.stats.enerRech || 1.0,
+          persoData: persoClone, // On passe le clone
+          efficiency: efficiency
+        };
+      });
+
+      // Dédoublonnage : on ne garde que le meilleur score (efficacité) par leaderboard (archetype)
+      const bestPerArchetype = new Map();
+      evaluatedBuilds.forEach((eb: any) => {
+        if (!bestPerArchetype.has(eb.archetype) || bestPerArchetype.get(eb.archetype).efficiency < eb.efficiency) {
+          bestPerArchetype.set(eb.archetype, eb);
         }
       });
 
-      // Sécurité si aucun build n'a pu être sélectionné
-      if (!bestScoringConfig) {
-        bestScoringConfig = {
-          weights: config.builds[bestBuildKey].weights,
-          idealMainStats: config.builds[bestBuildKey].idealMainStats,
-          bestSets: config.builds[bestBuildKey].bestSets || [],
-          goodSets: config.builds[bestBuildKey].goodSets || []
-        };
-      }
-
-      // LE CŒUR DU RÉACTEUR : On calcule d'abord le max dynamique !
-      const potentialMax = calculateMaxTheoreticalScore(perso, bestScoringConfig);
-
-      // Puis on passe ce max dynamique à ton algorithme (le buffedStats.cr est déjà ajusté par la boucle ci-dessus)
-      perso.buffedStats.cr = (perso.stats.critRate * 100) + getSimulatedCritRateBuff(perso, config);
-      const score = calculateCharacterScore(perso, bestScoringConfig, potentialMax.totalRolls);
-
-      // On sauvegarde le résultat complet de l'évaluation dans l'objet perso !
-      perso.evaluation = score;
-
-      return {
-        id: perso.id,
-        name: perso.name,
-        archetype: config.builds[bestBuildKey].leaderboard_id || bestBuildKey,
-        score: score.score, // Le vrai score brut
-        grade: score.grade,
-        persoData: perso // Tout le détail (stats, armes, artéfacts avec sub-scores) à sauvegarder !
-      };
+      return Array.from(bestPerArchetype.values());
     });
 
     // --- 3. Sauvegarde dans Supabase ---
@@ -274,59 +257,90 @@ app.get('/player/:uid', async (c) => {
       console.error("Supabase Player Upsert Error:", playerError);
     }
 
-    // Upsert des builds
-    const buildsToInsert = results.filter((r: any) => !r.error).map((res: any) => {
-      // Pré-calcul du CV et du Set pour alléger le front-end
-      let totalCV = 0;
-      const setsCounter: { [key: string]: number } = {};
+    // Upsert des builds et des scores
+    const uniqueBuildsMap = new Map();
+    const scoresToInsert: any[] = [];
 
-      if (res.persoData && res.persoData.artefacts) {
-        res.persoData.artefacts.forEach((art: any) => {
-          if (art.setKey) setsCounter[art.setKey] = (setsCounter[art.setKey] || 0) + 1;
+    results.filter((r: any) => !r.error).forEach((res: any) => {
+      // 1. On ne prépare le 'build' qu'une seule fois par personnage
+      const buildKey = `${uid}_${res.id}`;
+      if (!uniqueBuildsMap.has(buildKey)) {
+        let totalCV = 0;
+        const setsCounter: { [key: string]: number } = {};
 
-          if (art.mainStat) {
-            if (art.mainStat.key === "critRate_") totalCV += art.mainStat.value * 2;
-            if (art.mainStat.key === "critDMG_") totalCV += art.mainStat.value;
-          }
+        if (res.persoData && res.persoData.artefacts) {
+          res.persoData.artefacts.forEach((art: any) => {
+            if (art.setKey) setsCounter[art.setKey] = (setsCounter[art.setKey] || 0) + 1;
 
-          if (art.subStats) {
-            art.subStats.forEach((sub: any) => {
-              if (sub.key === "critRate_") totalCV += sub.value * 2;
-              if (sub.key === "critDMG_") totalCV += sub.value;
-            });
-          }
-        });
-      }
+            if (art.mainStat) {
+              if (art.mainStat.key === "critRate_") totalCV += art.mainStat.value * 2;
+              if (art.mainStat.key === "critDMG_") totalCV += art.mainStat.value;
+            }
 
-      const sortedSets = Object.entries(setsCounter).sort((a, b) => b[1] - a[1]);
-      const bestSetName = sortedSets.length > 0 ? sortedSets[0][0] : null;
-      const bestSetCount = sortedSets.length > 0 ? sortedSets[0][1] : 0;
-      
-      // Ajout de ces calculs dans un objet 'computed'
-      if (res.persoData) {
-        res.persoData.computed = {
+            if (art.subStats) {
+              art.subStats.forEach((sub: any) => {
+                if (sub.key === "critRate_") totalCV += sub.value * 2;
+                if (sub.key === "critDMG_") totalCV += sub.value;
+              });
+            }
+          });
+        }
+
+        const sortedSets = Object.entries(setsCounter).sort((a, b) => b[1] - a[1]);
+        const bestSetName = sortedSets.length > 0 ? sortedSets[0][0] : null;
+        const bestSetCount = sortedSets.length > 0 ? sortedSets[0][1] : 0;
+        
+        // On purge 'evaluation' car ça n'a plus de sens dans un objet 'build' partagé
+        const dataToSave = { ...res.persoData };
+        delete dataToSave.evaluation;
+
+        dataToSave.computed = {
           totalCV,
           bestSetName,
           bestSetCount
         };
+
+        uniqueBuildsMap.set(buildKey, {
+          uid: uid,
+          avatar_id: String(res.id),
+          archetype: res.archetype, // Satisfait le NOT NULL de l'ancienne base
+          score: res.score,         // Satisfait le NOT NULL de l'ancienne base
+          data: dataToSave
+        });
       }
 
-      return {
+      // 2. On ajoute l'entrée de score pour le leaderboard_scores
+      scoresToInsert.push({
         uid: uid,
         avatar_id: String(res.id),
-        archetype: res.archetype,
+        leaderboard_id: res.archetype,
         score: res.score,
-        data: res.persoData
-      };
+        grade: res.grade,
+        er: res.er
+      });
     });
 
+    const buildsToInsert = Array.from(uniqueBuildsMap.values());
+
+    let debugBuildsError = null;
     if (buildsToInsert.length > 0) {
       const { error: buildsError } = await supabase
         .from('builds')
-        .upsert(buildsToInsert, { onConflict: 'uid, avatar_id, archetype' });
+        .upsert(buildsToInsert, { onConflict: 'uid, avatar_id' }); // Plus de 'archetype' ici !
 
       if (buildsError) {
         console.error("Supabase Builds Upsert Error:", buildsError);
+        debugBuildsError = buildsError;
+      }
+    }
+
+    if (scoresToInsert.length > 0) {
+      const { error: scoresError } = await supabase
+        .from('leaderboard_scores')
+        .upsert(scoresToInsert, { onConflict: 'uid, avatar_id, leaderboard_id' });
+
+      if (scoresError) {
+        console.error("Supabase Scores Upsert Error:", scoresError);
       }
     }
 
@@ -335,6 +349,7 @@ app.get('/player/:uid', async (c) => {
       status: 'succès',
       message: 'Scores calculés et sauvegardés avec succès !',
       uid: uid,
+      debugBuildsError: debugBuildsError,
       scores: results.map((r: any) => ({
         id: r.id,
         name: r.name,
