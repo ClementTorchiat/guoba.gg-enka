@@ -368,6 +368,40 @@ app.get('/player/:uid', async (c) => {
   }
 });
 
+app.get('/rank/:leaderboard_id/:uid', async (c) => {
+  const leaderboard_id = c.req.param('leaderboard_id');
+  const uid = c.req.param('uid');
+  const supabase = getSupabase(c);
+
+  const { data: userScore, error: scoreError } = await supabase
+    .from('leaderboard_scores')
+    .select('score')
+    .eq('uid', uid)
+    .eq('leaderboard_id', leaderboard_id)
+    .maybeSingle();
+
+  if (scoreError || !userScore) {
+     return c.json({ rank: 0, total: 0 }); 
+  }
+
+  const { count: rankCount } = await supabase
+    .from('leaderboard_scores')
+    .select('*', { count: 'exact', head: true })
+    .eq('leaderboard_id', leaderboard_id)
+    .gt('score', userScore.score);
+
+  const { count: totalCount } = await supabase
+    .from('leaderboard_scores')
+    .select('*', { count: 'exact', head: true })
+    .eq('leaderboard_id', leaderboard_id);
+
+  return c.json({
+    rank: (rankCount || 0) + 1,
+    total: totalCount || 0,
+    score: userScore.score
+  });
+});
+
 export const ALL: APIRoute = (context) => {
   // On passe l'environnement Cloudflare à Hono pour qu'il puisse y accéder via `c.env`
   const env = (context.locals as any)?.runtime?.env || {};

@@ -18,9 +18,9 @@ export function renderCharacterScoreBadge(evaluation) {
                 </div>
             </div>
             <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
-                <p style="margin-left: 24px; margin-top:0; margin-bottom:0; font-size:14px;">${t('ui.char.totalRolls')}</p>
+                <p class="badge-lb-top" style="margin-left: 24px; margin-top:0; margin-bottom:0; font-size:14px; opacity: 0.5;">En attente...</p>
                 <div class="dotted-line"></div> 
-                <p>${evaluation.totalRolls}</p>
+                <p class="badge-lb-rank" style="margin:0; opacity: 0.5; font-size: 14px;">...</p>
             </div>
         </div>
     `;

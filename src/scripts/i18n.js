@@ -143,6 +143,9 @@ export const T = {
         "ui.art.rawScore.displayed": "Score affiché :",
 
         // ── Évaluation globale ────────────────────────────
+        "ui.lb.waiting": "En attente...",
+        "ui.lb.unranked": "Non classé",
+        "ui.lb.error": "Erreur",
         "ui.eval.globalGrade": "Note Globale",
         "ui.eval.efficiency": "Efficacité",
         "ui.eval.score": "Score",
@@ -1047,6 +1050,9 @@ export const T = {
         "ui.art.rawScore.displayed": "Displayed score:",
 
         // ── Global evaluation ─────────────────────────────
+        "ui.lb.waiting": "Waiting...",
+        "ui.lb.unranked": "Unranked",
+        "ui.lb.error": "Error",
         "ui.eval.globalGrade": "Global Rating",
         "ui.eval.efficiency": "Efficiency",
         "ui.eval.score": "Score",

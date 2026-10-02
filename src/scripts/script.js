@@ -4380,6 +4380,80 @@ function renderShowcase(index) {
     container.innerHTML = renderShowcaseComponent(p, index);
     renderToolbar(index);
     selectCharacter(index);
+    updateLeaderboardRank(index);
+}
+
+async function updateLeaderboardRank(index) {
+    const p = globalPersoData[index];
+    if (!p) return;
+    
+    const uid = new URLSearchParams(window.location.search).get('uid') || (document.getElementById('uidInput') ? document.getElementById('uidInput').value.trim() : '');
+    if (!uid) return;
+    
+    const leaderboardId = p.activeBuild ? (p.activeBuild.leaderboard_id || p.activeBuild.key) : null;
+    if (!leaderboardId) return;
+    
+    const container = document.querySelector('.leaderboards-container');
+    const link = document.getElementById('leaderboard-link');
+    if (!container) return;
+    
+    if (link) {
+        link.href = `/leaderboards/${leaderboardId}`;
+    }
+    
+    const placeholder = container.querySelector('.leaderboards-placeholder');
+    if (!placeholder) return;
+    
+    placeholder.innerHTML = `<span style="opacity: 0.5;">...</span>`;
+    
+    const badgeTop = document.querySelector('.badge-lb-top');
+    const badgeRank = document.querySelector('.badge-lb-rank');
+    if (badgeTop) {
+        badgeTop.innerHTML = t('ui.lb.waiting');
+        badgeTop.style.opacity = '0.5';
+    }
+    if (badgeRank) {
+        badgeRank.innerHTML = `...`;
+        badgeRank.style.opacity = '0.5';
+    }
+    
+    try {
+        const res = await fetch(`/api/rank/${leaderboardId}/${uid}`);
+        if (!res.ok) throw new Error("Rank API returned error");
+        const data = await res.json();
+        
+        if (data.rank > 0 && data.total > 0) {
+            const percentage = Math.max(1, Math.round((data.rank / data.total) * 100));
+            placeholder.innerHTML = `Top ${percentage} % - ${data.rank} / ${data.total}`;
+            if (badgeTop) {
+                badgeTop.innerHTML = `Top ${percentage} %`;
+                badgeTop.style.opacity = '1';
+            }
+            if (badgeRank) {
+                badgeRank.innerHTML = `${data.rank} / ${data.total}`;
+                badgeRank.style.opacity = '1';
+            }
+            if (link) {
+                const page = Math.max(1, Math.ceil(data.rank / 100));
+                link.href = `/leaderboards/${leaderboardId}?page=${page}`;
+            }
+        } else {
+            placeholder.innerHTML = `<span style="opacity: 0.5;">${t('ui.lb.unranked')}</span>`;
+            if (badgeTop) {
+                badgeTop.innerHTML = t('ui.lb.unranked');
+                badgeTop.style.opacity = '0.5';
+            }
+            if (badgeRank) badgeRank.innerHTML = ``;
+        }
+    } catch (err) {
+        console.error(err);
+        placeholder.innerHTML = `<span style="opacity: 0.5;">${t('ui.lb.error')}</span>`;
+        if (badgeTop) {
+            badgeTop.innerHTML = t('ui.lb.error');
+            badgeTop.style.opacity = '0.5';
+        }
+        if (badgeRank) badgeRank.innerHTML = ``;
+    }
 }
 
 function showAccountRoadmap() {

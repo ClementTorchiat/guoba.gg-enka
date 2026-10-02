@@ -3503,3 +3503,7 @@ input:checked+.toggle-track .star-4 {
     color: var(--text-primary);
     opacity: 1;
 }
+
+#leaderboard-link:hover {
+    background: var(--bg-hover) !important;
+}

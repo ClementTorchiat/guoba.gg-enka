@@ -170,14 +170,49 @@ export function renderToolbarControls(persoObj, charIndex) {
         teamHtml = `<div style="display:flex; color: var(--text-primary); border: none; border-radius: 8px; padding: 5px; flex-direction: row; align-items:center; gap: 5px; background: var(--bg-panel);">${charIcon}${matesHtml}</div>`;
     }
 
-    const currentERReq = (persoObj.activeBuild && persoObj.activeBuild.er_req) || 100;
-    let activeERTextHtml = `${currentERReq}% ER`;
-    let erOptionsHtml = '';
-    for (let i = 100; i <= 300; i += 10) {
-        const label = `${i}% ER`;
-        const isActiveClass = i === currentERReq ? 'active-item' : '';
-        erOptionsHtml += `<div class="data-select-item ${isActiveClass}" onclick="selectCustomER(${charIndex}, ${i})">${label}</div>`;
+    const lbId = builds[currentBuildKey].leaderboard_id || currentBuildKey;
+
+    let allErReqs = new Set();
+    Object.entries(builds).forEach(([key, b]) => {
+        const buildLbId = b.leaderboard_id || key;
+        if (buildLbId === lbId && b.er_req) {
+            allErReqs.add(b.er_req);
+        }
+    });
+
+    const sortedErReqs = Array.from(allErReqs).sort((a, b) => b - a);
+    const lowestEr = sortedErReqs.length > 0 ? sortedErReqs[sortedErReqs.length - 1] : null;
+
+    let otherErs = [];
+    if (lowestEr) {
+        for (let i = 1; i <= 3; i++) {
+            const nextEr = lowestEr - 10 * i;
+            if (nextEr >= 100) otherErs.push(nextEr);
+        }
     }
+    if (!sortedErReqs.includes(100) && !otherErs.includes(100)) {
+        otherErs.push(100);
+    }
+    otherErs.sort((a, b) => b - a);
+
+    const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
+
+    let rowEr = 100;
+    if (persoObj.stats && persoObj.stats.enerRech) {
+        rowEr = Math.round(persoObj.stats.enerRech * 100);
+    } else if (persoObj.combatStats && persoObj.combatStats.er) {
+        rowEr = Math.round(persoObj.combatStats.er);
+    }
+
+    let maxBucket = 100;
+    for (const b of allBuckets) {
+        if (rowEr >= b) {
+            maxBucket = b;
+            break;
+        }
+    }
+
+    let activeERTextHtml = `≥${maxBucket}% ER`;
 
     return `
         <div class="data-select-container main-content-menu-team" style="padding:0; border:none; background:transparent;">
@@ -193,12 +228,8 @@ export function renderToolbarControls(persoObj, charIndex) {
         ${teamHtml}
 
         <div class="data-select-container main-content-menu-er" style="padding:0; border:none; background:transparent;">
-            <button class="custom-dropdown-btn" onclick="toggleErMenu(event)" style="width: 100%; display: flex; justify-content: space-between; align-items: center; border: none; background: var(--bg-panel); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; height: 100%; box-sizing: border-box; min-width: 106px;">
+            <div style="width: 100%; display: flex; justify-content: center; align-items: center; border: none; background: var(--bg-panel); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 500; height: 100%; box-sizing: border-box; min-width: 105px;">
                 <span id="active-er-text" style="white-space: nowrap;">${activeERTextHtml}</span>
-                <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; margin-left: 8px; flex-shrink: 0;">
-            </button>
-            <div id="er-custom-menu" class="data-select-menu" style="min-width: 110px;">
-                ${erOptionsHtml}
             </div>
         </div>
     `;
