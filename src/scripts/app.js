@@ -7,4 +7,5 @@ import './scoring.js';
 import './teammate_buffs.js';
 import './pages.js';
 import './onboarding.js';
+import './auth.js';
 import './script.js';

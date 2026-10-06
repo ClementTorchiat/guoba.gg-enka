@@ -90,9 +90,9 @@ const colors = ["#ff8a80", "#ffd180", "#ccff90", "#84ffff", "#b388ff", "#ff80ab"
 </style>
 
 <script>
-    (function () {
+    document.addEventListener("astro:page-load", () => {
         const logoContainer = document.querySelector(".sidebar-title-container") as HTMLElement | null;
-        if (logoContainer) {
+        if (logoContainer && !document.querySelector(".easter-bunny-ears")) {
             logoContainer.style.position = "relative";
             const iconTemplate = document.getElementById("easter-logo-template") as HTMLTemplateElement | null;
             if (iconTemplate) {
@@ -100,18 +100,37 @@ const colors = ["#ff8a80", "#ffd180", "#ccff90", "#84ffff", "#b388ff", "#ff80ab"
             }
         }
 
-        const observer = new MutationObserver(() => {
+        function updateVisibility() {
             const profile = document.getElementById("player-profile");
             const decorations = document.getElementById("easter-decorations");
             const icon = document.querySelector(".easter-bunny-ears") as HTMLElement | null;
+            const homeTitle = document.getElementById("home-title");
+
+            if (homeTitle && !document.getElementById("easter-home-text")) {
+                const span = document.createElement("span");
+                span.id = "easter-home-text";
+                span.textContent = (window as any).t ? (window as any)("home.event.easter") : "Joyeuses Pâques !";
+                span.style.fontSize = "14px";
+                span.style.color = "var(--text-grey)";
+                span.style.fontWeight = "normal";
+                span.style.marginLeft = "8px";
+                span.style.fontFamily = "ShinShin, sans-serif";
+                homeTitle.appendChild(span);
+            }
+
+            const textNode = document.getElementById("easter-home-text");
 
             if (profile) {
                 const isProfileActive = profile.innerHTML.trim().length > 0;
                 if (decorations) decorations.style.display = isProfileActive ? "none" : "block";
                 if (icon) icon.style.display = isProfileActive ? "none" : "block";
+                if (textNode) textNode.style.display = isProfileActive ? "none" : "block";
             }
-        });
+        }
 
-        observer.observe(document.body, { childList: true, subtree: true });
-    })();
+        updateVisibility();
+
+        const observer = new MutationObserver(updateVisibility);
+        if (document.body) observer.observe(document.body, { childList: true, subtree: true });
+    });
 </script>

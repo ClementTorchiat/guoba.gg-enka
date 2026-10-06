@@ -7,16 +7,21 @@ const lanterns = Array.from({ length: 25 });
 
 <div id="lanternrite-decorations" aria-hidden="true">
     <div class="lanterns-container">
-        {lanterns.map((_, i) => (
-            <div class="lantern" style={`
+        {
+            lanterns.map((_, i) => (
+                <div
+                    class="lantern"
+                    style={`
                 left: ${Math.random() * 100}%;
                 animation-duration: ${Math.random() * 5 + 8}s;
                 animation-delay: ${Math.random() * 5}s;
                 transform: scale(${Math.random() * 0.5 + 0.5});
-            `}>
-                <div class="lantern-body"></div>
-            </div>
-        ))}
+            `}
+                >
+                    <div class="lantern-body" />
+                </div>
+            ))
+        }
     </div>
     <div class="lanternrite-glow"></div>
 </div>
@@ -25,24 +30,24 @@ const lanterns = Array.from({ length: 25 });
     <div class="chinese-knots-container" aria-hidden="true">
         <div class="knot knot-left">
             <svg viewBox="0 0 40 80" width="30" height="60" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg">
-                <line x1="20" y1="0" x2="20" y2="10" stroke="#d84315" stroke-width="2"/>
-                <path d="M 20,10 L 30,20 L 20,30 L 10,20 Z" fill="#d84315"/>
-                <path d="M 20,30 L 35,45 L 20,60 L 5,45 Z" fill="#d84315"/>
-                <line x1="20" y1="60" x2="20" y2="80" stroke="#d84315" stroke-width="2"/>
+                <line x1="20" y1="0" x2="20" y2="10" stroke="#d84315" stroke-width="2"></line>
+                <path d="M 20,10 L 30,20 L 20,30 L 10,20 Z" fill="#d84315"></path>
+                <path d="M 20,30 L 35,45 L 20,60 L 5,45 Z" fill="#d84315"></path>
+                <line x1="20" y1="60" x2="20" y2="80" stroke="#d84315" stroke-width="2"></line>
                 <!-- Tassel details -->
-                <line x1="16" y1="65" x2="16" y2="80" stroke="#d84315" stroke-width="1"/>
-                <line x1="24" y1="65" x2="24" y2="80" stroke="#d84315" stroke-width="1"/>
+                <line x1="16" y1="65" x2="16" y2="80" stroke="#d84315" stroke-width="1"></line>
+                <line x1="24" y1="65" x2="24" y2="80" stroke="#d84315" stroke-width="1"></line>
             </svg>
         </div>
         <div class="knot knot-right">
             <svg viewBox="0 0 40 80" width="30" height="60" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg">
-                <line x1="20" y1="0" x2="20" y2="10" stroke="#d84315" stroke-width="2"/>
-                <path d="M 20,10 L 30,20 L 20,30 L 10,20 Z" fill="#d84315"/>
-                <path d="M 20,30 L 35,45 L 20,60 L 5,45 Z" fill="#d84315"/>
-                <line x1="20" y1="60" x2="20" y2="80" stroke="#d84315" stroke-width="2"/>
+                <line x1="20" y1="0" x2="20" y2="10" stroke="#d84315" stroke-width="2"></line>
+                <path d="M 20,10 L 30,20 L 20,30 L 10,20 Z" fill="#d84315"></path>
+                <path d="M 20,30 L 35,45 L 20,60 L 5,45 Z" fill="#d84315"></path>
+                <line x1="20" y1="60" x2="20" y2="80" stroke="#d84315" stroke-width="2"></line>
                 <!-- Tassel details -->
-                <line x1="16" y1="65" x2="16" y2="80" stroke="#d84315" stroke-width="1"/>
-                <line x1="24" y1="65" x2="24" y2="80" stroke="#d84315" stroke-width="1"/>
+                <line x1="16" y1="65" x2="16" y2="80" stroke="#d84315" stroke-width="1"></line>
+                <line x1="24" y1="65" x2="24" y2="80" stroke="#d84315" stroke-width="1"></line>
             </svg>
         </div>
     </div>
@@ -51,11 +56,11 @@ const lanterns = Array.from({ length: 25 });
 <template id="lanternrite-logo-template">
     <div class="lanternrite-logo-icon">
         <svg viewBox="0 0 32 32" width="24" height="24" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg">
-            <rect x="8" y="6" width="16" height="20" rx="2" fill="#ffb300" stroke="#d84315" stroke-width="2"/>
-            <path d="M12,2 L20,2 L20,6 L12,6 Z" fill="#d84315" />
-            <path d="M12,26 L20,26 L20,30 L12,30 Z" fill="#d84315" />
+            <rect x="8" y="6" width="16" height="20" rx="2" fill="#ffb300" stroke="#d84315" stroke-width="2"></rect>
+            <path d="M12,2 L20,2 L20,6 L12,6 Z" fill="#d84315"></path>
+            <path d="M12,26 L20,26 L20,30 L12,30 Z" fill="#d84315"></path>
             <!-- Tassel -->
-            <path d="M16,30 L16,40 M14,30 L14,38 M18,30 L18,38" stroke="#d84315" stroke-width="1.5" />
+            <path d="M16,30 L16,40 M14,30 L14,38 M18,30 L18,38" stroke="#d84315" stroke-width="1.5"></path>
         </svg>
     </div>
 </template>
@@ -101,10 +106,20 @@ const lanterns = Array.from({ length: 25 });
     }
 
     @keyframes float-up {
-        0% { transform: translateY(50px) rotate(0deg); opacity: 0; }
-        10% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { transform: translateY(-110vh) rotate(15deg); opacity: 0; }
+        0% {
+            transform: translateY(50px) rotate(0deg);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-110vh) rotate(15deg);
+            opacity: 0;
+        }
     }
 
     .lanternrite-glow {
@@ -127,11 +142,11 @@ const lanterns = Array.from({ length: 25 });
         pointer-events: none;
         z-index: 50;
     }
-    
+
     :global(.knot) {
         position: absolute;
         top: -10px;
-        filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
         animation: sway-knot 4s ease-in-out infinite alternate;
         transform-origin: top center;
     }
@@ -146,8 +161,12 @@ const lanterns = Array.from({ length: 25 });
     }
 
     @keyframes sway-knot {
-        0% { transform: rotate(-5deg); }
-        100% { transform: rotate(5deg); }
+        0% {
+            transform: rotate(-5deg);
+        }
+        100% {
+            transform: rotate(5deg);
+        }
     }
 
     :global(.lanternrite-logo-icon) {
@@ -157,14 +176,14 @@ const lanterns = Array.from({ length: 25 });
         transform: rotate(15deg);
         pointer-events: none;
         z-index: 10;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     }
 </style>
 
 <script>
-    (function () {
+    document.addEventListener("astro:page-load", () => {
         const logoContainer = document.querySelector(".sidebar-title-container") as HTMLElement | null;
-        if (logoContainer) {
+        if (logoContainer && !document.querySelector(".lanternrite-logo-icon")) {
             logoContainer.style.position = "relative";
             const iconTemplate = document.getElementById("lanternrite-logo-template") as HTMLTemplateElement | null;
             if (iconTemplate) {
@@ -173,7 +192,7 @@ const lanterns = Array.from({ length: 25 });
         }
 
         const mainContent = document.querySelector(".main-content") as HTMLElement | null;
-        if (mainContent) {
+        if (mainContent && !document.querySelector(".chinese-knots-container")) {
             mainContent.style.position = "relative";
             const knotsTemplate = document.getElementById("lanternrite-knots-template") as HTMLTemplateElement | null;
             if (knotsTemplate) {
@@ -181,20 +200,39 @@ const lanterns = Array.from({ length: 25 });
             }
         }
 
-        const observer = new MutationObserver(() => {
+        function updateVisibility() {
             const profile = document.getElementById("player-profile");
             const decorations = document.getElementById("lanternrite-decorations");
             const icon = document.querySelector(".lanternrite-logo-icon") as HTMLElement | null;
             const knots = document.querySelector(".chinese-knots-container") as HTMLElement | null;
+            const homeTitle = document.getElementById("home-title");
+
+            if (homeTitle && !document.getElementById("lanternrite-home-text")) {
+                const span = document.createElement("span");
+                span.id = "lanternrite-home-text";
+                span.textContent = (window as any).t ? (window as any)("home.event.lanternrite") : "Joyeux Festival des lanternes !";
+                span.style.fontSize = "14px";
+                span.style.color = "var(--text-grey)";
+                span.style.fontWeight = "normal";
+                span.style.marginLeft = "8px";
+                span.style.fontFamily = "ShinShin, sans-serif";
+                homeTitle.appendChild(span);
+            }
+
+            const textNode = document.getElementById("lanternrite-home-text");
 
             if (profile) {
                 const isProfileActive = profile.innerHTML.trim().length > 0;
                 if (decorations) decorations.style.display = isProfileActive ? "none" : "block";
                 if (icon) icon.style.display = isProfileActive ? "none" : "block";
                 if (knots) knots.style.display = isProfileActive ? "none" : "block";
+                if (textNode) textNode.style.display = isProfileActive ? "none" : "block";
             }
-        });
+        }
 
-        observer.observe(document.body, { childList: true, subtree: true });
-    })();
+        updateVisibility();
+
+        const observer = new MutationObserver(updateVisibility);
+        if (document.body) observer.observe(document.body, { childList: true, subtree: true });
+    });
 </script>

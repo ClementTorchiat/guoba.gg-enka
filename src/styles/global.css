@@ -424,6 +424,7 @@ main {
 
 .sidebar-title h2 {
     font-size: 34px;
+    font-weight: normal;
 }
 
 .sidebar-text {
@@ -431,6 +432,7 @@ main {
     color: var(--text-primary);
     opacity: 40%;
     margin-bottom: 1px;
+    white-space: nowrap;
 }
 
 .search-container {
@@ -624,6 +626,7 @@ main {
     height: 52px;
     border-radius: 8px;
     background-color: rgba(0, 0, 0, 0.1);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .char-card-container {
@@ -636,6 +639,7 @@ main {
 
 .char-card-name {
     font-size: 16px;
+    white-space: nowrap;
 }
 
 .char-card-info {
@@ -771,14 +775,14 @@ main {
 }
 
 .character-portrait-container {
-    background-color: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765);
+    background-color: var(--char-bg-alpha, rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765));
 }
 
 .showcase-area-base-stats,
 .showcase-area-score,
 .showcase-area-skills,
 .showcase-area-combat-stats {
-    background-color: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765);
+    background-color: var(--char-bg-alpha, rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765));
 }
 
 .stat-row {
@@ -1001,7 +1005,7 @@ main {
 }
 
 .card {
-    background-color: rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765);
+    background-color: var(--char-bg-alpha, rgb(from var(--char-hex) calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765));
 }
 
 .stat-icon {
@@ -1166,7 +1170,6 @@ main {
 
 .player-profile-name {
     font-size: 16px;
-    font-weight: 700;
     color: var(--text-always-white);
     letter-spacing: 0.5px;
     white-space: nowrap;
@@ -1263,6 +1266,16 @@ main {
     box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.05);
 }
 
+.discord-card-wrapper:hover::after {
+    border-color: rgba(85, 102, 253, 0.5) !important;
+    box-shadow: inset 0 0 15px rgba(85, 102, 253, 0.15) !important;
+}
+
+.fav-card-wrapper:hover::after {
+    border-color: rgba(255, 177, 59, 0.5) !important;
+    box-shadow: inset 0 0 15px rgba(255, 177, 59, 0.15) !important;
+}
+
 .recent-action-btn {
     position: absolute;
     width: 26px;
@@ -1305,6 +1318,14 @@ main {
     background: rgba(255, 177, 59, 1);
     color: var(--text-primary);
     transform: scale(1.15) !important;
+}
+
+.recent-action-btn.discord-btn {
+    top: -8px;
+    left: -8px;
+    background: rgba(85, 102, 253, 0.95);
+    color: var(--text-primary);
+    pointer-events: auto;
 }
 
 .recent-action-btn.del-btn {
@@ -1770,10 +1791,15 @@ input:checked+.toggle-track .star-4 {
     background: var(--bg-panel);
     border-radius: 8px;
     flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .snav-item {
     color: var(--text-secondary);
+}
+
+.snav-item>div:first-child {
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .snav-item:hover {
@@ -2085,13 +2111,11 @@ input:checked+.toggle-track .star-4 {
     width: 100%;
     max-width: 580px;
     height: 580px;
-    background: #16181d;
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
+    background: var(--bg-card);
+    border-radius: 8px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 177, 59, 0.08);
 }
 
 .ob-progress-bar {
@@ -2108,12 +2132,12 @@ input:checked+.toggle-track .star-4 {
 }
 
 .ob-header {
-    padding: 20px 28px 0;
+    padding: 20px 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-shrink: 0;
-    padding-right: 54px;
+    padding-right: 64px;
 }
 
 .ob-logo-row {
@@ -2139,11 +2163,11 @@ input:checked+.toggle-track .star-4 {
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--accent-gold);
+    color: var(--text-grey);
 }
 
 .ob-body {
-    padding: 18px 28px 0;
+    padding: 0 28px 18px;
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
@@ -2166,15 +2190,18 @@ input:checked+.toggle-track .star-4 {
 
 .ob-close-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 12px;
+    right: 12px;
     background: none;
     border: none;
     color: var(--text-muted);
     font-size: 22px;
     cursor: pointer;
     z-index: 10;
-    transition: color 0.2s ease, transform 0.2s ease;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2182,7 +2209,7 @@ input:checked+.toggle-track .star-4 {
 
 .ob-close-btn:hover {
     color: var(--text-primary);
-    transform: scale(1.1);
+    background: var(--bg-hover) !important;
 }
 
 .ob-step-content {
@@ -2321,9 +2348,8 @@ input:checked+.toggle-track .star-4 {
 }
 
 .ob-grid-card {
-    background: #1a1d24;
-    border: 1px solid #252a35;
-    border-radius: 10px;
+    background: rgb(0, 0, 0, 0.2);
+    border-radius: 8px;
     padding: 13px 14px;
     display: flex;
     flex-direction: column;
@@ -2395,7 +2421,7 @@ input:checked+.toggle-track .star-4 {
     justify-content: space-between;
     border-top: 1px solid var(--ob-bg-button-dark);
     flex-shrink: 0;
-    background: #16181d;
+    background: var(--bg-card);
 }
 
 .ob-dots {
@@ -2438,14 +2464,13 @@ input:checked+.toggle-track .star-4 {
 }
 
 .ob-btn-prev {
-    background: var(--ob-bg-button-dark);
+    background: rgb(0, 0, 0, 0.2);
     color: var(--text-muted);
-    border: 1px solid var(--border-color);
 }
 
 .ob-btn-prev:hover {
-    background: #252b36;
-    color: var(--text-strong);
+    background: var(--bg-hover);
+    transform: translateY(-1px);
 }
 
 .ob-btn-prev:disabled {
@@ -2460,7 +2485,7 @@ input:checked+.toggle-track .star-4 {
 }
 
 .ob-btn-next:hover {
-    background: #ffc55a;
+    transform: translateY(-1px);
 }
 
 .ob-btn-next.ob-final {
@@ -2468,7 +2493,7 @@ input:checked+.toggle-track .star-4 {
 }
 
 .ob-btn-next.ob-final:hover {
-    box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
+    transform: translateY(-1px);
 }
 
 /* ==========================================================================
@@ -2520,8 +2545,8 @@ input:checked+.toggle-track .star-4 {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
-    height: 52px;
+    width: 40px;
+    height: 40px;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     flex-shrink: 0;
@@ -2536,13 +2561,7 @@ input:checked+.toggle-track .star-4 {
 .roadmap-btn-title {
     font-size: 14px;
     color: var(--text-primary);
-    font-family: 'ShinShin', sans-serif;
-}
-
-.roadmap-btn-sub {
-    font-size: 11px;
-    color: var(--text-muted, #8b949e);
-    font-family: 'ShinShin', sans-serif;
+    white-space: nowrap;
 }
 
 .roadmap-btn-badge {
@@ -3333,15 +3352,6 @@ input:checked+.toggle-track .star-4 {
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.char-card,
-.roadmap-sidebar-btn,
-.char-card-avatar,
-.roadmap-btn-icon,
-.search-container,
-.search-input {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 /* Sidebar Collapsed State (50px width for perfect flush squares) */
 .sidebar.sidebar-collapsed {
     width: 50px;
@@ -3436,7 +3446,7 @@ input:checked+.toggle-track .star-4 {
 }
 
 .sidebar.sidebar-collapsed .char-card-avatar,
-.sidebar.sidebar-collapsed .snav-item > div:first-child {
+.sidebar.sidebar-collapsed .snav-item>div:first-child {
     width: 44px !important;
     height: 44px !important;
     flex-shrink: 0;
@@ -3488,7 +3498,9 @@ input:checked+.toggle-track .star-4 {
     right: 50%;
     top: 50%;
     transform: translate(50%, -50%);
-}.tech-logo {
+}
+
+.tech-logo {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3499,6 +3511,7 @@ input:checked+.toggle-track .star-4 {
     width: 24px;
     height: 24px;
 }
+
 .tech-logo:hover {
     color: var(--text-primary);
     opacity: 1;
@@ -3506,4 +3519,296 @@ input:checked+.toggle-track .star-4 {
 
 #leaderboard-link:hover {
     background: var(--bg-hover) !important;
+}
+
+#user-account {
+    padding: 7px;
+    background-color: var(--bg-panel);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-account-container {
+    display: flex;
+    flex-direction: row;
+    gap: 13px;
+    align-items: center;
+}
+
+.user-account-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#user-account-name {
+    font-size: 14px;
+}
+
+#user-account-uid {
+    font-size: 11px;
+    opacity: 0.5;
+}
+
+.user-account-settings {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.user-account-settings:hover {
+    background: var(--bg-hover) !important;
+}
+
+.modal-close-btn {
+    transition: background-color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+    background: var(--bg-hover) !important;
+}
+
+#user-account-login-btn {
+    font-family: ShinShin, sans-serif;
+    font-size: 14px;
+    height: 66px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-panel);
+    color: var(--text-primary);
+    border: none;
+    padding: 7px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.user-account-login-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255, 0.5)
+}
+
+.user-account-login-container:hover {
+    background: var(--bg-hover) !important;
+}
+
+.button-unlink {
+    font-family: 'ShinShin', sans-serif;
+    border: 1px solid rgba(255, 255, 255, 0);
+    color: var(--text-grey);
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    padding: 5px 11px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all 0.2s;
+}
+
+.button-unlink:hover {
+    background: var(--bg-hover) !important;
+    transform: translateY(-1px);
+}
+
+.button-logout {
+    background: rgba(0, 0, 0, 0.25);
+    color: var(--text-grey);
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'ShinShin', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.button-logout:hover {
+    background: var(--bg-hover) !important;
+    transform: translateY(-1px);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    border-radius: 24px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--text-grey);
+    transition: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch input:checked+.toggle-slider {
+    background-color: var(--accent-gold);
+}
+
+.toggle-switch input:focus+.toggle-slider {
+    box-shadow: 0 0 1px var(--accent-gold);
+}
+
+.toggle-switch input:checked+.toggle-slider:before {
+    transform: translateX(20px);
+    background-color: #fff;
+}
+
+#generate-code-btn {
+    font-family: ShinShin, sans-serif;
+    background-color: rgb(0, 0, 0, 0.2);
+    color: var(--text-always-white);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#generate-code-btn:hover {
+    background-color: var(--bg-hover) !important;
+    transform: translateY(-1px);
+}
+
+/* Timeline Account Settings */
+.timeline-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.timeline-step {
+    position: relative;
+    padding-bottom: 32px;
+}
+
+.timeline-step::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 18px;
+    bottom: 0px;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    z-index: 1;
+}
+
+/* Hide line of step 1 initially, show it when validated */
+#timeline-step-1::before {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+#timeline-step-1.validated::before {
+    opacity: 1;
+}
+
+/* Remove line for the last step */
+.timeline-step.last-step::before {
+    display: none;
+}
+
+/* Solid grey diamond */
+.timeline-icon {
+    position: absolute;
+    left: -20px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    background: var(--text-muted);
+    /* solid grey */
+    border-radius: 2px;
+    /* optional slight rounding so it looks nicer */
+    transform: rotate(45deg);
+    z-index: 2;
+}
+
+.timeline-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.step-anim {
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+.step-anim.animate-in {
+    animation: timelineSlideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes timelineSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#verify-code-btn {
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-always-white);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    margin-top: 12px;
+    font-family: 'ShinShin', sans-serif;
+}
+
+#verify-code-btn:hover {
+    background-color: var(--bg-hover) !important;
+    transform: translateY(-1px);
+}
+
+/* --- OPTION RÉDUIRE LA TRANSPARENCE --- */
+html.reduce-transparency {
+    --char-bg-alpha: var(--bg-panel) !important;
+    --splash-display: none !important;
+}
+
+html.reduce-transparency .background-splash-art {
+    display: none !important;
 }

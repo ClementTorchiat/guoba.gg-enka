@@ -167,10 +167,10 @@ const bulbs = Array.from({ length: 30 });
 </style>
 
 <script>
-    (function () {
+    document.addEventListener("astro:page-load", () => {
         // 1. Ajouter le chapeau de noël au logo
         const logoContainer = document.querySelector(".sidebar-title-container") as HTMLElement | null;
-        if (logoContainer) {
+        if (logoContainer && !document.querySelector(".santa-hat-icon")) {
             logoContainer.style.position = "relative";
             const hatTemplate = document.getElementById("santa-hat-template") as HTMLTemplateElement | null;
             if (hatTemplate) {
@@ -180,7 +180,7 @@ const bulbs = Array.from({ length: 30 });
 
         // 2. Ajouter la guirlande dans main-content
         const mainContent = document.querySelector(".main-content") as HTMLElement | null;
-        if (mainContent) {
+        if (mainContent && !document.querySelector(".garland-container")) {
             mainContent.style.position = "relative";
             const garlandTemplate = document.getElementById("garland-template") as HTMLTemplateElement | null;
             if (garlandTemplate) {
@@ -188,21 +188,39 @@ const bulbs = Array.from({ length: 30 });
             }
         }
 
-        // 3. Observer pour masquer si on affiche un profil
-        const observer = new MutationObserver(() => {
+        function updateVisibility() {
             const profile = document.getElementById("player-profile");
             const decorations = document.getElementById("christmas-decorations");
             const garland = document.querySelector(".garland-container") as HTMLElement | null;
             const hat = document.querySelector(".santa-hat-icon") as HTMLElement | null;
+            const homeTitle = document.getElementById("home-title");
+
+            if (homeTitle && !document.getElementById("christmas-home-text")) {
+                const span = document.createElement("span");
+                span.id = "christmas-home-text";
+                span.textContent = (window as any).t ? (window as any)("home.event.christmas") : "Joyeux Noël !";
+                span.style.fontSize = "14px";
+                span.style.color = "var(--text-grey)";
+                span.style.fontWeight = "normal";
+                span.style.marginLeft = "8px";
+                span.style.fontFamily = "ShinShin, sans-serif";
+                homeTitle.appendChild(span);
+            }
+
+            const textNode = document.getElementById("christmas-home-text");
 
             if (profile) {
                 const isProfileActive = profile.innerHTML.trim().length > 0;
                 if (decorations) decorations.style.display = isProfileActive ? "none" : "block";
                 if (garland) garland.style.display = isProfileActive ? "none" : "flex";
                 if (hat) hat.style.display = isProfileActive ? "none" : "block";
+                if (textNode) textNode.style.display = isProfileActive ? "none" : "block";
             }
-        });
+        }
 
-        observer.observe(document.body, { childList: true, subtree: true });
-    })();
+        updateVisibility();
+
+        const observer = new MutationObserver(updateVisibility);
+        if (document.body) observer.observe(document.body, { childList: true, subtree: true });
+    });
 </script>

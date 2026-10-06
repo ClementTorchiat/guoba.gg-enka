@@ -247,6 +247,8 @@ function setFavoriteUid(uid) {
 }
 function toggleFavoriteProfile(uid, event) {
     if (event) event.stopPropagation();
+    const discordUid = localStorage.getItem('guoba_discord_uid');
+    if (discordUid === String(uid)) return;
     const current = getFavoriteUid();
     setFavoriteUid(current === uid ? null : uid);
     renderHome();
@@ -273,7 +275,8 @@ function saveRecentProfile(uid, playerInfo, profilePicUrl, bannerUrl) {
 
     if (profiles.length > 12) {
         const favUid = getFavoriteUid();
-        const removeIdx = profiles.map((p, i) => i).reverse().find(i => profiles[i].uid !== favUid);
+        const discordUid = localStorage.getItem('guoba_discord_uid');
+        const removeIdx = profiles.map((p, i) => i).reverse().find(i => String(profiles[i].uid) !== String(favUid) && String(profiles[i].uid) !== String(discordUid));
         if (removeIdx !== undefined) profiles.splice(removeIdx, 1);
         else profiles.pop();
     }
@@ -639,11 +642,13 @@ function toggleSearchIcon(isLoaded) {
 
     if (isLoaded) {
         searchBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-always-white)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
-        searchBtn.onclick = clearSearch;
+        searchBtn.type = 'button';
+        searchBtn.onclick = (e) => { e.preventDefault(); clearSearch(); };
         searchBtn.classList.add('is-clear');
     } else {
         searchBtn.innerHTML = `<img src="/assets/simulator/icons/icon_search_white.svg" alt="${t('ui.searchBtn')}" style="width: 20px; height: 20px;">`;
-        searchBtn.onclick = () => fetchUserData();
+        searchBtn.type = 'submit';
+        searchBtn.onclick = null;
         searchBtn.classList.remove('is-clear');
     }
 }
@@ -2964,6 +2969,8 @@ function showSidebarNav() {
     if (nav) nav.style.display = 'flex';
     const charSidebar = document.querySelector('.sidebar-characters');
     if (charSidebar) charSidebar.style.display = 'none';
+    const userAccount = document.getElementById('user-account-wrapper');
+    if (userAccount) userAccount.style.display = 'block';
     const sidebar = document.querySelector('.sidebar');
     if (sidebar) sidebar.classList.remove('sidebar-collapsed');
     const icon = document.getElementById('sidebar-collapse-icon');
@@ -2973,6 +2980,8 @@ function showSidebarNav() {
 function hideSidebarNav() {
     const nav = document.getElementById('sidebar-static-nav');
     if (nav) nav.style.display = 'none';
+    const userAccount = document.getElementById('user-account-wrapper');
+    if (userAccount) userAccount.style.display = 'none';
     const charSidebar = document.querySelector('.sidebar-characters');
     if (charSidebar) charSidebar.style.display = 'flex';
 }
@@ -2980,8 +2989,10 @@ function hideSidebarNav() {
 
 
 function updateSidebarNavActive(activePage) {
+    const targetHref = activePage === 'home' ? '/' : `/${activePage}`;
     document.querySelectorAll('.snav-item').forEach(item => {
-        item.classList.toggle('snav-item--active', item.dataset.page === activePage);
+        const href = item.getAttribute('href');
+        item.classList.toggle('snav-item--active', href === targetHref);
     });
 }
 
@@ -3022,14 +3033,23 @@ function renderHome() {
         const ICON = '/assets/simulator/icons/';
 
         const favUid = getFavoriteUid();
+        const discordUid = localStorage.getItem('guoba_discord_uid') || null;
 
-        const sortedProfiles = [
-            ...profiles.filter(p => p.uid === favUid),
-            ...profiles.filter(p => p.uid !== favUid)
-        ];
+        let effectiveFavUid = favUid;
+        if (favUid && favUid === discordUid) {
+            effectiveFavUid = null;
+            localStorage.removeItem('guoba_favorite_uid');
+        }
+
+        const favProfiles = profiles.filter(p => String(p.uid) === effectiveFavUid);
+        const discordProfiles = profiles.filter(p => String(p.uid) === discordUid && String(p.uid) !== effectiveFavUid);
+        const otherProfiles = profiles.filter(p => String(p.uid) !== effectiveFavUid && String(p.uid) !== discordUid);
+
+        const sortedProfiles = [...discordProfiles, ...favProfiles, ...otherProfiles];
 
         let cardsHtml = sortedProfiles.map(p => {
-            const isFav = p.uid === favUid;
+            const isFav = String(p.uid) === effectiveFavUid;
+            const isDiscord = String(p.uid) === discordUid;
             const server = serverMap[String(p.uid)[0]] || 'CN';
 
             function stygianIcon() {
@@ -3065,21 +3085,31 @@ function renderHome() {
             const row2 = row2Items.join('');
 
             return `
-        <div class="recent-account-card-wrapper" onclick="document.getElementById('uidInput').value = '${p.uid}'; fetchUserData();">
+        <div class="recent-account-card-wrapper ${isDiscord ? 'discord-card-wrapper' : (isFav ? 'fav-card-wrapper' : '')}" onclick="document.getElementById('uidInput').value = '${p.uid}'; fetchUserData();">
              
+            ${isDiscord ? `
+            <!-- Badge Discord -->
+            <div class="recent-action-btn discord-btn active" title="${t('home.discordAccount') || 'Compte Lié'}" style="display: flex; cursor: default;">
+                 <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                     <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                 </svg>
+            </div>
+            ` : `
             <!-- Bouton Favori -->
             <div onclick="toggleFavoriteProfile('${p.uid}', event)"
                  title="${isFav ? t('home.unpinAccount') : t('home.pinAccount')}"
                  class="recent-action-btn fav-btn ${isFav ? 'active' : ''}"
-                 style="display: ${isFav || !favUid ? 'flex' : 'none'};">
+                 style="display: ${isFav || !effectiveFavUid ? 'flex' : 'none'};">
                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="${isFav ? 'currentColor' : 'none'}" stroke-linecap="round" stroke-linejoin="round">
                      <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z"></path>
                  </svg>
             </div>
+            `}
 
             <!-- Bouton Supprimer -->
             <div onclick="deleteRecentProfile('${p.uid}', event)" 
-                 class="recent-action-btn del-btn">
+                 class="recent-action-btn del-btn"
+                 ${isDiscord ? 'style="display: none;"' : ''}>
                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                      <line x1="18" y1="6" x2="6" y2="18"></line>
                      <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -3116,9 +3146,11 @@ function renderHome() {
 
     const savedTheme = localStorage.getItem('guoba_theme') || 'wish';
     container.innerHTML = `
-        <div style="padding-left: 20px; padding-right: 20px; padding-top: 40px; display: flex; flex-direction: column; min-height: calc(100vh - 80px);">
+        <div style="padding-left: 20px; padding-right: 20px; padding-top: 30px; display: flex; flex-direction: column; min-height: calc(100vh - 80px);">
             <div style="flex: 1;">
-                <h2 style="color: var(--text-primary); font-size: 28px; margin-bottom: 10px;">${t('home.title')}</h2>
+                <h2 id="home-title" style="color: var(--text-primary); font-size: 28px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; font-weight: normal;">
+                    ${t('home.title')}
+                </h2>
                 <p style="max-width:980px; color: var(--text-grey); font-size: 14px; margin-bottom: 30px;">${t('home.subtitle')}</p>
                 ${profilesContentHtml}
             </div>
@@ -4390,28 +4422,42 @@ function renderShowcase(index) {
 async function updateLeaderboardRank(index) {
     const p = globalPersoData[index];
     if (!p) return;
-    
+
     const uid = new URLSearchParams(window.location.search).get('uid') || (document.getElementById('uidInput') ? document.getElementById('uidInput').value.trim() : '');
     if (!uid) return;
-    
+
     const leaderboardId = p.activeBuild ? (p.activeBuild.leaderboard_id || p.activeBuild.key) : null;
     if (!leaderboardId) return;
-    
+
     const container = document.querySelector('.leaderboards-container');
     const link = document.getElementById('leaderboard-link');
     if (!container) return;
-    
+
     if (link) {
         link.href = `/leaderboards/${leaderboardId}`;
     }
-    
+
     const placeholder = container.querySelector('.leaderboards-placeholder');
     if (!placeholder) return;
-    
-    placeholder.innerHTML = `<span style="opacity: 0.5;">...</span>`;
-    
+
     const badgeTop = document.querySelector('.badge-lb-top');
     const badgeRank = document.querySelector('.badge-lb-rank');
+
+    const isComplete = p.weapon && p.artefacts && p.artefacts.length >= 5;
+
+    if (!isComplete) {
+        if (link) link.removeAttribute('href');
+        placeholder.innerHTML = `<span style="opacity: 0.5;">${t('ui.lb.incomplete')}</span>`;
+        if (badgeTop) {
+            badgeTop.innerHTML = t('ui.lb.incomplete');
+            badgeTop.style.opacity = '0.5';
+        }
+        if (badgeRank) badgeRank.innerHTML = ``;
+        return;
+    }
+
+    placeholder.innerHTML = `<span style="opacity: 0.5;">...</span>`;
+
     if (badgeTop) {
         badgeTop.innerHTML = t('ui.lb.waiting');
         badgeTop.style.opacity = '0.5';
@@ -4420,17 +4466,17 @@ async function updateLeaderboardRank(index) {
         badgeRank.innerHTML = `...`;
         badgeRank.style.opacity = '0.5';
     }
-    
+
     try {
         // On attend que la mise à jour en tâche de fond soit terminée avant de demander le rang (si elle est en cours)
         if (window.leaderboardUpdatePromise) {
             await window.leaderboardUpdatePromise;
         }
-        
+
         const res = await fetch(`/api/rank/${leaderboardId}/${uid}`);
         if (!res.ok) throw new Error("Rank API returned error");
         const data = await res.json();
-        
+
         if (data.rank > 0 && data.total > 0) {
             const percentage = Math.max(1, Math.round((data.rank / data.total) * 100));
             placeholder.innerHTML = `Top ${percentage} % - ${data.rank} / ${data.total}`;
@@ -4618,7 +4664,7 @@ function initMainPageApp() {
     ensureAllTooltips();
     setupUidInputBinding();
 
-    const isMainPage = !!document.getElementById('sort-col-original');
+    const isMainPage = window.location.pathname === '/' || window.location.pathname === '';
     if (!isMainPage) return;
 
     const urlParams = new URLSearchParams(window.location.search);

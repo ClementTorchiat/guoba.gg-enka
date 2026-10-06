@@ -36,7 +36,7 @@ const colors = ["#f44336", "#2196f3", "#4caf50", "#ffeb3b", "#9c27b0", "#ff9800"
                     style={`
                 border-top-color: ${colors[i % colors.length]};
             `}
-                ></div>
+                />
             ))
         }
     </div>
@@ -153,9 +153,9 @@ const colors = ["#f44336", "#2196f3", "#4caf50", "#ffeb3b", "#9c27b0", "#ff9800"
 </style>
 
 <script>
-    (function () {
+    document.addEventListener("astro:page-load", () => {
         const logoContainer = document.querySelector(".sidebar-title-container") as HTMLElement | null;
-        if (logoContainer) {
+        if (logoContainer && !document.querySelector(".party-hat-icon")) {
             logoContainer.style.position = "relative";
             const iconTemplate = document.getElementById("anniversary-logo-template") as HTMLTemplateElement | null;
             if (iconTemplate) {
@@ -164,7 +164,7 @@ const colors = ["#f44336", "#2196f3", "#4caf50", "#ffeb3b", "#9c27b0", "#ff9800"
         }
 
         const mainContent = document.querySelector(".main-content") as HTMLElement | null;
-        if (mainContent) {
+        if (mainContent && !document.querySelector(".pennants-container")) {
             mainContent.style.position = "relative";
             const garlandTemplate = document.getElementById("anniversary-garland-template") as HTMLTemplateElement | null;
             if (garlandTemplate) {
@@ -172,20 +172,39 @@ const colors = ["#f44336", "#2196f3", "#4caf50", "#ffeb3b", "#9c27b0", "#ff9800"
             }
         }
 
-        const observer = new MutationObserver(() => {
+        function updateVisibility() {
             const profile = document.getElementById("player-profile");
             const decorations = document.getElementById("anniversary-decorations");
             const garland = document.querySelector(".pennants-container") as HTMLElement | null;
             const icon = document.querySelector(".party-hat-icon") as HTMLElement | null;
+            const homeTitle = document.getElementById("home-title");
+
+            if (homeTitle && !document.getElementById("anniversary-home-text")) {
+                const span = document.createElement("span");
+                span.id = "anniversary-home-text";
+                span.textContent = (window as any).t ? (window as any).t("home.event.anniversary") : "Joyeux Anniversaire !";
+                span.style.fontSize = "14px";
+                span.style.color = "var(--text-grey)";
+                span.style.fontWeight = "normal";
+                span.style.marginLeft = "8px";
+                span.style.fontFamily = "ShinShin, sans-serif";
+                homeTitle.appendChild(span);
+            }
+
+            const textNode = document.getElementById("anniversary-home-text");
 
             if (profile) {
                 const isProfileActive = profile.innerHTML.trim().length > 0;
                 if (decorations) decorations.style.display = isProfileActive ? "none" : "block";
                 if (garland) garland.style.display = isProfileActive ? "none" : "flex";
                 if (icon) icon.style.display = isProfileActive ? "none" : "block";
+                if (textNode) textNode.style.display = isProfileActive ? "none" : "block";
             }
-        });
+        }
 
-        observer.observe(document.body, { childList: true, subtree: true });
-    })();
+        updateVisibility();
+
+        const observer = new MutationObserver(updateVisibility);
+        if (document.body) observer.observe(document.body, { childList: true, subtree: true });
+    });
 </script>

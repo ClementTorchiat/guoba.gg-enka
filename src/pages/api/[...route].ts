@@ -238,110 +238,134 @@ app.get('/player/:uid', async (c) => {
     });
 
     // --- 3. Sauvegarde dans Supabase ---
+    
+    // Vérification de l'opt-out
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('leaderboard_opt_out')
+      .eq('genshin_uid', uid)
+      .maybeSingle();
 
-    // Upsert du joueur
-    const playerInfo = enkaData.playerInfo || {};
-    const nickname = playerInfo.nickname || "Traveler";
-    const profilePictureId = playerInfo.profilePicture?.avatarId || playerInfo.profilePicture?.id || "default";
+    const isOptOut = profile?.leaderboard_opt_out === true;
 
-    const { error: playerError } = await supabase
-      .from('players')
-      .upsert({
-        uid: uid,
-        nickname: nickname,
-        profile_picture: String(profilePictureId),
-        last_updated: new Date().toISOString()
-      }, { onConflict: 'uid' });
+    let debugBuildsError = null;
 
-    if (playerError) {
-      console.error("Supabase Player Upsert Error:", playerError);
-    }
+    if (!isOptOut) {
+      // Upsert du joueur
+      const playerInfo = enkaData.playerInfo || {};
+      const nickname = playerInfo.nickname || "Traveler";
+      const profilePictureId = playerInfo.profilePicture?.avatarId || playerInfo.profilePicture?.id || "default";
 
-    // Upsert des builds et des scores
-    const uniqueBuildsMap = new Map();
-    const scoresToInsert: any[] = [];
+      const { error: playerError } = await supabase
+        .from('players')
+        .upsert({
+          uid: uid,
+          nickname: nickname,
+          profile_picture: String(profilePictureId),
+          last_updated: new Date().toISOString()
+        }, { onConflict: 'uid' });
 
-    results.filter((r: any) => !r.error).forEach((res: any) => {
-      // 1. On ne prépare le 'build' qu'une seule fois par personnage
-      const buildKey = `${uid}_${res.id}`;
-      if (!uniqueBuildsMap.has(buildKey)) {
-        let totalCV = 0;
-        const setsCounter: { [key: string]: number } = {};
+      if (playerError) {
+        console.error("Supabase Player Upsert Error:", playerError);
+      }
 
-        if (res.persoData && res.persoData.artefacts) {
-          res.persoData.artefacts.forEach((art: any) => {
-            if (art.setKey) setsCounter[art.setKey] = (setsCounter[art.setKey] || 0) + 1;
+      // Upsert des builds et des scores
+      const uniqueBuildsMap = new Map();
+      const scoresToInsert: any[] = [];
 
-            if (art.mainStat) {
-              if (art.mainStat.key === "critRate_") totalCV += art.mainStat.value * 2;
-              if (art.mainStat.key === "critDMG_") totalCV += art.mainStat.value;
-            }
+      results.filter((r: any) => !r.error).forEach((res: any) => {
+        // Filtrage des builds incomplets
+        const hasWeapon = res.persoData && res.persoData.weapon;
+        const has5Artifacts = res.persoData && res.persoData.artefacts && res.persoData.artefacts.length >= 5;
+        
+        if (!hasWeapon || !has5Artifacts) {
+            return;
+        }
+        // 1. On ne prépare le 'build' qu'une seule fois par personnage
+        const buildKey = `${uid}_${res.id}`;
+        if (!uniqueBuildsMap.has(buildKey)) {
+          let totalCV = 0;
+          const setsCounter: { [key: string]: number } = {};
 
-            if (art.subStats) {
-              art.subStats.forEach((sub: any) => {
-                if (sub.key === "critRate_") totalCV += sub.value * 2;
-                if (sub.key === "critDMG_") totalCV += sub.value;
-              });
-            }
+          if (res.persoData && res.persoData.artefacts) {
+            res.persoData.artefacts.forEach((art: any) => {
+              if (art.setKey) setsCounter[art.setKey] = (setsCounter[art.setKey] || 0) + 1;
+
+              if (art.mainStat) {
+                if (art.mainStat.key === "critRate_") totalCV += art.mainStat.value * 2;
+                if (art.mainStat.key === "critDMG_") totalCV += art.mainStat.value;
+              }
+
+              if (art.subStats) {
+                art.subStats.forEach((sub: any) => {
+                  if (sub.key === "critRate_") totalCV += sub.value * 2;
+                  if (sub.key === "critDMG_") totalCV += sub.value;
+                });
+              }
+            });
+          }
+
+          const sortedSets = Object.entries(setsCounter).sort((a, b) => b[1] - a[1]);
+          const bestSetName = sortedSets.length > 0 ? sortedSets[0][0] : null;
+          const bestSetCount = sortedSets.length > 0 ? sortedSets[0][1] : 0;
+          
+          // On purge 'evaluation' car ça n'a plus de sens dans un objet 'build' partagé
+          const dataToSave = { ...res.persoData };
+          delete dataToSave.evaluation;
+
+          dataToSave.computed = {
+            totalCV,
+            bestSetName,
+            bestSetCount
+          };
+
+          uniqueBuildsMap.set(buildKey, {
+            uid: uid,
+            avatar_id: String(res.id),
+            archetype: res.archetype, // Satisfait le NOT NULL de l'ancienne base
+            score: res.score,         // Satisfait le NOT NULL de l'ancienne base
+            data: dataToSave
           });
         }
 
-        const sortedSets = Object.entries(setsCounter).sort((a, b) => b[1] - a[1]);
-        const bestSetName = sortedSets.length > 0 ? sortedSets[0][0] : null;
-        const bestSetCount = sortedSets.length > 0 ? sortedSets[0][1] : 0;
-        
-        // On purge 'evaluation' car ça n'a plus de sens dans un objet 'build' partagé
-        const dataToSave = { ...res.persoData };
-        delete dataToSave.evaluation;
-
-        dataToSave.computed = {
-          totalCV,
-          bestSetName,
-          bestSetCount
-        };
-
-        uniqueBuildsMap.set(buildKey, {
+        // 2. On ajoute l'entrée de score pour le leaderboard_scores
+        scoresToInsert.push({
           uid: uid,
           avatar_id: String(res.id),
-          archetype: res.archetype, // Satisfait le NOT NULL de l'ancienne base
-          score: res.score,         // Satisfait le NOT NULL de l'ancienne base
-          data: dataToSave
+          leaderboard_id: res.archetype,
+          score: res.score,
+          grade: res.grade,
+          er: res.er
         });
-      }
-
-      // 2. On ajoute l'entrée de score pour le leaderboard_scores
-      scoresToInsert.push({
-        uid: uid,
-        avatar_id: String(res.id),
-        leaderboard_id: res.archetype,
-        score: res.score,
-        grade: res.grade,
-        er: res.er
       });
-    });
 
-    const buildsToInsert = Array.from(uniqueBuildsMap.values());
+      const buildsToInsert = Array.from(uniqueBuildsMap.values());
 
-    let debugBuildsError = null;
-    if (buildsToInsert.length > 0) {
-      const { error: buildsError } = await supabase
-        .from('builds')
-        .upsert(buildsToInsert, { onConflict: 'uid, avatar_id' }); // Plus de 'archetype' ici !
+      if (buildsToInsert.length > 0) {
+        const { error: buildsError } = await supabase
+          .from('builds')
+          .upsert(buildsToInsert, { onConflict: 'uid, avatar_id' }); // Plus de 'archetype' ici !
 
-      if (buildsError) {
-        console.error("Supabase Builds Upsert Error:", buildsError);
-        debugBuildsError = buildsError;
+        if (buildsError) {
+          console.error("Supabase Builds Upsert Error:", buildsError);
+          debugBuildsError = buildsError;
+        }
       }
-    }
 
-    if (scoresToInsert.length > 0) {
-      const { error: scoresError } = await supabase
-        .from('leaderboard_scores')
-        .upsert(scoresToInsert, { onConflict: 'uid, avatar_id, leaderboard_id' });
+      if (scoresToInsert.length > 0) {
+        const { error: scoresError } = await supabase
+          .from('leaderboard_scores')
+          .upsert(scoresToInsert, { onConflict: 'uid, avatar_id, leaderboard_id' });
 
-      if (scoresError) {
-        console.error("Supabase Scores Upsert Error:", scoresError);
+        if (scoresError) {
+          console.error("Supabase Scores Upsert Error:", scoresError);
+        }
       }
+    } else {
+      // Nettoyage au cas où des données résiduelles existeraient
+      await supabase.from('builds').delete().eq('uid', uid);
+      await supabase.from('leaderboard_scores').delete().eq('uid', uid);
+      await supabase.from('players').delete().eq('uid', uid);
     }
 
     // On renvoie fièrement le résultat (sans envoyer persoData pour éviter de polluer l'API si le front n'en a pas besoin, ou tu peux le laisser)
@@ -366,6 +390,26 @@ app.get('/player/:uid', async (c) => {
       message: 'Une erreur est survenue lors du fetch vers Enka.'
     }, 500);
   }
+});
+
+app.post('/player/:uid/optout-clean', async (c) => {
+  const uid = c.req.param('uid');
+  const supabase = getSupabase(c);
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('leaderboard_opt_out')
+    .eq('genshin_uid', uid)
+    .maybeSingle();
+
+  if (profile?.leaderboard_opt_out === true) {
+    await supabase.from('builds').delete().eq('uid', uid);
+    await supabase.from('leaderboard_scores').delete().eq('uid', uid);
+    await supabase.from('players').delete().eq('uid', uid);
+    return c.json({ success: true, message: 'Données supprimées avec succès' });
+  }
+
+  return c.json({ success: false, message: 'Non éligible ou non opt-out' }, 403);
 });
 
 app.get('/rank/:leaderboard_id/:uid', async (c) => {

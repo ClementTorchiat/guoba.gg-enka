@@ -6,23 +6,11 @@ const frLogs = await Astro.glob("../data/changelogs/fr/*.md");
 const enLogs = await Astro.glob("../data/changelogs/en/*.md");
 
 // Tri par date décroissante
-frLogs.sort(
-    (a, b) =>
-        new Date(b.frontmatter.date).valueOf() -
-        new Date(a.frontmatter.date).valueOf(),
-);
-enLogs.sort(
-    (a, b) =>
-        new Date(b.frontmatter.date).valueOf() -
-        new Date(a.frontmatter.date).valueOf(),
-);
+frLogs.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+enLogs.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
 ---
 
-<Layout
-    title="Patch Notes — guoba.gg"
-    titleKey="page.changelog.title"
-    description="Historique des mises à jour de guoba.gg"
->
+<Layout title="Patch Notes — guoba.gg" titleKey="page.changelog.title" description="Historique des mises à jour de guoba.gg">
     <style is:inline>
         /* CSS logic to toggle language based on HTML root lang */
         html[lang="en"] .lang-fr {
@@ -97,13 +85,8 @@ enLogs.sort(
     <StaticLayout currentPage="changelog">
         <div class="static-page">
             <div class="static-page-hero">
-                <h1 class="static-page-title" data-i18n="page.changelog.title">
-                    Patch Notes
-                </h1>
-                <p class="static-page-lead" data-i18n="page.changelog.lead">
-                    Retrouvez ici l'historique des mises à jour et nouveautés de
-                    guoba.gg.
-                </p>
+                <h1 class="static-page-title" data-i18n="page.changelog.title">Patch Notes</h1>
+                <p class="static-page-lead" data-i18n="page.changelog.lead">Retrouvez ici l'historique des mises à jour et nouveautés de guoba.gg.</p>
             </div>
 
             <div class="static-page-body">
@@ -112,13 +95,9 @@ enLogs.sort(
                     {
                         frLogs.map((log) => (
                             <div class="changelog-entry">
-                                <h2 style="margin-top: 0px;">
-                                    {log.frontmatter.title}
-                                </h2>
+                                <h2 style="margin-top: 0px;">{log.frontmatter.title}</h2>
                                 <span class="changelog-date">
-                                    {new Date(
-                                        log.frontmatter.date,
-                                    ).toLocaleDateString("fr-FR", {
+                                    {new Date(log.frontmatter.date).toLocaleDateString("fr-FR", {
                                         year: "numeric",
                                         month: "long",
                                         day: "numeric",
@@ -137,13 +116,9 @@ enLogs.sort(
                     {
                         enLogs.map((log) => (
                             <div class="changelog-entry">
-                                <h2 style="margin-top: 0px;">
-                                    {log.frontmatter.title}
-                                </h2>
+                                <h2 style="margin-top: 0px;">{log.frontmatter.title}</h2>
                                 <span class="changelog-date">
-                                    {new Date(
-                                        log.frontmatter.date,
-                                    ).toLocaleDateString("en-US", {
+                                    {new Date(log.frontmatter.date).toLocaleDateString("en-US", {
                                         year: "numeric",
                                         month: "long",
                                         day: "numeric",

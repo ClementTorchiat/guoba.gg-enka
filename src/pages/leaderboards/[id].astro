@@ -147,7 +147,7 @@ try {
     paginationItems = getPaginationItems(currentPage, totalPages);
 
     // Data pour le graphique de répartition des grades
-    const { data: allGradesRaw } = await supabase.from("leaderboard_scores").select("grade->>letter as grade, er").eq("leaderboard_id", id);
+    const { data: allGradesRaw } = await supabase.from("leaderboard_scores").select("grade:grade->>letter, er").eq("leaderboard_id", id);
     const ALL_GRADES = ["F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+", "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"];
     const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
 
@@ -225,7 +225,7 @@ if (!pageError && !targetCharConfig) {
 
       <div class="leaderboard-content" style="margin-top: 20px;">
         <div class="leaderboard-details-tools" style="display: flex; flex-direction: row; justify-content: space-between;">
-          <a href="/leaderboards" data-astro-reload style="text-decoration: none;">
+          <a href="/leaderboards" data-astro-prefetch style="text-decoration: none;">
             <button class="lb-back-btn" style="font-family: Shinshin, sans-serif; display:inline-flex; gap: 9px; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(255,255,255,0); background: var(--bg-panel); color:var(--text-primary);">
               <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 10px; height: 10px; transform: rotate(90deg);" />
               <span data-i18n="lb.back">Revenir aux classements</span>
@@ -233,9 +233,9 @@ if (!pageError && !targetCharConfig) {
           </a>
         </div>
 
-        <div class="leaderboard-info" style={`display: flex; flex-direction: row; position:relative; padding:7px; overflow:hidden; background-color: rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); margin-top: 8px; border-radius: 8px;`}>
-          <div style={`position: absolute; inset: 0; background-image: url('${enkaGachaImg}'); background-position: center center; background-repeat: no-repeat; background-size: 200%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);`}></div>
-          <div style={`position: absolute; inset: 0; background-color: rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); transition: background-color 0.35s; z-index: 1;`}></div>
+        <div class="leaderboard-info" style={`display: flex; flex-direction: row; position:relative; padding:7px; overflow:hidden; background-color: var(--char-bg-alpha, rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); margin-top: 8px; border-radius: 8px;`}>
+          <div class="background-splash-art" style={`position: absolute; inset: 0; background-image: url('${enkaGachaImg}'); background-position: center center; background-repeat: no-repeat; background-size: 200%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);`}></div>
+          <div style={`position: absolute; inset: 0; background-color: var(--char-bg-alpha, rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); transition: background-color 0.35s; z-index: 1;`}></div>
 
           <div class="leaderboard-info-left" style="display: flex; flex-direction: column; gap: 16px; z-index: 1;">
             <div class="leaderboard-info-left-name" style="display: flex; flex-direction: row; gap: 18px; align-items: center;">
@@ -478,11 +478,11 @@ if (!pageError && !targetCharConfig) {
 
                   if (bestSetName && data.artefacts) {
                     const art1 = data.artefacts.find((a: any) => a.setKey === bestSetName && a.icon);
-                    if (art1) setIcon1 = art1.icon;
+                    if (art1) setIcon1 = art1.icon.replace(/_[1-5]$/, "_4");
                   }
                   if (secondBestSetName && data.artefacts) {
                     const art2 = data.artefacts.find((a: any) => a.setKey === secondBestSetName && a.icon);
-                    if (art2) setIcon2 = art2.icon;
+                    if (art2) setIcon2 = art2.icon.replace(/_[1-5]$/, "_4");
                   }
 
                   const tooltipPayload = {
@@ -624,9 +624,9 @@ if (!pageError && !targetCharConfig) {
     </div>
 
     <!-- Tooltip Global pour Mini Fiche -->
-    <div id="mini-showcase-tooltip" data-element={mainElem} style={`position: fixed; pointer-events: none; opacity: 0; z-index: 99999; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; width: 300px; overflow: hidden; background-color: rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); border-radius: 12px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 1px solid rgba(255, 255, 255, 0.4);`}>
-      <div style={`position: absolute; inset: 0; background-image: url('${enkaGachaImg}'); background-position: center center; background-repeat: no-repeat; background-size: 200%; z-index: 0; filter: blur(10px) brightness(0.6) saturate(0.8);`}></div>
-      <div style={`position: absolute; inset: 0; background-color: rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.85); z-index: 1;`}></div>
+    <div id="mini-showcase-tooltip" data-element={mainElem} style={`position: fixed; pointer-events: none; opacity: 0; z-index: 99999; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; width: 300px; overflow: hidden; background-color: var(--char-bg-alpha, rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); border-radius: 12px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; border: 1px solid rgba(255, 255, 255, 0.4);`}>
+      <div class="background-splash-art" style={`position: absolute; inset: 0; background-image: url('${enkaGachaImg}'); background-position: center center; background-repeat: no-repeat; background-size: 200%; z-index: 0; filter: blur(10px) brightness(0.6) saturate(0.8);`}></div>
+      <div style={`position: absolute; inset: 0; background-color: rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.85); transition: background-color 0.35s; z-index: 1;`}></div>
 
       <div style="position: relative; z-index: 2; padding: 12px; display: flex; flex-direction: column; gap: 8px;">
         <!-- HEADER -->
@@ -787,6 +787,7 @@ if (!pageError && !targetCharConfig) {
           const paginationData = document.getElementById('pagination-data');
           const offset = paginationData ? parseInt(paginationData.getAttribute('data-offset') || '0', 10) : 0;
           let currentRank = offset + 1;
+          let visibleIndex = 0;
           
           rows.forEach((row) => {
             const rowEr = parseInt(row.getAttribute("data-er") || "100", 10);
@@ -803,9 +804,11 @@ if (!pageError && !targetCharConfig) {
             // Afficher uniquement si le build appartient à ce palier maximal
             if (maxBucket === targetEr) {
               row.style.display = "flex";
+              row.style.backgroundColor = visibleIndex % 2 === 0 ? "rgba(0, 0, 0, 0.2)" : "var(--bg-panel)";
               const rankSpan = row.querySelector(".rank-number");
               if (rankSpan) rankSpan.textContent = currentRank.toString();
               currentRank++;
+              visibleIndex++;
             } else {
               row.style.display = "none";
             }
@@ -1137,7 +1140,7 @@ if (!pageError && !targetCharConfig) {
         const dataByEr = JSON.parse(canvas.getAttribute("data-values-by-er") || "{}");
 
         // Récupérer la valeur ER active
-        const defaultBtn = document.querySelector('.er-filter-btn[style*="rgba(59,130,246,0.18)"]') || document.querySelector(".er-filter-btn");
+        const defaultBtn = document.querySelector(".er-filter-btn.active-er-btn") || document.querySelector(".er-filter-btn");
         let activeEr = "100";
         if (defaultBtn) {
           activeEr = defaultBtn.getAttribute("data-filter-er") || "100";

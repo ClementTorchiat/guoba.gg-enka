@@ -4,23 +4,23 @@
 // Il suffit de le commenter ou de le supprimer de src/pages/index.astro pour retirer le thème.
 
 const radials = [
-    {x: 100, y: 100},
-    {x: 74.2, y: 96.5},
-    {x: 50.0, y: 86.6},
-    {x: 29.3, y: 70.7},
-    {x: 13.4, y: 50.0},
-    {x: 3.5, y: 25.8},
-    {x: 0, y: 0}
+    { x: 100, y: 100 },
+    { x: 74.2, y: 96.5 },
+    { x: 50.0, y: 86.6 },
+    { x: 29.3, y: 70.7 },
+    { x: 13.4, y: 50.0 },
+    { x: 3.5, y: 25.8 },
+    { x: 0, y: 0 },
 ];
 
 const radialsLeft = [
-    {x: 0, y: 100},
-    {x: 25.8, y: 96.5},
-    {x: 50.0, y: 86.6},
-    {x: 70.7, y: 70.7},
-    {x: 86.6, y: 50.0},
-    {x: 96.5, y: 25.8},
-    {x: 100, y: 0}
+    { x: 0, y: 100 },
+    { x: 25.8, y: 96.5 },
+    { x: 50.0, y: 86.6 },
+    { x: 70.7, y: 70.7 },
+    { x: 86.6, y: 50.0 },
+    { x: 96.5, y: 25.8 },
+    { x: 100, y: 0 },
 ];
 
 const rings = [20, 40, 60, 80, 100];
@@ -30,17 +30,19 @@ const rings = [20, 40, 60, 80, 100];
     <!-- Toile et Araignée -->
     <div class="spider-container">
         <svg class="spider-web-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            {radials.map(r => (
-                <line x1="100" y1="0" x2={r.x} y2={r.y} stroke="rgba(255,255,255,0.3)" stroke-width="0.8" />
-            ))}
-            {rings.map(radius => {
-                const points = radials.map(r => {
-                    const px = 100 - (100 - r.x) * (radius / 100);
-                    const py = (r.y) * (radius / 100);
-                    return `${px},${py}`;
-                }).join(' L ');
-                return <path d={`M ${points}`} fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.8" stroke-linejoin="round" />
-            })}
+            {radials.map((r) => <line x1="100" y1="0" x2={r.x} y2={r.y} stroke="rgba(255,255,255,0.3)" stroke-width="0.8" />)}
+            {
+                rings.map((radius) => {
+                    const points = radials
+                        .map((r) => {
+                            const px = 100 - (100 - r.x) * (radius / 100);
+                            const py = r.y * (radius / 100);
+                            return `${px},${py}`;
+                        })
+                        .join(" L ");
+                    return <path d={`M ${points}`} fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.8" stroke-linejoin="round" />;
+                })
+            }
         </svg>
         <div class="spider">
             <div class="spider-thread"></div>
@@ -68,17 +70,19 @@ const rings = [20, 40, 60, 80, 100];
 <template id="halloween-web-template">
     <div class="spider-container-left" aria-hidden="true">
         <svg class="spider-web-svg-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            {radialsLeft.map(r => (
-                <line x1="0" y1="0" x2={r.x} y2={r.y} stroke="rgba(255,255,255,0.3)" stroke-width="0.8" />
-            ))}
-            {rings.map(radius => {
-                const points = radialsLeft.map(r => {
-                    const px = r.x * (radius / 100);
-                    const py = r.y * (radius / 100);
-                    return `${px},${py}`;
-                }).join(' L ');
-                return <path d={`M ${points}`} fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.8" stroke-linejoin="round" />
-            })}
+            {radialsLeft.map((r) => <line x1="0" y1="0" x2={r.x} y2={r.y} stroke="rgba(255,255,255,0.3)" stroke-width="0.8" />)}
+            {
+                rings.map((radius) => {
+                    const points = radialsLeft
+                        .map((r) => {
+                            const px = r.x * (radius / 100);
+                            const py = r.y * (radius / 100);
+                            return `${px},${py}`;
+                        })
+                        .join(" L ");
+                    return <path d={`M ${points}`} fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.8" stroke-linejoin="round" />;
+                })
+            }
         </svg>
     </div>
 </template>
@@ -136,7 +140,8 @@ const rings = [20, 40, 60, 80, 100];
     }
 
     @keyframes spider-drop {
-        0%, 100% {
+        0%,
+        100% {
             transform: translateY(-130px);
         }
         50% {
@@ -158,20 +163,62 @@ const rings = [20, 40, 60, 80, 100];
         top: -50px;
         font-size: 20px;
         opacity: 0.7;
-        animation: fall 10s linear infinite, sway 3s ease-in-out infinite alternate;
+        animation:
+            fall 10s linear infinite,
+            sway 3s ease-in-out infinite alternate;
     }
 
     /* Positionnement et délais aléatoires pour les 10 feuilles */
-    .leaf:nth-child(1) { left: 5%; animation-delay: 0s, 0s; font-size: 24px; }
-    .leaf:nth-child(2) { left: 15%; animation-delay: 2s, 1s; font-size: 18px; }
-    .leaf:nth-child(3) { left: 25%; animation-delay: 4s, 2s; font-size: 22px; }
-    .leaf:nth-child(4) { left: 35%; animation-delay: 1s, 0.5s; font-size: 20px; }
-    .leaf:nth-child(5) { left: 45%; animation-delay: 6s, 1.5s; font-size: 26px; }
-    .leaf:nth-child(6) { left: 55%; animation-delay: 3s, 0.2s; font-size: 18px; }
-    .leaf:nth-child(7) { left: 65%; animation-delay: 7s, 2.5s; font-size: 24px; }
-    .leaf:nth-child(8) { left: 75%; animation-delay: 5s, 1s; font-size: 21px; }
-    .leaf:nth-child(9) { left: 85%; animation-delay: 2.5s, 0.8s; font-size: 19px; }
-    .leaf:nth-child(10) { left: 95%; animation-delay: 8s, 1.2s; font-size: 25px; }
+    .leaf:nth-child(1) {
+        left: 5%;
+        animation-delay: 0s, 0s;
+        font-size: 24px;
+    }
+    .leaf:nth-child(2) {
+        left: 15%;
+        animation-delay: 2s, 1s;
+        font-size: 18px;
+    }
+    .leaf:nth-child(3) {
+        left: 25%;
+        animation-delay: 4s, 2s;
+        font-size: 22px;
+    }
+    .leaf:nth-child(4) {
+        left: 35%;
+        animation-delay: 1s, 0.5s;
+        font-size: 20px;
+    }
+    .leaf:nth-child(5) {
+        left: 45%;
+        animation-delay: 6s, 1.5s;
+        font-size: 26px;
+    }
+    .leaf:nth-child(6) {
+        left: 55%;
+        animation-delay: 3s, 0.2s;
+        font-size: 18px;
+    }
+    .leaf:nth-child(7) {
+        left: 65%;
+        animation-delay: 7s, 2.5s;
+        font-size: 24px;
+    }
+    .leaf:nth-child(8) {
+        left: 75%;
+        animation-delay: 5s, 1s;
+        font-size: 21px;
+    }
+    .leaf:nth-child(9) {
+        left: 85%;
+        animation-delay: 2.5s, 0.8s;
+        font-size: 19px;
+    }
+    .leaf:nth-child(10) {
+        left: 95%;
+        animation-delay: 8s, 1.2s;
+        font-size: 25px;
+    }
 
     @keyframes fall {
         0% {
@@ -217,26 +264,26 @@ const rings = [20, 40, 60, 80, 100];
 <script>
     // Ce script permet de cacher les décorations d'Halloween si l'utilisateur consulte un profil.
     // Il écoute les changements dans le DOM pour rester totalement isolé de la logique principale de l'app.
-    (function() {
+    document.addEventListener("astro:page-load", () => {
         // Ajouter le masque citrouille au logo
-        const logoContainer = document.querySelector('.sidebar-title-container');
-        if (logoContainer) {
-            const img = logoContainer.querySelector('img');
+        const logoContainer = document.querySelector(".sidebar-title-container");
+        if (logoContainer && !document.getElementById("halloween-pumpkin-icon")) {
+            const img = logoContainer.querySelector("img");
             if (img && img.parentNode) {
                 // Créer un wrapper pour superposer le masque facilement
-                const wrapper = document.createElement('div');
-                wrapper.style.position = 'relative';
-                wrapper.style.display = 'flex';
-                wrapper.style.alignItems = 'center';
-                wrapper.style.justifyContent = 'center';
-                wrapper.style.width = '32px';
-                wrapper.style.height = '32px';
-                
+                const wrapper = document.createElement("div");
+                wrapper.style.position = "relative";
+                wrapper.style.display = "flex";
+                wrapper.style.alignItems = "center";
+                wrapper.style.justifyContent = "center";
+                wrapper.style.width = "32px";
+                wrapper.style.height = "32px";
+
                 img.parentNode.insertBefore(wrapper, img);
                 wrapper.appendChild(img);
 
-                const mask = document.createElement('div');
-                mask.id = 'halloween-pumpkin-icon';
+                const mask = document.createElement("div");
+                mask.id = "halloween-pumpkin-icon";
                 mask.innerHTML = `
                 <svg viewBox="0 0 32 32" width="32" height="32" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg">
                     <!-- Masque citrouille avec bordures arrondies de 8px (creusé) -->
@@ -252,41 +299,62 @@ const rings = [20, 40, 60, 80, 100];
                     <!-- Tige -->
                     <path d="M 14,0 Q 16,-5 19,-3 Q 17,0 16,0 Z" fill="#2e7d32" />
                 </svg>`;
-                mask.style.position = 'absolute';
-                mask.style.top = '0';
-                mask.style.left = '0';
-                mask.style.pointerEvents = 'none';
-                mask.style.zIndex = '10';
-                
+                mask.style.position = "absolute";
+                mask.style.top = "0";
+                mask.style.left = "0";
+                mask.style.pointerEvents = "none";
+                mask.style.zIndex = "10";
+
                 wrapper.appendChild(mask);
             }
         }
 
         // Ajouter la petite toile dans main-content
-        const mainContent = document.querySelector<HTMLElement>('.main-content');
-        if (mainContent) {
-            mainContent.style.position = 'relative';
-            const webTemplate = document.getElementById('halloween-web-template') as HTMLTemplateElement;
+        const mainContent = document.querySelector<HTMLElement>(".main-content");
+        if (mainContent && !document.querySelector(".spider-container-left")) {
+            mainContent.style.position = "relative";
+            const webTemplate = document.getElementById("halloween-web-template") as HTMLTemplateElement;
             if (webTemplate) {
                 mainContent.appendChild(webTemplate.content.cloneNode(true));
             }
         }
 
-        const observer = new MutationObserver(() => {
-            const profile = document.getElementById('player-profile');
-            const decorations = document.getElementById('halloween-decorations');
-            const pumpkinNode = document.getElementById('halloween-pumpkin-icon');
-            const webLeft = document.querySelector<HTMLElement>('.spider-container-left');
+        function updateVisibility() {
+            const profile = document.getElementById("player-profile");
+            const decorations = document.getElementById("halloween-decorations");
+            const pumpkinNode = document.getElementById("halloween-pumpkin-icon");
+            const webLeft = document.querySelector<HTMLElement>(".spider-container-left");
+            const homeTitle = document.getElementById("home-title");
+
+            if (homeTitle && !document.getElementById("halloween-home-text")) {
+                const span = document.createElement("span");
+                span.id = "halloween-home-text";
+                span.textContent = (window as any).t ? (window as any).t("home.event.halloween") : "Joyeux Halloween !";
+                span.style.fontSize = "14px";
+                span.style.color = "var(--text-grey)";
+                span.style.fontWeight = "normal";
+                span.style.marginLeft = "8px";
+                span.style.fontFamily = "ShinShin, sans-serif";
+                homeTitle.appendChild(span);
+            }
+
+            const textNode = document.getElementById("halloween-home-text");
+
             if (profile) {
                 // Si la div player-profile n'est pas vide, c'est qu'un profil est affiché
                 const isProfileActive = profile.innerHTML.trim().length > 0;
-                if (decorations) decorations.style.display = isProfileActive ? 'none' : 'block';
-                if (pumpkinNode) pumpkinNode.style.display = isProfileActive ? 'none' : 'block';
-                if (webLeft) webLeft.style.display = isProfileActive ? 'none' : 'block';
+                if (decorations) decorations.style.display = isProfileActive ? "none" : "block";
+                if (pumpkinNode) pumpkinNode.style.display = isProfileActive ? "none" : "block";
+                if (webLeft) webLeft.style.display = isProfileActive ? "none" : "block";
+                if (textNode) textNode.style.display = isProfileActive ? "none" : "block";
             }
-        });
+        }
+
+        updateVisibility();
+
+        const observer = new MutationObserver(updateVisibility);
 
         // Observer le body pour détecter quand le profil est peuplé ou vidé
-        observer.observe(document.body, { childList: true, subtree: true });
-    })();
+        if (document.body) observer.observe(document.body, { childList: true, subtree: true });
+    });
 </script>

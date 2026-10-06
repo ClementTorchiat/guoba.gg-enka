@@ -220,10 +220,10 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
         const hexColor = charData.hex || 'var(--char-hex)';
 
         const splashBgHtml = charData.splash ? `
-            <div style="position: absolute; inset: 0; background-image: url('${charData.splash}'); background-position: center center; background-repeat: no-repeat; background-size: 300%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);"></div>
-            <div style="position: absolute; inset: 0; background-color: rgb(from ${hexColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); transition: background-color 0.35s; z-index: 1;"></div>
+            <div class="background-splash-art" style="position: absolute; inset: 0; background-image: url('${charData.splash}'); background-position: center center; background-repeat: no-repeat; background-size: 300%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);"></div>
+            <div style="position: absolute; inset: 0; background-color: var(--char-bg-alpha, rgb(from ${hexColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); transition: background-color 0.35s; z-index: 1;"></div>
         ` : `
-            <div style="position: absolute; inset: 0; background-color: rgb(from ${hexColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765); transition: background-color 0.35s; z-index: 1;"></div>
+            <div style="position: absolute; inset: 0; background-color: var(--char-bg-alpha, rgb(from ${hexColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); transition: background-color 0.35s; z-index: 1;"></div>
         `;
 
         html += `
