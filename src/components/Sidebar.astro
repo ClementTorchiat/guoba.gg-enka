@@ -183,6 +183,12 @@ const { currentPage = "?" } = Astro.props;
         <!-- LOGGED OUT STATE -->
         <button id="user-account-login-btn" onclick="openLoginModal()">
             <div class="user-account-login-container" data-i18n="account.login.action">Connexion / Inscription</div>
+            <div class="user-account-login-icon" style="display: none;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
         </button>
 
         <!-- LOGGED IN STATE -->

@@ -3500,6 +3500,61 @@ input:checked+.toggle-track .star-4 {
     transform: translate(50%, -50%);
 }
 
+/* Sidebar collapsed state for User Account */
+.sidebar.sidebar-collapsed #user-account-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+.sidebar.sidebar-collapsed #user-account {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    background: transparent;
+    justify-content: center;
+}
+
+.sidebar.sidebar-collapsed .user-account-container {
+    display: none;
+}
+
+.sidebar.sidebar-collapsed .user-account-settings {
+    margin: 0;
+    width: 50px;
+    height: 50px;
+    background: var(--bg-panel);
+}
+
+.sidebar.sidebar-collapsed #user-account-login-btn {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    background: transparent;
+}
+
+.sidebar.sidebar-collapsed .user-account-login-container {
+    display: none;
+}
+
+.sidebar.sidebar-collapsed .user-account-login-icon {
+    display: flex !important;
+    width: 50px;
+    height: 50px;
+    background: var(--bg-panel);
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    margin: 0 auto;
+}
+
+.sidebar.sidebar-collapsed .user-account-login-icon:hover {
+    background: var(--bg-hover) !important;
+}
+
 .tech-logo {
     display: inline-flex;
     align-items: center;
