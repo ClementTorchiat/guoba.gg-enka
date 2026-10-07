@@ -211,11 +211,13 @@ export async function logoutUser() {
 // --- Logique de vérification de l'UID ---
 let currentVerificationCode = '';
 
-export function generateVerificationCode() {
+export async function generateVerificationCode() {
     const uidInput = document.getElementById('link-uid-input');
-    const errorEl = document.getElementById('uid-format-error');
+    const formatErrorEl = document.getElementById('uid-format-error');
+    const linkedErrorEl = document.getElementById('uid-linked-error');
     
-    if (errorEl) errorEl.style.display = 'none';
+    if (formatErrorEl) formatErrorEl.style.display = 'none';
+    if (linkedErrorEl) linkedErrorEl.style.display = 'none';
 
     const uidValue = uidInput ? uidInput.value.trim() : '';
     // Un UID valide fait généralement 9 chiffres (Genshin, HSR) ou 10 chiffres (ZZZ)
@@ -223,12 +225,34 @@ export function generateVerificationCode() {
     const uidRegex = /^[0-9]{8,10}$/;
     
     if (!uidValue || !uidRegex.test(uidValue)) {
-        if (errorEl) {
-            errorEl.style.display = 'block';
+        if (formatErrorEl) {
+            formatErrorEl.style.display = 'block';
         } else {
             alert(t('account.settings.errorFormat'));
         }
         return;
+    }
+
+    // Vérifie si l'UID est déjà lié à un profil existant
+    if (supabase) {
+        try {
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('id')
+                .eq('genshin_uid', uidValue)
+                .maybeSingle();
+
+            if (data) {
+                if (linkedErrorEl) {
+                    linkedErrorEl.style.display = 'block';
+                } else {
+                    alert(t('account.settings.errorAlreadyLinked'));
+                }
+                return;
+            }
+        } catch (e) {
+            console.error("Erreur lors de la vérification de l'UID", e);
+        }
     }
 
     // Génère un code de type "guoba-a1b2c3"
