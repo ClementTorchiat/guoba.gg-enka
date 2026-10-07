@@ -2,7 +2,7 @@
 import { t } from '../../scripts/i18n.js';
 import { generateScoreBar, calculateMaxTheoreticalScore, calculateRNGQuality } from '../../scripts/scoring.js';
 
-export function renderScoreSection(p, config) {
+export function renderScoreSection(p, config, charIndex = 0) {
     const ev = p.evaluation || { score: 0, grade: { letter: "?", color: "#888" }, totalRolls: 0, maxScore: 100 };
     const potential = calculateMaxTheoreticalScore(p, config);
     const efficiency = potential.score > 0 ? ((ev.score / potential.score) * 100).toFixed(1) : 0;
@@ -53,6 +53,9 @@ export function renderScoreSection(p, config) {
                     </div>
                 </div>
             </div>
+            
+            <!-- Compare Module Container -->
+            <div id="compare-module-container-${charIndex}" style="display: flex; justify-content: center; width: 100%;"></div>
         </div>
     `;
 }

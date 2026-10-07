@@ -13,6 +13,7 @@ import { renderShowcaseComponent } from '../components/showcase/ShowcaseContaine
 import { renderToolbarControls } from '../components/showcase/ToolbarControls.js';
 import { renderCombatStatsList, updateCombatStatsDOM, getStatBuffBreakdown } from '../components/showcase/CombatStatsList.js';
 import { renderBuffsPanel, updateBuffsPanelDOM } from '../components/showcase/BuffsPanel.js';
+import { initCompareModule } from '../components/showcase/CompareSpiderChart.js';
 import { renderAdviceSection } from '../components/advice/AdviceSection.js';
 import { renderCombatStatsAdviceCards } from '../components/advice/CombatStatsSection.js';
 import { renderPlayerProfileCard } from '../components/profile/PlayerHeader.js';
@@ -4417,6 +4418,7 @@ function renderShowcase(index) {
     renderToolbar(index);
     selectCharacter(index);
     updateLeaderboardRank(index);
+    initCompareModule(p, index);
 }
 
 async function updateLeaderboardRank(index) {

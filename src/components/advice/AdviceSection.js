@@ -18,8 +18,7 @@ export function renderAdviceSection(persoObj, config, charIndex = 0) {
     return ` 
         <div style="width: 100%;">
             <div style="display: flex; flex-direction: column; gap: 40px;">
-                ${renderScoreSection(persoObj, effectiveConfig)}
-                
+                ${renderScoreSection(persoObj, effectiveConfig, charIndex)}
                 ${dottedDivider}
                 
                 ${renderCombatStatsSection(persoObj, effectiveConfig)}
