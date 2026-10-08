@@ -65,7 +65,7 @@ export function renderCompareCard(hostPersoObj, guestCombatStats, guestExtraData
         bgLines += `<line x1="${center.x}" y1="${center.y}" x2="${outerPt.x}" y2="${outerPt.y}" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1" />`;
 
         const labelPt = getPoint(R + 22, angle);
-        labels += `<text x="${labelPt.x}" y="${labelPt.y}" fill="rgba(255, 255, 255, 0.7)" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle" style="pointer-events: none;">${axis.label}</text>`;
+        labels += `<text x="${labelPt.x}" y="${labelPt.y}" fill="rgba(255, 255, 255, 0.7)" font-size="12" text-anchor="middle" dominant-baseline="middle" style="pointer-events: none;">${axis.label}</text>`;
 
         const maxValue = Math.max(axis.hostValue, axis.guestValue, 0.0001);
 

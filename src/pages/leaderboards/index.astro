@@ -189,10 +189,10 @@ try {
               <div class="character-group" data-char-name={char.name.toLowerCase()} data-entries={charTotalEntries} data-is-new={char.isNew ? "true" : "false"}>
                 <!-- Ligne principale du Personnage -->
                 <div class="leaderboard-list-row cursor-pointer" data-char={char.originalName} style={`position: relative; overflow: hidden; padding: 2px; padding-right: 20px; border-radius: 8px; background-color: var(--char-bg-alpha, rgb(from ${char.color} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); display:flex; flex-direction: row; gap: 13px; align-items: center; cursor: pointer;`}>
-                  <div class="background-splash-art" style={`position: absolute; inset: 0; background-image: url('${char.gachaImg}'); background-position: center center; background-repeat: no-repeat; background-size: 100%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);`}></div>
+                  <img src={char.gachaImg} loading="lazy" decoding="async" class="background-splash-art" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);" />
                   <div class="row-overlay" style={`position: absolute; inset: 0; background-color: var(--char-bg-alpha, rgb(from ${char.color} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); transition: background-color 0.35s; z-index: 1;`}></div>
 
-                  <img src={char.avatarImg} onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${char.originalName.split('_')[0]}.png'`} style="z-index: 1; width: 52px; height: 52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" />
+                  <img src={char.avatarImg} loading="lazy" decoding="async" onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${char.originalName.split('_')[0]}.png'`} style="z-index: 1; width: 52px; height: 52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" />
                   
                   <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%;">
                     <div style="display: flex; align-items: center; gap: 12px;">
@@ -221,7 +221,7 @@ try {
                     const previewTeam = lb.teams.length > 0 ? lb.teams[0] : [];
                     
                     return (
-                      <a href={`/leaderboards/${lb.id}`} style="text-decoration: none; color: inherit; display: block;">
+                      <a href={`/leaderboards/${lb.id}`} data-astro-prefetch="hover" style="text-decoration: none; color: inherit; display: block;">
                         <div class="leaderboard-list-row-details hover-highlight" style={`position: relative; overflow: hidden; padding: 8px; padding-right: 20px; padding-left: 20px; border-radius: 8px; background-color: ${bgColor}; display:flex; flex-direction: row; gap: 20px; align-items: center; transition: background-color 0.2s ease;`}>
                           
                           <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center;">
@@ -268,15 +268,16 @@ try {
                                 return teamDisplay.map(member => (
                                   <div style="position: relative; width: 40px; height: 40px; flex-shrink: 0;">
                                     <img 
+                                      loading="lazy" decoding="async"
                                       style={`width: 100%; height: 100%; border-radius: 5px; background: ${member.bg}; ${member.isMain ? 'border: 1px solid rgba(255, 255, 255, 0.4);' : ''}`} 
                                       src={member.iconUrl}
                                       onerror="this.onerror=null; this.style.display='none'"
                                     />
                                     {member.weapon && teammateAssets[member.weapon as keyof typeof teammateAssets] && (
-                                      <img src={teammateAssets[member.weapon as keyof typeof teammateAssets]} title={member.weapon} class="dynamic-i18n-title" data-fr={assetTranslations[member.weapon]?.fr || member.weapon} data-en={assetTranslations[member.weapon]?.en || member.weapon} style="position:absolute; bottom:0; left:0; width:14px; height:14px; border-radius:2px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" decoding="async" />
+                                      <img src={teammateAssets[member.weapon as keyof typeof teammateAssets]} loading="lazy" decoding="async" title={member.weapon} class="dynamic-i18n-title" data-fr={assetTranslations[member.weapon]?.fr || member.weapon} data-en={assetTranslations[member.weapon]?.en || member.weapon} style="position:absolute; bottom:0; left:0; width:14px; height:14px; border-radius:2px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />
                                     )}
                                     {member.set && teammateAssets[member.set as keyof typeof teammateAssets] && (
-                                      <img src={teammateAssets[member.set as keyof typeof teammateAssets]} title={member.set} class="dynamic-i18n-title" data-fr={assetTranslations[member.set]?.fr || member.set} data-en={assetTranslations[member.set]?.en || member.set} style="position:absolute; bottom:0; right:0; width:14px; height:14px; border-radius:2px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" decoding="async" />
+                                      <img src={teammateAssets[member.set as keyof typeof teammateAssets]} loading="lazy" decoding="async" title={member.set} class="dynamic-i18n-title" data-fr={assetTranslations[member.set]?.fr || member.set} data-en={assetTranslations[member.set]?.en || member.set} style="position:absolute; bottom:0; right:0; width:14px; height:14px; border-radius:2px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />
                                     )}
                                     {member.cons > 0 && (
                                       <span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:700; color:#fff; text-shadow:0 0 3px #000; z-index:10;">C{member.cons}</span>

@@ -126,15 +126,23 @@ try {
     offset = (currentPage - 1) * limit;
 
     // 4. Récupération des données Supabase du classement avec `.range()`
-    const { data: builds, error, count } = await supabase
+    // Optimisation : On récupère le count total depuis la vue/table agrégée pour éviter un count exact lourd
+    const { data: countData } = await supabase
+      .from('build_counts_by_archetype')
+      .select('count')
+      .eq('archetype', id)
+      .maybeSingle();
+      
+    totalEntries = countData ? Number(countData.count) : 0;
+
+    const { data: builds, error } = await supabase
       .from("v_leaderboard_scores")
-      .select("*", { count: 'exact' })
+      .select("*")
       .eq("leaderboard_id", id)
       .order("score", { ascending: false })
       .range(offset, offset + limit - 1);
 
     entries = builds || [];
-    totalEntries = count || 0;
     totalPages = Math.ceil(totalEntries / limit);
 
     function getPaginationItems(current: number, total: number) {
@@ -147,7 +155,8 @@ try {
     paginationItems = getPaginationItems(currentPage, totalPages);
 
     // Data pour le graphique de répartition des grades
-    const { data: allGradesRaw } = await supabase.from("leaderboard_scores").select("grade:grade->>letter, er").eq("leaderboard_id", id);
+    // On utilise la vue matérialisée mv_grade_distribution pour économiser les perfs
+    const { data: distributionData } = await supabase.from("mv_grade_distribution").select("grade, er, count").eq("leaderboard_id", id);
     const ALL_GRADES = ["F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+", "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"];
     const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
 
@@ -156,13 +165,13 @@ try {
       distributionsByBucket[b] = Object.fromEntries(ALL_GRADES.map((g) => [g, 0]));
     }
 
-    if (allGradesRaw) {
-      allGradesRaw.forEach((build: any) => {
-        let grade = build?.grade;
+    if (distributionData) {
+      distributionData.forEach((row: any) => {
+        let grade = row.grade;
         if (grade) {
           if (grade.startsWith("ARCHON")) grade = "ARCHON";
 
-          const enerRech = build?.er ? parseFloat(build.er) : 1.0;
+          const enerRech = row.er ? parseFloat(row.er) : 1.0;
           const rowEr = Math.round(enerRech * 100);
 
           let maxBucket = 100;
@@ -174,7 +183,7 @@ try {
           }
 
           if (distributionsByBucket[maxBucket] && distributionsByBucket[maxBucket][grade] !== undefined) {
-            distributionsByBucket[maxBucket][grade]++;
+            distributionsByBucket[maxBucket][grade] += Number(row.count);
           }
         }
       });
@@ -224,14 +233,46 @@ if (!pageError && !targetCharConfig) {
       </div>
 
       <div class="leaderboard-content" style="margin-top: 20px;">
-        <div class="leaderboard-details-tools" style="display: flex; flex-direction: row; justify-content: space-between;">
+        <div class="leaderboard-details-tools" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
           <a href="/leaderboards" data-astro-prefetch style="text-decoration: none;">
             <button class="lb-back-btn" style="font-family: Shinshin, sans-serif; display:inline-flex; gap: 9px; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(255,255,255,0); background: var(--bg-panel); color:var(--text-primary);">
               <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 10px; height: 10px; transform: rotate(90deg);" />
               <span data-i18n="lb.back">Revenir aux classements</span>
             </button>
           </a>
+          
+          <div style="font-size: 11px; color: var(--text-grey); display: flex; gap: 6px; background: var(--bg-panel); padding: 5px 10px; border-radius: 8px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span data-i18n="lb.graphUpdateIn">Mise à jour du graphique dans : </span>
+            <span id="chart-update-timer" style="color: var(--accent-gold); font-weight: bold; font-family: monospace; font-size: 12px;">--:--:--</span>
+          </div>
         </div>
+
+        <script>
+          function updateTimer() {
+            const timerEl = document.getElementById('chart-update-timer');
+            if (!timerEl) return;
+            
+            const now = new Date();
+            // On vise 00h00 ou 12h00 UTC
+            let nextUpdate = new Date(now);
+            nextUpdate.setUTCHours(now.getUTCHours() >= 12 ? 24 : 12, 0, 0, 0);
+            
+            const diff = nextUpdate.getTime() - now.getTime();
+            
+            const h = Math.floor(diff / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            timerEl.textContent = `${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
+          }
+          
+          document.addEventListener('astro:page-load', () => {
+            updateTimer();
+            if ((window as any).chartTimerInterval) clearInterval((window as any).chartTimerInterval);
+            (window as any).chartTimerInterval = setInterval(updateTimer, 1000);
+          });
+        </script>
 
         <div class="leaderboard-info" style={`display: flex; flex-direction: row; position:relative; padding:7px; overflow:hidden; background-color: var(--char-bg-alpha, rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); margin-top: 8px; border-radius: 8px;`}>
           <div class="background-splash-art" style={`position: absolute; inset: 0; background-image: url('${enkaGachaImg}'); background-position: center center; background-repeat: no-repeat; background-size: 200%; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);`}></div>
@@ -329,9 +370,9 @@ if (!pageError && !targetCharConfig) {
                       <div class="leaderboard-info-left-teammates" data-team-index={teamIndex} style={`display: ${teamIndex === 0 ? "flex" : "none"}; flex-direction: row; gap: 8px;`}>
                         {teamDisplay.map((member) => (
                           <div style="position: relative; width: 80px; height: 80px; flex-shrink: 0;">
-                            <img style={`width: 100%; height: 100%; border-radius: 8px; background: ${member.bg}; ${member.isMain ? "border: 2px solid rgba(255, 255, 255, 0.5);" : ""}`} src={member.iconUrl} onerror="this.onerror=null; this.style.display='none'" />
-                            {member.weapon && teammateAssets[member.weapon as keyof typeof teammateAssets] && <img src={teammateAssets[member.weapon as keyof typeof teammateAssets]} title={member.weapon} class="dynamic-i18n-title" data-fr={assetTranslations[member.weapon]?.fr || member.weapon} data-en={assetTranslations[member.weapon]?.en || member.weapon} style="position:absolute; bottom:0; left:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" decoding="async" />}
-                            {member.set && teammateAssets[member.set as keyof typeof teammateAssets] && <img src={teammateAssets[member.set as keyof typeof teammateAssets]} title={member.set} class="dynamic-i18n-title" data-fr={assetTranslations[member.set]?.fr || member.set} data-en={assetTranslations[member.set]?.en || member.set} style="position:absolute; bottom:0; right:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" decoding="async" />}
+                            <img loading="lazy" decoding="async" style={`width: 100%; height: 100%; border-radius: 8px; background: ${member.bg}; ${member.isMain ? "border: 2px solid rgba(255, 255, 255, 0.5);" : ""}`} src={member.iconUrl} onerror="this.onerror=null; this.style.display='none'" />
+                            {member.weapon && teammateAssets[member.weapon as keyof typeof teammateAssets] && <img src={teammateAssets[member.weapon as keyof typeof teammateAssets]} loading="lazy" decoding="async" title={member.weapon} class="dynamic-i18n-title" data-fr={assetTranslations[member.weapon]?.fr || member.weapon} data-en={assetTranslations[member.weapon]?.en || member.weapon} style="position:absolute; bottom:0; left:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />}
+                            {member.set && teammateAssets[member.set as keyof typeof teammateAssets] && <img src={teammateAssets[member.set as keyof typeof teammateAssets]} loading="lazy" decoding="async" title={member.set} class="dynamic-i18n-title" data-fr={assetTranslations[member.set]?.fr || member.set} data-en={assetTranslations[member.set]?.en || member.set} style="position:absolute; bottom:0; right:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />}
                             {member.cons !== undefined && member.cons > 0 && <span style="position:absolute; top:2px; right:4px; font-size:12px; font-weight:700; color:#fff; text-shadow:0 0 3px #000; z-index:10;">C{member.cons}</span>}
                           </div>
                         ))}
