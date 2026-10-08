@@ -208,6 +208,20 @@ const finalSchema = schema || defaultSchema;
         </div>
 
         <script is:inline>
+            function copyVerificationCode(btn) {
+                const display = document.getElementById('verification-code-display');
+                if (!display) return;
+                navigator.clipboard.writeText(display.textContent).then(() => {
+                    const originalSvg = btn.innerHTML;
+                    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                    setTimeout(() => {
+                        btn.innerHTML = originalSvg;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Erreur lors de la copie du code:', err);
+                });
+            }
+
             function openLoginModal() {
                 const modal = document.getElementById("login-modal-overlay");
                 if (modal) {
@@ -267,6 +281,29 @@ const finalSchema = schema || defaultSchema;
                             item.classList.remove('active');
                         }
                     });
+
+                    const decimalsPref = localStorage.getItem("guoba_ranking_decimals") || "1";
+                    const decimalsLabel = document.getElementById("active-ranking-decimals-text");
+                    if (decimalsLabel) {
+                        const keys = {
+                            "0": "account.settings.decimals0",
+                            "1": "account.settings.decimals1",
+                            "2": "account.settings.decimals2",
+                        };
+                        const key = keys[decimalsPref] || keys["1"];
+                        decimalsLabel.setAttribute("data-i18n", key);
+                        if (typeof window !== "undefined" && window.t) {
+                            decimalsLabel.innerText = window.t(key);
+                        }
+                    }
+                    document.querySelectorAll('#ranking-decimals-custom-menu .custom-select-item').forEach(item => {
+                        if (item.getAttribute('data-value') === decimalsPref) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    });
+
                     modal.style.display = "flex";
                     modal.style.opacity = "0";
                     setTimeout(() => {
@@ -295,6 +332,15 @@ const finalSchema = schema || defaultSchema;
                 if (menu) menu.classList.toggle("show");
             }
 
+            function toggleRankingDecimalsMenu(event) {
+                event.stopPropagation();
+                const menu = document.getElementById("ranking-decimals-custom-menu");
+                document.querySelectorAll(".custom-select-menu").forEach((m) => {
+                    if (m !== menu) m.classList.remove("show");
+                });
+                if (menu) menu.classList.toggle("show");
+            }
+
             window.selectCustomSidebarDisplay = function (event, value, i18nKey) {
                 event.stopPropagation();
                 localStorage.setItem("guoba_sidebar_display", value);
@@ -317,6 +363,30 @@ const finalSchema = schema || defaultSchema;
                 });
 
                 window.dispatchEvent(new Event("sidebarDisplayChanged"));
+            };
+
+            window.selectCustomRankingDecimals = function (event, value, i18nKey) {
+                event.stopPropagation();
+                localStorage.setItem("guoba_ranking_decimals", value);
+                const textEl = document.getElementById("active-ranking-decimals-text");
+                if (textEl) {
+                    textEl.setAttribute("data-i18n", i18nKey);
+                    if (typeof window !== "undefined" && window.t) {
+                        textEl.innerText = window.t(i18nKey);
+                    }
+                }
+                const menu = document.getElementById("ranking-decimals-custom-menu");
+                if (menu) menu.classList.remove("show");
+
+                document.querySelectorAll('#ranking-decimals-custom-menu .custom-select-item').forEach(item => {
+                    if (item.getAttribute('data-value') === value) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+
+                window.dispatchEvent(new Event("rankingDecimalsChanged"));
             };
         </script>
 
@@ -357,8 +427,11 @@ const finalSchema = schema || defaultSchema;
                                     <div class="timeline-icon"></div>
                                     <div class="timeline-content">
                                         <span style="color: var(--text-muted); font-size: 13px;"><strong data-i18n="account.settings.step2">Étape 2 :</strong> <span data-i18n="account.settings.step2Desc">Copiez ce code dans votre signature en jeu.</span></span>
-                                        <div style="background: var(--bg-panel); padding: 10px; border-radius: 6px; border: 1px dashed var(--text-muted); text-align: center; margin-top: 10px;">
+                                        <div style="background: var(--bg-panel); padding: 10px; border-radius: 6px; border: 1px dashed var(--text-muted); margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
                                             <span id="verification-code-display" style="color: var(--text-primary); font-size: 18px; letter-spacing: 2px;">guoba-xxxx</span>
+                                            <button onclick="copyVerificationCode(this)" style="background: none; border: none; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; transition: color 0.2s;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-muted)'" title="Copier le code">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -439,6 +512,27 @@ const finalSchema = schema || defaultSchema;
                                     </div>
                                     <div class="custom-select-item" data-value="both" onclick="selectCustomSidebarDisplay(event, 'both', 'account.settings.sidebarDisplay.both')">
                                         <span data-i18n="account.settings.sidebarDisplay.both">Les deux</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; justify-content: space-between; color: var(--text-primary); font-size: 14px;">
+                            <span data-i18n="account.settings.rankingDecimals">Précision des classements</span>
+                            <div class="custom-select-container">
+                                <button onclick="toggleRankingDecimalsMenu(event)" class="link-button" style="width: 150px; justify-content: space-between; border: none; background: rgb(0,0,0,0.2); color: var(--text-primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: normal; outline: none; display: flex; align-items: center;">
+                                    <span id="active-ranking-decimals-text" data-i18n="account.settings.decimals1" style="white-space: nowrap;">1 décimale</span>
+                                    <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px;" />
+                                </button>
+
+                                <div id="ranking-decimals-custom-menu" class="custom-select-menu" style="width: 150px;">
+                                    <div class="custom-select-item" data-value="0" onclick="selectCustomRankingDecimals(event, '0', 'account.settings.decimals0')">
+                                        <span data-i18n="account.settings.decimals0">0 décimale</span>
+                                    </div>
+                                    <div class="custom-select-item" data-value="1" onclick="selectCustomRankingDecimals(event, '1', 'account.settings.decimals1')">
+                                        <span data-i18n="account.settings.decimals1">1 décimale</span>
+                                    </div>
+                                    <div class="custom-select-item" data-value="2" onclick="selectCustomRankingDecimals(event, '2', 'account.settings.decimals2')">
+                                        <span data-i18n="account.settings.decimals2">2 décimales</span>
                                     </div>
                                 </div>
                             </div>

@@ -29,6 +29,19 @@ import { t } from './i18n.js';
 
 const ICON_BASE_PATH = "/assets/simulator/icons/";
 
+window.formatTopPercentage = function(rank, total) {
+    if (!total || total === 0 || !rank) return "100";
+    const decimals = parseInt(localStorage.getItem('guoba_ranking_decimals') || '1', 10);
+    const rawPct = (rank / total) * 100;
+    if (decimals === 0) {
+        return Math.max(1, Math.round(rawPct)).toString();
+    } else if (decimals === 1) {
+        return Math.max(0.1, parseFloat(rawPct.toFixed(1))).toFixed(1);
+    } else {
+        return Math.max(0.01, parseFloat(rawPct.toFixed(2))).toFixed(2);
+    }
+};
+
 const ICON_MAP = window.ICON_MAP;
 
 function createIcon(key) {
@@ -4483,7 +4496,7 @@ async function updateLeaderboardRank(index) {
         const data = await res.json();
 
         if (data.rank > 0 && data.total > 0) {
-            const percentage = Math.max(1, Math.round((data.rank / data.total) * 100));
+            const percentage = window.formatTopPercentage(data.rank, data.total);
             placeholder.innerHTML = `Top ${percentage} % - ${data.rank} / ${data.total}`;
             if (badgeTop) {
                 badgeTop.innerHTML = `Top ${percentage} %`;
@@ -4769,6 +4782,21 @@ window.addEventListener("sidebarDisplayChanged", () => {
     const activeCard = document.querySelector('#sidebar-list .char-card.active');
     const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : -1;
     renderSidebar(activeOriginalIndex);
+});
+
+window.addEventListener("rankingDecimalsChanged", () => {
+    const activeCard = document.querySelector('#sidebar-list .char-card.active');
+    const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : -1;
+    renderSidebar(activeOriginalIndex);
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('view') === 'roadmap') {
+        renderRoadmapContainer();
+    } else {
+        if (activeOriginalIndex !== -1) {
+            selectCharacter(activeOriginalIndex, true);
+        }
+    }
 });
 
 window.addEventListener('popstate', () => {

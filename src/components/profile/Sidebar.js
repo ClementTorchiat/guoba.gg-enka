@@ -51,7 +51,8 @@ export function renderSidebarList(characters, activeOriginalIndex = 0, sortState
         let topText = '';
         if (rankInfo) {
             if (rankInfo.total > 0 && rankInfo.rank > 0) {
-                topText = `Top ${rankInfo.percentage}%`;
+                const pctStr = (typeof window !== 'undefined' && window.formatTopPercentage) ? window.formatTopPercentage(rankInfo.rank, rankInfo.total) : rankInfo.percentage;
+                topText = `Top ${pctStr}%`;
             } else {
                 topText = '-';
             }

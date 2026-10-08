@@ -43,8 +43,9 @@ export function renderRankingsSummary(characters) {
 
         let rankHtml = '';
         if (rankData && rankData.rank > 0 && rankData.total > 0) {
-            const rawPct = (rankData.rank / rankData.total) * 100;
-            const displayPct = rawPct < 10 ? Math.max(0.1, rawPct).toFixed(1) : Math.round(rawPct);
+            const displayPct = (typeof window !== 'undefined' && window.formatTopPercentage) 
+                ? window.formatTopPercentage(rankData.rank, rankData.total) 
+                : Math.max(1, Math.round((rankData.rank / rankData.total) * 100));
             const totalStr = formatNumber(rankData.total);
             const rankStr = formatNumber(rankData.rank);
 
