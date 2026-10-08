@@ -19,18 +19,18 @@ for (const path in setsConfigsLoaders) {
 // Fonction utilitaire pour simuler les buffs de Taux Crit actifs par défaut
 function getSimulatedCritRateBuff(perso: any, charConfig: any) {
   let extraCR = 0;
-  
+
   const parseBuffsArray = (buffArray: any[], selectMode: string) => {
     buffArray.forEach((item, idx) => {
       if (!item) return;
       if (item.cons !== undefined && (perso.cons || 0) < item.cons) return;
-      
+
       let isActive = item.active !== undefined ? item.active : true;
       if (selectMode === 'exclusive' && item.active === undefined) {
-          isActive = (idx === buffArray.length - 1);
+        isActive = (idx === buffArray.length - 1);
       }
       if (isActive && item.stats && item.stats.critRate_) {
-          extraCR += item.stats.critRate_;
+        extraCR += item.stats.critRate_;
       }
     });
   };
@@ -50,7 +50,7 @@ function getSimulatedCritRateBuff(perso: any, charConfig: any) {
         setsCount[art.setKey] = (setsCount[art.setKey] || 0) + 1;
       }
     });
-    
+
     Object.entries(setsCount).forEach(([setKey, count]) => {
       const setConfig = SET_CONFIGS[setKey];
       if (setConfig) {
@@ -59,7 +59,7 @@ function getSimulatedCritRateBuff(perso: any, charConfig: any) {
       }
     });
   }
-  
+
   return extraCR * 100; // En format pourcentage
 }
 
@@ -89,11 +89,11 @@ function getSupabase(c: any) {
   const env = c.env || {};
   const supabaseUrl = import.meta.env.SUPABASE_URL || env.SUPABASE_URL;
   const supabaseKey = import.meta.env.SUPABASE_SERVICE_KEY || env.SUPABASE_SERVICE_KEY;
-  
+
   if (!supabaseUrl) {
     throw new Error("SUPABASE_URL is missing in API route");
   }
-  
+
   cachedSupabase = createClient(supabaseUrl, supabaseKey);
   return cachedSupabase;
 }
@@ -182,8 +182,8 @@ app.get('/player/:uid', async (c) => {
 
       if (!configLoader) {
         const fuzzyKey = Object.keys(charConfigsLoaders).find(k => {
-           const charNameFromPath = k.split('/').pop()?.replace('.json', '');
-           return charNameFromPath && charNameFromPath.replace(/_/g, '').toLowerCase() === localName.toLowerCase();
+          const charNameFromPath = k.split('/').pop()?.replace('.json', '');
+          return charNameFromPath && charNameFromPath.replace(/_/g, '').toLowerCase() === localName.toLowerCase();
         });
         if (fuzzyKey) configLoader = charConfigsLoaders[fuzzyKey];
       }
@@ -210,11 +210,11 @@ app.get('/player/:uid', async (c) => {
         };
 
         const potentialMax = calculateMaxTheoreticalScore(perso, scoringConfig);
-        
+
         // On clone le perso pour ne pas écraser les stats buffées entre chaque leaderboard
         const persoClone = JSON.parse(JSON.stringify(perso));
         persoClone.buffedStats.cr = (persoClone.stats.critRate * 100) + getSimulatedCritRateBuff(persoClone, config);
-        
+
         const score = calculateCharacterScore(persoClone, scoringConfig, potentialMax.totalRolls);
 
         let efficiency = 0;
@@ -248,7 +248,7 @@ app.get('/player/:uid', async (c) => {
     const results = nestedResults.flat();
 
     // --- 3. Sauvegarde dans Supabase ---
-    
+
     // Vérification de l'opt-out
     const { data: profile } = await supabase
       .from('profiles')
@@ -287,9 +287,9 @@ app.get('/player/:uid', async (c) => {
         // Filtrage des builds incomplets
         const hasWeapon = res.persoData && res.persoData.weapon;
         const has5Artifacts = res.persoData && res.persoData.artefacts && res.persoData.artefacts.length >= 5;
-        
+
         if (!hasWeapon || !has5Artifacts) {
-            return;
+          return;
         }
         // 1. On ne prépare le 'build' qu'une seule fois par personnage
         const buildKey = `${uid}_${res.id}`;
@@ -318,7 +318,7 @@ app.get('/player/:uid', async (c) => {
           const sortedSets = Object.entries(setsCounter).sort((a, b) => b[1] - a[1]);
           const bestSetName = sortedSets.length > 0 ? sortedSets[0][0] : null;
           const bestSetCount = sortedSets.length > 0 ? sortedSets[0][1] : 0;
-          
+
           // On purge 'evaluation' car ça n'a plus de sens dans un objet 'build' partagé
           const dataToSave = { ...res.persoData };
           delete dataToSave.evaluation;
@@ -365,7 +365,7 @@ app.get('/player/:uid', async (c) => {
         console.error("Supabase Builds Upsert Error:", buildsRes.error);
         debugBuildsError = buildsRes.error;
       }
-      
+
       if (scoresRes.error) {
         console.error("Supabase Scores Upsert Error:", scoresRes.error);
       }
@@ -435,7 +435,7 @@ app.get('/rank/:leaderboard_id/:uid', async (c) => {
     .maybeSingle();
 
   if (scoreError || !userScore) {
-     return c.json({ rank: 0, total: 0 }); 
+    return c.json({ rank: 0, total: 0 });
   }
 
   // --- 1. Reconstruire les buckets d'ER comme sur le front-end ---
@@ -445,15 +445,15 @@ app.get('/rank/:leaderboard_id/:uid', async (c) => {
   // --- 2. Trouver dans quel bucket se trouve l'utilisateur ---
   const userEnerRech = userScore.er ? parseFloat(userScore.er as string) : 1.0;
   const userRowEr = Math.round(userEnerRech * 100);
-  
+
   let userBucket = smallestBucket;
   let nextHigherBucket: number | null = null;
 
   if (userRowEr < smallestBucket) {
-     userBucket = smallestBucket;
-     if (allBuckets.length > 1) {
-         nextHigherBucket = allBuckets[allBuckets.length - 2];
-     }
+    userBucket = smallestBucket;
+    if (allBuckets.length > 1) {
+      nextHigherBucket = allBuckets[allBuckets.length - 2];
+    }
   } else {
     for (let i = 0; i < allBuckets.length; i++) {
       if (userRowEr >= allBuckets[i]) {
@@ -470,7 +470,7 @@ app.get('/rank/:leaderboard_id/:uid', async (c) => {
     .select('*', { count: 'exact', head: true })
     .eq('leaderboard_id', leaderboard_id)
     .gt('score', userScore.score);
-    
+
   let totalQuery = supabase
     .from('leaderboard_scores')
     .select('*', { count: 'exact', head: true })
@@ -481,7 +481,7 @@ app.get('/rank/:leaderboard_id/:uid', async (c) => {
     rankQuery = rankQuery.gte('er', userBucket / 100);
     totalQuery = totalQuery.gte('er', userBucket / 100);
   }
-  
+
   if (nextHigherBucket !== null) {
     // Il y a toujours une limite supérieure sauf si on est dans le plus grand bucket
     rankQuery = rankQuery.lt('er', nextHigherBucket / 100);
@@ -502,7 +502,7 @@ app.post('/ranks/:uid', async (c) => {
   const uid = c.req.param('uid');
   const body = await c.req.json().catch(() => ({}));
   const queries = body.queries || [];
-  
+
   if (!queries || queries.length === 0) {
     return c.json({ ranks: {} });
   }
@@ -517,7 +517,7 @@ app.post('/ranks/:uid', async (c) => {
     .select('leaderboard_id, score, er')
     .eq('uid', uid)
     .in('leaderboard_id', requestedLeaderboardIds);
-    
+
   const scoresMap = new Map();
   if (userScores) {
     userScores.forEach((s: any) => scoresMap.set(s.leaderboard_id, s));
@@ -525,7 +525,7 @@ app.post('/ranks/:uid', async (c) => {
 
   // 2. Préparation des paramètres pour la fonction RPC ou le fallback
   const rpcRequests: any[] = [];
-  
+
   for (const query of queries) {
     const leaderboard_id = query.leaderboard_id;
     const userScore = scoresMap.get(leaderboard_id);
@@ -540,15 +540,15 @@ app.post('/ranks/:uid', async (c) => {
 
     const userEnerRech = userScore.er ? parseFloat(userScore.er as string) : 1.0;
     const userRowEr = Math.round(userEnerRech * 100);
-    
+
     let userBucket = smallestBucket;
     let nextHigherBucket: number | null = null;
 
     if (userRowEr < smallestBucket) {
-       userBucket = smallestBucket;
-       if (allBuckets.length > 1) {
-           nextHigherBucket = allBuckets[allBuckets.length - 2];
-       }
+      userBucket = smallestBucket;
+      if (allBuckets.length > 1) {
+        nextHigherBucket = allBuckets[allBuckets.length - 2];
+      }
     } else {
       for (let i = 0; i < allBuckets.length; i++) {
         if (userRowEr >= allBuckets[i]) {
@@ -561,7 +561,7 @@ app.post('/ranks/:uid', async (c) => {
 
     rpcRequests.push({
       leaderboard_id: leaderboard_id,
-      user_score: userScore.score,
+      user_score: userScore.score + 0.0001,
       min_er: userBucket !== smallestBucket ? userBucket / 100 : null,
       max_er: nextHigherBucket !== null ? nextHigherBucket / 100 : null
     });
@@ -588,7 +588,7 @@ app.post('/ranks/:uid', async (c) => {
       .select('*', { count: 'exact', head: true })
       .eq('leaderboard_id', req.leaderboard_id)
       .gt('score', req.user_score);
-      
+
     let totalQuery = supabase
       .from('leaderboard_scores')
       .select('*', { count: 'exact', head: true })
@@ -598,7 +598,7 @@ app.post('/ranks/:uid', async (c) => {
       rankQuery = rankQuery.gte('er', req.min_er);
       totalQuery = totalQuery.gte('er', req.min_er);
     }
-    
+
     if (req.max_er !== null) {
       rankQuery = rankQuery.lt('er', req.max_er);
       totalQuery = totalQuery.lt('er', req.max_er);
