@@ -4,59 +4,16 @@ import { createClient } from '@supabase/supabase-js';
 import { parseEnkaData } from '../../server/enkaParser';
 import { calculateCharacterScore, calculateMaxTheoreticalScore } from '../../scripts/scoring.js';
 
-const charConfigsLoaders = import.meta.glob('../../../data/characters/*.json', { eager: true });
-const setsConfigsLoaders = import.meta.glob('../../../data/sets/*.json', { eager: true });
+import _ER_BUCKETS_BY_LEADERBOARD from '../../data/er_buckets.json';
+const ER_BUCKETS_BY_LEADERBOARD = _ER_BUCKETS_BY_LEADERBOARD as Record<string, number[]>;
 
-// On crée un dictionnaire rapide : { "Hu_Tao": {...}, "Arlecchino": {...} }
-const CHAR_CONFIGS: Record<string, any> = {};
-for (const path in charConfigsLoaders) {
-  const fileName = path.split('/').pop()?.replace('.json', '') || "";
-  CHAR_CONFIGS[fileName] = (charConfigsLoaders[path] as any).default || charConfigsLoaders[path];
-}
+const charConfigsLoaders = import.meta.glob('../../../data/characters/*.json');
+const setsConfigsLoaders = import.meta.glob('../../../data/sets/*.json', { eager: true });
 
 const SET_CONFIGS: Record<string, any> = {};
 for (const path in setsConfigsLoaders) {
   const fileName = path.split('/').pop()?.replace('.json', '') || "";
   SET_CONFIGS[fileName] = (setsConfigsLoaders[path] as any).default || setsConfigsLoaders[path];
-}
-
-// --- OPTIMISATION CPU : Précalcul des buckets ER pour éviter de le refaire à chaque requête ---
-const ER_BUCKETS_BY_LEADERBOARD: Record<string, number[]> = {};
-for (const charName in CHAR_CONFIGS) {
-  const config = CHAR_CONFIGS[charName];
-  if (config.builds) {
-    for (const [buildName, buildData] of Object.entries(config.builds)) {
-      const data = buildData as any;
-      const lbId = data.leaderboard_id || buildName;
-      if (!ER_BUCKETS_BY_LEADERBOARD[lbId]) {
-        ER_BUCKETS_BY_LEADERBOARD[lbId] = [];
-      }
-      if (data.er_req) {
-        if (!ER_BUCKETS_BY_LEADERBOARD[lbId].includes(data.er_req)) {
-          ER_BUCKETS_BY_LEADERBOARD[lbId].push(data.er_req);
-        }
-      }
-    }
-  }
-}
-
-// On pré-calcule les buckets finaux (incluant les "Autres ER")
-for (const lbId in ER_BUCKETS_BY_LEADERBOARD) {
-  const sortedErReqs = [...ER_BUCKETS_BY_LEADERBOARD[lbId]].sort((a, b) => b - a);
-  let otherErs: number[] = [];
-  const lowestEr = sortedErReqs.length > 0 ? sortedErReqs[sortedErReqs.length - 1] : null;
-  
-  if (lowestEr) {
-    for (let i = 1; i <= 3; i++) {
-      const nextEr = lowestEr - 10 * i;
-      if (nextEr >= 100) otherErs.push(nextEr);
-    }
-  }
-  if (!sortedErReqs.includes(100) && !otherErs.includes(100)) {
-    otherErs.push(100);
-  }
-  
-  ER_BUCKETS_BY_LEADERBOARD[lbId] = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
 }
 
 // Fonction utilitaire pour simuler les buffs de Taux Crit actifs par défaut
@@ -122,9 +79,13 @@ export const prerender = false;
 
 const app = new Hono().basePath('/api');
 
-// Fonction utilitaire pour initialiser Supabase dynamiquement à chaque requête
+let cachedSupabase: any = null;
+
+// Fonction utilitaire pour initialiser Supabase dynamiquement et le mettre en cache
 // (Nécessaire sur Cloudflare car les variables d'environnement ne sont pas disponibles au top-level)
 function getSupabase(c: any) {
+  if (cachedSupabase) return cachedSupabase;
+
   const env = c.env || {};
   const supabaseUrl = import.meta.env.SUPABASE_URL || env.SUPABASE_URL;
   const supabaseKey = import.meta.env.SUPABASE_SERVICE_KEY || env.SUPABASE_SERVICE_KEY;
@@ -132,7 +93,9 @@ function getSupabase(c: any) {
   if (!supabaseUrl) {
     throw new Error("SUPABASE_URL is missing in API route");
   }
-  return createClient(supabaseUrl, supabaseKey);
+  
+  cachedSupabase = createClient(supabaseUrl, supabaseKey);
+  return cachedSupabase;
 }
 
 app.get('/hello', (c) => {
@@ -210,19 +173,22 @@ app.get('/player/:uid', async (c) => {
     const persos = await parseEnkaData(enkaData);
 
     // 2. Calcul du score pour chaque personnage
-    const results = persos.flatMap((perso: any) => {
+    const nestedResults = await Promise.all(persos.map(async (perso: any) => {
       // Enka donne des noms comme "MarionetteNew", on les traduit avec notre dictionnaire ENKA_TO_LOCAL_NAME
       const localName = ENKA_TO_LOCAL_NAME[perso.name] || perso.name;
 
-      let config = CHAR_CONFIGS[localName];
-      if (!config) {
-        const fuzzyKey = Object.keys(CHAR_CONFIGS).find(k =>
-          k.replace(/_/g, '').toLowerCase() === localName.toLowerCase()
-        );
-        if (fuzzyKey) config = CHAR_CONFIGS[fuzzyKey];
+      const exactPath = `../../../data/characters/${localName}.json`;
+      let configLoader = charConfigsLoaders[exactPath];
+
+      if (!configLoader) {
+        const fuzzyKey = Object.keys(charConfigsLoaders).find(k => {
+           const charNameFromPath = k.split('/').pop()?.replace('.json', '');
+           return charNameFromPath && charNameFromPath.replace(/_/g, '').toLowerCase() === localName.toLowerCase();
+        });
+        if (fuzzyKey) configLoader = charConfigsLoaders[fuzzyKey];
       }
 
-      if (!config) {
+      if (!configLoader) {
         return [{
           id: perso.id,
           name: perso.name,
@@ -230,6 +196,9 @@ app.get('/player/:uid', async (c) => {
           error: 'Configuration non trouvée dans /data/characters/'
         }];
       }
+
+      const mod = await configLoader();
+      const config = (mod as any).default || mod;
 
       // On calcule le score pour TOUS les builds de ce personnage
       const evaluatedBuilds = Object.entries(config.builds).map(([key, build]: [string, any]) => {
@@ -274,7 +243,9 @@ app.get('/player/:uid', async (c) => {
       });
 
       return Array.from(bestPerArchetype.values());
-    });
+    }));
+
+    const results = nestedResults.flat();
 
     // --- 3. Sauvegarde dans Supabase ---
     
@@ -380,30 +351,30 @@ app.get('/player/:uid', async (c) => {
 
       const buildsToInsert = Array.from(uniqueBuildsMap.values());
 
-      if (buildsToInsert.length > 0) {
-        const { error: buildsError } = await supabase
-          .from('builds')
-          .upsert(buildsToInsert, { onConflict: 'uid, avatar_id' }); // Plus de 'archetype' ici !
+      const buildsPromise = buildsToInsert.length > 0
+        ? supabase.from('builds').upsert(buildsToInsert, { onConflict: 'uid, avatar_id' })
+        : Promise.resolve({ error: null });
 
-        if (buildsError) {
-          console.error("Supabase Builds Upsert Error:", buildsError);
-          debugBuildsError = buildsError;
-        }
+      const scoresPromise = scoresToInsert.length > 0
+        ? supabase.from('leaderboard_scores').upsert(scoresToInsert, { onConflict: 'uid, avatar_id, leaderboard_id' })
+        : Promise.resolve({ error: null });
+
+      const [buildsRes, scoresRes] = await Promise.all([buildsPromise, scoresPromise]);
+
+      if (buildsRes.error) {
+        console.error("Supabase Builds Upsert Error:", buildsRes.error);
+        debugBuildsError = buildsRes.error;
       }
-
-      if (scoresToInsert.length > 0) {
-        const { error: scoresError } = await supabase
-          .from('leaderboard_scores')
-          .upsert(scoresToInsert, { onConflict: 'uid, avatar_id, leaderboard_id' });
-
-        if (scoresError) {
-          console.error("Supabase Scores Upsert Error:", scoresError);
-        }
+      
+      if (scoresRes.error) {
+        console.error("Supabase Scores Upsert Error:", scoresRes.error);
       }
     } else {
       // Nettoyage au cas où des données résiduelles existeraient
-      await supabase.from('builds').delete().eq('uid', uid);
-      await supabase.from('leaderboard_scores').delete().eq('uid', uid);
+      await Promise.all([
+        supabase.from('builds').delete().eq('uid', uid),
+        supabase.from('leaderboard_scores').delete().eq('uid', uid)
+      ]);
       await supabase.from('players').delete().eq('uid', uid);
     }
 
@@ -517,8 +488,7 @@ app.get('/rank/:leaderboard_id/:uid', async (c) => {
     totalQuery = totalQuery.lt('er', nextHigherBucket / 100);
   }
 
-  const { count: rankCount } = await rankQuery;
-  const { count: totalCount } = await totalQuery;
+  const [{ count: rankCount }, { count: totalCount }] = await Promise.all([rankQuery, totalQuery]);
 
   return c.json({
     rank: (rankCount || 0) + 1,
@@ -550,7 +520,7 @@ app.post('/ranks/:uid', async (c) => {
     
   const scoresMap = new Map();
   if (userScores) {
-    userScores.forEach(s => scoresMap.set(s.leaderboard_id, s));
+    userScores.forEach((s: any) => scoresMap.set(s.leaderboard_id, s));
   }
 
   // 2. Préparation des paramètres pour la fonction RPC ou le fallback
@@ -634,8 +604,7 @@ app.post('/ranks/:uid', async (c) => {
       totalQuery = totalQuery.lt('er', req.max_er);
     }
 
-    const { count: rankCount } = await rankQuery;
-    const { count: totalCount } = await totalQuery;
+    const [{ count: rankCount }, { count: totalCount }] = await Promise.all([rankQuery, totalQuery]);
 
     results[req.leaderboard_id] = {
       rank: (rankCount || 0) + 1,

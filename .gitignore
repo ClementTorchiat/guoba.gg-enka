@@ -34,3 +34,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Auto-generated data files
+/src/data/er_buckets.json
