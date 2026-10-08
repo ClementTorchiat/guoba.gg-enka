@@ -91,12 +91,6 @@ try {
     });
   }
 
-  // Tri alphabétique des personnages (avec les "New" en premier)
-  characterList.sort((a, b) => {
-    if (a.isNew && !b.isNew) return -1;
-    if (!a.isNew && b.isNew) return 1;
-    return a.name.localeCompare(b.name);
-  });
 
   // 4. Récupération des statistiques depuis Supabase
   const { data: buildsData, error } = await supabase.from('build_counts_by_archetype').select('*');
@@ -115,6 +109,16 @@ try {
     char.totalEntries = char.leaderboards.reduce((acc: number, lb: any) => Math.max(acc, (archetypeCounts[lb.id] || 0)), 0);
     totalEntries += char.totalEntries;
   }
+
+  // Tri par défaut : Entrées (Décroissant) (avec les "New" en premier, puis alphabétique en cas d'égalité)
+  characterList.sort((a, b) => {
+    if (a.isNew && !b.isNew) return -1;
+    if (!a.isNew && b.isNew) return 1;
+    if (b.totalEntries !== a.totalEntries) {
+      return b.totalEntries - a.totalEntries;
+    }
+    return a.name.localeCompare(b.name);
+  });
 } catch (e: any) {
   pageError = e.message || String(e);
 }
@@ -148,18 +152,18 @@ try {
             
             <div class="custom-select-container" style="position: relative; flex-shrink: 0; z-index: 50;">
               <button id="sortDropdownBtn" type="button" style="justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 15px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; outline: none; height: 100%; min-height: 50px; display: flex; align-items: center; width: 100%; min-width: 220px;">
-                <span id="sort-current-label" class="dynamic-i18n" data-fr="Nom (A-Z)" data-en="Name (A-Z)">Nom (A-Z)</span>
+                <span id="sort-current-label" class="dynamic-i18n" data-fr="Entrées (Décroissant)" data-en="Entries (Descending)">Entrées (Décroissant)</span>
                 <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 10px; height: 10px; opacity: 0.6; margin-left: 8px;">
               </button>
 
               <div id="sort-custom-menu" class="custom-select-menu" style="min-width: 100%; top: calc(100% + 5px); bottom: auto; margin-bottom: 0; right: 0; border: none;">
-                <div class="custom-select-item" data-value="name-asc" data-fr="Nom (A-Z)" data-en="Name (A-Z)" style="background: var(--bg-active);">
+                <div class="custom-select-item" data-value="name-asc" data-fr="Nom (A-Z)" data-en="Name (A-Z)">
                   <span class="dynamic-i18n" data-fr="Nom (A-Z)" data-en="Name (A-Z)">Nom (A-Z)</span>
                 </div>
                 <div class="custom-select-item" data-value="name-desc" data-fr="Nom (Z-A)" data-en="Name (Z-A)">
                   <span class="dynamic-i18n" data-fr="Nom (Z-A)" data-en="Name (Z-A)">Nom (Z-A)</span>
                 </div>
-                <div class="custom-select-item" data-value="entries-desc" data-fr="Entrées (Décroissant)" data-en="Entries (Descending)">
+                <div class="custom-select-item" data-value="entries-desc" data-fr="Entrées (Décroissant)" data-en="Entries (Descending)" style="background: var(--bg-active);">
                   <span class="dynamic-i18n" data-fr="Entrées (Décroissant)" data-en="Entries (Descending)">Entrées (Décroissant)</span>
                 </div>
                 <div class="custom-select-item" data-value="entries-asc" data-fr="Entrées (Croissant)" data-en="Entries (Ascending)">

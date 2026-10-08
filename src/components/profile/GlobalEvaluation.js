@@ -392,11 +392,11 @@ export function renderGlobalEvaluation(playerInfo, globalPersoData, uidStr = '')
             <div style="display: flex; flex-direction: column; text-align: center; justify-content: center; gap: 2px; padding-right: 15px; border-right: 1px solid rgba(255,255,255,0.2); height: 100%;">
                 <div>
                     <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin:0;">${t('ui.eval.efficiency')}</p>
-                    <p style="font-size: 14px; font-weight: bold; color: var(--text-primary); margin:0;">${avgEff.toFixed(1)}%</p>
+                    <p style="font-size: 14px; color: var(--text-always-white); margin:0;">${avgEff.toFixed(1)}%</p>
                 </div>
                 <div>
                     <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin:0;">${t('ui.eval.score')}</p>
-                    <p style="font-size: 14px; font-weight: bold; color: var(--text-primary); margin:0;">${avgScore.toFixed(1)}</p>
+                    <p style="font-size: 14px; color: var(--text-always-white); margin:0;">${avgScore.toFixed(1)}</p>
                 </div>
             </div>
             <div style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 2px 12px 2px 0;">

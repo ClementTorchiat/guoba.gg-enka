@@ -133,10 +133,10 @@ button[title="Mode d'emploi"]:hover,
 }
 
 .theme-dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 1px solid var(--border-subtle);
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid rgb(255, 255, 255, 0.2);
     flex-shrink: 0;
 }
 
@@ -322,26 +322,26 @@ html[data-theme="guild"] {
 }
 
 /*
-        html[data-theme="light"] {
-            --bg-base: #ffffff;
-            --bg-panel: #ededed;
-            --bg-hover: #f3f4f6;
-            --bg-active: #e5e7eb;
-            --bg-card: #f8fafc;
+html[data-theme="light"] {
+    --bg-base: #ffffff;
+    --bg-panel: #ededed;
+    --bg-hover: #f3f4f6;
+    --bg-active: #e5e7eb;
+    --bg-card: #f8fafc;
 
-            --text-always-white: #ffffff;
-            --text-primary: #3b3b3b;
-            --text-secondary: rgba(17, 24, 39, 0.6);
-            --text-grey: #aaaaaa;
-            --text-strong: #000000;
-            --text-muted: #6b7280;
-            --border-subtle: rgba(17, 24, 39, 0.15);
-            --border-color: #d1d5db;
+    --text-always-white: #ffffff;
+    --text-primary: #3b3b3b;
+    --text-secondary: rgba(17, 24, 39, 0.6);
+    --text-grey: #aaaaaa;
+    --text-strong: #000000;
+    --text-muted: #6b7280;
+    --border-subtle: rgba(17, 24, 39, 0.15);
+    --border-color: #d1d5db;
 
-            --ob-bg-button-dark: #f3f4f6;
+    --ob-bg-button-dark: #f3f4f6;
 
-            --accent-gold: #FFB13B;
-        }*/
+    --accent-gold: #FFB13B;
+}*/
 
 * {
     box-sizing: border-box;
@@ -643,6 +643,7 @@ main {
 .char-card-name {
     font-size: 14px;
     white-space: normal;
+    color: var(--text-primary);
 }
 
 .char-card-info {
@@ -1428,7 +1429,7 @@ main {
     padding: 2px 6px;
     border-radius: 5px;
     font-size: 11px;
-    color: var(--text-primary);
+    color: var(--text-always-white);
     cursor: pointer;
     transition: 0.2s;
     white-space: nowrap;
@@ -1847,7 +1848,7 @@ input:checked+.toggle-track .star-4 {
 
 .static-page-title {
     font-size: 32px;
-    font-weight: 800;
+    font-weight: normal;
     color: var(--text-primary);
     line-height: 1.1;
 }

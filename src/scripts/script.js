@@ -4753,7 +4753,7 @@ window.fetchSidebarRanks = async function (uid) {
             const activeCard = document.querySelector('#sidebar-list .char-card.active');
             const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : -1;
             renderSidebar(activeOriginalIndex);
-            
+
             if (window._isPopstate || (new URLSearchParams(window.location.search).get('view') === 'roadmap')) {
                 if (typeof window.setRoadmapFocusChar === 'function') {
                     window.setRoadmapFocusChar(window.roadmapFocusCharNom);
