@@ -54,8 +54,15 @@ export async function checkSessionAndUpdateUI() {
             // Mise à jour visuelle basique (Discord Info)
             const nameEl = document.getElementById('user-account-name');
             const avatarEl = document.getElementById('user-account-avatar');
+            
+            const discordName = session.user.user_metadata?.full_name || session.user.user_metadata?.name;
+            if (discordName) {
+                localStorage.setItem('guoba_discord_name', discordName);
+            } else {
+                localStorage.removeItem('guoba_discord_name');
+            }
 
-            if (nameEl) nameEl.textContent = session.user.user_metadata.full_name || t('account.settings.player');
+            if (nameEl) nameEl.textContent = discordName || t('account.settings.player');
             if (avatarEl) avatarEl.src = session.user.user_metadata.avatar_url || '/assets/global/favicon.png';
 
             // On vérifie le profil public pour savoir s'il a associé un UID
@@ -205,6 +212,7 @@ export async function logoutUser() {
     if (!supabase) return;
     await supabase.auth.signOut();
     localStorage.removeItem('guoba_discord_uid');
+    localStorage.removeItem('guoba_discord_name');
     window.location.reload(); // On recharge pour réinitialiser l'état
 }
 

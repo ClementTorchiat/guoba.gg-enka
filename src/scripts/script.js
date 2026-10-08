@@ -3148,11 +3148,14 @@ function renderHome() {
     }
 
     const savedTheme = localStorage.getItem('guoba_theme') || 'wish';
+    const discordName = localStorage.getItem('guoba_discord_name');
+    const displayTitle = discordName ? t('home.titleWelcome').replace('{name}', discordName) : t('home.title');
+
     container.innerHTML = `
         <div style="padding-left: 20px; padding-right: 20px; padding-top: 30px; display: flex; flex-direction: column; min-height: calc(100vh - 80px);">
             <div style="flex: 1;">
                 <h2 id="home-title" style="color: var(--text-primary); font-size: 28px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; font-weight: normal;">
-                    ${t('home.title')}
+                    ${displayTitle}
                 </h2>
                 <p style="max-width:980px; color: var(--text-grey); font-size: 14px; margin-bottom: 30px;">${t('home.subtitle')}</p>
                 ${profilesContentHtml}
@@ -4730,7 +4733,7 @@ if (document.readyState === 'loading') {
     initMainPageApp();
 }
 
-window.fetchSidebarRanks = async function(uid) {
+window.fetchSidebarRanks = async function (uid) {
     if (!globalPersoData) return;
     if (window.leaderboardUpdatePromise) {
         await window.leaderboardUpdatePromise;
