@@ -1380,7 +1380,7 @@ main {
 }
 
 .pp-badge-ar {
-    background: rgb(72 72 72 / 80%);
+    background: rgb(46 89 174 / 80%);
     color: var(--text-always-white);
     border: 1px solid var(--border-subtle);
 }
