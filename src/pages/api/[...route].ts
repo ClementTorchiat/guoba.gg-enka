@@ -518,6 +518,120 @@ app.get('/rank/:leaderboard_id/:uid', async (c) => {
   });
 });
 
+app.post('/ranks/:uid', async (c) => {
+  const uid = c.req.param('uid');
+  const body = await c.req.json().catch(() => ({}));
+  const queries = body.queries || [];
+  
+  if (!queries || queries.length === 0) {
+    return c.json({ ranks: {} });
+  }
+
+  const supabase = getSupabase(c);
+  const results: Record<string, any> = {};
+
+  // We fetch each rank sequentially or in parallel using the same logic as /rank/:id/:uid
+  // For edge computing, Promise.all is fast enough for ~8 small queries
+  await Promise.all(queries.map(async (query: any) => {
+    const leaderboard_id = query.leaderboard_id;
+    const { data: userScore } = await supabase
+      .from('leaderboard_scores')
+      .select('score, er')
+      .eq('uid', uid)
+      .eq('leaderboard_id', leaderboard_id)
+      .maybeSingle();
+
+    if (!userScore) {
+      results[leaderboard_id] = { rank: 0, total: 0 };
+      return;
+    }
+
+    let allErReqs = new Set<number>();
+    for (const charName in CHAR_CONFIGS) {
+      const config = CHAR_CONFIGS[charName];
+      if (config.builds) {
+        for (const [buildName, buildData] of Object.entries(config.builds)) {
+          const data = buildData as any;
+          const lbId = data.leaderboard_id || buildName;
+          if (lbId === leaderboard_id && data.er_req) {
+            allErReqs.add(data.er_req);
+          }
+        }
+      }
+    }
+
+    const sortedErReqs = Array.from(allErReqs).sort((a, b) => b - a);
+    let otherErs: number[] = [];
+    const lowestEr = sortedErReqs.length > 0 ? sortedErReqs[sortedErReqs.length - 1] : null;
+    
+    if (lowestEr) {
+      for (let i = 1; i <= 3; i++) {
+        const nextEr = lowestEr - 10 * i;
+        if (nextEr >= 100) otherErs.push(nextEr);
+      }
+    }
+    if (!sortedErReqs.includes(100) && !otherErs.includes(100)) {
+      otherErs.push(100);
+    }
+
+    const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
+    const smallestBucket = allBuckets[allBuckets.length - 1] || 100;
+
+    const userEnerRech = userScore.er ? parseFloat(userScore.er as string) : 1.0;
+    const userRowEr = Math.round(userEnerRech * 100);
+    
+    let userBucket = smallestBucket;
+    let nextHigherBucket: number | null = null;
+
+    if (userRowEr < smallestBucket) {
+       userBucket = smallestBucket;
+       if (allBuckets.length > 1) {
+           nextHigherBucket = allBuckets[allBuckets.length - 2];
+       }
+    } else {
+      for (let i = 0; i < allBuckets.length; i++) {
+        if (userRowEr >= allBuckets[i]) {
+          userBucket = allBuckets[i];
+          if (i > 0) nextHigherBucket = allBuckets[i - 1];
+          break;
+        }
+      }
+    }
+
+    let rankQuery = supabase
+      .from('leaderboard_scores')
+      .select('*', { count: 'exact', head: true })
+      .eq('leaderboard_id', leaderboard_id)
+      .gt('score', userScore.score);
+      
+    let totalQuery = supabase
+      .from('leaderboard_scores')
+      .select('*', { count: 'exact', head: true })
+      .eq('leaderboard_id', leaderboard_id);
+
+    if (userBucket !== smallestBucket) {
+      rankQuery = rankQuery.gte('er', userBucket / 100);
+      totalQuery = totalQuery.gte('er', userBucket / 100);
+    }
+    
+    if (nextHigherBucket !== null) {
+      rankQuery = rankQuery.lt('er', nextHigherBucket / 100);
+      totalQuery = totalQuery.lt('er', nextHigherBucket / 100);
+    }
+
+    const { count: rankCount } = await rankQuery;
+    const { count: totalCount } = await totalQuery;
+
+    results[leaderboard_id] = {
+      rank: (rankCount || 0) + 1,
+      total: totalCount || 0,
+      percentage: totalCount ? Math.max(1, Math.round((((rankCount || 0) + 1) / totalCount) * 100)) : 0
+    };
+  }));
+
+  return c.json({ ranks: results });
+});
+
 export const ALL: APIRoute = (context) => {
   // On passe l'environnement Cloudflare à Hono pour qu'il puisse y accéder via `c.env`
   const env = (context.locals as any)?.runtime?.env || {};

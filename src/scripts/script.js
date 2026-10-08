@@ -731,6 +731,7 @@ async function fetchUserData(optionalUid) {
             renderPlayerProfile(cachedData.playerInfo, uid);
             renderGlobalEvaluation(cachedData.playerInfo);
             toggleSearchIcon(true);
+            if (typeof window.fetchSidebarRanks === 'function') window.fetchSidebarRanks(uid);
             return;
         }
 
@@ -790,6 +791,7 @@ async function fetchUserData(optionalUid) {
 
             if (loader) loader.innerText = "";
             toggleSearchIcon(true);
+            if (typeof window.fetchSidebarRanks === 'function') window.fetchSidebarRanks(uid);
 
         } catch (e) {
             clearTimeout(timeoutId);
@@ -4727,6 +4729,40 @@ if (document.readyState === 'loading') {
 } else {
     initMainPageApp();
 }
+
+window.fetchSidebarRanks = async function(uid) {
+    if (!globalPersoData) return;
+    if (window.leaderboardUpdatePromise) {
+        await window.leaderboardUpdatePromise;
+    }
+    const queries = globalPersoData.map(p => {
+        const lbId = p.activeBuild ? (p.activeBuild.leaderboard_id || p.activeBuild.key) : null;
+        return { leaderboard_id: lbId };
+    }).filter(q => q.leaderboard_id);
+
+    try {
+        const res = await fetch(`/api/ranks/${uid}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ queries })
+        });
+        if (res.ok) {
+            const data = await res.json();
+            window.userLeaderboardRanks = data.ranks;
+            const activeCard = document.querySelector('#sidebar-list .char-card.active');
+            const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : 0;
+            renderSidebar(activeOriginalIndex);
+        }
+    } catch (e) {
+        console.error("Failed to fetch sidebar ranks", e);
+    }
+};
+
+window.addEventListener("sidebarDisplayChanged", () => {
+    const activeCard = document.querySelector('#sidebar-list .char-card.active');
+    const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : 0;
+    renderSidebar(activeOriginalIndex);
+});
 
 window.addEventListener('popstate', () => {
     const urlParams = new URLSearchParams(window.location.search);

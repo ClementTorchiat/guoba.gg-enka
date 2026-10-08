@@ -246,6 +246,27 @@ const finalSchema = schema || defaultSchema;
                     if (reduceCb) {
                         reduceCb.checked = localStorage.getItem("guoba_reduce_transparency") === "true";
                     }
+                    const sidebarPref = localStorage.getItem("guoba_sidebar_display") || "score_grade";
+                    const sidebarLabel = document.getElementById("active-sidebar-display-text");
+                    if (sidebarLabel) {
+                        const keys = {
+                            score_grade: "account.settings.sidebarDisplay.score",
+                            top_percent: "account.settings.sidebarDisplay.top",
+                            both: "account.settings.sidebarDisplay.both",
+                        };
+                        const key = keys[sidebarPref] || keys["score_grade"];
+                        sidebarLabel.setAttribute("data-i18n", key);
+                        if (typeof window !== "undefined" && window.t) {
+                            sidebarLabel.innerText = window.t(key);
+                        }
+                    }
+                    document.querySelectorAll('#sidebar-display-custom-menu .custom-select-item').forEach(item => {
+                        if (item.getAttribute('data-value') === sidebarPref) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    });
                     modal.style.display = "flex";
                     modal.style.opacity = "0";
                     setTimeout(() => {
@@ -264,6 +285,39 @@ const finalSchema = schema || defaultSchema;
                     }, 200);
                 }
             }
+
+            function toggleSidebarDisplayMenu(event) {
+                event.stopPropagation();
+                const menu = document.getElementById("sidebar-display-custom-menu");
+                document.querySelectorAll(".custom-select-menu").forEach((m) => {
+                    if (m !== menu) m.classList.remove("show");
+                });
+                if (menu) menu.classList.toggle("show");
+            }
+
+            window.selectCustomSidebarDisplay = function (event, value, i18nKey) {
+                event.stopPropagation();
+                localStorage.setItem("guoba_sidebar_display", value);
+                const textEl = document.getElementById("active-sidebar-display-text");
+                if (textEl) {
+                    textEl.setAttribute("data-i18n", i18nKey);
+                    if (typeof window !== "undefined" && window.t) {
+                        textEl.innerText = window.t(i18nKey);
+                    }
+                }
+                const menu = document.getElementById("sidebar-display-custom-menu");
+                if (menu) menu.classList.remove("show");
+
+                document.querySelectorAll('#sidebar-display-custom-menu .custom-select-item').forEach(item => {
+                    if (item.getAttribute('data-value') === value) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+
+                window.dispatchEvent(new Event("sidebarDisplayChanged"));
+            };
         </script>
 
         <!-- SETTINGS MODAL -->
@@ -353,20 +407,43 @@ const finalSchema = schema || defaultSchema;
 
                 <div id="settings-preferences-view" style="background: var(--bg-body); padding: 15px; border-radius: 8px; display: none; flex-direction: column; gap: 12px;">
                     <h4 style="margin: 0; color: var(--text-primary); font-size: 16px; font-weight: normal;" data-i18n="account.settings.preferences">Préférences</h4>
-                    <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text-primary); font-size: 14px;">
-                        <span data-i18n="account.settings.optout">Ne pas apparaître dans les classements (Opt-out)</span>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="leaderboard-optout-checkbox" onchange="toggleLeaderboardOptOut(this.checked)" />
-                            <span class="toggle-slider"></span>
+                    <div style="display: flex; flex-direction: column; gap: 12px; padding-left: 10px;">
+                        <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text-primary); font-size: 14px;">
+                            <span data-i18n="account.settings.optout">Ne pas apparaître dans les classements (Opt-out)</span>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="leaderboard-optout-checkbox" onchange="toggleLeaderboardOptOut(this.checked)" />
+                                <span class="toggle-slider"></span>
+                            </div>
+                        </label>
+                        <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text-primary); font-size: 14px;">
+                            <span data-i18n="account.settings.reduceTransparency">Réduire les effets de transparence</span>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="reduce-transparency-checkbox" onchange="toggleReduceTransparency(this.checked)" />
+                                <span class="toggle-slider"></span>
+                            </div>
+                        </label>
+                        <div style="display: flex; align-items: center; justify-content: space-between; color: var(--text-primary); font-size: 14px;">
+                            <span data-i18n="account.settings.sidebarDisplay">Affichage dans la sidebar</span>
+                            <div class="custom-select-container">
+                                <button onclick="toggleSidebarDisplayMenu(event)" class="link-button" style="width: 150px; justify-content: space-between; border: none; background: rgb(0,0,0,0.2); color: var(--text-primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: normal; outline: none; display: flex; align-items: center;">
+                                    <span id="active-sidebar-display-text" data-i18n="account.settings.sidebarDisplay.score" style="white-space: nowrap;">Score et Grade</span>
+                                    <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px;" />
+                                </button>
+
+                                <div id="sidebar-display-custom-menu" class="custom-select-menu" style="width: 150px;">
+                                    <div class="custom-select-item" data-value="score_grade" onclick="selectCustomSidebarDisplay(event, 'score_grade', 'account.settings.sidebarDisplay.score')">
+                                        <span data-i18n="account.settings.sidebarDisplay.score">Score et Grade</span>
+                                    </div>
+                                    <div class="custom-select-item" data-value="top_percent" onclick="selectCustomSidebarDisplay(event, 'top_percent', 'account.settings.sidebarDisplay.top')">
+                                        <span data-i18n="account.settings.sidebarDisplay.top">Top X%</span>
+                                    </div>
+                                    <div class="custom-select-item" data-value="both" onclick="selectCustomSidebarDisplay(event, 'both', 'account.settings.sidebarDisplay.both')">
+                                        <span data-i18n="account.settings.sidebarDisplay.both">Les deux</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </label>
-                    <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text-primary); font-size: 14px;">
-                        <span data-i18n="account.settings.reduceTransparency">Réduire les effets de transparence</span>
-                        <div class="toggle-switch">
-                            <input type="checkbox" id="reduce-transparency-checkbox" onchange="toggleReduceTransparency(this.checked)" />
-                            <span class="toggle-slider"></span>
-                        </div>
-                    </label>
+                    </div>
                 </div>
 
                 <button onclick="logoutUser()" class="button-logout" data-i18n="account.settings.logout">Se déconnecter</button>

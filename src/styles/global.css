@@ -93,7 +93,6 @@ button[title="Mode d'emploi"]:hover,
     box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.4);
     right: 0;
     background: var(--bg-panel);
-    border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 6px;
     z-index: 100;
@@ -127,6 +126,10 @@ button[title="Mode d'emploi"]:hover,
 
 .custom-select-item:hover {
     background: var(--bg-hover);
+}
+
+.custom-select-item.active {
+    background: var(--bg-active);
 }
 
 .theme-dot {
@@ -605,7 +608,7 @@ main {
 .char-card {
     display: flex;
     align-items: center;
-    padding: 2px 8px 2px 2px;
+    padding: 0 8px 0 0;
     border-radius: 8px;
     cursor: pointer;
     transition: 0.2s;
@@ -638,7 +641,7 @@ main {
 }
 
 .char-card-name {
-    font-size: 16px;
+    font-size: 14px;
     white-space: normal;
 }
 
@@ -1617,7 +1620,7 @@ main {
     padding: 40px;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    max-width: 500px;
+    max-width: 540px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
@@ -3577,7 +3580,7 @@ input:checked+.toggle-track .star-4 {
 }
 
 #user-account {
-    padding: 7px;
+    padding: 5px;
     background-color: var(--bg-panel);
     border-radius: 8px;
     display: flex;
@@ -3634,7 +3637,7 @@ input:checked+.toggle-track .star-4 {
 #user-account-login-btn {
     font-family: ShinShin, sans-serif;
     font-size: 14px;
-    height: 66px;
+    height: 48px;
     display: flex;
     width: 100%;
     align-items: center;
@@ -3642,7 +3645,7 @@ input:checked+.toggle-track .star-4 {
     background-color: var(--bg-panel);
     color: var(--text-primary);
     border: none;
-    padding: 7px;
+    padding: 5px;
     border-radius: 8px;
     cursor: pointer;
 }

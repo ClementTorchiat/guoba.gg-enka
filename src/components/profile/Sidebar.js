@@ -24,6 +24,9 @@ export function renderSidebarList(characters, activeOriginalIndex = 0, sortState
         });
     }
 
+    const displayPref = localStorage.getItem("guoba_sidebar_display") || "score_grade";
+    const ranks = (typeof window !== 'undefined' && window.userLeaderboardRanks) || {};
+
     entries.forEach(({ p, originalIndex }) => {
         const div = document.createElement('div');
         div.className = `char-card ${originalIndex === targetIndex ? 'active' : ''}`;
@@ -39,13 +42,48 @@ export function renderSidebarList(characters, activeOriginalIndex = 0, sortState
                 window.renderShowcase(originalIndex);
             }
         };
+
+        const score = p.evaluation?.score || 0;
+        const gradeLetter = p.evaluation?.grade?.letter || '?';
+        const gradeColor = p.evaluation?.grade?.color || '#fff';
+        const lbId = p.activeBuild ? (p.activeBuild.leaderboard_id || p.activeBuild.key) : null;
+        const rankInfo = lbId ? ranks[lbId] : null;
+        let topText = '';
+        if (rankInfo) {
+            if (rankInfo.total > 0 && rankInfo.rank > 0) {
+                topText = `Top ${rankInfo.percentage}%`;
+            } else {
+                topText = '-';
+            }
+        }
+
+        let infoHTML = '';
+        if (displayPref === "top_percent") {
+            infoHTML = `<p style="color:var(--text-primary); font-size:14px;">${topText || '...'}</p>`;
+        } else if (displayPref === "both") {
+            infoHTML = `
+                <div style="display: flex; flex-direction: column; align-items: flex-start; line-height: 1.1; width: 100%; gap: 3px;">
+                    <div style="display: flex; gap: 4px;">
+                        <span style="color:${gradeColor}; font-size:13px;">${score}</span>
+                        <span style="color:${gradeColor}; font-size:13px;">(${gradeLetter})</span>
+                    </div>
+                    <span style="color:var(--text-muted); font-size:10px; align-self: flex-end;">${topText || '...'}</span>
+                </div>
+            `;
+        } else {
+            // Default "score_grade"
+            infoHTML = `
+                <p style="color:${gradeColor};">${score} </p>
+                <p style="color:${gradeColor};">(${gradeLetter})</p>
+            `;
+        }
+
         div.innerHTML = `
             <img alt="" src="${p.image}" class="char-card-avatar">
             <div class="char-card-container">
                 <p class="char-card-name">${p.nom}</p>
-                <div class="char-card-info">
-                    <p style="color:${p.evaluation?.grade?.color || '#fff'};">${p.evaluation?.score || 0} </p>
-                    <p style="color:${p.evaluation?.grade?.color || '#fff'};">(${p.evaluation?.grade?.letter || '?'})</p>
+                <div class="char-card-info" data-char-index="${originalIndex}">
+                    ${infoHTML}
                 </div>
             </div>`;
         list.appendChild(div);
