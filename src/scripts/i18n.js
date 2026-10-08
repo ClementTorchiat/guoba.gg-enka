@@ -829,6 +829,10 @@ export const T = {
         "roadmap.outsideShowcase": "Hors-vitrine",
         "roadmap.noCharacters": "Aucun personnage chargé. Entrez votre UID pour afficher la Roadmap.",
 
+        "roadmap.rankings.title": "Résumé des classements",
+        "roadmap.rankings.subtitle": "Résumé des meilleurs classements actuels de vos personnages.",
+
+
         // Module 1 : Baromètre de Maturité
         "roadmap.maturity.title": "Baromètre de Maturité Globale",
         "roadmap.maturity.desc": "Indicateur synthétique du niveau d'avancement et de complétion de vos personnages de vitrine.",
@@ -1793,6 +1797,10 @@ export const T = {
         "roadmap.toggleAllChars.active": "Showcase only",
         "roadmap.outsideShowcase": "Outside showcase",
         "roadmap.noCharacters": "No characters loaded. Enter your UID to view the Roadmap.",
+
+        "roadmap.rankings.title": "Rankings Summary",
+        "roadmap.rankings.subtitle": "Summary of your characters' current best rankings.",
+
 
         // Module 1 : Maturity Barometer
         "roadmap.maturity.title": "Global Maturity Barometer",

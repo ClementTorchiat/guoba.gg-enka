@@ -1,5 +1,6 @@
 // src/components/roadmap/RoadmapContainer.js
 import { t } from '../../scripts/i18n.js';
+import { renderRankingsSummary } from './RankingsSummary.js';
 import { renderMaturityBarometer } from './MaturityBarometer.js';
 import { renderQuickWinsPlan } from './QuickWinsPlan.js';
 import { renderGlobalSwapAdvisor } from './GlobalSwapAdvisor.js';
@@ -257,7 +258,7 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                 return `
                             <button data-action="toggle-roadmap-focus-dropdown"
                                     type="button"
-                                    style="display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 14px; box-sizing:border-box; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s ease; border:1px solid transparent; background:rgba(0, 0, 0, 0.25); color:var(--text-always-white); box-shadow:none;">
+                                    style="display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 14px; box-sizing:border-box; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s ease; border:1px solid transparent; background: var(--bg-panel); color:var(--text-always-white); box-shadow:none;">
                                 <span style="pointer-events:none;">${t('roadmap.focus.all')}</span>
                                 <svg class="focus-chevron" style="width:14px; height:14px; transition:transform 0.2s ease; margin-left:4px; opacity:0.8; pointer-events:none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
@@ -302,6 +303,11 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                     </div>
                 </div>
             </div>
+
+            <!-- NOUVEAU : Résumé des classements -->
+            ${renderRankingsSummary(characters)}
+            
+            ${dottedDivider}
 
             <!-- Module 1 : Baromètre de Maturité Globale -->
             ${renderMaturityBarometer(characters, focusCharNom)}

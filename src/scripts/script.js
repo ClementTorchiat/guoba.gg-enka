@@ -212,7 +212,7 @@ function setSidebarSort(column) {
         sidebarSortState.direction = 'desc';
     }
     const activeCard = document.querySelector('#sidebar-list .char-card.active');
-    const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : 0;
+    const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : -1;
     renderSidebar(activeOriginalIndex);
 }
 
@@ -320,7 +320,7 @@ function showSkeletonCard() {
             sk.id = 'roadmap-skeleton-tmp';
             sk.className = 'sk';
             sk.style.width = '100%';
-            sk.style.height = '62px';
+            sk.style.height = '50px';
             sk.style.borderRadius = '8px';
             sk.style.margin = '0';
             roadmapArea.appendChild(sk);
@@ -426,17 +426,15 @@ function showSkeletonCard() {
     `).join('');
 
     const buffsCard = `
-        <div style="width:240px; min-width:240px; height:280px; border:1px solid var(--border-color); border-radius:8px; padding:12px; box-sizing:border-box; display:flex; flex-direction:column; gap:10px;">
-            <div class="sk" style="height:14px; width:60%;"></div>
-            <div class="sk" style="height:9px; width:90%;"></div>
-            <div class="sk" style="height:9px; width:80%;"></div>
-            <div style="border-top:1px solid var(--border-color); margin:2px 0;"></div>
-            ${Array(5).fill(0).map(() => `
-                <div style="display:flex; justify-content:space-between; align-items:center; height:28px; background:var(--bg-active); border-radius:8px; padding:0 8px; box-sizing:border-box;">
-                    <div class="sk" style="height:10px; width:70%;"></div>
-                    <div class="sk" style="width:30px; height:16px; border-radius:34px;"></div>
-                </div>
-            `).join('')}
+        <div style="width:240px; min-width:240px; height:280px; border:1px solid var(--border-color); border-radius:8px; padding:12px; box-sizing:border-box; display:flex; flex-direction:column;">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <div class="sk" style="height:14px; width:50%;"></div>
+                <div class="sk" style="height:11px; width:90%;"></div>
+            </div>
+            <div style="margin: 9px 0px; border-top:1px solid var(--border-color);"></div>
+            <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+                <div class="sk" style="width:160px; height:160px; border-radius:50%;"></div>
+            </div>
         </div>
     `;
 
@@ -4753,8 +4751,14 @@ window.fetchSidebarRanks = async function (uid) {
             const data = await res.json();
             window.userLeaderboardRanks = data.ranks;
             const activeCard = document.querySelector('#sidebar-list .char-card.active');
-            const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : 0;
+            const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : -1;
             renderSidebar(activeOriginalIndex);
+            
+            if (window._isPopstate || (new URLSearchParams(window.location.search).get('view') === 'roadmap')) {
+                if (typeof window.setRoadmapFocusChar === 'function') {
+                    window.setRoadmapFocusChar(window.roadmapFocusCharNom);
+                }
+            }
         }
     } catch (e) {
         console.error("Failed to fetch sidebar ranks", e);
@@ -4763,7 +4767,7 @@ window.fetchSidebarRanks = async function (uid) {
 
 window.addEventListener("sidebarDisplayChanged", () => {
     const activeCard = document.querySelector('#sidebar-list .char-card.active');
-    const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : 0;
+    const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : -1;
     renderSidebar(activeOriginalIndex);
 });
 
