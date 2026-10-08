@@ -126,22 +126,18 @@ try {
     offset = (currentPage - 1) * limit;
 
     // 4. Récupération des données Supabase du classement avec `.range()`
-    // Optimisation : On récupère le count total depuis la vue/table agrégée pour éviter un count exact lourd
-    const { data: countData } = await supabase
-      .from('build_counts_by_archetype')
-      .select('count')
-      .eq('archetype', id)
-      .maybeSingle();
+    // Optimisation : On récupère tout en parallèle (Promise.all) pour réduire le temps de réponse
+    const [
+      { data: countData },
+      { data: builds, error },
+      { data: distributionData }
+    ] = await Promise.all([
+      supabase.from('build_counts_by_archetype').select('count').eq('archetype', id).maybeSingle(),
+      supabase.from("v_leaderboard_scores").select("*").eq("leaderboard_id", id).order("score", { ascending: false }).range(offset, offset + limit - 1),
+      supabase.from("mv_grade_distribution").select("grade, er, count").eq("leaderboard_id", id)
+    ]);
       
     totalEntries = countData ? Number(countData.count) : 0;
-
-    const { data: builds, error } = await supabase
-      .from("v_leaderboard_scores")
-      .select("*")
-      .eq("leaderboard_id", id)
-      .order("score", { ascending: false })
-      .range(offset, offset + limit - 1);
-
     entries = builds || [];
     totalPages = Math.ceil(totalEntries / limit);
 
@@ -155,8 +151,6 @@ try {
     paginationItems = getPaginationItems(currentPage, totalPages);
 
     // Data pour le graphique de répartition des grades
-    // On utilise la vue matérialisée mv_grade_distribution pour économiser les perfs
-    const { data: distributionData } = await supabase.from("mv_grade_distribution").select("grade, er, count").eq("leaderboard_id", id);
     const ALL_GRADES = ["F", "F+", "D", "D+", "C", "C+", "B", "B+", "A", "A+", "S", "S+", "SS", "SS+", "SSS", "SSS+", "WTF", "WTF+", "ARCHON"];
     const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
 

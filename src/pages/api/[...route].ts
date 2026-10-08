@@ -20,6 +20,45 @@ for (const path in setsConfigsLoaders) {
   SET_CONFIGS[fileName] = (setsConfigsLoaders[path] as any).default || setsConfigsLoaders[path];
 }
 
+// --- OPTIMISATION CPU : Précalcul des buckets ER pour éviter de le refaire à chaque requête ---
+const ER_BUCKETS_BY_LEADERBOARD: Record<string, number[]> = {};
+for (const charName in CHAR_CONFIGS) {
+  const config = CHAR_CONFIGS[charName];
+  if (config.builds) {
+    for (const [buildName, buildData] of Object.entries(config.builds)) {
+      const data = buildData as any;
+      const lbId = data.leaderboard_id || buildName;
+      if (!ER_BUCKETS_BY_LEADERBOARD[lbId]) {
+        ER_BUCKETS_BY_LEADERBOARD[lbId] = [];
+      }
+      if (data.er_req) {
+        if (!ER_BUCKETS_BY_LEADERBOARD[lbId].includes(data.er_req)) {
+          ER_BUCKETS_BY_LEADERBOARD[lbId].push(data.er_req);
+        }
+      }
+    }
+  }
+}
+
+// On pré-calcule les buckets finaux (incluant les "Autres ER")
+for (const lbId in ER_BUCKETS_BY_LEADERBOARD) {
+  const sortedErReqs = [...ER_BUCKETS_BY_LEADERBOARD[lbId]].sort((a, b) => b - a);
+  let otherErs: number[] = [];
+  const lowestEr = sortedErReqs.length > 0 ? sortedErReqs[sortedErReqs.length - 1] : null;
+  
+  if (lowestEr) {
+    for (let i = 1; i <= 3; i++) {
+      const nextEr = lowestEr - 10 * i;
+      if (nextEr >= 100) otherErs.push(nextEr);
+    }
+  }
+  if (!sortedErReqs.includes(100) && !otherErs.includes(100)) {
+    otherErs.push(100);
+  }
+  
+  ER_BUCKETS_BY_LEADERBOARD[lbId] = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
+}
+
 // Fonction utilitaire pour simuler les buffs de Taux Crit actifs par défaut
 function getSimulatedCritRateBuff(perso: any, charConfig: any) {
   let extraCR = 0;
@@ -429,36 +468,7 @@ app.get('/rank/:leaderboard_id/:uid', async (c) => {
   }
 
   // --- 1. Reconstruire les buckets d'ER comme sur le front-end ---
-  let allErReqs = new Set<number>();
-  for (const charName in CHAR_CONFIGS) {
-    const config = CHAR_CONFIGS[charName];
-    if (config.builds) {
-      for (const [buildName, buildData] of Object.entries(config.builds)) {
-        const data = buildData as any;
-        const lbId = data.leaderboard_id || buildName;
-        if (lbId === leaderboard_id && data.er_req) {
-          allErReqs.add(data.er_req);
-        }
-      }
-    }
-  }
-
-  const sortedErReqs = Array.from(allErReqs).sort((a, b) => b - a);
-  let otherErs: number[] = [];
-  const lowestEr = sortedErReqs.length > 0 ? sortedErReqs[sortedErReqs.length - 1] : null;
-  
-  if (lowestEr) {
-    for (let i = 1; i <= 3; i++) {
-      const nextEr = lowestEr - 10 * i;
-      if (nextEr >= 100) otherErs.push(nextEr);
-    }
-  }
-  if (!sortedErReqs.includes(100) && !otherErs.includes(100)) {
-    otherErs.push(100);
-  }
-
-  // Exemple: [140, 130, 120, 100]
-  const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
+  const allBuckets = ER_BUCKETS_BY_LEADERBOARD[leaderboard_id] || [100];
   const smallestBucket = allBuckets[allBuckets.length - 1] || 100;
 
   // --- 2. Trouver dans quel bucket se trouve l'utilisateur ---
@@ -530,51 +540,32 @@ app.post('/ranks/:uid', async (c) => {
   const supabase = getSupabase(c);
   const results: Record<string, any> = {};
 
-  // We fetch each rank sequentially or in parallel using the same logic as /rank/:id/:uid
-  // For edge computing, Promise.all is fast enough for ~8 small queries
-  await Promise.all(queries.map(async (query: any) => {
+  // 1. Fetch de tous les scores en une seule requête (Optimisation JS)
+  const requestedLeaderboardIds = queries.map((q: any) => q.leaderboard_id);
+  const { data: userScores } = await supabase
+    .from('leaderboard_scores')
+    .select('leaderboard_id, score, er')
+    .eq('uid', uid)
+    .in('leaderboard_id', requestedLeaderboardIds);
+    
+  const scoresMap = new Map();
+  if (userScores) {
+    userScores.forEach(s => scoresMap.set(s.leaderboard_id, s));
+  }
+
+  // 2. Préparation des paramètres pour la fonction RPC ou le fallback
+  const rpcRequests: any[] = [];
+  
+  for (const query of queries) {
     const leaderboard_id = query.leaderboard_id;
-    const { data: userScore } = await supabase
-      .from('leaderboard_scores')
-      .select('score, er')
-      .eq('uid', uid)
-      .eq('leaderboard_id', leaderboard_id)
-      .maybeSingle();
+    const userScore = scoresMap.get(leaderboard_id);
 
     if (!userScore) {
       results[leaderboard_id] = { rank: 0, total: 0 };
-      return;
+      continue;
     }
 
-    let allErReqs = new Set<number>();
-    for (const charName in CHAR_CONFIGS) {
-      const config = CHAR_CONFIGS[charName];
-      if (config.builds) {
-        for (const [buildName, buildData] of Object.entries(config.builds)) {
-          const data = buildData as any;
-          const lbId = data.leaderboard_id || buildName;
-          if (lbId === leaderboard_id && data.er_req) {
-            allErReqs.add(data.er_req);
-          }
-        }
-      }
-    }
-
-    const sortedErReqs = Array.from(allErReqs).sort((a, b) => b - a);
-    let otherErs: number[] = [];
-    const lowestEr = sortedErReqs.length > 0 ? sortedErReqs[sortedErReqs.length - 1] : null;
-    
-    if (lowestEr) {
-      for (let i = 1; i <= 3; i++) {
-        const nextEr = lowestEr - 10 * i;
-        if (nextEr >= 100) otherErs.push(nextEr);
-      }
-    }
-    if (!sortedErReqs.includes(100) && !otherErs.includes(100)) {
-      otherErs.push(100);
-    }
-
-    const allBuckets = [...sortedErReqs, ...otherErs].sort((a, b) => b - a);
+    const allBuckets = ER_BUCKETS_BY_LEADERBOARD[leaderboard_id] || [100];
     const smallestBucket = allBuckets[allBuckets.length - 1] || 100;
 
     const userEnerRech = userScore.er ? parseFloat(userScore.er as string) : 1.0;
@@ -598,31 +589,55 @@ app.post('/ranks/:uid', async (c) => {
       }
     }
 
+    rpcRequests.push({
+      leaderboard_id: leaderboard_id,
+      user_score: userScore.score,
+      min_er: userBucket !== smallestBucket ? userBucket / 100 : null,
+      max_er: nextHigherBucket !== null ? nextHigherBucket / 100 : null
+    });
+  }
+
+  if (rpcRequests.length === 0) {
+    return c.json({ ranks: results });
+  }
+
+  // 3. TENTATIVE D'APPEL RPC (Méthode 100% optimisée Postgres)
+  const { data: rpcData, error: rpcError } = await supabase.rpc('get_user_ranks_batch', {
+    p_requests: rpcRequests
+  });
+
+  if (rpcData && !rpcError) {
+    // La RPC a marché, on fusionne avec les éventuels résultats 0 déjà dans `results`
+    return c.json({ ranks: { ...results, ...rpcData } });
+  }
+
+  // 4. FALLBACK (Si l'utilisateur n'a pas encore créé la fonction RPC sur Supabase)
+  await Promise.all(rpcRequests.map(async (req: any) => {
     let rankQuery = supabase
       .from('leaderboard_scores')
       .select('*', { count: 'exact', head: true })
-      .eq('leaderboard_id', leaderboard_id)
-      .gt('score', userScore.score);
+      .eq('leaderboard_id', req.leaderboard_id)
+      .gt('score', req.user_score);
       
     let totalQuery = supabase
       .from('leaderboard_scores')
       .select('*', { count: 'exact', head: true })
-      .eq('leaderboard_id', leaderboard_id);
+      .eq('leaderboard_id', req.leaderboard_id);
 
-    if (userBucket !== smallestBucket) {
-      rankQuery = rankQuery.gte('er', userBucket / 100);
-      totalQuery = totalQuery.gte('er', userBucket / 100);
+    if (req.min_er !== null) {
+      rankQuery = rankQuery.gte('er', req.min_er);
+      totalQuery = totalQuery.gte('er', req.min_er);
     }
     
-    if (nextHigherBucket !== null) {
-      rankQuery = rankQuery.lt('er', nextHigherBucket / 100);
-      totalQuery = totalQuery.lt('er', nextHigherBucket / 100);
+    if (req.max_er !== null) {
+      rankQuery = rankQuery.lt('er', req.max_er);
+      totalQuery = totalQuery.lt('er', req.max_er);
     }
 
     const { count: rankCount } = await rankQuery;
     const { count: totalCount } = await totalQuery;
 
-    results[leaderboard_id] = {
+    results[req.leaderboard_id] = {
       rank: (rankCount || 0) + 1,
       total: totalCount || 0,
       percentage: totalCount ? Math.max(1, Math.round((((rankCount || 0) + 1) / totalCount) * 100)) : 0
