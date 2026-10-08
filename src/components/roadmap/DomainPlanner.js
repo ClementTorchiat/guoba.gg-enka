@@ -183,12 +183,14 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                     <button data-action="set-domain-scope"
                             data-scope="showcase"
                             type="button"
+                            class="button-unlink"
                             style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${!showAllChars ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${!showAllChars ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.25)'}; color:${!showAllChars ? '#60a5fa' : 'var(--text-grey)'};">
                         <span>${t('roadmap.scope.showcase')}</span>
                     </button>
                     <button data-action="set-domain-scope"
                             data-scope="all"
                             type="button"
+                            class="button-unlink"
                             style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${showAllChars ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${showAllChars ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.25)'}; color:${showAllChars ? '#60a5fa' : 'var(--text-grey)'};">
                         <span>${t('roadmap.scope.allChars')}</span>
                     </button>
@@ -209,23 +211,23 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                             <div style="background:${d.isFocusTarget ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${d.isFocusTarget ? '1px solid rgba(59,130,246,0.4)' : '1px solid rgba(255,255,255,0)'}; border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:12px; position:relative; flex-grow: 1;">
                                 <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
                                     <div>
-                                        <div style="font-size:14px; font-weight:700; color:var(--text-primary);">${d.domainName}</div>
+                                        <div style="font-size:14px; font-weight:normal; color:var(--text-primary);">${d.domainName}</div>
                                         <div style="font-size:11px; color:var(--text-grey);">${d.regionName}</div>
                                     </div>
                                     <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
                                         ${d.isFocusTarget ? `
-                                            <span style="font-size:9px; font-weight:700; padding:2px 6px; border-radius:10px; background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); white-space:nowrap;">
+                                            <span style="font-size:9px; font-weight:normal; padding:2px 6px; border-radius:10px; background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); white-space:nowrap;">
                                                 ${t('roadmap.focus.domainPriority')}
                                             </span>
                                         ` : ''}
-                                        <span style="font-size:10px; font-weight:700; padding:3px 8px; border-radius:12px; background:${d.efficiencyColor}18; color:${d.efficiencyColor}; border:1px solid ${d.efficiencyColor}40; white-space:nowrap;">
+                                        <span style="font-size:10px; font-weight:normal; padding:3px 8px; border-radius:12px; background:${d.efficiencyColor}18; color:${d.efficiencyColor}; border:1px solid ${d.efficiencyColor}40; white-space:nowrap;">
                                             ${t('roadmap.domains.efficiency.' + d.efficiencyKey)}
                                         </span>
                                     </div>
                                 </div>
 
                                 ${d.bothSetsUseful ? `
-                                    <div style="font-size:11px; font-weight:600; color:#22c55e; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.2); padding:4px 8px; border-radius:6px;">
+                                    <div style="font-size:11px; font-weight:normal; color:#22c55e; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.2); padding:4px 8px; border-radius:6px;">
                                         ${t('roadmap.domains.bothSetsUseful')}
                                     </div>
                                 ` : ''}
@@ -236,7 +238,7 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                                     <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0);">
                                         <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
                                             ${d.set1.icon ? `<img src="${d.set1.icon}" alt="${d.set1.name}" style="width:22px; height:22px; border-radius:4px; object-fit:contain; background:rgba(0,0,0,0.3);" onerror="this.style.display='none'">` : ''}
-                                            <span style="font-weight:600; color:var(--text-primary);">${d.set1.name}</span>
+                                            <span style="font-weight:normal; color:var(--text-primary);">${d.set1.name}</span>
                                         </div>
                                         ${(d.set1.chars.length > 0 || nonVitrine1.length > 0) ? `
                                             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
@@ -257,7 +259,7 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                                     <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0);">
                                         <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
                                             ${d.set2.icon ? `<img src="${d.set2.icon}" alt="${d.set2.name}" style="width:22px; height:22px; border-radius:4px; object-fit:contain; background:rgba(0,0,0,0.3);" onerror="this.style.display='none'">` : ''}
-                                            <span style="font-weight:600; color:var(--text-primary);">${d.set2.name}</span>
+                                            <span style="font-weight:normal; color:var(--text-primary);">${d.set2.name}</span>
                                         </div>
                                         ${(d.set2.chars.length > 0 || nonVitrine2.length > 0) ? `
                                             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">

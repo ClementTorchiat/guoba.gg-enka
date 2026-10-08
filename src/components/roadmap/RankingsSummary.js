@@ -1,6 +1,6 @@
 import { t } from '../../scripts/i18n.js';
 
-export function renderRankingsSummary(characters) {
+export function renderRankingsSummary(characters, focusCharNom = null) {
     if (!characters || characters.length === 0) return '';
 
     const sortedChars = [...characters].filter(c => {
@@ -31,6 +31,14 @@ export function renderRankingsSummary(characters) {
         });
     }
 
+    if (focusCharNom) {
+        sortedChars.sort((a, b) => {
+            const isFocusA = a.nom === focusCharNom ? 1 : 0;
+            const isFocusB = b.nom === focusCharNom ? 1 : 0;
+            return isFocusB - isFocusA;
+        });
+    }
+
     const formatNumber = (num) => {
         if (!num) return '0';
         if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
@@ -43,8 +51,8 @@ export function renderRankingsSummary(characters) {
 
         let rankHtml = '';
         if (rankData && rankData.rank > 0 && rankData.total > 0) {
-            const displayPct = (typeof window !== 'undefined' && window.formatTopPercentage) 
-                ? window.formatTopPercentage(rankData.rank, rankData.total) 
+            const displayPct = (typeof window !== 'undefined' && window.formatTopPercentage)
+                ? window.formatTopPercentage(rankData.rank, rankData.total)
                 : Math.max(1, Math.round((rankData.rank / rankData.total) * 100));
             const totalStr = formatNumber(rankData.total);
             const rankStr = formatNumber(rankData.rank);
@@ -76,12 +84,18 @@ export function renderRankingsSummary(characters) {
         const erTxt = c.activeBuild?.er_req ? `${c.activeBuild.er_req}% ER` : '';
         const faceImage = c.image ? c.image.replace('_Side', '') : '';
 
+        const isFocus = focusCharNom && c.nom === focusCharNom;
+        const cardBg = isFocus ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)';
+        const cardBorderColor = isFocus ? 'rgba(59,130,246,0.4)' : scoreColor;
+        const imgBorder = isFocus ? '1px solid #60a5fa' : 'none';
+        const nameColor = isFocus ? '#60a5fa' : 'var(--text-primary)';
+
         return `
-            <div style="border-radius:8px; padding:6px; background: var(--bg-panel); border:2px solid ${scoreColor}; display:flex; flex-direction:column; box-sizing:border-box; min-width:0;">
+            <div style="border-radius:8px; padding:6px; background: ${cardBg}; border:1.5px solid ${cardBorderColor}; display:flex; flex-direction:column; box-sizing:border-box; min-width:0;">
                 <div style="display:flex; align-items:center; gap:10px; min-width:0;">
-                    <img src="${faceImage}" alt="${c.nom}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; background: rgb(0,0,0,0.2); flex-shrink:0;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                    <img src="${faceImage}" alt="${c.nom}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; background: rgb(0,0,0,0.2); flex-shrink:0; border:${imgBorder}; box-sizing:border-box;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                     <div style="display:flex; flex-direction:column; overflow:hidden; min-width:0;">
-                        <span style="font-size:14px; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.nom}</span>
+                        <span style="font-size:14px; color:${nameColor}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.nom}</span>
                         <span style="font-size:11px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${buildName}">${buildName}</span>
                     </div>
                 </div>

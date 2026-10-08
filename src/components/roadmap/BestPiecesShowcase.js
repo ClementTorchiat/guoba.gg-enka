@@ -76,12 +76,14 @@ export function renderBestPiecesShowcase(characters, focusCharNom = null, mode =
                         <button data-action="set-best-pieces-mode"
                                 data-mode="score"
                                 type="button"
+                                class="button-unlink"
                                 style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${mode === 'score' ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${mode === 'score' ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.2)'}; color:${mode === 'score' ? '#60a5fa' : 'var(--text-grey)'};">
                             <span>${t('roadmap.best.modeScore')}</span>
                         </button>
                         <button data-action="set-best-pieces-mode"
                                 data-mode="cv"
                                 type="button"
+                                class="button-unlink"
                                 style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${mode === 'cv' ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${mode === 'cv' ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.2)'}; color:${mode === 'cv' ? '#60a5fa' : 'var(--text-grey)'};">
                             <span>${t('roadmap.best.modeCV')}</span>
                         </button>
@@ -103,14 +105,14 @@ export function renderBestPiecesShowcase(characters, focusCharNom = null, mode =
                                 ${p.icon ? `<img src="${p.icon}" alt="${p.typeName}" style="width:34px; height:34px; border-radius:4px; object-fit:contain; flex-shrink:0; background:rgba(0,0,0,0.2);">` : ''}
                                 <div style="display:flex; flex-direction:column;">
                                     <div style="display:flex; align-items:center; gap:6px;">
-                                        <span style="font-size:13px; font-weight:600; color:var(--text-primary);">${p.typeName}</span>
+                                        <span style="font-size:13px; font-weight:normal; color:var(--text-primary);">${p.typeName}</span>
                                     </div>
                                     <div style="display:flex; align-items:center; gap:4px; margin-top:3px;">
                                         <span style="font-size:11px; color:var(--text-grey);">${p.setName}</span>
                                     </div>
                                     <div style="display:flex; align-items:center; gap:6px; margin-top:4px;">
                                         <img src="${p.persoImage}" style="width:16px; height:16px; border-radius:2px; background:rgba(0,0,0,0.2);">
-                                        <span style="font-size:11px; font-weight:500; color:${p.isFocus ? '#60a5fa' : 'var(--text-primary)'};">${p.persoNom}</span>
+                                        <span style="font-size:11px; font-weight:normal; color:${p.isFocus ? '#60a5fa' : 'var(--text-primary)'};">${p.persoNom}</span>
                                         <span style="font-size:11px; color:var(--text-grey);">•</span>
                                         <div style="display:flex; align-items:center; gap:3px;">
                                             <img src="${ICON_BASE_PATH}${ICON_MAP[p.mainStatKey] || ICON_MAP['unknown']}" style="width:12px; height:12px;" alt="">
@@ -124,7 +126,7 @@ export function renderBestPiecesShowcase(characters, focusCharNom = null, mode =
                             <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
                                 ${mode === 'cv' ? `
                                     <div style="display:flex; flex-direction:column; align-items:flex-end;">
-                                        <div style="font-size:16px; font-weight:800; color:#f59e0b;">
+                                        <div style="font-size:16px; font-weight:normal; color:#f59e0b;">
                                             ${p.cv} <span style="font-size:11px; color:#fbbf24; font-weight:normal;">CV</span>
                                         </div>
                                         <div style="font-size:10px; color:var(--text-grey); display:flex; gap:6px;">
@@ -135,7 +137,7 @@ export function renderBestPiecesShowcase(characters, focusCharNom = null, mode =
                                 ` : `
                                     <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
                                         <div style="min-width:60px; text-align:right;">
-                                            <span style="font-size:16px; font-weight:800; color:${p.gradeColor};">${p.score}</span>
+                                            <span style="font-size:16px; font-weight:normal; color:${p.gradeColor};">${p.score}</span>
                                             <span style="font-size:11px; color:${p.gradeColor};">(${p.grade})</span>
                                         </div>
                                     </div>

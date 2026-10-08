@@ -210,7 +210,7 @@ export function renderMaturityBarometer(characters) {
                 <div style="display:flex; align-items:center; gap:16px;">
                     <div style="padding:8px 14px; text-align:center; min-width:80px;">
                         <div style="font-size:11px; color:var(--text-grey); text-transform:uppercase;">${t('roadmap.maturity.avgScore')}</div>
-                        <div style="font-size:22px; color:var(--text-primary);">${data.avgScore} <span style="font-size:13px; font-weight:700; color:${data.gradeColor};">(${data.avgGrade})</span></div>
+                        <div style="font-size:22px; color:var(--text-primary);">${data.avgScore} <span style="font-size:13px; font-weight:normal; color:${data.gradeColor};">(${data.avgGrade})</span></div>
                     </div>
                     
                     <div style="padding:8px 14px; text-align:center; min-width:80px;">
@@ -225,7 +225,7 @@ export function renderMaturityBarometer(characters) {
                 ${metricItems.map(item => `
                     <div style="background:var(--bg-panel); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:6px; justify-content: space-between;">
                         <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px;">
-                            <span style="color:var(--text-primary); font-weight:500;">
+                            <span style="color:var(--text-primary); font-weight:normal;">
                                 ${item.label}
                             </span>
                             <span style="color:var(--text-grey); font-size:11px;">${item.cur}/${item.total}</span>

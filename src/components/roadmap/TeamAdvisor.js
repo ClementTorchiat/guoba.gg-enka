@@ -56,23 +56,23 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
             let showcaseCount = 1;
             let containsFocus = getInternalName(c.nom) === getInternalName(focusCharNom);
             const activeTeamNames = [c.nom];
-            
+
             const resolveBuildName = (buildConfig, fallbackKey) => {
                 if (!buildConfig || !buildConfig.name) return fallbackKey;
                 const lang = typeof window !== 'undefined' && window.GUOBA_LANG ? window.GUOBA_LANG : 'fr';
                 return buildConfig.name[lang] || buildConfig.name.en || buildConfig.name.fr || fallbackKey;
             };
             const translatedBuildName = resolveBuildName(buildConfig, buildName);
-            
+
             buildConfig.team.forEach(slot => {
                 if (!slot.name) return;
-                
+
                 const names = Array.isArray(slot.name) ? slot.name : [slot.name];
                 const elems = slot.element ? (Array.isArray(slot.element) ? slot.element : [slot.element]) : [];
-                
+
                 let usedName = names[0];
                 let usedElem = elems[0];
-                for(let i = 0; i < names.length; i++) {
+                for (let i = 0; i < names.length; i++) {
                     const n = names[i];
                     const e = elems[i] || elems[0];
                     const resolvedName = resolveTeammateNameFn(n, e);
@@ -85,7 +85,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                 activeTeamNames.push(resolveTeammateNameFn(usedName, usedElem));
 
                 let inShowcase = false;
-                for(let i = 0; i < names.length; i++) {
+                for (let i = 0; i < names.length; i++) {
                     const n = names[i];
                     const e = elems[i] || elems[0];
                     const resolvedName = resolveTeammateNameFn(n, e);
@@ -99,7 +99,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                 }
 
                 if (!containsFocus && focusCharNom) {
-                    for(let i = 0; i < names.length; i++) {
+                    for (let i = 0; i < names.length; i++) {
                         const n = names[i];
                         const e = elems[i] || elems[0];
                         const resolvedName = resolveTeammateNameFn(n, e);
@@ -147,7 +147,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
         if (topTeams.length >= 3) break;
 
         const teamNames = teamData.build.activeTeamNames;
-        
+
         if (noDuplicates) {
             const hasDuplicate = teamNames.some(name => usedCharacters.has(name));
             if (hasDuplicate) continue;
@@ -165,12 +165,12 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
         if (!slot.name) return '';
         const names = Array.isArray(slot.name) ? slot.name : [slot.name];
         const elems = Array.isArray(slot.element) ? slot.element : [slot.element];
-        
+
         let displayedName = names[0];
         let displayedElem = elems[0];
         let inShowcase = false;
         let showcaseChar = null;
-        
+
         for (let i = 0; i < names.length; i++) {
             const currentElem = elems[i] || elems[0];
             const resolvedName = resolveTeammateNameFn(names[i], currentElem);
@@ -185,7 +185,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
 
         const opacity = inShowcase ? '1' : '0.6';
         const filter = inShowcase ? 'none' : 'grayscale(70%)';
-        
+
         let iconPath = `https://enka.network/ui/UI_AvatarIcon_${displayedName}.png`;
         if (showcaseChar && showcaseChar.image) {
             iconPath = showcaseChar.image.replace('Side_', '');
@@ -201,12 +201,12 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
         `;
     };
 
-        let btnStyle = 'display: inline-flex; align-items: center; padding: 5px 11px; border-radius: 8px; font-size: 11px; font-weight: normal; cursor: pointer; transition: all 0.2s ease; ';
-        if (noDuplicates) {
-            btnStyle += 'border: 1px solid #3b82f6; background: rgba(59, 130, 246, 0.18); color: #60a5fa;';
-        } else {
-            btnStyle += 'border: 1px solid rgba(255, 255, 255, 0); background: rgba(0, 0, 0, 0.25); color: var(--text-grey);';
-        }
+    let btnStyle = 'display: inline-flex; align-items: center; padding: 5px 11px; border-radius: 8px; font-size: 11px; font-weight: normal; cursor: pointer; transition: all 0.2s ease; ';
+    if (noDuplicates) {
+        btnStyle += 'border: 1px solid #3b82f6; background: rgba(59, 130, 246, 0.18); color: #60a5fa;';
+    } else {
+        btnStyle += 'border: 1px solid rgba(255, 255, 255, 0); background: rgba(0, 0, 0, 0.25); color: var(--text-grey);';
+    }
 
     return `
         <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
@@ -219,29 +219,29 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                         ${t('roadmap.teams.desc')}
                     </p>
                 </div>
-                <button data-action="toggle-roadmap-duplicate-teams" type="button" style="${btnStyle}">
+                <button data-action="toggle-roadmap-duplicate-teams" type="button" class="button-unlink" style="${btnStyle}">
                     ${t('roadmap.teams.noDuplicates')}
                 </button>
             </div>
             <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;">
                 ${topTeams.map((teamData, index) => {
-                    const dps = teamData.dps;
-                    const build = teamData.build;
-                    const teamSlots = build.config.team.filter(slot => slot.name);
-                    
-                    const dpsElem = dps.combatStats?.dmgBonusKey ? dps.combatStats.dmgBonusKey.replace('_dmg_', '') : 'pyro';
-                    const dpsBg = ELEMENT_COLORS[dpsElem] || '#333';
-                    const dpsIconPath = dps.image ? dps.image.replace('Side_', '') : `https://enka.network/ui/UI_AvatarIcon_${dps.nom}.png`;
+        const dps = teamData.dps;
+        const build = teamData.build;
+        const teamSlots = build.config.team.filter(slot => slot.name);
 
-                    const isFocusTeam = focusCharNom && build.containsFocus && index === 0;
-                    const cardBg = isFocusTeam ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)';
-                    const cardBorder = isFocusTeam ? '1px solid rgba(59,130,246,0.4)' : '1px solid rgba(255,255,255,0)';
+        const dpsElem = dps.combatStats?.dmgBonusKey ? dps.combatStats.dmgBonusKey.replace('_dmg_', '') : 'pyro';
+        const dpsBg = ELEMENT_COLORS[dpsElem] || '#333';
+        const dpsIconPath = dps.image ? dps.image.replace('Side_', '') : `https://enka.network/ui/UI_AvatarIcon_${dps.nom}.png`;
 
-                    return `
+        const isFocusTeam = focusCharNom && build.containsFocus && index === 0;
+        const cardBg = isFocusTeam ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)';
+        const cardBorder = isFocusTeam ? '1px solid rgba(59,130,246,0.4)' : '1px solid rgba(255,255,255,0)';
+
+        return `
                         <div class="ob-grid-card" style="padding:16px; display:flex; flex-direction:column; gap:16px; background:${cardBg}; border-radius:10px; border: ${cardBorder}; position:relative;">
                             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <span style="font-size:14px; font-weight:700; color:var(--text-primary);">
+                                    <span style="font-size:14px; font-weight:normal; color:var(--text-primary);">
                                         #${index + 1} - ${dps.nom}
                                     </span>
                                     <span style="font-size:11px; padding:2px 6px; background:rgba(0,0,0,0.2); border-radius:4px; color:var(--text-grey);">
@@ -249,7 +249,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                                     </span>
                                 </div>
                                 <div style="display:flex; align-items:center; gap:4px;">
-                                    <span style="font-size:12px; font-weight:700; color:var(--accent-gold);">
+                                    <span style="font-size:12px; font-weight:normal; color:var(--accent-gold);">
                                         ${build.score}%
                                     </span>
                                 </div>
@@ -258,13 +258,13 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                             <div style="display:flex; align-items:center; gap:12px; justify-content:center;">
                                 <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
                                     <img src="${dpsIconPath}" alt="${dps.nom}" style="width:48px; height:48px; border-radius:6px; background:${dpsBg}; border: 1px solid rgba(255, 255, 255, 0.5); object-fit:cover;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'" decoding="async" title="${resolveTeammateNameFn(dps.nom)}">
-                                    <span style="font-size:11px; color:var(--text-primary); white-space:nowrap; font-weight:700;">${resolveTeammateNameFn(dps.nom)}</span>
+                                    <span style="font-size:11px; color:var(--text-primary); white-space:nowrap; font-weight:normal;">${resolveTeammateNameFn(dps.nom)}</span>
                                 </div>
                                 ${teamSlots.map(slot => renderSlot(slot)).join('')}
                             </div>
                         </div>
                     `;
-                }).join('')}
+    }).join('')}
             </div>
         </div>
     `;

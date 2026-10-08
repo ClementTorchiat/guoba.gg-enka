@@ -29,7 +29,7 @@ import { t } from './i18n.js';
 
 const ICON_BASE_PATH = "/assets/simulator/icons/";
 
-window.formatTopPercentage = function(rank, total) {
+window.formatTopPercentage = function (rank, total) {
     if (!total || total === 0 || !rank) return "100";
     const decimals = parseInt(localStorage.getItem('guoba_ranking_decimals') || '1', 10);
     const rawPct = (rank / total) * 100;
@@ -147,11 +147,22 @@ let sidebarSortState = { column: 'original', direction: 'desc' };
 
 const THEME_COLORS = window.THEME_COLORS;
 
+function updateCustomDropdownArrows() {
+    ['theme-custom-menu', 'lang-custom-menu', 'build-custom-menu'].forEach(id => {
+        const menu = document.getElementById(id);
+        if (menu && menu.previousElementSibling) {
+            const arrow = menu.previousElementSibling.querySelector('.sort-arrow');
+            if (arrow) arrow.style.transform = menu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+    });
+}
+
 function toggleThemeMenu(event) {
     event.stopPropagation();
     const langMenu = document.getElementById('lang-custom-menu');
     if (langMenu) langMenu.classList.remove('show');
     document.getElementById('theme-custom-menu').classList.toggle('show');
+    updateCustomDropdownArrows();
 }
 
 function toggleLangMenu(event) {
@@ -159,6 +170,7 @@ function toggleLangMenu(event) {
     const themeMenu = document.getElementById('theme-custom-menu');
     if (themeMenu) themeMenu.classList.remove('show');
     document.getElementById('lang-custom-menu').classList.toggle('show');
+    updateCustomDropdownArrows();
 }
 
 function selectCustomTheme(themeValue, themeName) {
@@ -166,6 +178,7 @@ function selectCustomTheme(themeValue, themeName) {
     document.getElementById('active-theme-text').innerText = themeName;
     document.getElementById('active-theme-dot').style.background = THEME_COLORS[themeValue];
     document.getElementById('theme-custom-menu').classList.remove('show');
+    updateCustomDropdownArrows();
 }
 function changeTheme(themeValue) {
     document.documentElement.setAttribute('data-theme', themeValue);
@@ -180,6 +193,7 @@ function toggleBuildMenu(event) {
     if (!isOpen) {
         menu.classList.add('show');
     }
+    updateCustomDropdownArrows();
 }
 
 function toggleErMenu(event) {
@@ -197,6 +211,7 @@ function closeAllDataMenus() {
     const erMenu = document.getElementById('er-custom-menu');
     if (buildMenu) buildMenu.classList.remove('show');
     if (erMenu) erMenu.classList.remove('show');
+    updateCustomDropdownArrows();
 }
 
 function selectCustomBuild(charIndex, buildKey) {
@@ -215,6 +230,7 @@ document.addEventListener('click', () => {
     if (themeMenu) themeMenu.classList.remove('show');
     if (langMenu) langMenu.classList.remove('show');
     closeAllDataMenus();
+    updateCustomDropdownArrows();
 });
 
 function setSidebarSort(column) {
@@ -3186,12 +3202,12 @@ function renderHome() {
                 <div style="margin-left: auto; display: flex; gap: 8px;">
                     
                     <div class="custom-select-container">
-                        <button onclick="toggleThemeMenu(event)" class="link-button" style="width: 100%; justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 16px 0 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; outline: none; height: 38px; display: flex; align-items: center;">
+                        <button onclick="toggleThemeMenu(event)" class="link-button hover-bg-hover" style="width: 100%; justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 16px 0 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; outline: none; height: 38px; display: flex; align-items: center;">
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span class="theme-dot" id="active-theme-dot" style="background: ${THEME_COLORS[savedTheme] || THEME_COLORS['wish']};"></span>
                                 <span id="active-theme-text">${t('theme.' + savedTheme)}</span>
                             </div>
-                            <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; margin-left: 8px;">
+                            <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px; transition: transform 0.2s ease;">
                         </button>
 
                         <div id="theme-custom-menu" class="custom-select-menu">
@@ -3214,9 +3230,9 @@ function renderHome() {
                     </div>
 
                     <div class="custom-select-container">
-                        <button onclick="toggleLangMenu(event)" class="link-button" style="justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; outline: none; height: 38px; display: flex; align-items: center;">
+                        <button onclick="toggleLangMenu(event)" class="link-button hover-bg-hover" style="justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; outline: none; height: 38px; display: flex; align-items: center;">
                             <span>${window.GUOBA_LANG.toUpperCase()}</span>
-                            <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" id="arrow-original" style="font-size: 12px; opacity: 0.6; margin-left: 8px;">
+                            <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px; transition: transform 0.2s ease;">
                         </button>
 
                         <div id="lang-custom-menu" class="custom-select-menu" style="min-width: 69px;">
@@ -4788,7 +4804,7 @@ window.addEventListener("rankingDecimalsChanged", () => {
     const activeCard = document.querySelector('#sidebar-list .char-card.active');
     const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : -1;
     renderSidebar(activeOriginalIndex);
-    
+
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('view') === 'roadmap') {
         renderRoadmapContainer();

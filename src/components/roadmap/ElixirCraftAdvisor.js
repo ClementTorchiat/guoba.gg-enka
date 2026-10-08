@@ -337,18 +337,19 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                 <!-- Sélecteur de Budget d'Élixirs -->
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                     ${budgets.map(b => {
-                        const isSelected = String(budgetFilter) === String(b.key);
-                        return `
+        const isSelected = String(budgetFilter) === String(b.key);
+        return `
                             <button data-action="set-elixir-budget"
                                     data-budget="${b.key}"
                                     type="button"
+                                    class="button-unlink"
                                     title="${b.fullLabel || b.label}"
                                     style="display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:8px; font-size:11px; cursor:pointer; transition:all 0.2s ease; border:${isSelected ? '1px solid #f59e0b' : 'none'}; background:${isSelected ? 'rgba(245,158,11,0.18)' : 'rgba(0,0,0,0.2)'}; color:${isSelected ? 'var(--accent-gold, #f59e0b)' : 'var(--text-grey)'};">
                                 <span>${b.label}</span>
                                 ${b.count ? getFlaskSvg(11, isSelected ? '#f59e0b' : 'var(--text-grey)') : ''}
                             </button>
                         `;
-                    }).join('')}
+    }).join('')}
                 </div>
             </div>
 
@@ -368,11 +369,11 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                                     <img src="${rec.persoImage}" alt="${rec.persoNom}" style="width:34px; height:34px; border-radius:6px; background:rgba(0,0,0,0.2); flex-shrink:0; border:${rec.isFocus ? '1px solid #60a5fa' : 'none'};">
                                     <div style="min-width:0;">
                                         <div style="display:flex; align-items:center; gap:6px;">
-                                            <span style="font-size:13px; font-weight:700; color:${rec.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                            <span style="font-size:13px; font-weight:normal; color:${rec.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                                                 ${rec.persoNom}
                                             </span>
                                             ${rec.isFocus ? `
-                                                <span style="font-size:9px; font-weight:700; padding:1px 5px; border-radius:6px; background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4);">
+                                                <span style="font-size:9px; font-weight:normal; padding:1px 5px; border-radius:6px; background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4);">
                                                     ${t('roadmap.elixir.focusPriority')}
                                                 </span>
                                             ` : ''}
@@ -387,7 +388,7 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
 
                                 <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
                                     <!-- Badge Coût Élixirs avec SVG Minimaliste -->
-                                    <span style="font-size:11px; font-weight:700; padding:3px 8px; border-radius:8px; background:rgba(245,158,11,0.15); color:#f59e0b; display:inline-flex; align-items:center; gap:4px;">
+                                    <span style="font-size:11px; font-weight:normal; padding:3px 8px; border-radius:8px; background:rgba(245,158,11,0.15); color:#f59e0b; display:inline-flex; align-items:center; gap:4px;">
                                         <span>${rec.cost}</span>
                                         ${getFlaskSvg(12, '#f59e0b')}
                                     </span>
@@ -400,7 +401,7 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                                     <div style="display:flex; align-items:center; gap:8px; min-width:0;">
                                         ${rec.pieceIcon ? `<img src="${rec.pieceIcon}" alt="${rec.setName}" style="width:28px; height:28px; border-radius:4px; background:rgba(0,0,0,0.2); object-fit:contain; flex-shrink:0;" onerror="this.style.display='none'">` : ''}
                                         <div style="display:flex; flex-direction:column; min-width:0;">
-                                            <span style="font-size:12px; font-weight:700; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                            <span style="font-size:12px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                                                 ${rec.slotName}
                                             </span>
                                             <span style="font-size:10px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
@@ -410,7 +411,7 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                                     </div>
                                     <div style="display:flex; align-items:center; gap:4px; flex-shrink:0; white-space:nowrap;">
                                         <img src="${ICON_BASE_PATH}${ICON_MAP[rec.mainStatKey] || ICON_MAP['unknown']}" style="width:14px; height:14px; flex-shrink:0;" alt="">
-                                        <span style="font-size:11px; font-weight:600; color:var(--text-primary); white-space:nowrap;">${rec.mainStatLabel}</span>
+                                        <span style="font-size:11px; font-weight:normal; color:var(--text-primary); white-space:nowrap;">${rec.mainStatLabel}</span>
                                     </div>
                                 </div>
 
@@ -418,11 +419,11 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                                 <div style="display:flex; flex-direction:column; gap:4px; font-size:11px;">
                                     <span style="color:var(--text-grey); font-size:10px;">${t('roadmap.elixir.substats')}</span>
                                     <div style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;">
-                                        <span style="background:rgba(245,158,11,0.12); color:#fbbf24; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:600; display:flex; align-items:center; gap:3px;">
+                                        <span style="background:rgba(245,158,11,0.12); color:#fbbf24; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:normal; display:flex; align-items:center; gap:3px;">
                                             <img src="${ICON_BASE_PATH}${ICON_MAP[rec.chosenSub1.key] || ICON_MAP['unknown']}" style="width:10px; height:10px;" alt="">
                                             ${rec.chosenSub1.label}
                                         </span>
-                                        <span style="background:rgba(245,158,11,0.12); color:#fbbf24; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:600; display:flex; align-items:center; gap:3px;">
+                                        <span style="background:rgba(245,158,11,0.12); color:#fbbf24; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:normal; display:flex; align-items:center; gap:3px;">
                                             <img src="${ICON_BASE_PATH}${ICON_MAP[rec.chosenSub2.key] || ICON_MAP['unknown']}" style="width:10px; height:10px;" alt="">
                                             ${rec.chosenSub2.label}
                                         </span>
@@ -434,15 +435,15 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                             <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
                                 <div style="display:flex; flex-direction:column; gap:2px;">
                                     <div style="font-size:10px; color:var(--text-grey);">
-                                        ${t('roadmap.elixir.currentPiece')} <span style="color:${rec.curGradeColor}; font-weight:700;">${rec.curScore} pts (${rec.curGrade})</span>
+                                        ${t('roadmap.elixir.currentPiece')} <span style="color:${rec.curGradeColor}; font-weight:normal;">${rec.curScore} pts (${rec.curGrade})</span>
                                     </div>
-                                    <div style="font-size:12px; font-weight:800; color:#22c55e;">
+                                    <div style="font-size:12px; font-weight:normal; color:#22c55e;">
                                         ${t('roadmap.elixir.expectedGain', rec.deltaScore)}
                                     </div>
                                 </div>
 
                                 <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                                    <span style="font-size:10px; font-weight:700; padding:2px 7px; border-radius:6px; background:${rec.verdictColor}18; color:${rec.verdictColor};">
+                                    <span style="font-size:10px; font-weight:normal; padding:2px 7px; border-radius:6px; background:${rec.verdictColor}18; color:${rec.verdictColor};">
                                         ${t('roadmap.elixir.verdict.' + rec.verdict)}
                                     </span>
                                     <span style="font-size:10px; color:var(--text-grey);">

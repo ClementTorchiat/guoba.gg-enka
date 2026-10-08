@@ -248,7 +248,8 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                 return `
                             <button data-action="toggle-roadmap-focus-dropdown"
                                     type="button"
-                                    style="display:inline-flex; align-items:center; gap:6px; height:36px; padding:3px 12px 3px 4px; box-sizing:border-box; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(59, 130, 246, 0.4); background:rgba(59, 130, 246, 0.08); color:var(--text-primary); box-shadow:none; backdrop-filter:blur(4px);">
+                                    class="hover-bg-hover"
+                                    style="display:inline-flex; align-items:center; gap:6px; height:36px; padding:3px 12px 3px 4px; box-sizing:border-box; border-radius:8px; font-size:12px; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(59, 130, 246, 0.4); background:rgba(59, 130, 246, 0.08); color:var(--text-primary); box-shadow:none; backdrop-filter:blur(4px);">
                                 <img src="${activeChar.image}" alt="${activeChar.nom}" style="width:26px; height:26px; border-radius:6px; object-fit:cover; pointer-events:none;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                 <span style="white-space:nowrap; pointer-events:none;">${activeChar.nom}</span>
                                 <svg class="focus-chevron" style="width:14px; height:14px; transition:transform 0.2s ease; margin-left:4px; opacity:0.6; pointer-events:none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -258,7 +259,8 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                 return `
                             <button data-action="toggle-roadmap-focus-dropdown"
                                     type="button"
-                                    style="display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 14px; box-sizing:border-box; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s ease; border:1px solid transparent; background: var(--bg-panel); color:var(--text-always-white); box-shadow:none;">
+                                    class="hover-bg-hover"
+                                    style="display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 14px; box-sizing:border-box; border-radius:8px; font-size:12px; cursor:pointer; transition:all 0.2s ease; border:1px solid transparent; background: var(--bg-panel); color:var(--text-always-white); box-shadow:none;">
                                 <span style="pointer-events:none;">${t('roadmap.focus.all')}</span>
                                 <svg class="focus-chevron" style="width:14px; height:14px; transition:transform 0.2s ease; margin-left:4px; opacity:0.8; pointer-events:none;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
@@ -279,7 +281,7 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                                     <svg style="width:26px; height:26px; color:var(--text-always-white); opacity:0.8;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                                 </div>
                                 <div class="char-card-container">
-                                    <p class="char-card-name" style="margin:0; font-weight:600;">${t('roadmap.focus.all')}</p>
+                                    <p class="char-card-name" style="margin:0; font-weight:normal;">${t('roadmap.focus.all')}</p>
                                 </div>
                             </div>
                             
@@ -294,7 +296,7 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                                          style="margin:0;">
                                         <img src="${c.image}" alt="${c.nom}" class="char-card-avatar" style="object-fit:cover; pointer-events:none;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                         <div class="char-card-container">
-                                            <p class="char-card-name" style="margin:0; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.nom}</p>
+                                            <p class="char-card-name" style="margin:0; font-weight:normal; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.nom}</p>
                                         </div>
                                     </div>
                                 `;
@@ -305,7 +307,7 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
             </div>
 
             <!-- NOUVEAU : Résumé des classements -->
-            ${renderRankingsSummary(characters)}
+            ${renderRankingsSummary(characters, focusCharNom)}
             
             ${dottedDivider}
 
@@ -329,17 +331,6 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
 
             ${dottedDivider}
 
-            <!-- Deux colonnes pour Donjons & Synthèse Mystique -->
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:40px;">
-                <!-- Module 4 : Planificateur de Donjons -->
-                ${renderDomainPlanner(characters, focusCharNom, typeof window !== 'undefined' ? !!window.roadmapShowAllDomainChars : false)}
-
-                <!-- Module 5 : Conseiller de Synthèse Mystique -->
-                ${renderStrongboxAdvisor(characters, focusCharNom, typeof window !== 'undefined' ? !!window.roadmapShowAllStrongboxChars : false)}
-            </div>
-
-            ${dottedDivider}
-
             <!-- Deux colonnes pour Meilleures & Pires Pièces -->
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:40px;">
                 <!-- Module 6 : Hall of Fame (Meilleures Pièces) -->
@@ -354,6 +345,17 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
             <!-- Module 7 : Conseiller d'Élixir Sanctifiant (Transmutateur) -->
             ${renderElixirCraftAdvisor(characters, focusCharNom, typeof window !== 'undefined' ? (window.roadmapElixirBudget || 'all') : 'all')}
 
+            ${dottedDivider}
+
+            <!-- Deux colonnes pour Donjons & Synthèse Mystique -->
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:40px;">
+                <!-- Module 4 : Planificateur de Donjons -->
+                ${renderDomainPlanner(characters, focusCharNom, typeof window !== 'undefined' ? !!window.roadmapShowAllDomainChars : false)}
+
+                <!-- Module 5 : Conseiller de Synthèse Mystique -->
+                ${renderStrongboxAdvisor(characters, focusCharNom, typeof window !== 'undefined' ? !!window.roadmapShowAllStrongboxChars : false)}
+            </div>
+            
         </div>
     `;
 }

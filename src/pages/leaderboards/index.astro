@@ -151,9 +151,9 @@ try {
             </form>
             
             <div class="custom-select-container" style="position: relative; flex-shrink: 0; z-index: 50;">
-              <button id="sortDropdownBtn" type="button" style="justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 15px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; outline: none; height: 100%; min-height: 50px; display: flex; align-items: center; width: 100%; min-width: 220px;">
+              <button id="sortDropdownBtn" type="button" class="hover-bg-hover" style="justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 15px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; outline: none; height: 100%; min-height: 50px; display: flex; align-items: center; width: 100%; min-width: 220px;">
                 <span id="sort-current-label" class="dynamic-i18n" data-fr="Entrées (Décroissant)" data-en="Entries (Descending)">Entrées (Décroissant)</span>
-                <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 10px; height: 10px; opacity: 0.6; margin-left: 8px;">
+                <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 10px; height: 10px; opacity: 0.6; margin-left: 8px; transition: transform 0.2s ease;">
               </button>
 
               <div id="sort-custom-menu" class="custom-select-menu" style="min-width: 100%; top: calc(100% + 5px); bottom: auto; margin-bottom: 0; right: 0; border: none;">
@@ -173,11 +173,51 @@ try {
             </div>
           </div>
 
-          <div style="display: flex; color: var(--text-grey); font-size: 14px; align-items: center; gap: 5px;">
-            <p><span class="dynamic-i18n-count-lb" data-count={totalLeaderboards}>{totalLeaderboards} classements</span> |</p>
-            <p><span class="dynamic-i18n-count-entries" data-count={totalEntries}>{totalEntries} entrées</span></p>
+          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+            <div style="display: flex; color: var(--text-grey); font-size: 12px; align-items: center; gap: 5px;">
+              <p><span class="dynamic-i18n-count-lb" data-count={totalLeaderboards}>{totalLeaderboards} classements</span> |</p>
+              <p><span class="dynamic-i18n-count-entries" data-count={totalEntries}>{totalEntries} entrées</span></p>
+            </div>
+            
+            <div style="font-size: 11px; color: var(--text-grey); display: flex; gap: 6px; background: var(--bg-panel); padding: 5px 10px; border-radius: 8px; align-items: center;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span data-i18n="lb.entriesUpdateIn">Mise à jour des entrées dans : </span>
+              <span id="entries-update-timer" style="color: var(--accent-gold); font-weight: bold; font-family: monospace; font-size: 12px;">--:--</span>
+            </div>
           </div>
         </div>
+
+        <script>
+          function updateEntriesTimer() {
+            const timerEl = document.getElementById('entries-update-timer');
+            if (!timerEl) return;
+            
+            const now = new Date();
+            let nextUpdate = new Date(now);
+            const minutes = now.getMinutes();
+            // Le cron tourne toutes les 10 minutes (00, 10, 20...)
+            const next10Min = Math.ceil((minutes + 1) / 10) * 10;
+            
+            if (next10Min >= 60) {
+              nextUpdate.setHours(now.getHours() + 1, 0, 0, 0);
+            } else {
+              nextUpdate.setMinutes(next10Min, 0, 0);
+            }
+            
+            const diff = nextUpdate.getTime() - now.getTime();
+            
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            timerEl.textContent = `${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
+          }
+          
+          document.addEventListener('astro:page-load', () => {
+            updateEntriesTimer();
+            if ((window as any).entriesTimerInterval) clearInterval((window as any).entriesTimerInterval);
+            (window as any).entriesTimerInterval = setInterval(updateEntriesTimer, 1000);
+          });
+        </script>
 
         <div class="leaderboards-container" style="background: var(--bg-panel); border-radius: 8px; margin-top: 8px; padding: 5px;">
           <div class="leaderboards-head" style="display: flex; flex-direction: row; justify-content: space-between; margin: 7px 20px 10px 10px">
@@ -313,6 +353,13 @@ try {
 <style>
   .hover-highlight:hover {
     background-color: rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  .leaderboard-list-row {
+    transition: filter 0.2s ease;
+  }
+  .leaderboard-list-row:hover {
+    filter: brightness(1.2);
   }
   
   .leaderboards-details-wrapper {
@@ -493,10 +540,14 @@ try {
       sortDropdownBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         sortCustomMenu.classList.toggle('show');
+        const arrow = sortDropdownBtn.querySelector('img');
+        if (arrow) arrow.style.transform = sortCustomMenu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
       });
       
       document.addEventListener('click', () => {
         sortCustomMenu.classList.remove('show');
+        const arrow = sortDropdownBtn.querySelector('img');
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
       });
 
       document.querySelectorAll('#sort-custom-menu .custom-select-item').forEach(item => {
@@ -518,6 +569,8 @@ try {
           item.setAttribute('style', 'background: var(--bg-active);');
           
           sortCustomMenu.classList.remove('show');
+          const arrow = sortDropdownBtn.querySelector('img');
+          if (arrow) arrow.style.transform = 'rotate(0deg)';
           
           const list = document.getElementById('leaderboardsList');
           if (!list) return;
