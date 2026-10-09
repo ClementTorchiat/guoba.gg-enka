@@ -1810,6 +1810,10 @@ input:checked+.toggle-track .star-4 {
     color: var(--text-secondary);
 }
 
+.snav-item .char-card-name {
+    color: inherit;
+}
+
 .snav-item>div:first-child {
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
