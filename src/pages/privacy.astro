@@ -17,7 +17,8 @@ const privacySchema = {
     <div class="static-page">
       <div class="static-page-hero">
         <h1 class="static-page-title" data-i18n="page.privacy.title">Charte de confidentialité</h1>
-        <p class="static-page-lead" data-i18n="page.privacy.lead">Transparence sur les données que guoba.gg collecte — ou plutôt ne collecte pas.</p>
+        <p class="static-page-lead" data-i18n="page.privacy.lead">Transparence sur les données que guoba.gg traite pour son fonctionnement.</p>
+        <p class="static-note" style="margin-top: 1rem;" data-i18n="page.privacy.consent">En utilisant ce site, vous consentez expressément à la collecte et à l'utilisation des informations telles que décrites dans cette politique.</p>
       </div>
 
       <div class="static-page-body">
@@ -27,6 +28,44 @@ const privacySchema = {
             guoba.gg ne possède <strong>aucun compte utilisateur</strong>, ne demande aucune inscription, aucun email, aucun mot de passe.
           </p>
           <p data-i18n="page.privacy.q1.p2">Nous n'avons pas accès à votre compte HoYoverse. Votre UID est une information publique exposée nativement par le jeu.</p>
+        </section>
+
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.privacy.q1a.title">Données en ligne (Classements et Profil)</h2>
+          <p data-i18n-html="page.privacy.q1a.p1">
+            Si vous participez aux <strong>classements</strong> ou utilisez la connexion optionnelle, certaines données sont sauvegardées sur nos serveurs :
+          </p>
+          <ul class="static-list">
+            <li data-i18n-html="page.privacy.q1a.l1">
+              Vos <strong>builds Genshin Impact</strong> (personnages, artéfacts, armes) associés à votre UID. Ces données sont de toute façon publiques.
+            </li>
+            <li data-i18n-html="page.privacy.q1a.l2">
+              En cas de <strong>connexion Discord (OAuth)</strong>, nous stockons uniquement votre identifiant public Discord (ID), nom d'utilisateur, avatar et adresse email pour lier votre profil.
+            </li>
+          </ul>
+          <p class="static-note" data-i18n="page.privacy.q1a.p2">Ces données servent uniquement au fonctionnement du classement et de votre profil. Elles ne sont ni transmises ni vendues à des tiers.</p>
+        </section>
+
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.privacy.q1b.title">Hébergement, Conservation et Vos Droits (RGPD)</h2>
+          <ul class="static-list">
+            <li data-i18n-html="page.privacy.q1b.l1">
+              <strong>Hébergement :</strong> Les données en ligne sont hébergées de manière sécurisée via <strong>Supabase</strong>, sur des serveurs situés en <strong>Irlande (Union Européenne)</strong>.
+            </li>
+            <li data-i18n-html="page.privacy.q1b.l2">
+              <strong>Conservation :</strong> Vos données de connexion et vos builds sont conservés tant que vous utilisez activement le service. En cas d'inactivité prolongée (plus de 2 ans), ou sur simple demande, elles seront supprimées.
+            </li>
+            <li data-i18n-html="page.privacy.q1b.l3">
+              <strong>Vos droits :</strong> Conformément au RGPD, vous disposez d'un <strong>droit d'accès, de rectification et d'effacement</strong> de toutes les données vous concernant. Pour exercer ces droits, référez-vous à la section Contact.
+            </li>
+            <li data-i18n-html="page.privacy.q1b.l4">
+              <strong>Journaux serveurs :</strong> Des données techniques (comme votre adresse IP) sont temporairement enregistrées par nos prestataires pour des raisons de sécurité et de prévention des attaques.
+            </li>
+          </ul>
         </section>
 
         <div class="static-divider"></div>
@@ -57,6 +96,7 @@ const privacySchema = {
           <p data-i18n-html="page.privacy.q3.p2">
             Consultez la <a href="https://enka.network/privacy-policy/" target="_blank" rel="noopener">politique d'Enka.Network</a> pour les détails sur leur propre traitement des données.
           </p>
+          <p data-i18n="page.privacy.q3.p3">Cette politique de confidentialité s'applique uniquement à guoba.gg. Nous ne sommes pas responsables des pratiques de confidentialité des sites externes (y compris Enka.Network ou HoYoverse) vers lesquels nous créons des liens.</p>
         </section>
 
         <div class="static-divider"></div>
@@ -76,7 +116,10 @@ const privacySchema = {
         <section class="static-section">
           <h2 class="static-section-title" data-i18n="page.privacy.q5.title">Cookies & traceurs</h2>
           <p data-i18n-html="page.privacy.q5.p1">
-            guoba.gg n'utilise <strong>aucun cookie</strong> de tracking, aucune régie publicitaire, aucun outil d'analyse comportementale (Google Analytics, etc.).
+            guoba.gg n'utilise <strong>aucun cookie de suivi (tracking)</strong>, aucune régie publicitaire, aucun outil d'analyse comportementale (Google Analytics, etc.).
+          </p>
+          <p data-i18n-html="page.privacy.q5.p2">
+            Seuls des <strong>cookies ou jetons de session strictement nécessaires</strong> sont utilisés si vous choisissez de vous connecter via Discord, afin de maintenir votre connexion active.
           </p>
         </section>
 
@@ -85,18 +128,39 @@ const privacySchema = {
         <section class="static-section">
           <h2 class="static-section-title" data-i18n="page.privacy.q6.title">Contact</h2>
           <p data-i18n="page.privacy.q6.p1">Pour toute question relative à la confidentialité, rejoignez le Discord et adressez-vous à clem.</p>
-          <div class="static-links">
-            <a class="link-button" href="https://discord.gg/CZ5qxVqBVJ" target="_blank" rel="noopener noreferrer">
+          <div class="static-links" style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a class="link-button" href="https://discord.gg/RdeuCCHZ3P" target="_blank" rel="noopener noreferrer">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"
                 ><path
                   d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"
                 ></path></svg
               >Discord
             </a>
+            <a class="link-button" href="https://discord.com/users/483740473245171712" target="_blank" rel="noopener noreferrer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"
+                ><path
+                  d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"
+                ></path></svg
+              >clem
+            </a>
           </div>
         </section>
 
-        <p class="static-updated" data-i18n="page.privacy.date">Dernière mise à jour : juin 2026</p>
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.privacy.q7.title">Protection des mineurs</h2>
+          <p data-i18n="page.privacy.q7.p1">Ce service n'est pas destiné aux enfants de moins de 15 ans. Nous ne collectons pas sciemment d'informations personnelles auprès de mineurs.</p>
+        </section>
+
+        <div class="static-divider"></div>
+
+        <section class="static-section">
+          <h2 class="static-section-title" data-i18n="page.privacy.q8.title">Modifications de la charte</h2>
+          <p data-i18n="page.privacy.q8.p1">Nous nous réservons le droit de modifier cette charte de confidentialité à tout moment. Les changements prennent effet dès leur publication sur cette page.</p>
+        </section>
+
+        <p class="static-updated" data-i18n="page.privacy.date">Dernière mise à jour : octobre 2026</p>
       </div>
     </div>
   </StaticLayout>
