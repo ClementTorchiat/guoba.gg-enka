@@ -1,6 +1,7 @@
 // src/components/profile/GlobalEvaluation.js
 import { t } from '../../scripts/i18n.js';
 import { calculateMaxTheoreticalScore, calculateRNGQuality, calculateRollDistribution, getGradeColor } from '../../scripts/scoring.js';
+import { badgesConfig } from './badgesConfig.js';
 
 export function renderGlobalEvaluation(playerInfo, globalPersoData, uidStr = '') {
     const evalContainer = document.getElementById('global-evaluation');
@@ -64,10 +65,6 @@ export function renderGlobalEvaluation(playerInfo, globalPersoData, uidStr = '')
         }
     }
 
-    const badgesData = [];
-    const addBadge = (icon, name, desc, bgRgba, tooltipColor = "rgba(255, 255, 255, 0.4)") => {
-        badgesData.push({ icon, name, desc, bgRgba, tooltipColor });
-    };
 
     const isAbyss = (playerInfo?.towerStarIndex || 0) >= 36;
     const isTheater = (playerInfo?.theaterStarIndex || 0) >= 8;
@@ -182,13 +179,14 @@ export function renderGlobalEvaluation(playerInfo, globalPersoData, uidStr = '')
             const t2 = p.talents[1].level || 0;
             const t3 = p.talents[2].level || 0;
             if (t1 >= 10 && t2 >= 10 && t3 >= 10) tripleCrown = true;
+            if (t1 === 1 && t2 === 1 && t3 === 1 && p.level >= 80) pacifist = true;
         }
 
         if (p.weapon) {
             const weaponRarity = p.weapon.stars || p.weapon.rarity || 1;
             const weaponRefinement = p.weapon.rank || p.weapon.refinement || 1;
             if (p.rarity === 5 && p.cons === 6 && weaponRarity === 5 && weaponRefinement === 5) leviathan = true;
-            if (p.rarity === 5 && p.level >= 80 && weaponRarity <= 2) diogenes = true;
+            if (p.rarity === 5 && p.level >= 80 && weaponRarity <= 3) diogenes = true;
             if (p.level === 90 && weaponRarity === 3) p.ghettoKing = true;
             if (p.weapon.name && p.weapon.name.includes("Favonius")) favoniusCount++;
         }
@@ -245,130 +243,46 @@ export function renderGlobalEvaluation(playerInfo, globalPersoData, uidStr = '')
         if (p.weapon && (p.weapon.key === "EverlastingMoonglow" || p.weapon.key === "JadefallsSplendor")) hasDonutHonte = true;
     });
 
-    if (creatorUIDs.includes(uidStr)) {
-        addBadge("👑", t('badge.creator.name'), t('badge.creator.desc'), "linear-gradient(135deg, rgba(248, 250, 252, 0.7) 0%, rgba(56, 189, 248, 0.7) 50%, rgba(248, 250, 252, 0.7) 100%)");
-    }
-    if (contributorUIDs.includes(uidStr)) {
-        addBadge("🛠️", t('badge.contributor.name'), t('badge.contributor.desc'), "linear-gradient(135deg, #334155, #94a3b8)");
-    }
-    if (bestieUIDs.includes(uidStr)) {
-        addBadge("💖", t('badge.bestie.name'), t('badge.bestie.desc'), "linear-gradient(135deg, #fbcfe8, #e879f9, #be185d)");
-    }
-    if (eluDeCelestia) {
-        addBadge("🕊️", t('badge.celestia.name'), t('badge.celestia.desc'), "linear-gradient(135deg, rgba(250, 214, 32, 0.7) 0%, rgba(255, 255, 255, 0.7) 40%, rgba(56, 189, 248, 0.7) 100%)");
-    }
-    if (hasSandrone) {
-        addBadge("⚙️", t('badge.sandrone.name'), t('badge.sandrone.desc'), "linear-gradient(135deg, #5053BB 0%, #656788 50%, #91101D 100%)");
-    }
-    if (isAbyss && isTheater && isStygian) {
-        addBadge("👑", t('badge.masterEndgame.name'), t('badge.masterEndgame.desc'), "linear-gradient(135deg, rgba(230,190,255,0.7), rgba(154,204,255,0.7), rgba(255,204,229,0.7), rgba(253,245,169,0.7))");
-    } else {
-        if (isAbyss) addBadge("🏆", t('badge.abyssArchon.name'), t('badge.abyssArchon.desc'), "rgba(37, 51, 85, 0.6)");
-        if (isTheater) addBadge("🎭", t('badge.theaterStar.name'), t('badge.theaterStar.desc'), "rgba(82, 42, 138, 0.6)");
-        if (isStygian && !isStygianDiff6) addBadge("🐉", t('badge.carnageKing.name'), t('badge.carnageKing.desc'), "rgba(139, 45, 139, 0.6)");
-    }
-    if (isStygianDiff6 && stygianSec !== null && stygianSec <= 180) {
-        addBadge("🌌", t('badge.legend.name'), t('badge.legend.desc'), "linear-gradient(135deg, rgba(30,27,75,0.8), rgba(109,40,217,0.7), rgba(250,204,21,0.6))");
-    } else if (isStygianDiff6) {
-        addBadge("🩸", t('badge.carnagePlague.name'), t('badge.carnagePlague.desc'), "linear-gradient(135deg, rgba(153,27,27,0.7), rgba(220,38,38,0.7))");
-    }
-    if (playerInfo?.finishAchievementNum >= 1700) {
-        addBadge("📜", t('badge.archivist.name'), t('badge.archivist.desc'), "linear-gradient(135deg, rgba(6, 78, 59, 0.95), rgba(16, 185, 129, 0.85), rgba(253, 224, 71, 0.85))");
-    }
-    if (playerInfo?.level === 60) addBadge("🏅", t('badge.veteran.name'), t('badge.veteran.desc'), "rgba(207, 156, 79, 0.6)");
-    if (avgEff >= 95) addBadge("🌟", t('badge.perfection.name'), t('badge.perfection.desc'), "linear-gradient(135deg, rgba(255,215,0,0.7), rgba(255,255,255,0.6))");
-
-    if (globalPersoData.length === 1) addBadge("🃏", t('badge.oneTrick.name', globalPersoData[0].nom), t('badge.oneTrick.desc', globalPersoData[0].nom), "rgba(107, 114, 128, 0.6)");
-    else if (globalPersoData.length < 12) addBadge("🥷", t('badge.hiddenCollection.name'), t('badge.hiddenCollection.desc'), "rgba(107, 114, 128, 0.6)");
-
-    const c6FiveStars = globalPersoData.filter(p => p.rarity === 5 && p.cons === 6).length;
-    if (c6FiveStars > 1) addBadge("🐋", t('badge.narval.name'), t('badge.narval.desc'), "linear-gradient(135deg, rgba(30, 58, 138, 0.9), rgba(49, 46, 129, 0.9), rgba(167, 139, 250, 0.8))");
-    else if (c6FiveStars === 1) addBadge("🐳", t('badge.whale.name'), t('badge.whale.desc'), "rgba(59, 172, 197, 0.6)");
-    if (avgRNG > 80) addBadge("🍀", t('badge.lucky.name'), t('badge.lucky.desc', avgRNG.toFixed(1)), "rgba(61, 160, 97, 0.6)");
-    else if (avgRNG < 40 && validChars > 0) addBadge("🌧️", t('badge.cursed.name'), t('badge.cursed.desc', avgRNG.toFixed(1)), "rgba(107, 114, 128, 0.6)");
-
-    if (uidStr.length === 9 && uidStr.substring(1, 3) === "00") {
-        addBadge("🕰️", t('badge.og.name'), t('badge.og.desc'), "linear-gradient(135deg, rgba(120, 113, 108, 0.9), rgba(63, 63, 70, 0.9), rgba(212, 175, 55, 0.7))");
-    }
-    if (leviathan) addBadge("🔱", t('badge.leviathan.name'), t('badge.leviathan.desc'), "linear-gradient(135deg, rgba(6,182,212,0.8), rgba(59,130,246,0.8), rgba(30,58,138,0.8))");
-    if (level100Reached) addBadge("💫", t('badge.stellaFortuna.name'), t('badge.stellaFortuna.desc'), "linear-gradient(135deg, rgba(2,6,23,0.7), rgba(37,99,235,0.7), rgba(56,189,248,0.7))");
-    if (holyGrail) addBadge("🏆", t('badge.holyGrail.name'), t('badge.holyGrail.desc'), "linear-gradient(135deg, #a16207 0%, #facc15 50%, #a16207 100%)");
-    if (tripleCrown) addBadge("👑", t('badge.tripleCrown.name'), t('badge.tripleCrown.desc'), "linear-gradient(135deg, rgba(251,191,36,0.8), rgba(245,158,11,0.8), rgba(217,119,6,0.8))");
-    if (akashamaxxing) addBadge("📈", t('badge.akasha.name'), t('badge.akasha.desc'), "linear-gradient(135deg, rgba(236,72,153,0.7), rgba(168,85,247,0.7))");
-    if (hasFurinaWithPipe) addBadge("🪠", t('badge.plombier.name'), t('badge.plombier.desc'), "linear-gradient(135deg, #1e3a8a, #d97706)");
-    if (hasRaidenCatch) addBadge("🐟", t('badge.raidenCatch.name'), t('badge.raidenCatch.desc'), "linear-gradient(135deg, #7c3aed, #0ea5e9)");
-    if (hasZhongliTassel) addBadge("🪨", t('badge.zhongliTassel.name'), t('badge.zhongliTassel.desc'), "linear-gradient(135deg, #ca8a04, #475569)");
-
-    if (hasXianglingCatch) addBadge("🌶️", t('badge.xianglingCatch.name'), t('badge.xianglingCatch.desc'), "linear-gradient(135deg, #ef4444, #f59e0b)");
-    if (hasMagieInterdite) addBadge("📖", t('badge.magieInterdite.name'), t('badge.magieInterdite.desc'), "linear-gradient(135deg, #a855f7, #ec4899)");
-    if (hasBennettC6) addBadge("🔴", t('badge.bennettC6.name'), t('badge.bennettC6.desc'), "rgba(220, 38, 38, 0.6)");
-    if (hasZibaiAube) addBadge("🐴", t('badge.zibaiAube.name'), t('badge.zibaiAube.desc'), "linear-gradient(135deg, #54cabb, #2c786c)");
-    if (hasDonutHonte) addBadge("🍩", t('badge.donutHonte.name'), t('badge.donutHonte.desc'), "linear-gradient(135deg, #ec4899, #8b5cf6)");
-    if (enfantCount >= 3) addBadge("🍼", t('badge.creche.name'), t('badge.creche.desc'), "linear-gradient(135deg, #fbcfe8, #f472b6)");
-    if (animalCount >= 3) addBadge("🐾", t('badge.animalier.name'), t('badge.animalier.desc'), "linear-gradient(135deg, #b45309, #d97706)");
-
-    if (fatuiCount >= 3) addBadge("❄️", t('badge.fatui.name'), t('badge.fatui.desc'), "linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(22, 78, 99, 0.9), rgba(8, 145, 178, 0.8))");
-    if (mermoniaCount >= 3) addBadge("⚖️", t('badge.mermonia.name'), t('badge.mermonia.desc'), "linear-gradient(135deg, rgba(20, 83, 101, 0.9) 0%, rgba(139, 131, 118, 0.95) 100%)");
-    if (hearthCount >= 3) addBadge("🎩", t('badge.hearth.name'), t('badge.hearth.desc'), "linear-gradient(135deg, #7f1d1d, #1c1917, #f5f5f4)");
-    if (kamisatoCount >= 3) addBadge("🪭", t('badge.kamisato.name'), t('badge.kamisato.desc'), "linear-gradient(135deg, #e0f2fe, #1e3a8a, #991b1b)");
-    if (aratakiCount >= 2) addBadge("🎸", t('badge.arataki.name'), t('badge.arataki.desc'), "linear-gradient(135deg, #ca8a04, #7e22ce)");
-    if (adeptiCount >= 3) addBadge("🏔️", t('badge.adepti.name'), t('badge.adepti.desc'), "linear-gradient(135deg, #0f766e, #064e3b, #b45309)");
-    if (sumeruCount === 4) addBadge("🏛️", t('badge.sumeru.name'), t('badge.sumeru.desc'), "linear-gradient(135deg, #064e3b, #10b981, #b45309)");
-    if (healerCount >= 3) addBadge("🏥", t('badge.hospital.name'), t('badge.hospital.desc'), "linear-gradient(135deg, rgba(6, 78, 59, 0.9), rgba(5, 150, 105, 0.8))");
-    if (playerInfo?.level >= 55 && playerInfo?.finishAchievementNum !== null && playerInfo?.finishAchievementNum < 1000) {
-        addBadge("📸", t('badge.tourist.name'), t('badge.tourist.desc'), "linear-gradient(135deg, rgba(180, 83, 9, 0.9), rgba(3, 105, 161, 0.9))");
-    }
-    if (anomalieOffensive) addBadge("💥", t('badge.offensiveAnomaly.name'), t('badge.offensiveAnomaly.desc'), "linear-gradient(135deg, rgba(153, 27, 27, 0.8), rgba(38, 38, 38, 0.9), rgba(220, 38, 38, 0.8))");
-    if (starterCount === 3) addBadge("👶", t('badge.starter.name'), t('badge.starter.desc'), "linear-gradient(135deg, #a7f3d0, #3b82f6)");
-    if (archonCount >= 4) addBadge("🏛️", t('badge.divine.name'), t('badge.divine.desc'), "linear-gradient(135deg, rgba(255,215,0,0.6), rgba(255,255,255,0.4))");
-    if (allInCrit) addBadge("🎯", t('badge.allInCrit.name'), t('badge.allInCrit.desc'), "linear-gradient(135deg, rgba(220,38,38,0.8), rgba(249,115,22,0.8))");
-    if (surgicalPrec) addBadge("🎯", t('badge.surgical.name'), t('badge.surgical.desc'), "rgba(220, 38, 38, 0.6)");
-    if (highER) addBadge("⚡", t('badge.powerPlant.name'), t('badge.powerPlant.desc'), "rgba(207, 156, 79, 0.6)");
-    if (asthmatic) addBadge("😮‍💨", t('badge.asthmatic.name'), t('badge.asthmatic.desc'), "rgba(107, 114, 128, 0.6)");
-    if (alchemist) addBadge("🧪", t('badge.alchemist.name'), t('badge.alchemist.desc'), "rgba(61, 160, 97, 0.6)");
-    if (casino) addBadge("🎰", t('badge.casino.name'), t('badge.casino.desc'), "rgba(184, 63, 63, 0.6)");
-    if (hpSack) addBadge("🛡️", t('badge.hpTank.name'), t('badge.hpTank.desc'), "rgba(207, 156, 79, 0.6)");
-    if (impostor) addBadge("🤡", t('badge.impostor.name'), t('badge.impostor.desc'), "rgba(184, 63, 63, 0.6)");
-    if (qiqiCurse) addBadge("🧟‍♀️", t('badge.qiqiCurse.name'), t('badge.qiqiCurse.desc'), "rgba(107, 114, 128, 0.6)");
-    if (nudist) addBadge("🩳", t('badge.nudist.name'), t('badge.nudist.desc'), "rgba(107, 114, 128, 0.6)");
-    if (internFound) addBadge("👶", t('badge.intern.name'), t('badge.intern.desc'), "rgba(107, 114, 128, 0.6)");
-    if (aloyFound) addBadge("⏳", t('badge.aloy.name'), t('badge.aloy.desc'), "rgba(107, 114, 128, 0.6)");
-    if (globalPersoData.some(p => p.ghettoKing)) addBadge("🪵", t('badge.tiersMonde.name'), t('badge.tiersMonde.desc'), "rgba(139, 69, 19, 0.6)");
-    if (level89Syndrome) addBadge("🪙", t('badge.89.name'), t('badge.89.desc'), "rgba(107, 114, 128, 0.6)");
-    if (level67EasterEgg) addBadge("👀", "67", "SIX SEVEEEEN", "rgba(168, 85, 247, 0.6)");
-    if (emblemFan >= 3) addBadge("👘", t('badge.emblemFan.name'), t('badge.emblemFan.desc'), "rgba(168, 85, 247, 0.6)");
-    if (favoniusCount >= 3) addBadge("🗡️", t('badge.favSect.name'), t('badge.favSect.desc'), "rgba(107, 114, 128, 0.6)");
-
-    if (rainbowFan >= globalPersoData.length / 3 && globalPersoData.length >= 3) {
-        addBadge("🌈", t('badge.rainbow.name'), t('badge.rainbow.desc'), "linear-gradient(90deg, rgba(255,0,0,0.4), rgba(255,165,0,0.4), rgba(255,255,0,0.4), rgba(0,128,0,0.4), rgba(0,0,255,0.4), rgba(75,0,130,0.4), rgba(238,130,238,0.4))");
-    }
-    if (pacifist) addBadge("🕊️", t('badge.pacifist.name'), t('badge.pacifist.desc'), "rgba(107, 114, 128, 0.6)");
-    if (globalPersoData.length >= 4 && fourStarCount > globalPersoData.length / 2) {
-        addBadge("🧑‍🌾", t('badge.f2p.name'), t('badge.f2p.desc'), "rgba(107, 114, 128, 0.6)");
-    }
-    if (globalPersoData.length >= 8 && fourStarCount === 0) {
-        addBadge("💎", t('badge.champLeague.name'), t('badge.champLeague.desc'), "rgba(59, 130, 246, 0.6)");
-    }
-    if (globalPersoData.length >= 4 && maxFriendshipCount === globalPersoData.length) {
-        addBadge("🤝", t('badge.bondUnbreakable.name'), t('badge.bondUnbreakable.desc'), "rgba(238, 130, 238, 0.6)");
-    }
-
     let monopolyElem = null;
+    let supremacyElem = null;
     Object.entries(elementCount).forEach(([elem, count]) => {
         if (count === globalPersoData.length && globalPersoData.length >= 4) {
             monopolyElem = elem;
-            addBadge("🔮", t('badge.monopoly.name', elem.charAt(0).toUpperCase() + elem.slice(1)), t('badge.monopoly.desc'), "linear-gradient(135deg, rgba(37,51,85,0.8), rgba(168,85,247,0.7))");
         } else if (count > Math.ceil(globalPersoData.length / 2) && globalPersoData.length >= 4 && !monopolyElem) {
-            addBadge("👑", t('badge.supremacy.name', elem.charAt(0).toUpperCase() + elem.slice(1)), t('badge.supremacy.desc'), "rgba(61, 160, 97, 0.6)");
+            supremacyElem = elem;
         }
     });
 
-    const getBadgePriority = (bg) => {
-        if (bg.includes('linear-gradient')) return 1;
-        if (bg.includes('107, 114, 128')) return 3;
-        return 2;
+    const stats = {
+        uidStr, playerInfo, avgEff, avgScore, avgRNG, validChars, globalPersoData,
+        isAbyss, isTheater, isStygian, isStygianDiff6, stygianSec,
+        holyGrail, level89Syndrome, level67EasterEgg,
+        highER, asthmatic, casino, alchemist, allInCrit,
+        bruteForce, surgicalPrec, hospital, brickWall,
+        rainbowFan, emblemFan, pacifist, hpSack, impostor,
+        tripleCrown, leviathan, qiqiCurse, diogenes, nudist, level100Reached,
+        fourStarCount, maxFriendshipCount,
+        archonCount, favoniusCount, aloyFound, internFound,
+        elementCount, akashamaxxing, fatuiCount, healerCount, eluDeCelestia, anomalieOffensive,
+        starterCount, hasSandrone, hasFurinaWithPipe, hasRaidenCatch, hasZhongliTassel,
+        hearthCount, kamisatoCount, aratakiCount, adeptiCount, sumeruCount, mermoniaCount,
+        hasXianglingCatch, hasMagieInterdite, hasBennettC6, enfantCount, animalCount,
+        hasZibaiAube, hasDonutHonte, hasGhettoKing: globalPersoData.some(p => p.ghettoKing),
+        c6FiveStars: globalPersoData.filter(p => p.rarity === 5 && p.cons === 6).length,
+        monopolyElem, supremacyElem
     };
-    badgesData.sort((a, b) => getBadgePriority(a.bgRgba) - getBadgePriority(b.bgRgba));
+
+    const badgesData = badgesConfig
+        .filter(b => b.condition(stats))
+        .map(b => ({
+            icon: b.icon,
+            name: b.getName ? b.getName(stats) : t(b.nameKey),
+            desc: b.getDesc ? b.getDesc(stats) : t(b.descKey),
+            bgRgba: b.bg,
+            tooltipColor: b.tooltipColor,
+            priority: b.priority
+        }))
+        .sort((a, b) => a.priority - b.priority);
 
     const badges = badgesData.map(b => {
         const safeDesc = b.desc.replace(/'/g, "\\'");
