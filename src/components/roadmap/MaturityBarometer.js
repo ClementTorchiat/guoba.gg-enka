@@ -163,8 +163,8 @@ export function calculateAccountMaturity(characters) {
         gradeColor = getGradeColor('F');
     }
 
-    let maturityColor = '#22c55e';
-    if (globalIndex >= 80) maturityColor = '#22c55e';
+    let maturityColor = 'var(--accent-green)';
+    if (globalIndex >= 80) maturityColor = 'var(--accent-green)';
     else if (globalIndex >= 60) maturityColor = '#3b82f6';
     else if (globalIndex >= 40) maturityColor = '#eab308';
     else maturityColor = '#ef4444';
@@ -232,7 +232,7 @@ export function renderMaturityBarometer(characters) {
                         </div>
                         <div style="display:flex; align-items:center; gap:8px;">
                             <div style="flex:1; height:6px; background:rgba(255,255,255,0.08); border-radius:3px; overflow:hidden; position:relative;">
-                                <div style="position:absolute; top:0; left:0; bottom:0; width:${item.pct}%; background:linear-gradient(90deg, #3b82f6, ${item.pct >= 80 ? '#22c55e' : '#f59e0b'}); border-radius:3px; transition:width 0.6s ease;"></div>
+                                <div style="position:absolute; top:0; left:0; bottom:0; width:${item.pct}%; background:linear-gradient(90deg, #3b82f6, ${item.pct >= 80 ? 'var(--accent-green)' : '#f59e0b'}); border-radius:3px; transition:width 0.6s ease;"></div>
                             </div>
                             <span style="font-size:11px; color:var(--text-primary); min-width:32px; text-align:right;">${item.pct}%</span>
                         </div>

@@ -74,7 +74,7 @@ export function renderRollDetailsSection(persoObj) {
         return `
             <div style="width: 100%; background:var(--bg-panel); padding:10px 12px; border-radius:8px;">
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom:8px;">
-                    <img src="${art.icon}" style="width:38px; height:38px; border-radius:8px; background-color: rgba(0,0,0,0.1)" alt="">
+                    <img src="${art.icon}" style="width:38px; height:38px; border-radius:8px; background-color: var(--shadow-subtle)" alt="">
                     <div style="display:flex; flex-direction:column; justify-content:center; gap: 2px;">
                         <p style="font-size:12px; color:var(--text-primary); overflow:hidden; text-overflow:ellipsis; margin:0;">
                             ${pieceName}
@@ -106,7 +106,7 @@ export function renderRollDetailsSection(persoObj) {
                                     </g>
                                     <defs>
                                         <clipPath id="clip0_976_885">
-                                            <rect width="575" height="754" fill="white"/>
+                                            <rect width="575" height="754" fill="var(--text-always-white)"/>
                                         </clipPath>
                                     </defs>
                                 </svg>

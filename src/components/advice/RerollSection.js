@@ -16,7 +16,7 @@ export function renderRerollSection(persoObj, config) {
         return `
             <div style="width: 100%; background:var(--bg-panel); padding:12px; border-radius:8px; border-left: 3px solid ${metrics.badge.color}">
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
-                    <img src="${art.icon}" style="width:42px; height:42px; border-radius:8px; background-color: rgba(0,0,0,0.1)" alt="">
+                    <img src="${art.icon}" style="width:42px; height:42px; border-radius:8px; background-color: var(--shadow-subtle)" alt="">
                     <div style="display:flex; flex-direction:column; justify-content:center; gap: 3px;">
                         <p style="font-size:12px; color:var(--text-primary); overflow:hidden; text-overflow:ellipsis; margin:0;">
                             ${pieceName}
@@ -30,10 +30,10 @@ export function renderRerollSection(persoObj, config) {
                 <div style="margin-bottom:8px;">
                     <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-grey); margin-bottom: 4px;">
                         <p style="margin:0;">${t('analysis.s6.gainPotential')}</p>
-                        <p style="color:${metrics.potential > 60 ? '#22c55e' : '#ccc'}; margin:0;">${metrics.potential}%</p>
+                        <p style="color:${metrics.potential > 60 ? 'var(--accent-green)' : '#ccc'}; margin:0;">${metrics.potential}%</p>
                     </div>
-                    <div style="width:100%; height:4px; background:#333; border-radius:2px;">
-                        <div style="width:${metrics.potential}%; height:100%; background:linear-gradient(90deg, #3b82f6, #22c55e); border-radius:2px;"></div>
+                    <div style="width:100%; height:4px; background:var(--shadow-subtle); border-radius:2px;">
+                        <div style="width:${metrics.potential}%; height:100%; background:linear-gradient(90deg, #3b82f6, var(--accent-green)); border-radius:2px;"></div>
                     </div>
                 </div>
 
@@ -42,7 +42,7 @@ export function renderRerollSection(persoObj, config) {
                         <p style="margin:0;">${t('analysis.s6.lossRisk')}</p>
                         <p style="color:${metrics.risk > 60 ? '#ff4d4d' : '#ccc'}; margin:0;">${metrics.risk}%</p>
                     </div>
-                    <div style="width:100%; height:4px; background:#333; border-radius:2px;">
+                    <div style="width:100%; height:4px; background:var(--shadow-subtle); border-radius:2px;">
                         <div style="width:${metrics.risk}%; height:100%; background:linear-gradient(90deg, #f59e0b, #ff4d4d); border-radius:2px;"></div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@ export function renderRerollSection(persoObj, config) {
                                     </g>
                                     <defs>
                                     <clipPath id="clip0_976_912">
-                                    <rect width="181.79" height="170.59" fill="white"/>
+                                    <rect width="181.79" height="170.59" fill="var(--text-always-white)"/>
                                     </clipPath>
                                     </defs>
                                 </svg>

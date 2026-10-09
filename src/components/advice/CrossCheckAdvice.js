@@ -135,12 +135,12 @@ export function renderCrossCheckAdvice(charIndex) {
             <div style="flex: 1; min-width: 200px; background:var(--bg-panel); border-radius:8px; padding:11px; display:flex; flex-direction:column; gap:9px; border-top:2px solid var(--accent-gold); box-sizing:border-box;">
                 <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
                     <div style="position:relative; flex-shrink:0;">
-                        <img src="${swap.currArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);">
+                        <img src="${swap.currArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: var(--shadow-subtle);">
                         <img src="${swap.currCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid var(--bg-panel);">
                     </div>
                     <span style="color:var(--accent-gold); font-size:16px;">⇒</span>
                     <div style="position:relative; flex-shrink:0;">
-                        <img src="${swap.newArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.1);">
+                        <img src="${swap.newArt.icon}" style="width:52px; height:52px; border-radius: 8px; background-color: var(--shadow-subtle);">
                         <img src="${swap.otherCharIcon}" style="position:absolute; bottom:-4px; right:-4px; width:30px; height:30px; border-radius:50%; border:1.5px solid var(--bg-panel);">
                     </div>
                 </div>

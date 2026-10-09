@@ -51,8 +51,8 @@ const bulbs = Array.from({ length: 30 });
     <div class="santa-hat-icon">
         <svg viewBox="0 0 100 100" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
             <path d="M 25,65 Q 45,5 75,30 L 85,65 Z" fill="#d32f2f"></path>
-            <circle cx="75" cy="30" r="12" fill="#ffffff"></circle>
-            <rect x="15" y="60" width="80" height="22" rx="10" fill="#ffffff"></rect>
+            <circle cx="75" cy="30" r="12" fill="var(--text-always-white)"></circle>
+            <rect x="15" y="60" width="80" height="22" rx="10" fill="var(--text-always-white)"></rect>
         </svg>
     </div>
 </template>
@@ -81,7 +81,7 @@ const bulbs = Array.from({ length: 30 });
     .snowflake {
         position: absolute;
         top: -30px;
-        color: white;
+        color: var(--text-always-white);
         user-select: none;
         animation: fall linear infinite;
         text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
@@ -162,7 +162,7 @@ const bulbs = Array.from({ length: 30 });
         transform: rotate(-20deg);
         pointer-events: none;
         z-index: 10;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        filter: drop-shadow(0 2px 4px var(--shadow-subtle));
     }
 </style>
 

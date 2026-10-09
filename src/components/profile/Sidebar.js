@@ -45,7 +45,7 @@ export function renderSidebarList(characters, activeOriginalIndex = 0, sortState
 
         const score = p.evaluation?.score || 0;
         const gradeLetter = p.evaluation?.grade?.letter || '?';
-        const gradeColor = p.evaluation?.grade?.color || '#fff';
+        const gradeColor = p.evaluation?.grade?.color || 'var(--text-always-white)';
         const lbId = p.activeBuild ? (p.activeBuild.leaderboard_id || p.activeBuild.key) : null;
         const rankInfo = lbId ? ranks[lbId] : null;
         let topText = '';

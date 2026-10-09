@@ -211,7 +211,7 @@ if (!pageError && !targetCharConfig) {
 ---
 
 {pageError ? (
-  <div style="padding: 50px; background: #fff; color: #f00; font-family: sans-serif;">
+  <div style="padding: 50px; background: var(--text-always-white); color: #f00; font-family: sans-serif;">
     <h1 style="color: #f00;">Erreur Serveur (500)</h1>
     <p>Une erreur s'est produite lors du rendu côté serveur sur Cloudflare :</p>
     <pre style="background: #eee; padding: 15px; overflow-x: auto; color: #333;">{pageError}</pre>
@@ -290,15 +290,15 @@ if (!pageError && !targetCharConfig) {
                 <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
                   <p data-i18n="lb.associatedTeam">Équipe associée</p>
                   <svg onmouseenter={"showGlobalTooltip(this, window.t('lb.associatedTeamTooltip'), `rgba(255,255,255,0.4)`)"} onmouseleave="hideGlobalTooltip()" style="cursor: pointer;" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 7.5C14 3.91015 11.0899 1 7.5 1C3.91015 1 1 3.91015 1 7.5C1 11.0899 3.91015 14 7.5 14V15C3.35786 15 0 11.6421 0 7.5C0 3.35786 3.35786 0 7.5 0C11.6421 0 15 3.35786 15 7.5C15 11.6421 11.6421 15 7.5 15V14C11.0899 14 14 11.0899 14 7.5Z" fill="white"></path>
-                    <path d="M9.95301 5.49967C9.84324 4.97607 9.53223 4.5997 9.03915 4.35734C8.52821 4.10547 7.97109 4.03764 7.43358 4C6.49445 4.01613 5.75831 4.35072 5.24519 5.08029C5.11582 5.26434 4.97469 5.45211 5.00387 5.69488C5.03393 5.94345 5.28004 6.07994 5.50741 5.95751C5.65464 5.87852 5.79926 5.7776 5.90902 5.65725C6.29626 5.23208 6.76321 5.0104 7.36563 5.06747C7.74676 5.10387 8.10656 5.37642 8.16449 5.68909C8.23244 6.05719 8.04296 6.35332 7.62131 6.51172C7.43532 6.58162 7.23713 6.62174 7.04765 6.6846C6.68742 6.80413 6.44915 7.02498 6.36203 7.39391C6.21524 8.01553 6.4387 8.53003 6.84074 8.99821C6.95356 9.12932 7.1095 9.19095 7.28678 9.15579C7.46276 9.12105 7.5538 8.98953 7.60433 8.83898C7.65093 8.69919 7.67881 8.55361 7.71192 8.40968C7.81167 7.97872 7.99635 7.81287 8.45721 7.73305C9.074 7.62634 9.57492 7.35958 9.82321 6.78262C10.0005 6.37069 10.0458 5.94138 9.95301 5.49967Z" fill="white"></path>
-                    <path d="M7.21796 9.29683C6.68263 9.30096 6.31586 9.64879 6.31804 10.1501C6.32022 10.6542 6.68567 10.9971 7.22362 11C7.7546 11.0029 8.11875 10.6542 8.11745 10.1451C8.11571 9.63349 7.7546 9.29269 7.21796 9.29683Z" fill="white"></path>
+                    <path d="M14 7.5C14 3.91015 11.0899 1 7.5 1C3.91015 1 1 3.91015 1 7.5C1 11.0899 3.91015 14 7.5 14V15C3.35786 15 0 11.6421 0 7.5C0 3.35786 3.35786 0 7.5 0C11.6421 0 15 3.35786 15 7.5C15 11.6421 11.6421 15 7.5 15V14C11.0899 14 14 11.0899 14 7.5Z" fill="var(--text-always-white)"></path>
+                    <path d="M9.95301 5.49967C9.84324 4.97607 9.53223 4.5997 9.03915 4.35734C8.52821 4.10547 7.97109 4.03764 7.43358 4C6.49445 4.01613 5.75831 4.35072 5.24519 5.08029C5.11582 5.26434 4.97469 5.45211 5.00387 5.69488C5.03393 5.94345 5.28004 6.07994 5.50741 5.95751C5.65464 5.87852 5.79926 5.7776 5.90902 5.65725C6.29626 5.23208 6.76321 5.0104 7.36563 5.06747C7.74676 5.10387 8.10656 5.37642 8.16449 5.68909C8.23244 6.05719 8.04296 6.35332 7.62131 6.51172C7.43532 6.58162 7.23713 6.62174 7.04765 6.6846C6.68742 6.80413 6.44915 7.02498 6.36203 7.39391C6.21524 8.01553 6.4387 8.53003 6.84074 8.99821C6.95356 9.12932 7.1095 9.19095 7.28678 9.15579C7.46276 9.12105 7.5538 8.98953 7.60433 8.83898C7.65093 8.69919 7.67881 8.55361 7.71192 8.40968C7.81167 7.97872 7.99635 7.81287 8.45721 7.73305C9.074 7.62634 9.57492 7.35958 9.82321 6.78262C10.0005 6.37069 10.0458 5.94138 9.95301 5.49967Z" fill="var(--text-always-white)"></path>
+                    <path d="M7.21796 9.29683C6.68263 9.30096 6.31586 9.64879 6.31804 10.1501C6.32022 10.6542 6.68567 10.9971 7.22362 11C7.7546 11.0029 8.11875 10.6542 8.11745 10.1451C8.11571 9.63349 7.7546 9.29269 7.21796 9.29683Z" fill="var(--text-always-white)"></path>
                   </svg>
                 </div>
                 {
                   allVariantsForThisId.length > 1 && (
                     <div class="team-variant-dropdown-container data-select-container" style="position: relative; padding:0; border:none; background:transparent; height: 36px;">
-                      <button type="button" class="team-variant-btn custom-dropdown-btn" style="display: flex; justify-content: space-between; align-items: center; border: none; background: rgba(0, 0, 0, 0.25); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: normal; height: 36px; box-sizing: border-box; min-width: 150px; max-width: 250px;">
+                      <button type="button" class="team-variant-btn custom-dropdown-btn" style="display: flex; justify-content: space-between; align-items: center; border: none; background: var(--shadow-subtle); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: normal; height: 36px; box-sizing: border-box; min-width: 150px; max-width: 250px;">
                         <span class="team-variant-label dynamic-i18n" data-fr={allVariantsForThisId[0].name?.fr || "Variante 1"} data-en={allVariantsForThisId[0].name?.en || "Variant 1"} style="pointer-events:none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;">
                           {allVariantsForThisId[0].name?.fr || "Variante 1"}
                         </span>
@@ -367,7 +367,7 @@ if (!pageError && !targetCharConfig) {
                             <img loading="lazy" decoding="async" style={`width: 100%; height: 100%; border-radius: 8px; background: ${member.bg}; ${member.isMain ? "border: 2px solid rgba(255, 255, 255, 0.5);" : ""}`} src={member.iconUrl} onerror="this.onerror=null; this.style.display='none'" />
                             {member.weapon && teammateAssets[member.weapon as keyof typeof teammateAssets] && <img src={teammateAssets[member.weapon as keyof typeof teammateAssets]} loading="lazy" decoding="async" title={member.weapon} class="dynamic-i18n-title" data-fr={assetTranslations[member.weapon]?.fr || member.weapon} data-en={assetTranslations[member.weapon]?.en || member.weapon} style="position:absolute; bottom:0; left:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />}
                             {member.set && teammateAssets[member.set as keyof typeof teammateAssets] && <img src={teammateAssets[member.set as keyof typeof teammateAssets]} loading="lazy" decoding="async" title={member.set} class="dynamic-i18n-title" data-fr={assetTranslations[member.set]?.fr || member.set} data-en={assetTranslations[member.set]?.en || member.set} style="position:absolute; bottom:0; right:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />}
-                            {member.cons !== undefined && member.cons > 0 && <span style="position:absolute; top:2px; right:4px; font-size:12px; font-weight:700; color:#fff; text-shadow:0 0 3px #000; z-index:10;">C{member.cons}</span>}
+                            {member.cons !== undefined && member.cons > 0 && <span style="position:absolute; top:2px; right:4px; font-size:12px; font-weight:700; color:var(--text-always-white); text-shadow:0 0 3px #000; z-index:10;">C{member.cons}</span>}
                           </div>
                         ))}
                       </div>
@@ -385,9 +385,9 @@ if (!pageError && !targetCharConfig) {
                       ER Recommandée :
                     </p>
                     <svg onmouseenter="showGlobalTooltip(this, window.t('lb.erTooltip'), 'rgba(255,255,255,0.4)')" onmouseleave="hideGlobalTooltip()" style="cursor: pointer;" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M14 7.5C14 3.91015 11.0899 1 7.5 1C3.91015 1 1 3.91015 1 7.5C1 11.0899 3.91015 14 7.5 14V15C3.35786 15 0 11.6421 0 7.5C0 3.35786 3.35786 0 7.5 0C11.6421 0 15 3.35786 15 7.5C15 11.6421 11.6421 15 7.5 15V14C11.0899 14 14 11.0899 14 7.5Z" fill="white" />
-                      <path d="M9.95301 5.49967C9.84324 4.97607 9.53223 4.5997 9.03915 4.35734C8.52821 4.10547 7.97109 4.03764 7.43358 4C6.49445 4.01613 5.75831 4.35072 5.24519 5.08029C5.11582 5.26434 4.97469 5.45211 5.00387 5.69488C5.03393 5.94345 5.28004 6.07994 5.50741 5.95751C5.65464 5.87852 5.79926 5.7776 5.90902 5.65725C6.29626 5.23208 6.76321 5.0104 7.36563 5.06747C7.74676 5.10387 8.10656 5.37642 8.16449 5.68909C8.23244 6.05719 8.04296 6.35332 7.62131 6.51172C7.43532 6.58162 7.23713 6.62174 7.04765 6.6846C6.68742 6.80413 6.44915 7.02498 6.36203 7.39391C6.21524 8.01553 6.4387 8.53003 6.84074 8.99821C6.95356 9.12932 7.1095 9.19095 7.28678 9.15579C7.46276 9.12105 7.5538 8.98953 7.60433 8.83898C7.65093 8.69919 7.67881 8.55361 7.71192 8.40968C7.81167 7.97872 7.99635 7.81287 8.45721 7.73305C9.074 7.62634 9.57492 7.35958 9.82321 6.78262C10.0005 6.37069 10.0458 5.94138 9.95301 5.49967Z" fill="white" />
-                      <path d="M7.21796 9.29683C6.68263 9.30096 6.31586 9.64879 6.31804 10.1501C6.32022 10.6542 6.68567 10.9971 7.22362 11C7.7546 11.0029 8.11875 10.6542 8.11745 10.1451C8.11571 9.63349 7.7546 9.29269 7.21796 9.29683Z" fill="white" />
+                      <path d="M14 7.5C14 3.91015 11.0899 1 7.5 1C3.91015 1 1 3.91015 1 7.5C1 11.0899 3.91015 14 7.5 14V15C3.35786 15 0 11.6421 0 7.5C0 3.35786 3.35786 0 7.5 0C11.6421 0 15 3.35786 15 7.5C15 11.6421 11.6421 15 7.5 15V14C11.0899 14 14 11.0899 14 7.5Z" fill="var(--text-always-white)" />
+                      <path d="M9.95301 5.49967C9.84324 4.97607 9.53223 4.5997 9.03915 4.35734C8.52821 4.10547 7.97109 4.03764 7.43358 4C6.49445 4.01613 5.75831 4.35072 5.24519 5.08029C5.11582 5.26434 4.97469 5.45211 5.00387 5.69488C5.03393 5.94345 5.28004 6.07994 5.50741 5.95751C5.65464 5.87852 5.79926 5.7776 5.90902 5.65725C6.29626 5.23208 6.76321 5.0104 7.36563 5.06747C7.74676 5.10387 8.10656 5.37642 8.16449 5.68909C8.23244 6.05719 8.04296 6.35332 7.62131 6.51172C7.43532 6.58162 7.23713 6.62174 7.04765 6.6846C6.68742 6.80413 6.44915 7.02498 6.36203 7.39391C6.21524 8.01553 6.4387 8.53003 6.84074 8.99821C6.95356 9.12932 7.1095 9.19095 7.28678 9.15579C7.46276 9.12105 7.5538 8.98953 7.60433 8.83898C7.65093 8.69919 7.67881 8.55361 7.71192 8.40968C7.81167 7.97872 7.99635 7.81287 8.45721 7.73305C9.074 7.62634 9.57492 7.35958 9.82321 6.78262C10.0005 6.37069 10.0458 5.94138 9.95301 5.49967Z" fill="var(--text-always-white)" />
+                      <path d="M7.21796 9.29683C6.68263 9.30096 6.31586 9.64879 6.31804 10.1501C6.32022 10.6542 6.68567 10.9971 7.22362 11C7.7546 11.0029 8.11875 10.6542 8.11745 10.1451C8.11571 9.63349 7.7546 9.29269 7.21796 9.29683Z" fill="var(--text-always-white)" />
                     </svg>
                     {sortedErReqs.map((er, index) => {
                       const isDefault = index === 0;
@@ -498,7 +498,7 @@ if (!pageError && !targetCharConfig) {
                     }
                   }
 
-                  const bgColor = index % 2 === 0 ? "rgba(0, 0, 0, 0.2)" : "var(--bg-panel)";
+                  const bgColor = index % 2 === 0 ? "var(--shadow-subtle)" : "var(--bg-panel)";
 
                   // Helper pour le serveur
                   const serverPrefix = build.uid ? String(build.uid)[0] : "7";
@@ -564,7 +564,7 @@ if (!pageError && !targetCharConfig) {
 
                           if (is2p2p && setIcon1 && setIcon2) {
                             return (
-                              <div style="width: 36px; height: 36px; border-radius: 6px; background-color: rgba(0, 0, 0, 0.2); position: relative; overflow: hidden; box-sizing: border-box;" title={`${bestSetName} (2p) / ${secondBestSetName} (2p)`}>
+                              <div style="width: 36px; height: 36px; border-radius: 6px; background-color: var(--shadow-subtle); position: relative; overflow: hidden; box-sizing: border-box;" title={`${bestSetName} (2p) / ${secondBestSetName} (2p)`}>
                                 <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; clip-path: polygon(0 0, 100% 0, 0 100%);">
                                   <img src={`https://enka.network/ui/${setIcon1}.png`} style="width: 25px; height: 25px; position: absolute; top: 1px; left: 1px;" alt={bestSetName} />
                                 </div>
@@ -575,7 +575,7 @@ if (!pageError && !targetCharConfig) {
                               </div>
                             );
                           } else if (bestSetName && setIcon1) {
-                            return <img src={`https://enka.network/ui/${setIcon1}.png`} style="width: 36px; height: 36px; border-radius: 6px; background-color: rgba(0, 0, 0, 0.2); padding:2px;" alt={bestSetName} title={`${bestSetName} (${bestSetCount}p)`} />;
+                            return <img src={`https://enka.network/ui/${setIcon1}.png`} style="width: 36px; height: 36px; border-radius: 6px; background-color: var(--shadow-subtle); padding:2px;" alt={bestSetName} title={`${bestSetName} (${bestSetCount}p)`} />;
                           } else if (bestSetName) {
                             return (
                               <span style="font-size: 12px; background: rgba(0,0,0,0.4); padding: 4px; border-radius: 4px; text-align: center;" title={`${bestSetName} (${bestSetCount}p)`}>
@@ -671,7 +671,7 @@ if (!pageError && !targetCharConfig) {
             <div style="display: flex; align-items: center; gap: 10px;">
               <img src={enkaAvatarImg} style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" onerror="this.style.display='none'" />
               <div style="display: flex; align-items: baseline; gap: 6px;">
-                <span style="font-size: 15px; color: white; letter-spacing: 0.2px;" class="dynamic-i18n" data-fr={targetCharTranslations.fr} data-en={targetCharTranslations.en}>{targetCharName.replace(/_/g, " ")}</span>
+                <span style="font-size: 15px; color: var(--text-always-white); letter-spacing: 0.2px;" class="dynamic-i18n" data-fr={targetCharTranslations.fr} data-en={targetCharTranslations.en}>{targetCharName.replace(/_/g, " ")}</span>
               </div>
             </div>
             <div style="display: flex; align-items: baseline; white-space: nowrap;">
@@ -685,7 +685,7 @@ if (!pageError && !targetCharConfig) {
             <div style="display: flex; align-items: center; gap: 10px;">
               <img id="tt-weapon-icon" src="" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px; display: none;" />
               <div style="display: flex; align-items: baseline; gap: 6px;">
-                <span id="tt-weapon-name" style="font-size: 12px; color: white;">-</span>
+                <span id="tt-weapon-name" style="font-size: 12px; color: var(--text-always-white);">-</span>
               </div>
             </div>
             <div style="display: flex; align-items: baseline; white-space: nowrap;">
@@ -839,7 +839,7 @@ if (!pageError && !targetCharConfig) {
             // Afficher uniquement si le build appartient à ce palier maximal
             if (maxBucket === targetEr) {
               row.style.display = "flex";
-              row.style.backgroundColor = visibleIndex % 2 === 0 ? "rgba(0, 0, 0, 0.2)" : "var(--bg-panel)";
+              row.style.backgroundColor = visibleIndex % 2 === 0 ? "var(--shadow-subtle)" : "var(--bg-panel)";
               const rankSpan = row.querySelector(".rank-number");
               if (rankSpan) rankSpan.textContent = currentRank.toString();
               currentRank++;
@@ -978,7 +978,7 @@ if (!pageError && !targetCharConfig) {
                     <span style="font-size: 14px; color: rgba(255,255,255,0.85);">${label}</span>
                 </div>
                 <div style="flex: 1; border-bottom: 1px dashed rgba(255,255,255,0.2); margin: 0 8px; transform: translateY(4px);"></div>
-                <span style="font-size: 14px; color: white;">${value}</span>
+                <span style="font-size: 14px; color: var(--text-always-white);">${value}</span>
             </div>
         `;
 
@@ -1087,7 +1087,7 @@ if (!pageError && !targetCharConfig) {
                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             ${sUrl ? `<img src="${sUrl}" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" />` : ""}
-                            <span style="font-size: 12px; color: white;">${bestName}</span>
+                            <span style="font-size: 12px; color: var(--text-always-white);">${bestName}</span>
                         </div>
                         <span style="font-size: 12px; color: rgba(255,255,255,0.7); white-space: nowrap;">${data.sets.best.count}${(window.t && window.t("lb.piecesShort")) || "P"}</span>
                     </div>
@@ -1100,7 +1100,7 @@ if (!pageError && !targetCharConfig) {
                         <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 ${sUrl2 ? `<img src="${sUrl2}" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" />` : ""}
-                                <span style="font-size: 12px; color: white;">${secondName}</span>
+                                <span style="font-size: 12px; color: var(--text-always-white);">${secondName}</span>
                             </div>
                             <span style="font-size: 12px; color: rgba(255,255,255,0.7); white-space: nowrap;">${data.sets.second.count}${(window.t && window.t("lb.piecesShort")) || "P"}</span>
                         </div>
@@ -1189,7 +1189,7 @@ if (!pageError && !targetCharConfig) {
             datasets: [
               {
                 data: dataVals,
-                borderColor: "#ffffff",
+                borderColor: "var(--text-always-white)",
                 borderWidth: 2,
                 tension: 0.4,
                 pointRadius: 0,
@@ -1213,9 +1213,9 @@ if (!pageError && !targetCharConfig) {
             scales: {
               x: {
                 grid: { display: false },
-                border: { display: true, color: "#ffffff", width: 1.5 },
+                border: { display: true, color: "var(--text-always-white)", width: 1.5 },
                 ticks: {
-                  color: "#ffffff",
+                  color: "var(--text-always-white)",
                   font: { family: "Shinshin, sans-serif", size: 14, weight: "bold" },
                   maxRotation: 0,
                   autoSkip: false,
@@ -1230,10 +1230,10 @@ if (!pageError && !targetCharConfig) {
               },
               y: {
                 grid: { display: false },
-                border: { display: true, color: "#ffffff", width: 1.5 },
+                border: { display: true, color: "var(--text-always-white)", width: 1.5 },
                 beginAtZero: true,
                 ticks: {
-                  color: "#ffffff",
+                  color: "var(--text-always-white)",
                   font: { family: "Shinshin, sans-serif", size: 14, weight: "bold" },
                   callback: function (value, index, values) {
                     if (index === 0) return "0";
@@ -1269,7 +1269,7 @@ if (!pageError && !targetCharConfig) {
 
   .er-filter-btn {
     border: 1px solid rgba(255,255,255,0);
-    background: rgba(0, 0, 0, 0.25);
+    background: var(--shadow-subtle);
   }
 
   .er-filter-btn:hover {

@@ -130,7 +130,7 @@ export function calculateDomainRankings(characters, focusCharNom = null) {
             let efficiencyColor = '#94a3b8';
             if (isFocusTarget || totalScore >= 6.0 || (bothSetsUseful && totalScore >= 4.5)) {
                 efficiencyKey = 'veryHigh';
-                efficiencyColor = isFocusTarget ? '#3b82f6' : '#22c55e';
+                efficiencyColor = isFocusTarget ? '#3b82f6' : 'var(--accent-green)';
             } else if (totalScore >= 4.0) {
                 efficiencyKey = 'high';
                 efficiencyColor = '#3b82f6';
@@ -184,21 +184,21 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                             data-scope="showcase"
                             type="button"
                             class="button-unlink"
-                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${!showAllChars ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${!showAllChars ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.25)'}; color:${!showAllChars ? '#60a5fa' : 'var(--text-grey)'};">
+                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${!showAllChars ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${!showAllChars ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${!showAllChars ? '#60a5fa' : 'var(--text-grey)'};">
                         <span>${t('roadmap.scope.showcase')}</span>
                     </button>
                     <button data-action="set-domain-scope"
                             data-scope="all"
                             type="button"
                             class="button-unlink"
-                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${showAllChars ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${showAllChars ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.25)'}; color:${showAllChars ? '#60a5fa' : 'var(--text-grey)'};">
+                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${showAllChars ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${showAllChars ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${showAllChars ? '#60a5fa' : 'var(--text-grey)'};">
                         <span>${t('roadmap.scope.allChars')}</span>
                     </button>
                 </div>
             </div>
 
             ${domains.length === 0 ? `
-                <div style="padding:16px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center; flex-grow: 1;">
+                <div style="padding:16px; background:var(--shadow-subtle); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center; flex-grow: 1;">
                     ${t('roadmap.domains.empty')}
                 </div>
             ` : `
@@ -227,7 +227,7 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                                 </div>
 
                                 ${d.bothSetsUseful ? `
-                                    <div style="font-size:11px; font-weight:normal; color:#22c55e; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.2); padding:4px 8px; border-radius:6px;">
+                                    <div style="font-size:11px; font-weight:normal; color:var(--accent-green); background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.2); padding:4px 8px; border-radius:6px;">
                                         ${t('roadmap.domains.bothSetsUseful')}
                                     </div>
                                 ` : ''}
@@ -235,20 +235,20 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                                 <!-- Détail des 2 sets -->
                                 <div style="display:flex; flex-direction:column; gap:8px; font-size:11px;">
                                     <!-- Set 1 -->
-                                    <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0);">
+                                    <div style="background:var(--shadow-subtle); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0);">
                                         <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
-                                            ${d.set1.icon ? `<img src="${d.set1.icon}" alt="${d.set1.name}" style="width:22px; height:22px; border-radius:4px; object-fit:contain; background:rgba(0,0,0,0.3);" onerror="this.style.display='none'">` : ''}
+                                            ${d.set1.icon ? `<img src="${d.set1.icon}" alt="${d.set1.name}" style="width:22px; height:22px; border-radius:4px; object-fit:contain; background:var(--shadow-subtle);" onerror="this.style.display='none'">` : ''}
                                             <span style="font-weight:normal; color:var(--text-primary);">${d.set1.name}</span>
                                         </div>
                                         ${(d.set1.chars.length > 0 || nonVitrine1.length > 0) ? `
                                             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                                                 ${d.set1.chars.map(c => `
-                                                    <img src="${c.perso.image}" alt="${c.perso.nom}" title="${c.perso.nom} (${c.label})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:${c.isFocus ? '2px solid #60a5fa' : '1px solid rgba(255,255,255,0)'}; cursor:pointer;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                                                    <img src="${c.perso.image}" alt="${c.perso.nom}" title="${c.perso.nom} (${c.label})" style="width:32px; height:32px; border-radius:4px; background:var(--shadow-subtle); border:${c.isFocus ? '2px solid #60a5fa' : '1px solid rgba(255,255,255,0)'}; cursor:pointer;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                                 `).join('')}
                                                 ${nonVitrine1.map(c => {
             const cName = (LANG === 'fr' ? c.nom : (c.enName || c.nom));
             return `
-                                                    <img src="${c.image}" alt="${cName}" title="${cName} (${t('roadmap.outsideShowcase')})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.15); opacity:0.45; filter:grayscale(20%);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                                                    <img src="${c.image}" alt="${cName}" title="${cName} (${t('roadmap.outsideShowcase')})" style="width:32px; height:32px; border-radius:4px; background:var(--shadow-subtle); border:1px dashed rgba(255,255,255,0.15); opacity:0.45; filter:grayscale(20%);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                                 `;
         }).join('')}
                                             </div>
@@ -256,20 +256,20 @@ export function renderDomainPlanner(characters, focusCharNom = null, showAllChar
                                     </div>
 
                                     <!-- Set 2 -->
-                                    <div style="background:rgba(0,0,0,0.2); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0);">
+                                    <div style="background:var(--shadow-subtle); padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0);">
                                         <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
-                                            ${d.set2.icon ? `<img src="${d.set2.icon}" alt="${d.set2.name}" style="width:22px; height:22px; border-radius:4px; object-fit:contain; background:rgba(0,0,0,0.3);" onerror="this.style.display='none'">` : ''}
+                                            ${d.set2.icon ? `<img src="${d.set2.icon}" alt="${d.set2.name}" style="width:22px; height:22px; border-radius:4px; object-fit:contain; background:var(--shadow-subtle);" onerror="this.style.display='none'">` : ''}
                                             <span style="font-weight:normal; color:var(--text-primary);">${d.set2.name}</span>
                                         </div>
                                         ${(d.set2.chars.length > 0 || nonVitrine2.length > 0) ? `
                                             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                                                 ${d.set2.chars.map(c => `
-                                                    <img src="${c.perso.image}" alt="${c.perso.nom}" title="${c.perso.nom} (${c.label})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:${c.isFocus ? '2px solid #60a5fa' : '1px solid rgba(255,255,255,0)'}; cursor:pointer;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                                                    <img src="${c.perso.image}" alt="${c.perso.nom}" title="${c.perso.nom} (${c.label})" style="width:32px; height:32px; border-radius:4px; background:var(--shadow-subtle); border:${c.isFocus ? '2px solid #60a5fa' : '1px solid rgba(255,255,255,0)'}; cursor:pointer;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                                 `).join('')}
                                                 ${nonVitrine2.map(c => {
             const cName = (LANG === 'fr' ? c.nom : (c.enName || c.nom));
             return `
-                                                    <img src="${c.image}" alt="${cName}" title="${cName} (${t('roadmap.outsideShowcase')})" style="width:32px; height:32px; border-radius:4px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.15); opacity:0.45; filter:grayscale(20%);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                                                    <img src="${c.image}" alt="${cName}" title="${cName} (${t('roadmap.outsideShowcase')})" style="width:32px; height:32px; border-radius:4px; background:var(--shadow-subtle); border:1px dashed rgba(255,255,255,0.15); opacity:0.45; filter:grayscale(20%);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                                 `;
         }).join('')}
                                             </div>

@@ -49,7 +49,7 @@
         .sidebar-title-container { display: flex; flex-direction: row; gap: 14px; align-items: center; margin-left: 6px; margin-top: 13px; }
         .sidebar-title-container img { width: 34px; height: 34px; margin-bottom: 3px; }
         .sidebar-title-container h2 { font-size: 34px; }
-        .sidebar-text { font-size: 12px; color: #ffffff; opacity: 40%; margin-left: 46px; margin-bottom: 1px; }
+        .sidebar-text { font-size: 12px; color: var(--text-always-white); opacity: 40%; margin-left: 46px; margin-bottom: 1px; }
 
         .main-content {
             display: flex; gap: 8px; overflow-y: auto; position: relative; flex-direction: column; width: 100%;
@@ -57,7 +57,7 @@
         .main-content::-webkit-scrollbar { width: 0; padding-top: 5px; }
 
         .link-button {
-            color: white; text-decoration: none; display: flex; flex-direction: row; gap: 8px;
+            color: var(--text-always-white); text-decoration: none; display: flex; flex-direction: row; gap: 8px;
             align-items: center; padding: 9px 16px 9px 12px; border-radius: 8px; transition: 0.2s; font-size: 14px;
         }
         .link-button:hover { background-color: #2C2D32; }
@@ -88,36 +88,36 @@
                 <div class="coaching-row" style="margin-top:20px; width:100%;">
                     <div style="padding:20px;">
 
-                        <h2 style="color:#fff; margin-bottom:25px; font-size:32px; border-bottom:2px solid #FFFFFF; padding-bottom:10px; display:flex; align-items:center; gap:10px;">À propos du projet</h2>
+                        <h2 style="color:var(--text-always-white); margin-bottom:25px; font-size:32px; border-bottom:2px solid var(--text-always-white); padding-bottom:10px; display:flex; align-items:center; gap:10px;">À propos du projet</h2>
 
                         <div style="display:flex; flex-direction:column; gap:64px;">
 
                             <div>
-                                <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">1. Vue d'ensemble</h3>
+                                <h3 style="color:var(--text-always-white); font-size:24px; margin-bottom: 12px;">1. Vue d'ensemble</h3>
                                 <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Pourquoi Guoba.gg existe et ce que le simulateur essaie d'accomplir pour la communauté.</p>
 
                                 <div style="background:#2C2D32; padding:20px; border-radius:8px;">
-                                    <p style="font-size: 16px; color: #fff; line-height: 1.6;">Guoba.gg est né d'une volonté d'offrir un outil visuel et précis pour simuler des builds sur Genshin Impact. L'idée est de dépasser le simple calcul de "Crit Value" pour prendre en compte les synergies, les armes, et les plafonds théoriques de chaque archétype.<br><br>Ce projet est développé par des passionnés, pour des joueurs désireux de comprendre la vraie valeur de leurs artéfacts.</p>
+                                    <p style="font-size: 16px; color: var(--text-always-white); line-height: 1.6;">Guoba.gg est né d'une volonté d'offrir un outil visuel et précis pour simuler des builds sur Genshin Impact. L'idée est de dépasser le simple calcul de "Crit Value" pour prendre en compte les synergies, les armes, et les plafonds théoriques de chaque archétype.<br><br>Ce projet est développé par des passionnés, pour des joueurs désireux de comprendre la vraie valeur de leurs artéfacts.</p>
                                 </div>
                             </div>
 
                             <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
                             <div>
-                                <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">2. L'équipe</h3>
+                                <h3 style="color:var(--text-always-white); font-size:24px; margin-bottom: 12px;">2. L'équipe</h3>
                                 <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Les personnes impliquées dans le développement et le theorycrafting derrière l'outil.</p>
 
                                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
 
-                                    <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid #22c55e;">
+                                    <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid var(--accent-green);">
                                         <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">Développeur Principal</p>
-                                        <p style="font-size: 18px; color:#fff; font-weight: bold;">TonPseudo</p>
+                                        <p style="font-size: 18px; color:var(--text-always-white); font-weight: bold;">TonPseudo</p>
                                         <p style="font-size: 14px; color:#aaa; margin-top: 8px;">Création du moteur de calcul, interface utilisateur et intégration des données de jeu.</p>
                                     </div>
 
                                     <div style="background:#2C2D32; padding:15px; border-radius:8px; border-left:3px solid #3b82f6;">
                                         <p style="font-size: 12px;color: #aaa; text-transform: uppercase;margin-bottom: 8px;">Data & Theorycrafting</p>
-                                        <p style="font-size: 18px; color:#fff; font-weight: bold;">NomCollaborateur</p>
+                                        <p style="font-size: 18px; color:var(--text-always-white); font-weight: bold;">NomCollaborateur</p>
                                         <p style="font-size: 14px; color:#aaa; margin-top: 8px;">Définition des poids statistiques, tests de rentabilité et équilibrage des notes.</p>
                                     </div>
 
@@ -127,11 +127,11 @@
                             <div style="margin: auto 10px; flex-grow: 1; width: unset; min-width: unset; background: none; border-color: rgba(255, 255, 255, 0.25); border-style: dashed; border-width: 1px 0 0; display: flex; clear: both;"></div>
 
                             <div>
-                                <h3 style="color:#FFFFFF; font-size:24px; margin-bottom: 12px;">3. Mentions légales</h3>
+                                <h3 style="color:var(--text-always-white); font-size:24px; margin-bottom: 12px;">3. Mentions légales</h3>
                                 <p style="border-left: 3px solid #aaa; padding-left: 12px; color: #aaa; font-size: 16px; margin-bottom: 24px;">Crédits et propriétés intellectuelles.</p>
 
                                 <div style="background:#2C2D32; padding:20px; border-radius:8px; border-left:3px solid #ef4444;">
-                                    <p style="font-size: 14px; color: #fff; line-height: 1.6;">Ce site est un projet de fan indépendant et n'est en aucun cas affilié à, parrainé ou approuvé par HoYoverse.<br>Tous les contenus et actifs liés aux jeux sont la propriété exclusive de HoYoverse.<br><br>Ce projet s'appuie sur l'API fournie par <a href="https://enka.network" style="color: var(--accent-gold); text-decoration: none;">Enka.Network</a>.</p>
+                                    <p style="font-size: 14px; color: var(--text-always-white); line-height: 1.6;">Ce site est un projet de fan indépendant et n'est en aucun cas affilié à, parrainé ou approuvé par HoYoverse.<br>Tous les contenus et actifs liés aux jeux sont la propriété exclusive de HoYoverse.<br><br>Ce projet s'appuie sur l'API fournie par <a href="https://enka.network" style="color: var(--accent-gold); text-decoration: none;">Enka.Network</a>.</p>
                                 </div>
                             </div>
 

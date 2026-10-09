@@ -125,7 +125,7 @@ try {
 ---
 
 {pageError ? (
-  <div style="padding: 50px; background: #fff; color: #f00; font-family: sans-serif;">
+  <div style="padding: 50px; background: var(--text-always-white); color: #f00; font-family: sans-serif;">
     <h1 style="color: #f00;">Erreur Serveur (500)</h1>
     <p>Une erreur s'est produite lors du rendu côté serveur sur Cloudflare :</p>
     <pre style="background: #eee; padding: 15px; overflow-x: auto; color: #333;">{pageError}</pre>
@@ -259,7 +259,7 @@ try {
                     const count = archetypeCounts[lb.id] || 0;
                     const lbNameObj = leaderboardsNames[lb.id as keyof typeof leaderboardsNames];
                     const lbName = lbNameObj ? lbNameObj.fr : lb.id;
-                    const bgColor = index % 2 === 0 ? 'rgba(0, 0, 0, 0.2)' : 'var(--bg-panel)';
+                    const bgColor = index % 2 === 0 ? 'var(--shadow-subtle)' : 'var(--bg-panel)';
                     
                     // On prend la première team associée à ce leaderboard_id pour l'aperçu
                     const previewTeam = lb.teams.length > 0 ? lb.teams[0] : [];
@@ -324,7 +324,7 @@ try {
                                       <img src={teammateAssets[member.set as keyof typeof teammateAssets]} loading="lazy" decoding="async" title={member.set} class="dynamic-i18n-title" data-fr={assetTranslations[member.set]?.fr || member.set} data-en={assetTranslations[member.set]?.en || member.set} style="position:absolute; bottom:0; right:0; width:14px; height:14px; border-radius:2px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />
                                     )}
                                     {member.cons > 0 && (
-                                      <span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:700; color:#fff; text-shadow:0 0 3px #000; z-index:10;">C{member.cons}</span>
+                                      <span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:700; color:var(--text-always-white); text-shadow:0 0 3px #000; z-index:10;">C{member.cons}</span>
                                     )}
                                   </div>
                                 ));

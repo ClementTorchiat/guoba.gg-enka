@@ -93,7 +93,7 @@ export function renderRankingsSummary(characters, focusCharNom = null) {
         return `
             <div style="border-radius:8px; padding:6px; background: ${cardBg}; border:1.5px solid ${cardBorderColor}; display:flex; flex-direction:column; box-sizing:border-box; min-width:0;">
                 <div style="display:flex; align-items:center; gap:10px; min-width:0;">
-                    <img src="${faceImage}" alt="${c.nom}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; background: rgb(0,0,0,0.2); flex-shrink:0; border:${imgBorder}; box-sizing:border-box;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                    <img src="${faceImage}" alt="${c.nom}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; background: var(--shadow-subtle); flex-shrink:0; border:${imgBorder}; box-sizing:border-box;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                     <div style="display:flex; flex-direction:column; overflow:hidden; min-width:0;">
                         <span style="font-size:14px; color:${nameColor}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.nom}</span>
                         <span style="font-size:11px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${buildName}">${buildName}</span>

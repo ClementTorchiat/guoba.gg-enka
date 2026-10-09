@@ -178,7 +178,7 @@ export function renderQuickWinsPlan(characters, focusCharNom = null) {
             title: t('roadmap.breakdown.levels'),
             items: data.levels,
             okText: t('roadmap.breakdown.levels.ok'),
-            badgeColor: '#22c55e'
+            badgeColor: 'var(--accent-green)'
         },
         {
             key: 'talents',
@@ -217,20 +217,20 @@ export function renderQuickWinsPlan(characters, focusCharNom = null) {
                     <div style="grid-column: span ${index < 3 ? 2 : 3}; background:var(--bg-panel); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:12px;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="font-size:13px; font-weight:normal; color:var(--text-primary);">${sec.title}</span>
-                            <span style="font-size:10px; font-weight:normal; padding:2px 7px; border-radius:10px; background:${sec.items.length === 0 ? 'rgba(34,197,94,0.15)' : `${sec.badgeColor}20`}; color:${sec.items.length === 0 ? '#22c55e' : sec.badgeColor}; border:1px solid ${sec.items.length === 0 ? 'rgba(34,197,94,0.3)' : `${sec.badgeColor}40`};">
+                            <span style="font-size:10px; font-weight:normal; padding:2px 7px; border-radius:10px; background:${sec.items.length === 0 ? 'rgba(34,197,94,0.15)' : `${sec.badgeColor}20`}; color:${sec.items.length === 0 ? 'var(--accent-green)' : sec.badgeColor}; border:1px solid ${sec.items.length === 0 ? 'rgba(34,197,94,0.3)' : `${sec.badgeColor}40`};">
                                 ${sec.items.length === 0 ? t('roadmap.breakdown.optimal') : t('roadmap.breakdown.toDo', sec.items.length)}
                             </span>
                         </div>
 
                         <div style="display:flex; flex-direction:column; gap:8px;">
                             ${sec.items.length === 0 ? `
-                                <div style="padding:10px; background:rgba(34,197,94,0.06); border:1px dashed rgba(34,197,94,0.25); border-radius:6px; color:#22c55e; font-size:11px; text-align:center;">
+                                <div style="padding:10px; background:rgba(34,197,94,0.06); border:1px dashed rgba(34,197,94,0.25); border-radius:6px; color:var(--accent-green); font-size:11px; text-align:center;">
                                     ${sec.okText}
                                 </div>
                             ` : sec.items.slice(0, 5).map(item => `
-                                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px; background:${item.isFocus ? 'rgba(59,130,246,0.1)' : 'rgba(0, 0, 0, 0.2)'}; border:${item.isFocus ? '1px solid rgba(59,130,246,0.35)' : '0'}; border-radius:6px; gap:8px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px; background:${item.isFocus ? 'rgba(59,130,246,0.1)' : 'var(--shadow-subtle)'}; border:${item.isFocus ? '1px solid rgba(59,130,246,0.35)' : '0'}; border-radius:6px; gap:8px;">
                                     <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
-                                        <img src="${item.charAvatar}" alt="${item.charName}" style="width:32px; height:32px; border-radius:5px; background:rgba(0,0,0,0.2); flex-shrink:0; border:${item.isFocus ? '1px solid #60a5fa' : 'none'};">
+                                        <img src="${item.charAvatar}" alt="${item.charName}" style="width:32px; height:32px; border-radius:5px; background:var(--shadow-subtle); flex-shrink:0; border:${item.isFocus ? '1px solid #60a5fa' : 'none'};">
                                         <div style="min-width:0; flex:1;">
                                             <div style="font-size:11px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${item.title}">
                                                 ${item.title}
@@ -241,7 +241,7 @@ export function renderQuickWinsPlan(characters, focusCharNom = null) {
                                     <div style="display:flex; align-items:center; gap:5px; font-size:11px; flex-shrink:0;">
                                         <span style="color:var(--text-grey); font-size:10px;">${item.current}</span>
                                         <span style="color:var(--text-grey); font-size:10px;">→</span>
-                                        <span style="color:#22c55e; font-weight:normal; font-size:10px;">${item.target}</span>
+                                        <span style="color:var(--accent-green); font-weight:normal; font-size:10px;">${item.target}</span>
                                     </div>
                                 </div>
                             `).join('')}

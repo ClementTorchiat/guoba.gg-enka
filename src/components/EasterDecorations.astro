@@ -34,7 +34,7 @@ const colors = ["#ff8a80", "#ffd180", "#ccff90", "#84ffff", "#b388ff", "#ff80ab"
 <template id="easter-logo-template">
     <div class="easter-bunny-ears">
         <svg viewBox="0 0 32 32" width="36" height="36" style="overflow: visible;" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 10,12 C 6,-5 14,-10 16,5 C 18,-10 26,-5 22,12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"></path>
+            <path d="M 10,12 C 6,-5 14,-10 16,5 C 18,-10 26,-5 22,12" fill="var(--text-always-white)" stroke="#e0e0e0" stroke-width="1"></path>
             <path d="M 11,10 C 9,-2 13,-6 15,4 C 17,-6 21,-2 19,10" fill="#ff80ab"></path>
         </svg>
     </div>
@@ -85,7 +85,7 @@ const colors = ["#ff8a80", "#ffd180", "#ccff90", "#84ffff", "#b388ff", "#ff80ab"
         left: -2px;
         pointer-events: none;
         z-index: 10;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        filter: drop-shadow(0 2px 4px var(--shadow-subtle));
     }
 </style>
 

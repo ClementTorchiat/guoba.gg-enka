@@ -205,7 +205,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
     if (noDuplicates) {
         btnStyle += 'border: 1px solid #3b82f6; background: rgba(59, 130, 246, 0.18); color: #60a5fa;';
     } else {
-        btnStyle += 'border: 1px solid rgba(255, 255, 255, 0); background: rgba(0, 0, 0, 0.25); color: var(--text-grey);';
+        btnStyle += 'border: 1px solid rgba(255, 255, 255, 0); background: var(--shadow-subtle); color: var(--text-grey);';
     }
 
     return `
@@ -244,7 +244,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                                     <span style="font-size:14px; font-weight:normal; color:var(--text-primary);">
                                         #${index + 1} - ${dps.nom}
                                     </span>
-                                    <span style="font-size:11px; padding:2px 6px; background:rgba(0,0,0,0.2); border-radius:4px; color:var(--text-grey);">
+                                    <span style="font-size:11px; padding:2px 6px; background:var(--shadow-subtle); border-radius:4px; color:var(--text-grey);">
                                         ${build.name}
                                     </span>
                                 </div>

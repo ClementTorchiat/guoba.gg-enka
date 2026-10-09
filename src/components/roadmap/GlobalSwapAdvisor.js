@@ -104,7 +104,7 @@ export function renderGlobalSwapAdvisor(characters, focusCharNom = null) {
             </div>
 
             ${swaps.length === 0 ? `
-                <div style="padding:16px; background:rgba(34,197,94,0.08); border:1px dashed rgba(34,197,94,0.3); border-radius:8px; color:#22c55e; font-size:13px; text-align:center;">
+                <div style="padding:16px; background:rgba(34,197,94,0.08); border:1px dashed rgba(34,197,94,0.3); border-radius:8px; color:var(--accent-green); font-size:13px; text-align:center;">
                     ${t('roadmap.swaps.noSwaps')}
                 </div>
             ` : `
@@ -114,7 +114,7 @@ export function renderGlobalSwapAdvisor(characters, focusCharNom = null) {
                             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
                                 <div style="display:flex; align-items:center; gap:8px;">
                                     ${swap.artA.icon || swap.artB.icon ? `
-                                        <img src="${swap.artA.icon || swap.artB.icon}" alt="${swap.slotName}" style="width:28px; height:28px; border-radius:4px; object-fit:contain; background:rgba(0,0,0,0.2);">
+                                        <img src="${swap.artA.icon || swap.artB.icon}" alt="${swap.slotName}" style="width:28px; height:28px; border-radius:4px; object-fit:contain; background:var(--shadow-subtle);">
                                     ` : ''}
                                     <span style="font-size:12px; font-weight:normal; color:var(--text-primary);">
                                         ${swap.slotName}
@@ -135,10 +135,10 @@ export function renderGlobalSwapAdvisor(characters, focusCharNom = null) {
                             <div style="display:flex; align-items:center; justify-content:space-between; border-radius:8px; gap:8px;">
                                 <!-- Perso A -->
                                 <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
-                                    <img src="${swap.charA.image}" alt="${swap.charA.nom}" style="width:42px; height:42px; border-radius:6px; background:rgba(0,0,0,0.2); flex-shrink:0; border:${swap.charA.isFocus ? '2px solid #60a5fa' : 'none'};">
+                                    <img src="${swap.charA.image}" alt="${swap.charA.nom}" style="width:42px; height:42px; border-radius:6px; background:var(--shadow-subtle); flex-shrink:0; border:${swap.charA.isFocus ? '2px solid #60a5fa' : 'none'};">
                                     <div style="min-width:0;">
                                         <div style="font-size:12px; font-weight:normal; color:${swap.charA.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${swap.charA.nom}</div>
-                                        <div style="font-size:11px; font-weight:normal; color:${swap.charA.delta >= 0 ? '#22c55e' : '#ef4444'};">
+                                        <div style="font-size:11px; font-weight:normal; color:${swap.charA.delta >= 0 ? 'var(--accent-green)' : '#ef4444'};">
                                             ${swap.charA.delta >= 0 ? '+' : ''}${swap.charA.delta} pts
                                         </div>
                                     </div>
@@ -150,11 +150,11 @@ export function renderGlobalSwapAdvisor(characters, focusCharNom = null) {
                                 <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0; justify-content:flex-end; text-align:right;">
                                     <div style="min-width:0;">
                                         <div style="font-size:12px; font-weight:normal; color:${swap.charB.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${swap.charB.nom}</div>
-                                        <div style="font-size:11px; font-weight:normal; color:${swap.charB.delta >= 0 ? '#22c55e' : '#ef4444'};">
+                                        <div style="font-size:11px; font-weight:normal; color:${swap.charB.delta >= 0 ? 'var(--accent-green)' : '#ef4444'};">
                                             ${swap.charB.delta >= 0 ? '+' : ''}${swap.charB.delta} pts
                                         </div>
                                     </div>
-                                    <img src="${swap.charB.image}" alt="${swap.charB.nom}" style="width:42px; height:42px; border-radius:6px; background:rgba(0,0,0,0.2); flex-shrink:0; border:${swap.charB.isFocus ? '2px solid #60a5fa' : 'none'};">
+                                    <img src="${swap.charB.image}" alt="${swap.charB.nom}" style="width:42px; height:42px; border-radius:6px; background:var(--shadow-subtle); flex-shrink:0; border:${swap.charB.isFocus ? '2px solid #60a5fa' : 'none'};">
                                 </div>
                             </div>
                         </div>

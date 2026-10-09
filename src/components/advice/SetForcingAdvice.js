@@ -46,7 +46,7 @@ export function getSetForcingAdvice(persoObj, config) {
         if (charLikes2p2p) {
             return {
                 type: "success",
-                color: "#22c55e",
+                color: "var(--accent-green)",
                 title: t('advice.setForce.title.ok'),
                 msg: t('advice.setForce.ok2p2p'),
                 status: '2p2p',
@@ -55,7 +55,7 @@ export function getSetForcingAdvice(persoObj, config) {
         }
         return {
             type: "success",
-            color: "#22c55e",
+            color: "var(--accent-green)",
             title: t('advice.setForce.title.ok'),
             msg: t('advice.setForce.okRainbow'),
             status: 'rainbow',
@@ -101,7 +101,7 @@ export function getSetForcingAdvice(persoObj, config) {
 
         return {
             type: "success",
-            color: "#22c55e",
+            color: "var(--accent-green)",
             title: t('advice.setForce.title.ok'),
             msg: t('advice.setForce.okQuality'),
             status: 'good4p',
@@ -125,7 +125,7 @@ export function renderSetForcingAdvice(persoObj, config) {
     }
 
     let color = '#ef4444';
-    if (adv.type === 'success') color = '#22c55e';
+    if (adv.type === 'success') color = 'var(--accent-green)';
     if (adv.type === 'warning') color = '#eab308';
     if (adv.type === 'info') color = '#3b82f6';
 
@@ -154,7 +154,7 @@ export function renderSetForcingAdvice(persoObj, config) {
         bottomHtml = `
             <div style="display:flex; align-items:center; gap: 12px; width: 100%;">
                 <div style="position:relative; flex-shrink:0; line-height:0;">
-                    <img src="${setIconUrl}" style="width:60px; height:60px; border-radius:6px; background:rgba(0,0,0,0.1); object-fit:cover; ${adv.status === 'forcing' ? 'filter: grayscale(100%) opacity(0.5);' : ''}" alt="">
+                    <img src="${setIconUrl}" style="width:60px; height:60px; border-radius:6px; background:var(--shadow-subtle); object-fit:cover; ${adv.status === 'forcing' ? 'filter: grayscale(100%) opacity(0.5);' : ''}" alt="">
                     ${adv.status === 'forcing' ? `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); filter: drop-shadow(0 0 4px rgba(0,0,0,0.9));"><path d="M18.84 12.25l1.72-1.71a4.5 4.5 0 0 0-6.36-6.36l-1.72 1.71"></path><path d="M5.16 11.75l-1.72 1.71a4.5 4.5 0 0 0 6.36 6.36l1.72-1.71"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg>` : ''}
                 </div>
                 <div style="flex: 1; width: 100%; position: relative;">
@@ -162,7 +162,7 @@ export function renderSetForcingAdvice(persoObj, config) {
                         <span>${t('analysis.offPiece.setAvg')}</span>
                         <span style="color: ${color}; font-size: 12px;">${adv.targetSet.avgScore.toFixed(1)} <span style="font-size:10px; color:var(--text-grey);">/ 25.0</span></span>
                     </div>
-                    <div style="width: 100%; height: 16px; background: rgba(0,0,0,0.2); border-radius: 4px; overflow: hidden; position: relative;">
+                    <div style="width: 100%; height: 16px; background: var(--shadow-subtle); border-radius: 4px; overflow: hidden; position: relative;">
                         <div style="
                             width: ${scorePct}%;
                             height: 100%;
@@ -193,13 +193,13 @@ export function renderSetForcingAdvice(persoObj, config) {
         `;
     } else {
         const setIconsHtml = adv.activeSets.map(set => {
-            return `<img src="${getSetIcon(set.hash)}" style="width:60px; height:60px; border-radius:6px; background:rgba(0,0,0,0.1); object-fit:cover;" alt="">`;
+            return `<img src="${getSetIcon(set.hash)}" style="width:60px; height:60px; border-radius:6px; background:var(--shadow-subtle); object-fit:cover;" alt="">`;
         }).join('');
 
         bottomHtml = `
             <div style="display:flex; align-items:center; gap: 12px; width: 100%;">
                 ${adv.activeSets.length === 0
-                ? `<img src="${ICON_BASE_PATH}icon_score.webp" style="width:60px; height:60px; border-radius:6px; background:rgba(0,0,0,0.1); object-fit:cover; opacity:0.5;" alt="">`
+                ? `<img src="${ICON_BASE_PATH}icon_score.webp" style="width:60px; height:60px; border-radius:6px; background:var(--shadow-subtle); object-fit:cover; opacity:0.5;" alt="">`
                 : setIconsHtml
             }
                 <div style="flex: 1; padding-left: 4px;">

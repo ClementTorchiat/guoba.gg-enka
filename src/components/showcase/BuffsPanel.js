@@ -150,7 +150,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
     let html = `
         <style>
             .buff-category-body::-webkit-scrollbar { width: 4px; }
-            .buff-category-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+            .buff-category-body::-webkit-scrollbar-track { background: var(--shadow-subtle); border-radius: 4px; }
             .buff-category-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
             .buff-category-body::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
         </style>
@@ -191,7 +191,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
                 }
 
                 html += `
-                    <div class="buff-row" data-buff-index="${bIndex}" data-hex-color="${hexColor}" style="display:flex; flex-direction: row; gap: 8px; align-items:center; background:rgba(0,0,0,0.2); padding: 8px 10px; border-radius: 8px; backdrop-filter: blur(4px);">
+                    <div class="buff-row" data-buff-index="${bIndex}" data-hex-color="${hexColor}" style="display:flex; flex-direction: row; gap: 8px; align-items:center; background:var(--shadow-subtle); padding: 8px 10px; border-radius: 8px; backdrop-filter: blur(4px);">
                         <div style="display: flex; align-items: center; gap: 4px;">
                             ${iconHtml}
                             <p style="font-size:12px; color:${textColor}; margin: 0; white-space: nowrap;">${displayName}</p>
@@ -216,7 +216,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
     `;
 
     Object.entries(characters).forEach(([charName, charData]) => {
-        const charAvatarHtml = charData.img ? `<img src="${charData.img}" style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain; background: rgba(0,0,0,0.2);" onerror="this.style.display='none'">` : `<div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; font-size: 14px;"></div>`;
+        const charAvatarHtml = charData.img ? `<img src="${charData.img}" style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain; background: var(--shadow-subtle);" onerror="this.style.display='none'">` : `<div style="width: 32px; height: 32px; border-radius: 8px; background: var(--shadow-subtle); display: flex; align-items: center; justify-content: center; font-size: 14px;"></div>`;
         const hexColor = charData.hex || 'var(--char-hex)';
 
         const splashBgHtml = charData.splash ? `
@@ -245,7 +245,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
         Object.entries(charData.origins).forEach(([originName, originData]) => {
             let originIconHtml = '';
             if (originData.img) {
-                originIconHtml = `<img src="${originData.img}" style="width: 24px; height: 24px; object-fit: contain; background: rgba(0,0,0,0.2); border-radius: 4px; padding: 2px;" onerror="this.style.display='none'">`;
+                originIconHtml = `<img src="${originData.img}" style="width: 24px; height: 24px; object-fit: contain; background: var(--shadow-subtle); border-radius: 4px; padding: 2px;" onerror="this.style.display='none'">`;
             }
 
             html += `
@@ -268,7 +268,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
                 const knobTransform = buff.active ? 'transform:translateX(12px);' : '';
 
                 html += `
-                            <div class="buff-row" data-buff-index="${bIndex}" data-hex-color="${hexColor}" style="display:flex; flex-direction: row; gap: 8px; align-items:center; justify-content:space-between; padding: 6px 8px; background:rgba(0,0,0,0.2); border-radius:4px; box-sizing: border-box; transition: background 0.2s;">
+                            <div class="buff-row" data-buff-index="${bIndex}" data-hex-color="${hexColor}" style="display:flex; flex-direction: row; gap: 8px; align-items:center; justify-content:space-between; padding: 6px 8px; background:var(--shadow-subtle); border-radius:4px; box-sizing: border-box; transition: background 0.2s;">
                                 <p style="font-size:12px; color:${textColor}; transition: color 0.3s; margin: 0; flex: 1; min-width: 0; word-break: break-word; line-height: 1.3;">${displayName}</p>
                                 
                                 <label class="switch" style="position:relative; display:inline-block; width:26px; min-width: 26px; height:14px; box-sizing: border-box; flex-shrink: 0;">

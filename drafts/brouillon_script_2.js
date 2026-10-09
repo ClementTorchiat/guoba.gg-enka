@@ -286,9 +286,9 @@ function calculatePotentialScore(persoObj, config) {
 
 function getCritAdvice(cr, cd) {
     if (cr > 100) return { color: '#ff4d4d', msg: `Taux CRIT excédentaire (${cr.toFixed(1)}%). Inutile de dépasser 100%.` };
-    if (cr >= 85) return { color: '#22c55e', msg: "Taux CRIT excellent (>85%). Ne vous souciez plus du ratio, foncez sur le DGT CRIT." };
+    if (cr >= 85) return { color: 'var(--accent-green)', msg: "Taux CRIT excellent (>85%). Ne vous souciez plus du ratio, foncez sur le DGT CRIT." };
     const diff = (cr * 2) - cd;
-    if (Math.abs(diff) < 25) return { color: '#22c55e', msg: "Ratio 1:2 Équilibré (Excellent)." };
+    if (Math.abs(diff) < 25) return { color: 'var(--accent-green)', msg: "Ratio 1:2 Équilibré (Excellent)." };
     if (diff > 25) return { color: '#3b82f6', msg: "Ratio déséquilibré : Trop de Taux CRIT par rapport aux DGT." };
     if (diff < -25) return { color: '#eab308', msg: "Ratio déséquilibré : Manque de Taux CRIT pour être stable." };
     return { color: '#888', msg: "Analyse impossible" };
@@ -358,7 +358,7 @@ function getMainStatAdvice(persoObj, config) {
 function getFarmDifficulty(pieceType, mainStatKey) {
     // Si c'est Fleur ou Plume -> Facile (Stat fixe)
     if (pieceType === "EQUIP_BRACER" || pieceType === "EQUIP_NECKLACE") {
-        return { label: "Facile", color: "#22c55e" }; // Vert
+        return { label: "Facile", color: "var(--accent-green)" }; // Vert
     }
 
     const rates = MAINSTAT_DROP_RATES[pieceType];
@@ -366,7 +366,7 @@ function getFarmDifficulty(pieceType, mainStatKey) {
 
     const probability = rates[mainStatKey];
 
-    if (probability >= 19) return { label: "Facile", color: "#22c55e" }; // Vert (>20%)
+    if (probability >= 19) return { label: "Facile", color: "var(--accent-green)" }; // Vert (>20%)
     if (probability >= 10) return { label: "Moyennement difficile", color: "#eab308" }; // Jaune (10-20%)
     if (probability >= 5) return { label: "Difficile", color: "#f97316" }; // Orange (5-10%)
     return { label: "Très difficile", color: "#ef4444" }; // Rouge (<5%)
@@ -742,7 +742,7 @@ function calculateRerollMetrics(artifact, config) {
         badge = { text: "Garder (Solide)", color: "#ef4444" }; // Rouge
     }
     else if (potential > 60 && risk < 40) {
-        badge = { text: "Reroll envisageable", color: "#22c55e" }; // Vert
+        badge = { text: "Reroll envisageable", color: "var(--accent-green)" }; // Vert
     }
     else if (potential > 50) {
         badge = { text: "Casino (Double ou Rien)", color: "#f97316" }; // Orange
@@ -988,7 +988,7 @@ function renderShowcase(index) {
 
                 ${talentsHtml}
                 
-                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; margin-top:15px; border:1px solid #333;">
+                <div style="background:var(--shadow-subtle); padding:15px; border-radius:8px; margin-top:15px; border:1px solid #333;">
                     <h3 style="font-size:0.9rem; color:var(--accent-gold); text-transform:uppercase; margin-bottom:10px; font-weight:bold;">Stats de Combat</h3>
                     ${statLine(createSvg('heart'), "PV Max", Math.round(b.hp), b.hp > s.hp)}
                     ${statLine(createSvg('sword'), "ATQ", Math.round(b.atk), b.atk > s.atk)}
@@ -1022,9 +1022,9 @@ function renderShowcase(index) {
             <div class="card weapon-card">
                 <img src="${p.weapon.icon}" class="item-img" style="width:80px; height:80px; border:2px solid ${p.weapon.stars === 5 ? '#eab308' : '#d1d5db'}">
                 <div style="flex:1">
-                    <div style="font-weight:700; font-size:1.1rem; color:${p.weapon.stars === 5 ? '#eab308' : '#fff'}">${p.weapon.name}</div>
+                    <div style="font-weight:700; font-size:1.1rem; color:${p.weapon.stars === 5 ? '#eab308' : 'var(--text-always-white)'}">${p.weapon.name}</div>
                     <div style="color:var(--accent-gold); font-size:0.9rem; margin-bottom:5px;">Niv. ${p.weapon.level} • R${p.weapon.rank}</div>
-                    <div style="display:flex; gap:15px; margin-top:5px; background:rgba(0,0,0,0.2); padding:5px; border-radius:4px;">
+                    <div style="display:flex; gap:15px; margin-top:5px; background:var(--shadow-subtle); padding:5px; border-radius:4px;">
                         ${p.weapon.baseAtk ? `
                         <div style="text-align:center;">
                             <div style="font-size:0.7rem; color:#aaa;">ATQ Base</div>
@@ -1064,7 +1064,7 @@ function renderShowcase(index) {
                 <div class="item-header">
                     <div style="position:relative; display:inline-block;">
                         <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : '#a855f7'};">
-                        <div style="position:absolute; bottom:0; right:0; background:rgba(0,0,0,0.8); color:white; font-size:0.65rem; padding:1px 4px; border-top-left-radius:4px;">+${art.level}</div>
+                        <div style="position:absolute; bottom:0; right:0; background:rgba(0,0,0,0.8); color:var(--text-always-white); font-size:0.65rem; padding:1px 4px; border-top-left-radius:4px;">+${art.level}</div>
                     </div>
                     <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center; margin-left: 10px;">
                         <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600; font-size:0.9rem;">${pieceName}</div>
@@ -1075,7 +1075,7 @@ function renderShowcase(index) {
                 <div class="main-stat-display">
                     <span>${formatValueDisplay(art.mainStat.key, art.mainStat.value)}</span>
                     <span style="display:flex; align-items:center; gap:5px; font-size:0.7rem; color:#aaa; font-weight:normal; align-self:center;">
-                        <span style="color:#fff; display:inline-flex;">${art.mainStat.icon}</span> ${art.mainStat.label}
+                        <span style="color:var(--text-always-white); display:inline-flex;">${art.mainStat.icon}</span> ${art.mainStat.label}
                     </span>
                 </div>
                 <div style="margin-top:10px;">${subsHtml}</div>
@@ -1098,12 +1098,12 @@ function renderShowcase(index) {
                 lastCategory = buff.category;
             }
             buffListHtml += `
-                <div style="display:flex; align-items:center; justify-content:space-between; padding:6px 8px; background:rgba(0,0,0,0.2); margin-bottom:4px; border-radius:4px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:6px 8px; background:var(--shadow-subtle); margin-bottom:4px; border-radius:4px;">
                     <span style="font-size:0.8rem; color:#ddd;">${buff.name}</span>
                     <label class="switch" style="position:relative; display:inline-block; width:30px; height:16px;">
                         <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${index}, ${bIndex})" style="opacity:0; width:0; height:0;">
                         <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:#333; transition:.4s; border-radius:34px;"></span>
-                        <span style="position:absolute; content:''; height:12px; width:12px; left:2px; bottom:2px; background-color:white; transition:.4s; border-radius:50%; ${buff.active ? 'transform:translateX(14px); background-color:var(--accent-gold);' : ''}"></span>
+                        <span style="position:absolute; content:''; height:12px; width:12px; left:2px; bottom:2px; background-color:var(--text-always-white); transition:.4s; border-radius:50%; ${buff.active ? 'transform:translateX(14px); background-color:var(--accent-gold);' : ''}"></span>
                     </label>
                 </div>`;
         });
@@ -1127,7 +1127,7 @@ function renderShowcase(index) {
         const efficiency = (potential.score > 0) ? ((ev.score / potential.score) * 100).toFixed(1) : 0;
         let effColor = '#ff4d4d';
         if (efficiency > 70) effColor = '#eab308';
-        if (efficiency > 85) effColor = '#22c55e';
+        if (efficiency > 85) effColor = 'var(--accent-green)';
         if (efficiency > 95) effColor = '#a855f7';
 
         const gain = (potential.score - ev.score).toFixed(1);
@@ -1148,7 +1148,7 @@ function renderShowcase(index) {
 
         return `
                 <div style="background:rgba(30, 35, 45, 0.95); border:1px solid #444; border-radius:8px; padding:20px;">
-                    <h2 style="color:#fff; margin-bottom:25px; font-size:1.4rem; text-transform:uppercase; border-bottom:2px solid var(--accent-gold); padding-bottom:10px; display:flex; align-items:center; gap:10px;">
+                    <h2 style="color:var(--text-always-white); margin-bottom:25px; font-size:1.4rem; text-transform:uppercase; border-bottom:2px solid var(--accent-gold); padding-bottom:10px; display:flex; align-items:center; gap:10px;">
                         <i class="fa-solid fa-chart-line" style="color:var(--accent-gold)"></i> ANALYSE & CONSEILS
                     </h2>
                     
@@ -1156,7 +1156,7 @@ function renderShowcase(index) {
                         
                         <div>
                             <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">1. Vue d'ensemble</h3>
-                            <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
+                            <div style="background:var(--shadow-subtle); padding:15px; border-radius:8px;">
                                 ${generateScoreBar(ev.totalRolls, ev.grade.letter)}
                                 
                                 <div style="display:flex; justify-content:space-around; align-items:center; margin-top:20px; flex-wrap:wrap; gap:20px;">
@@ -1166,15 +1166,15 @@ function renderShowcase(index) {
                                     </div>
                                     <div style="text-align:center;">
                                         <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase;">Facteur Chance (RNG)</div>
-                                        <div style="font-size:2.5rem; font-weight:800; color:${rngQuality > 85 ? '#22c55e' : (rngQuality > 75 ? '#eab308' : '#ff4d4d')}; line-height:1;">${rngQuality}%</div>
+                                        <div style="font-size:2.5rem; font-weight:800; color:${rngQuality > 85 ? 'var(--accent-green)' : (rngQuality > 75 ? '#eab308' : '#ff4d4d')}; line-height:1;">${rngQuality}%</div>
                                     </div>
                                     <div style="flex:1; min-width:200px;">
                                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; font-size:0.8rem;">
                                             <span style="color:#ccc;">Score Potentiel Max</span>
-                                            <span style="font-weight:bold; color:var(--accent-gold);">${potential.score} <span style="color:#22c55e; font-size:0.7rem;">(+${gain})</span></span>
+                                            <span style="font-weight:bold; color:var(--accent-gold);">${potential.score} <span style="color:var(--accent-green); font-size:0.7rem;">(+${gain})</span></span>
                                         </div>
                                         <div style="width:100%; background:#333; height:10px; border-radius:5px; position:relative;">
-                                            <div style="height:100%; background:#fff; width:${Math.min((ev.score / potential.score)*100, 100)}%; border-radius:5px; position:absolute;"></div>
+                                            <div style="height:100%; background:var(--text-always-white); width:${Math.min((ev.score / potential.score)*100, 100)}%; border-radius:5px; position:absolute;"></div>
                                             <div style="height:100%; background:var(--accent-gold); width:100%; opacity:0.3; border-radius:5px;"></div>
                                         </div>
                                     </div>
@@ -1185,11 +1185,11 @@ function renderShowcase(index) {
                         <div>
                             <h3 style="color:#ccc; font-size:1rem; text-transform:uppercase; margin-bottom:15px; border-left:4px solid var(--accent-gold); padding-left:10px;">2. Analyse Stratégique</h3>
                             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
-                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${critAdvice.color};">
+                                <div style="background:var(--shadow-subtle); padding:15px; border-radius:8px; border-left:3px solid ${critAdvice.color};">
                                     <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Conseil Critique</div>
-                                    <div style="font-size:1rem; font-weight:500; color:#fff;">${critAdvice.msg}</div>
+                                    <div style="font-size:1rem; font-weight:500; color:var(--text-always-white);">${critAdvice.msg}</div>
                                 </div>
-                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px;">
+                                <div style="background:var(--shadow-subtle); padding:15px; border-radius:8px;">
                                     <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:10px; display:flex; justify-content:space-between;">
                                         <span>Répartition des Rolls</span>
                                         <span style="font-weight:bold; color:#ff4d4d;">${deadRolls.count} Morts</span>
@@ -1202,14 +1202,14 @@ function renderShowcase(index) {
                                         ${deadRolls.details.map(d =>
             `<span style="background:rgba(255, 77, 77, 0.15); color:#ff9999; font-size:0.75rem; padding:2px 8px; border-radius:4px;">${d.label}: ${d.count}</span>`
         ).join('')}
-                                        ${deadRolls.count === 0 ? '<span style="color:#22c55e; font-size:0.8rem;">Aucune stat morte !</span>' : ''}
+                                        ${deadRolls.count === 0 ? '<span style="color:var(--accent-green); font-size:0.8rem;">Aucune stat morte !</span>' : ''}
                                     </div>
                                 </div>
                                 
                                 ${offPieceAdvice ? `
-                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${offPieceAdvice.type === 'success' ? '#22c55e' : (offPieceAdvice.type === 'warning' ? '#eab308' : '#ef4444')}; grid-column: 1 / -1;">
+                                <div style="background:var(--shadow-subtle); padding:15px; border-radius:8px; border-left:3px solid ${offPieceAdvice.type === 'success' ? 'var(--accent-green)' : (offPieceAdvice.type === 'warning' ? '#eab308' : '#ef4444')}; grid-column: 1 / -1;">
                                     <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:5px;">Analyse Pièce Hors-Set (Joker)</div>
-                                    <div style="font-size:0.95rem; color:#fff;">${offPieceAdvice.msg}</div>
+                                    <div style="font-size:0.95rem; color:var(--text-always-white);">${offPieceAdvice.msg}</div>
                                 </div>` : ''}
                             </div>
                         </div>
@@ -1219,13 +1219,13 @@ function renderShowcase(index) {
                             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
                                 
                                 ${talentAdvices && talentAdvices.length > 0 ? `
-                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${talentAdvices[0].type === 'success' ? '#22c55e' : (talentAdvices.some(a => a.type === 'critical') ? '#ef4444' : '#3b82f6')}; grid-column: 1 / -1;">
-                                    <div style="font-size:0.8rem; color:${talentAdvices[0].type === 'success' ? '#22c55e' : '#aaa'}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
+                                <div style="background:var(--shadow-subtle); padding:15px; border-radius:8px; border-left:3px solid ${talentAdvices[0].type === 'success' ? 'var(--accent-green)' : (talentAdvices.some(a => a.type === 'critical') ? '#ef4444' : '#3b82f6')}; grid-column: 1 / -1;">
+                                    <div style="font-size:0.8rem; color:${talentAdvices[0].type === 'success' ? 'var(--accent-green)' : '#aaa'}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
                                         <i class="fa-solid fa-book-open"></i> Priorité des Aptitudes
                                     </div>
                                     ${talentAdvices.map(adv => `
-                                        <div style="margin-bottom:5px; font-size:0.9rem; color:#fff;">
-                                            ${adv.type !== 'success' ? `<i class="fa-solid fa-circle-${adv.type === 'critical' ? 'exclamation' : 'info'}" style="color:${adv.type === 'critical' ? '#ef4444' : '#3b82f6'}"></i>` : '<i class="fa-solid fa-check" style="color:#22c55e"></i>'} 
+                                        <div style="margin-bottom:5px; font-size:0.9rem; color:var(--text-always-white);">
+                                            ${adv.type !== 'success' ? `<i class="fa-solid fa-circle-${adv.type === 'critical' ? 'exclamation' : 'info'}" style="color:${adv.type === 'critical' ? '#ef4444' : '#3b82f6'}"></i>` : '<i class="fa-solid fa-check" style="color:var(--accent-green)"></i>'} 
                                             ${adv.msg}
                                         </div>
                                     `).join('')}
@@ -1233,60 +1233,60 @@ function renderShowcase(index) {
 
                                 ${(() => {
             const adv = getMainStatAdvice(p, config);
-            const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+            const color = adv.type === 'success' ? 'var(--accent-green)' : '#ef4444';
             const icon = adv.type === 'success' ? 'check' : 'triangle-exclamation';
             return `
-                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                    <div style="background:var(--shadow-subtle); padding:15px; border-radius:8px; border-left:3px solid ${color};">
                                         <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
                                             <i class="fa-solid fa-${icon}"></i> ${adv.title}
                                         </div>
                                         ${adv.type === 'success'
-                ? `<div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>`
-                : adv.details.map(d => `<div style="margin-bottom:5px; font-size:0.9rem; color:#fff;">Sur <b>${d.piece}</b>, visez <span style="color:var(--accent-gold); font-weight:bold;">${d.better}</span> (Actuel: ${d.current}).</div>`).join('')
+                ? `<div style="font-size:0.95rem; color:var(--text-always-white);">${adv.msg}</div>`
+                : adv.details.map(d => `<div style="margin-bottom:5px; font-size:0.9rem; color:var(--text-always-white);">Sur <b>${d.piece}</b>, visez <span style="color:var(--accent-gold); font-weight:bold;">${d.better}</span> (Actuel: ${d.current}).</div>`).join('')
             }
                                     </div>`;
         })()}
 
                                 ${(() => {
             const adv = getSetForcingAdvice(p);
-            const color = adv.type === 'success' ? '#22c55e' : '#eab308'; // Vert ou Jaune
+            const color = adv.type === 'success' ? 'var(--accent-green)' : '#eab308'; // Vert ou Jaune
             const icon = adv.type === 'success' ? 'check' : 'triangle-exclamation';
             return `
-                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                    <div style="background:var(--shadow-subtle); padding:15px; border-radius:8px; border-left:3px solid ${color};">
                                         <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
                                             <i class="fa-solid fa-${icon}"></i> ${adv.title}
                                         </div>
-                                        <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
+                                        <div style="font-size:0.95rem; color:var(--text-always-white);">${adv.msg}</div>
                                     </div>`;
         })()}
 
                                 ${(() => {
             const adv = getWeaponAdvice(p);
-            const color = adv.type === 'success' ? '#22c55e' : '#eab308';
+            const color = adv.type === 'success' ? 'var(--accent-green)' : '#eab308';
             const icon = adv.type === 'success' ? 'check' : 'arrow-up';
             return `
-                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                    <div style="background:var(--shadow-subtle); padding:15px; border-radius:8px; border-left:3px solid ${color};">
                                         <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
                                             <i class="fa-solid fa-${icon}"></i> ${adv.title}
                                         </div>
-                                        <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
+                                        <div style="font-size:0.95rem; color:var(--text-always-white);">${adv.msg}</div>
                                     </div>`;
         })()}
 
                                 ${(() => {
             const adv = getLevelAdvice(p);
-            const color = adv.type === 'success' ? '#22c55e' : '#3b82f6'; // Vert ou Bleu
+            const color = adv.type === 'success' ? 'var(--accent-green)' : '#3b82f6'; // Vert ou Bleu
             const icon = adv.type === 'success' ? 'check' : 'arrow-up';
             return `
-                                    <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; border-left:3px solid ${color};">
+                                    <div style="background:var(--shadow-subtle); padding:15px; border-radius:8px; border-left:3px solid ${color};">
                                         <div style="font-size:0.8rem; color:${color}; text-transform:uppercase; margin-bottom:10px; font-weight:bold;">
                                             <i class="fa-solid fa-${icon}"></i> ${adv.title}
                                         </div>
-                                        <div style="font-size:0.95rem; color:#fff;">${adv.msg}</div>
+                                        <div style="font-size:0.95rem; color:var(--text-always-white);">${adv.msg}</div>
                                     </div>`;
         })()}
 
-                                <div style="background:rgba(0,0,0,0.2); padding:15px; border-radius:8px; grid-column: 1 / -1;">
+                                <div style="background:var(--shadow-subtle); padding:15px; border-radius:8px; grid-column: 1 / -1;">
                                     <div style="font-size:0.8rem; color:#aaa; text-transform:uppercase; margin-bottom:10px;">Top 3 Priorités (Artéfacts à changer)</div>
                                     ${priorities.length > 0 ? priorities.map((p, i) => {
             const difficulty = getFarmDifficulty(p.type, p.mainKey);
@@ -1298,7 +1298,7 @@ function renderShowcase(index) {
                                             </div>
                                             <span style="color:${p.color}; font-weight:bold;">${p.score} (${p.grade})</span>
                                         </div>
-                                    `}).join('') : '<div style="color:#22c55e; font-weight:bold;"><i class="fa-solid fa-check"></i> Rien à signaler, excellent travail.</div>'}
+                                    `}).join('') : '<div style="color:var(--accent-green); font-weight:bold;"><i class="fa-solid fa-check"></i> Rien à signaler, excellent travail.</div>'}
                                 </div>
 
                             </div>
@@ -1311,8 +1311,8 @@ function renderShowcase(index) {
                                 <div style="font-size:0.9rem; color:#93c5fd; margin-bottom:15px;">Voici ce que vous gagneriez en remplaçant vos stats mortes par des stats utiles :</div>
                                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
                                 ${deadSims.map(sim => `
-                                    <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:6px; border-left:3px solid #3b82f6;">
-                                        <div style="font-size:0.9rem; color:#fff; font-weight:bold; margin-bottom:5px;">${sim.pieceName}</div>
+                                    <div style="background:var(--shadow-subtle); padding:12px; border-radius:6px; border-left:3px solid #3b82f6;">
+                                        <div style="font-size:0.9rem; color:var(--text-always-white); font-weight:bold; margin-bottom:5px;">${sim.pieceName}</div>
                                         <div style="font-size:0.8rem; color:#ccc; line-height:1.4;">${sim.text}</div>
                                         <div style="font-size:1rem; color:var(--accent-gold); font-weight:bold; margin-top:5px;">${sim.gainHtml}</div>
                                     </div>
@@ -1329,19 +1329,19 @@ function renderShowcase(index) {
             if(!metrics) return '';
             const pieceName = ARTIFACT_TYPE_MAPPING[art.type] || art.type;
             return `
-                                    <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; border:1px solid #444;">
+                                    <div style="background:var(--shadow-subtle); padding:12px; border-radius:8px; border:1px solid #444;">
                                         <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
                                             <img src="${art.icon}" style="width:30px; height:30px;">
-                                            <div style="font-size:0.8rem; font-weight:bold; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${pieceName}</div>
+                                            <div style="font-size:0.8rem; font-weight:bold; color:var(--text-always-white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${pieceName}</div>
                                         </div>
                                         
                                         <div style="margin-bottom:8px;">
                                             <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:#aaa;">
                                                 <span>Potentiel Gain</span>
-                                                <span style="color:${metrics.potential > 60 ? '#22c55e' : '#ccc'}">${metrics.potential}%</span>
+                                                <span style="color:${metrics.potential > 60 ? 'var(--accent-green)' : '#ccc'}">${metrics.potential}%</span>
                                             </div>
                                             <div style="width:100%; height:4px; background:#333; border-radius:2px;">
-                                                <div style="width:${metrics.potential}%; height:100%; background:linear-gradient(90deg, #3b82f6, #22c55e); border-radius:2px;"></div>
+                                                <div style="width:${metrics.potential}%; height:100%; background:linear-gradient(90deg, #3b82f6, var(--accent-green)); border-radius:2px;"></div>
                                             </div>
                                         </div>
 

@@ -154,7 +154,7 @@ export function renderToolbarControls(persoObj, charIndex) {
                 : '';
 
             const consBadge = (mate.cons && mate.cons > 0)
-                ? `<span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:700; color:#fff; text-shadow:0 0 3px #000; z-index:10;">C${mate.cons}</span>`
+                ? `<span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:700; color:var(--text-always-white); text-shadow:0 0 3px #000; z-index:10;">C${mate.cons}</span>`
                 : '';
 
             return `

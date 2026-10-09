@@ -14,7 +14,7 @@ export function getFarmDifficulty(pieceType, mainStatKey) {
 
     const probability = rates[mainStatKey];
 
-    if (probability >= 19) return { label: t('farm.medium'), color: "#22c55e" };
+    if (probability >= 19) return { label: t('farm.medium'), color: "var(--accent-green)" };
     if (probability >= 10) return { label: t('farm.hard'), color: "#eab308" };
     if (probability >= 5) return { label: t('farm.veryHard'), color: "#f97316" };
     return { label: t('farm.extreme'), color: "#ef4444" };
@@ -89,7 +89,7 @@ export function getMainStatAdvice(persoObj, config) {
 
     return {
         type: "success",
-        color: "#22c55e",
+        color: "var(--accent-green)",
         title: t('advice.mainStat.title.ok'),
         msg: t('advice.mainStat.ok'),
         slotsData: slotsData
@@ -114,7 +114,7 @@ export function renderMainStatsAdvice(persoObj, config) {
             </div>`;
     }
 
-    const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+    const color = adv.type === 'success' ? 'var(--accent-green)' : '#ef4444';
     let circlesHtml = '';
 
     if (adv.slotsData && adv.slotsData.length === 3) {
@@ -124,7 +124,7 @@ export function renderMainStatsAdvice(persoObj, config) {
             if (!slot.isEquipped) {
                 circlesHtml += `
                     <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
-                        <div style="width: 60px; height: 60px; border-radius: 8px; background: conic-gradient(#4b5563 100%, rgba(255,255,255,0.1) 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3); opacity: 0.4;">
+                        <div style="width: 60px; height: 60px; border-radius: 8px; background: conic-gradient(#4b5563 100%, rgba(255,255,255,0.1) 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px var(--shadow-subtle); opacity: 0.4;">
                             <div style="position:relative; width: 54px; height: 54px; border-radius: 6px; background: var(--bg-panel); display: flex; align-items: center; justify-content: center; overflow: hidden;">
                                 <img src="${ICON_BASE_PATH}icon_unknown.webp" style="width: 28px; height: 28px; object-fit: contain; opacity: 0.3;" alt="?">
                             </div>
@@ -133,11 +133,11 @@ export function renderMainStatsAdvice(persoObj, config) {
                 return;
             }
 
-            const progressColor = slot.isOk ? '#22c55e' : '#ef4444';
+            const progressColor = slot.isOk ? 'var(--accent-green)' : '#ef4444';
 
             circlesHtml += `
                 <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
-                    <div style="width: 60px; height: 60px; border-radius: 8px; background: conic-gradient(${progressColor} 100%, rgba(255,255,255,0.1) 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                    <div style="width: 60px; height: 60px; border-radius: 8px; background: conic-gradient(${progressColor} 100%, rgba(255,255,255,0.1) 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px var(--shadow-subtle);">
                         <div style="position:relative; width: 54px; height: 54px; border-radius: 6px; background: var(--bg-panel); display: flex; align-items: center; justify-content: center; overflow: hidden;">
                             <img src="${slot.icon}" style="width: 48px; height: 48px; object-fit: contain; border-radius: 4px;" alt="">
                             ${slot.isOk ? `

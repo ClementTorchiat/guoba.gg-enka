@@ -36,7 +36,7 @@ export function renderERAdvice(p, b) {
     const adv = getERAdvice(currentER, targetER);
     if (!adv) return '';
 
-    const color = adv.type === 'success' ? '#22c55e' : (adv.type === 'info' ? '#3b82f6' : '#ef4444');
+    const color = adv.type === 'success' ? 'var(--accent-green)' : (adv.type === 'info' ? '#3b82f6' : '#ef4444');
 
     const pctCurrent = Math.max(0, Math.min(((currentER - 100) / 200) * 100, 100));
     const pctTarget = Math.max(0, Math.min(((targetER - 100) / 200) * 100, 100));
@@ -56,7 +56,7 @@ export function renderERAdvice(p, b) {
             </div>
             
             <div style="width: 100%; position: relative;">
-                <div style="width: 100%; height: 20px; background: rgba(0,0,0,0.2); border-radius: 4px; overflow: hidden; position: relative;">
+                <div style="width: 100%; height: 20px; background: var(--shadow-subtle); border-radius: 4px; overflow: hidden; position: relative;">
                     <div style="
                         width: ${pctCurrent}%; 
                         height: 100%; 

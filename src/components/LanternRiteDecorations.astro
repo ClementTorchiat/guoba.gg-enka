@@ -146,7 +146,7 @@ const lanterns = Array.from({ length: 25 });
     :global(.knot) {
         position: absolute;
         top: -10px;
-        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+        filter: drop-shadow(0 2px 5px var(--shadow-subtle));
         animation: sway-knot 4s ease-in-out infinite alternate;
         transform-origin: top center;
     }
@@ -176,7 +176,7 @@ const lanterns = Array.from({ length: 25 });
         transform: rotate(15deg);
         pointer-events: none;
         z-index: 10;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        filter: drop-shadow(0 2px 4px var(--shadow-subtle));
     }
 </style>
 

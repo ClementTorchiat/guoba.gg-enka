@@ -1220,11 +1220,11 @@ function getCritAdvice(cr, cd, config) {
             color: '#eab308',
             msg: t('advice.crit.highCDLowCR', roundedCR, roundedCD)
         };
-        return { color: '#22c55e', msg: t('advice.crit.above90') };
+        return { color: 'var(--accent-green)', msg: t('advice.crit.above90') };
     }
 
     if (roundedCR >= 80) return {
-        color: '#22c55e',
+        color: 'var(--accent-green)',
         msg: t('advice.crit.above80')
     };
 
@@ -1342,7 +1342,7 @@ function getFarmDifficulty(pieceType, mainStatKey) {
 
     const probability = rates[mainStatKey];
 
-    if (probability >= 19) return { label: t('farm.medium'), color: "#22c55e" };
+    if (probability >= 19) return { label: t('farm.medium'), color: "var(--accent-green)" };
     if (probability >= 10) return { label: t('farm.hard'), color: "#eab308" };
     if (probability >= 5) return { label: t('farm.veryHard'), color: "#f97316" };
     return { label: t('farm.extreme'), color: "#ef4444" };
@@ -1732,7 +1732,7 @@ function getLevelAdvice(persoObj) {
             title: t('advice.level.title'),
             msg: t('advice.level.legendary'),
             maxLevel: 100,
-            barColor: '#22c55e'
+            barColor: 'var(--accent-green)'
         };
     }
     if (persoObj.level >= 95) {
@@ -1741,7 +1741,7 @@ function getLevelAdvice(persoObj) {
             title: t('advice.level.title'),
             msg: t('advice.level.ascended'),
             maxLevel: 95,
-            barColor: '#22c55e'
+            barColor: 'var(--accent-green)'
         };
     }
     if (persoObj.level >= 90) {
@@ -1750,7 +1750,7 @@ function getLevelAdvice(persoObj) {
             title: t('advice.level.title'),
             msg: t('advice.level.ok'),
             maxLevel: 90,
-            barColor: '#22c55e'
+            barColor: 'var(--accent-green)'
         };
     }
     return {
@@ -2191,7 +2191,7 @@ function calculateRerollMetrics(artifact, config) {
     } else if (risk > 75) {
         badge = { text: t("reroll.tooRisky"), color: "#ef4444" };
     } else if (potential > 40 && risk < 35) {
-        badge = { text: t("reroll.recommended"), color: "#22c55e" };
+        badge = { text: t("reroll.recommended"), color: "var(--accent-green)" };
     } else if (potential > 15) {
         badge = { text: t("reroll.optimizable"), color: "#3b82f6" };
     } else {
@@ -3611,7 +3611,7 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
                     </div>
                 </div>
 
-                <div style="background: rgba(0, 0, 0, 0.25); border-radius: 6px; padding: 6px 8px; margin-top: 2px; border: 1px solid rgba(255, 255, 255, 0.06);">
+                <div style="background: var(--shadow-subtle); border-radius: 6px; padding: 6px 8px; margin-top: 2px; border: 1px solid rgba(255, 255, 255, 0.06);">
                     <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">
                         ${t('ui.statTooltip.rollBreakdown')}
                     </div>
@@ -3713,7 +3713,7 @@ window.showArtifactScoreTooltip = function (element, charIndex, artIndex) {
                 ${t('ui.art.rawScore.desc')}
             </div>
             
-            <div style="background: rgba(0, 0, 0, 0.25); border-radius: 6px; padding: 6px 8px; margin-top: 4px; border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; gap: 6px;">
+            <div style="background: var(--shadow-subtle); border-radius: 6px; padding: 6px 8px; margin-top: 4px; border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; gap: 6px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px;">
                     <span style="font-size: 11px; color: rgba(255, 255, 255, 0.8);">${t('ui.art.rawScore.total')}</span>
                     <span style="font-family: monospace; font-size: 14px; font-weight: bold; color: var(--text-always-white);">${rawScore}</span>

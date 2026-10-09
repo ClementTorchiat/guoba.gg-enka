@@ -77,14 +77,14 @@ export function renderBestPiecesShowcase(characters, focusCharNom = null, mode =
                                 data-mode="score"
                                 type="button"
                                 class="button-unlink"
-                                style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${mode === 'score' ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${mode === 'score' ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.2)'}; color:${mode === 'score' ? '#60a5fa' : 'var(--text-grey)'};">
+                                style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${mode === 'score' ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${mode === 'score' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${mode === 'score' ? '#60a5fa' : 'var(--text-grey)'};">
                             <span>${t('roadmap.best.modeScore')}</span>
                         </button>
                         <button data-action="set-best-pieces-mode"
                                 data-mode="cv"
                                 type="button"
                                 class="button-unlink"
-                                style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${mode === 'cv' ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${mode === 'cv' ? 'rgba(59,130,246,0.18)' : 'rgba(0,0,0,0.2)'}; color:${mode === 'cv' ? '#60a5fa' : 'var(--text-grey)'};">
+                                style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${mode === 'cv' ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${mode === 'cv' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${mode === 'cv' ? '#60a5fa' : 'var(--text-grey)'};">
                             <span>${t('roadmap.best.modeCV')}</span>
                         </button>
                     </div>
@@ -92,7 +92,7 @@ export function renderBestPiecesShowcase(characters, focusCharNom = null, mode =
             </div>
 
             ${topPieces.length === 0 ? `
-                <div style="padding:16px; background:rgba(0,0,0,0.2); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
+                <div style="padding:16px; background:var(--shadow-subtle); border:1px dashed rgba(255,255,255,0.1); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
                     ${t('roadmap.best.empty')}
                 </div>
             ` : `                <div style="display:flex; flex-direction:column; gap:10px;">
@@ -102,7 +102,7 @@ export function renderBestPiecesShowcase(characters, focusCharNom = null, mode =
         return `
                         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; padding:12px 14px; background:${p.isFocus ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${p.isFocus ? '1px solid rgba(59,130,246,0.2)' : '1px solid rgba(255,255,255,0)'}; border-radius:8px; gap:12px;">
                             <div style="display:flex; align-items:top; gap:10px; flex:1; min-width:180px;">
-                                ${p.icon ? `<img src="${p.icon}" alt="${p.typeName}" style="width:34px; height:34px; border-radius:4px; object-fit:contain; flex-shrink:0; background:rgba(0,0,0,0.2);">` : ''}
+                                ${p.icon ? `<img src="${p.icon}" alt="${p.typeName}" style="width:34px; height:34px; border-radius:4px; object-fit:contain; flex-shrink:0; background:var(--shadow-subtle);">` : ''}
                                 <div style="display:flex; flex-direction:column;">
                                     <div style="display:flex; align-items:center; gap:6px;">
                                         <span style="font-size:13px; font-weight:normal; color:var(--text-primary);">${p.typeName}</span>
@@ -111,7 +111,7 @@ export function renderBestPiecesShowcase(characters, focusCharNom = null, mode =
                                         <span style="font-size:11px; color:var(--text-grey);">${p.setName}</span>
                                     </div>
                                     <div style="display:flex; align-items:center; gap:6px; margin-top:4px;">
-                                        <img src="${p.persoImage}" style="width:16px; height:16px; border-radius:2px; background:rgba(0,0,0,0.2);">
+                                        <img src="${p.persoImage}" style="width:16px; height:16px; border-radius:2px; background:var(--shadow-subtle);">
                                         <span style="font-size:11px; font-weight:normal; color:${p.isFocus ? '#60a5fa' : 'var(--text-primary)'};">${p.persoNom}</span>
                                         <span style="font-size:11px; color:var(--text-grey);">•</span>
                                         <div style="display:flex; align-items:center; gap:3px;">

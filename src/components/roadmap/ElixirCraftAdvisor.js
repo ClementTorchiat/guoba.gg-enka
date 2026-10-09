@@ -256,7 +256,7 @@ export function getElixirCraftRecommendations(characters, focusCharNom = null, b
                 verdictColor = '#c084fc';
             } else if (upgradeChance >= 80 && deltaScoreRaw >= 5) {
                 verdict = 'safe';
-                verdictColor = '#22c55e';
+                verdictColor = 'var(--accent-green)';
             }
 
             // Conversion en score / 100 pour l'affichage
@@ -344,7 +344,7 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                                     type="button"
                                     class="button-unlink"
                                     title="${b.fullLabel || b.label}"
-                                    style="display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:8px; font-size:11px; cursor:pointer; transition:all 0.2s ease; border:${isSelected ? '1px solid #f59e0b' : 'none'}; background:${isSelected ? 'rgba(245,158,11,0.18)' : 'rgba(0,0,0,0.2)'}; color:${isSelected ? 'var(--accent-gold, #f59e0b)' : 'var(--text-grey)'};">
+                                    style="display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:8px; font-size:11px; cursor:pointer; transition:all 0.2s ease; border:${isSelected ? '1px solid #f59e0b' : 'none'}; background:${isSelected ? 'rgba(245,158,11,0.18)' : 'var(--shadow-subtle)'}; color:${isSelected ? 'var(--accent-gold, #f59e0b)' : 'var(--text-grey)'};">
                                 <span>${b.label}</span>
                                 ${b.count ? getFlaskSvg(11, isSelected ? '#f59e0b' : 'var(--text-grey)') : ''}
                             </button>
@@ -355,7 +355,7 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
 
             <!-- Grille des Recommandations de Craft -->
             ${recs.length === 0 ? `
-                <div style="padding:16px; background:rgba(0,0,0,0.2); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
+                <div style="padding:16px; background:var(--shadow-subtle); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
                     ${t('roadmap.elixir.empty')}
                 </div>
             ` : `
@@ -366,7 +366,7 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                             <!-- Ligne 1 : Perso + Build + Coût Élixir -->
                             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
                                 <div style="display:flex; align-items:center; gap:8px; min-width:0;">
-                                    <img src="${rec.persoImage}" alt="${rec.persoNom}" style="width:34px; height:34px; border-radius:6px; background:rgba(0,0,0,0.2); flex-shrink:0; border:${rec.isFocus ? '1px solid #60a5fa' : 'none'};">
+                                    <img src="${rec.persoImage}" alt="${rec.persoNom}" style="width:34px; height:34px; border-radius:6px; background:var(--shadow-subtle); flex-shrink:0; border:${rec.isFocus ? '1px solid #60a5fa' : 'none'};">
                                     <div style="min-width:0;">
                                         <div style="display:flex; align-items:center; gap:6px;">
                                             <span style="font-size:13px; font-weight:normal; color:${rec.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
@@ -396,10 +396,10 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                             </div>
 
                             <!-- Ligne 2 : Détail du Craft Prévu (Set, Slot, Mainstat & Substats) -->
-                            <div style="display:flex; flex-direction:column; gap:8px; background:rgba(0,0,0,0.2); padding:10px; border-radius:8px;">
+                            <div style="display:flex; flex-direction:column; gap:8px; background:var(--shadow-subtle); padding:10px; border-radius:8px;">
                                 <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
                                     <div style="display:flex; align-items:center; gap:8px; min-width:0;">
-                                        ${rec.pieceIcon ? `<img src="${rec.pieceIcon}" alt="${rec.setName}" style="width:28px; height:28px; border-radius:4px; background:rgba(0,0,0,0.2); object-fit:contain; flex-shrink:0;" onerror="this.style.display='none'">` : ''}
+                                        ${rec.pieceIcon ? `<img src="${rec.pieceIcon}" alt="${rec.setName}" style="width:28px; height:28px; border-radius:4px; background:var(--shadow-subtle); object-fit:contain; flex-shrink:0;" onerror="this.style.display='none'">` : ''}
                                         <div style="display:flex; flex-direction:column; min-width:0;">
                                             <span style="font-size:12px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                                                 ${rec.slotName}
@@ -437,7 +437,7 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                                     <div style="font-size:10px; color:var(--text-grey);">
                                         ${t('roadmap.elixir.currentPiece')} <span style="color:${rec.curGradeColor}; font-weight:normal;">${rec.curScore} pts (${rec.curGrade})</span>
                                     </div>
-                                    <div style="font-size:12px; font-weight:normal; color:#22c55e;">
+                                    <div style="font-size:12px; font-weight:normal; color:var(--accent-green);">
                                         ${t('roadmap.elixir.expectedGain', rec.deltaScore)}
                                     </div>
                                 </div>

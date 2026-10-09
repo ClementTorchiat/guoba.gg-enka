@@ -142,7 +142,7 @@ export function renderSubstatQualitySection(persoObj, config) {
                 <div style="display:flex; flex-direction:column; padding-top:12px; gap:0;">
                     ${subsHtml}
                 </div>
-                ${!hasDead ? `<p style="margin-top:10px; text-align:center; background:#22c55e20; color:#22c55e; padding:4px; border-radius:4px; font-size:12px; border:1px solid #22c55e40;">${t('analysis.s4.optimal')}</p>` : ''}
+                ${!hasDead ? `<p style="margin-top:10px; text-align:center; background:var(--accent-green)20; color:var(--accent-green); padding:4px; border-radius:4px; font-size:12px; border:1px solid var(--accent-green)40;">${t('analysis.s4.optimal')}</p>` : ''}
             </div>
         `;
     }).join('');
@@ -164,7 +164,7 @@ export function renderSubstatQualitySection(persoObj, config) {
             const label = t('stat.' + key);
             const icon = ICON_BASE_PATH + (ICON_MAP[key] || ICON_MAP['unknown']);
             return `
-                            <div style="display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.1); padding: 8px 12px; border-radius: 6px;">
+                            <div style="display: flex; align-items: center; gap: 8px; background: var(--shadow-subtle); padding: 8px 12px; border-radius: 6px;">
                                 <img src="${icon}" style="width: 18px; height: 18px;" alt="">
                                 <div style="display: flex; flex-direction: column;">
                                     <span style="font-size: 11px; color: var(--text-grey);">${label}</span>
@@ -233,7 +233,7 @@ export function renderSubstatQualitySection(persoObj, config) {
             const delta = maxTotal - sub.value;
             const deltaDisplay = isFlat ? Math.round(delta) : parseFloat(delta.toFixed(1));
             const deltaHtml = delta > 0.01
-                ? `<span style="color:#22c55e; font-size:10px; font-family:ShinShin, Inter, sans-serif;">(+${deltaDisplay}${suffix})</span>`
+                ? `<span style="color:var(--accent-green); font-size:10px; font-family:ShinShin, Inter, sans-serif;">(+${deltaDisplay}${suffix})</span>`
                 : '';
 
             return `
@@ -256,7 +256,7 @@ export function renderSubstatQualitySection(persoObj, config) {
         return `
             <div style="width: 100%; background:var(--bg-panel); padding:10px 12px; border-radius:8px;">
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom:8px;">
-                    <img src="${art.icon}" style="width:38px; height:38px; border-radius:8px; background-color: rgba(0,0,0,0.1)" alt="">
+                    <img src="${art.icon}" style="width:38px; height:38px; border-radius:8px; background-color: var(--shadow-subtle)" alt="">
                     <div>
                         <p style="font-size:12px; color:var(--text-primary); overflow:hidden; text-overflow:ellipsis; margin:0;">${pieceName}</p>
                     </div>
@@ -308,7 +308,7 @@ export function renderSubstatQualitySection(persoObj, config) {
             if (w === undefined && key.includes('_dmg_')) w = config?.weights?.['elemental_dmg_'];
             const opacity = (w && w > 0) ? '1' : '0.4';
             return `
-                            <div style="display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.1); padding: 8px 12px; border-radius: 6px; opacity: ${opacity};">
+                            <div style="display: flex; align-items: center; gap: 8px; background: var(--shadow-subtle); padding: 8px 12px; border-radius: 6px; opacity: ${opacity};">
                                 <img src="${icon}" style="width: 18px; height: 18px;" alt="">
                                 <div style="display: flex; flex-direction: column;">
                                     <span style="font-size: 11px; color: var(--text-grey);">${label}</span>

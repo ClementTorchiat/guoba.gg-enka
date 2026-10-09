@@ -33,7 +33,7 @@ export function getTalentAdvice(persoObj, config) {
     check('burst', t('advice.talent.burst'));
 
     if (criticals.length === 0 && infos.length === 0) {
-        return [{ type: "success", color: "#22c55e", title: t('advice.talent.title'), msg: t('advice.talent.ok') }];
+        return [{ type: "success", color: "var(--accent-green)", title: t('advice.talent.title'), msg: t('advice.talent.ok') }];
     }
 
     let advices = [];
@@ -68,7 +68,7 @@ export function getTalentAdvice(persoObj, config) {
 export function renderTalentAdvice(persoObj, config) {
     const talentAdvices = getTalentAdvice(persoObj, config);
     if (!talentAdvices || talentAdvices.length === 0) return '';
-    const color = talentAdvices[0].type === 'success' ? '#22c55e' : '#ef4444';
+    const color = talentAdvices[0].type === 'success' ? 'var(--accent-green)' : '#ef4444';
 
     const target = (config && config.talents) || { auto: 1, skill: 1, burst: 1 };
     const talentKeys = ['auto', 'skill', 'burst'];
@@ -83,13 +83,13 @@ export function renderTalentAdvice(persoObj, config) {
 
             const lvlText = curLvl >= tgtLvl
                 ? `<span style="color:var(--text-primary);">${curLvl}</span>`
-                : `<span style="color:var(--text-muted);">${curLvl}</span> <span style="color:var(--text-always-white); font-size:11px;">➔</span> <span style="color:#22c55e;">${tgtLvl}</span>`;
+                : `<span style="color:var(--text-muted);">${curLvl}</span> <span style="color:var(--text-always-white); font-size:11px;">➔</span> <span style="color:var(--accent-green);">${tgtLvl}</span>`;
 
-            const progressColor = curLvl >= tgtLvl ? '#22c55e' : '#ef4444';
+            const progressColor = curLvl >= tgtLvl ? 'var(--accent-green)' : '#ef4444';
 
             circlesHtml += `
                 <div style="display:flex; flex-direction:column; align-items:center; gap:6px; flex:1;">
-                    <div style="width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(${progressColor} ${pct}%, rgba(255,255,255,0.1) ${pct}%); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                    <div style="width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(${progressColor} ${pct}%, rgba(255,255,255,0.1) ${pct}%); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px var(--shadow-subtle);">
                         <div style="width: 54px; height: 54px; border-radius: 50%; background: var(--bg-panel); display: flex; align-items: center; justify-content: center; overflow: hidden;">
                             <img src="${persoObj.talents[idx].icon}" style="width: 40px; height: 40px; object-fit: contain;" alt="">
                         </div>

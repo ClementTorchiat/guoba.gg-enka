@@ -27,12 +27,12 @@ export function getCritAdvice(cr, cd, config) {
                 msg: t('advice.crit.highCDLowCR', roundedCR, roundedCD)
             };
         }
-        return { color: '#22c55e', msg: t('advice.crit.above90') };
+        return { color: 'var(--accent-green)', msg: t('advice.crit.above90') };
     }
 
     if (roundedCR >= 80) {
         return {
-            color: '#22c55e',
+            color: 'var(--accent-green)',
             msg: t('advice.crit.above80')
         };
     }
@@ -71,7 +71,7 @@ export function renderCritAdvice(b, config) {
             
             ${critAdvice.msg !== t('advice.crit.noCrit') ? `
             <div style="padding-left: 16px; padding-bottom: 24px; padding-top: 32px; border-top:1px dashed rgba(255,255,255,0.1);">
-                <div style="width: 100%; aspect-ratio: ${Math.max(300, b.cd) / 100}; background: rgba(0,0,0,0.2); border-left: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2); position: relative; display: flex; align-items: flex-end;">
+                <div style="width: 100%; aspect-ratio: ${Math.max(300, b.cd) / 100}; background: var(--shadow-subtle); border-left: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2); position: relative; display: flex; align-items: flex-end;">
                     
                     <span style="position:absolute; left:-18px; top:50%; font-size:10px; color:var(--text-grey); transform:translateY(-50%) rotate(-90deg); letter-spacing:1px;">CR</span>
                     <span style="position:absolute; left:-12px; top:-16px; font-size:9px; color:var(--text-grey);">100%</span>

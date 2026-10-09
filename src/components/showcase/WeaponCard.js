@@ -12,7 +12,7 @@ export function renderWeaponCard(persoObj) {
             <div style="flex:1; display: flex; flex-direction: column; overflow: hidden;">
                 <div style="font-size:16px; color: var(--text-always-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${w.name}</div>
                 <div style="color: var(--text-always-white); font-size:14px; margin-bottom:5px;">${t('ui.char.level', w.level)} • R${w.rank || 1}</div>
-                <div style="display:flex; gap:12px; margin-top:5px; background:rgba(0,0,0,0.2); padding:5px; border-radius:8px; overflow: hidden;">
+                <div style="display:flex; gap:12px; margin-top:5px; background:var(--shadow-subtle); padding:5px; border-radius:8px; overflow: hidden;">
                     ${w.baseAtk ? `
                     <div style="overflow: hidden; padding-left: 2px;">
                         <p style="font-size:12px; color: rgba(255, 255, 255, 0.4); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin:0;">${t('ui.art.baseAtk')}</p>

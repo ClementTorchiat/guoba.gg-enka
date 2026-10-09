@@ -9,7 +9,7 @@ export function renderScoreSection(p, config, charIndex = 0) {
 
     let effColor = '#ef4444';
     if (efficiency > 70) effColor = '#eab308';
-    if (efficiency > 85) effColor = '#22c55e';
+    if (efficiency > 85) effColor = 'var(--accent-green)';
     if (efficiency > 95) effColor = '#a855f7';
 
     const gain = (potential.score - ev.score).toFixed(1);
@@ -39,12 +39,12 @@ export function renderScoreSection(p, config, charIndex = 0) {
                     </div>
                     <div style="text-align:left;">
                         <p style="font-size:12px; text-transform: uppercase; color:var(--text-grey); margin-bottom: 8px;">${t('analysis.s1.rngFactor')}</p>
-                        <p style="font-size:40px; line-height: 1; color:${rngQuality > 85 ? '#22c55e' : (rngQuality > 75 ? '#eab308' : '#ff4d4d')}">${rngQuality}%</p>
+                        <p style="font-size:40px; line-height: 1; color:${rngQuality > 85 ? 'var(--accent-green)' : (rngQuality > 75 ? '#eab308' : '#ff4d4d')}">${rngQuality}%</p>
                     </div>
                     <div style="flex:1; min-width:200px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.8rem;">
                             <span style="color:var(--text-grey); font-size: 12px; text-transform: uppercase;">${t('analysis.s1.maxScore')}</span>
-                            <span style="color:var(--accent-gold);">${potential.score} <span style="color:#22c55e; font-size:0.7rem;">(+${gain})</span></span>
+                            <span style="color:var(--accent-gold);">${potential.score} <span style="color:var(--accent-green); font-size:0.7rem;">(+${gain})</span></span>
                         </div>
                         <div style="width:100%; background:#333; height:40px; border-radius:8px; position:relative;">
                             <div style="height:100%; background:var(--text-primary); width:${Math.min((ev.score / (potential.score || 100)) * 100, 100)}%; border-radius:8px; position:absolute;"></div>

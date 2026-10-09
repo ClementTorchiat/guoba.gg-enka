@@ -89,7 +89,7 @@ export function calculateRerollMetrics(artifact, config) {
     } else if (risk > 75) {
         badge = { text: t("reroll.tooRisky"), color: "#ef4444" };
     } else if (potential > 40 && risk < 35) {
-        badge = { text: t("reroll.recommended"), color: "#22c55e" };
+        badge = { text: t("reroll.recommended"), color: "var(--accent-green)" };
     } else if (potential > 15) {
         badge = { text: t("reroll.optimizable"), color: "#3b82f6" };
     } else {

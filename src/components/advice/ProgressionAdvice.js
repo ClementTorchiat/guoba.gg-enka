@@ -9,7 +9,7 @@ export function getLevelAdvice(persoObj) {
             title: t('advice.level.title'),
             msg: t('advice.level.legendary'),
             maxLevel: 100,
-            barColor: '#22c55e'
+            barColor: 'var(--accent-green)'
         };
     }
     if (lvl >= 95) {
@@ -18,7 +18,7 @@ export function getLevelAdvice(persoObj) {
             title: t('advice.level.title'),
             msg: t('advice.level.ascended'),
             maxLevel: 95,
-            barColor: '#22c55e'
+            barColor: 'var(--accent-green)'
         };
     }
     if (lvl >= 90) {
@@ -27,7 +27,7 @@ export function getLevelAdvice(persoObj) {
             title: t('advice.level.title'),
             msg: t('advice.level.ok'),
             maxLevel: 90,
-            barColor: '#22c55e'
+            barColor: 'var(--accent-green)'
         };
     }
     return {
@@ -65,7 +65,7 @@ export function getWeaponAdvice(persoObj) {
 
 export function renderLevelAdvice(persoObj) {
     const adv = getLevelAdvice(persoObj);
-    const borderColor = adv.type === 'success' ? '#22c55e' : '#ef4444';
+    const borderColor = adv.type === 'success' ? 'var(--accent-green)' : '#ef4444';
     const pctCurrent = Math.min(((persoObj.level || 1) / adv.maxLevel) * 100, 100);
     const pctTarget = 100;
 
@@ -74,7 +74,7 @@ export function renderLevelAdvice(persoObj) {
             <div>
                 <p style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; margin-bottom: 12px;">${adv.title}</p>
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-                    <img src="${persoObj.image}" style="width:60px; height:60px; border-radius:6px; background:rgba(0,0,0,0.1); object-fit:cover; align-self:flex-start;" alt="${persoObj.nom}">
+                    <img src="${persoObj.image}" style="width:60px; height:60px; border-radius:6px; background:var(--shadow-subtle); object-fit:cover; align-self:flex-start;" alt="${persoObj.nom}">
                     <div style="flex:1;">
                         <p style="font-size: 12px; color:var(--text-grey); margin:0 0 4px 0;">${persoObj.nom}</p>
                         <p style="font-size: 14px; color:var(--text-primary); margin:0; line-height:1.4;">${adv.msg}</p>
@@ -83,7 +83,7 @@ export function renderLevelAdvice(persoObj) {
             </div>
             
             <div style="width: 100%; position: relative; margin-top:auto;">
-                <div style="width: 100%; height: 16px; background: rgba(0,0,0,0.2); border-radius: 4px; overflow: hidden; position: relative;">
+                <div style="width: 100%; height: 16px; background: var(--shadow-subtle); border-radius: 4px; overflow: hidden; position: relative;">
                     <div style="
                         width: ${pctCurrent}%; 
                         height: 100%; 
@@ -119,7 +119,7 @@ export function renderLevelAdvice(persoObj) {
 
 export function renderWeaponAdvice(persoObj) {
     const adv = getWeaponAdvice(persoObj);
-    const color = adv.type === 'success' ? '#22c55e' : '#ef4444';
+    const color = adv.type === 'success' ? 'var(--accent-green)' : '#ef4444';
     const weaponLevel = persoObj.weapon ? persoObj.weapon.level : 1;
     const pctCurrent = (weaponLevel / 90) * 100;
     const pctTarget = 100;
@@ -130,7 +130,7 @@ export function renderWeaponAdvice(persoObj) {
             <div>
                 <p style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; margin-bottom: 12px;">${adv.title}</p>
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-                    <img src="${weaponIcon}" style="width:60px; height:60px; border-radius:6px; background:rgba(0,0,0,0.1); object-fit:cover; align-self:flex-start;" alt="${t('ui.alt.weapon')}">
+                    <img src="${weaponIcon}" style="width:60px; height:60px; border-radius:6px; background:var(--shadow-subtle); object-fit:cover; align-self:flex-start;" alt="${t('ui.alt.weapon')}">
                     <div style="flex:1;">
                         <p style="font-size: 12px; color:var(--text-grey); margin:0 0 4px 0;">${persoObj.weapon ? persoObj.weapon.name : ''}</p>
                         <p style="font-size: 14px; color:var(--text-primary); margin:0; line-height:1.4;">${adv.msg}</p>
@@ -139,7 +139,7 @@ export function renderWeaponAdvice(persoObj) {
             </div>
             
             <div style="width: 100%; position: relative; margin-top:auto;">
-                <div style="width: 100%; height: 16px; background: rgba(0,0,0,0.2); border-radius: 4px; overflow: hidden; position: relative;">
+                <div style="width: 100%; height: 16px; background: var(--shadow-subtle); border-radius: 4px; overflow: hidden; position: relative;">
                     <div style="
                         width: ${pctCurrent}%; 
                         height: 100%; 

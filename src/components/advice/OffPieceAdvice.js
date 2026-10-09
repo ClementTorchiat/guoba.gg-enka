@@ -94,7 +94,7 @@ export function renderOffPieceAdvice(persoObj) {
     if (!offPieceAdvice) return '';
 
     let borderColor = '#ef4444';
-    if (offPieceAdvice.type === 'success') borderColor = '#22c55e';
+    if (offPieceAdvice.type === 'success') borderColor = 'var(--accent-green)';
     else if (offPieceAdvice.type === 'warning') borderColor = '#eab308';
     else if (offPieceAdvice.type === 'info') borderColor = '#f97316';
     else if (['empty', 'incomplete', 'rainbow'].includes(offPieceAdvice.type)) borderColor = '#6b7280';
@@ -107,15 +107,15 @@ export function renderOffPieceAdvice(persoObj) {
         const offPct = Math.min(((offPieceScore || 0) / maxScale) * 100, 100);
         const avgPct = Math.min((avgScore / maxScale) * 100, 100);
 
-        const innerColor = offPieceAdvice.type === 'success' ? '#22c55e' : (offPieceAdvice.type === 'warning' ? '#eab308' : (offPieceAdvice.type === 'info' ? '#f97316' : '#ef4444'));
+        const innerColor = offPieceAdvice.type === 'success' ? 'var(--accent-green)' : (offPieceAdvice.type === 'warning' ? '#eab308' : (offPieceAdvice.type === 'info' ? '#f97316' : '#ef4444'));
         const labelText = is5of5 ? t('analysis.offPiece.replaceable') : t('analysis.offPiece.offSet');
         const iconFile = (offPiece.mainStat && ICON_MAP[offPiece.mainStat.key]) || ICON_MAP['unknown'] || 'icon_unknown.png';
 
         innerHtml = `
-            <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px;">
+            <div style="background: var(--shadow-subtle); padding: 12px; border-radius: 8px;">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <div style="position: relative; flex-shrink: 0;">
-                        <img src="${offPiece.icon}" style=" display: block; width: 40px; height: 40px; border-radius: 6px; background: rgba(0,0,0,0.3); border: 1px solid ${innerColor}80;">
+                        <img src="${offPiece.icon}" style=" display: block; width: 40px; height: 40px; border-radius: 6px; background: var(--shadow-subtle); border: 1px solid ${innerColor}80;">
                         <img src="/assets/simulator/icons/${iconFile}" style="position: absolute; bottom: 1px; right: 1px; width: 16px; height: 16px; background: var(--bg-panel); border-radius: 5px; padding: 2px; opacity: 0.8;">
                     </div>
                     

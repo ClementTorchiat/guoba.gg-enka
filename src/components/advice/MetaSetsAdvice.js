@@ -98,7 +98,7 @@ export function renderMetaSetsAdvice(persoObj, config) {
     if (!adv) return '';
 
     let color = '#ef4444';
-    if (adv.type === 'success') color = '#22c55e';
+    if (adv.type === 'success') color = 'var(--accent-green)';
     if (adv.type === 'info') color = '#f97316';
 
     const ICON_BASE_PATH = "/assets/simulator/icons/";
@@ -124,7 +124,7 @@ export function renderMetaSetsAdvice(persoObj, config) {
 
         return `
             <div style="display:flex; align-items:center; gap: 15px;">
-                <div style="width: 60px; height: 60px; border-radius: 8px; background: rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <div style="width: 60px; height: 60px; border-radius: 8px; background: var(--shadow-subtle); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                     <img src="${setIconUrl}" style="width: 60px; height: 60px; object-fit: contain;" alt="">
                 </div>
                 <div style="display:flex; flex-direction:column; gap:8px;">

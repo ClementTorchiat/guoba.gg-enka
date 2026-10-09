@@ -71,7 +71,7 @@ export function renderPrioritiesAdvice(persoObj) {
     let contentHtml = '';
 
     if (!priorities || priorities.length === 0) {
-        contentHtml = `<p style="color:#22c55e; font-size: 13px;">${t('analysis.s3.noPriority')}</p>`;
+        contentHtml = `<p style="color:var(--accent-green); font-size: 13px;">${t('analysis.s3.noPriority')}</p>`;
     } else {
         const avgScore = persoObj.artefacts.reduce((sum, art) => sum + (art.score || 0), 0) / Math.max(persoObj.artefacts.length, 1);
         const maxScale = Math.max(...persoObj.artefacts.map(a => a.score || 0), 50);
@@ -97,7 +97,7 @@ export function renderPrioritiesAdvice(persoObj) {
                         
                         <div style="display:flex; align-items:center; gap:8px;">
                             <p style="font-size: 14px; color:var(--text-primary); margin:0;">${i + 1}. ${prio.piece}</p>
-                            ${prio.isOffPiece ? `<span style="font-size:9px; color:#22c55e; background:rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); padding:2px 5px; border-radius:4px; text-transform:uppercase;">${t('ui.art.offPiece')}</span>` : ''}
+                            ${prio.isOffPiece ? `<span style="font-size:9px; color:var(--accent-green); background:rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); padding:2px 5px; border-radius:4px; text-transform:uppercase;">${t('ui.art.offPiece')}</span>` : ''}
                         </div>
                         
                         <div style="display:flex; align-items:center; gap:5px;">
@@ -124,7 +124,7 @@ export function renderPrioritiesAdvice(persoObj) {
                             <span>${t('analysis.top3.thisPiece')} : <strong style="color: ${prio.color};">${prio.score}</strong></span>
                             <span>${t('analysis.top3.globalAvg')} : <strong style="color: var(--text-always-white);">${avgScore.toFixed(1)}</strong></span>
                         </div>
-                        <div style="width: 100%; height: 6px; background: #222; border-radius: 3px; position: relative;">
+                        <div style="width: 100%; height: 6px; background: var(--shadow-subtle); border-radius: 3px; position: relative;">
                             <div style="position: absolute; left: 0; top: 0; bottom: 0; width: ${pct}%; background: ${prio.color}; opacity: 0.85; border-radius: 3px;"></div>
                             <div style="position: absolute; left: ${avgPct}%; top: -3px; bottom: -3px; width: 2px; background: var(--text-always-white); box-shadow: 0 0 4px rgba(0,0,0,0.8); z-index: 2;">
                                 <div style="position: absolute; top: -4px; left: -3px; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 4px solid var(--text-always-white);"></div>

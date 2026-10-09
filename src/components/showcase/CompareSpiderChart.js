@@ -90,7 +90,7 @@ export function renderCompareCard(hostPersoObj, guestCombatStats, guestExtraData
             ${bgLines}
             
             <!-- Son build (Host) -->
-            <polygon points="${hostPoints.join(' ')}" fill="rgba(0, 0, 0, 0.2)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="2" style="transition: all 0.3s ease-out; pointer-events: none;" />
+            <polygon points="${hostPoints.join(' ')}" fill="var(--shadow-subtle)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="2" style="transition: all 0.3s ease-out; pointer-events: none;" />
             
             <!-- Ton build (Guest) -->
             <polygon points="${guestPoints.join(' ')}" fill="rgba(77, 171, 247, 0.4)" stroke="#4dabf7" stroke-width="2" stroke-dasharray="4,4" style="transition: all 0.3s ease-out; pointer-events: none;" />
@@ -121,7 +121,7 @@ export function renderCompareCard(hostPersoObj, guestCombatStats, guestExtraData
         const delta = axis.guestValue - axis.hostValue;
 
         const isPositive = delta > 0;
-        const color = isPositive ? '#22c55e' : (delta < 0 ? '#ef4444' : 'rgba(255,255,255,0.4)');
+        const color = isPositive ? 'var(--accent-green)' : (delta < 0 ? '#ef4444' : 'rgba(255,255,255,0.4)');
         const sign = isPositive ? '+' : '';
         const formattedDelta = delta === 0 ? '-' : formatSpiderValue(axis.key, delta);
 
@@ -154,7 +154,7 @@ export function renderCompareCard(hostPersoObj, guestCombatStats, guestExtraData
         let cleanIconHtml = statIconHtml.replace('margin-right: 5px;', '').replace('margin-bottom: 2px;', '');
 
         deltasHtml += `
-            <div style="display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px; background: var(--shadow-subtle); padding: 8px 12px; border-radius: 8px;">
                 <div style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; flex-shrink: 0;">
                     ${cleanIconHtml}
                 </div>
@@ -182,26 +182,26 @@ export function renderCompareCard(hostPersoObj, guestCombatStats, guestExtraData
             .map(([k, count]) => {
                 let iconUrl = window.ITEM_ICON_MAP[k] || '';
                 iconUrl = iconUrl.replace(/_[1-5]\.png$/, '_4.png');
-                return `<img src="${iconUrl}" style="width: 24px; height: 24px; border-radius: 4px; background: rgba(0,0,0,0.2);">`;
+                return `<img src="${iconUrl}" style="width: 24px; height: 24px; border-radius: 4px; background: var(--shadow-subtle);">`;
             })
             .join('');
 
         const guestSetsHtml = (guestExtraData.sets || [])
             .map(s => {
                 let iconUrl = s.icon ? s.icon.replace(/_[1-5]\.png$/, '_4.png') : '';
-                return `<img src="${iconUrl}" style="width: 24px; height: 24px; border-radius: 4px; background: rgba(0,0,0,0.2);">`;
+                return `<img src="${iconUrl}" style="width: 24px; height: 24px; border-radius: 4px; background: var(--shadow-subtle);">`;
             })
             .join('');
 
         extraHtml = `
-            <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 8px 16px; border-radius: 8px; flex-wrap: wrap; gap: 12px; margin-top: auto;">
+            <div style="display: flex; align-items: center; justify-content: space-between; background: var(--shadow-subtle); padding: 8px 16px; border-radius: 8px; flex-wrap: wrap; gap: 12px; margin-top: auto;">
                 
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em;">${t('ui.compare.weapon')}</span>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        ${guestWeaponIcon ? `<img src="${guestWeaponIcon}" style="width: 24px; height: 24px; border-radius: 4px; background: rgba(0,0,0,0.2);" alt="">` : '<span style="color:#666;">-</span>'}
+                        ${guestWeaponIcon ? `<img src="${guestWeaponIcon}" style="width: 24px; height: 24px; border-radius: 4px; background: var(--shadow-subtle);" alt="">` : '<span style="color:#666;">-</span>'}
                         <span style="color: var(--text-grey); font-size: 11px;">vs</span>
-                        ${hostWeaponIcon ? `<img src="${hostWeaponIcon}" style="width: 24px; height: 24px; border-radius: 4px; background: rgba(0,0,0,0.2);" alt="">` : '<span style="color:#666;">-</span>'}
+                        ${hostWeaponIcon ? `<img src="${hostWeaponIcon}" style="width: 24px; height: 24px; border-radius: 4px; background: var(--shadow-subtle);" alt="">` : '<span style="color:#666;">-</span>'}
                     </div>
                 </div>
 
