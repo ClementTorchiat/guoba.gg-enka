@@ -231,7 +231,7 @@ export function renderMaturityBarometer(characters) {
                             <span style="color:var(--text-grey); font-size:11px;">${item.cur}/${item.total}</span>
                         </div>
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <div style="flex:1; height:6px; background:rgba(255,255,255,0.08); border-radius:3px; overflow:hidden; position:relative;">
+                            <div style="flex:1; height:6px; background: var(--shadow-subtle); border-radius:3px; overflow:hidden; position:relative;">
                                 <div style="position:absolute; top:0; left:0; bottom:0; width:${item.pct}%; background:linear-gradient(90deg, #3b82f6, ${item.pct >= 80 ? 'var(--accent-green)' : '#f59e0b'}); border-radius:3px; transition:width 0.6s ease;"></div>
                             </div>
                             <span style="font-size:11px; color:var(--text-primary); min-width:32px; text-align:right;">${item.pct}%</span>

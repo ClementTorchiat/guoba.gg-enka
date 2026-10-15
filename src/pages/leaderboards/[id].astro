@@ -1189,7 +1189,7 @@ if (!pageError && !targetCharConfig) {
             datasets: [
               {
                 data: dataVals,
-                borderColor: "var(--text-always-white)",
+                borderColor: "#ffffff",
                 borderWidth: 2,
                 tension: 0.4,
                 pointRadius: 0,
@@ -1213,9 +1213,9 @@ if (!pageError && !targetCharConfig) {
             scales: {
               x: {
                 grid: { display: false },
-                border: { display: true, color: "var(--text-always-white)", width: 1.5 },
+                border: { display: true, color: "#ffffff", width: 1.5 },
                 ticks: {
-                  color: "var(--text-always-white)",
+                  color: "#ffffff",
                   font: { family: "Shinshin, sans-serif", size: 14, weight: "bold" },
                   maxRotation: 0,
                   autoSkip: false,
@@ -1230,10 +1230,10 @@ if (!pageError && !targetCharConfig) {
               },
               y: {
                 grid: { display: false },
-                border: { display: true, color: "var(--text-always-white)", width: 1.5 },
+                border: { display: true, color: "#ffffff", width: 1.5 },
                 beginAtZero: true,
                 ticks: {
-                  color: "var(--text-always-white)",
+                  color: "#ffffff",
                   font: { family: "Shinshin, sans-serif", size: 14, weight: "bold" },
                   callback: function (value, index, values) {
                     if (index === 0) return "0";

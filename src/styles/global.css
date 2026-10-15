@@ -3668,6 +3668,14 @@ input:checked+.toggle-track .star-4 {
     background: var(--bg-hover) !important;
 }
 
+.modal-close-btn:hover svg {
+    stroke: var(--text-primary);
+}
+
+.spinning {
+    animation: spin 0.8s linear infinite;
+}
+
 #user-account-login-btn {
     font-family: ShinShin, sans-serif;
     font-size: 14px;

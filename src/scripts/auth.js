@@ -40,6 +40,7 @@ export async function checkSessionAndUpdateUI() {
 
     const loginBtn = document.getElementById('user-account-login-btn');
     const userAccount = document.getElementById('user-account');
+    const discordRefreshBtn = document.getElementById('settings-update-discord-btn');
 
     try {
         const { data: { session }, error } = await supabase.auth.getSession();
@@ -50,6 +51,7 @@ export async function checkSessionAndUpdateUI() {
             // L'utilisateur EST connecté
             if (loginBtn) loginBtn.style.display = 'none';
             if (userAccount) userAccount.style.display = 'flex';
+            if (discordRefreshBtn) discordRefreshBtn.style.display = 'flex';
 
             // Mise à jour visuelle basique (Discord Info)
             const nameEl = document.getElementById('user-account-name');
@@ -71,6 +73,7 @@ export async function checkSessionAndUpdateUI() {
             // L'utilisateur n'est PAS connecté
             if (loginBtn) loginBtn.style.display = 'flex';
             if (userAccount) userAccount.style.display = 'none';
+            if (discordRefreshBtn) discordRefreshBtn.style.display = 'none';
         }
     } catch (err) {
         console.error(t('account.auth.sessionError'), err);
@@ -210,10 +213,43 @@ async function updateSettingsUiState(uid) {
 
 export async function logoutUser() {
     if (!supabase) return;
+    const discordRefreshBtn = document.getElementById('settings-update-discord-btn');
+    if (discordRefreshBtn) discordRefreshBtn.style.display = 'none';
     await supabase.auth.signOut();
     localStorage.removeItem('guoba_discord_uid');
     localStorage.removeItem('guoba_discord_name');
     window.location.reload(); // On recharge pour réinitialiser l'état
+}
+
+export async function updateDiscordAvatar() {
+    if (!supabase) {
+        alert(t('account.auth.notConfigured'));
+        return;
+    }
+
+    const btn = document.getElementById('settings-update-discord-btn');
+    const svg = btn ? btn.querySelector('svg') : null;
+    if (svg) svg.classList.add('spinning');
+    if (btn) btn.style.pointerEvents = 'none';
+
+    try {
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'discord',
+            options: {
+                redirectTo: window.location.href
+            }
+        });
+
+        if (error) {
+            console.error(t('account.auth.loginError'), error.message);
+            if (svg) svg.classList.remove('spinning');
+            if (btn) btn.style.pointerEvents = 'auto';
+        }
+    } catch (err) {
+        console.error("Erreur lors de la mise à jour de l'avatar Discord:", err);
+        if (svg) svg.classList.remove('spinning');
+        if (btn) btn.style.pointerEvents = 'auto';
+    }
 }
 
 // --- Logique de vérification de l'UID ---
@@ -409,6 +445,7 @@ window.generateVerificationCode = generateVerificationCode;
 window.verifyUidSignature = verifyUidSignature;
 window.unlinkUid = unlinkUid;
 window.toggleLeaderboardOptOut = toggleLeaderboardOptOut;
+window.updateDiscordAvatar = updateDiscordAvatar;
 
 // Au chargement de l'app, on vérifie la session
 document.addEventListener('DOMContentLoaded', () => {
