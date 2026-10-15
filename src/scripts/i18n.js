@@ -66,6 +66,7 @@ export const T = {
 
         "ui.setPieces": (n) => `${n} pièces`,
         // ── Sidebar & navigation ──────────────────────────
+        "ui.sidebar.collapse": "Réduire la barre latérale",
         "ui.version": (ver, gi) => `Ver. ${ver} - Astro Build (GI Ver. ${gi})`,
         "ui.search.placeholder": "Entrez votre UID...",
         "ui.search.loading": "Chargement des données…",
@@ -1082,6 +1083,7 @@ export const T = {
 
         "ui.setPieces": (n) => `${n}-piece`,
         // ── Sidebar & navigation ──────────────────────────
+        "ui.sidebar.collapse": "Collapse sidebar",
         "ui.version": (ver, gi) => `Ver. ${ver} - Astro Build (GI Ver. ${gi})`,
         "ui.search.placeholder": "Enter your UID...",
         "ui.search.loading": "Loading data…",

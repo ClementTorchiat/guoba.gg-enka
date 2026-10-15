@@ -13,19 +13,19 @@ const { currentPage = "?" } = Astro.props;
     <div class="sidebar-top-wrapper" style="display: flex; align-items: center; justify-content: space-between; position: relative;">
         <div class="sidebar-title">
             <a href="/" class="sidebar-title-container" onclick="if(window.location.pathname === '/' || window.location.pathname === '') { if(window.clearSearch) { event.preventDefault(); window.clearSearch(); } }" style="cursor: pointer; text-decoration: none;">
-                <Image src={guobaLogo} alt="guoba" width={32} height={32} style="border-radius: 8px;" />
+                <Image src={guobaLogo} alt="guoba" width={72} height={72} style="border-radius: 8px;" />
                 <h2 style="color: var(--text-primary)">guoba.gg</h2>
             </a>
             <p class="sidebar-text" style="margin-left: 0;">Ver. -- - Bêta Build (GI Ver. --)</p>
         </div>
-        <button id="sidebar-collapse-btn" onclick="window.toggleSidebarCollapse();" style="display: flex; align-items: center; justify-content: center; background: var(--bg-panel); border: none; border-radius: 8px; cursor: pointer; height: 76px; width: 50px; padding: 0; flex-shrink: 0; margin-left: 10px;">
+        <button id="sidebar-collapse-btn" onclick="window.toggleSidebarCollapse();" style="display: flex; align-items: center; justify-content: center; background: var(--bg-panel); border: none; border-radius: 8px; cursor: pointer; height: 76px; width: 50px; padding: 0; flex-shrink: 0; margin-left: 10px;" data-i18n-aria-label="ui.sidebar.collapse" aria-label="Réduire la barre latérale">
             <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 14px; height: 14px; transform: rotate(90deg); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);" id="sidebar-collapse-icon" />
         </button>
     </div>
     <div class="sidebar-search">
         <form action="/" method="GET" class="search-container" id="sidebar-search-form" onsubmit="if(window.location.pathname === '/' || window.location.pathname === '') { event.preventDefault(); if(window.fetchUserData) window.fetchUserData(); }">
             <input type="text" name="uid" id="uidInput" class="search-input" data-i18n-placeholder="ui.search.placeholder" placeholder="Entrez un UID..." autocomplete="off" />
-            <button type="submit" id="searchBtn" class="search-btn" data-i18n-aria-label="ui.searchBtn"><img src="/assets/simulator/icons/icon_search_white.svg" alt="" style="width: 20px; height: 20px;" /></button>
+            <button type="submit" id="searchBtn" class="search-btn" data-i18n-aria-label="ui.searchBtn" aria-label="Rechercher"><img src="/assets/simulator/icons/icon_search_white.svg" alt="" style="width: 20px; height: 20px;" /></button>
         </form>
     </div>
     <div id="roadmap-sidebar-area" style="display: none;">
@@ -180,13 +180,13 @@ const { currentPage = "?" } = Astro.props;
         <!-- LOGGED IN STATE -->
         <div id="user-account" style="display: none;">
             <div class="user-account-container">
-                <img id="user-account-avatar" class="char-card-avatar" src="/assets/global/favicon.png" alt="" onerror="this.onerror=null; this.src='/assets/global/favicon.png';" />
+                <img id="user-account-avatar" class="char-card-avatar" src="/assets/global/favicon.png" alt="" crossorigin="anonymous" onerror="this.onerror=null; this.src='/assets/global/favicon.png';" />
                 <div class="user-account-info">
                     <p id="user-account-name"></p>
                     <p id="user-account-uid"></p>
                 </div>
             </div>
-            <button class="user-account-settings" onclick="openSettingsModal()">
+            <button class="user-account-settings" onclick="openSettingsModal()" data-i18n-aria-label="account.settings.title" aria-label="Paramètres du compte">
                 <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M7.11727 0.9375C7.22757 0.393382 7.70919 0 8.26801 0L10.4665 0C11.0254 0 11.507 0.393382 11.6173 0.9375L12.1504 3.51103C12.6687 3.73162 13.154 4.01471 13.5952 4.34927L16.0879 3.52206C16.6173 3.34559 17.1982 3.56618 17.4776 4.05147L18.5768 5.95588C18.8562 6.44118 18.757 7.05147 18.3379 7.42279L16.3783 9.16544C16.4114 9.4375 16.4261 9.71691 16.4261 10C16.4261 10.2831 16.4077 10.5625 16.3783 10.8346L18.3415 12.5809C18.7607 12.9522 18.8562 13.5662 18.5805 14.0478L17.4812 15.9522C17.2018 16.4338 16.621 16.6581 16.0915 16.4816L13.5989 15.6544C13.154 15.989 12.6687 16.2684 12.154 16.4926L11.6246 19.0625C11.5107 19.6103 11.029 20 10.4739 20H8.27536C7.71654 20 7.23492 19.6066 7.12463 19.0625L6.59522 16.4926C6.07683 16.2721 5.59522 15.989 5.15036 15.6544L2.64669 16.4816C2.11727 16.6581 1.53639 16.4375 1.25698 15.9522L0.157715 14.0478C-0.121697 13.5625 -0.0224325 12.9522 0.396685 12.5809L2.35992 10.8346C2.32683 10.5625 2.31213 10.2831 2.31213 10C2.31213 9.71691 2.33051 9.4375 2.35992 9.16544L0.396685 7.41912C-0.0224325 7.04779 -0.118021 6.43382 0.157715 5.95221L1.25698 4.04779C1.53639 3.5625 2.11727 3.34191 2.64669 3.51838L5.13933 4.34559C5.58419 4.01103 6.06948 3.73162 6.58419 3.50735L7.11727 0.9375ZM9.36727 12.9412C10.9923 12.9338 12.3048 11.614 12.2974 9.98897C12.2901 8.36397 10.9702 7.05147 9.34522 7.05882C7.72022 7.06618 6.40772 8.38603 6.41507 10.011C6.42242 11.636 7.74227 12.9485 9.36727 12.9412Z"

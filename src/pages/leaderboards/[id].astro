@@ -274,7 +274,7 @@ if (!pageError && !targetCharConfig) {
 
           <div class="leaderboard-info-left" style="display: flex; flex-direction: column; gap: 16px; z-index: 1;">
             <div class="leaderboard-info-left-name" style="display: flex; flex-direction: row; gap: 18px; align-items: center;">
-              <img src={enkaAvatarImg} style="width: 86px; height:86px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${targetCharName.split("_")[0]}.png'`} />
+              <img src={enkaAvatarImg} crossorigin="anonymous" style="width: 86px; height:86px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${targetCharName.split("_")[0]}.png'`} />
               <div class="leaderboard-info-left-name-container" style="display:flex; flex-direction: column;">
                 <div class="leaderboard-info-left-name-container-icons" style="display: flex; flex-direction: row;">
                   <img src={`/assets/simulator/icons/icon_${mainElem}.webp`} style="width: 21px; height: 21px;" />

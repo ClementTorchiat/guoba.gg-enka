@@ -171,12 +171,22 @@ async function updateSettingsUiState(uid) {
                     const namecardsData = window.namecardsData || {};
                     const namecard = namecardsData[String(p.nameCardId)];
                     let bannerUrl = null;
+                    const updateLinkedBg = (url) => {
+                        const bgEl = document.getElementById('settings-linked-bg');
+                        if (!bgEl) return;
+                        if (bgEl.tagName === 'IMG') {
+                            bgEl.src = url;
+                            bgEl.style.display = 'block';
+                        } else {
+                            bgEl.style.backgroundImage = `url('${url}')`;
+                        }
+                    };
                     if (namecard && namecard.Icon) {
                         bannerUrl = `https://enka.network${namecard.Icon}`;
-                        document.getElementById('settings-linked-bg').style.backgroundImage = `url('${bannerUrl}')`;
+                        updateLinkedBg(bannerUrl);
                     } else if (p.nameCardId) {
                         bannerUrl = `https://enka.network/ui/namecard/UI_NameCardPic_${p.nameCardId}_P.png`;
-                        document.getElementById('settings-linked-bg').style.backgroundImage = `url('${bannerUrl}')`;
+                        updateLinkedBg(bannerUrl);
                     }
 
                     // Add to recent profiles so it's always displayed on home

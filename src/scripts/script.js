@@ -3147,9 +3147,9 @@ function renderHome() {
             </div>
 
             <div class="player-profile-card" style="margin: 0; width: 100%; height: 100%; box-sizing: border-box; pointer-events: none;">
-                <div class="player-profile-bg" ${p.banner ? `style="background-image:url('${p.banner}')"` : ''}></div>
+                ${p.banner ? `<img class="player-profile-bg" src="${p.banner}" alt="" crossorigin="anonymous">` : `<div class="player-profile-bg"></div>`}
                 <div class="player-profile-content">
-                    <img class="player-profile-avatar" src="${p.pic}" alt="${t('ui.alt.avatar')}" onerror="this.src='https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png'" decoding="async">
+                    <img class="player-profile-avatar" src="${p.pic}" alt="${t('ui.alt.avatar')}" crossorigin="anonymous" onerror="this.src='https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png'" decoding="async">
                     <div class="player-profile-identity">
                         <div class="player-profile-name-row">
                             <span class="player-profile-name">${p.nickname}</span>

@@ -79,10 +79,11 @@ export function renderPlayerProfileCard(playerInfo, uid, charData = {}) {
 
     return `
         <div class="player-profile-card">
-            <div class="player-profile-bg" ${bannerUrl ? `style="background-image:url('${bannerUrl}')"` : ''}></div>
+            ${bannerUrl ? `<img class="player-profile-bg" src="${bannerUrl}" alt="" crossorigin="anonymous">` : `<div class="player-profile-bg"></div>`}
             <div class="player-profile-content">
                 <img class="player-profile-avatar"
                      src="${profilePicUrl}" alt="Avatar"
+                     crossorigin="anonymous"
                      onerror="this.src='https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png'">
                 <div class="player-profile-identity">
                     <div class="player-profile-name-row">

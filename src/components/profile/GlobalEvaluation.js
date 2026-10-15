@@ -296,7 +296,7 @@ export function renderGlobalEvaluation(playerInfo, globalPersoData, uidStr = '')
     });
 
     evalContainer.innerHTML = `
-        <div class="player-profile-bg" ${bannerUrl ? `style="background-image:url('${bannerUrl}')"` : ''}></div>
+        ${bannerUrl ? `<img class="player-profile-bg" src="${bannerUrl}" alt="" crossorigin="anonymous">` : `<div class="player-profile-bg"></div>`}
         
         <div style="position: relative; z-index: 2; display: flex; width: 100%; height: 100%; align-items: center; gap: 15px;">
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-right: 15px; padding-left: 15px; gap: 4px; border-right: 1px solid rgba(255,255,255,0.2); height: 100%;">

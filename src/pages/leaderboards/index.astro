@@ -233,10 +233,10 @@ try {
               <div class="character-group" data-char-name={char.name.toLowerCase()} data-entries={charTotalEntries} data-is-new={char.isNew ? "true" : "false"}>
                 <!-- Ligne principale du Personnage -->
                 <div class="leaderboard-list-row cursor-pointer" data-char={char.originalName} style={`position: relative; overflow: hidden; padding: 2px; padding-right: 20px; border-radius: 8px; background-color: var(--char-bg-alpha, rgb(from ${char.color} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); display:flex; flex-direction: row; gap: 13px; align-items: center; cursor: pointer;`}>
-                  <img src={char.gachaImg} loading="lazy" decoding="async" class="background-splash-art" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);" />
+                  <img src={char.gachaImg} loading="lazy" decoding="async" crossorigin="anonymous" class="background-splash-art" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);" />
                   <div class="row-overlay" style={`position: absolute; inset: 0; background-color: var(--char-bg-alpha, rgb(from ${char.color} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); transition: background-color 0.35s; z-index: 1;`}></div>
 
-                  <img src={char.avatarImg} loading="lazy" decoding="async" onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${char.originalName.split('_')[0]}.png'`} style="z-index: 1; width: 52px; height: 52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" />
+                  <img src={char.avatarImg} loading="lazy" decoding="async" crossorigin="anonymous" onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${char.originalName.split('_')[0]}.png'`} style="z-index: 1; width: 52px; height: 52px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" />
                   
                   <div style="z-index: 1; display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%;">
                     <div style="display: flex; align-items: center; gap: 12px;">
