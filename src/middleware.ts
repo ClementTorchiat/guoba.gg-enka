@@ -6,7 +6,7 @@ const CSP_POLICY = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://enka.network https://cdn.prod.website-files.com https://cdn.discordapp.com https://media.discordapp.net https://static.wikia.nocookie.net",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.supabase.co https://enka.network https://*.workers.dev ws: http:",
+  "connect-src 'self' https://*.supabase.co https://enka.network https://*.workers.dev https://raw.githubusercontent.com ws: http:",
   "worker-src 'self' blob:",
   "frame-ancestors 'none'",
   "object-src 'none'",

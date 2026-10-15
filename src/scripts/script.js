@@ -3042,8 +3042,8 @@ function renderHome() {
 
     if (profiles.length === 0) {
         profilesContentHtml = `
-            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0.5; margin: 80px 0;">
-                <img src="${ICON_BASE_PATH}icon_score.webp" alt="" style="width: 64px; height: 64px; margin-bottom: 20px; filter: grayscale(100%);">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 80px 0;">
+                <img src="${ICON_BASE_PATH}icon_score.webp" alt="" style="width: 64px; height: 64px; margin-bottom: 20px; filter: grayscale(100%); opacity: 0.4;">
                 <h2 style="color: var(--text-primary); font-size: 24px; margin-bottom: 8px;">${t('home.empty')}</h2>
                 <p style="color: var(--text-grey); font-size: 14px;">${t('home.emptyHint')}</p>
             </div>
