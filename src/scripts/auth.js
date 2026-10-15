@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { idbGet } from './db.js';
 
 // Initialisation de Supabase côté client (grâce aux variables d'environnement publiques)
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
@@ -104,6 +105,7 @@ async function fetchUserProfile(userId) {
                 uidEl.textContent = t('account.settings.unlinked');
                 uidEl.style.opacity = '0.5';
                 localStorage.removeItem('guoba_discord_uid');
+                localStorage.removeItem('guoba_linked_profile');
                 updateSettingsUiState(null);
             }
 
@@ -118,7 +120,28 @@ async function fetchUserProfile(userId) {
         console.warn(t('account.auth.profileNotFound'), err);
         uidEl.textContent = t('account.settings.unlinked');
         localStorage.removeItem('guoba_discord_uid');
+        localStorage.removeItem('guoba_linked_profile');
         updateSettingsUiState(null);
+    }
+}
+
+// Helper pour mettre à jour la bannière liée de manière sûre (sans déclencher d'erreurs CORS/404)
+function updateLinkedBg(url) {
+    const bgEl = document.getElementById('settings-linked-bg');
+    if (!bgEl) return;
+    if (url) {
+        if (bgEl.tagName === 'IMG') {
+            bgEl.onerror = () => { bgEl.style.display = 'none'; };
+            bgEl.src = url;
+            bgEl.style.display = 'block';
+        } else {
+            bgEl.style.backgroundImage = `url('${url}')`;
+        }
+    } else {
+        bgEl.style.display = 'none';
+        if (bgEl.tagName === 'IMG') {
+            bgEl.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E";
+        }
     }
 }
 
@@ -134,8 +157,57 @@ async function updateSettingsUiState(uid) {
         if (linkedView) linkedView.style.display = 'flex';
         if (prefsView) prefsView.style.display = 'flex';
 
-        document.getElementById('settings-linked-uid').textContent = `UID: ${uid}`;
-        document.getElementById('settings-linked-name').textContent = t('data.loading');
+        const uidEl = document.getElementById('settings-linked-uid');
+        const nameEl = document.getElementById('settings-linked-name');
+        const avatarEl = document.getElementById('settings-linked-avatar');
+        if (uidEl) uidEl.textContent = `UID: ${uid}`;
+
+        // 1. Lire le cache local spécifique au profil lié (uniquement les données et les 2 images nécessaires)
+        let cached = null;
+        try {
+            const raw = localStorage.getItem('guoba_linked_profile');
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (String(parsed.uid) === String(uid)) {
+                    cached = parsed;
+                }
+            }
+            // Secours : si pas encore dans guoba_linked_profile, regarder dans les profils récents
+            if (!cached) {
+                const recents = JSON.parse(localStorage.getItem('guoba_recent_profiles') || '[]');
+                const found = recents.find(r => String(r.uid) === String(uid));
+                if (found) {
+                    cached = {
+                        uid: String(uid),
+                        nickname: found.nickname,
+                        pic: found.pic,
+                        banner: found.banner
+                    };
+                }
+            }
+        } catch (_) {}
+
+        // Affichage immédiat depuis le cache local (zéro latence, zéro clignotement)
+        if (cached) {
+            if (nameEl && cached.nickname) nameEl.textContent = cached.nickname;
+            if (avatarEl && cached.pic) {
+                avatarEl.onerror = () => { avatarEl.src = 'https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png'; };
+                avatarEl.src = cached.pic;
+            }
+            if (cached.banner) {
+                updateLinkedBg(cached.banner);
+            } else {
+                updateLinkedBg(null);
+            }
+        } else {
+            if (nameEl) nameEl.textContent = t('data.loading');
+            updateLinkedBg(null);
+        }
+
+        // Si le cache a moins de 5 minutes, inutile de solliciter le proxy à chaque changement de page
+        if (cached && cached.ts && (Date.now() - cached.ts < 5 * 60 * 1000) && cached.banner && cached.pic) {
+            return;
+        }
 
         try {
             const proxyUrl = `https://guobagg.clement-torchiat.workers.dev/?uid=${uid}`;
@@ -144,10 +216,22 @@ async function updateSettingsUiState(uid) {
                 const data = await res.json();
                 const p = data.playerInfo;
                 if (p) {
-                    document.getElementById('settings-linked-name').textContent = p.nickname || t('account.settings.player');
+                    if (nameEl) nameEl.textContent = p.nickname || t('account.settings.player');
 
-                    // Récupérer l'avatar complet (pfpsData / charData)
-                    let profilePicUrl = 'https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png';
+                    // Charger les dictionnaires depuis IndexedDB si non présents en mémoire
+                    if (!window.namecardsData || !window.pfpsData) {
+                        try {
+                            const idb = await idbGet('guoba_gamedata_idb_v5');
+                            if (idb) {
+                                window.namecardsData = window.namecardsData || idb.namecards;
+                                window.pfpsData = window.pfpsData || idb.pfps;
+                                window.charData = window.charData || idb.chars;
+                            }
+                        } catch (_) {}
+                    }
+
+                    // 1ère image : Avatar (profilePicUrl)
+                    let profilePicUrl = cached?.pic || 'https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png';
                     const pp = p.profilePicture || {};
                     if (pp.id) {
                         const pfp = (window.pfpsData || {})[String(pp.id)];
@@ -165,46 +249,67 @@ async function updateSettingsUiState(uid) {
                             }
                         }
                     }
-                    document.getElementById('settings-linked-avatar').src = profilePicUrl;
+                    if (avatarEl) {
+                        avatarEl.onerror = () => { avatarEl.src = 'https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png'; };
+                        avatarEl.src = profilePicUrl;
+                    }
 
-                    // Récupérer la bannière via namecardsData
+                    // 2ème image : Bannière de thème (bannerUrl)
                     const namecardsData = window.namecardsData || {};
                     const namecard = namecardsData[String(p.nameCardId)];
                     let bannerUrl = null;
-                    const updateLinkedBg = (url) => {
-                        const bgEl = document.getElementById('settings-linked-bg');
-                        if (!bgEl) return;
-                        if (bgEl.tagName === 'IMG') {
-                            bgEl.src = url;
-                            bgEl.style.display = 'block';
-                        } else {
-                            bgEl.style.backgroundImage = `url('${url}')`;
-                        }
-                    };
+
                     if (namecard && namecard.Icon) {
                         bannerUrl = `https://enka.network${namecard.Icon}`;
-                        updateLinkedBg(bannerUrl);
+                    } else if (cached && cached.banner && String(cached.nameCardId) === String(p.nameCardId)) {
+                        bannerUrl = cached.banner;
                     } else if (p.nameCardId) {
-                        bannerUrl = `https://enka.network/ui/namecard/UI_NameCardPic_${p.nameCardId}_P.png`;
-                        updateLinkedBg(bannerUrl);
+                        // Téléchargement ponctuel et léger de namecards.json uniquement si nécessaire (21 Ko)
+                        try {
+                            const ncRes = await fetch('https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/namecards.json');
+                            if (ncRes.ok) {
+                                const ncData = await ncRes.json();
+                                window.namecardsData = ncData;
+                                if (ncData[String(p.nameCardId)]?.Icon) {
+                                    bannerUrl = `https://enka.network${ncData[String(p.nameCardId)].Icon}`;
+                                }
+                            }
+                        } catch (_) {}
                     }
 
-                    // Add to recent profiles so it's always displayed on home
+                    updateLinkedBg(bannerUrl);
+
+                    // Mise en cache local des informations et des 2 URLs d'images uniquement
+                    try {
+                        localStorage.setItem('guoba_linked_profile', JSON.stringify({
+                            uid: String(uid),
+                            nickname: p.nickname || t('account.settings.player'),
+                            pic: profilePicUrl,
+                            banner: bannerUrl,
+                            nameCardId: p.nameCardId,
+                            ts: Date.now()
+                        }));
+                    } catch (_) {}
+
+                    // Mise à jour des profils récents pour l'accueil
                     try {
                         let recents = JSON.parse(localStorage.getItem('guoba_recent_profiles') || '[]');
-                        if (!recents.find(r => String(r.uid) === String(uid))) {
-                            recents.unshift({
-                                uid: uid,
-                                nickname: p.nickname || t('account.settings.player'),
-                                ar: p.level || 0,
-                                pic: profilePicUrl,
-                                banner: bannerUrl,
-                                signature: p.signature || ''
-                            });
-                            localStorage.setItem('guoba_recent_profiles', JSON.stringify(recents));
-                            // Force re-render if we are on home page
-                            if (window.renderHome) window.renderHome();
+                        const existingIdx = recents.findIndex(r => String(r.uid) === String(uid));
+                        const profileEntry = {
+                            uid: uid,
+                            nickname: p.nickname || t('account.settings.player'),
+                            ar: p.level || 0,
+                            pic: profilePicUrl,
+                            banner: bannerUrl,
+                            signature: p.signature || ''
+                        };
+                        if (existingIdx !== -1) {
+                            recents[existingIdx] = { ...recents[existingIdx], ...profileEntry };
+                        } else {
+                            recents.unshift(profileEntry);
                         }
+                        localStorage.setItem('guoba_recent_profiles', JSON.stringify(recents));
+                        if (window.renderHome) window.renderHome();
                     } catch (e) {
                         console.error("Erreur lors de l'ajout au profils récents", e);
                     }
@@ -218,6 +323,7 @@ async function updateSettingsUiState(uid) {
         if (unlinkedView) unlinkedView.style.display = 'flex';
         if (linkedView) linkedView.style.display = 'none';
         if (prefsView) prefsView.style.display = 'none';
+        updateLinkedBg(null);
     }
 }
 
@@ -228,6 +334,7 @@ export async function logoutUser() {
     await supabase.auth.signOut();
     localStorage.removeItem('guoba_discord_uid');
     localStorage.removeItem('guoba_discord_name');
+    localStorage.removeItem('guoba_linked_profile');
     window.location.reload(); // On recharge pour réinitialiser l'état
 }
 
@@ -403,6 +510,7 @@ export async function unlinkUid() {
 
             if (error) throw error;
             localStorage.removeItem('guoba_discord_uid');
+            localStorage.removeItem('guoba_linked_profile');
 
             // Mise à jour de l'UI
             const uidEl = document.getElementById('user-account-uid');
