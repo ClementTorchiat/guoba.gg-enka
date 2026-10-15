@@ -230,7 +230,7 @@ if (!pageError && !targetCharConfig) {
         <div class="leaderboard-details-tools" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
           <a href="/leaderboards" data-astro-prefetch style="text-decoration: none;">
             <button class="lb-back-btn" style="font-family: Shinshin, sans-serif; display:inline-flex; gap: 9px; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:1px solid rgba(255,255,255,0); background: var(--bg-panel); color:var(--text-primary);">
-              <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 10px; height: 10px; transform: rotate(90deg);" />
+              <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 10px; height: 10px; transform: rotate(90deg);" />
               <span data-i18n="lb.back">Revenir aux classements</span>
             </button>
           </a>
@@ -274,11 +274,11 @@ if (!pageError && !targetCharConfig) {
 
           <div class="leaderboard-info-left" style="display: flex; flex-direction: column; gap: 16px; z-index: 1;">
             <div class="leaderboard-info-left-name" style="display: flex; flex-direction: row; gap: 18px; align-items: center;">
-              <img src={enkaAvatarImg} crossorigin="anonymous" style="width: 86px; height:86px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${targetCharName.split("_")[0]}.png'`} />
+              <img src={enkaAvatarImg} alt={targetCharName} crossorigin="anonymous" style="width: 86px; height:86px; border-radius: 8px; background-color: rgba(0, 0, 0, 0.4);" onerror={`this.onerror=null; this.src='https://enka.network/ui/UI_AvatarIcon_${targetCharName.split("_")[0]}.png'`} />
               <div class="leaderboard-info-left-name-container" style="display:flex; flex-direction: column;">
                 <div class="leaderboard-info-left-name-container-icons" style="display: flex; flex-direction: row;">
-                  <img src={`/assets/simulator/icons/icon_${mainElem}.webp`} style="width: 21px; height: 21px;" />
-                  <img src={`/assets/simulator/icons/icon_${mainWeapon}.webp`} style="width: 21px; height: 21px;" />
+                  <img src={`/assets/simulator/icons/icon_${mainElem}.webp`} alt="" style="width: 21px; height: 21px;" />
+                  <img src={`/assets/simulator/icons/icon_${mainWeapon}.webp`} alt="" style="width: 21px; height: 21px;" />
                 </div>
                 <p style="font-size: 22px;" class="dynamic-i18n" data-fr={targetCharTranslations.fr} data-en={targetCharTranslations.en}>{targetCharName.replace(/_/g, " ")}</p>
                 <p style="font-size: 18px; opacity: 0.5;" class="dynamic-i18n" data-fr={lbNameObj ? lbNameObj.fr : lbDisplayName} data-en={lbNameObj ? lbNameObj.en : lbDisplayName}>{lbDisplayName}</p>
@@ -364,9 +364,9 @@ if (!pageError && !targetCharConfig) {
                       <div class="leaderboard-info-left-teammates" data-team-index={teamIndex} style={`display: ${teamIndex === 0 ? "flex" : "none"}; flex-direction: row; gap: 8px;`}>
                         {teamDisplay.map((member) => (
                           <div style="position: relative; width: 80px; height: 80px; flex-shrink: 0;">
-                            <img loading="lazy" decoding="async" style={`width: 100%; height: 100%; border-radius: 8px; background: ${member.bg}; ${member.isMain ? "border: 2px solid rgba(255, 255, 255, 0.5);" : ""}`} src={member.iconUrl} onerror="this.onerror=null; this.style.display='none'" />
-                            {member.weapon && teammateAssets[member.weapon as keyof typeof teammateAssets] && <img src={teammateAssets[member.weapon as keyof typeof teammateAssets]} loading="lazy" decoding="async" title={member.weapon} class="dynamic-i18n-title" data-fr={assetTranslations[member.weapon]?.fr || member.weapon} data-en={assetTranslations[member.weapon]?.en || member.weapon} style="position:absolute; bottom:0; left:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />}
-                            {member.set && teammateAssets[member.set as keyof typeof teammateAssets] && <img src={teammateAssets[member.set as keyof typeof teammateAssets]} loading="lazy" decoding="async" title={member.set} class="dynamic-i18n-title" data-fr={assetTranslations[member.set]?.fr || member.set} data-en={assetTranslations[member.set]?.en || member.set} style="position:absolute; bottom:0; right:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />}
+                            <img loading="lazy" decoding="async" alt="" style={`width: 100%; height: 100%; border-radius: 8px; background: ${member.bg}; ${member.isMain ? "border: 2px solid rgba(255, 255, 255, 0.5);" : ""}`} src={member.iconUrl} onerror="this.onerror=null; this.style.display='none'" />
+                            {member.weapon && teammateAssets[member.weapon as keyof typeof teammateAssets] && <img src={teammateAssets[member.weapon as keyof typeof teammateAssets]} alt="" loading="lazy" decoding="async" title={member.weapon} class="dynamic-i18n-title" data-fr={assetTranslations[member.weapon]?.fr || member.weapon} data-en={assetTranslations[member.weapon]?.en || member.weapon} style="position:absolute; bottom:0; left:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />}
+                            {member.set && teammateAssets[member.set as keyof typeof teammateAssets] && <img src={teammateAssets[member.set as keyof typeof teammateAssets]} alt="" loading="lazy" decoding="async" title={member.set} class="dynamic-i18n-title" data-fr={assetTranslations[member.set]?.fr || member.set} data-en={assetTranslations[member.set]?.en || member.set} style="position:absolute; bottom:0; right:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />}
                             {member.cons !== undefined && member.cons > 0 && <span style="position:absolute; top:2px; right:4px; font-size:12px; font-weight:700; color:var(--text-always-white); text-shadow:0 0 3px #000; z-index:10;">C{member.cons}</span>}
                           </div>
                         ))}
@@ -597,7 +597,7 @@ if (!pageError && !targetCharConfig) {
                       </div>
 
                       <div style="flex: 1; display:flex; flex-direction: row; align-items: center; justify-content: center; gap:6px;">
-                        <img src="/assets/simulator/icons/icon_er.webp" style="width: 22px; height: 22px;" />
+                        <img src="/assets/simulator/icons/icon_er.webp" alt="" style="width: 22px; height: 22px;" />
                         <span style="font-size: 14px;">{(stats.enerRech * 100).toFixed(1)}%</span>
                       </div>
 
@@ -617,13 +617,13 @@ if (!pageError && !targetCharConfig) {
         {totalPages > 1 && (
           <>
             <div id="pagination-data" data-offset={offset} class="pagination-container" style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 5px; height: 50px;">
-                <a href={`?page=1`} class="pag-btn" style={`display: ${currentPage === 1 ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
-                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(90deg); opacity: 0.8;" />
-                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(90deg); opacity: 0.8; margin-left: -6px;" />
+                <a href={`?page=1`} class="pag-btn" aria-label="Première page" data-i18n-aria-label="lb.firstPage" style={`display: ${currentPage === 1 ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 12px; height: 12px; transform: rotate(90deg); opacity: 0.8;" />
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 12px; height: 12px; transform: rotate(90deg); opacity: 0.8; margin-left: -6px;" />
                 </a>
                 
-                <a href={`?page=${Math.max(1, currentPage - 1)}`} class="pag-btn" style={`display: ${currentPage === 1 ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
-                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(90deg); opacity: 0.8;" />
+                <a href={`?page=${Math.max(1, currentPage - 1)}`} class="pag-btn" aria-label="Page précédente" data-i18n-aria-label="lb.prevPage" style={`display: ${currentPage === 1 ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 12px; height: 12px; transform: rotate(90deg); opacity: 0.8;" />
                 </a>
 
                 {paginationItems.map((p) => {
@@ -639,13 +639,13 @@ if (!pageError && !targetCharConfig) {
                   );
                 })}
 
-                <a href={`?page=${Math.min(totalPages, currentPage + 1)}`} class="pag-btn" style={`display: ${currentPage === totalPages ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
-                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(-90deg); opacity: 0.8;" />
+                <a href={`?page=${Math.min(totalPages, currentPage + 1)}`} class="pag-btn" aria-label="Page suivante" data-i18n-aria-label="lb.nextPage" style={`display: ${currentPage === totalPages ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 12px; height: 12px; transform: rotate(-90deg); opacity: 0.8;" />
                 </a>
                 
-                <a href={`?page=${totalPages}`} class="pag-btn" style={`display: ${currentPage === totalPages ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
-                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(-90deg); opacity: 0.8;" />
-                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" style="width: 12px; height: 12px; transform: rotate(-90deg); opacity: 0.8; margin-left: -6px;" />
+                <a href={`?page=${totalPages}`} class="pag-btn" aria-label="Dernière page" data-i18n-aria-label="lb.lastPage" style={`display: ${currentPage === totalPages ? 'none' : 'flex'}; align-items: center; justify-content: center; width: 34px; height: 50px; border-radius: 8px; background: var(--bg-panel); text-decoration: none; color: var(--text-primary); transition: background 0.2s;`}>
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 12px; height: 12px; transform: rotate(-90deg); opacity: 0.8;" />
+                  <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" style="width: 12px; height: 12px; transform: rotate(-90deg); opacity: 0.8; margin-left: -6px;" />
                 </a>
               </div>
               <style>
@@ -669,7 +669,7 @@ if (!pageError && !targetCharConfig) {
           <!-- Character Info -->
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 10px;">
-              <img src={enkaAvatarImg} style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" onerror="this.style.display='none'" />
+              <img src={enkaAvatarImg} alt="" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" onerror="this.style.display='none'" />
               <div style="display: flex; align-items: baseline; gap: 6px;">
                 <span style="font-size: 15px; color: var(--text-always-white); letter-spacing: 0.2px;" class="dynamic-i18n" data-fr={targetCharTranslations.fr} data-en={targetCharTranslations.en}>{targetCharName.replace(/_/g, " ")}</span>
               </div>
@@ -683,7 +683,7 @@ if (!pageError && !targetCharConfig) {
           <!-- Weapon Info -->
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 10px;">
-              <img id="tt-weapon-icon" src="" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px; display: none;" />
+              <img id="tt-weapon-icon" src="" alt="" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px; display: none;" />
               <div style="display: flex; align-items: baseline; gap: 6px;">
                 <span id="tt-weapon-name" style="font-size: 12px; color: var(--text-always-white);">-</span>
               </div>
@@ -974,7 +974,7 @@ if (!pageError && !targetCharConfig) {
         const renderStat = (icon, label, value) => `
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div style="display: flex; align-items: center; gap: 8px;">
-                    <img src="/assets/simulator/icons/${icon}" style="width: 18px; height: 18px; object-fit: contain; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.5));">
+                    <img src="/assets/simulator/icons/${icon}" alt="" style="width: 18px; height: 18px; object-fit: contain; filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.5));">
                     <span style="font-size: 14px; color: rgba(255,255,255,0.85);">${label}</span>
                 </div>
                 <div style="flex: 1; border-bottom: 1px dashed rgba(255,255,255,0.2); margin: 0 8px; transform: translateY(4px);"></div>
@@ -1086,7 +1086,7 @@ if (!pageError && !targetCharConfig) {
                 setsHtml += `
                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            ${sUrl ? `<img src="${sUrl}" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" />` : ""}
+                            ${sUrl ? `<img src="${sUrl}" alt="" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" />` : ""}
                             <span style="font-size: 12px; color: var(--text-always-white);">${bestName}</span>
                         </div>
                         <span style="font-size: 12px; color: rgba(255,255,255,0.7); white-space: nowrap;">${data.sets.best.count}${(window.t && window.t("lb.piecesShort")) || "P"}</span>
@@ -1099,7 +1099,7 @@ if (!pageError && !targetCharConfig) {
                   setsHtml += `
                         <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
                             <div style="display: flex; align-items: center; gap: 10px;">
-                                ${sUrl2 ? `<img src="${sUrl2}" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" />` : ""}
+                                ${sUrl2 ? `<img src="${sUrl2}" alt="" style="width: 36px; height: 36px; object-fit: contain; background: rgba(0,0,0,0.4); border-radius: 4px;" />` : ""}
                                 <span style="font-size: 12px; color: var(--text-always-white);">${secondName}</span>
                             </div>
                             <span style="font-size: 12px; color: rgba(255,255,255,0.7); white-space: nowrap;">${data.sets.second.count}${(window.t && window.t("lb.piecesShort")) || "P"}</span>

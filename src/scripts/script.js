@@ -251,7 +251,7 @@ function updateSortArrows() {
         const section = document.getElementById(`sort-col-${col}`);
         if (!arrow || !section) return;
         const isActive = sidebarSortState.column === col;
-        section.style.opacity = isActive ? '1' : '0.4';
+        section.style.opacity = isActive ? '1' : '0.8';
         arrow.style.transition = 'transform 0.2s ease';
         arrow.style.transform = (isActive && sidebarSortState.direction === 'asc') ? 'rotate(180deg)' : 'rotate(0deg)';
         arrow.style.opacity = isActive ? '1' : '0.4';

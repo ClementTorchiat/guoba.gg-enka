@@ -1,7 +1,4 @@
 ---
-import { Image } from "astro:assets";
-import guobaLogo from "../assets/global/favicon.png";
-
 interface Props {
     currentPage?: "home" | "about" | "team" | "privacy" | "changelog" | "leaderboards" | "?";
 }
@@ -13,7 +10,7 @@ const { currentPage = "?" } = Astro.props;
     <div class="sidebar-top-wrapper" style="display: flex; align-items: center; justify-content: space-between; position: relative;">
         <div class="sidebar-title">
             <a href="/" class="sidebar-title-container" onclick="if(window.location.pathname === '/' || window.location.pathname === '') { if(window.clearSearch) { event.preventDefault(); window.clearSearch(); } }" style="cursor: pointer; text-decoration: none;">
-                <Image src={guobaLogo} alt="guoba" width={72} height={72} style="border-radius: 8px;" />
+                <img src="/assets/global/favicon.png" alt="guoba" width="72" height="72" style="border-radius: 8px;" />
                 <h2 style="color: var(--text-primary)">guoba.gg</h2>
             </a>
             <p class="sidebar-text" style="margin-left: 0;">Ver. -- - Bêta Build (GI Ver. --)</p>

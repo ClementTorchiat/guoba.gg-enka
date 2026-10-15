@@ -1032,6 +1032,10 @@ export const T = {
         "lb.statEr": "Recharge d'énergie",
         "lb.dmgBonus": (e) => `Bonus de DGT ${e}`,
         "lb.noSetEquipped": "Aucun set équipé",
+        "lb.firstPage": "Première page",
+        "lb.prevPage": "Page précédente",
+        "lb.nextPage": "Page suivante",
+        "lb.lastPage": "Dernière page",
     },
 
 
@@ -2042,6 +2046,10 @@ export const T = {
         "lb.statEr": "Energy Recharge",
         "lb.dmgBonus": (e) => `${e} DMG Bonus`,
         "lb.noSetEquipped": "No set equipped",
+        "lb.firstPage": "First page",
+        "lb.prevPage": "Previous page",
+        "lb.nextPage": "Next page",
+        "lb.lastPage": "Last page",
     }
 };
 export function t(key, ...args) {

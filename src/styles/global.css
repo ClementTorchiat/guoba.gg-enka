@@ -562,7 +562,7 @@ main {
     align-items: center;
     justify-content: left;
     gap: 9px;
-    opacity: 65%;
+    opacity: 0.8;
 }
 
 .character-header-section-2 p {
@@ -577,7 +577,7 @@ main {
     align-items: center;
     justify-content: right;
     gap: 9px;
-    opacity: 65%;
+    opacity: 0.8;
 }
 
 .character-header-section-3 p {
@@ -594,7 +594,7 @@ main {
 }
 
 .sort-col:hover {
-    opacity: 0.75 !important;
+    opacity: 1 !important;
 }
 
 .sort-arrow {

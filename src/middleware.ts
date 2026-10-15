@@ -2,7 +2,7 @@ import { defineMiddleware } from 'astro:middleware';
 
 const CSP_POLICY = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' data:",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://enka.network https://cdn.prod.website-files.com https://cdn.discordapp.com https://media.discordapp.net https://static.wikia.nocookie.net",
   "font-src 'self' data:",
