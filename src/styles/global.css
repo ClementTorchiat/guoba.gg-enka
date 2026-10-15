@@ -3763,8 +3763,13 @@ input:checked+.toggle-track .star-4 {
     right: 0;
     bottom: 0;
     background-color: var(--shadow-subtle);
-    transition: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: background-color 0.2s ease;
     border-radius: 24px;
+}
+
+.toggle-switch:hover input:not(:checked)+.toggle-slider,
+.toggle-switch input:not(:checked)+.toggle-slider:hover {
+    background-color: var(--bg-hover);
 }
 
 .toggle-slider:before {
@@ -3807,6 +3812,14 @@ input:checked+.toggle-track .star-4 {
 #generate-code-btn:hover {
     background-color: var(--bg-hover) !important;
     transform: translateY(-1px);
+}
+
+#settings-preferences-view .custom-select-container > button {
+    transition: background-color 0.2s ease;
+}
+
+#settings-preferences-view .custom-select-container > button:hover {
+    background-color: var(--bg-hover) !important;
 }
 
 /* Timeline Account Settings */
