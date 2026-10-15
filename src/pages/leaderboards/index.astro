@@ -355,12 +355,26 @@ try {
   .hover-highlight:hover {
     background-color: rgba(255, 255, 255, 0.05) !important;
   }
+
+  .character-group {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 56px;
+  }
   
   .leaderboard-list-row {
     transition: filter 0.2s ease;
+    contain: paint;
+    isolation: isolate;
   }
   .leaderboard-list-row:hover {
     filter: brightness(1.2);
+  }
+
+  .background-splash-art {
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+    pointer-events: none;
   }
   
   .leaderboards-details-wrapper {
