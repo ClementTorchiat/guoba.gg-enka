@@ -115,8 +115,8 @@ export function renderOffPieceAdvice(persoObj) {
             <div style="background: var(--shadow-subtle); padding: 12px; border-radius: 8px;">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <div style="position: relative; flex-shrink: 0;">
-                        <img src="${offPiece.icon}" style=" display: block; width: 40px; height: 40px; border-radius: 6px; background: var(--shadow-subtle); border: 1px solid ${innerColor}80;">
-                        <img src="/assets/simulator/icons/${iconFile}" style="position: absolute; bottom: 1px; right: 1px; width: 16px; height: 16px; background: var(--bg-panel); border-radius: 5px; padding: 2px; opacity: 0.8;">
+                        <img src="${offPiece.icon}" alt="${offPiece.name || 'Artéfact'}" crossorigin="anonymous" style=" display: block; width: 40px; height: 40px; border-radius: 6px; background: var(--shadow-subtle); border: 1px solid ${innerColor}80;">
+                        <img src="/assets/simulator/icons/${iconFile}" alt="" style="position: absolute; bottom: 1px; right: 1px; width: 16px; height: 16px; background: var(--bg-panel); border-radius: 5px; padding: 2px; opacity: 0.8;">
                     </div>
                     
                     <div style="flex: 1; min-width: 0;">

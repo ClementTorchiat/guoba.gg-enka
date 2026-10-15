@@ -631,6 +631,11 @@ export const T = {
         "page.about.q3.note": "L'outil se concentre sur la <strong>qualité de votre investissement</strong> : vos artéfacts sont-ils mathématiquement excellents, votre build est-il bien équilibré en jeu, et que devez-vous farmer en priorité absolue ?",
         "page.about.q4.title": "Open source & contributions",
         "page.about.q4.desc": "Le projet est ouvert aux retours de la communauté. Si vous repérez une erreur dans les poids d'un personnage, une stat mal calculée ou souhaitez proposer une amélioration, rejoignez le Discord.",
+        "page.404.title": "Page introuvable — guoba.gg",
+        "page.404.heading": "404",
+        "page.404.subheading": "Oups ! Guoba s'est égaré...",
+        "page.404.lead": "La page que vous cherchez n'existe pas, a été déplacée ou Guoba l'a mangée en chemin.",
+        "page.404.back_home": "Retour à l'accueil",
 
         // ── Comptes & Authentification ────────────────────
         "account.login.title": "Créer un compte",
@@ -1636,6 +1641,11 @@ export const T = {
         "page.about.q3.note": "The tool focuses on the <strong>quality of your investment</strong>: are your artifacts mathematically excellent, is your build well-balanced in-game, and what should you farm as an absolute priority?",
         "page.about.q4.title": "Open source & contributions",
         "page.about.q4.desc": "The project is open to community feedback. If you spot an error in a character's weights, a miscalculated stat, or want to suggest an improvement, join the Discord.",
+        "page.404.title": "Page Not Found — guoba.gg",
+        "page.404.heading": "404",
+        "page.404.subheading": "Oops! Guoba got lost...",
+        "page.404.lead": "The page you are looking for does not exist, has been moved, or Guoba ate it along the way.",
+        "page.404.back_home": "Back to Home",
 
         // ── Accounts & Authentication ─────────────────────
         "account.login.title": "Create an account",

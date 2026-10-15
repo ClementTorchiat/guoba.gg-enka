@@ -197,7 +197,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
                             <p style="font-size:12px; color:${textColor}; margin: 0; white-space: nowrap;">${displayName}</p>
                         </div>
                         <label class="switch" style="position:relative; display:inline-block; width:26px; min-width: 26px; height:14px; box-sizing: border-box; flex-shrink: 0; margin-left: 4px;">
-                            <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${charIndex}, ${bIndex})" style="opacity:0; width:0; height:0;">
+                            <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${charIndex}, ${bIndex})" aria-label="${displayName}" style="opacity:0; width:0; height:0;">
                             <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:${trackColor}; transition:.4s; border-radius:34px; width: 100%;"></span>
                             <span style="position:absolute; content:''; border-radius:50%; height:10px; width:10px; left:2px; bottom:2px; background-color:${knobColor}; transition:.4s; ${knobTransform} box-shadow: 0 1px 2px rgba(0,0,0,0.4);"></span>
                         </label>
@@ -216,7 +216,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
     `;
 
     Object.entries(characters).forEach(([charName, charData]) => {
-        const charAvatarHtml = charData.img ? `<img src="${charData.img}" style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain; background: var(--shadow-subtle);" onerror="this.style.display='none'">` : `<div style="width: 32px; height: 32px; border-radius: 8px; background: var(--shadow-subtle); display: flex; align-items: center; justify-content: center; font-size: 14px;"></div>`;
+        const charAvatarHtml = charData.img ? `<img src="${charData.img}" alt="${charName}" crossorigin="anonymous" style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain; background: var(--shadow-subtle);" onerror="this.style.display='none'">` : `<div style="width: 32px; height: 32px; border-radius: 8px; background: var(--shadow-subtle); display: flex; align-items: center; justify-content: center; font-size: 14px;"></div>`;
         const hexColor = charData.hex || 'var(--char-hex)';
 
         const splashBgHtml = charData.splash ? `
@@ -245,7 +245,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
         Object.entries(charData.origins).forEach(([originName, originData]) => {
             let originIconHtml = '';
             if (originData.img) {
-                originIconHtml = `<img src="${originData.img}" style="width: 24px; height: 24px; object-fit: contain; background: var(--shadow-subtle); border-radius: 4px; padding: 2px;" onerror="this.style.display='none'">`;
+                originIconHtml = `<img src="${originData.img}" alt="${originName}" crossorigin="anonymous" style="width: 24px; height: 24px; object-fit: contain; background: var(--shadow-subtle); border-radius: 4px; padding: 2px;" onerror="this.style.display='none'">`;
             }
 
             html += `
@@ -272,7 +272,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
                                 <p style="font-size:12px; color:${textColor}; transition: color 0.3s; margin: 0; flex: 1; min-width: 0; word-break: break-word; line-height: 1.3;">${displayName}</p>
                                 
                                 <label class="switch" style="position:relative; display:inline-block; width:26px; min-width: 26px; height:14px; box-sizing: border-box; flex-shrink: 0;">
-                                    <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${charIndex}, ${bIndex})" style="opacity:0; width:0; height:0;">
+                                    <input type="checkbox" ${buff.active ? 'checked' : ''} onchange="toggleBuff(${charIndex}, ${bIndex})" aria-label="${displayName}" style="opacity:0; width:0; height:0;">
                                     <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:${trackColor}; transition:.4s; border-radius:34px; width: 100%;"></span>
                                     <span style="position:absolute; content:''; border-radius:50%; height:10px; width:10px; left:2px; bottom:2px; background-color:${knobColor}; transition:.4s; ${knobTransform} box-shadow: 0 1px 2px rgba(0,0,0,0.4);"></span>
                                 </label>

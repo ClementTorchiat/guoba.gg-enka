@@ -1,0 +1,29 @@
+---
+// src/pages/404.astro
+import Layout from "../layouts/Layout.astro";
+import StaticLayout from "../layouts/StaticLayout.astro";
+import { Image } from "astro:assets";
+import guobaLogo from "../assets/global/favicon.png";
+---
+
+<Layout title="Page introuvable — guoba.gg" titleKey="page.404.title" description="La page demandée est introuvable sur guoba.gg.">
+  <StaticLayout currentPage="?">
+    <div class="static-page" style="min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 20px;">
+      <div style="position: relative; margin-bottom: 24px;">
+        <Image src={guobaLogo} alt="Guoba Logo" width={80} height={80} style="border-radius: 8px;" />
+      </div>
+
+      <div style="font-size: 72px; font-weight: 800; line-height: 1; letter-spacing: -2px; background: linear-gradient(135deg, var(--accent-gold, #FFB13B) 0%, #ff6b35 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px;" data-i18n="page.404.heading">404</div>
+
+      <h1 class="static-page-title" style="margin-bottom: 12px; font-size: 24px;" data-i18n="page.404.subheading">Oups ! Guoba s'est égaré...</h1>
+
+      <p class="static-page-lead" style="max-width: 500px; margin: 0 auto 32px; font-size: 15px;" data-i18n="page.404.lead">La page que vous cherchez n'existe pas, a été déplacée ou Guoba l'a mangée en chemin.</p>
+
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+        <a href="/" class="link-button link-button-404" style="background: var(--bg-panel); color: var(--text-primary); font-weight: normal; padding: 10px 22px; border-radius: 8px;">
+          <span data-i18n="page.404.back_home">Retour à l'accueil</span>
+        </a>
+      </div>
+    </div>
+  </StaticLayout>
+</Layout>

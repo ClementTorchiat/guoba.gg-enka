@@ -50,7 +50,7 @@ export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 
                 
                 <div class="item-header" style="height: 50px; display: flex; flex-direction: row; align-items: center; gap: 12px;">
                     <div style="position:relative; display:inline-block; flex-shrink: 0;">
-                        <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : art.stars === 4 ? '#a855f7' : '#6b7280'}; object-fit:cover;" decoding="async">
+                        <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : art.stars === 4 ? '#a855f7' : '#6b7280'}; object-fit:cover;" alt="${pieceName || 'Artéfact'}" crossorigin="anonymous" decoding="async">
                         <p style="position:absolute; bottom:7px; right:1px; background:rgba(0, 0, 0, 0.4); color:rgba(255, 255, 255, 0.8); font-size:11px; padding: 1px 5px 1px 4px; border-radius:8px;">+${art.level}</p>
                     </div>
                     <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center;">

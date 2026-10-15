@@ -562,7 +562,7 @@ main {
     align-items: center;
     justify-content: left;
     gap: 9px;
-    opacity: 40%;
+    opacity: 65%;
 }
 
 .character-header-section-2 p {
@@ -577,7 +577,7 @@ main {
     align-items: center;
     justify-content: right;
     gap: 9px;
-    opacity: 40%;
+    opacity: 65%;
 }
 
 .character-header-section-3 p {
@@ -3910,4 +3910,13 @@ html.reduce-transparency {
 
 html.reduce-transparency .background-splash-art {
     display: none !important;
+}
+
+.link-button-404 {
+    transition: all 0.2s ease;
+}
+
+.link-button-404:hover {
+    background-color: var(--bg-hover) !important;
+    transform: translateY(-1px);
 }
