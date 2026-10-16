@@ -64,10 +64,11 @@ button[title="Mode d'emploi"]:hover,
 
 @font-face {
     font-family: 'ShinShin';
-    src: url("/assets/global/typo/ShinShin.ttf") format('truetype');
+    src: url("/assets/global/typo/ShinShin.woff2") format('woff2'),
+         url("/assets/global/typo/ShinShin.ttf") format('truetype');
     font-weight: normal;
     font-style: normal;
-    font-display: block;
+    font-display: swap;
 }
 
 @keyframes spin {
