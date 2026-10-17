@@ -23,12 +23,27 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
         : null;
     const defaultOffset = skinOverride?.portraitOffset ?? (resolvedConfig?.portraitOffset ?? -35);
 
-    let currentOffset = defaultOffset;
+    let currentOffsetX = defaultOffset;
+    let currentOffsetY = 0;
+    let currentScale = 100;
+
     if (typeof window !== 'undefined') {
-        const savedOffset = window.customizationState?.customOffsets?.[charKey] ??
+        const savedOffsetX = window.customizationState?.customOffsets?.[charKey] ??
             (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_custom_offset_' + charKey) : null);
-        if (savedOffset !== null && savedOffset !== undefined) {
-            currentOffset = Number(savedOffset);
+        if (savedOffsetX !== null && savedOffsetX !== undefined) {
+            currentOffsetX = Number(savedOffsetX);
+        }
+
+        const savedOffsetY = window.customizationState?.customOffsetsY?.[charKey] ??
+            (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_custom_offset_y_' + charKey) : null);
+        if (savedOffsetY !== null && savedOffsetY !== undefined) {
+            currentOffsetY = Number(savedOffsetY);
+        }
+
+        const savedScale = window.customizationState?.customScales?.[charKey] ??
+            (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_custom_scale_' + charKey) : null);
+        if (savedScale !== null && savedScale !== undefined) {
+            currentScale = Number(savedScale);
         }
     }
 
@@ -90,7 +105,7 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
                         <span>Image</span>
                     </div>
                 </div>
-                <button type="button" class="custom-reset-btn" title="Réinitialiser l'image par défaut" onclick="window.resetCustomImage && window.resetCustomImage('${charKey}', '${safeDefaultSplash}')">
+                <button type="button" class="custom-reset-btn" title="Réinitialiser l'image et le cadrage (Master Reset)" onclick="window.resetCustomImage && window.resetCustomImage('${charKey}', '${safeDefaultSplash}', ${defaultOffset})">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
                         <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
                         <path d="M20 4v5h-5"></path>
@@ -98,7 +113,7 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
                 </button>
             </div>
 
-            <!-- Contrôle B : Décalage horizontal -->
+            <!-- Contrôle B : Décalage horizontal X -->
             <div class="custom-row-with-reset">
                 <div class="custom-offset-control" title="Décalage horizontal du portrait">
                     <button type="button" class="custom-offset-btn" id="btn-offset-left" onclick="window.adjustPortraitOffset && window.adjustPortraitOffset('${charKey}', -2, ${defaultOffset}, event)" title="Déplacer vers la gauche (Shift pour aller plus vite)">
@@ -106,14 +121,61 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
                             <polyline points="15 18 9 12 15 6"></polyline>
                         </svg>
                     </button>
-                    <span id="custom-offset-value" class="custom-offset-value" title="Position horizontale actuelle">${currentOffset}%</span>
+                    <span id="custom-offset-value" class="custom-offset-value" title="Position horizontale actuelle">${currentOffsetX}%</span>
                     <button type="button" class="custom-offset-btn" id="btn-offset-right" onclick="window.adjustPortraitOffset && window.adjustPortraitOffset('${charKey}', 2, ${defaultOffset}, event)" title="Déplacer vers la droite (Shift pour aller plus vite)">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                     </button>
                 </div>
-                <button type="button" class="custom-reset-btn" id="btn-offset-reset" title="Réinitialiser la position par défaut (${defaultOffset}%)" onclick="window.resetPortraitOffset && window.resetPortraitOffset('${charKey}', ${defaultOffset})">
+                <button type="button" class="custom-reset-btn" id="btn-offset-reset" title="Réinitialiser la position horizontale (${defaultOffset}%)" onclick="window.resetPortraitOffset && window.resetPortraitOffset('${charKey}', ${defaultOffset})">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
+                        <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
+                        <path d="M20 4v5h-5"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Contrôle C : Décalage vertical Y -->
+            <div class="custom-row-with-reset">
+                <div class="custom-offset-control" title="Décalage vertical du portrait">
+                    <button type="button" class="custom-offset-btn" id="btn-offset-y-up" onclick="window.adjustPortraitOffsetY && window.adjustPortraitOffsetY('${charKey}', -2, ${defaultOffset}, event)" title="Déplacer vers le haut (Shift pour aller plus vite)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                    </button>
+                    <span id="custom-offset-y-value" class="custom-offset-value" title="Position verticale actuelle">${currentOffsetY}%</span>
+                    <button type="button" class="custom-offset-btn" id="btn-offset-y-down" onclick="window.adjustPortraitOffsetY && window.adjustPortraitOffsetY('${charKey}', 2, ${defaultOffset}, event)" title="Déplacer vers le bas (Shift pour aller plus vite)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                <button type="button" class="custom-reset-btn" id="btn-offset-y-reset" title="Réinitialiser la position verticale (0%)" onclick="window.resetPortraitOffsetY && window.resetPortraitOffsetY('${charKey}', ${defaultOffset})">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
+                        <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
+                        <path d="M20 4v5h-5"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Contrôle D : Zoom / Échelle -->
+            <div class="custom-row-with-reset">
+                <div class="custom-offset-control" title="Zoom / Échelle du portrait">
+                    <button type="button" class="custom-offset-btn" id="btn-scale-down" onclick="window.adjustPortraitScale && window.adjustPortraitScale('${charKey}', -5, ${defaultOffset}, event)" title="Dézoomer (Shift pour aller plus vite)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                    <span id="custom-scale-value" class="custom-offset-value" title="Zoom actuel">${currentScale}%</span>
+                    <button type="button" class="custom-offset-btn" id="btn-scale-up" onclick="window.adjustPortraitScale && window.adjustPortraitScale('${charKey}', 5, ${defaultOffset}, event)" title="Zoomer (Shift pour aller plus vite)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                </div>
+                <button type="button" class="custom-reset-btn" id="btn-scale-reset" title="Réinitialiser le zoom (100%)" onclick="window.resetPortraitScale && window.resetPortraitScale('${charKey}', ${defaultOffset})">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
                         <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
                         <path d="M20 4v5h-5"></path>
@@ -273,11 +335,15 @@ if (typeof window !== 'undefined') {
             scoreMode: savedScore === 'rolls' ? 'rolls' : 'ranking',
             artScoreMode: savedArtScore === 'cv' ? 'cv' : 'score',
             customSplashes: {},
-            customOffsets: {}
+            customOffsets: {},
+            customOffsetsY: {},
+            customScales: {}
         };
     } else {
         window.customizationState.customSplashes = window.customizationState.customSplashes || {};
         window.customizationState.customOffsets = window.customizationState.customOffsets || {};
+        window.customizationState.customOffsetsY = window.customizationState.customOffsetsY || {};
+        window.customizationState.customScales = window.customizationState.customScales || {};
     }
 
     window.openCustomImagePicker = function () {
@@ -362,8 +428,26 @@ if (typeof window !== 'undefined') {
         input.value = '';
     };
 
-    window.resetCustomImage = function (charKey, defaultSplash) {
+    window.applyPortraitTransform = function (charKey, defaultOffsetX) {
+        const defX = typeof defaultOffsetX === 'number' ? defaultOffsetX : -35;
+        const offsetX = window.customizationState?.customOffsets?.[charKey] ??
+            (localStorage.getItem('guoba_custom_offset_' + charKey) !== null ? Number(localStorage.getItem('guoba_custom_offset_' + charKey)) : defX);
+
+        const offsetY = window.customizationState?.customOffsetsY?.[charKey] ??
+            (localStorage.getItem('guoba_custom_offset_y_' + charKey) !== null ? Number(localStorage.getItem('guoba_custom_offset_y_' + charKey)) : 0);
+
+        const scale = window.customizationState?.customScales?.[charKey] ??
+            (localStorage.getItem('guoba_custom_scale_' + charKey) !== null ? Number(localStorage.getItem('guoba_custom_scale_' + charKey)) : 100);
+
+        const portraitImg = document.querySelector('.character-portrait');
+        if (portraitImg) {
+            portraitImg.style.transform = `translateX(${offsetX}%) translateY(${offsetY}%) scale(${scale / 100})`;
+        }
+    };
+
+    window.resetCustomImage = function (charKey, defaultSplash, defaultOffsetX) {
         window.customizationState = window.customizationState || {};
+
         if (window.customizationState.customSplashes) {
             delete window.customizationState.customSplashes[charKey];
         }
@@ -371,9 +455,33 @@ if (typeof window !== 'undefined') {
             localStorage.removeItem('guoba_custom_splash_' + charKey);
         } catch (e) { }
 
+        if (window.customizationState.customOffsets) {
+            delete window.customizationState.customOffsets[charKey];
+        }
+        try {
+            localStorage.removeItem('guoba_custom_offset_' + charKey);
+        } catch (e) { }
+
+        if (window.customizationState.customOffsetsY) {
+            delete window.customizationState.customOffsetsY[charKey];
+        }
+        try {
+            localStorage.removeItem('guoba_custom_offset_y_' + charKey);
+        } catch (e) { }
+
+        if (window.customizationState.customScales) {
+            delete window.customizationState.customScales[charKey];
+        }
+        try {
+            localStorage.removeItem('guoba_custom_scale_' + charKey);
+        } catch (e) { }
+
+        const defX = typeof defaultOffsetX === 'number' ? defaultOffsetX : -35;
+
         const portraitImg = document.querySelector('.character-portrait');
         if (portraitImg) {
             portraitImg.src = defaultSplash;
+            portraitImg.style.transform = `translateX(${defX}%) translateY(0%) scale(1)`;
         }
 
         const bgSplash = document.querySelector('.background-splash-art');
@@ -384,6 +492,15 @@ if (typeof window !== 'undefined') {
         if (bgSplash && bgSplash.nextElementSibling && bgSplash.nextElementSibling.tagName === 'IMG') {
             bgSplash.nextElementSibling.src = defaultSplash;
         }
+
+        const valX = document.getElementById('custom-offset-value');
+        if (valX) valX.textContent = `${defX}%`;
+
+        const valY = document.getElementById('custom-offset-y-value');
+        if (valY) valY.textContent = '0%';
+
+        const valScale = document.getElementById('custom-scale-value');
+        if (valScale) valScale.textContent = '100%';
     };
 
     window.adjustPortraitOffset = function (charKey, delta, defaultOffset, event) {
@@ -405,10 +522,7 @@ if (typeof window !== 'undefined') {
             localStorage.setItem('guoba_custom_offset_' + charKey, nextOffset.toString());
         } catch (e) { }
 
-        const portraitImg = document.querySelector('.character-portrait');
-        if (portraitImg) {
-            portraitImg.style.transform = `translateX(${nextOffset}%)`;
-        }
+        window.applyPortraitTransform(charKey, defaultOffset);
 
         const valDisplay = document.getElementById('custom-offset-value');
         if (valDisplay) {
@@ -424,14 +538,97 @@ if (typeof window !== 'undefined') {
             localStorage.removeItem('guoba_custom_offset_' + charKey);
         } catch (e) { }
 
-        const portraitImg = document.querySelector('.character-portrait');
-        if (portraitImg) {
-            portraitImg.style.transform = `translateX(${defaultOffset}%)`;
-        }
+        window.applyPortraitTransform(charKey, defaultOffset);
 
         const valDisplay = document.getElementById('custom-offset-value');
         if (valDisplay) {
             valDisplay.textContent = `${defaultOffset}%`;
+        }
+    };
+
+    window.adjustPortraitOffsetY = function (charKey, delta, defaultOffset, event) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.customOffsetsY = window.customizationState.customOffsetsY || {};
+
+        let current = window.customizationState.customOffsetsY[charKey];
+        if (typeof current !== 'number') {
+            const saved = localStorage.getItem('guoba_custom_offset_y_' + charKey);
+            current = saved !== null ? Number(saved) : 0;
+        }
+
+        const actualDelta = (event && event.shiftKey) ? delta * 5 : delta;
+        let nextOffset = Math.round((current + actualDelta) * 10) / 10;
+        nextOffset = Math.max(-200, Math.min(200, nextOffset));
+
+        window.customizationState.customOffsetsY[charKey] = nextOffset;
+        try {
+            localStorage.setItem('guoba_custom_offset_y_' + charKey, nextOffset.toString());
+        } catch (e) { }
+
+        window.applyPortraitTransform(charKey, defaultOffset);
+
+        const valDisplay = document.getElementById('custom-offset-y-value');
+        if (valDisplay) {
+            valDisplay.textContent = `${nextOffset}%`;
+        }
+    };
+
+    window.resetPortraitOffsetY = function (charKey, defaultOffset) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.customOffsetsY = window.customizationState.customOffsetsY || {};
+        delete window.customizationState.customOffsetsY[charKey];
+        try {
+            localStorage.removeItem('guoba_custom_offset_y_' + charKey);
+        } catch (e) { }
+
+        window.applyPortraitTransform(charKey, defaultOffset);
+
+        const valDisplay = document.getElementById('custom-offset-y-value');
+        if (valDisplay) {
+            valDisplay.textContent = '0%';
+        }
+    };
+
+    window.adjustPortraitScale = function (charKey, delta, defaultOffset, event) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.customScales = window.customizationState.customScales || {};
+
+        let current = window.customizationState.customScales[charKey];
+        if (typeof current !== 'number') {
+            const saved = localStorage.getItem('guoba_custom_scale_' + charKey);
+            current = saved !== null ? Number(saved) : 100;
+        }
+
+        const actualDelta = (event && event.shiftKey) ? delta * 3 : delta;
+        let nextScale = Math.round((current + actualDelta) * 10) / 10;
+        nextScale = Math.max(20, Math.min(300, nextScale));
+
+        window.customizationState.customScales[charKey] = nextScale;
+        try {
+            localStorage.setItem('guoba_custom_scale_' + charKey, nextScale.toString());
+        } catch (e) { }
+
+        window.applyPortraitTransform(charKey, defaultOffset);
+
+        const valDisplay = document.getElementById('custom-scale-value');
+        if (valDisplay) {
+            valDisplay.textContent = `${nextScale}%`;
+        }
+    };
+
+    window.resetPortraitScale = function (charKey, defaultOffset) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.customScales = window.customizationState.customScales || {};
+        delete window.customizationState.customScales[charKey];
+        try {
+            localStorage.removeItem('guoba_custom_scale_' + charKey);
+        } catch (e) { }
+
+        window.applyPortraitTransform(charKey, defaultOffset);
+
+        const valDisplay = document.getElementById('custom-scale-value');
+        if (valDisplay) {
+            valDisplay.textContent = '100%';
         }
     };
 

@@ -10,12 +10,27 @@ export function renderCharacterPortrait(persoObj, config) {
     const charKey = (persoObj?.nom || 'default').toLowerCase().trim().replace(/\s+/g, '_');
     const defaultOffset = skinOverride?.portraitOffset ?? (config?.portraitOffset ?? -35);
 
-    let currentOffset = defaultOffset;
+    let currentOffsetX = defaultOffset;
+    let currentOffsetY = 0;
+    let currentScale = 100;
+
     if (typeof window !== 'undefined') {
-        const savedOffset = window.customizationState?.customOffsets?.[charKey] ??
+        const savedOffsetX = window.customizationState?.customOffsets?.[charKey] ??
             (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_custom_offset_' + charKey) : null);
-        if (savedOffset !== null && savedOffset !== undefined) {
-            currentOffset = Number(savedOffset);
+        if (savedOffsetX !== null && savedOffsetX !== undefined) {
+            currentOffsetX = Number(savedOffsetX);
+        }
+
+        const savedOffsetY = window.customizationState?.customOffsetsY?.[charKey] ??
+            (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_custom_offset_y_' + charKey) : null);
+        if (savedOffsetY !== null && savedOffsetY !== undefined) {
+            currentOffsetY = Number(savedOffsetY);
+        }
+
+        const savedScale = window.customizationState?.customScales?.[charKey] ??
+            (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_custom_scale_' + charKey) : null);
+        if (savedScale !== null && savedScale !== undefined) {
+            currentScale = Number(savedScale);
         }
     }
 
@@ -28,9 +43,11 @@ export function renderCharacterPortrait(persoObj, config) {
         }
     }
 
+    const scaleFactor = currentScale / 100;
+
     return `
         <div class="character-portrait-container" style="width: 350px; height: 720px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: rgb(0, 0, 0) 1px 1px 6px; box-sizing: border-box;">
-            <img class="character-portrait" src="${activeSplash}" alt="${persoObj.nom}" fetchpriority="high" decoding="sync" onerror="if(this.src.endsWith('.webp')){this.src=this.src.replace(/\\.webp$/i,'.png');}" style="filter: none; position: absolute; transform: translateX(${currentOffset}%); height: 720px; transition: transform 0.2s ease, filter 0.35s cubic-bezier(0.41, 0.65, 0.39, 0.99); box-sizing: border-box;">
+            <img class="character-portrait" src="${activeSplash}" alt="${persoObj.nom}" fetchpriority="high" decoding="sync" onerror="if(this.src.endsWith('.webp')){this.src=this.src.replace(/\\.webp$/i,'.png');}" style="filter: none; position: absolute; transform-origin: center center; transform: translateX(${currentOffsetX}%) translateY(${currentOffsetY}%) scale(${scaleFactor}); height: 720px; transition: transform 0.2s ease, filter 0.35s cubic-bezier(0.41, 0.65, 0.39, 0.99); box-sizing: border-box;">
         </div>
     `;
 }
