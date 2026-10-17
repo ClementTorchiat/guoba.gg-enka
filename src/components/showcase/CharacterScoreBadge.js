@@ -13,7 +13,7 @@ export function renderCharacterScoreBadge(evaluation) {
                 </div>
                 <div class="dotted-line"></div> 
                 <div style="display: flex; flex-direction: row; gap: 4px;">
-                    <p style="color: ${evaluation.grade?.color || '#aaa'};">${evaluation.score}</p>
+                    <p class="score-grade-value" style="color: ${evaluation.grade?.color || '#aaa'};">${evaluation.score}</p>
                     <p style="margin:0;">(${evaluation.grade?.letter || '?'})</p>
                 </div>
             </div>

@@ -18,15 +18,30 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex) {
     const isDark = (typeof window !== 'undefined') &&
         (window.customizationState?.themeMode === 'dark' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_theme_mode') === 'dark'));
+    const hasNoBgSplash = (typeof window !== 'undefined') &&
+        (window.customizationState?.bgSplashMode === 'no-splash' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_bgsplash_mode') === 'no-splash'));
     const hasNoShadow = (typeof window !== 'undefined') &&
         (window.customizationState?.shadowMode === 'no-shadow' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode') === 'no-shadow'));
     const hasNoBorder = (typeof window !== 'undefined') &&
         (window.customizationState?.borderMode === 'no-border' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_border_mode') === 'no-border'));
+    const isSquareCorners = (typeof window !== 'undefined') &&
+        (window.customizationState?.cornerMode === 'square' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_corner_mode') === 'square'));
+    const hasNoRarity = (typeof window !== 'undefined') &&
+        (window.customizationState?.rarityMode === 'no-rarity' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rarity_mode') === 'no-rarity'));
+    const hasNoRollDots = (typeof window !== 'undefined') &&
+        (window.customizationState?.rollDotsMode === 'no-dots' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'no-dots'));
     const isScoreRolls = (typeof window !== 'undefined') &&
         (window.customizationState?.scoreMode === 'rolls' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_score_mode') === 'rolls'));
+    const isArtifactCv = (typeof window !== 'undefined') &&
+        (window.customizationState?.artScoreMode === 'cv' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_artscore_mode') === 'cv'));
 
     return `
         <div class="customization-bar">
@@ -76,10 +91,20 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex) {
                 </button>
             </div>
 
+            <!-- Contrôle 4 : Fond illustré ou Fond uni -->
+            <div class="custom-toggle-group" style="margin-top: 8px;">
+                <button type="button" class="custom-toggle-btn ${!hasNoBgSplash ? 'active' : ''}" id="btn-bgsplash-on" onclick="window.setBgSplashMode && window.setBgSplashMode('splash')" title="Fond illustré">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-photo"><path d="M15 8h.01"></path><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"></path><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"></path><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"></path></svg>
+                </button>
+                <button type="button" class="custom-toggle-btn ${hasNoBgSplash ? 'active' : ''}" id="btn-bgsplash-off" onclick="window.setBgSplashMode && window.setBgSplashMode('no-splash')" title="Fond uni (sans illustration)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-photo-off"><path d="M15 8h.01"></path><path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"></path><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"></path><path d="M16.32 12.34c.577 -.059 1.162 .162 1.68 .66l3 3"></path><path d="M3 3l18 18"></path></svg>
+                </button>
+            </div>
+
             <!-- Séparateur -->
             <div class="custom-divider" style="margin-top: 14px;"></div>
 
-            <!-- Contrôle 4 : Shadow ou Sans Shadow -->
+            <!-- Contrôle 5 : Shadow ou Sans Shadow -->
             <div class="custom-toggle-group">
                 <button type="button" class="custom-toggle-btn ${!hasNoShadow ? 'active' : ''}" id="btn-shadow-on" onclick="window.setShadowMode && window.setShadowMode('shadow')" title="Avec ombres">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-shadow"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M13 12h5"></path><path d="M13 15h4"></path><path d="M13 18h1"></path><path d="M13 9h4"></path><path d="M13 6h1"></path></svg>
@@ -89,7 +114,7 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex) {
                 </button>
             </div>
 
-            <!-- Contrôle 5 : Border ou Sans Border -->
+            <!-- Contrôle 6 : Border ou Sans Border -->
             <div class="custom-toggle-group" style="margin-top: 8px;">
                 <button type="button" class="custom-toggle-btn ${!hasNoBorder ? 'active' : ''}" id="btn-border-on" onclick="window.setBorderMode && window.setBorderMode('border')" title="Avec bordures">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-square"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path></svg>
@@ -99,16 +124,56 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex) {
                 </button>
             </div>
 
+            <!-- Contrôle 7 : Angles arrondis ou Carrés -->
+            <div class="custom-toggle-group" style="margin-top: 8px;">
+                <button type="button" class="custom-toggle-btn ${!isSquareCorners ? 'active' : ''}" id="btn-corners-rounded" onclick="window.setCornerMode && window.setCornerMode('rounded')" title="Angles arrondis">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-border-corner-rounded"><path d="M4 20v-10a6 6 0 0 1 6 -6h10"></path></svg>
+                </button>
+                <button type="button" class="custom-toggle-btn ${isSquareCorners ? 'active' : ''}" id="btn-corners-square" onclick="window.setCornerMode && window.setCornerMode('square')" title="Angles carrés">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-border-corner-square"><path d="M4 20v-16h16"></path></svg>
+                </button>
+            </div>
+
+            <!-- Contrôle 8 : Rareté et Grade -->
+            <div class="custom-toggle-group" style="margin-top: 8px;">
+                <button type="button" class="custom-toggle-btn ${!hasNoRarity ? 'active' : ''}" id="btn-rarity-on" onclick="window.setRarityMode && window.setRarityMode('rarity')" title="Avec couleurs de rareté et grade">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-star"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg>
+                </button>
+                <button type="button" class="custom-toggle-btn ${hasNoRarity ? 'active' : ''}" id="btn-rarity-off" onclick="window.setRarityMode && window.setRarityMode('no-rarity')" title="Sans couleurs de rareté et grade">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-star-off"><path d="M3 3l18 18"></path><path d="M10.012 6.016l1.981 -4.014l3.086 6.253l6.9 1l-4.421 4.304m.012 4.01l.588 3.426l-6.158 -3.245l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l.856 -1.733"></path></svg>
+                </button>
+            </div>
+
             <!-- Séparateur -->
             <div class="custom-divider" style="margin-top: 14px;"></div>
 
-            <!-- Contrôle 6 : Classement ou Rolls Totaux -->
+            <!-- Contrôle 9 : Points de rolls des substats (Afficher / Masquer) -->
+            <div class="custom-toggle-group" style="margin-bottom: 8px;">
+                <button type="button" class="custom-toggle-btn ${!hasNoRollDots ? 'active' : ''}" id="btn-rolldots-on" onclick="window.setRollDotsMode && window.setRollDotsMode('dots')" title="Afficher les points de rolls">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dots"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path></svg>
+                </button>
+                <button type="button" class="custom-toggle-btn ${hasNoRollDots ? 'active' : ''}" id="btn-rolldots-off" onclick="window.setRollDotsMode && window.setRollDotsMode('no-dots')" title="Masquer les points de rolls">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dots-off"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M3 3l18 18"></path></svg>
+                </button>
+            </div>
+
+            <!-- Contrôle 10 : Classement ou Rolls Totaux -->
             <div class="custom-segmented-vertical">
                 <button type="button" class="custom-segmented-item ${!isScoreRolls ? 'active' : ''}" id="btn-score-ranking" onclick="window.setScoreDisplayMode && window.setScoreDisplayMode('ranking')">
                     Classement
                 </button>
                 <button type="button" class="custom-segmented-item ${isScoreRolls ? 'active' : ''}" id="btn-score-rolls" onclick="window.setScoreDisplayMode && window.setScoreDisplayMode('rolls')">
                     Rolls totaux
+                </button>
+            </div>
+
+            <!-- Contrôle 11 : Score d'artéfact ou Crit Value -->
+            <div class="custom-segmented-vertical" style="margin-top: 8px;">
+                <button type="button" class="custom-segmented-item ${!isArtifactCv ? 'active' : ''}" id="btn-artscore-score" onclick="window.setArtifactScoreMode && window.setArtifactScoreMode('score')">
+                    Score
+                </button>
+                <button type="button" class="custom-segmented-item ${isArtifactCv ? 'active' : ''}" id="btn-artscore-cv" onclick="window.setArtifactScoreMode && window.setArtifactScoreMode('cv')">
+                    Crit Value
                 </button>
             </div>
         </div>
@@ -119,15 +184,25 @@ if (typeof window !== 'undefined') {
     if (!window.customizationState) {
         const savedMode = localStorage.getItem('guoba_custom_style_mode');
         const savedTheme = localStorage.getItem('guoba_custom_theme_mode');
+        const savedBgSplash = localStorage.getItem('guoba_custom_bgsplash_mode');
         const savedShadow = localStorage.getItem('guoba_custom_shadow_mode');
         const savedBorder = localStorage.getItem('guoba_custom_border_mode');
+        const savedCorner = localStorage.getItem('guoba_custom_corner_mode');
+        const savedRarity = localStorage.getItem('guoba_custom_rarity_mode');
+        const savedRollDots = localStorage.getItem('guoba_custom_rolldots_mode');
         const savedScore = localStorage.getItem('guoba_custom_score_mode');
+        const savedArtScore = localStorage.getItem('guoba_custom_artscore_mode');
         window.customizationState = {
             styleMode: savedMode === 'transparent' ? 'transparent' : 'frost',
             themeMode: savedTheme === 'dark' ? 'dark' : 'light',
+            bgSplashMode: savedBgSplash === 'no-splash' ? 'no-splash' : 'splash',
             shadowMode: savedShadow === 'no-shadow' ? 'no-shadow' : 'shadow',
             borderMode: savedBorder === 'no-border' ? 'no-border' : 'border',
-            scoreMode: savedScore === 'rolls' ? 'rolls' : 'ranking'
+            cornerMode: savedCorner === 'square' ? 'square' : 'rounded',
+            rarityMode: savedRarity === 'no-rarity' ? 'no-rarity' : 'rarity',
+            rollDotsMode: savedRollDots === 'no-dots' ? 'no-dots' : 'dots',
+            scoreMode: savedScore === 'rolls' ? 'rolls' : 'ranking',
+            artScoreMode: savedArtScore === 'cv' ? 'cv' : 'score'
         };
     }
 
@@ -209,6 +284,28 @@ if (typeof window !== 'undefined') {
         }
     };
 
+    window.setBgSplashMode = function (mode) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.bgSplashMode = mode;
+        try {
+            localStorage.setItem('guoba_custom_bgsplash_mode', mode);
+        } catch (e) {}
+
+        const wrapper = document.querySelector('.showcase-wrapper');
+        const btnOn = document.getElementById('btn-bgsplash-on');
+        const btnOff = document.getElementById('btn-bgsplash-off');
+
+        if (mode === 'no-splash') {
+            if (wrapper) wrapper.classList.add('mode-no-bg-splash');
+            if (btnOn) btnOn.classList.remove('active');
+            if (btnOff) btnOff.classList.add('active');
+        } else {
+            if (wrapper) wrapper.classList.remove('mode-no-bg-splash');
+            if (btnOn) btnOn.classList.add('active');
+            if (btnOff) btnOff.classList.remove('active');
+        }
+    };
+
     window.setShadowMode = function (mode) {
         window.customizationState = window.customizationState || {};
         window.customizationState.shadowMode = mode;
@@ -253,6 +350,72 @@ if (typeof window !== 'undefined') {
         }
     };
 
+    window.setCornerMode = function (mode) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.cornerMode = mode;
+        try {
+            localStorage.setItem('guoba_custom_corner_mode', mode);
+        } catch (e) {}
+
+        const wrapper = document.querySelector('.showcase-wrapper');
+        const btnRounded = document.getElementById('btn-corners-rounded');
+        const btnSquare = document.getElementById('btn-corners-square');
+
+        if (mode === 'square') {
+            if (wrapper) wrapper.classList.add('mode-square-corners');
+            if (btnRounded) btnRounded.classList.remove('active');
+            if (btnSquare) btnSquare.classList.add('active');
+        } else {
+            if (wrapper) wrapper.classList.remove('mode-square-corners');
+            if (btnRounded) btnRounded.classList.add('active');
+            if (btnSquare) btnSquare.classList.remove('active');
+        }
+    };
+
+    window.setRarityMode = function (mode) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.rarityMode = mode;
+        try {
+            localStorage.setItem('guoba_custom_rarity_mode', mode);
+        } catch (e) {}
+
+        const wrapper = document.querySelector('.showcase-wrapper');
+        const btnOn = document.getElementById('btn-rarity-on');
+        const btnOff = document.getElementById('btn-rarity-off');
+
+        if (mode === 'no-rarity') {
+            if (wrapper) wrapper.classList.add('mode-no-rarity');
+            if (btnOn) btnOn.classList.remove('active');
+            if (btnOff) btnOff.classList.add('active');
+        } else {
+            if (wrapper) wrapper.classList.remove('mode-no-rarity');
+            if (btnOn) btnOn.classList.add('active');
+            if (btnOff) btnOff.classList.remove('active');
+        }
+    };
+
+    window.setRollDotsMode = function (mode) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.rollDotsMode = mode;
+        try {
+            localStorage.setItem('guoba_custom_rolldots_mode', mode);
+        } catch (e) {}
+
+        const wrapper = document.querySelector('.showcase-wrapper');
+        const btnOn = document.getElementById('btn-rolldots-on');
+        const btnOff = document.getElementById('btn-rolldots-off');
+
+        if (mode === 'no-dots') {
+            if (wrapper) wrapper.classList.add('mode-no-roll-dots');
+            if (btnOn) btnOn.classList.remove('active');
+            if (btnOff) btnOff.classList.add('active');
+        } else {
+            if (wrapper) wrapper.classList.remove('mode-no-roll-dots');
+            if (btnOn) btnOn.classList.add('active');
+            if (btnOff) btnOff.classList.remove('active');
+        }
+    };
+
     window.setScoreDisplayMode = function (mode) {
         window.customizationState = window.customizationState || {};
         window.customizationState.scoreMode = mode;
@@ -272,6 +435,28 @@ if (typeof window !== 'undefined') {
             if (wrapper) wrapper.classList.remove('mode-score-rolls');
             if (btnRanking) btnRanking.classList.add('active');
             if (btnRolls) btnRolls.classList.remove('active');
+        }
+    };
+
+    window.setArtifactScoreMode = function (mode) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.artScoreMode = mode;
+        try {
+            localStorage.setItem('guoba_custom_artscore_mode', mode);
+        } catch (e) {}
+
+        const wrapper = document.querySelector('.showcase-wrapper');
+        const btnScore = document.getElementById('btn-artscore-score');
+        const btnCv = document.getElementById('btn-artscore-cv');
+
+        if (mode === 'cv') {
+            if (wrapper) wrapper.classList.add('mode-artifact-cv');
+            if (btnScore) btnScore.classList.remove('active');
+            if (btnCv) btnCv.classList.add('active');
+        } else {
+            if (wrapper) wrapper.classList.remove('mode-artifact-cv');
+            if (btnScore) btnScore.classList.add('active');
+            if (btnCv) btnCv.classList.remove('active');
         }
     };
 }

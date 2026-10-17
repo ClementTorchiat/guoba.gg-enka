@@ -829,7 +829,7 @@ main {
     background: var(--bg-base);
     background-blend-mode: screen;
     border-radius: 7px;
-    transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s;
+    transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s, border-radius 0.25s;
     gap: 8px;
     color: var(--text-always-white);
 }
@@ -978,11 +978,16 @@ main {
 }
 
 .background-splash-art {
-    transition: filter 0.35s ease;
+    transition: filter 0.35s ease, opacity 0.35s ease, visibility 0.35s ease;
 }
 
 .mode-dark .background-splash-art {
     filter: blur(10px) brightness(var(--char-splash-brightness, 0.3)) saturate(0.8) !important;
+}
+
+.showcase-wrapper.mode-no-bg-splash .background-splash-art {
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
 
 /* --- SANS SHADOW --- */
@@ -1004,6 +1009,54 @@ main {
 .showcase-wrapper.mode-no-border .buff-category-card {
     border-color: transparent !important;
 }
+
+/* --- SANS COULEURS DE RARETÉ ET DE GRADE --- */
+.showcase-wrapper.mode-no-rarity .item-img {
+    border: none !important;
+}
+
+.showcase-wrapper.mode-no-rarity .artifact-card .artifact-set-name,
+.showcase-wrapper.mode-no-rarity .item-header .artifact-set-name {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.showcase-wrapper.mode-no-rarity .showcase-area-score {
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+.showcase-wrapper.mode-no-border.mode-no-rarity .showcase-area-score {
+    border-color: transparent !important;
+}
+
+.showcase-wrapper.mode-no-rarity .showcase-area-score .score-grade-value {
+    color: var(--text-always-white, #ffffff) !important;
+}
+
+.showcase-wrapper.mode-no-rarity .showcase-area-combat-stats .stat-row.is-buffed p:last-of-type {
+    color: var(--text-always-white, #ffffff) !important;
+}
+
+/* --- ANGLES CARRÉS --- */
+.showcase-wrapper.mode-square-corners .top-row,
+.showcase-wrapper.mode-square-corners .card,
+.showcase-wrapper.mode-square-corners .character-portrait-container,
+.showcase-wrapper.mode-square-corners .showcase-area-base-stats,
+.showcase-wrapper.mode-square-corners .showcase-area-score,
+.showcase-wrapper.mode-square-corners .showcase-area-skills,
+.showcase-wrapper.mode-square-corners .showcase-area-combat-stats,
+.showcase-wrapper.mode-square-corners .buff-category-card,
+.showcase-wrapper.mode-square-corners .item-img,
+.showcase-wrapper.mode-square-corners .weapon-stats-row {
+    border-radius: 0 !important;
+}
+
+/* --- POINTS DE ROLLS SUBSTATS --- */
+.showcase-wrapper.mode-no-roll-dots .substat-rolls-indicator {
+    display: none !important;
+}
+
+
+
 
 /* --- SÉLECTEUR VERTICAL (CLASSEMENT / ROLLS TOTAUX) --- */
 .custom-segmented-vertical {
@@ -1056,6 +1109,19 @@ main {
 }
 
 .showcase-wrapper.mode-score-rolls .score-row-rolls {
+    display: flex !important;
+}
+
+/* --- AFFICHAGE SCORE D'ARTÉFACT VS CRIT VALUE --- */
+.art-footer-cv {
+    display: none !important;
+}
+
+.showcase-wrapper.mode-artifact-cv .art-footer-score {
+    display: none !important;
+}
+
+.showcase-wrapper.mode-artifact-cv .art-footer-cv {
     display: flex !important;
 }
 

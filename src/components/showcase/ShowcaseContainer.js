@@ -32,16 +32,31 @@ export function renderShowcaseComponent(persoObj, charIndex) {
     const isDark = (typeof window !== 'undefined') &&
         (window.customizationState?.themeMode === 'dark' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_theme_mode') === 'dark'));
+    const hasNoBgSplash = (typeof window !== 'undefined') &&
+        (window.customizationState?.bgSplashMode === 'no-splash' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_bgsplash_mode') === 'no-splash'));
     const hasNoShadow = (typeof window !== 'undefined') &&
         (window.customizationState?.shadowMode === 'no-shadow' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode') === 'no-shadow'));
     const hasNoBorder = (typeof window !== 'undefined') &&
         (window.customizationState?.borderMode === 'no-border' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_border_mode') === 'no-border'));
+    const isSquareCorners = (typeof window !== 'undefined') &&
+        (window.customizationState?.cornerMode === 'square' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_corner_mode') === 'square'));
+    const hasNoRarity = (typeof window !== 'undefined') &&
+        (window.customizationState?.rarityMode === 'no-rarity' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rarity_mode') === 'no-rarity'));
+    const hasNoRollDots = (typeof window !== 'undefined') &&
+        (window.customizationState?.rollDotsMode === 'no-dots' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'no-dots'));
     const isScoreRolls = (typeof window !== 'undefined') &&
         (window.customizationState?.scoreMode === 'rolls' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_score_mode') === 'rolls'));
-    const wrapperClass = `showcase-wrapper${isTransparent ? ' mode-transparent' : ''}${isDark ? ' mode-dark' : ''}${hasNoShadow ? ' mode-no-shadow' : ''}${hasNoBorder ? ' mode-no-border' : ''}${isScoreRolls ? ' mode-score-rolls' : ''}`;
+    const isArtifactCv = (typeof window !== 'undefined') &&
+        (window.customizationState?.artScoreMode === 'cv' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_artscore_mode') === 'cv'));
+    const wrapperClass = `showcase-wrapper${isTransparent ? ' mode-transparent' : ''}${isDark ? ' mode-dark' : ''}${hasNoBgSplash ? ' mode-no-bg-splash' : ''}${hasNoShadow ? ' mode-no-shadow' : ''}${hasNoBorder ? ' mode-no-border' : ''}${isSquareCorners ? ' mode-square-corners' : ''}${hasNoRarity ? ' mode-no-rarity' : ''}${hasNoRollDots ? ' mode-no-roll-dots' : ''}${isScoreRolls ? ' mode-score-rolls' : ''}${isArtifactCv ? ' mode-artifact-cv' : ''}`;
 
     return `
         <div class="${wrapperClass}" style="--char-hex: ${charColor}; width: 100%; position: relative;">

@@ -19,7 +19,7 @@ export function renderCharacterPortrait(persoObj, config) {
 export function renderBackgroundSplash(persoObj) {
     if (!persoObj || !persoObj.splashArt) return '';
     return `
-        <div class="background-splash-art" style="background-image: url('${persoObj.splashArt}'); background-position: center center; background-repeat: no-repeat; background-size: 300%; position: absolute; inset: 0px; z-index: 0; filter: blur(10px) brightness(var(--char-splash-brightness, 0.7)) saturate(0.8); max-width: 1153px; clip-path: inset(0); transition: filter 0.35s ease;"></div>
+        <div class="background-splash-art" style="background-image: url('${persoObj.splashArt}'); background-position: center center; background-repeat: no-repeat; background-size: 300%; position: absolute; inset: 0px; z-index: 0; filter: blur(10px) brightness(var(--char-splash-brightness, 0.7)) saturate(0.8); max-width: 1153px; clip-path: inset(0); transition: filter 0.35s ease, opacity 0.35s ease, visibility 0.35s ease;"></div>
         <img src="${persoObj.splashArt}" style="display:none;" onerror="if(this.src.endsWith('.webp')){ const fallback = this.src.replace(/\\.webp$/i, '.png'); this.src = fallback; this.previousElementSibling.style.backgroundImage = 'url(' + fallback + ')'; }">
     `;
 }
