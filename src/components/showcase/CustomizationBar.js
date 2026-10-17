@@ -74,6 +74,9 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
     const hasNoRollDots = (typeof window !== 'undefined') &&
         (window.customizationState?.rollDotsMode === 'no-dots' ||
             (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'no-dots'));
+    const hasNoDeadDim = (typeof window !== 'undefined') &&
+        (window.customizationState?.deadDimMode === 'no-dim' ||
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode') === 'no-dim'));
     const isScoreRolls = (typeof window !== 'undefined') &&
         (window.customizationState?.scoreMode === 'rolls' ||
             (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_score_mode') === 'rolls'));
@@ -280,7 +283,7 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
             <div class="custom-divider"></div>
 
             <!-- Contrôle 9 : Points de rolls des substats (Afficher / Masquer) -->
-            <div class="custom-toggle-group" style="margin-bottom: 8px;">
+            <div class="custom-toggle-group">
                 <button type="button" class="custom-toggle-btn ${!hasNoRollDots ? 'active' : ''}" id="btn-rolldots-on" onclick="window.setRollDotsMode && window.setRollDotsMode('dots')" title="Afficher les points de rolls">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dots"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path></svg>
                 </button>
@@ -289,7 +292,17 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
                 </button>
             </div>
 
-            <!-- Contrôle 10 : Classement ou Rolls Totaux -->
+            <!-- Contrôle 10 : Stats inutiles (Griser / Ne pas griser) -->
+            <div class="custom-toggle-group" style="margin-top: 8px; margin-bottom: 8px;">
+                <button type="button" class="custom-toggle-btn ${!hasNoDeadDim ? 'active' : ''}" id="btn-deaddim-on" onclick="window.setDeadDimMode && window.setDeadDimMode('dim')" title="Griser les stats inutiles (opacité 40%)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-filter"><path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.828 4.828a2 2 0 0 0 -.586 1.414v4.172l-4 2v-6.172a2 2 0 0 0 -.586 -1.414l-4.828 -4.828a2 2 0 0 1 -.586 -1.414v-2.172z"></path></svg>
+                </button>
+                <button type="button" class="custom-toggle-btn ${hasNoDeadDim ? 'active' : ''}" id="btn-deaddim-off" onclick="window.setDeadDimMode && window.setDeadDimMode('no-dim')" title="Ne pas griser les stats inutiles (opacité 100%)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-filter-off"><path d="M3 3l18 18"></path><path d="M9 5h11a1 1 0 0 1 1 1v2a1 1 0 0 1 -.293 .707l-4.707 4.707v4.586l-4 2v-4.586m-2.293 -2.293l-3.414 -3.414a1 1 0 0 1 -.293 -.707v-2a1 1 0 0 1 1 -1h2"></path></svg>
+                </button>
+            </div>
+
+            <!-- Contrôle 11 : Classement ou Rolls Totaux -->
             <div class="custom-segmented-vertical">
                 <button type="button" class="custom-segmented-item ${!isScoreRolls ? 'active' : ''}" id="btn-score-ranking" onclick="window.setScoreDisplayMode && window.setScoreDisplayMode('ranking')">
                     Classement
@@ -299,7 +312,7 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
                 </button>
             </div>
 
-            <!-- Contrôle 11 : Score d'artéfact ou Crit Value -->
+            <!-- Contrôle 12 : Score d'artéfact ou Crit Value -->
             <div class="custom-segmented-vertical" style="margin-top: 8px;">
                 <button type="button" class="custom-segmented-item ${!isArtifactCv ? 'active' : ''}" id="btn-artscore-score" onclick="window.setArtifactScoreMode && window.setArtifactScoreMode('score')">
                     Score
@@ -346,6 +359,7 @@ if (typeof window !== 'undefined') {
         const savedCorner = localStorage.getItem('guoba_custom_corner_mode');
         const savedRarity = localStorage.getItem('guoba_custom_rarity_mode');
         const savedRollDots = localStorage.getItem('guoba_custom_rolldots_mode');
+        const savedDeadDim = localStorage.getItem('guoba_custom_deaddim_mode');
         const savedScore = localStorage.getItem('guoba_custom_score_mode');
         const savedArtScore = localStorage.getItem('guoba_custom_artscore_mode');
         window.customizationState = {
@@ -357,6 +371,7 @@ if (typeof window !== 'undefined') {
             cornerMode: savedCorner === 'square' ? 'square' : 'rounded',
             rarityMode: savedRarity === 'no-rarity' ? 'no-rarity' : 'rarity',
             rollDotsMode: savedRollDots === 'no-dots' ? 'no-dots' : 'dots',
+            deadDimMode: savedDeadDim === 'no-dim' ? 'no-dim' : 'dim',
             scoreMode: savedScore === 'rolls' ? 'rolls' : 'ranking',
             artScoreMode: savedArtScore === 'cv' ? 'cv' : 'score',
             customSplashes: {},
@@ -691,6 +706,18 @@ if (typeof window !== 'undefined') {
         window.updateCharHex(defaultColor);
     };
 
+    function toggleShowcaseClass(cls, add) {
+        const wrapper = document.querySelector('.showcase-wrapper');
+        const topRow = document.querySelector('.top-row');
+        if (add) {
+            if (wrapper) wrapper.classList.add(cls);
+            if (topRow) topRow.classList.add(cls);
+        } else {
+            if (wrapper) wrapper.classList.remove(cls);
+            if (topRow) topRow.classList.remove(cls);
+        }
+    }
+
     window.setStyleMode = function (mode) {
         window.customizationState = window.customizationState || {};
         window.customizationState.styleMode = mode;
@@ -698,16 +725,15 @@ if (typeof window !== 'undefined') {
             localStorage.setItem('guoba_custom_style_mode', mode);
         } catch (e) { }
 
-        const wrapper = document.querySelector('.showcase-wrapper');
         const btnFrost = document.getElementById('btn-style-frost');
         const btnTransp = document.getElementById('btn-style-transparent');
 
         if (mode === 'transparent') {
-            if (wrapper) wrapper.classList.add('mode-transparent');
+            toggleShowcaseClass('mode-transparent', true);
             if (btnFrost) btnFrost.classList.remove('active');
             if (btnTransp) btnTransp.classList.add('active');
         } else {
-            if (wrapper) wrapper.classList.remove('mode-transparent');
+            toggleShowcaseClass('mode-transparent', false);
             if (btnFrost) btnFrost.classList.add('active');
             if (btnTransp) btnTransp.classList.remove('active');
         }
@@ -720,16 +746,15 @@ if (typeof window !== 'undefined') {
             localStorage.setItem('guoba_custom_theme_mode', mode);
         } catch (e) { }
 
-        const wrapper = document.querySelector('.showcase-wrapper');
         const btnLight = document.getElementById('btn-theme-light');
         const btnDark = document.getElementById('btn-theme-dark');
 
         if (mode === 'dark') {
-            if (wrapper) wrapper.classList.add('mode-dark');
+            toggleShowcaseClass('mode-dark', true);
             if (btnLight) btnLight.classList.remove('active');
             if (btnDark) btnDark.classList.add('active');
         } else {
-            if (wrapper) wrapper.classList.remove('mode-dark');
+            toggleShowcaseClass('mode-dark', false);
             if (btnLight) btnLight.classList.add('active');
             if (btnDark) btnDark.classList.remove('active');
         }
@@ -742,16 +767,15 @@ if (typeof window !== 'undefined') {
             localStorage.setItem('guoba_custom_bgsplash_mode', mode);
         } catch (e) { }
 
-        const wrapper = document.querySelector('.showcase-wrapper');
         const btnOn = document.getElementById('btn-bgsplash-on');
         const btnOff = document.getElementById('btn-bgsplash-off');
 
         if (mode === 'no-splash') {
-            if (wrapper) wrapper.classList.add('mode-no-bg-splash');
+            toggleShowcaseClass('mode-no-bg-splash', true);
             if (btnOn) btnOn.classList.remove('active');
             if (btnOff) btnOff.classList.add('active');
         } else {
-            if (wrapper) wrapper.classList.remove('mode-no-bg-splash');
+            toggleShowcaseClass('mode-no-bg-splash', false);
             if (btnOn) btnOn.classList.add('active');
             if (btnOff) btnOff.classList.remove('active');
         }
@@ -764,16 +788,15 @@ if (typeof window !== 'undefined') {
             localStorage.setItem('guoba_custom_shadow_mode', mode);
         } catch (e) { }
 
-        const wrapper = document.querySelector('.showcase-wrapper');
         const btnOn = document.getElementById('btn-shadow-on');
         const btnOff = document.getElementById('btn-shadow-off');
 
         if (mode === 'no-shadow') {
-            if (wrapper) wrapper.classList.add('mode-no-shadow');
+            toggleShowcaseClass('mode-no-shadow', true);
             if (btnOn) btnOn.classList.remove('active');
             if (btnOff) btnOff.classList.add('active');
         } else {
-            if (wrapper) wrapper.classList.remove('mode-no-shadow');
+            toggleShowcaseClass('mode-no-shadow', false);
             if (btnOn) btnOn.classList.add('active');
             if (btnOff) btnOff.classList.remove('active');
         }
@@ -786,16 +809,15 @@ if (typeof window !== 'undefined') {
             localStorage.setItem('guoba_custom_border_mode', mode);
         } catch (e) { }
 
-        const wrapper = document.querySelector('.showcase-wrapper');
         const btnOn = document.getElementById('btn-border-on');
         const btnOff = document.getElementById('btn-border-off');
 
         if (mode === 'no-border') {
-            if (wrapper) wrapper.classList.add('mode-no-border');
+            toggleShowcaseClass('mode-no-border', true);
             if (btnOn) btnOn.classList.remove('active');
             if (btnOff) btnOff.classList.add('active');
         } else {
-            if (wrapper) wrapper.classList.remove('mode-no-border');
+            toggleShowcaseClass('mode-no-border', false);
             if (btnOn) btnOn.classList.add('active');
             if (btnOff) btnOff.classList.remove('active');
         }
@@ -808,16 +830,15 @@ if (typeof window !== 'undefined') {
             localStorage.setItem('guoba_custom_corner_mode', mode);
         } catch (e) { }
 
-        const wrapper = document.querySelector('.showcase-wrapper');
         const btnRounded = document.getElementById('btn-corners-rounded');
         const btnSquare = document.getElementById('btn-corners-square');
 
         if (mode === 'square') {
-            if (wrapper) wrapper.classList.add('mode-square-corners');
+            toggleShowcaseClass('mode-square-corners', true);
             if (btnRounded) btnRounded.classList.remove('active');
             if (btnSquare) btnSquare.classList.add('active');
         } else {
-            if (wrapper) wrapper.classList.remove('mode-square-corners');
+            toggleShowcaseClass('mode-square-corners', false);
             if (btnRounded) btnRounded.classList.add('active');
             if (btnSquare) btnSquare.classList.remove('active');
         }
@@ -830,16 +851,15 @@ if (typeof window !== 'undefined') {
             localStorage.setItem('guoba_custom_rarity_mode', mode);
         } catch (e) { }
 
-        const wrapper = document.querySelector('.showcase-wrapper');
         const btnOn = document.getElementById('btn-rarity-on');
         const btnOff = document.getElementById('btn-rarity-off');
 
         if (mode === 'no-rarity') {
-            if (wrapper) wrapper.classList.add('mode-no-rarity');
+            toggleShowcaseClass('mode-no-rarity', true);
             if (btnOn) btnOn.classList.remove('active');
             if (btnOff) btnOff.classList.add('active');
         } else {
-            if (wrapper) wrapper.classList.remove('mode-no-rarity');
+            toggleShowcaseClass('mode-no-rarity', false);
             if (btnOn) btnOn.classList.add('active');
             if (btnOff) btnOff.classList.remove('active');
         }
@@ -852,16 +872,36 @@ if (typeof window !== 'undefined') {
             localStorage.setItem('guoba_custom_rolldots_mode', mode);
         } catch (e) { }
 
-        const wrapper = document.querySelector('.showcase-wrapper');
         const btnOn = document.getElementById('btn-rolldots-on');
         const btnOff = document.getElementById('btn-rolldots-off');
 
         if (mode === 'no-dots') {
-            if (wrapper) wrapper.classList.add('mode-no-roll-dots');
+            toggleShowcaseClass('mode-no-roll-dots', true);
             if (btnOn) btnOn.classList.remove('active');
             if (btnOff) btnOff.classList.add('active');
         } else {
-            if (wrapper) wrapper.classList.remove('mode-no-roll-dots');
+            toggleShowcaseClass('mode-no-roll-dots', false);
+            if (btnOn) btnOn.classList.add('active');
+            if (btnOff) btnOff.classList.remove('active');
+        }
+    };
+
+    window.setDeadDimMode = function (mode) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.deadDimMode = mode;
+        try {
+            localStorage.setItem('guoba_custom_deaddim_mode', mode);
+        } catch (e) { }
+
+        const btnOn = document.getElementById('btn-deaddim-on');
+        const btnOff = document.getElementById('btn-deaddim-off');
+
+        if (mode === 'no-dim') {
+            toggleShowcaseClass('mode-no-dead-dim', true);
+            if (btnOn) btnOn.classList.remove('active');
+            if (btnOff) btnOff.classList.add('active');
+        } else {
+            toggleShowcaseClass('mode-no-dead-dim', false);
             if (btnOn) btnOn.classList.add('active');
             if (btnOff) btnOff.classList.remove('active');
         }
@@ -874,16 +914,15 @@ if (typeof window !== 'undefined') {
             localStorage.setItem('guoba_custom_score_mode', mode);
         } catch (e) { }
 
-        const wrapper = document.querySelector('.showcase-wrapper');
         const btnRanking = document.getElementById('btn-score-ranking');
         const btnRolls = document.getElementById('btn-score-rolls');
 
         if (mode === 'rolls') {
-            if (wrapper) wrapper.classList.add('mode-score-rolls');
+            toggleShowcaseClass('mode-score-rolls', true);
             if (btnRanking) btnRanking.classList.remove('active');
             if (btnRolls) btnRolls.classList.add('active');
         } else {
-            if (wrapper) wrapper.classList.remove('mode-score-rolls');
+            toggleShowcaseClass('mode-score-rolls', false);
             if (btnRanking) btnRanking.classList.add('active');
             if (btnRolls) btnRolls.classList.remove('active');
         }
@@ -896,16 +935,15 @@ if (typeof window !== 'undefined') {
             localStorage.setItem('guoba_custom_artscore_mode', mode);
         } catch (e) { }
 
-        const wrapper = document.querySelector('.showcase-wrapper');
         const btnScore = document.getElementById('btn-artscore-score');
         const btnCv = document.getElementById('btn-artscore-cv');
 
         if (mode === 'cv') {
-            if (wrapper) wrapper.classList.add('mode-artifact-cv');
+            toggleShowcaseClass('mode-artifact-cv', true);
             if (btnScore) btnScore.classList.remove('active');
             if (btnCv) btnCv.classList.add('active');
         } else {
-            if (wrapper) wrapper.classList.remove('mode-artifact-cv');
+            toggleShowcaseClass('mode-artifact-cv', false);
             if (btnScore) btnScore.classList.add('active');
             if (btnCv) btnCv.classList.remove('active');
         }

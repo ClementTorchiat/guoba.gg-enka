@@ -4649,6 +4649,23 @@ window.exportBuildAsImage = async function () {
         btn.style.pointerEvents = 'none';
     });
 
+    const wrapper = document.querySelector('.showcase-wrapper');
+    const addedClasses = [];
+    let prevCharHex = null;
+    if (wrapper) {
+        wrapper.classList.forEach(cls => {
+            if (cls.startsWith('mode-') && !element.classList.contains(cls)) {
+                element.classList.add(cls);
+                addedClasses.push(cls);
+            }
+        });
+        const charHex = wrapper.style.getPropertyValue('--char-hex');
+        if (charHex) {
+            prevCharHex = element.style.getPropertyValue('--char-hex');
+            element.style.setProperty('--char-hex', charHex);
+        }
+    }
+
     const bgDiv = element.querySelector('.background-splash-art');
     let originalBgImage = "";
 
@@ -4707,7 +4724,15 @@ window.exportBuildAsImage = async function () {
             margin: '0',
             padding: '0'
         },
-        filter: (node) => true
+        filter: (node) => {
+            if (node.nodeType === 1) {
+                const display = window.getComputedStyle(node).display;
+                if (display === 'none') {
+                    return false;
+                }
+            }
+            return true;
+        }
     })
         .then(function (dataUrl) {
             const nameEl = document.querySelector('.showcase-area-base-stats h2');
@@ -4729,6 +4754,14 @@ window.exportBuildAsImage = async function () {
         })
         .finally(function () {
             element.classList.remove('export-mode');
+            addedClasses.forEach(cls => element.classList.remove(cls));
+            if (prevCharHex !== null) {
+                if (prevCharHex) {
+                    element.style.setProperty('--char-hex', prevCharHex);
+                } else {
+                    element.style.removeProperty('--char-hex');
+                }
+            }
             if (bgDiv && originalBgImage) {
                 bgDiv.style.backgroundImage = originalBgImage;
             }

@@ -50,18 +50,22 @@ export function renderShowcaseComponent(persoObj, charIndex) {
     const hasNoRollDots = (typeof window !== 'undefined') &&
         (window.customizationState?.rollDotsMode === 'no-dots' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'no-dots'));
+    const hasNoDeadDim = (typeof window !== 'undefined') &&
+        (window.customizationState?.deadDimMode === 'no-dim' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode') === 'no-dim'));
     const isScoreRolls = (typeof window !== 'undefined') &&
         (window.customizationState?.scoreMode === 'rolls' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_score_mode') === 'rolls'));
     const isArtifactCv = (typeof window !== 'undefined') &&
         (window.customizationState?.artScoreMode === 'cv' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_artscore_mode') === 'cv'));
-    const wrapperClass = `showcase-wrapper${isTransparent ? ' mode-transparent' : ''}${isDark ? ' mode-dark' : ''}${hasNoBgSplash ? ' mode-no-bg-splash' : ''}${hasNoShadow ? ' mode-no-shadow' : ''}${hasNoBorder ? ' mode-no-border' : ''}${isSquareCorners ? ' mode-square-corners' : ''}${hasNoRarity ? ' mode-no-rarity' : ''}${hasNoRollDots ? ' mode-no-roll-dots' : ''}${isScoreRolls ? ' mode-score-rolls' : ''}${isArtifactCv ? ' mode-artifact-cv' : ''}`;
+    const modeClasses = `${isTransparent ? ' mode-transparent' : ''}${isDark ? ' mode-dark' : ''}${hasNoBgSplash ? ' mode-no-bg-splash' : ''}${hasNoShadow ? ' mode-no-shadow' : ''}${hasNoBorder ? ' mode-no-border' : ''}${isSquareCorners ? ' mode-square-corners' : ''}${hasNoRarity ? ' mode-no-rarity' : ''}${hasNoRollDots ? ' mode-no-roll-dots' : ''}${hasNoDeadDim ? ' mode-no-dead-dim' : ''}${isScoreRolls ? ' mode-score-rolls' : ''}${isArtifactCv ? ' mode-artifact-cv' : ''}`;
+    const wrapperClass = `showcase-wrapper${modeClasses}`;
 
     return `
         <div class="${wrapperClass}" style="--char-hex: ${charColor}; width: 100%; position: relative;">
             <div class="top-row-container">
-                <div class="top-row" style="position: relative; display: flex; gap: 8px; justify-content: flex-start; align-items: stretch;">
+                <div class="top-row${modeClasses}" style="position: relative; display: flex; gap: 8px; justify-content: flex-start; align-items: stretch;">
                     ${renderBackgroundSplash(persoObj)}
 
                     <!-- Colonne Gauche : Portrait et Arme -->

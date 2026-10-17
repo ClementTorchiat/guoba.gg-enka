@@ -801,6 +801,7 @@ main {
     overflow-x: auto;
     overflow-y: hidden;
     margin-bottom: 24px;
+    padding-bottom: 6px;
 }
 
 .top-row-container::-webkit-scrollbar,
@@ -1106,11 +1107,11 @@ main {
     --char-splash-brightness: 0.7;
 }
 
-.showcase-wrapper.mode-transparent {
+:is(.showcase-wrapper, .top-row).mode-transparent {
     --char-card-alpha: var(--char-card-alpha-transparent);
 }
 
-.showcase-wrapper.mode-dark {
+:is(.showcase-wrapper, .top-row).mode-dark {
     --char-color-div: 5;
     --char-splash-brightness: 0.6;
 }
@@ -1123,74 +1124,81 @@ main {
     filter: blur(10px) brightness(var(--char-splash-brightness, 0.3)) saturate(0.8) !important;
 }
 
-.showcase-wrapper.mode-no-bg-splash .background-splash-art {
+:is(.showcase-wrapper, .top-row).mode-no-bg-splash .background-splash-art {
     opacity: 0 !important;
     visibility: hidden !important;
 }
 
 /* --- SANS SHADOW --- */
-.showcase-wrapper.mode-no-shadow .card,
-.showcase-wrapper.mode-no-shadow .character-portrait-container,
-.showcase-wrapper.mode-no-shadow .showcase-area-base-stats,
-.showcase-wrapper.mode-no-shadow .showcase-area-score,
-.showcase-wrapper.mode-no-shadow .showcase-area-skills,
-.showcase-wrapper.mode-no-shadow .showcase-area-combat-stats {
+:is(.showcase-wrapper, .top-row).mode-no-shadow .card,
+:is(.showcase-wrapper, .top-row).mode-no-shadow .character-portrait-container,
+:is(.showcase-wrapper, .top-row).mode-no-shadow .showcase-area-base-stats,
+:is(.showcase-wrapper, .top-row).mode-no-shadow .showcase-area-score,
+:is(.showcase-wrapper, .top-row).mode-no-shadow .showcase-area-skills,
+:is(.showcase-wrapper, .top-row).mode-no-shadow .showcase-area-combat-stats {
     box-shadow: none !important;
 }
 
 /* --- SANS BORDER --- */
-.showcase-wrapper.mode-no-border .card,
-.showcase-wrapper.mode-no-border .character-portrait-container,
-.showcase-wrapper.mode-no-border .showcase-area-base-stats,
-.showcase-wrapper.mode-no-border .showcase-area-skills,
-.showcase-wrapper.mode-no-border .showcase-area-combat-stats,
-.showcase-wrapper.mode-no-border .buff-category-card {
+:is(.showcase-wrapper, .top-row).mode-no-border .card,
+:is(.showcase-wrapper, .top-row).mode-no-border .character-portrait-container,
+:is(.showcase-wrapper, .top-row).mode-no-border .showcase-area-base-stats,
+:is(.showcase-wrapper, .top-row).mode-no-border .showcase-area-score,
+:is(.showcase-wrapper, .top-row).mode-no-border .showcase-area-skills,
+:is(.showcase-wrapper, .top-row).mode-no-border .showcase-area-combat-stats,
+:is(.showcase-wrapper, .top-row).mode-no-border .buff-category-card {
     border-color: transparent !important;
 }
 
 /* --- SANS COULEURS DE RARETÉ ET DE GRADE --- */
-.showcase-wrapper.mode-no-rarity .item-img {
+:is(.showcase-wrapper, .top-row).mode-no-rarity .item-img {
     border: none !important;
 }
 
-.showcase-wrapper.mode-no-rarity .artifact-card .artifact-set-name,
-.showcase-wrapper.mode-no-rarity .item-header .artifact-set-name {
+:is(.showcase-wrapper, .top-row).mode-no-rarity .artifact-card .artifact-set-name,
+:is(.showcase-wrapper, .top-row).mode-no-rarity .item-header .artifact-set-name {
     color: rgba(255, 255, 255, 0.6) !important;
 }
 
-.showcase-wrapper.mode-no-rarity .showcase-area-score {
+:is(.showcase-wrapper, .top-row).mode-no-rarity .showcase-area-score {
     border: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 
-.showcase-wrapper.mode-no-border.mode-no-rarity .showcase-area-score {
+:is(.showcase-wrapper, .top-row).mode-no-border.mode-no-rarity .showcase-area-score {
     border-color: transparent !important;
 }
 
-.showcase-wrapper.mode-no-rarity .showcase-area-score .score-grade-value {
+:is(.showcase-wrapper, .top-row).mode-no-rarity .showcase-area-score .score-grade-value {
     color: var(--text-always-white, #ffffff) !important;
 }
 
-.showcase-wrapper.mode-no-rarity .showcase-area-combat-stats .stat-row.is-buffed p:last-of-type {
+:is(.showcase-wrapper, .top-row).mode-no-rarity .showcase-area-combat-stats .stat-row.is-buffed p:last-of-type {
     color: var(--text-always-white, #ffffff) !important;
 }
 
 /* --- ANGLES CARRÉS --- */
-.showcase-wrapper.mode-square-corners .top-row,
-.showcase-wrapper.mode-square-corners .card,
-.showcase-wrapper.mode-square-corners .character-portrait-container,
-.showcase-wrapper.mode-square-corners .showcase-area-base-stats,
-.showcase-wrapper.mode-square-corners .showcase-area-score,
-.showcase-wrapper.mode-square-corners .showcase-area-skills,
-.showcase-wrapper.mode-square-corners .showcase-area-combat-stats,
-.showcase-wrapper.mode-square-corners .buff-category-card,
-.showcase-wrapper.mode-square-corners .item-img,
-.showcase-wrapper.mode-square-corners .weapon-stats-row {
+:is(.showcase-wrapper, .top-row).mode-square-corners,
+:is(.showcase-wrapper, .top-row).mode-square-corners .top-row,
+:is(.showcase-wrapper, .top-row).mode-square-corners .card,
+:is(.showcase-wrapper, .top-row).mode-square-corners .character-portrait-container,
+:is(.showcase-wrapper, .top-row).mode-square-corners .showcase-area-base-stats,
+:is(.showcase-wrapper, .top-row).mode-square-corners .showcase-area-score,
+:is(.showcase-wrapper, .top-row).mode-square-corners .showcase-area-skills,
+:is(.showcase-wrapper, .top-row).mode-square-corners .showcase-area-combat-stats,
+:is(.showcase-wrapper, .top-row).mode-square-corners .buff-category-card,
+:is(.showcase-wrapper, .top-row).mode-square-corners .item-img,
+:is(.showcase-wrapper, .top-row).mode-square-corners .weapon-stats-row {
     border-radius: 0 !important;
 }
 
 /* --- POINTS DE ROLLS SUBSTATS --- */
-.showcase-wrapper.mode-no-roll-dots .substat-rolls-indicator {
+:is(.showcase-wrapper, .top-row).mode-no-roll-dots .substat-rolls-indicator {
     display: none !important;
+}
+
+/* --- STATS INUTILES SUBSTATS (GRISÉES / NORMALES) --- */
+:is(.showcase-wrapper, .top-row).mode-no-dead-dim .substat-row.dead {
+    opacity: 1 !important;
 }
 
 
@@ -1280,11 +1288,11 @@ main {
     display: none !important;
 }
 
-.showcase-wrapper.mode-score-rolls .score-row-ranking {
+:is(.showcase-wrapper, .top-row).mode-score-rolls .score-row-ranking {
     display: none !important;
 }
 
-.showcase-wrapper.mode-score-rolls .score-row-rolls {
+:is(.showcase-wrapper, .top-row).mode-score-rolls .score-row-rolls {
     display: flex !important;
 }
 
@@ -1293,11 +1301,11 @@ main {
     display: none !important;
 }
 
-.showcase-wrapper.mode-artifact-cv .art-footer-score {
+:is(.showcase-wrapper, .top-row).mode-artifact-cv .art-footer-score {
     display: none !important;
 }
 
-.showcase-wrapper.mode-artifact-cv .art-footer-cv {
+:is(.showcase-wrapper, .top-row).mode-artifact-cv .art-footer-cv {
     display: flex !important;
 }
 
@@ -1400,7 +1408,7 @@ main {
     border-radius: 4px;
     padding: 1px 4px;
     margin: 0 -4px;
-    transition: background-color 0.15s ease;
+    transition: background-color 0.15s ease, opacity 0.15s ease;
 }
 
 .substat-row:hover {
