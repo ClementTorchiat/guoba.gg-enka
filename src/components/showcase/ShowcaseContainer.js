@@ -90,7 +90,7 @@ export function renderShowcaseComponent(persoObj, charIndex) {
                 </div>
 
                 <!-- Barre verticale de customisation -->
-                ${renderCustomizationBar(persoObj, charColor, charIndex)}
+                ${renderCustomizationBar(persoObj, charColor, charIndex, config)}
             </div>
 
             <!-- Nouvelle Section : Buffs Actifs Détaillés -->

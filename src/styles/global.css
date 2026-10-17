@@ -835,8 +835,8 @@ main {
 }
 
 .customization-bar {
-    width: 140px;
-    min-width: 140px;
+    width: 160px;
+    min-width: 160px;
     flex-shrink: 0;
     height: 856px;
     background: var(--bg-panel);
@@ -846,6 +846,12 @@ main {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.customization-bar::-webkit-scrollbar {
+    display: none;
 }
 
 .custom-title {
@@ -864,19 +870,166 @@ main {
     width: 100%;
 }
 
-.custom-color-control {
+.custom-row-with-reset {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 6px;
+    gap: 6px;
+    width: 100%;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+}
+
+.custom-row-with-reset:nth-last-child(1 of .custom-row-with-reset) {
+    margin-bottom: 0;
+}
+
+
+.custom-reset-btn {
+    width: 32px;
+    min-width: 32px;
+    height: 32px;
+    background: var(--shadow-subtle);
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 0;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.custom-reset-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.custom-reset-btn:hover svg {
+    transform: rotate(60deg);
+}
+
+.custom-reset-btn:active {
+    background: var(--bg-active);
+    color: var(--text-always-white);
+    transform: scale(0.95);
+}
+
+.custom-reset-btn svg {
+    display: block;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.custom-image-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
     background: var(--shadow-subtle);
     border-radius: 6px;
     cursor: pointer;
     user-select: none;
     transition: border-color 0.2s, background-color 0.2s;
-    gap: 4px;
     box-sizing: border-box;
-    width: 100%;
+    flex: 1;
+    min-width: 0;
+    height: 32px;
+}
+
+.custom-image-control:hover {
+    background: var(--bg-hover);
+}
+
+.custom-image-btn-content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-primary);
+    font-size: 11px;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.custom-image-btn-content svg {
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.custom-image-control:hover .custom-image-btn-content svg {
+    color: var(--text-primary);
+}
+
+.custom-offset-control {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 4px;
+    background: var(--shadow-subtle);
+    border-radius: 6px;
+    user-select: none;
+    gap: 2px;
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 0;
+    height: 32px;
+}
+
+.custom-offset-btn {
+    width: 20px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    flex-shrink: 0;
+}
+
+.custom-offset-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.custom-offset-btn:active {
+    background: var(--bg-active);
+    color: var(--text-always-white);
+}
+
+.custom-offset-value {
+    font-size: 11px;
+    font-weight: normal;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    flex: 1;
+    min-width: 32px;
+    letter-spacing: -0.2px;
+}
+
+.custom-color-control {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 8px;
+    background: var(--shadow-subtle);
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.2s, background-color 0.2s;
+    gap: 8px;
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 0;
+    height: 32px;
 }
 
 .custom-color-control:hover {
@@ -884,42 +1037,22 @@ main {
 }
 
 .custom-color-swatch {
-    width: 20px;
-    height: 20px;
-    min-width: 20px;
-    border-radius: 5px;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     flex-shrink: 0;
     transition: background-color 0.2s ease;
 }
 
 .custom-color-hex {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: normal;
     letter-spacing: 0.5px;
     color: var(--text-primary);
     font-family: inherit;
     text-transform: uppercase;
-}
-
-.custom-color-reset-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--text-primary);
-    opacity: 0.85;
-    transition: opacity 0.2s, transform 0.2s;
-    flex-shrink: 0;
-}
-
-.custom-color-reset-btn:hover {
-    opacity: 1;
-    transform: scale(1.15);
 }
 
 .custom-toggle-group {

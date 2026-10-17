@@ -10,60 +10,129 @@ function normalizeHex(hex) {
     return clean;
 }
 
-export function renderCustomizationBar(persoObj, defaultColor, charIndex) {
+export function renderCustomizationBar(persoObj, defaultColor, charIndex, config) {
     const validDefault = normalizeHex(defaultColor);
+    const charKey = (persoObj?.nom || 'default').toLowerCase().trim().replace(/\s+/g, '_');
+
+    let resolvedConfig = config || persoObj?.charConfig || {};
+    if (!config && persoObj?.activeBuild) {
+        resolvedConfig = { ...resolvedConfig, ...persoObj.activeBuild };
+    }
+    const skinOverride = (resolvedConfig && resolvedConfig.skins && persoObj.costumeId && resolvedConfig.skins[persoObj.costumeId])
+        ? resolvedConfig.skins[persoObj.costumeId]
+        : null;
+    const defaultOffset = skinOverride?.portraitOffset ?? (resolvedConfig?.portraitOffset ?? -35);
+
+    let currentOffset = defaultOffset;
+    if (typeof window !== 'undefined') {
+        const savedOffset = window.customizationState?.customOffsets?.[charKey] ??
+            (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_custom_offset_' + charKey) : null);
+        if (savedOffset !== null && savedOffset !== undefined) {
+            currentOffset = Number(savedOffset);
+        }
+    }
+
+    const safeDefaultSplash = (persoObj?.splashArt || '').replace(/'/g, "\\'");
+
     const isTransparent = (typeof window !== 'undefined') &&
         (window.customizationState?.styleMode === 'transparent' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_style_mode') === 'transparent'));
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_style_mode') === 'transparent'));
     const isDark = (typeof window !== 'undefined') &&
         (window.customizationState?.themeMode === 'dark' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_theme_mode') === 'dark'));
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_theme_mode') === 'dark'));
     const hasNoBgSplash = (typeof window !== 'undefined') &&
         (window.customizationState?.bgSplashMode === 'no-splash' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_bgsplash_mode') === 'no-splash'));
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_bgsplash_mode') === 'no-splash'));
     const hasNoShadow = (typeof window !== 'undefined') &&
         (window.customizationState?.shadowMode === 'no-shadow' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode') === 'no-shadow'));
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode') === 'no-shadow'));
     const hasNoBorder = (typeof window !== 'undefined') &&
         (window.customizationState?.borderMode === 'no-border' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_border_mode') === 'no-border'));
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_border_mode') === 'no-border'));
     const isSquareCorners = (typeof window !== 'undefined') &&
         (window.customizationState?.cornerMode === 'square' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_corner_mode') === 'square'));
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_corner_mode') === 'square'));
     const hasNoRarity = (typeof window !== 'undefined') &&
         (window.customizationState?.rarityMode === 'no-rarity' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rarity_mode') === 'no-rarity'));
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rarity_mode') === 'no-rarity'));
     const hasNoRollDots = (typeof window !== 'undefined') &&
         (window.customizationState?.rollDotsMode === 'no-dots' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'no-dots'));
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'no-dots'));
     const isScoreRolls = (typeof window !== 'undefined') &&
         (window.customizationState?.scoreMode === 'rolls' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_score_mode') === 'rolls'));
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_score_mode') === 'rolls'));
     const isArtifactCv = (typeof window !== 'undefined') &&
         (window.customizationState?.artScoreMode === 'cv' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_artscore_mode') === 'cv'));
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_artscore_mode') === 'cv'));
 
     return `
         <div class="customization-bar">
             <!-- Titre de la section -->
-            <h3 class="custom-title">Customisation</h3>
+            <h3 class="custom-title">Personnalisation</h3>
 
             <!-- Séparateur -->
             <div class="custom-divider"></div>
 
+            <!-- Contrôle A : Image personnalisée -->
+            <input type="file" id="custom-image-input" accept="image/*" style="display: none;" onchange="window.handleCustomImageUpload && window.handleCustomImageUpload(this, '${charKey}')">
+
+            <div class="custom-row-with-reset">
+                <div class="custom-image-control" onclick="window.openCustomImagePicker && window.openCustomImagePicker()" title="Changer l'image du personnage (portrait et fond)">
+                    <div class="custom-image-btn-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-photo-up">
+                            <path d="M15 8h.01"></path>
+                            <path d="M12 20h-7a3 3 0 0 1 -3 -3v-10a3 3 0 0 1 3 -3h14a3 3 0 0 1 3 3v5"></path>
+                            <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l4 4"></path>
+                            <path d="M14 14l1 -1c.617 -.594 1.328 -.793 2.009 -.598"></path>
+                            <path d="M19 22v-6"></path>
+                            <path d="M22 19l-3 -3l-3 3"></path>
+                        </svg>
+                        <span>Image</span>
+                    </div>
+                </div>
+                <button type="button" class="custom-reset-btn" title="Réinitialiser l'image par défaut" onclick="window.resetCustomImage && window.resetCustomImage('${charKey}', '${safeDefaultSplash}')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
+                        <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
+                        <path d="M20 4v5h-5"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Contrôle B : Décalage horizontal -->
+            <div class="custom-row-with-reset">
+                <div class="custom-offset-control" title="Décalage horizontal du portrait">
+                    <button type="button" class="custom-offset-btn" id="btn-offset-left" onclick="window.adjustPortraitOffset && window.adjustPortraitOffset('${charKey}', -2, ${defaultOffset}, event)" title="Déplacer vers la gauche (Shift pour aller plus vite)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <span id="custom-offset-value" class="custom-offset-value" title="Position horizontale actuelle">${currentOffset}%</span>
+                    <button type="button" class="custom-offset-btn" id="btn-offset-right" onclick="window.adjustPortraitOffset && window.adjustPortraitOffset('${charKey}', 2, ${defaultOffset}, event)" title="Déplacer vers la droite (Shift pour aller plus vite)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+                <button type="button" class="custom-reset-btn" id="btn-offset-reset" title="Réinitialiser la position par défaut (${defaultOffset}%)" onclick="window.resetPortraitOffset && window.resetPortraitOffset('${charKey}', ${defaultOffset})">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
+                        <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
+                        <path d="M20 4v5h-5"></path>
+                    </svg>
+                </button>
+            </div>
+
             <!-- Contrôle 1 : Sélecteur de couleur -->
             <input type="color" id="custom-color-input" value="${validDefault}" style="position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0;" oninput="window.updateCharHex && window.updateCharHex(this.value)" onchange="window.updateCharHex && window.updateCharHex(this.value)">
 
-            <div class="custom-color-control" onclick="window.openCustomColorPicker && window.openCustomColorPicker()" title="Changer la couleur">
-                <div id="custom-color-swatch" class="custom-color-swatch" style="background-color: ${validDefault};"></div>
-                <span id="custom-color-hex" class="custom-color-hex">${validDefault.toUpperCase()}</span>
-                <button type="button" class="custom-color-reset-btn" title="Réinitialiser la couleur par défaut" onclick="event.stopPropagation(); window.resetCharHex && window.resetCharHex('${validDefault}')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="7"></circle>
-                        <line x1="12" y1="2" x2="12" y2="4.5"></line>
-                        <line x1="12" y1="19.5" x2="12" y2="22"></line>
-                        <line x1="2" y1="12" x2="4.5" y2="12"></line>
-                        <line x1="19.5" y1="12" x2="22" y2="12"></line>
+            <div class="custom-row-with-reset">
+                <div class="custom-color-control" onclick="window.openCustomColorPicker && window.openCustomColorPicker()" title="Changer la couleur">
+                    <div id="custom-color-swatch" class="custom-color-swatch" style="background-color: ${validDefault};"></div>
+                    <span id="custom-color-hex" class="custom-color-hex">${validDefault.toUpperCase()}</span>
+                </div>
+                <button type="button" class="custom-reset-btn" title="Réinitialiser la couleur par défaut" onclick="window.resetCharHex && window.resetCharHex('${validDefault}')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
+                        <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
+                        <path d="M20 4v5h-5"></path>
                     </svg>
                 </button>
             </div>
@@ -202,9 +271,169 @@ if (typeof window !== 'undefined') {
             rarityMode: savedRarity === 'no-rarity' ? 'no-rarity' : 'rarity',
             rollDotsMode: savedRollDots === 'no-dots' ? 'no-dots' : 'dots',
             scoreMode: savedScore === 'rolls' ? 'rolls' : 'ranking',
-            artScoreMode: savedArtScore === 'cv' ? 'cv' : 'score'
+            artScoreMode: savedArtScore === 'cv' ? 'cv' : 'score',
+            customSplashes: {},
+            customOffsets: {}
         };
+    } else {
+        window.customizationState.customSplashes = window.customizationState.customSplashes || {};
+        window.customizationState.customOffsets = window.customizationState.customOffsets || {};
     }
+
+    window.openCustomImagePicker = function () {
+        const input = document.getElementById('custom-image-input');
+        if (input) input.click();
+    };
+
+    window.applyCustomSplash = function (charKey, dataUrl) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.customSplashes = window.customizationState.customSplashes || {};
+        window.customizationState.customSplashes[charKey] = dataUrl;
+
+        try {
+            localStorage.setItem('guoba_custom_splash_' + charKey, dataUrl);
+        } catch (e) {
+            console.warn('Storage quota exceeded for custom splash, saved in memory only:', e);
+        }
+
+        const portraitImg = document.querySelector('.character-portrait');
+        if (portraitImg) {
+            portraitImg.src = dataUrl;
+        }
+
+        const bgSplash = document.querySelector('.background-splash-art');
+        if (bgSplash) {
+            bgSplash.style.backgroundImage = 'url("' + dataUrl + '")';
+        }
+
+        if (bgSplash && bgSplash.nextElementSibling && bgSplash.nextElementSibling.tagName === 'IMG') {
+            bgSplash.nextElementSibling.src = dataUrl;
+        }
+    };
+
+    window.handleCustomImageUpload = function (input, charKey) {
+        if (!input || !input.files || !input.files[0]) return;
+        const file = input.files[0];
+        if (!file.type.startsWith('image/')) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const rawDataUrl = e.target.result;
+            const img = new Image();
+            img.onload = function () {
+                let width = img.width;
+                let height = img.height;
+                const maxDim = 1920;
+                if (width > maxDim || height > maxDim) {
+                    if (width > height) {
+                        height = Math.round((height * maxDim) / width);
+                        width = maxDim;
+                    } else {
+                        width = Math.round((width * maxDim) / height);
+                        height = maxDim;
+                    }
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                let dataUrl = rawDataUrl;
+                try {
+                    const webpUrl = canvas.toDataURL('image/webp', 0.92);
+                    if (webpUrl && webpUrl.startsWith('data:image/webp')) {
+                        dataUrl = webpUrl;
+                    } else {
+                        dataUrl = canvas.toDataURL('image/png');
+                    }
+                } catch (err) {
+                    dataUrl = rawDataUrl;
+                }
+
+                window.applyCustomSplash(charKey, dataUrl);
+            };
+            img.onerror = function () {
+                window.applyCustomSplash(charKey, rawDataUrl);
+            };
+            img.src = rawDataUrl;
+        };
+        reader.readAsDataURL(file);
+        input.value = '';
+    };
+
+    window.resetCustomImage = function (charKey, defaultSplash) {
+        window.customizationState = window.customizationState || {};
+        if (window.customizationState.customSplashes) {
+            delete window.customizationState.customSplashes[charKey];
+        }
+        try {
+            localStorage.removeItem('guoba_custom_splash_' + charKey);
+        } catch (e) { }
+
+        const portraitImg = document.querySelector('.character-portrait');
+        if (portraitImg) {
+            portraitImg.src = defaultSplash;
+        }
+
+        const bgSplash = document.querySelector('.background-splash-art');
+        if (bgSplash) {
+            bgSplash.style.backgroundImage = 'url("' + defaultSplash + '")';
+        }
+
+        if (bgSplash && bgSplash.nextElementSibling && bgSplash.nextElementSibling.tagName === 'IMG') {
+            bgSplash.nextElementSibling.src = defaultSplash;
+        }
+    };
+
+    window.adjustPortraitOffset = function (charKey, delta, defaultOffset, event) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.customOffsets = window.customizationState.customOffsets || {};
+
+        let current = window.customizationState.customOffsets[charKey];
+        if (typeof current !== 'number') {
+            const saved = localStorage.getItem('guoba_custom_offset_' + charKey);
+            current = saved !== null ? Number(saved) : defaultOffset;
+        }
+
+        const actualDelta = (event && event.shiftKey) ? delta * 5 : delta;
+        let nextOffset = Math.round((current + actualDelta) * 10) / 10;
+        nextOffset = Math.max(-200, Math.min(200, nextOffset));
+
+        window.customizationState.customOffsets[charKey] = nextOffset;
+        try {
+            localStorage.setItem('guoba_custom_offset_' + charKey, nextOffset.toString());
+        } catch (e) { }
+
+        const portraitImg = document.querySelector('.character-portrait');
+        if (portraitImg) {
+            portraitImg.style.transform = `translateX(${nextOffset}%)`;
+        }
+
+        const valDisplay = document.getElementById('custom-offset-value');
+        if (valDisplay) {
+            valDisplay.textContent = `${nextOffset}%`;
+        }
+    };
+
+    window.resetPortraitOffset = function (charKey, defaultOffset) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.customOffsets = window.customizationState.customOffsets || {};
+        delete window.customizationState.customOffsets[charKey];
+        try {
+            localStorage.removeItem('guoba_custom_offset_' + charKey);
+        } catch (e) { }
+
+        const portraitImg = document.querySelector('.character-portrait');
+        if (portraitImg) {
+            portraitImg.style.transform = `translateX(${defaultOffset}%)`;
+        }
+
+        const valDisplay = document.getElementById('custom-offset-value');
+        if (valDisplay) {
+            valDisplay.textContent = `${defaultOffset}%`;
+        }
+    };
 
     window.openCustomColorPicker = function () {
         const input = document.getElementById('custom-color-input');
@@ -245,7 +474,7 @@ if (typeof window !== 'undefined') {
         window.customizationState.styleMode = mode;
         try {
             localStorage.setItem('guoba_custom_style_mode', mode);
-        } catch (e) {}
+        } catch (e) { }
 
         const wrapper = document.querySelector('.showcase-wrapper');
         const btnFrost = document.getElementById('btn-style-frost');
@@ -267,7 +496,7 @@ if (typeof window !== 'undefined') {
         window.customizationState.themeMode = mode;
         try {
             localStorage.setItem('guoba_custom_theme_mode', mode);
-        } catch (e) {}
+        } catch (e) { }
 
         const wrapper = document.querySelector('.showcase-wrapper');
         const btnLight = document.getElementById('btn-theme-light');
@@ -289,7 +518,7 @@ if (typeof window !== 'undefined') {
         window.customizationState.bgSplashMode = mode;
         try {
             localStorage.setItem('guoba_custom_bgsplash_mode', mode);
-        } catch (e) {}
+        } catch (e) { }
 
         const wrapper = document.querySelector('.showcase-wrapper');
         const btnOn = document.getElementById('btn-bgsplash-on');
@@ -311,7 +540,7 @@ if (typeof window !== 'undefined') {
         window.customizationState.shadowMode = mode;
         try {
             localStorage.setItem('guoba_custom_shadow_mode', mode);
-        } catch (e) {}
+        } catch (e) { }
 
         const wrapper = document.querySelector('.showcase-wrapper');
         const btnOn = document.getElementById('btn-shadow-on');
@@ -333,7 +562,7 @@ if (typeof window !== 'undefined') {
         window.customizationState.borderMode = mode;
         try {
             localStorage.setItem('guoba_custom_border_mode', mode);
-        } catch (e) {}
+        } catch (e) { }
 
         const wrapper = document.querySelector('.showcase-wrapper');
         const btnOn = document.getElementById('btn-border-on');
@@ -355,7 +584,7 @@ if (typeof window !== 'undefined') {
         window.customizationState.cornerMode = mode;
         try {
             localStorage.setItem('guoba_custom_corner_mode', mode);
-        } catch (e) {}
+        } catch (e) { }
 
         const wrapper = document.querySelector('.showcase-wrapper');
         const btnRounded = document.getElementById('btn-corners-rounded');
@@ -377,7 +606,7 @@ if (typeof window !== 'undefined') {
         window.customizationState.rarityMode = mode;
         try {
             localStorage.setItem('guoba_custom_rarity_mode', mode);
-        } catch (e) {}
+        } catch (e) { }
 
         const wrapper = document.querySelector('.showcase-wrapper');
         const btnOn = document.getElementById('btn-rarity-on');
@@ -399,7 +628,7 @@ if (typeof window !== 'undefined') {
         window.customizationState.rollDotsMode = mode;
         try {
             localStorage.setItem('guoba_custom_rolldots_mode', mode);
-        } catch (e) {}
+        } catch (e) { }
 
         const wrapper = document.querySelector('.showcase-wrapper');
         const btnOn = document.getElementById('btn-rolldots-on');
@@ -421,7 +650,7 @@ if (typeof window !== 'undefined') {
         window.customizationState.scoreMode = mode;
         try {
             localStorage.setItem('guoba_custom_score_mode', mode);
-        } catch (e) {}
+        } catch (e) { }
 
         const wrapper = document.querySelector('.showcase-wrapper');
         const btnRanking = document.getElementById('btn-score-ranking');
@@ -443,7 +672,7 @@ if (typeof window !== 'undefined') {
         window.customizationState.artScoreMode = mode;
         try {
             localStorage.setItem('guoba_custom_artscore_mode', mode);
-        } catch (e) {}
+        } catch (e) { }
 
         const wrapper = document.querySelector('.showcase-wrapper');
         const btnScore = document.getElementById('btn-artscore-score');
