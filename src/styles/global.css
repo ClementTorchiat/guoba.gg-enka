@@ -1135,7 +1135,11 @@ main {
 :is(.showcase-wrapper, .top-row).mode-no-shadow .showcase-area-base-stats,
 :is(.showcase-wrapper, .top-row).mode-no-shadow .showcase-area-score,
 :is(.showcase-wrapper, .top-row).mode-no-shadow .showcase-area-skills,
-:is(.showcase-wrapper, .top-row).mode-no-shadow .showcase-area-combat-stats {
+:is(.showcase-wrapper, .top-row).mode-no-shadow .showcase-area-combat-stats,
+:is(.showcase-wrapper, .top-row).mode-no-shadow .buff-category-card,
+:is(.showcase-wrapper, .top-row).mode-no-shadow .artifact-card,
+:is(.showcase-wrapper, .top-row).mode-no-shadow .weapon-card,
+:is(.showcase-wrapper, .top-row).mode-no-shadow .buffs-card {
     box-shadow: none !important;
 }
 
@@ -1146,7 +1150,10 @@ main {
 :is(.showcase-wrapper, .top-row).mode-no-border .showcase-area-score,
 :is(.showcase-wrapper, .top-row).mode-no-border .showcase-area-skills,
 :is(.showcase-wrapper, .top-row).mode-no-border .showcase-area-combat-stats,
-:is(.showcase-wrapper, .top-row).mode-no-border .buff-category-card {
+:is(.showcase-wrapper, .top-row).mode-no-border .buff-category-card,
+:is(.showcase-wrapper, .top-row).mode-no-border .artifact-card,
+:is(.showcase-wrapper, .top-row).mode-no-border .weapon-card,
+:is(.showcase-wrapper, .top-row).mode-no-border .buffs-card {
     border-color: transparent !important;
 }
 
@@ -1181,13 +1188,17 @@ main {
 :is(.showcase-wrapper, .top-row).mode-square-corners .top-row,
 :is(.showcase-wrapper, .top-row).mode-square-corners .card,
 :is(.showcase-wrapper, .top-row).mode-square-corners .character-portrait-container,
+:is(.showcase-wrapper, .top-row).mode-square-corners .showcase-area-container,
 :is(.showcase-wrapper, .top-row).mode-square-corners .showcase-area-base-stats,
 :is(.showcase-wrapper, .top-row).mode-square-corners .showcase-area-score,
 :is(.showcase-wrapper, .top-row).mode-square-corners .showcase-area-skills,
 :is(.showcase-wrapper, .top-row).mode-square-corners .showcase-area-combat-stats,
 :is(.showcase-wrapper, .top-row).mode-square-corners .buff-category-card,
 :is(.showcase-wrapper, .top-row).mode-square-corners .item-img,
-:is(.showcase-wrapper, .top-row).mode-square-corners .weapon-stats-row {
+:is(.showcase-wrapper, .top-row).mode-square-corners .weapon-stats-row,
+:is(.showcase-wrapper, .top-row).mode-square-corners .artifact-card,
+:is(.showcase-wrapper, .top-row).mode-square-corners .weapon-card,
+:is(.showcase-wrapper, .top-row).mode-square-corners .buffs-card {
     border-radius: 0 !important;
 }
 

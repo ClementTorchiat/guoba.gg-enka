@@ -4666,6 +4666,30 @@ window.exportBuildAsImage = async function () {
         }
     }
 
+    const activeModes = [
+        { key: 'guoba_custom_shadow_mode', val: 'no-shadow', cls: 'mode-no-shadow' },
+        { key: 'guoba_custom_border_mode', val: 'no-border', cls: 'mode-no-border' },
+        { key: 'guoba_custom_corner_mode', val: 'square', cls: 'mode-square-corners' },
+        { key: 'guoba_custom_rarity_mode', val: 'no-rarity', cls: 'mode-no-rarity' },
+        { key: 'guoba_custom_rolldots_mode', val: 'no-dots', cls: 'mode-no-roll-dots' },
+        { key: 'guoba_custom_deaddim_mode', val: 'no-dim', cls: 'mode-no-dead-dim' },
+        { key: 'guoba_custom_score_mode', val: 'rolls', cls: 'mode-score-rolls' },
+        { key: 'guoba_custom_artscore_mode', val: 'cv', cls: 'mode-artifact-cv' },
+        { key: 'guoba_custom_bgsplash_mode', val: 'no-splash', cls: 'mode-no-bg-splash' },
+        { key: 'guoba_custom_style_mode', val: 'transparent', cls: 'mode-transparent' },
+        { key: 'guoba_custom_theme_mode', val: 'dark', cls: 'mode-dark' }
+    ];
+
+    activeModes.forEach(({ key, val, cls }) => {
+        const isSet = (wrapper && wrapper.classList.contains(cls)) ||
+            (window.customizationState && Object.values(window.customizationState).includes(val)) ||
+            (typeof localStorage !== 'undefined' && localStorage.getItem(key) === val);
+        if (isSet && !element.classList.contains(cls)) {
+            element.classList.add(cls);
+            addedClasses.push(cls);
+        }
+    });
+
     const bgDiv = element.querySelector('.background-splash-art');
     let originalBgImage = "";
 
@@ -4732,6 +4756,86 @@ window.exportBuildAsImage = async function () {
                 }
             }
             return true;
+        },
+        onclone: (clonedElement) => {
+            const hasNoShadow = clonedElement.classList.contains('mode-no-shadow') ||
+                (window.customizationState?.shadowMode === 'no-shadow') ||
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode') === 'no-shadow');
+
+            const hasSquareCorners = clonedElement.classList.contains('mode-square-corners') ||
+                (window.customizationState?.cornerMode === 'square') ||
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_corner_mode') === 'square');
+
+            const hasNoBorder = clonedElement.classList.contains('mode-no-border') ||
+                (window.customizationState?.borderMode === 'no-border') ||
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_border_mode') === 'no-border');
+
+            const hasNoRarity = clonedElement.classList.contains('mode-no-rarity') ||
+                (window.customizationState?.rarityMode === 'no-rarity') ||
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rarity_mode') === 'no-rarity');
+
+            const hasNoDeadDim = clonedElement.classList.contains('mode-no-dead-dim') ||
+                (window.customizationState?.deadDimMode === 'no-dim') ||
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode') === 'no-dim');
+
+            // 1. SANS OMBRES : supprimer box-shadow sur toutes les cartes et conteneurs
+            if (hasNoShadow) {
+                clonedElement.style.setProperty('box-shadow', 'none', 'important');
+                clonedElement.querySelectorAll('*').forEach(el => {
+                    el.style.setProperty('box-shadow', 'none', 'important');
+                });
+            }
+
+            // 2. ANGLES CARRÉS : border-radius à 0 sur la fiche et toutes les cartes
+            if (hasSquareCorners) {
+                clonedElement.style.setProperty('border-radius', '0', 'important');
+                clonedElement.querySelectorAll(
+                    '.card, .character-portrait-container, .showcase-area-container, .showcase-area-base-stats, .showcase-area-score, .showcase-area-skills, .showcase-area-combat-stats, .buff-category-card, .item-img, .weapon-stats-row, .artifact-card, .weapon-card, .buffs-card'
+                ).forEach(el => {
+                    el.style.setProperty('border-radius', '0', 'important');
+                });
+            }
+
+            // 3. SANS BORDURES : border-color transparent sur les cartes
+            if (hasNoBorder) {
+                clonedElement.querySelectorAll(
+                    '.card, .character-portrait-container, .showcase-area-base-stats, .showcase-area-score, .showcase-area-skills, .showcase-area-combat-stats, .buff-category-card, .artifact-card, .weapon-card, .buffs-card'
+                ).forEach(el => {
+                    el.style.setProperty('border-color', 'transparent', 'important');
+                });
+            }
+
+            // 4. SANS RARETÉ / GRADE
+            if (hasNoRarity) {
+                clonedElement.querySelectorAll('.item-img').forEach(el => {
+                    el.style.setProperty('border', 'none', 'important');
+                });
+                const scoreBox = clonedElement.querySelector('.showcase-area-score');
+                if (scoreBox) {
+                    if (hasNoBorder) {
+                        scoreBox.style.setProperty('border-color', 'transparent', 'important');
+                    } else {
+                        scoreBox.style.setProperty('border', '1px solid rgba(255, 255, 255, 0.4)', 'important');
+                    }
+                }
+                clonedElement.querySelectorAll('.artifact-card .artifact-set-name, .item-header .artifact-set-name').forEach(el => {
+                    el.style.setProperty('color', 'rgba(255, 255, 255, 0.6)', 'important');
+                });
+                clonedElement.querySelectorAll('.showcase-area-score .score-grade-value, .showcase-area-combat-stats .stat-row.is-buffed p:last-of-type').forEach(el => {
+                    el.style.setProperty('color', 'var(--text-always-white, #ffffff)', 'important');
+                });
+            }
+
+            // 5. STATS INUTILES (GRISÉES / NORMALES)
+            if (hasNoDeadDim) {
+                clonedElement.querySelectorAll('.substat-row.dead').forEach(el => {
+                    el.style.setProperty('opacity', '1', 'important');
+                });
+            } else {
+                clonedElement.querySelectorAll('.substat-row.dead').forEach(el => {
+                    el.style.setProperty('opacity', '0.4', 'important');
+                });
+            }
         }
     })
         .then(function (dataUrl) {
