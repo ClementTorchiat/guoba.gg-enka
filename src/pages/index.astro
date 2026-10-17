@@ -73,13 +73,13 @@ const onboardingImages = {
                 <Sidebar currentPage="home" />
                 <div class="main-content">
                     <div id="player-profile"></div>
-                    <div class="main-content-menu" style="display: none; justify-content: space-between; align-items: flex-end; gap: 8px;">
-                        <div class="main-content-menu-container">
+                    <div class="main-content-menu" onscroll="if (window.closeAllDataMenus) window.closeAllDataMenus()" style="display: none; align-items: flex-end; gap: 8px;">
+                        <div class="main-content-menu-container" style="flex-shrink: 0;">
                             <div id="toolbar-controls" style="display: flex; align-items: center; gap: 8px; flex: 1;"></div>
                             <div class="menu-actions" style="display:flex; gap:10px;"></div>
                         </div>
 
-                        <a id="leaderboard-link" href="/leaderboards" class="leaderboards-container" style="display: flex; justify-content: space-between; padding-left: 15px; padding-right: 16px; align-items: center; width: 100%; height: 50px; background: var(--bg-panel); color: var(--text-primary);border: none;border-radius: 8px; text-decoration: none; cursor: pointer; transition: background 0.2s ease;">
+                        <a id="leaderboard-link" href="/leaderboards" class="leaderboards-container" style="display: flex; justify-content: space-between; padding-left: 15px; padding-right: 16px; align-items: center; width: 240px; min-width: 240px; flex-shrink: 0; box-sizing: border-box; height: 50px; background: var(--bg-panel); color: var(--text-primary);border: none;border-radius: 8px; text-decoration: none; cursor: pointer; transition: background 0.2s ease;">
                             <div class="leaderboards-left" style="display: flex; align-items: center;">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.11 402.49" width="20" height="19" fill="var(--text-always-white)" aria-hidden="true" style="margin-bottom: 2px;">
                                     <path d="M313.04,77.24c-9.19-2.82-16.78-4.99-23.47-6.91-17.32-4.95-26.01-7.44-30.94-12.37-4.93-4.93-7.42-13.62-12.38-30.95-1.92-6.69-4.09-14.28-6.92-23.48C238.69,1.43,236.75,0,234.55,0s-4.13,1.43-4.78,3.53c-2.82,9.2-4.99,16.78-6.91,23.48-4.95,17.33-7.44,26.02-12.37,30.95-4.93,4.93-13.62,7.41-30.95,12.37-6.69,1.91-14.28,4.08-23.48,6.91-2.1,.64-3.53,2.58-3.53,4.78s1.43,4.14,3.53,4.78c9.2,2.83,16.78,5,23.48,6.92,17.33,4.96,26.02,7.45,30.95,12.38,4.93,4.93,7.41,13.62,12.37,30.94,1.91,6.69,4.08,14.28,6.91,23.47,.65,2.1,2.58,3.53,4.78,3.53h0c2.19,0,4.13-1.43,4.78-3.53,2.83-9.19,5-16.78,6.92-23.47,4.96-17.32,7.45-26.01,12.38-30.94s13.62-7.42,30.94-12.38c6.69-1.92,14.28-4.09,23.47-6.92,2.1-.65,3.53-2.58,3.53-4.78s-1.43-4.13-3.53-4.78Z"></path>
@@ -96,7 +96,7 @@ const onboardingImages = {
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                         </a>
 
-                        <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; max-width: 240px; width: 100%; min-width: 240px;">
+                        <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; width: 240px; min-width: 240px; flex-shrink: 0;">
                             <button onclick="openOnboarding()" data-i18n-title="ui.helpBtn" data-i18n-aria-label="ui.helpBtn" style="
                             background: var(--bg-panel);
                             border: none;

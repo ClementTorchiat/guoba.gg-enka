@@ -65,7 +65,7 @@ button[title="Mode d'emploi"]:hover,
 @font-face {
     font-family: 'ShinShin';
     src: url("/assets/global/typo/ShinShin.woff2") format('woff2'),
-         url("/assets/global/typo/ShinShin.ttf") format('truetype');
+        url("/assets/global/typo/ShinShin.ttf") format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -151,7 +151,7 @@ button[title="Mode d'emploi"]:hover,
     display: flex;
     position: absolute;
     top: 100%;
-    margin-top: 8px;
+    /*margin-top: 8px;*/
     left: 0;
     width: 100%;
     box-sizing: border-box;
@@ -407,7 +407,7 @@ main {
 .layout-flex {
     width: 100%;
     box-sizing: border-box;
-    justify-content: center;
+    /*justify-content: center;*/
     display: flex;
 }
 
@@ -415,8 +415,8 @@ main {
     height: 100%;
     margin-bottom: 200px;
     width: 100%;
-    max-width: 1800px;
-    min-width: 1100px;
+    /*max-width: 1800px;
+    min-width: 1100px;*/
     gap: 8px;
     box-sizing: border-box;
     display: flex;
@@ -716,9 +716,25 @@ main {
     z-index: 999999;
 }
 
+.leaderboards-left {
+    align-items: end !important;
+}
+
 .main-content-menu {
     width: 100%;
     box-sizing: border-box;
+    flex-shrink: 0;
+    min-height: 50px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.main-content-menu::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 .main-content-menu-title {
@@ -776,31 +792,56 @@ main {
     display: flex;
 }
 
+.top-row-container {
+    position: relative;
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-bottom: 24px;
+}
+
+.top-row-container::-webkit-scrollbar,
+.top-row::-webkit-scrollbar {
+    height: 4px;
+}
+
+.top-row-container::-webkit-scrollbar-thumb,
+.top-row::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+}
+
+.top-row-container::-webkit-scrollbar-track,
+.top-row::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 .top-row {
     position: relative;
     display: flex;
+    width: 1153px;
+    min-width: 1153px;
+    flex-shrink: 0;
     height: 856px;
     background: var(--bg-base);
     background-blend-mode: screen;
-    overflow-x: auto;
-    overflow-y: hidden;
     border-radius: 7px;
     transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s;
     gap: 8px;
     color: var(--text-always-white);
 }
 
-.top-row::-webkit-scrollbar {
-    height: 4px;
-}
-
-.top-row::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50px;
-}
-
-.top-row::-webkit-scrollbar-track {
-    background: transparent;
+.customization-bar {
+    width: 130px;
+    min-width: 130px;
+    flex-shrink: 0;
+    height: 856px;
+    background: var(--bg-panel);
+    border-radius: 8px;
+    box-sizing: border-box;
 }
 
 .character-portrait-container {
@@ -3815,11 +3856,11 @@ input:checked+.toggle-track .star-4 {
     transform: translateY(-1px);
 }
 
-#settings-preferences-view .custom-select-container > button {
+#settings-preferences-view .custom-select-container>button {
     transition: background-color 0.2s ease;
 }
 
-#settings-preferences-view .custom-select-container > button:hover {
+#settings-preferences-view .custom-select-container>button:hover {
     background-color: var(--bg-hover) !important;
 }
 

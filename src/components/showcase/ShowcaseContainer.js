@@ -27,32 +27,37 @@ export function renderShowcaseComponent(persoObj, charIndex) {
 
     return `
         <div class="showcase-wrapper" style="--char-hex: ${charColor}; width: 100%; position: relative;">
-            <div class="top-row" style="position: relative; display: flex; gap: 8px; justify-content: flex-start; align-items: stretch; margin-bottom: 24px;">
-                ${renderBackgroundSplash(persoObj)}
+            <div class="top-row-container">
+                <div class="top-row" style="position: relative; display: flex; gap: 8px; justify-content: flex-start; align-items: stretch;">
+                    ${renderBackgroundSplash(persoObj)}
 
-                <!-- Colonne Gauche : Portrait et Arme -->
-                <div class="character-portrait-weapon" style="gap: 8px; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box; z-index: 10;">
-                    ${renderCharacterPortrait(persoObj, config)}
-                    <div class="weapon-container">
-                        ${renderWeaponCard(persoObj)}
+                    <!-- Colonne Gauche : Portrait et Arme -->
+                    <div class="character-portrait-weapon" style="gap: 8px; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box; z-index: 10;">
+                        ${renderCharacterPortrait(persoObj, config)}
+                        <div class="weapon-container">
+                            ${renderWeaponCard(persoObj)}
+                        </div>
+                    </div>
+
+                    <!-- Colonne Milieu : Infos, Base Stats, Score, Aptitudes, Stats Combat -->
+                    <div class="showcase-area" style="gap: 8px; justify-content: space-between; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box; z-index: 10;">
+                        <div class="showcase-area-container" style="width: 299px; height: 100%; border-radius: 8px; flex: 1 1 0%; justify-content: space-between; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box;">
+                            ${renderBaseStatsList(persoObj, infoHeaderHtml, charIndex)}
+                            ${renderCharacterScoreBadge(persoObj.evaluation)}
+                            ${renderTalentsList(persoObj.talents)}
+                            ${renderCombatStatsList(persoObj, charIndex)}
+                        </div>
+                    </div>
+
+                    <!-- Colonne Droite : Artéfacts et Panneau de Buffs -->
+                    <div class="equipment-area" style="display: grid; grid-template-columns: repeat(2, 240px); gap: 8px; z-index: 10;">
+                        ${renderArtifactsGrid(persoObj, charIndex)}
+                        ${renderBuffsPanel(persoObj, charIndex)}
                     </div>
                 </div>
 
-                <!-- Colonne Milieu : Infos, Base Stats, Score, Aptitudes, Stats Combat -->
-                <div class="showcase-area" style="gap: 8px; justify-content: space-between; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box; z-index: 10;">
-                    <div class="showcase-area-container" style="width: 299px; height: 100%; border-radius: 8px; flex: 1 1 0%; justify-content: space-between; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box;">
-                        ${renderBaseStatsList(persoObj, infoHeaderHtml, charIndex)}
-                        ${renderCharacterScoreBadge(persoObj.evaluation)}
-                        ${renderTalentsList(persoObj.talents)}
-                        ${renderCombatStatsList(persoObj, charIndex)}
-                    </div>
-                </div>
-
-                <!-- Colonne Droite : Artéfacts et Panneau de Buffs -->
-                <div class="equipment-area" style="display: grid; grid-template-columns: repeat(2, 240px); gap: 8px; z-index: 10;">
-                    ${renderArtifactsGrid(persoObj, charIndex)}
-                    ${renderBuffsPanel(persoObj, charIndex)}
-                </div>
+                <!-- Barre verticale de customisation (test) -->
+                <div class="customization-bar"></div>
             </div>
 
             <!-- Nouvelle Section : Buffs Actifs Détaillés -->

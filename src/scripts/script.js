@@ -188,10 +188,20 @@ function changeTheme(themeValue) {
 function toggleBuildMenu(event) {
     event.stopPropagation();
     const menu = document.getElementById('build-custom-menu');
+    if (!menu) return;
+    const btn = event.currentTarget || menu.previousElementSibling;
     const isOpen = menu.classList.contains('show');
     closeAllDataMenus();
     if (!isOpen) {
         menu.classList.add('show');
+        if (btn) {
+            const rect = btn.getBoundingClientRect();
+            menu.style.position = 'fixed';
+            menu.style.top = `${rect.bottom + 8}px`;
+            menu.style.left = `${rect.left}px`;
+            menu.style.width = `${rect.width}px`;
+            menu.style.zIndex = '1000';
+        }
     }
     updateCustomDropdownArrows();
 }
@@ -209,7 +219,14 @@ function toggleErMenu(event) {
 function closeAllDataMenus() {
     const buildMenu = document.getElementById('build-custom-menu');
     const erMenu = document.getElementById('er-custom-menu');
-    if (buildMenu) buildMenu.classList.remove('show');
+    if (buildMenu) {
+        buildMenu.classList.remove('show');
+        buildMenu.style.position = '';
+        buildMenu.style.top = '';
+        buildMenu.style.left = '';
+        buildMenu.style.width = '';
+        buildMenu.style.zIndex = '';
+    }
     if (erMenu) erMenu.classList.remove('show');
     updateCustomDropdownArrows();
 }
@@ -232,6 +249,23 @@ document.addEventListener('click', () => {
     closeAllDataMenus();
     updateCustomDropdownArrows();
 });
+
+window.addEventListener('scroll', () => {
+    closeAllDataMenus();
+}, { passive: true });
+
+function setupMenuHorizontalScroll() {
+    const menu = document.querySelector('.main-content-menu');
+    if (!menu || menu._wheelBound) return;
+    menu._wheelBound = true;
+    menu.addEventListener('wheel', (e) => {
+        if (e.deltaY !== 0 && menu.scrollWidth > menu.clientWidth) {
+            e.preventDefault();
+            menu.scrollLeft += e.deltaY;
+            closeAllDataMenus();
+        }
+    }, { passive: false });
+}
 
 function setSidebarSort(column) {
     if (sidebarSortState.column === column) {
@@ -468,70 +502,73 @@ function showSkeletonCard() {
     `;
 
     container.innerHTML = `
-        <div class="top-row">
+        <div class="top-row-container">
+            <div class="top-row">
 
-            <!-- Fond neutre -->
-            <div style="position:absolute; inset:0; z-index:0; background:var(--bg-card);"></div>
+                <!-- Fond neutre -->
+                <div style="position:absolute; inset:0; z-index:0; background:var(--bg-card);"></div>
 
-            <!-- Colonne gauche : portrait + arme -->
-            <div style="display:flex; flex-direction:column; gap:8px; flex-shrink:0; position:relative; z-index:1;">
-                <div class="sk" style="width:350px; height:720px; border-radius:8px; border:1px solid var(--border-subtle);"></div>
-                <div class="sk" style="width:350px; height:128px; border-radius:8px; border:1px solid var(--border-subtle);"></div>
-            </div>
+                <!-- Colonne gauche : portrait + arme -->
+                <div style="display:flex; flex-direction:column; gap:8px; flex-shrink:0; position:relative; z-index:1;">
+                    <div class="sk" style="width:350px; height:720px; border-radius:8px; border:1px solid var(--border-subtle);"></div>
+                    <div class="sk" style="width:350px; height:128px; border-radius:8px; border:1px solid var(--border-subtle);"></div>
+                </div>
 
-            <!-- Colonne milieu : stats + score + skills + combat -->
-            <div style="width:299px; flex-shrink:0; display:flex; flex-direction:column; gap:8px; position:relative; z-index:1;">
+                <!-- Colonne milieu : stats + score + skills + combat -->
+                <div style="width:299px; flex-shrink:0; display:flex; flex-direction:column; gap:8px; position:relative; z-index:1;">
 
-                <!-- Stats de base -->
-                <div style="flex:1; border-radius:8px; border:1px solid var(--border-subtle); padding:12px; display:flex; flex-direction:column; gap:11px; background:var(--bg-panel);">
-                    <div style="display:flex; justify-content:space-between; align-items:center; height:40px; margin-bottom:2px;">
-                        <div style="display:flex; gap:4px; align-items:center;">
-                            <div class="sk" style="width:25px; height:25px; border-radius:50%;"></div>
-                            <div class="sk" style="width:29px; height:29px; border-radius:50%;"></div>
+                    <!-- Stats de base -->
+                    <div style="flex:1; border-radius:8px; border:1px solid var(--border-subtle); padding:12px; display:flex; flex-direction:column; gap:11px; background:var(--bg-panel);">
+                        <div style="display:flex; justify-content:space-between; align-items:center; height:40px; margin-bottom:2px;">
+                            <div style="display:flex; gap:4px; align-items:center;">
+                                <div class="sk" style="width:25px; height:25px; border-radius:50%;"></div>
+                                <div class="sk" style="width:29px; height:29px; border-radius:50%;"></div>
+                            </div>
+                            <div style="display:flex; flex-direction:column; gap:5px; align-items:flex-end;">
+                                <div class="sk" style="width:60px; height:11px;"></div>
+                                <div class="sk" style="width:32px; height:11px;"></div>
+                            </div>
                         </div>
-                        <div style="display:flex; flex-direction:column; gap:5px; align-items:flex-end;">
-                            <div class="sk" style="width:60px; height:11px;"></div>
-                            <div class="sk" style="width:32px; height:11px;"></div>
+                        <div class="sk" style="width:55%; height:22px; border-radius:6px;"></div>
+                        <div class="sk" style="width:50%; height:11px;"></div>
+                        <div style="display:flex; flex-direction:column; gap:9px;">
+                            ${statRows}
                         </div>
                     </div>
-                    <div class="sk" style="width:55%; height:22px; border-radius:6px;"></div>
-                    <div class="sk" style="width:50%; height:11px;"></div>
-                    <div style="display:flex; flex-direction:column; gap:9px;">
-                        ${statRows}
-                    </div>
-                </div>
 
-                <!-- Score -->
-                <div style="border-radius:8px; border:1px solid var(--border-subtle); padding:10px 10px 8px 7px; display:flex; flex-direction:column; gap:8px; background:var(--bg-panel);">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div class="sk" style="width:70px; height:12px;"></div>
-                        <div class="sk" style="width:65px; height:12px;"></div>
-                    </div>
-                    <div class="sk" style="height:8px; width:100%; border-radius:4px;"></div>
-                </div>
-
-                <!-- Skills -->
-                <div style="border-radius:8px; border:1px solid var(--border-subtle); padding:10px; display:flex; justify-content:space-around; align-items:center; background:var(--bg-panel);">
-                    ${Array(3).fill(0).map(() => `
-                        <div style="display:flex; flex-direction:column; align-items:center; gap:8px; margin-bottom:11px;">
-                            <div class="sk" style="width:64px; height:64px; border-radius:50%;"></div>
-                            <div class="sk" style="width:28px; height:10px; border-radius:34px;"></div>
+                    <!-- Score -->
+                    <div style="border-radius:8px; border:1px solid var(--border-subtle); padding:10px 10px 8px 7px; display:flex; flex-direction:column; gap:8px; background:var(--bg-panel);">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div class="sk" style="width:70px; height:12px;"></div>
+                            <div class="sk" style="width:65px; height:12px;"></div>
                         </div>
-                    `).join('')}
+                        <div class="sk" style="height:8px; width:100%; border-radius:4px;"></div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div style="border-radius:8px; border:1px solid var(--border-subtle); padding:10px; display:flex; justify-content:space-around; align-items:center; background:var(--bg-panel);">
+                        ${Array(3).fill(0).map(() => `
+                            <div style="display:flex; flex-direction:column; align-items:center; gap:8px; margin-bottom:11px;">
+                                <div class="sk" style="width:64px; height:64px; border-radius:50%;"></div>
+                                <div class="sk" style="width:28px; height:10px; border-radius:34px;"></div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Stats en combat -->
+                    <div style="border-radius:8px; border:1px solid var(--border-subtle); padding:10px; display:flex; flex-direction:column; gap:9px; background:var(--bg-panel);">
+                        ${combatRows}
+                    </div>
                 </div>
 
-                <!-- Stats en combat -->
-                <div style="border-radius:8px; border:1px solid var(--border-subtle); padding:10px; display:flex; flex-direction:column; gap:9px; background:var(--bg-panel);">
-                    ${combatRows}
+                <!-- Colonne droite : équipement -->
+                <div class="equipment-area" style="position:relative; z-index:1;">
+                    ${artifactCards}
+                    ${buffsCard}
                 </div>
-            </div>
 
-            <!-- Colonne droite : équipement -->
-            <div class="equipment-area" style="position:relative; z-index:1;">
-                ${artifactCards}
-                ${buffsCard}
             </div>
-
+            <div class="customization-bar"></div>
         </div>
     `;
 }
@@ -4445,6 +4482,7 @@ function renderShowcase(index) {
 
     if (menu) menu.style.display = 'flex';
     if (menuContainer) menuContainer.style.display = 'flex';
+    setupMenuHorizontalScroll();
 
     container.innerHTML = renderShowcaseComponent(p, index);
     renderToolbar(index);
@@ -4697,6 +4735,7 @@ window.exportBuildAsImage = async function () {
 function initMainPageApp() {
     ensureAllTooltips();
     setupUidInputBinding();
+    setupMenuHorizontalScroll();
 
     const isMainPage = window.location.pathname === '/' || window.location.pathname === '';
     if (!isMainPage) return;
