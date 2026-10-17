@@ -7,6 +7,7 @@ import { renderCharacterScoreBadge } from './CharacterScoreBadge.js';
 import { renderTalentsList } from './TalentsList.js';
 import { renderArtifactsGrid } from './ArtifactsGrid.js';
 import { renderBuffsPanel, renderActiveBuffsSection } from './BuffsPanel.js';
+import { renderCustomizationBar } from './CustomizationBar.js';
 import { renderAdviceSection } from '../advice/AdviceSection.js';
 import { t } from '../../scripts/i18n.js';
 
@@ -25,8 +26,25 @@ export function renderShowcaseComponent(persoObj, charIndex) {
     const charColor = skinOverride?.color || config.color || "#4b5563";
     const infoHeaderHtml = renderCharacterInfo(persoObj);
 
+    const isTransparent = (typeof window !== 'undefined') &&
+        (window.customizationState?.styleMode === 'transparent' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_style_mode') === 'transparent'));
+    const isDark = (typeof window !== 'undefined') &&
+        (window.customizationState?.themeMode === 'dark' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_theme_mode') === 'dark'));
+    const hasNoShadow = (typeof window !== 'undefined') &&
+        (window.customizationState?.shadowMode === 'no-shadow' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode') === 'no-shadow'));
+    const hasNoBorder = (typeof window !== 'undefined') &&
+        (window.customizationState?.borderMode === 'no-border' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_border_mode') === 'no-border'));
+    const isScoreRolls = (typeof window !== 'undefined') &&
+        (window.customizationState?.scoreMode === 'rolls' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_score_mode') === 'rolls'));
+    const wrapperClass = `showcase-wrapper${isTransparent ? ' mode-transparent' : ''}${isDark ? ' mode-dark' : ''}${hasNoShadow ? ' mode-no-shadow' : ''}${hasNoBorder ? ' mode-no-border' : ''}${isScoreRolls ? ' mode-score-rolls' : ''}`;
+
     return `
-        <div class="showcase-wrapper" style="--char-hex: ${charColor}; width: 100%; position: relative;">
+        <div class="${wrapperClass}" style="--char-hex: ${charColor}; width: 100%; position: relative;">
             <div class="top-row-container">
                 <div class="top-row" style="position: relative; display: flex; gap: 8px; justify-content: flex-start; align-items: stretch;">
                     ${renderBackgroundSplash(persoObj)}
@@ -56,8 +74,8 @@ export function renderShowcaseComponent(persoObj, charIndex) {
                     </div>
                 </div>
 
-                <!-- Barre verticale de customisation (test) -->
-                <div class="customization-bar"></div>
+                <!-- Barre verticale de customisation -->
+                ${renderCustomizationBar(persoObj, charColor, charIndex)}
             </div>
 
             <!-- Nouvelle Section : Buffs Actifs Détaillés -->

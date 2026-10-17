@@ -17,10 +17,17 @@ export function renderCharacterScoreBadge(evaluation) {
                     <p style="margin:0;">(${evaluation.grade?.letter || '?'})</p>
                 </div>
             </div>
-            <div class="stat-row" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
+            <!-- Ligne 2 : Classement (défaut) -->
+            <div class="stat-row score-row-ranking" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
                 <p class="badge-lb-top" style="margin-left: 24px; margin-top:0; margin-bottom:0; font-size:14px; opacity: 0.5;">En attente...</p>
                 <div class="dotted-line"></div> 
                 <p class="badge-lb-rank" style="margin:0; opacity: 0.5; font-size: 14px;">...</p>
+            </div>
+            <!-- Ligne 2 : Rolls totaux (alternative) -->
+            <div class="stat-row score-row-rolls" style="filter: none; justify-content: space-between; align-items: center; display: flex; box-sizing: border-box;">
+                <p style="margin-left: 24px; margin-top:0; margin-bottom:0; font-size:14px;">${t('ui.char.totalRolls') || 'Rolls totaux'}</p>
+                <div class="dotted-line"></div> 
+                <p style="margin:0; font-size: 14px;">${evaluation.totalRolls ?? '0.0'}</p>
             </div>
         </div>
     `;
