@@ -925,7 +925,7 @@ main {
 .custom-image-control {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
     padding: 0 8px;
     background: var(--shadow-subtle);
     border-radius: 6px;
@@ -945,12 +945,11 @@ main {
 .custom-image-btn-content {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     color: var(--text-primary);
     font-size: 11px;
     font-weight: normal;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
 }
 
 .custom-image-btn-content svg {
