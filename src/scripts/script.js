@@ -4641,9 +4641,13 @@ window.exportBuildAsImage = async function () {
     const element = document.querySelector('.top-row');
     if (!element) return alert(t('error.noBuild'));
 
-    const btn = document.querySelector('button[onclick="exportBuildAsImage()"]');
-    const originalContent = btn ? btn.innerHTML : t('ui.exportBtn');
-    if (btn) btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 5px;"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> ${t('export.processing')}`;
+    const btns = Array.from(document.querySelectorAll('button[onclick="exportBuildAsImage()"]'));
+    const originalContents = new Map();
+    btns.forEach(btn => {
+        originalContents.set(btn, btn.innerHTML);
+        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 5px;"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> <span style="white-space: nowrap;">${t('export.processing')}</span>`;
+        btn.style.pointerEvents = 'none';
+    });
 
     const bgDiv = element.querySelector('.background-splash-art');
     let originalBgImage = "";
@@ -4728,7 +4732,12 @@ window.exportBuildAsImage = async function () {
             if (bgDiv && originalBgImage) {
                 bgDiv.style.backgroundImage = originalBgImage;
             }
-            if (btn) btn.innerHTML = originalContent;
+            btns.forEach(btn => {
+                if (originalContents.has(btn)) {
+                    btn.innerHTML = originalContents.get(btn);
+                }
+                btn.style.pointerEvents = '';
+            });
         });
 };
 
