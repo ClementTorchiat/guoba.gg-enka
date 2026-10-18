@@ -2,6 +2,7 @@
 import { t } from '../../scripts/i18n.js';
 import { getSpiderChartAxes } from './SpiderChart.js';
 import { createStatIcon } from './CombatStatsList.js';
+import { getStoredSnapshots, getCharacterKey } from '../../scripts/snapshotManager.js';
 
 function formatSpiderValue(key, val) {
     if (['cr', 'cd', 'er', 'dmg', 'hb'].includes(key)) {
@@ -80,8 +81,12 @@ export function renderCompareCard(hostPersoObj, guestCombatStats, guestExtraData
         const hostValStr = formatSpiderValue(axis.key, axis.hostValue);
         const guestValStr = formatSpiderValue(axis.key, axis.guestValue);
 
+        const guestDotLabel = guestExtraData?.isArchived
+            ? `${axis.label} (Votre Build - ${t('roadmap.scope.reserve')})`
+            : `${axis.label} (Votre Build)`;
+
         hostCircles += `<circle cx="${hostPt.x}" cy="${hostPt.y}" r="3.5" fill="rgba(255, 255, 255, 0.4)" stroke="transparent" stroke-width="0" style="transition: all 0.3s ease-out; cursor: pointer; pointer-events: auto;" data-type="combat" data-label="${axis.label} (Son Build)" data-val="${hostValStr}" onmouseenter="window.showSpiderStatTooltip && window.showSpiderStatTooltip(this)" onmouseleave="window.hideSpiderStatTooltip && window.hideSpiderStatTooltip()" />`;
-        guestCircles += `<circle cx="${guestPt.x}" cy="${guestPt.y}" r="3.5" fill="#4dabf7" stroke="transparent" stroke-width="0" style="transition: all 0.3s ease-out; cursor: pointer; pointer-events: auto;" data-type="combat" data-label="${axis.label} (Votre Build)" data-val="${guestValStr}" onmouseenter="window.showSpiderStatTooltip && window.showSpiderStatTooltip(this)" onmouseleave="window.hideSpiderStatTooltip && window.hideSpiderStatTooltip()" />`;
+        guestCircles += `<circle cx="${guestPt.x}" cy="${guestPt.y}" r="3.5" fill="#4dabf7" stroke="transparent" stroke-width="0" style="transition: all 0.3s ease-out; cursor: pointer; pointer-events: auto;" data-type="combat" data-label="${guestDotLabel}" data-val="${guestValStr}" onmouseenter="window.showSpiderStatTooltip && window.showSpiderStatTooltip(this)" onmouseleave="window.hideSpiderStatTooltip && window.hideSpiderStatTooltip()" />`;
     }
 
     const htmlContent = `
@@ -108,7 +113,9 @@ export function renderCompareCard(hostPersoObj, guestCombatStats, guestExtraData
                     <p style="margin-bottom: 2px; margin-top:0; color: var(--text-always-white); display: flex; align-items: center; justify-content: space-between;">
                         ${t('ui.compare.graphTitle')}
                     </p>
-                    <p style="font-size: 11px; color: rgba(255, 255, 255, 0.4); margin:0; line-height: 1.25;">${t('ui.compare.graphDesc')}</p>
+                    <p style="font-size: 11px; color: rgba(255, 255, 255, 0.4); margin:0; line-height: 1.25;">
+                        ${t('ui.compare.graphDesc')}${guestExtraData?.isArchived ? ` <span style="opacity: 0.7;">(${t('roadmap.scope.reserve')})</span>` : ''}
+                    </p>
                 </div>
                 <div class="card-divider" style="flex-shrink: 0; margin: 9px 0px; display: flex; clear: both; width: 100%; box-sizing: border-box; color: var(--dotted-line); border-width: 1px 0 0; border-color: var(--dotted-line); border-block-start: 1px solid var(--dotted-line);"></div>
             </div>
@@ -234,12 +241,19 @@ export function renderCompareCard(hostPersoObj, guestCombatStats, guestExtraData
     const playerName = window.currentPlayerNickname || t('ui.compare.player');
     const charName = hostPersoObj.nom || t('ui.compare.character');
 
+    const reserveBadge = guestExtraData?.isArchived ? `
+        <span style="font-size: 10px; text-transform: none; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12); padding: 1px 7px; border-radius: 4px; color: var(--text-grey); font-weight: 500; margin-left: 4px; display: inline-flex; align-items: center; gap: 4px;">
+            ${t('roadmap.scope.reserve')}
+        </span>
+    ` : '';
+
     return `
         <div style="display: flex; gap: 20px; flex-wrap: wrap; width: 100%; align-items: stretch; margin-top: 20px;">
             <div style="flex: 1; min-width: 300px; border-radius: 8px; background: var(--bg-panel); padding: 16px; display: flex; flex-direction: column; max-height: 280px; overflow-y: auto; box-sizing: border-box;">
                 <h4 style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; margin-top: 0; margin-bottom: 12px; font-weight: normal; display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
                     ${t('ui.compare.title')} 
                     <span style="text-transform: none; font-size: 11px; opacity: 0.7;">${t('ui.compare.subtitle', charName, charName, playerName)}</span>
+                    ${reserveBadge}
                 </h4>
                 <p style="font-size: 14px; color: var(--text-primary); margin-top: 0; margin-bottom: 20px; line-height: 1.4;">
                     ${t('ui.compare.desc')}
@@ -254,6 +268,54 @@ export function renderCompareCard(hostPersoObj, guestCombatStats, guestExtraData
     `;
 }
 
+function isTravelerId(id) {
+    return [10000005, 10000007, 10000117, 10000118].includes(Number(id));
+}
+
+function findMatchingGuestCharacter(snapshots, avatarInfoList, hostPersoObj) {
+    const hostId = Number(hostPersoObj.id || hostPersoObj.avatarId);
+    const hostIsTraveler = isTravelerId(hostId);
+    const hostDepot = hostPersoObj.skillDepotId ? String(hostPersoObj.skillDepotId) : null;
+
+    // 1. Chercher dans la vitrine live (Enka)
+    let liveAvatar = null;
+    if (Array.isArray(avatarInfoList)) {
+        liveAvatar = avatarInfoList.find(a => {
+            const aId = Number(a.avatarId);
+            if (hostIsTraveler && isTravelerId(aId)) {
+                if (hostDepot && a.skillDepotId) {
+                    return String(a.skillDepotId) === hostDepot;
+                }
+                return true;
+            }
+            return aId === hostId;
+        }) || null;
+    }
+
+    // 2. Chercher dans les snapshots locaux (vitrine ou réserve)
+    let snapshotChar = null;
+    if (snapshots && typeof snapshots === 'object') {
+        const key = getCharacterKey(hostPersoObj);
+        if (snapshots[key]) {
+            snapshotChar = snapshots[key];
+        } else {
+            snapshotChar = Object.values(snapshots).find(p => {
+                if (!p) return false;
+                const pId = Number(p.id || p.avatarId);
+                if (hostIsTraveler && isTravelerId(pId)) {
+                    if (hostDepot && p.skillDepotId) {
+                        return String(p.skillDepotId) === hostDepot;
+                    }
+                    return true;
+                }
+                return pId === hostId;
+            }) || null;
+        }
+    }
+
+    return { liveAvatar, snapshotChar };
+}
+
 export async function initCompareModule(hostPersoObj, charIndex) {
     const container = document.getElementById(`compare-module-container-${charIndex}`);
     if (!container) return;
@@ -262,69 +324,106 @@ export async function initCompareModule(hostPersoObj, charIndex) {
     if (!loggedUid) return; // Pas de compte lié
 
     // Vérifier si l'utilisateur consulte son propre profil (dans ce cas, on ne compare pas)
-    const hostUid = window.currentProfileUid || new URLSearchParams(window.location.search).get('uid');
+    const hostUid = window.currentProfileUid
+        || new URLSearchParams(window.location.search).get('uid')
+        || (document.getElementById('uidInput') ? document.getElementById('uidInput').value.trim() : '');
     if (String(hostUid) === String(loggedUid)) return;
 
     try {
-        let data;
-        if (window.loggedUserEnkaData) {
-            data = window.loggedUserEnkaData;
-        } else {
-            if (!window.loggedUserEnkaPromise) {
-                const proxyUrl = `https://guobagg.clement-torchiat.workers.dev/?uid=${loggedUid}`;
-                window.loggedUserEnkaPromise = fetch(proxyUrl).then(res => {
-                    if (!res.ok) throw new Error('Network error');
-                    return res.json();
-                }).catch(e => null);
-            }
-            data = await window.loggedUserEnkaPromise;
-            if (data && data.avatarInfoList) {
-                window.loggedUserEnkaData = data;
-            }
+        // Lancer en parallèle la lecture des snapshots locaux (IndexedDB) et la vitrine live Enka
+        if (!window.loggedUserSnapshotsPromise || window.loggedUserSnapshotsUid !== loggedUid) {
+            window.loggedUserSnapshotsUid = loggedUid;
+            window.loggedUserSnapshotsPromise = getStoredSnapshots(loggedUid);
         }
 
-        if (!data || !data.avatarInfoList) return;
+        if (!window.loggedUserEnkaData && !window.loggedUserEnkaPromise) {
+            const proxyUrl = `https://guobagg.clement-torchiat.workers.dev/?uid=${loggedUid}`;
+            window.loggedUserEnkaPromise = fetch(proxyUrl).then(res => {
+                if (!res.ok) throw new Error('Network error');
+                return res.json();
+            }).catch(e => null);
+        }
 
-        const guestAvatar = data.avatarInfoList.find(a => a.avatarId === hostPersoObj.id);
-        if (!guestAvatar) return; // Le joueur n'a pas ce personnage dans sa vitrine
+        const [snapshots, enkaData] = await Promise.all([
+            window.loggedUserSnapshotsPromise,
+            window.loggedUserEnkaData || window.loggedUserEnkaPromise
+        ]);
 
-        const fp = guestAvatar.fightPropMap;
+        if (enkaData && enkaData.avatarInfoList) {
+            window.loggedUserEnkaData = enkaData;
+        }
 
-        // Element key used by host, just in case for dmg bonus
-        const elemKey = hostPersoObj.combatStats.dmgBonusKey;
+        const { liveAvatar, snapshotChar } = findMatchingGuestCharacter(
+            snapshots,
+            window.loggedUserEnkaData?.avatarInfoList,
+            hostPersoObj
+        );
+
+        if (!liveAvatar && !snapshotChar) return; // Ni en vitrine ni en archive
+
+        // Source de données : priorité à la vitrine live si disponible, sinon snapshot local
+        const target = liveAvatar || snapshotChar;
+        const isArchived = !liveAvatar && Boolean(snapshotChar?.isArchived !== false);
+
+        const fp = target.fightPropMap || {};
+        const elemKey = hostPersoObj.combatStats?.dmgBonusKey;
         const elemId = Object.keys(window.ELEMENT_DATA || {}).find(k => window.ELEMENT_DATA[k].key === elemKey);
 
+        let dmgBonus = 0;
+        if (elemId && fp[window.ELEMENT_DATA[elemId].id] !== undefined) {
+            dmgBonus = fp[window.ELEMENT_DATA[elemId].id] * 100;
+        } else if (target.combatStats?.dmgBonusKey === elemKey && target.combatStats?.dmgBonus !== undefined) {
+            dmgBonus = target.combatStats.dmgBonus;
+        } else if (elemKey && target.combatStats && target.combatStats[elemKey] !== undefined) {
+            dmgBonus = target.combatStats[elemKey];
+        }
+
         const guestCombatStats = {
-            hp: fp[2000] || 0,
-            atk: fp[2001] || 0,
-            def: fp[2002] || 0,
-            em: fp[28] || 0,
-            cr: (fp[20] || 0) * 100,
-            cd: (fp[22] || 0) * 100,
-            er: (fp[23] || 0) * 100,
-            hb: (fp[26] || 0) * 100,
-            dmgBonus: elemId && fp[window.ELEMENT_DATA[elemId].id] ? (fp[window.ELEMENT_DATA[elemId].id] * 100) : 0,
+            hp: (target.combatStats?.hp !== undefined) ? target.combatStats.hp : (fp[2000] || 0),
+            atk: (target.combatStats?.atk !== undefined) ? target.combatStats.atk : (fp[2001] || 0),
+            def: (target.combatStats?.def !== undefined) ? target.combatStats.def : (fp[2002] || 0),
+            em: (target.combatStats?.em !== undefined) ? target.combatStats.em : (fp[28] || 0),
+            cr: (target.combatStats?.cr !== undefined) ? target.combatStats.cr : ((fp[20] || 0) * 100),
+            cd: (target.combatStats?.cd !== undefined) ? target.combatStats.cd : ((fp[22] || 0) * 100),
+            er: (target.combatStats?.er !== undefined) ? target.combatStats.er : ((fp[23] || 0) * 100),
+            hb: (target.combatStats?.hb !== undefined) ? target.combatStats.hb : ((fp[26] || 0) * 100),
+            dmgBonus: dmgBonus,
             dmgBonusKey: elemKey
         };
 
-        if (fp[30] !== undefined) {
+        if (target.combatStats?.physical_dmg_ !== undefined) {
+            guestCombatStats['physical_dmg_'] = target.combatStats.physical_dmg_;
+        } else if (fp[30] !== undefined) {
             guestCombatStats['physical_dmg_'] = (fp[30] || 0) * 100;
         }
 
         const guestExtraData = {
             weaponIcon: null,
-            cons: guestAvatar.talentIdList ? guestAvatar.talentIdList.length : 0,
-            sets: []
+            cons: 0,
+            sets: [],
+            isArchived: isArchived
         };
 
-        if (guestAvatar.equipList) {
-            const weapon = guestAvatar.equipList.find(e => e.weapon);
+        if (target.cons !== undefined) {
+            guestExtraData.cons = target.cons;
+        } else if (target.talentIdList) {
+            guestExtraData.cons = target.talentIdList.length;
+        }
+
+        if (target.weapon?.icon) {
+            guestExtraData.weaponIcon = target.weapon.icon;
+        } else if (target.weapon?.key && window.ITEM_ICON_MAP?.[target.weapon.key]) {
+            guestExtraData.weaponIcon = window.ITEM_ICON_MAP[target.weapon.key];
+        } else if (target.equipList) {
+            const weapon = target.equipList.find(e => e.weapon);
             if (weapon && weapon.flat && weapon.flat.icon) {
                 guestExtraData.weaponIcon = `https://enka.network/ui/${weapon.flat.icon}.png`;
             }
+        }
 
+        if (target.equipList) {
             const guestSets = {};
-            guestAvatar.equipList.filter(e => e.reliquary).forEach(e => {
+            target.equipList.filter(e => e.reliquary).forEach(e => {
                 if (!e.flat || !e.flat.setNameTextMapHash) return;
                 const setNameHash = e.flat.setNameTextMapHash;
                 const icon = e.flat.icon ? `https://enka.network/ui/${e.flat.icon}.png` : '';
@@ -332,6 +431,26 @@ export async function initCompareModule(hostPersoObj, charIndex) {
                 guestSets[setNameHash].count++;
             });
             guestExtraData.sets = Object.values(guestSets).filter(s => s.count >= 2);
+        } else if (Array.isArray(target.artefacts) && target.artefacts.length > 0) {
+            const guestSets = {};
+            target.artefacts.forEach(art => {
+                if (!art) return;
+                const key = art.setKey || art.setName;
+                if (!key) return;
+                const icon = art.icon ? art.icon.replace(/_[1-5]\.png$/, '_4.png') : ((window.ITEM_ICON_MAP && window.ITEM_ICON_MAP[art.setKey]) || '');
+                if (!guestSets[key]) guestSets[key] = { count: 0, icon: icon };
+                guestSets[key].count++;
+            });
+            guestExtraData.sets = Object.values(guestSets).filter(s => s.count >= 2);
+        } else if (target.setsCounter) {
+            const guestSets = [];
+            Object.entries(target.setsCounter).forEach(([key, count]) => {
+                if (count >= 2) {
+                    const icon = (window.ITEM_ICON_MAP && window.ITEM_ICON_MAP[key]) || '';
+                    guestSets.push({ count, icon });
+                }
+            });
+            guestExtraData.sets = guestSets;
         }
 
         container.innerHTML = renderCompareCard(hostPersoObj, guestCombatStats, guestExtraData);
