@@ -34,6 +34,7 @@ enLogs.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontm
             color: var(--text-primary);
             font-size: 1.5rem;
             border-top: 1px solid var(--text-primary);
+            font-weight: normal;
         }
 
         .changelog-entry h2 {
@@ -41,13 +42,14 @@ enLogs.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontm
             margin-bottom: 8px;
             color: var(--text-primary);
             font-size: 1.2rem;
+            font-weight: normal;
         }
         .changelog-date {
             color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 20px;
             display: block;
-            font-weight: 500;
+            font-weight: normal;
         }
         .changelog-content {
             color: var(--text-primary);
@@ -70,8 +72,8 @@ enLogs.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontm
             font-size: 0.875rem;
         }
         .changelog-content li strong {
-            text-decoration: underline;
             color: rgba(255, 255, 255, 1);
+            font-weight: normal;
         }
         .changelog-content a {
             color: #e2a25b;

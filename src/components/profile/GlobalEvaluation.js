@@ -303,7 +303,7 @@ export function renderGlobalEvaluation(playerInfo, globalPersoData, uidStr = '')
         <div style="position: relative; z-index: 2; display: flex; width: 100%; height: 100%; align-items: center; gap: 15px;">
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-right: 15px; padding-left: 15px; gap: 4px; border-right: 1px solid rgba(255,255,255,0.2); height: 100%;">
                 <p style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin: 0;">${t('ui.eval.globalGrade')}</p>
-                <p style="font-size: 42px; font-weight: 800; color: ${globalGrade.color}; line-height: 1; text-shadow: 0 0 10px ${globalGrade.color}40; margin:0;">${globalGrade.letter}</p>
+                <p style="font-size: 42px; font-weight: normal; color: ${globalGrade.color}; line-height: 1; text-shadow: 0 0 10px ${globalGrade.color}40; margin:0;">${globalGrade.letter}</p>
             </div>
             <div style="display: flex; flex-direction: column; text-align: center; justify-content: center; gap: 2px; padding-right: 15px; border-right: 1px solid rgba(255,255,255,0.2); height: 100%;">
                 <div>

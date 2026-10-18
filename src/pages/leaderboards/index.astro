@@ -182,7 +182,7 @@ try {
             <div style="font-size: 11px; color: var(--text-grey); display: flex; gap: 6px; background: var(--bg-panel); padding: 5px 10px; border-radius: 8px; align-items: center;">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
               <span data-i18n="lb.entriesUpdateIn">Mise à jour des entrées dans : </span>
-              <span id="entries-update-timer" style="color: var(--accent-gold); font-weight: bold; font-family: monospace; font-size: 12px;">--:--</span>
+              <span id="entries-update-timer" style="color: var(--accent-gold); font-weight: normal; font-family: monospace; font-size: 12px;">--:--</span>
             </div>
           </div>
         </div>
@@ -325,7 +325,7 @@ try {
                                       <img src={teammateAssets[member.set as keyof typeof teammateAssets]} alt="" loading="lazy" decoding="async" title={member.set} class="dynamic-i18n-title" data-fr={assetTranslations[member.set]?.fr || member.set} data-en={assetTranslations[member.set]?.en || member.set} style="position:absolute; bottom:0; right:0; width:14px; height:14px; border-radius:2px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />
                                     )}
                                     {member.cons > 0 && (
-                                      <span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:700; color:var(--text-always-white); text-shadow:0 0 3px #000; z-index:10;">C{member.cons}</span>
+                                      <span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:normal; color:var(--text-always-white); text-shadow:0 0 3px #000; z-index:10;">C{member.cons}</span>
                                     )}
                                   </div>
                                 ));

@@ -2372,7 +2372,6 @@ main {
     padding: 2px 7px;
     border-radius: 5px;
     font-size: 11px;
-    font-weight: 500;
     letter-spacing: 0.02em;
     color: var(--text-always-white);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
@@ -2479,27 +2478,23 @@ main {
     border-radius: 7px;
     border: 1px solid color-mix(in srgb, var(--tooltip-color, var(--accent-gold)) 40%, rgba(255, 255, 255, 0.15));
     pointer-events: none;
-    mask-image: 
-        linear-gradient(
-            to right,
+    mask-image:
+        linear-gradient(to right,
             black 0,
             black calc(var(--arrow-left, 50%) - 5px),
             transparent calc(var(--arrow-left, 50%) - 5px),
             transparent calc(var(--arrow-left, 50%) + 5px),
             black calc(var(--arrow-left, 50%) + 5px),
-            black 100%
-        ),
+            black 100%),
         linear-gradient(black, black);
-    -webkit-mask-image: 
-        linear-gradient(
-            to right,
+    -webkit-mask-image:
+        linear-gradient(to right,
             black 0,
             black calc(var(--arrow-left, 50%) - 5px),
             transparent calc(var(--arrow-left, 50%) - 5px),
             transparent calc(var(--arrow-left, 50%) + 5px),
             black calc(var(--arrow-left, 50%) + 5px),
-            black 100%
-        ),
+            black 100%),
         linear-gradient(black, black);
     mask-size: 100% 5px, 100% calc(100% - 5px);
     -webkit-mask-size: 100% 5px, 100% calc(100% - 5px);
@@ -2535,28 +2530,24 @@ main {
     border-radius: 7px;
     border: 1px solid color-mix(in srgb, var(--tooltip-color, var(--accent-gold)) 40%, rgba(255, 255, 255, 0.15));
     pointer-events: none;
-    mask-image: 
+    mask-image:
         linear-gradient(black, black),
-        linear-gradient(
-            to right,
+        linear-gradient(to right,
             black 0,
             black calc(var(--arrow-left, 50%) - 5px),
             transparent calc(var(--arrow-left, 50%) - 5px),
             transparent calc(var(--arrow-left, 50%) + 5px),
             black calc(var(--arrow-left, 50%) + 5px),
-            black 100%
-        );
-    -webkit-mask-image: 
+            black 100%);
+    -webkit-mask-image:
         linear-gradient(black, black),
-        linear-gradient(
-            to right,
+        linear-gradient(to right,
             black 0,
             black calc(var(--arrow-left, 50%) - 5px),
             transparent calc(var(--arrow-left, 50%) - 5px),
             transparent calc(var(--arrow-left, 50%) + 5px),
             black calc(var(--arrow-left, 50%) + 5px),
-            black 100%
-        );
+            black 100%);
     mask-size: 100% calc(100% - 5px), 100% 5px;
     -webkit-mask-size: 100% calc(100% - 5px), 100% 5px;
     mask-position: top, bottom;
@@ -3083,7 +3074,7 @@ input:checked+.toggle-track .star-4 {
 
 .static-section strong {
     color: var(--text-primary);
-    font-weight: 600;
+    font-weight: normal;
 }
 
 .static-section a {

@@ -153,7 +153,7 @@ export function renderToolbarControls(persoObj, charIndex) {
                 : '';
 
             const consBadge = (mate.cons && mate.cons > 0)
-                ? `<span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:700; color:var(--text-always-white); text-shadow:0 0 3px #000; z-index:10; pointer-events:none;">C${mate.cons}</span>`
+                ? `<span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:normal; color:var(--text-always-white); text-shadow:0 0 3px #000; z-index:10; pointer-events:none;">C${mate.cons}</span>`
                 : '';
 
             const elemName = elems[0] ? (typeof t === 'function' ? t(`ui.char.spider.stat.${elems[0]}`) || elems[0] : elems[0]) : '';
@@ -245,7 +245,7 @@ export function renderToolbarControls(persoObj, charIndex) {
 
     return `
         <div class="data-select-container main-content-menu-team" style="padding:0; border:none; background:transparent;">
-            <button class="custom-dropdown-btn hover-bg-hover" onclick="toggleBuildMenu(event)" style="width: 100%; display: flex; justify-content: space-between; align-items: center; border: none; background: var(--bg-panel); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; height: 100%; box-sizing: border-box;">
+            <button class="custom-dropdown-btn hover-bg-hover" onclick="toggleBuildMenu(event)" style="width: 100%; display: flex; justify-content: space-between; align-items: center; border: none; background: var(--bg-panel); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: normal; height: 100%; box-sizing: border-box;">
                 <span id="active-build-text" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;">${activeBuildTextHtml}</span>
                 <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px; flex-shrink: 0; transition: transform 0.2s ease;">
             </button>
@@ -257,7 +257,7 @@ export function renderToolbarControls(persoObj, charIndex) {
         ${teamHtml}
 
         <div class="data-select-container main-content-menu-er" style="padding:0; border:none; background:transparent;">
-            <div style="width: 100%; display: flex; justify-content: center; align-items: center; border: none; background: var(--bg-panel); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 500; height: 100%; box-sizing: border-box; min-width: 105px;">
+            <div style="width: 100%; display: flex; justify-content: center; align-items: center; border: none; background: var(--bg-panel); color: var(--text-primary); padding: 8px 12px; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: normal; height: 100%; box-sizing: border-box; min-width: 105px;">
                 <span id="active-er-text" style="white-space: nowrap;">${activeERTextHtml}</span>
             </div>
         </div>

@@ -1146,7 +1146,7 @@ function generateScoreBar(totalRolls, currentGrade, maxPossibleRolls = 45) {
                 ${markersHtml}
                 <div class="score-cursor" style="left: ${percent}%;">
                     <div class="score-cursor-label" style="background:none; padding:0; border:none; box-shadow:none; display:flex; align-items:baseline; gap:6px; white-space:nowrap; transform: translateX(-50%); bottom: 25px;">
-                        <span style="font-size:1.2rem; font-weight:800; color:var(--accent-gold); line-height:1;">${currentGrade}</span>
+                        <span style="font-size:1.2rem; font-weight:normal; color:var(--accent-gold); line-height:1;">${currentGrade}</span>
                         <span style="font-size:0.85rem; color:#ddd;">(${totalRolls} Rolls)</span>
                     </div>
                 </div>
@@ -3094,7 +3094,7 @@ function renderHome() {
         profilesContentHtml = `
             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 80px 0;">
                 <img src="${ICON_BASE_PATH}icon_score.webp" alt="" style="width: 64px; height: 64px; margin-bottom: 20px; filter: grayscale(100%); opacity: 0.4;">
-                <h2 style="color: var(--text-primary); font-size: 24px; margin-bottom: 8px;">${t('home.empty')}</h2>
+                <h2 style="color: var(--text-primary); font-size: 24px; margin-bottom: 8px; font-weight: normal;">${t('home.empty')}</h2>
                 <p style="color: var(--text-grey); font-size: 14px;">${t('home.emptyHint')}</p>
             </div>
         `;
@@ -3252,7 +3252,7 @@ function renderHome() {
                 <div style="margin-left: auto; display: flex; gap: 8px;">
                     
                     <div class="custom-select-container">
-                        <button onclick="toggleThemeMenu(event)" class="link-button hover-bg-hover" style="width: 100%; justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 16px 0 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; outline: none; height: 38px; display: flex; align-items: center;">
+                        <button onclick="toggleThemeMenu(event)" class="link-button hover-bg-hover" style="width: 100%; justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 16px 0 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: normal; outline: none; height: 38px; display: flex; align-items: center;">
                             <div style="display: flex; align-items: center; gap: 8px;">
                                 <span class="theme-dot" id="active-theme-dot" style="background: ${THEME_COLORS[savedTheme] || THEME_COLORS['wish']};"></span>
                                 <span id="active-theme-text">${t('theme.' + savedTheme)}</span>
@@ -3280,7 +3280,7 @@ function renderHome() {
                     </div>
 
                     <div class="custom-select-container">
-                        <button onclick="toggleLangMenu(event)" class="link-button hover-bg-hover" style="justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; outline: none; height: 38px; display: flex; align-items: center;">
+                        <button onclick="toggleLangMenu(event)" class="link-button hover-bg-hover" style="justify-content: space-between; border:none; background: var(--bg-panel); color: var(--text-primary); padding: 0 12px; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: normal; outline: none; height: 38px; display: flex; align-items: center;">
                             <span>${window.GUOBA_LANG.toUpperCase()}</span>
                             <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px; transition: transform 0.2s ease;">
                         </button>
@@ -3801,14 +3801,14 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
                         <span style="color: rgba(255, 255, 255, 0.4); flex-shrink: 0; font-size: 12px; line-height: 1;">-</span>
                         <span style="color: var(--text-always-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${b.name}">${b.name}</span>
                     </div>
-                    <span style="color: var(--accent-gold); font-weight: 600; flex-shrink: 0; white-space: nowrap; margin-left: 6px;">${b.displayValue}</span>
+                    <span style="color: var(--accent-gold); font-weight: normal; flex-shrink: 0; white-space: nowrap; margin-left: 6px;">${b.displayValue}</span>
                 </div>
             `;
         });
 
         buffsGroupsHtml += `
             <div class="stat-tooltip-category-group" style="margin-bottom: 6px;">
-                <div style="font-size: 11px; font-weight: 600; color: rgba(255, 255, 255, 0.85); margin-bottom: 3px; display: flex; align-items: center; gap: 5px;">
+                <div style="font-size: 11px; font-weight: normal; color: rgba(255, 255, 255, 0.85); margin-bottom: 3px; display: flex; align-items: center; gap: 5px;">
                     <span style="display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: currentColor; flex-shrink: 0;"></span>
                     <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${catName}</span>
                 </div>
@@ -3822,7 +3822,7 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
     const tooltipHtml = `
         <div class="stat-tooltip-content" style="display: flex; flex-direction: column; gap: 6px;">
             <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 5px;">
-                <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; color: var(--text-always-white); font-size: 12px;">
+                <div style="display: flex; align-items: center; gap: 6px; font-weight: normal; color: var(--text-always-white); font-size: 12px;">
                     ${breakdown.statIcon}
                     <span>${breakdown.statLabel}</span>
                 </div>
@@ -3831,7 +3831,7 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
 
             <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: rgba(255, 255, 255, 0.7); margin-top: 2px;">
                 <span>${t('ui.statTooltip.unbuffed')}</span>
-                <span style="font-family: 'ShinShin', sans-serif; color: var(--text-always-white); font-weight: 500;">${breakdown.initialDisplay}</span>
+                <span style="font-family: 'ShinShin', sans-serif; color: var(--text-always-white); font-weight: normal;">${breakdown.initialDisplay}</span>
             </div>
 
             <div style="margin-top: 4px; margin-bottom: 2px;">
@@ -3844,9 +3844,9 @@ window.showCombatStatTooltip = function (element, charIndex, statKey) {
             </div>
 
             <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; border-top: 1px solid rgba(255, 255, 255, 0.15); padding-top: 6px; margin-top: 2px;">
-                <span style="font-weight: 600; color: var(--text-always-white);">${t('ui.statTooltip.buffedTotal')}</span>
+                <span style="font-weight: normal; color: var(--text-always-white);">${t('ui.statTooltip.buffedTotal')}</span>
                 <div style="text-align: right;">
-                    <span style="color: var(--text-always-white); font-weight: bold; font-size: 13px;">${breakdown.finalDisplay}</span>
+                    <span style="color: var(--text-always-white); font-weight: normal; font-size: 13px;">${breakdown.finalDisplay}</span>
                     <span style="color: rgba(255, 255, 255, 0.55); font-size: 11px; margin-left: 3px;">(${breakdown.totalGainDisplay})</span>
                 </div>
             </div>
@@ -3941,7 +3941,7 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
         tooltip.innerHTML = `
             <div class="stat-tooltip-content" style="display: flex; flex-direction: column; gap: 6px;">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 5px;">
-                    <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
+                    <div style="display: flex; align-items: center; gap: 6px; font-weight: normal; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
                         ${statIcon}
                         <span>${sub.label}</span>
                     </div>
@@ -3989,7 +3989,7 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
                 ? Math.round(rollValue)
                 : (typeof rollValue === 'number' ? rollValue.toFixed(1) : rollValue);
             const plusSign = (index < rollsArray.length - 1) ? ' <span style="color: rgba(255, 255, 255, 0.4); margin: 0 2px;">+</span> ' : '';
-            return `<span style="color:${color}; font-weight: 600;">${displayVal}</span>${plusSign}`;
+            return `<span style="color:${color}; font-weight: normal;">${displayVal}</span>${plusSign}`;
         }).join('');
 
         let rollsBreakdownListHtml = '';
@@ -4021,7 +4021,7 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
                         <span style="color: rgba(255, 255, 255, 0.85);">Roll ${idx + 1}</span>
                         ${tierLabel ? `<span style="font-size: 10px; color: ${color}; opacity: 0.9; margin-left: 2px;">(${tierLabel})</span>` : ''}
                     </div>
-                    <span style="font-family: monospace; font-weight: 600; color: ${color};">${formattedRollVal}</span>
+                    <span style="font-family: monospace; font-weight: normal; color: ${color};">${formattedRollVal}</span>
                 </div>
             `;
         });
@@ -4029,7 +4029,7 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
         tooltip.innerHTML = `
             <div class="stat-tooltip-content" style="display: flex; flex-direction: column; gap: 6px;">
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 5px;">
-                    <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
+                    <div style="display: flex; align-items: center; gap: 6px; font-weight: normal; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
                         ${statIcon}
                         <span>${sub.label}</span>
                     </div>
@@ -4039,12 +4039,12 @@ window.showArtifactStatTooltip = function (element, charIndex, artIndex, subInde
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-top: 2px;">
                     <span style="color: rgba(255, 255, 255, 0.7); font-size: 11px;">${t('analysis.s5.title')}</span>
                     <div style="display: flex; align-items: center; gap: 6px;">
-                        <span style="color: var(--text-always-white); font-weight: bold; font-size: 13px;">${formatValueDisplay(sub.key, sub.value)}</span>
-                        <span style="font-size: 10px; background: rgba(255, 255, 255, 0.1); color: var(--text-always-white); padding: 1px 6px; border-radius: 4px; font-weight: 500;">${t('ui.statTooltip.rollCount', rollsCount)}</span>
+                        <span style="color: var(--text-always-white); font-weight: normal; font-size: 13px;">${formatValueDisplay(sub.key, sub.value)}</span>
+                        <span style="font-size: 10px; background: rgba(255, 255, 255, 0.1); color: var(--text-always-white); padding: 1px 6px; border-radius: 4px; font-weight: normal;">${t('ui.statTooltip.rollCount', rollsCount)}</span>
                     </div>
                 </div>
 
-                <div style="background: var(--shadow-subtle); border-radius: 6px; padding: 6px 8px; margin-top: 2px; border: 1px solid rgba(255, 255, 255, 0.06);">
+                <div style="background: var(--shadow-subtle); border-radius: 6px; padding: 6px 8px; margin-top: 2px;">
                     <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;">
                         ${t('ui.statTooltip.rollBreakdown')}
                     </div>
@@ -4135,7 +4135,7 @@ window.showArtifactScoreTooltip = function (element, charIndex, artIndex) {
     tooltip.innerHTML = `
         <div class="stat-tooltip-content" style="display: flex; flex-direction: column; gap: 6px;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 5px;">
-                <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
+                <div style="display: flex; align-items: center; gap: 6px; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
                     <img src="/assets/simulator/icons/icon_score_white.webp" style="width: 17px; height: 17px;" alt="Score">
                     <span>${t('ui.char.score')} ${t('ui.art.rawScore.title')}</span>
                 </div>
@@ -4146,14 +4146,14 @@ window.showArtifactScoreTooltip = function (element, charIndex, artIndex) {
                 ${t('ui.art.rawScore.desc')}
             </div>
             
-            <div style="background: var(--shadow-subtle); border-radius: 6px; padding: 6px 8px; margin-top: 4px; border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; gap: 6px;">
+            <div style="background: var(--shadow-subtle); border-radius: 6px; padding: 6px 8px; margin-top: 4px; display: flex; flex-direction: column; gap: 6px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 6px;">
                     <span style="font-size: 11px; color: rgba(255, 255, 255, 0.8);">${t('ui.art.rawScore.total')}</span>
-                    <span style="font-family: monospace; font-size: 14px; font-weight: bold; color: var(--text-always-white);">${rawScore}</span>
+                    <span style="font-family: monospace; font-size: 12px; color: var(--text-always-white);">${rawScore}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 11px; color: rgba(255, 255, 255, 0.8);">${t('ui.art.rawScore.displayed')}</span>
-                    <span style="font-family: monospace; font-size: 14px; font-weight: bold; color: var(--text-always-white);">${art.score}/100</span>
+                    <span style="font-family: monospace; font-size: 12px; color: var(--text-always-white);">${art.score}/100</span>
                 </div>
             </div>
         </div>
@@ -4722,9 +4722,9 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
 
             return `
                 <div style="margin-bottom: 5px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 2px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: normal; color: rgba(255, 255, 255, 0.9); margin-bottom: 2px;">
                         <span>${section.title}</span>
-                        <span style="color: var(--text-always-white); font-weight: 600; font-family: 'ShinShin', sans-serif;">${section.total}</span>
+                        <span style="color: var(--text-always-white); font-weight: normal; font-family: 'ShinShin', sans-serif;">${section.total}</span>
                     </div>
                     <div style="display: flex; flex-direction: column;">
                         ${itemsHtml}
@@ -4739,7 +4739,7 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
                     <span style="color: rgba(255, 255, 255, 0.35); flex-shrink: 0;">•</span>
                     <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.label}</span>
                 </div>
-                <span style="font-family: 'ShinShin', sans-serif; font-weight: 600; color: var(--text-always-white); margin-left: 6px; flex-shrink: 0;">${item.value}</span>
+                <span style="font-family: 'ShinShin', sans-serif; font-weight: normal; color: var(--text-always-white); margin-left: 6px; flex-shrink: 0;">${item.value}</span>
             </div>
         `).join('');
 
@@ -4753,11 +4753,11 @@ window.showBaseStatTooltip = function (element, charIndex, statKey) {
     tooltip.innerHTML = `
         <div class="stat-tooltip-content" style="display: flex; flex-direction: column; gap: 6px;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 5px;">
-                <div style="display: flex; align-items: center; gap: 6px; font-weight: bold; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
+                <div style="display: flex; align-items: center; gap: 6px; font-weight: normal; color: var(--text-always-white); font-size: 12px; white-space: nowrap;">
                     ${breakdown.statIcon}
                     <span>${breakdown.statLabel}</span>
                 </div>
-                <span style="color: var(--text-always-white); font-weight: bold; font-size: 13px; white-space: nowrap;">${breakdown.totalDisplay}</span>
+                <span style="color: var(--text-always-white); font-weight: normal; font-size: 13px; white-space: nowrap;">${breakdown.totalDisplay}</span>
             </div>
             ${contentHtml}
         </div>
@@ -4990,7 +4990,7 @@ function showAccountRoadmap() {
     const currentUid = new URLSearchParams(window.location.search).get('uid') || (document.getElementById('uidInput') ? document.getElementById('uidInput').value.trim() : '');
     if (!window._isPopstate && currentUid) {
         const lang = localStorage.getItem('guoba_lang') || 'fr';
-        window.history.replaceState({ uid: currentUid, view: 'roadmap' }, '', `/?uid=${encodeURIComponent(currentUid)}&view=roadmap&lang=${lang}`);
+        window.history.replaceState({ uid: currentUid, view: 'account-review' }, '', `/?uid=${encodeURIComponent(currentUid)}&view=account-review&lang=${lang}`);
     }
 
     document.querySelectorAll('#sidebar-list .char-card').forEach((card) => {
@@ -5459,7 +5459,7 @@ function initMainPageApp() {
             toggleSearchIcon(true);
 
             const urlView = urlParams.get('view');
-            if (urlView === 'roadmap' && globalPersoData && globalPersoData.length > 0) {
+            if ((urlView === 'account-review' || urlView === 'roadmap') && globalPersoData && globalPersoData.length > 0) {
                 showAccountRoadmap();
             } else if (urlChar && globalPersoData && globalPersoData.length > 0) {
                 const targetIndex = globalPersoData.findIndex(p => p.nom.toLowerCase() === urlChar.toLowerCase());
@@ -5523,7 +5523,8 @@ window.fetchSidebarRanks = async function (uid) {
             const activeOriginalIndex = activeCard ? parseInt(activeCard.dataset.originalIndex) : -1;
             renderSidebar(activeOriginalIndex);
 
-            if (window._isPopstate || (new URLSearchParams(window.location.search).get('view') === 'roadmap')) {
+            const currentView = new URLSearchParams(window.location.search).get('view');
+            if (window._isPopstate || (currentView === 'account-review' || currentView === 'roadmap')) {
                 if (typeof window.setRoadmapFocusChar === 'function') {
                     window.setRoadmapFocusChar(window.roadmapFocusCharNom);
                 }
@@ -5546,7 +5547,8 @@ window.addEventListener("rankingDecimalsChanged", () => {
     renderSidebar(activeOriginalIndex);
 
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('view') === 'roadmap') {
+    const currentView = urlParams.get('view');
+    if (currentView === 'account-review' || currentView === 'roadmap') {
         renderRoadmapContainer();
     } else {
         if (activeOriginalIndex !== -1) {
@@ -5572,7 +5574,7 @@ window.addEventListener('popstate', () => {
         return;
     }
 
-    if (view === 'roadmap' && globalPersoData.length > 0) {
+    if ((view === 'account-review' || view === 'roadmap') && globalPersoData.length > 0) {
         window._isPopstate = true;
         showAccountRoadmap();
         window._isPopstate = false;
@@ -5668,6 +5670,7 @@ if (typeof window !== 'undefined') {
     window.statLine = statLine;
     window.renderShowcase = renderShowcase;
     window.showAccountRoadmap = showAccountRoadmap;
+    window.showAccountReview = showAccountRoadmap;
     window.showCombatStatTooltip = showCombatStatTooltip;
     window.hideCombatStatTooltip = hideCombatStatTooltip;
     window.showArtifactStatTooltip = showArtifactStatTooltip;

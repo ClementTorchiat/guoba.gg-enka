@@ -155,12 +155,12 @@ export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
     perso.artefacts.forEach(art => {
         if ((art.stars || 5) < 4) {
             art.score = 0;
-            art.rawScore = 0; 
+            art.rawScore = 0;
             art.grade = { letter: '—', color: '#6b7280', points: 0 };
             return;
         }
         const powerResult = scoreArtifact(art, config.weights);
-        
+
         /*
         // --- [LEGACY FEATURE] SYSTÈME ACTUEL (Score Brut) ---
         // Remplacer le bloc du système /100 ci-dessous par :
@@ -205,9 +205,9 @@ export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
         // --- [LEGACY FEATURE] ---
         // totalScore += art.score;
         */
-        
+
         // --- SYSTÈME RELATIF /100 ---
-        totalScore += art.rawScore; 
+        totalScore += art.rawScore;
 
         totalRolls += qualityPoints;
 
@@ -249,7 +249,7 @@ export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
     }
 
     const active4p = activeBonuses.filter(b => b.endsWith(":4"));
-    const active2p  = activeBonuses.filter(b => b.endsWith(":2"));
+    const active2p = activeBonuses.filter(b => b.endsWith(":2"));
 
     let isBest = false;
     let isGood = false;
@@ -258,14 +258,14 @@ export function calculateCharacterScore(perso, config, maxRolls = 45.0) {
     else if (active4p.some(b => config.goodSets && config.goodSets.includes(b))) isGood = true;
 
     if (!isBest && !isGood && active2p.length >= 2) {
-        const allInBest       = active2p.every(b => config.bestSets && config.bestSets.includes(b));
+        const allInBest = active2p.every(b => config.bestSets && config.bestSets.includes(b));
         const allInBestOrGood = active2p.every(b => (config.bestSets && config.bestSets.includes(b)) || (config.goodSets && config.goodSets.includes(b)));
 
-        if (allInBest)            isBest = true;
+        if (allInBest) isBest = true;
         else if (allInBestOrGood) isGood = true;
     }
 
-    if (isBest)      setMultiplier = 1.0;
+    if (isBest) setMultiplier = 1.0;
     else if (isGood) setMultiplier = 0.85;
 
     const finalScore = parseFloat((totalScore * setMultiplier).toFixed(1));
@@ -414,7 +414,7 @@ export function generateScoreBar(totalRolls, currentGrade, maxPossibleRolls = 45
                 ${markersHtml}
                 <div class="score-cursor" style="left: ${percent}%;">
                     <div class="score-cursor-label" style="background:none; padding:0; border:none; box-shadow:none; display:flex; align-items:baseline; gap:6px; white-space:nowrap; transform: translateX(-50%); bottom: 25px;">
-                        <span style="font-size:1.2rem; font-weight:800; color:var(--accent-gold); line-height:1;">${currentGrade}</span>
+                        <span style="font-size:1.2rem; font-weight:normal; color:var(--accent-gold); line-height:1;">${currentGrade}</span>
                         <span style="font-size:0.85rem; color:#ddd;">(${totalRolls} Rolls)</span>
                     </div>
                 </div>
@@ -809,7 +809,7 @@ if (typeof window !== 'undefined') {
     window.SCORING_NORMS = SCORING_NORMS;
     window.getRollDetails = getRollDetails;
     window.getRollCount = getRollCount;
-    window.getMaxTheoreticalScoreForPiece = getMaxTheoreticalScoreForPiece; 
+    window.getMaxTheoreticalScoreForPiece = getMaxTheoreticalScoreForPiece;
     window.calculateMaxTheoreticalScore = calculateMaxTheoreticalScore;
     window.calculateRollDistribution = calculateRollDistribution;
     window.calculateDeadRolls = calculateDeadRolls;

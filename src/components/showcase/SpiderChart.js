@@ -2,7 +2,7 @@
 import { t } from '../../scripts/i18n.js';
 
 if (typeof window !== 'undefined') {
-    window.showSpiderStatTooltip = function(element) {
+    window.showSpiderStatTooltip = function (element) {
         if (!element) return;
         const type = element.dataset.type;
         const label = element.dataset.label;
@@ -21,25 +21,25 @@ if (typeof window !== 'undefined') {
 
         tooltip.innerHTML = `
             <div class="stat-tooltip-content">
-                <div style="font-weight: 600; color: rgba(255, 255, 255, 0.7); font-size: 11px; padding-bottom: 6px; white-space: nowrap;">
+                <div style="font-weight: normal; color: rgba(255, 255, 255, 0.7); font-size: 11px; padding-bottom: 6px; white-space: nowrap;">
                     ${typeLabel}
                 </div>
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 18px; border-top: 1px solid rgba(255, 255, 255, 0.15); padding-top: 6px;">
-                    <span style="color: var(--text-always-white); font-weight: bold; font-size: 12px; white-space: nowrap;">${label}</span>
-                    <span style="color: var(--text-always-white); font-weight: bold; font-size: 13px; white-space: nowrap; font-family: 'ShinShin', sans-serif;">${val}</span>
+                    <span style="color: var(--text-always-white); font-weight: normal; font-size: 12px; white-space: nowrap;">${label}</span>
+                    <span style="color: var(--text-always-white); font-weight: normal; font-size: 13px; white-space: nowrap; font-family: 'ShinShin', sans-serif;">${val}</span>
                 </div>
             </div>
         `;
 
         const rect = element.getBoundingClientRect();
-        
+
         tooltip.style.visibility = 'hidden';
         tooltip.style.display = 'block';
         tooltip.style.transform = 'none';
         tooltip.style.pointerEvents = 'none';
-        
+
         const tipRect = tooltip.getBoundingClientRect();
-        
+
         let left = rect.left + rect.width / 2;
         const padding = 10;
         if (left - tipRect.width / 2 < padding) {
@@ -47,9 +47,9 @@ if (typeof window !== 'undefined') {
         } else if (left + tipRect.width / 2 > window.innerWidth - padding) {
             left = window.innerWidth - tipRect.width / 2 - padding;
         }
-        
+
         tooltip.style.left = left + 'px';
-        
+
         const spaceAbove = rect.top;
         if (spaceAbove > tipRect.height + 20) {
             tooltip.style.top = (rect.top - 8) + 'px';
@@ -63,7 +63,7 @@ if (typeof window !== 'undefined') {
         tooltip.style.opacity = '1';
     };
 
-    window.hideSpiderStatTooltip = function() {
+    window.hideSpiderStatTooltip = function () {
         const tooltip = document.getElementById('combat-stat-tooltip');
         if (tooltip) {
             tooltip.style.visibility = 'hidden';
@@ -182,7 +182,7 @@ export function renderSpiderChartContent(persoObj) {
 
         // Labels
         const labelPt = getPoint(R + 22, angle);
-        labels += `<text x="${labelPt.x}" y="${labelPt.y}" fill="rgba(255, 255, 255, 0.7)" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle" style="pointer-events: none;">${axis.label}</text>`;
+        labels += `<text x="${labelPt.x}" y="${labelPt.y}" fill="rgba(255, 255, 255, 0.7)" font-size="12" font-weight="normal" text-anchor="middle" dominant-baseline="middle" style="pointer-events: none;">${axis.label}</text>`;
 
         // Combat stat forms the outer colored polygon (100% radius)
         buffedPoints.push(`${outerPt.x},${outerPt.y}`);

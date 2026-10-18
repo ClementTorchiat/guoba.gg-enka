@@ -912,11 +912,11 @@ export const T = {
             }
         ],
 
-        // ── Roadmap de Compte ─────────────────────────────
-        "roadmap.button.title": "Roadmap du compte",
+        // ── Bilan de Compte ─────────────────────────────
+        "roadmap.button.title": "Bilan du compte",
         "roadmap.button.subtitle": "Stratégie globale",
         "roadmap.button.badge": (n) => `${n} actions`,
-        "roadmap.page.title": "Roadmap Stratégique du Compte",
+        "roadmap.page.title": "Bilan Stratégique du Compte",
         "roadmap.teams.title": "Équipes Recommandées",
         "roadmap.teams.desc": "Basé sur les meilleurs DPS de votre vitrine, découvrez les équipes optimales que vous pouvez jouer.",
         "roadmap.teams.noDuplicates": "Éviter les doublons",
@@ -932,7 +932,7 @@ export const T = {
         "roadmap.toggleAllChars.label": "Tous les persos du jeu",
         "roadmap.toggleAllChars.active": "Vitrine uniquement",
         "roadmap.outsideShowcase": "Hors-vitrine",
-        "roadmap.noCharacters": "Aucun personnage chargé. Entrez votre UID pour afficher la Roadmap.",
+        "roadmap.noCharacters": "Aucun personnage chargé. Entrez votre UID pour afficher le Bilan.",
 
         "roadmap.rankings.title": "Résumé des classements",
         "roadmap.rankings.subtitle": "Résumé des meilleurs classements actuels de vos personnages.",
@@ -1991,15 +1991,15 @@ export const T = {
             }
         ],
 
-        // ── Account Roadmap ───────────────────────────────
-        "roadmap.button.title": "Account Roadmap",
+        // ── Account Review ───────────────────────────────
+        "roadmap.button.title": "Account Review",
         "roadmap.button.subtitle": "Global Optimization",
         "roadmap.button.badge": (n) => `${n} actions`,
-        "roadmap.page.title": "Strategic Account Roadmap",
+        "roadmap.page.title": "Strategic Account Review",
         "roadmap.teams.title": "Recommended Teams",
         "roadmap.teams.desc": "Based on the top DPS in your showcase, discover the optimal teams you can play.",
         "roadmap.teams.noDuplicates": "Avoid duplicates",
-        "roadmap.page.subtitle": (count) => `Comprehensive analysis and optimization roadmap for all ${count} showcase characters.`,
+        "roadmap.page.subtitle": (count) => `Comprehensive analysis and optimization review for all ${count} showcase characters.`,
         "roadmap.nav.back": "Back to Showcase",
         "roadmap.focus.label": "Showcase Priority:",
         "roadmap.focus.all": "All",
@@ -2011,7 +2011,7 @@ export const T = {
         "roadmap.toggleAllChars.label": "All game characters",
         "roadmap.toggleAllChars.active": "Showcase only",
         "roadmap.outsideShowcase": "Outside showcase",
-        "roadmap.noCharacters": "No characters loaded. Enter your UID to view the Roadmap.",
+        "roadmap.noCharacters": "No characters loaded. Enter your UID to view the Account Review.",
 
         "roadmap.rankings.title": "Rankings Summary",
         "roadmap.rankings.subtitle": "Summary of your characters' current best rankings.",
