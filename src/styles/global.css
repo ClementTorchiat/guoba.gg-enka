@@ -680,6 +680,45 @@ main {
     font-size: 13px;
 }
 
+/* Barre de séparation pour les personnages archivés */
+.sidebar-archive-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 6px 8px 6px;
+    margin-top: 4px;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.sidebar-archive-divider::before {
+    content: '';
+    width: 14px;
+    height: 1px;
+    background-color: var(--text-always-white, #ffffff);
+    opacity: 0.9;
+}
+
+.sidebar-archive-divider-text {
+    font-size: 12px;
+    font-weight: normal;
+    color: var(--text-always-white, #ffffff);
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+}
+
+.sidebar-archive-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: var(--text-always-white, #ffffff);
+    opacity: 0.9;
+}
+
+.char-card.is-archived {
+    opacity: 0.95;
+}
+
 
 .main-content {
     display: flex;
@@ -4644,6 +4683,23 @@ input:checked+.toggle-track .star-4 {
     width: 44px !important;
     height: 44px !important;
     flex-shrink: 0;
+}
+
+.sidebar.sidebar-collapsed .sidebar-archive-divider {
+    padding: 6px 0;
+    margin: 4px auto;
+    width: 36px;
+    justify-content: center;
+}
+
+.sidebar.sidebar-collapsed .sidebar-archive-divider::before,
+.sidebar.sidebar-collapsed .sidebar-archive-divider-text {
+    display: none;
+}
+
+.sidebar.sidebar-collapsed .sidebar-archive-divider::after {
+    width: 100%;
+    flex: none;
 }
 
 /* 50x50 Morphing for Roadmap Button */

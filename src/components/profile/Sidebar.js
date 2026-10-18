@@ -9,27 +9,35 @@ export function renderSidebarList(characters, activeOriginalIndex = 0, sortState
     let entries = (characters || []).map((p, i) => ({ p, originalIndex: i }));
 
     const { column, direction } = sortState;
-    if (column === 'original') {
-        if (direction === 'asc') entries.reverse();
-    } else if (column === 'name') {
-        entries.sort((a, b) => {
-            const lang = (typeof window !== 'undefined' && window.GUOBA_LANG) || 'fr';
-            const cmp = a.p.nom.localeCompare(b.p.nom, lang, { sensitivity: 'base' });
-            return direction === 'desc' ? cmp : -cmp;
-        });
-    } else if (column === 'score') {
-        entries.sort((a, b) => {
-            const cmp = (b.p.evaluation?.score || 0) - (a.p.evaluation?.score || 0);
-            return direction === 'desc' ? cmp : -cmp;
-        });
-    }
+    const applySort = (arr) => {
+        if (column === 'original') {
+            if (direction === 'asc') arr.reverse();
+        } else if (column === 'name') {
+            arr.sort((a, b) => {
+                const lang = (typeof window !== 'undefined' && window.GUOBA_LANG) || 'fr';
+                const cmp = a.p.nom.localeCompare(b.p.nom, lang, { sensitivity: 'base' });
+                return direction === 'desc' ? cmp : -cmp;
+            });
+        } else if (column === 'score') {
+            arr.sort((a, b) => {
+                const cmp = (b.p.evaluation?.score || 0) - (a.p.evaluation?.score || 0);
+                return direction === 'desc' ? cmp : -cmp;
+            });
+        }
+    };
+
+    const showcaseEntries = entries.filter(e => !e.p.isArchived);
+    const archivedEntries = entries.filter(e => e.p.isArchived);
+
+    applySort(showcaseEntries);
+    applySort(archivedEntries);
 
     const displayPref = localStorage.getItem("guoba_sidebar_display") || "score_grade";
     const ranks = (typeof window !== 'undefined' && window.userLeaderboardRanks) || {};
 
-    entries.forEach(({ p, originalIndex }) => {
+    const renderCard = ({ p, originalIndex }) => {
         const div = document.createElement('div');
-        div.className = `char-card ${originalIndex === targetIndex ? 'active' : ''}`;
+        div.className = `char-card ${originalIndex === targetIndex ? 'active' : ''} ${p.isArchived ? 'is-archived' : ''}`;
         div.dataset.originalIndex = originalIndex;
         div.onclick = () => {
             document.querySelectorAll('.char-card').forEach(c => c.classList.remove('active'));
@@ -80,7 +88,7 @@ export function renderSidebarList(characters, activeOriginalIndex = 0, sortState
         }
 
         div.innerHTML = `
-            <img alt="" src="${p.image}" class="char-card-avatar">
+            <img alt="" src="${p.image}" class="char-card-avatar" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
             <div class="char-card-container">
                 <p class="char-card-name">${p.nom}</p>
                 <div class="char-card-info" data-char-index="${originalIndex}">
@@ -88,5 +96,17 @@ export function renderSidebarList(characters, activeOriginalIndex = 0, sortState
                 </div>
             </div>`;
         list.appendChild(div);
-    });
+    };
+
+    showcaseEntries.forEach(renderCard);
+
+    if (archivedEntries.length > 0) {
+        const divider = document.createElement('div');
+        divider.className = 'sidebar-archive-divider';
+        const labelText = (typeof window !== 'undefined' && window.t) ? window.t('sidebar.archivedTitle') : 'Archivés';
+        divider.innerHTML = `<span class="sidebar-archive-divider-text">${labelText}</span>`;
+        list.appendChild(divider);
+
+        archivedEntries.forEach(renderCard);
+    }
 }

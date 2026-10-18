@@ -76,6 +76,8 @@ export const T = {
         "ui.col.portrait": "Ordre vitrine",
         "ui.col.sortByName": "Trier par nom",
         "ui.col.sortByScore": "Trier par score",
+        "sidebar.archivedTitle": "Archivés",
+        "sidebar.archivedBadge": "Archivé",
 
         // ── Toolbar & menu principal ──────────────────────
         "ui.noArchetype": "Aucun archétype disponible",
@@ -748,6 +750,11 @@ export const T = {
         "account.settings.decimals1": "1 décimale",
         "account.settings.decimals2": "2 décimales",
         "account.settings.preferences": "Préférences",
+        "account.settings.dataManagement": "Gestion des données",
+        "account.settings.archivedCount": (c = 0) => `${c} personnage${c > 1 ? 's' : ''} en réserve`,
+        "account.settings.clearSnapshots": "Effacer la réserve",
+        "account.settings.clearSnapshotsConfirm": "Voulez-vous vraiment effacer tous les personnages archivés en réserve pour cet UID ? Cette action est irréversible.",
+        "account.settings.clearSnapshotsSuccess": "La réserve de personnages a été effacée avec succès.",
         "account.settings.logout": "Se déconnecter",
         "account.settings.updateDiscordAvatar": "Mettre à jour la photo de profil Discord",
         "account.auth.missingEnv": "⚠️ [Auth] Variables d'environnement Supabase manquantes pour le client (PUBLIC_SUPABASE_URL / PUBLIC_SUPABASE_ANON_KEY).",
@@ -1167,6 +1174,8 @@ export const T = {
         "ui.col.portrait": "Showcase order",
         "ui.col.sortByName": "Sort by name",
         "ui.col.sortByScore": "Sort by score",
+        "sidebar.archivedTitle": "Archived",
+        "sidebar.archivedBadge": "Archived",
 
         // ── Toolbar & main menu ───────────────────────────
         "ui.noArchetype": "No archetype available",
@@ -1827,6 +1836,11 @@ export const T = {
         "account.settings.decimals1": "1 decimal",
         "account.settings.decimals2": "2 decimals",
         "account.settings.preferences": "Preferences",
+        "account.settings.dataManagement": "Data Management",
+        "account.settings.archivedCount": (c = 0) => `${c} archived character${c > 1 ? 's' : ''}`,
+        "account.settings.clearSnapshots": "Clear archive",
+        "account.settings.clearSnapshotsConfirm": "Are you sure you want to delete all archived characters for this UID? This action cannot be undone.",
+        "account.settings.clearSnapshotsSuccess": "Archived characters have been successfully cleared.",
         "account.settings.logout": "Log out",
         "account.settings.updateDiscordAvatar": "Update Discord profile picture",
         "account.auth.missingEnv": "⚠️ [Auth] Missing Supabase environment variables for the client (PUBLIC_SUPABASE_URL / PUBLIC_SUPABASE_ANON_KEY).",

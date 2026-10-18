@@ -1,5 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { idbGet } from './db.js';
+import { getStoredSnapshots, clearStoredSnapshots, countArchivedCharacters } from './snapshotManager.js';
+import { t as i18nT } from './i18n.js';
 
 // Initialisation de Supabase côté client (grâce aux variables d'environnement publiques)
 const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
@@ -13,7 +15,7 @@ if (supabaseUrl && supabaseAnonKey) {
     console.warn(window.t ? window.t('account.auth.missingEnv') : "⚠️ [Auth] Variables d'environnement Supabase manquantes pour le client (PUBLIC_SUPABASE_URL / PUBLIC_SUPABASE_ANON_KEY).");
 }
 
-const t = (k) => window.t ? window.t(k) : k;
+const t = (k, ...args) => (typeof window !== 'undefined' && window.t) ? window.t(k, ...args) : i18nT(k, ...args);
 
 // Fonction pour déclencher l'authentification OAuth avec Discord
 export async function loginWithDiscord() {
@@ -86,6 +88,16 @@ async function fetchUserProfile(userId) {
     const uidEl = document.getElementById('user-account-uid');
     if (!uidEl) return;
 
+    // Économie maximale des requêtes Supabase : si on a déjà un profil en cache local récent (< 10 min)
+    const cachedUid = localStorage.getItem('guoba_discord_uid');
+    const lastFetch = parseInt(localStorage.getItem('guoba_profile_last_fetch') || '0', 10);
+    if (cachedUid && (Date.now() - lastFetch < 10 * 60 * 1000)) {
+        uidEl.textContent = `UID: ${cachedUid}`;
+        uidEl.style.opacity = '0.5';
+        updateSettingsUiState(cachedUid);
+        return;
+    }
+
     try {
         const { data, error } = await supabase
             .from('profiles')
@@ -94,6 +106,7 @@ async function fetchUserProfile(userId) {
             .single();
 
         if (data) {
+            localStorage.setItem('guoba_profile_last_fetch', String(Date.now()));
             if (data.genshin_uid) {
                 uidEl.textContent = `UID: ${data.genshin_uid}`;
                 uidEl.style.opacity = '0.5';
@@ -161,6 +174,8 @@ async function updateSettingsUiState(uid) {
         const nameEl = document.getElementById('settings-linked-name');
         const avatarEl = document.getElementById('settings-linked-avatar');
         if (uidEl) uidEl.textContent = `UID: ${uid}`;
+
+        updateArchivedCountLabel();
 
         // 1. Lire le cache local spécifique au profil lié (uniquement les données et les 2 images nécessaires)
         let cached = null;
@@ -343,6 +358,7 @@ export async function logoutUser() {
     localStorage.removeItem('guoba_discord_uid');
     localStorage.removeItem('guoba_discord_name');
     localStorage.removeItem('guoba_linked_profile');
+    localStorage.removeItem('guoba_profile_last_fetch');
     window.location.reload(); // On recharge pour réinitialiser l'état
 }
 
@@ -519,6 +535,7 @@ export async function unlinkUid() {
             if (error) throw error;
             localStorage.removeItem('guoba_discord_uid');
             localStorage.removeItem('guoba_linked_profile');
+            localStorage.removeItem('guoba_profile_last_fetch');
 
             // Mise à jour de l'UI
             const uidEl = document.getElementById('user-account-uid');
@@ -573,6 +590,51 @@ export async function toggleLeaderboardOptOut(isOptOut) {
     }
 }
 
+// --- Logique d'affichage du compteur de la réserve ---
+export async function updateArchivedCountLabel() {
+    const countLabel = document.getElementById('settings-archived-count-label');
+    if (!countLabel) return;
+    const uid = localStorage.getItem('guoba_discord_uid');
+    if (!uid) {
+        countLabel.textContent = t('account.settings.archivedCount', 0);
+        return;
+    }
+    try {
+        const count = await countArchivedCharacters(uid);
+        countLabel.textContent = t('account.settings.archivedCount', count);
+    } catch (_) {
+        countLabel.textContent = t('account.settings.archivedCount', 0);
+    }
+}
+
+// --- Logique d'effacement de la réserve locale ---
+export async function clearArchivedSnapshots() {
+    const uid = localStorage.getItem('guoba_discord_uid');
+    if (!uid) return;
+
+    if (!confirm(t('account.settings.clearSnapshotsConfirm'))) return;
+
+    await clearStoredSnapshots(uid);
+
+    const countLabel = document.getElementById('settings-archived-count-label');
+    if (countLabel) {
+        countLabel.textContent = t('account.settings.archivedCount', 0);
+    }
+
+    const currentUid = document.getElementById('uidInput')?.value.trim();
+    if (currentUid && String(currentUid) === String(uid) && Array.isArray(window.globalPersoData)) {
+        window.globalPersoData = window.globalPersoData.filter(p => !p.isArchived);
+        if (typeof window.renderSidebar === 'function') {
+            window.renderSidebar(0);
+        }
+        if (typeof window.renderShowcase === 'function' && window.globalPersoData.length > 0) {
+            window.renderShowcase(0);
+        }
+    }
+
+    alert(t('account.settings.clearSnapshotsSuccess'));
+}
+
 // Exposer les fonctions globales pour qu'elles puissent être appelées via des 'onclick' en HTML
 window.loginWithDiscord = loginWithDiscord;
 window.logoutUser = logoutUser;
@@ -581,6 +643,8 @@ window.verifyUidSignature = verifyUidSignature;
 window.unlinkUid = unlinkUid;
 window.toggleLeaderboardOptOut = toggleLeaderboardOptOut;
 window.updateDiscordAvatar = updateDiscordAvatar;
+window.clearArchivedSnapshots = clearArchivedSnapshots;
+window.updateArchivedCountLabel = updateArchivedCountLabel;
 
 // Au chargement de l'app, on vérifie la session
 document.addEventListener('DOMContentLoaded', () => {

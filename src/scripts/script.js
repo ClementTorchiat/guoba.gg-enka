@@ -24,6 +24,7 @@ import { setUserData, setCharacterList, selectCharacter } from '../stores/appSto
 import { preloadConfigsForShowcase, loadCharacterConfig } from './configLoader.js';
 import { idbGet, idbSet } from './db.js';
 import { loadRollTable } from './rollTableLoader.js';
+import { mergeShowcaseWithSnapshots, updateSnapshotCharacter } from './snapshotManager.js';
 
 import { t } from './i18n.js';
 
@@ -792,7 +793,7 @@ async function fetchUserData(optionalUid) {
             const cachedData = apiSessionCache[uid].data;
             window.currentPlayerNickname = cachedData.playerInfo.nickname || t('data.unknownPlayer');
             await preloadConfigsForShowcase(cachedData, charData, locData, window.HASH_TO_KEY);
-            processData(cachedData);
+            await processData(cachedData, uid);
             renderPlayerProfile(cachedData.playerInfo, uid);
             renderGlobalEvaluation(cachedData.playerInfo);
             toggleSearchIcon(true);
@@ -849,7 +850,7 @@ async function fetchUserData(optionalUid) {
             // Préchargement ultra-rapide des configurations nécessaires pour le showcase
             await preloadConfigsForShowcase(data, charData, locData, window.HASH_TO_KEY);
 
-            processData(data);
+            await processData(data, uid);
             renderPlayerProfile(data.playerInfo, uid);
 
             renderGlobalEvaluation(data.playerInfo);
@@ -2277,9 +2278,9 @@ function resolveCharConfig(nom) {
         || defaultConfig;
 }
 
-function processData(data) {
+async function processData(data, uid = null) {
     if (!data.avatarInfoList) return;
-    globalPersoData = [];
+    const showcasePersos = [];
 
     const G_CHAR_CONFIG = window.CHARACTER_CONFIG || {};
     const G_WEAPON_PASSIVES = window.WEAPON_PASSIVES || {};
@@ -2684,7 +2685,9 @@ function processData(data) {
             charConfig: rawConfig,
             activeBuild: activeBuild,
             costumeId: costumeId,
-            friendship: (perso.fetterInfo && perso.fetterInfo.expLevel) ? perso.fetterInfo.expLevel : 0
+            friendship: (perso.fetterInfo && perso.fetterInfo.expLevel) ? perso.fetterInfo.expLevel : 0,
+            skillDepotId: perso.skillDepotId || null,
+            nameTextMapHash: nameHash || null
         };
 
         if (activeBuild && activeBuild.team) {
@@ -2696,12 +2699,19 @@ function processData(data) {
         persoObj.evaluation = calculateCharacterScore(persoObj, scoringConfig, potentialMax.totalRolls);
         persoObj.weights = scoringConfig.weights;
 
-        globalPersoData.push(persoObj);
+        showcasePersos.push(persoObj);
     });
 
-    setUserData(data, document.getElementById('uidInput')?.value.trim() || '');
+    const currentUidStr = uid || document.getElementById('uidInput')?.value.trim() || new URLSearchParams(window.location.search).get('uid') || '';
+    globalPersoData = await mergeShowcaseWithSnapshots(currentUidStr, showcasePersos, locData);
+
+    setUserData(data, currentUidStr);
     setCharacterList(globalPersoData);
     window.globalPersoData = globalPersoData;
+
+    if (typeof window.updateArchivedCountLabel === 'function') {
+        window.updateArchivedCountLabel();
+    }
 
     renderSidebar();
     hideSidebarNav();
@@ -2819,6 +2829,11 @@ function switchBuild(charIndex, buildKey) {
 
     renderSidebar(idx);
     renderShowcase(idx);
+
+    const effectiveUid = document.getElementById('uidInput')?.value.trim() || new URLSearchParams(window.location.search).get('uid') || '';
+    if (effectiveUid) {
+        updateSnapshotCharacter(effectiveUid, p);
+    }
 }
 
 function updateResonanceBuffs(p, teamData) {

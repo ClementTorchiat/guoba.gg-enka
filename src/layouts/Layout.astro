@@ -633,6 +633,10 @@ const finalSchema = schema || defaultSchema;
                         updateDiscordBtn.style.display = isConnected ? "flex" : "none";
                     }
 
+                    if (typeof window.updateArchivedCountLabel === 'function') {
+                        window.updateArchivedCountLabel();
+                    }
+
                     const reduceCb = document.getElementById("reduce-transparency-checkbox");
                     if (reduceCb) {
                         reduceCb.checked = localStorage.getItem("guoba_reduce_transparency") === "true";
@@ -923,6 +927,13 @@ const finalSchema = schema || defaultSchema;
                                         <span data-i18n="account.settings.decimals2">2 décimales</span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div style="border-top: 1px solid var(--border-color); padding-top: 14px; margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
+                            <span style="font-size: 13px; color: var(--text-grey);" data-i18n="account.settings.dataManagement">Gestion des données</span>
+                            <div style="display: flex; align-items: center; justify-content: space-between; color: var(--text-primary); font-size: 14px;">
+                                <span id="settings-archived-count-label">0 personnage en réserve</span>
+                                <button onclick="clearArchivedSnapshots()" class="button-unlink" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.25); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: all 0.2s ease;" data-i18n="account.settings.clearSnapshots">Effacer la réserve</button>
                             </div>
                         </div>
                     </div>
