@@ -1,6 +1,8 @@
 // src/scripts/snapshotManager.js
 // Gestionnaire de snapshots de personnages persistants par UID via IndexedDB (zéro dépendance externe)
 import { idbGet, idbSet, idbDel } from './db.js';
+import { loadCharacterConfig } from './configLoader.js';
+import { calculateCharacterScore, calculateMaxTheoreticalScore } from './scoring.js';
 
 export function getCharacterKey(perso) {
     if (!perso) return '';
@@ -84,6 +86,69 @@ export async function updateSnapshotCharacter(uid, perso) {
     }
 }
 
+export async function syncArchivedCharacterConfig(archivedPerso) {
+    if (!archivedPerso) return;
+    const charName = archivedPerso.nom || archivedPerso.name;
+    if (!charName) return;
+
+    const rawConfig = await loadCharacterConfig(charName);
+    if (!rawConfig || !rawConfig.builds || Object.keys(rawConfig.builds).length === 0) {
+        return;
+    }
+
+    archivedPerso.charConfig = rawConfig;
+
+    // Retrouver le build actif : conserver la clé si elle existe toujours, sinon chercher le meilleur build ou le premier
+    let activeBuildKey = archivedPerso.activeBuild?.key;
+    if (!activeBuildKey || !rawConfig.builds[activeBuildKey]) {
+        let bestKey = null;
+        let maxEfficiency = -1;
+        const artefacts = archivedPerso.artefacts || [];
+
+        Object.entries(rawConfig.builds).forEach(([key, build]) => {
+            const tempConfig = { ...rawConfig, ...build };
+            const clonedArtefacts = artefacts.map(a => ({ ...a }));
+            const simulation = calculateCharacterScore({ artefacts: clonedArtefacts }, tempConfig);
+            const potential = calculateMaxTheoreticalScore({ artefacts }, tempConfig);
+
+            let efficiency = 0;
+            if (potential && potential.score > 0) {
+                efficiency = simulation.score / potential.score;
+            }
+            if (efficiency > maxEfficiency) {
+                maxEfficiency = efficiency;
+                bestKey = key;
+            }
+        });
+        activeBuildKey = bestKey || Object.keys(rawConfig.builds)[0];
+    }
+
+    const freshBuild = rawConfig.builds[activeBuildKey];
+    if (freshBuild) {
+        archivedPerso.activeBuild = {
+            ...freshBuild,
+            key: activeBuildKey
+        };
+    }
+
+    const scoringConfig = { ...rawConfig, ...archivedPerso.activeBuild };
+    archivedPerso.weights = scoringConfig.weights;
+
+    // Mise à jour des résonances et des buffs de coéquipiers si disponibles
+    if (typeof window !== 'undefined' && archivedPerso.activeBuild?.team) {
+        if (typeof window.updateResonanceBuffs === 'function') {
+            window.updateResonanceBuffs(archivedPerso, archivedPerso.activeBuild.team);
+        }
+        if (typeof window.updateTeammateBuffs === 'function') {
+            window.updateTeammateBuffs(archivedPerso, archivedPerso.activeBuild.team);
+        }
+    }
+
+    // Recalcul du score théorique maximal et de l'évaluation complète
+    const potentialMax = calculateMaxTheoreticalScore(archivedPerso, scoringConfig);
+    archivedPerso.evaluation = calculateCharacterScore(archivedPerso, scoringConfig, potentialMax.totalRolls);
+}
+
 export async function mergeShowcaseWithSnapshots(uid, showcasePersoList, locData = null) {
     if (!isLinkedAccount(uid)) {
         return (showcasePersoList || []).map(p => {
@@ -128,6 +193,17 @@ export async function mergeShowcaseWithSnapshots(uid, showcasePersoList, locData
         }
     });
 
+    // 2.5 Resynchroniser la configuration et le score des personnages archivés pour garantir leur fraîcheur
+    if (archivedList.length > 0) {
+        await Promise.all(archivedList.map(async (archivedPerso) => {
+            try {
+                await syncArchivedCharacterConfig(archivedPerso);
+            } catch (err) {
+                console.warn('[SnapshotManager] Impossible de synchroniser la config pour:', archivedPerso?.nom, err);
+            }
+        }));
+    }
+
     // 3. Sauvegarde asynchrone non-bloquante du dictionnaire mis à jour
     saveStoredSnapshots(uid, snapshotsMap).catch(e => {
         console.warn('[SnapshotManager] Sauvegarde asynchrone échouée:', e);
@@ -146,6 +222,8 @@ if (typeof window !== 'undefined') {
         clearStoredSnapshots,
         countArchivedCharacters,
         updateSnapshotCharacter,
+        syncArchivedCharacterConfig,
         mergeShowcaseWithSnapshots
     };
 }
+
