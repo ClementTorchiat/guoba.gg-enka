@@ -3067,6 +3067,18 @@ function renderHome() {
     showSidebarNav();
     updateSidebarNavActive('home');
 
+    const playerProfile = document.getElementById('player-profile');
+    if (playerProfile) playerProfile.innerHTML = '';
+
+    const evalContainer = document.getElementById('global-evaluation');
+    if (evalContainer) evalContainer.style.display = 'none';
+
+    const roadmapArea = document.getElementById('roadmap-sidebar-area');
+    if (roadmapArea) roadmapArea.style.display = 'none';
+
+    const topHeader = document.getElementById('top-header-area');
+    if (topHeader) topHeader.style.display = 'none';
+
     const container = document.getElementById('main-container');
     const profiles = getRecentProfiles();
 

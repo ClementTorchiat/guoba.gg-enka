@@ -309,7 +309,15 @@ async function updateSettingsUiState(uid) {
                             recents.unshift(profileEntry);
                         }
                         localStorage.setItem('guoba_recent_profiles', JSON.stringify(recents));
-                        if (window.renderHome) window.renderHome();
+                        
+                        // Forcer le rafraîchissement UNIQUEMENT si l'utilisateur est actuellement sur la page d'accueil
+                        const isHome = (window.location.pathname === '/' || window.location.pathname === '') &&
+                            !new URLSearchParams(window.location.search).get('uid') &&
+                            (!window.globalPersoData || window.globalPersoData.length === 0) &&
+                            document.getElementById('home-title');
+                        if (isHome && typeof window.renderHome === 'function') {
+                            window.renderHome();
+                        }
                     } catch (e) {
                         console.error("Erreur lors de l'ajout au profils récents", e);
                     }
@@ -519,6 +527,15 @@ export async function unlinkUid() {
                 uidEl.style.opacity = '0.5';
             }
             updateSettingsUiState(null);
+
+            const isHome = (window.location.pathname === '/' || window.location.pathname === '') &&
+                !new URLSearchParams(window.location.search).get('uid') &&
+                (!window.globalPersoData || window.globalPersoData.length === 0) &&
+                document.getElementById('home-title');
+            if (isHome && typeof window.renderHome === 'function') {
+                window.renderHome();
+            }
+
             alert(t('account.settings.unlinkSuccess'));
         }
     } catch (err) {
