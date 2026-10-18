@@ -4822,8 +4822,30 @@ input:checked+.toggle-track .star-4 {
     opacity: 1;
 }
 
-#leaderboard-link:hover {
-    background: var(--bg-hover) !important;
+.leaderboard-link-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.leaderboard-link-btn:hover {
+    background-color: var(--bg-hover);
+}
+
+.leaderboard-link-btn:not([href]) {
+    opacity: 0.35;
+    cursor: default;
+    pointer-events: none;
 }
 
 #user-account {
