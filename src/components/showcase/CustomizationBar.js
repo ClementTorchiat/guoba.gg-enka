@@ -51,6 +51,9 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
 
     const safeDefaultSplash = (persoObj?.splashArt || '').replace(/'/g, "\\'");
 
+    const isModern = (typeof window !== 'undefined') &&
+        (window.customizationState?.cardDesignMode === 'modern' ||
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_card_design') === 'modern'));
     const isTransparent = (typeof window !== 'undefined') &&
         (window.customizationState?.styleMode === 'transparent' ||
             (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_style_mode') === 'transparent'));
@@ -60,9 +63,8 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
     const hasNoBgSplash = (typeof window !== 'undefined') &&
         (window.customizationState?.bgSplashMode === 'no-splash' ||
             (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_bgsplash_mode') === 'no-splash'));
-    const hasNoShadow = (typeof window !== 'undefined') &&
-        (window.customizationState?.shadowMode === 'no-shadow' ||
-            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode') === 'no-shadow'));
+    const savedShadow = (typeof window !== 'undefined') ? (window.customizationState?.shadowMode || (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode'))) : null;
+    const hasNoShadow = savedShadow ? (savedShadow === 'no-shadow') : isModern;
     const hasNoBorder = (typeof window !== 'undefined') &&
         (window.customizationState?.borderMode === 'no-border' ||
             (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_border_mode') === 'no-border'));
@@ -206,6 +208,16 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
 
             <!-- Séparateur -->
             <div class="custom-divider"></div>
+
+            <!-- Style global : Classique ou Moderne -->
+            <div class="custom-segmented-vertical" style="margin-bottom: 8px;">
+                <button type="button" class="custom-segmented-item ${!isModern ? 'active' : ''}" id="btn-card-design-classic" onclick="window.setCardDesignMode && window.setCardDesignMode('classic')" data-i18n="custom.design.classic">
+                    ${t('custom.design.classic')}
+                </button>
+                <button type="button" class="custom-segmented-item ${isModern ? 'active' : ''}" id="btn-card-design-modern" onclick="window.setCardDesignMode && window.setCardDesignMode('modern')" data-i18n="custom.design.modern">
+                    ${t('custom.design.modern')}
+                </button>
+            </div>
 
             <!-- Contrôle 2 : Frost ou Transparent -->
             <div class="custom-toggle-group">
@@ -352,6 +364,7 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
 
 if (typeof window !== 'undefined') {
     if (!window.customizationState) {
+        const savedCardDesign = localStorage.getItem('guoba_custom_card_design');
         const savedMode = localStorage.getItem('guoba_custom_style_mode');
         const savedTheme = localStorage.getItem('guoba_custom_theme_mode');
         const savedBgSplash = localStorage.getItem('guoba_custom_bgsplash_mode');
@@ -364,6 +377,7 @@ if (typeof window !== 'undefined') {
         const savedScore = localStorage.getItem('guoba_custom_score_mode');
         const savedArtScore = localStorage.getItem('guoba_custom_artscore_mode');
         window.customizationState = {
+            cardDesignMode: savedCardDesign === 'modern' ? 'modern' : 'classic',
             styleMode: savedMode === 'transparent' ? 'transparent' : 'frost',
             themeMode: savedTheme === 'dark' ? 'dark' : 'light',
             bgSplashMode: savedBgSplash === 'no-splash' ? 'no-splash' : 'splash',
@@ -1061,6 +1075,33 @@ if (typeof window !== 'undefined') {
             toggleShowcaseClass('mode-artifact-cv', false);
             if (btnScore) btnScore.classList.add('active');
             if (btnCv) btnCv.classList.remove('active');
+        }
+    };
+
+    window.setCardDesignMode = function (mode) {
+        window.customizationState = window.customizationState || {};
+        window.customizationState.cardDesignMode = mode;
+        try {
+            localStorage.setItem('guoba_custom_card_design', mode);
+        } catch (e) { }
+
+        const btnClassic = document.getElementById('btn-card-design-classic');
+        const btnModern = document.getElementById('btn-card-design-modern');
+
+        if (mode === 'modern') {
+            toggleShowcaseClass('mode-modern', true);
+            if (btnClassic) btnClassic.classList.remove('active');
+            if (btnModern) btnModern.classList.add('active');
+            if (typeof window.setShadowMode === 'function') {
+                window.setShadowMode('no-shadow');
+            }
+        } else {
+            toggleShowcaseClass('mode-modern', false);
+            if (btnClassic) btnClassic.classList.add('active');
+            if (btnModern) btnModern.classList.remove('active');
+            if (typeof window.setShadowMode === 'function') {
+                window.setShadowMode('shadow');
+            }
         }
     };
 }

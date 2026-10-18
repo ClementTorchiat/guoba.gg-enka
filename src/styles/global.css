@@ -1381,6 +1381,12 @@ main {
     --char-card-alpha-transparent: 0.6;
     --char-color-div: 3.5;
     --char-splash-brightness: 0.7;
+    --char-border-alpha: 0.45;
+}
+
+:is(.showcase-wrapper, .top-row) {
+    --char-card-border: rgba(255, 255, 255, 0.4);
+    --char-card-bg: var(--char-bg-alpha, rgb(from var(--char-hex) calc(r / var(--char-color-div, 3.5)) calc(g / var(--char-color-div, 3.5)) calc(b / var(--char-color-div, 3.5)) / var(--char-card-alpha, 0.765)));
 }
 
 :is(.showcase-wrapper, .top-row).mode-transparent {
@@ -1392,12 +1398,62 @@ main {
     --char-splash-brightness: 0.6;
 }
 
+/* --- MODE MODERNE (DESIGN MODULAIRE) --- */
+:is(.showcase-wrapper, .top-row).mode-modern {
+    --char-card-modern-target-l: 0.45;
+    --char-card-alpha-modern: 0.2;
+    --char-card-border: oklch(from var(--char-hex, #ffffff) 0.78 calc(c * 1.2) h / 0.4);
+    --char-card-bg: var(--char-bg-alpha, oklch(from var(--char-hex, #ffffff) calc(var(--char-card-modern-target-l) + (l - 0.5) * 0.15) min(0.12, calc(c * 1.2)) h / var(--char-card-alpha-modern)));
+}
+
+:is(.showcase-wrapper, .top-row).mode-modern.mode-transparent {
+    --char-card-alpha-modern: 0.1;
+}
+
+:is(.showcase-wrapper, .top-row).mode-modern.mode-dark {
+    --char-card-modern-target-l: 0.38;
+}
+
+.modern-splash-tint {
+    position: absolute;
+    inset: 0px;
+    z-index: 0;
+    pointer-events: none;
+    background: var(--char-hex);
+    mix-blend-mode: soft-light;
+    opacity: 0;
+    visibility: hidden;
+    border-radius: inherit;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+:is(.showcase-wrapper, .top-row).mode-modern .modern-splash-tint {
+    opacity: 0.4;
+    visibility: visible;
+}
+
+:is(.showcase-wrapper, .top-row).mode-no-bg-splash .modern-splash-tint {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
 .background-splash-art {
     transition: filter 0.35s ease, opacity 0.35s ease, visibility 0.35s ease;
 }
 
 .mode-dark .background-splash-art {
     filter: blur(10px) brightness(var(--char-splash-brightness, 0.3)) saturate(0.8) !important;
+}
+
+:is(.showcase-wrapper, .top-row).mode-modern > :is(.top-row-container, .top-row) > .background-splash-art,
+.top-row.mode-modern > .background-splash-art {
+    filter: blur(40px) brightness(0.35) saturate(1.5) contrast(1.25) !important;
+    mix-blend-mode: screen;
+}
+
+:is(.showcase-wrapper, .top-row).mode-modern.mode-dark > :is(.top-row-container, .top-row) > .background-splash-art,
+.top-row.mode-modern.mode-dark > .background-splash-art {
+    filter: blur(40px) brightness(0.25) saturate(1.5) contrast(1.25) !important;
 }
 
 :is(.showcase-wrapper, .top-row).mode-no-bg-splash .background-splash-art {
@@ -1444,7 +1500,7 @@ main {
 }
 
 :is(.showcase-wrapper, .top-row).mode-no-rarity .showcase-area-score {
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border: 1px solid var(--char-card-border, rgba(255, 255, 255, 0.4)) !important;
 }
 
 :is(.showcase-wrapper, .top-row).mode-no-border.mode-no-rarity .showcase-area-score {
@@ -1597,7 +1653,7 @@ main {
 }
 
 .character-portrait-container {
-    background-color: var(--char-bg-alpha, rgb(from var(--char-hex) calc(r / var(--char-color-div, 3.5)) calc(g / var(--char-color-div, 3.5)) calc(b / var(--char-color-div, 3.5)) / var(--char-card-alpha, 0.765)));
+    background-color: var(--char-card-bg, var(--char-bg-alpha, rgb(from var(--char-hex) calc(r / var(--char-color-div, 3.5)) calc(g / var(--char-color-div, 3.5)) calc(b / var(--char-color-div, 3.5)) / var(--char-card-alpha, 0.765))));
     transition: background-color 0.35s ease, box-shadow 0.25s, border-color 0.25s;
 }
 
@@ -1605,7 +1661,7 @@ main {
 .showcase-area-score,
 .showcase-area-skills,
 .showcase-area-combat-stats {
-    background-color: var(--char-bg-alpha, rgb(from var(--char-hex) calc(r / var(--char-color-div, 3.5)) calc(g / var(--char-color-div, 3.5)) calc(b / var(--char-color-div, 3.5)) / var(--char-card-alpha, 0.765)));
+    background-color: var(--char-card-bg, var(--char-bg-alpha, rgb(from var(--char-hex) calc(r / var(--char-color-div, 3.5)) calc(g / var(--char-color-div, 3.5)) calc(b / var(--char-color-div, 3.5)) / var(--char-card-alpha, 0.765))));
 }
 
 .stat-row {
@@ -1827,7 +1883,7 @@ main {
 }
 
 .card {
-    background-color: var(--char-bg-alpha, rgb(from var(--char-hex) calc(r / var(--char-color-div, 3.5)) calc(g / var(--char-color-div, 3.5)) calc(b / var(--char-color-div, 3.5)) / var(--char-card-alpha, 0.765)));
+    background-color: var(--char-card-bg, var(--char-bg-alpha, rgb(from var(--char-hex) calc(r / var(--char-color-div, 3.5)) calc(g / var(--char-color-div, 3.5)) calc(b / var(--char-color-div, 3.5)) / var(--char-card-alpha, 0.765))));
 }
 
 .stat-icon {
@@ -4715,7 +4771,8 @@ html.reduce-transparency {
     --splash-display: none !important;
 }
 
-html.reduce-transparency .background-splash-art {
+html.reduce-transparency .background-splash-art,
+html.reduce-transparency .modern-splash-tint {
     display: none !important;
 }
 

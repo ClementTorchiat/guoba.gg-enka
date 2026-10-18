@@ -4679,6 +4679,7 @@ window.exportBuildAsImage = async function () {
     }
 
     const activeModes = [
+        { key: 'guoba_custom_card_design', val: 'modern', cls: 'mode-modern' },
         { key: 'guoba_custom_shadow_mode', val: 'no-shadow', cls: 'mode-no-shadow' },
         { key: 'guoba_custom_border_mode', val: 'no-border', cls: 'mode-no-border' },
         { key: 'guoba_custom_corner_mode', val: 'square', cls: 'mode-square-corners' },
@@ -4827,7 +4828,7 @@ window.exportBuildAsImage = async function () {
                     if (hasNoBorder) {
                         scoreBox.style.setProperty('border-color', 'transparent', 'important');
                     } else {
-                        scoreBox.style.setProperty('border', '1px solid rgba(255, 255, 255, 0.4)', 'important');
+                        scoreBox.style.setProperty('border', '1px solid var(--char-card-border, rgba(255, 255, 255, 0.4))', 'important');
                     }
                 }
                 clonedElement.querySelectorAll('.artifact-card .artifact-set-name, .item-header .artifact-set-name').forEach(el => {

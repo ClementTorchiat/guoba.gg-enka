@@ -50,7 +50,7 @@ export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 
     const pieceName = t('artifact.' + art.type);
 
     return `
-        <div class="card artifact-card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid rgba(255, 255, 255, 0.4); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset;">
+        <div class="card artifact-card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid var(--char-card-border, rgba(255, 255, 255, 0.4)); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset;">
             <div class="card-container" style="padding: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; align-items: stretch; height: 100%;">
                 
                 <div class="item-header" style="height: 50px; display: flex; flex-direction: row; align-items: center; gap: 12px;">

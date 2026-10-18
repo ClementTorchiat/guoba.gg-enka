@@ -46,7 +46,7 @@ export function renderCharacterPortrait(persoObj, config) {
     const scaleFactor = currentScale / 100;
 
     return `
-        <div class="character-portrait-container" style="width: 350px; height: 720px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: rgb(0, 0, 0) 1px 1px 6px; box-sizing: border-box;">
+        <div class="character-portrait-container" style="width: 350px; height: 720px; position: relative; overflow: hidden; border-radius: 8px; border: 1px solid var(--char-card-border, rgba(255, 255, 255, 0.4)); box-shadow: rgb(0, 0, 0) 1px 1px 6px; box-sizing: border-box;">
             <img class="character-portrait" src="${activeSplash}" alt="${persoObj.nom}" fetchpriority="high" decoding="sync" onerror="if(this.src.endsWith('.webp')){this.src=this.src.replace(/\\.webp$/i,'.png');}" style="filter: none; position: absolute; transform-origin: center center; transform: translateX(${currentOffsetX}%) translateY(${currentOffsetY}%) scale(${scaleFactor}); height: 720px; transition: transform 0.2s ease, filter 0.35s cubic-bezier(0.41, 0.65, 0.39, 0.99); box-sizing: border-box;">
         </div>
     `;

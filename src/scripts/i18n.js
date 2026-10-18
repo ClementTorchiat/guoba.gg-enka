@@ -204,6 +204,8 @@ export const T = {
         "custom.score.rolls": "Rolls totaux",
         "custom.artscore.score": "Score",
         "custom.artscore.cv": "Crit Value",
+        "custom.design.classic": "Classique",
+        "custom.design.modern": "Moderne",
         "artifact.default": "Artéfact",
 
         // ── Évaluation globale ────────────────────────────
@@ -1283,6 +1285,8 @@ export const T = {
         "custom.score.rolls": "Total rolls",
         "custom.artscore.score": "Score",
         "custom.artscore.cv": "Crit Value",
+        "custom.design.classic": "Classic",
+        "custom.design.modern": "Modern",
         "artifact.default": "Artifact",
 
         // ── Global evaluation ─────────────────────────────

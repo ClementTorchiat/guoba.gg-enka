@@ -4,7 +4,7 @@ import { renderSpiderChartContent, updateSpiderChartDOM } from './SpiderChart.js
 
 export function renderBuffsPanel(persoObj, charIndex) {
     return `
-        <div class="card buffs-card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid rgba(255, 255, 255, 0.4); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; position: relative; overflow: hidden;">
+        <div class="card buffs-card" style="width: 240px; min-width: 240px; height: 280px; border: 1px solid var(--char-card-border, rgba(255, 255, 255, 0.4)); transition: background-color 0.35s, box-shadow 0.25s, border-color 0.25s; border-radius: 8px; box-shadow: rgb(0, 0, 0) 1px 1px 6px, rgba(255, 255, 255, 0.3) 0px 0px 2px inset; position: relative; overflow: hidden;">
             <div class="card-container" style="padding: 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; position: relative; z-index: 10;">
                 <div style="font-size:14px; flex-shrink: 0;">
                     <p style="margin-bottom: 2px; margin-top:0;">${t('ui.char.spiderTitle')}</p>
@@ -227,7 +227,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
         `;
 
         html += `
-            <div class="buff-category-card" style="flex: 1; min-width: 0; position: relative; border-radius: 8px; display: flex; flex-direction: column; max-height: 300px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.4);  transition: box-shadow 0.25s, border-color 0.25s;">
+            <div class="buff-category-card" style="flex: 1; min-width: 0; position: relative; border-radius: 8px; display: flex; flex-direction: column; max-height: 300px; overflow: hidden; border: 1px solid var(--char-card-border, rgba(255, 255, 255, 0.4));  transition: box-shadow 0.25s, border-color 0.25s;">
                 ${splashBgHtml}
                 <div style="display: flex; align-items: center; gap: 10px; padding: 12px 12px 0 12px; z-index: 2; position: relative;">
                     ${charAvatarHtml}

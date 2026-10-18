@@ -35,9 +35,11 @@ export function renderShowcaseComponent(persoObj, charIndex) {
     const hasNoBgSplash = (typeof window !== 'undefined') &&
         (window.customizationState?.bgSplashMode === 'no-splash' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_bgsplash_mode') === 'no-splash'));
-    const hasNoShadow = (typeof window !== 'undefined') &&
-        (window.customizationState?.shadowMode === 'no-shadow' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode') === 'no-shadow'));
+    const isModern = (typeof window !== 'undefined') &&
+        (window.customizationState?.cardDesignMode === 'modern' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_card_design') === 'modern'));
+    const savedShadow = (typeof window !== 'undefined') ? (window.customizationState?.shadowMode || (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode'))) : null;
+    const hasNoShadow = savedShadow ? (savedShadow === 'no-shadow') : isModern;
     const hasNoBorder = (typeof window !== 'undefined') &&
         (window.customizationState?.borderMode === 'no-border' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_border_mode') === 'no-border'));
@@ -59,7 +61,7 @@ export function renderShowcaseComponent(persoObj, charIndex) {
     const isArtifactCv = (typeof window !== 'undefined') &&
         (window.customizationState?.artScoreMode === 'cv' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_artscore_mode') === 'cv'));
-    const modeClasses = `${isTransparent ? ' mode-transparent' : ''}${isDark ? ' mode-dark' : ''}${hasNoBgSplash ? ' mode-no-bg-splash' : ''}${hasNoShadow ? ' mode-no-shadow' : ''}${hasNoBorder ? ' mode-no-border' : ''}${isSquareCorners ? ' mode-square-corners' : ''}${hasNoRarity ? ' mode-no-rarity' : ''}${hasNoRollDots ? ' mode-no-roll-dots' : ''}${hasNoDeadDim ? ' mode-no-dead-dim' : ''}${isScoreRolls ? ' mode-score-rolls' : ''}${isArtifactCv ? ' mode-artifact-cv' : ''}`;
+    const modeClasses = `${isModern ? ' mode-modern' : ''}${isTransparent ? ' mode-transparent' : ''}${isDark ? ' mode-dark' : ''}${hasNoBgSplash ? ' mode-no-bg-splash' : ''}${hasNoShadow ? ' mode-no-shadow' : ''}${hasNoBorder ? ' mode-no-border' : ''}${isSquareCorners ? ' mode-square-corners' : ''}${hasNoRarity ? ' mode-no-rarity' : ''}${hasNoRollDots ? ' mode-no-roll-dots' : ''}${hasNoDeadDim ? ' mode-no-dead-dim' : ''}${isScoreRolls ? ' mode-score-rolls' : ''}${isArtifactCv ? ' mode-artifact-cv' : ''}`;
     const wrapperClass = `showcase-wrapper${modeClasses}`;
 
     return `
@@ -67,6 +69,7 @@ export function renderShowcaseComponent(persoObj, charIndex) {
             <div class="top-row-container">
                 <div class="top-row${modeClasses}" style="position: relative; display: flex; gap: 8px; justify-content: flex-start; align-items: stretch;">
                     ${renderBackgroundSplash(persoObj)}
+                    <div class="modern-splash-tint"></div>
 
                     <!-- Colonne Gauche : Portrait et Arme -->
                     <div class="character-portrait-weapon" style="gap: 8px; align-items: stretch; flex-direction: column; display: flex; box-sizing: border-box; z-index: 10;">
