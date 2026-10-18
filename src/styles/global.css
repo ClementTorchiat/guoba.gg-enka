@@ -1495,6 +1495,20 @@ main {
     box-shadow: none !important;
 }
 
+/* --- AURA / LUEUR COLORÉE (CLASSIQUE) --- */
+:is(.showcase-wrapper, .top-row).mode-glow-shadow .card,
+:is(.showcase-wrapper, .top-row).mode-glow-shadow .character-portrait-container,
+:is(.showcase-wrapper, .top-row).mode-glow-shadow .showcase-area-base-stats,
+:is(.showcase-wrapper, .top-row).mode-glow-shadow .showcase-area-score,
+:is(.showcase-wrapper, .top-row).mode-glow-shadow .showcase-area-skills,
+:is(.showcase-wrapper, .top-row).mode-glow-shadow .showcase-area-combat-stats,
+:is(.showcase-wrapper, .top-row).mode-glow-shadow .buff-category-card,
+:is(.showcase-wrapper, .top-row).mode-glow-shadow .artifact-card,
+:is(.showcase-wrapper, .top-row).mode-glow-shadow .weapon-card,
+:is(.showcase-wrapper, .top-row).mode-glow-shadow .buffs-card {
+    box-shadow: 0 0 14px 0 color-mix(in srgb, var(--char-hex, #ffffff) 30%, transparent), rgba(255, 255, 255, 0.3) 0px 0px 2px inset !important;
+}
+
 /* Mode moderne : Micro-biseau supérieur (Glass highlight) */
 :is(.showcase-wrapper, .top-row).mode-modern .card,
 :is(.showcase-wrapper, .top-row).mode-modern .character-portrait-container,
@@ -1508,16 +1522,29 @@ main {
     box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15) !important;
 }
 
-:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow) .card,
-:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow) .character-portrait-container,
-:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow) .showcase-area-base-stats,
-:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow) .showcase-area-skills,
-:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow) .showcase-area-combat-stats,
-:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow) .buff-category-card,
-:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow) .artifact-card,
-:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow) .weapon-card,
-:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow) .buffs-card {
+:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow):not(.mode-glow-shadow) .card,
+:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow):not(.mode-glow-shadow) .character-portrait-container,
+:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow):not(.mode-glow-shadow) .showcase-area-base-stats,
+:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow):not(.mode-glow-shadow) .showcase-area-skills,
+:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow):not(.mode-glow-shadow) .showcase-area-combat-stats,
+:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow):not(.mode-glow-shadow) .buff-category-card,
+:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow):not(.mode-glow-shadow) .artifact-card,
+:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow):not(.mode-glow-shadow) .weapon-card,
+:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow):not(.mode-glow-shadow) .buffs-card {
     box-shadow: rgb(0, 0, 0) 1px 1px 6px, inset 0 1px 0 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Mode moderne : Aura / Lueur colorée */
+:is(.showcase-wrapper, .top-row).mode-modern.mode-glow-shadow .card,
+:is(.showcase-wrapper, .top-row).mode-modern.mode-glow-shadow .character-portrait-container,
+:is(.showcase-wrapper, .top-row).mode-modern.mode-glow-shadow .showcase-area-base-stats,
+:is(.showcase-wrapper, .top-row).mode-modern.mode-glow-shadow .showcase-area-skills,
+:is(.showcase-wrapper, .top-row).mode-modern.mode-glow-shadow .showcase-area-combat-stats,
+:is(.showcase-wrapper, .top-row).mode-modern.mode-glow-shadow .buff-category-card,
+:is(.showcase-wrapper, .top-row).mode-modern.mode-glow-shadow .artifact-card,
+:is(.showcase-wrapper, .top-row).mode-modern.mode-glow-shadow .weapon-card,
+:is(.showcase-wrapper, .top-row).mode-modern.mode-glow-shadow .buffs-card {
+    box-shadow: 0 0 14px 0 color-mix(in srgb, var(--char-hex, #ffffff) 30%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.15) !important;
 }
 
 /* Mode moderne : Aura / lueur diffuse sur le badge de score */
@@ -1525,16 +1552,24 @@ main {
     box-shadow: 0 0 16px -2px color-mix(in srgb, var(--grade-color, #ffd700) 35%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
 }
 
-:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow) .showcase-area-score {
+:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow):not(.mode-glow-shadow) .showcase-area-score {
     box-shadow: rgb(0, 0, 0) 1px 1px 6px, 0 0 16px -2px color-mix(in srgb, var(--grade-color, #ffd700) 35%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+:is(.showcase-wrapper, .top-row).mode-modern.mode-glow-shadow .showcase-area-score {
+    box-shadow: 0 0 14px 0 color-mix(in srgb, var(--char-hex, #ffffff) 30%, transparent), 0 0 16px -2px color-mix(in srgb, var(--grade-color, #ffd700) 35%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
 }
 
 :is(.showcase-wrapper, .top-row).mode-modern.mode-no-rarity .showcase-area-score {
     box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15) !important;
 }
 
-:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow).mode-no-rarity .showcase-area-score {
+:is(.showcase-wrapper, .top-row).mode-modern:not(.mode-no-shadow):not(.mode-glow-shadow).mode-no-rarity .showcase-area-score {
     box-shadow: rgb(0, 0, 0) 1px 1px 6px, inset 0 1px 0 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+:is(.showcase-wrapper, .top-row).mode-modern.mode-glow-shadow.mode-no-rarity .showcase-area-score {
+    box-shadow: 0 0 14px 0 color-mix(in srgb, var(--char-hex, #ffffff) 30%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.15) !important;
 }
 
 /* --- SANS BORDER --- */
@@ -1613,7 +1648,16 @@ main {
     display: none !important;
 }
 
-/* --- STATS INUTILES SUBSTATS (GRISÉES / NORMALES) --- */
+/* --- STATS INUTILES SUBSTATS (GRISÉES / BARRÉES / NORMALES) --- */
+:is(.showcase-wrapper, .top-row).mode-strike-dead-dim .substat-row.dead p {
+    text-decoration: line-through !important;
+    text-decoration-thickness: 1.5px !important;
+}
+
+:is(.showcase-wrapper, .top-row).mode-strike-dead-dim .substat-row.dead {
+    opacity: 0.45 !important;
+}
+
 :is(.showcase-wrapper, .top-row).mode-no-dead-dim .substat-row.dead {
     opacity: 1 !important;
 }

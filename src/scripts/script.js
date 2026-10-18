@@ -4681,12 +4681,14 @@ window.exportBuildAsImage = async function () {
     const activeModes = [
         { key: 'guoba_custom_card_design', val: 'modern', cls: 'mode-modern' },
         { key: 'guoba_custom_shadow_mode', val: 'no-shadow', cls: 'mode-no-shadow' },
+        { key: 'guoba_custom_shadow_mode', val: 'glow', cls: 'mode-glow-shadow' },
         { key: 'guoba_custom_border_mode', val: 'no-border', cls: 'mode-no-border' },
         { key: 'guoba_custom_corner_mode', val: 'square', cls: 'mode-square-corners' },
         { key: 'guoba_custom_rarity_mode', val: 'no-rarity', cls: 'mode-no-rarity' },
         { key: 'guoba_custom_rolldots_mode', val: 'no-dots', cls: 'mode-no-roll-dots' },
         { key: 'guoba_custom_rolldots_mode', val: 'colored', cls: 'mode-colored-roll-dots' },
         { key: 'guoba_custom_deaddim_mode', val: 'no-dim', cls: 'mode-no-dead-dim' },
+        { key: 'guoba_custom_deaddim_mode', val: 'strike', cls: 'mode-strike-dead-dim' },
         { key: 'guoba_custom_score_mode', val: 'rolls', cls: 'mode-score-rolls' },
         { key: 'guoba_custom_artscore_mode', val: 'cv', cls: 'mode-artifact-cv' },
         { key: 'guoba_custom_bgsplash_mode', val: 'no-splash', cls: 'mode-no-bg-splash' },
@@ -4792,6 +4794,10 @@ window.exportBuildAsImage = async function () {
                 (window.customizationState?.shadowMode === 'no-shadow') ||
                 (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode') === 'no-shadow');
 
+            const isGlowShadow = clonedElement.classList.contains('mode-glow-shadow') ||
+                (window.customizationState?.shadowMode === 'glow') ||
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode') === 'glow');
+
             const hasSquareCorners = clonedElement.classList.contains('mode-square-corners') ||
                 (window.customizationState?.cornerMode === 'square') ||
                 (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_corner_mode') === 'square');
@@ -4808,11 +4814,22 @@ window.exportBuildAsImage = async function () {
                 (window.customizationState?.deadDimMode === 'no-dim') ||
                 (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode') === 'no-dim');
 
-            // 1. SANS OMBRES : supprimer box-shadow sur toutes les cartes et conteneurs
+            const isDeadDimStrike = clonedElement.classList.contains('mode-strike-dead-dim') ||
+                (window.customizationState?.deadDimMode === 'strike') ||
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode') === 'strike');
+
+            // 1. OMBRES : supprimer box-shadow si no-shadow, ou appliquer lueur colorée si glow en mode classique
             if (hasNoShadow) {
                 clonedElement.style.setProperty('box-shadow', 'none', 'important');
                 clonedElement.querySelectorAll('*').forEach(el => {
                     el.style.setProperty('box-shadow', 'none', 'important');
+                });
+            } else if (isGlowShadow && !isModern) {
+                const charHex = clonedElement.style.getPropertyValue('--char-hex') || window.customizationState?.activeHex || '#ffffff';
+                clonedElement.querySelectorAll(
+                    '.card, .character-portrait-container, .showcase-area-base-stats, .showcase-area-score, .showcase-area-skills, .showcase-area-combat-stats, .buff-category-card, .artifact-card, .weapon-card, .buffs-card'
+                ).forEach(el => {
+                    el.style.setProperty('box-shadow', `0 0 14px 0 color-mix(in srgb, ${charHex} 30%, transparent), rgba(255, 255, 255, 0.3) 0px 0px 2px inset`, 'important');
                 });
             }
 
@@ -4856,14 +4873,24 @@ window.exportBuildAsImage = async function () {
                 });
             }
 
-            // 5. STATS INUTILES (GRISÉES / NORMALES)
+            // 5. STATS INUTILES (GRISÉES / BARRÉES / NORMALES)
             if (hasNoDeadDim) {
                 clonedElement.querySelectorAll('.substat-row.dead').forEach(el => {
                     el.style.setProperty('opacity', '1', 'important');
+                    el.querySelectorAll('p').forEach(p => p.style.removeProperty('text-decoration'));
+                });
+            } else if (isDeadDimStrike) {
+                clonedElement.querySelectorAll('.substat-row.dead').forEach(el => {
+                    el.style.setProperty('opacity', '0.45', 'important');
+                    el.querySelectorAll('p').forEach(p => {
+                        p.style.setProperty('text-decoration', 'line-through', 'important');
+                        p.style.setProperty('text-decoration-thickness', '1.5px', 'important');
+                    });
                 });
             } else {
                 clonedElement.querySelectorAll('.substat-row.dead').forEach(el => {
                     el.style.setProperty('opacity', '0.4', 'important');
+                    el.querySelectorAll('p').forEach(p => p.style.removeProperty('text-decoration'));
                 });
             }
 
@@ -4922,13 +4949,16 @@ window.exportBuildAsImage = async function () {
                     });
                 }
 
-                // Micro-biseau supérieur (Glass highlight) sur les cartes
+                // Micro-biseau supérieur (Glass highlight) et ombres sur les cartes
                 const modernCards = clonedElement.querySelectorAll(
                     '.card, .character-portrait-container, .showcase-area-base-stats, .showcase-area-skills, .showcase-area-combat-stats, .buff-category-card, .artifact-card, .weapon-card, .buffs-card'
                 );
+                const charHex = clonedElement.style.getPropertyValue('--char-hex') || window.customizationState?.activeHex || '#ffffff';
                 modernCards.forEach(el => {
                     if (hasNoShadow) {
                         el.style.setProperty('box-shadow', 'inset 0 1px 0 0 rgba(255, 255, 255, 0.15)', 'important');
+                    } else if (isGlowShadow) {
+                        el.style.setProperty('box-shadow', `0 0 14px 0 color-mix(in srgb, ${charHex} 30%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.15)`, 'important');
                     } else {
                         el.style.setProperty('box-shadow', 'rgb(0, 0, 0) 1px 1px 6px, inset 0 1px 0 0 rgba(255, 255, 255, 0.15)', 'important');
                     }
@@ -4941,12 +4971,16 @@ window.exportBuildAsImage = async function () {
                         const gradeColor = scoreBox.style.getPropertyValue('--grade-color') || scoreBox.style.borderColor || '#ffd700';
                         if (hasNoShadow) {
                             scoreBox.style.setProperty('box-shadow', `0 0 16px -2px color-mix(in srgb, ${gradeColor} 35%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.2)`, 'important');
+                        } else if (isGlowShadow) {
+                            scoreBox.style.setProperty('box-shadow', `0 0 14px 0 color-mix(in srgb, ${charHex} 30%, transparent), 0 0 16px -2px color-mix(in srgb, ${gradeColor} 35%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.2)`, 'important');
                         } else {
                             scoreBox.style.setProperty('box-shadow', `rgb(0, 0, 0) 1px 1px 6px, 0 0 16px -2px color-mix(in srgb, ${gradeColor} 35%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.2)`, 'important');
                         }
                     } else {
                         if (hasNoShadow) {
                             scoreBox.style.setProperty('box-shadow', 'inset 0 1px 0 0 rgba(255, 255, 255, 0.15)', 'important');
+                        } else if (isGlowShadow) {
+                            scoreBox.style.setProperty('box-shadow', `0 0 14px 0 color-mix(in srgb, ${charHex} 30%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.15)`, 'important');
                         } else {
                             scoreBox.style.setProperty('box-shadow', 'rgb(0, 0, 0) 1px 1px 6px, inset 0 1px 0 0 rgba(255, 255, 255, 0.15)', 'important');
                         }

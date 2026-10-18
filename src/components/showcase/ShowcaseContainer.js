@@ -39,7 +39,9 @@ export function renderShowcaseComponent(persoObj, charIndex) {
         (window.customizationState?.cardDesignMode === 'modern' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_card_design') === 'modern'));
     const savedShadow = (typeof window !== 'undefined') ? (window.customizationState?.shadowMode || (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode'))) : null;
-    const hasNoShadow = savedShadow ? (savedShadow === 'no-shadow') : isModern;
+    const shadowMode = (savedShadow === 'no-shadow' || savedShadow === 'glow') ? savedShadow : (savedShadow === 'shadow' ? 'shadow' : (isModern ? 'no-shadow' : 'shadow'));
+    const hasNoShadow = shadowMode === 'no-shadow';
+    const isGlowShadow = shadowMode === 'glow';
     const hasNoBorder = (typeof window !== 'undefined') &&
         (window.customizationState?.borderMode === 'no-border' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_border_mode') === 'no-border'));
@@ -55,16 +57,17 @@ export function renderShowcaseComponent(persoObj, charIndex) {
     const isRollDotsColored = (typeof window !== 'undefined') &&
         (window.customizationState?.rollDotsMode === 'colored' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'colored'));
-    const hasNoDeadDim = (typeof window !== 'undefined') &&
-        (window.customizationState?.deadDimMode === 'no-dim' ||
-         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode') === 'no-dim'));
+    const savedDeadDim = (typeof window !== 'undefined') ? (window.customizationState?.deadDimMode || (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode'))) : null;
+    const deadDimMode = (savedDeadDim === 'no-dim' || savedDeadDim === 'strike') ? savedDeadDim : 'dim';
+    const hasNoDeadDim = deadDimMode === 'no-dim';
+    const isDeadDimStrike = deadDimMode === 'strike';
     const isScoreRolls = (typeof window !== 'undefined') &&
         (window.customizationState?.scoreMode === 'rolls' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_score_mode') === 'rolls'));
     const isArtifactCv = (typeof window !== 'undefined') &&
         (window.customizationState?.artScoreMode === 'cv' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_artscore_mode') === 'cv'));
-    const modeClasses = `${isModern ? ' mode-modern' : ''}${isTransparent ? ' mode-transparent' : ''}${isDark ? ' mode-dark' : ''}${hasNoBgSplash ? ' mode-no-bg-splash' : ''}${hasNoShadow ? ' mode-no-shadow' : ''}${hasNoBorder ? ' mode-no-border' : ''}${isSquareCorners ? ' mode-square-corners' : ''}${hasNoRarity ? ' mode-no-rarity' : ''}${hasNoRollDots ? ' mode-no-roll-dots' : ''}${isRollDotsColored ? ' mode-colored-roll-dots' : ''}${hasNoDeadDim ? ' mode-no-dead-dim' : ''}${isScoreRolls ? ' mode-score-rolls' : ''}${isArtifactCv ? ' mode-artifact-cv' : ''}`;
+    const modeClasses = `${isModern ? ' mode-modern' : ''}${isTransparent ? ' mode-transparent' : ''}${isDark ? ' mode-dark' : ''}${hasNoBgSplash ? ' mode-no-bg-splash' : ''}${hasNoShadow ? ' mode-no-shadow' : ''}${isGlowShadow ? ' mode-glow-shadow' : ''}${hasNoBorder ? ' mode-no-border' : ''}${isSquareCorners ? ' mode-square-corners' : ''}${hasNoRarity ? ' mode-no-rarity' : ''}${hasNoRollDots ? ' mode-no-roll-dots' : ''}${isRollDotsColored ? ' mode-colored-roll-dots' : ''}${hasNoDeadDim ? ' mode-no-dead-dim' : ''}${isDeadDimStrike ? ' mode-strike-dead-dim' : ''}${isScoreRolls ? ' mode-score-rolls' : ''}${isArtifactCv ? ' mode-artifact-cv' : ''}`;
     const wrapperClass = `showcase-wrapper${modeClasses}`;
 
     return `

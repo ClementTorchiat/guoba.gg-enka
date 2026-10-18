@@ -64,7 +64,7 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
         (window.customizationState?.bgSplashMode === 'no-splash' ||
             (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_bgsplash_mode') === 'no-splash'));
     const savedShadow = (typeof window !== 'undefined') ? (window.customizationState?.shadowMode || (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_shadow_mode'))) : null;
-    const hasNoShadow = savedShadow ? (savedShadow === 'no-shadow') : isModern;
+    const shadowMode = (savedShadow === 'no-shadow' || savedShadow === 'glow') ? savedShadow : (savedShadow === 'shadow' ? 'shadow' : (isModern ? 'no-shadow' : 'shadow'));
     const hasNoBorder = (typeof window !== 'undefined') &&
         (window.customizationState?.borderMode === 'no-border' ||
             (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_border_mode') === 'no-border'));
@@ -77,9 +77,8 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
     const rollDotsMode = (typeof window !== 'undefined')
         ? (window.customizationState?.rollDotsMode || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_custom_rolldots_mode') : null) || 'dots')
         : (typeof localStorage !== 'undefined' ? (localStorage.getItem('guoba_custom_rolldots_mode') || 'dots') : 'dots');
-    const hasNoDeadDim = (typeof window !== 'undefined') &&
-        (window.customizationState?.deadDimMode === 'no-dim' ||
-            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode') === 'no-dim'));
+    const savedDeadDim = (typeof window !== 'undefined') ? (window.customizationState?.deadDimMode || (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode'))) : null;
+    const deadDimMode = (savedDeadDim === 'no-dim' || savedDeadDim === 'strike') ? savedDeadDim : 'dim';
     const isScoreRolls = (typeof window !== 'undefined') &&
         (window.customizationState?.scoreMode === 'rolls' ||
             (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_score_mode') === 'rolls'));
@@ -252,12 +251,15 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
             <!-- Séparateur -->
             <div class="custom-divider"></div>
 
-            <!-- Contrôle 5 : Shadow ou Sans Shadow -->
+            <!-- Contrôle 5 : Ombres (Avec ombres / Aura colorée / Sans ombres) -->
             <div class="custom-toggle-group">
-                <button type="button" class="custom-toggle-btn ${!hasNoShadow ? 'active' : ''}" id="btn-shadow-on" onclick="window.setShadowMode && window.setShadowMode('shadow')" title="${t('custom.shadow.on')}" data-i18n-title="custom.shadow.on">
+                <button type="button" class="custom-toggle-btn ${shadowMode === 'shadow' ? 'active' : ''}" id="btn-shadow-on" onclick="window.setShadowMode && window.setShadowMode('shadow')" title="${t('custom.shadow.on')}" data-i18n-title="custom.shadow.on">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-shadow"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M13 12h5"></path><path d="M13 15h4"></path><path d="M13 18h1"></path><path d="M13 9h4"></path><path d="M13 6h1"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${hasNoShadow ? 'active' : ''}" id="btn-shadow-off" onclick="window.setShadowMode && window.setShadowMode('no-shadow')" title="${t('custom.shadow.off')}" data-i18n-title="custom.shadow.off">
+                <button type="button" class="custom-toggle-btn ${shadowMode === 'glow' ? 'active' : ''}" id="btn-shadow-glow" onclick="window.setShadowMode && window.setShadowMode('glow')" title="${t('custom.shadow.glow')}" data-i18n-title="custom.shadow.glow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-sparkles"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"></path></svg>
+                </button>
+                <button type="button" class="custom-toggle-btn ${shadowMode === 'no-shadow' ? 'active' : ''}" id="btn-shadow-off" onclick="window.setShadowMode && window.setShadowMode('no-shadow')" title="${t('custom.shadow.off')}" data-i18n-title="custom.shadow.off">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-shadow-off"><path d="M5.634 5.638a9 9 0 0 0 12.728 12.727m1.68 -2.32a9 9 0 0 0 -12.086 -12.088"></path><path d="M16 12h2"></path><path d="M13 15h2"></path><path d="M13 18h1"></path><path d="M13 9h4"></path><path d="M13 6h1"></path><path d="M3 3l18 18"></path></svg>
                 </button>
             </div>
@@ -312,12 +314,15 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
                 </button>
             </div>
 
-            <!-- Contrôle 10 : Stats inutiles (Griser / Ne pas griser) -->
+            <!-- Contrôle 10 : Stats inutiles (Griser / Barrer / Ne pas griser) -->
             <div class="custom-toggle-group" style="margin-top: 8px; margin-bottom: 8px;">
-                <button type="button" class="custom-toggle-btn ${!hasNoDeadDim ? 'active' : ''}" id="btn-deaddim-on" onclick="window.setDeadDimMode && window.setDeadDimMode('dim')" title="${t('custom.deaddim.on')}" data-i18n-title="custom.deaddim.on">
+                <button type="button" class="custom-toggle-btn ${deadDimMode === 'dim' ? 'active' : ''}" id="btn-deaddim-on" onclick="window.setDeadDimMode && window.setDeadDimMode('dim')" title="${t('custom.deaddim.on')}" data-i18n-title="custom.deaddim.on">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-filter"><path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.828 4.828a2 2 0 0 0 -.586 1.414v4.172l-4 2v-6.172a2 2 0 0 0 -.586 -1.414l-4.828 -4.828a2 2 0 0 1 -.586 -1.414v-2.172z"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${hasNoDeadDim ? 'active' : ''}" id="btn-deaddim-off" onclick="window.setDeadDimMode && window.setDeadDimMode('no-dim')" title="${t('custom.deaddim.off')}" data-i18n-title="custom.deaddim.off">
+                <button type="button" class="custom-toggle-btn ${deadDimMode === 'strike' ? 'active' : ''}" id="btn-deaddim-strike" onclick="window.setDeadDimMode && window.setDeadDimMode('strike')" title="${t('custom.deaddim.strike')}" data-i18n-title="custom.deaddim.strike">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-strikethrough"><path d="M5 12l14 0"></path><path d="M16 6.5a4 2.5 0 0 0 -4 -2.5h-1a3.5 3.5 0 0 0 0 7h2a3.5 3.5 0 0 1 0 7h-1.5a4.5 4.5 0 0 1 -4 -2.5"></path></svg>
+                </button>
+                <button type="button" class="custom-toggle-btn ${deadDimMode === 'no-dim' ? 'active' : ''}" id="btn-deaddim-off" onclick="window.setDeadDimMode && window.setDeadDimMode('no-dim')" title="${t('custom.deaddim.off')}" data-i18n-title="custom.deaddim.off">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-filter-off"><path d="M3 3l18 18"></path><path d="M9 5h11a1 1 0 0 1 1 1v2a1 1 0 0 1 -.293 .707l-4.707 4.707v4.586l-4 2v-4.586m-2.293 -2.293l-3.414 -3.414a1 1 0 0 1 -.293 -.707v-2a1 1 0 0 1 1 -1h2"></path></svg>
                 </button>
             </div>
@@ -388,12 +393,12 @@ if (typeof window !== 'undefined') {
             styleMode: savedMode === 'transparent' ? 'transparent' : 'frost',
             themeMode: savedTheme === 'dark' ? 'dark' : 'light',
             bgSplashMode: savedBgSplash === 'no-splash' ? 'no-splash' : 'splash',
-            shadowMode: savedShadow === 'no-shadow' ? 'no-shadow' : 'shadow',
+            shadowMode: (savedShadow === 'no-shadow' || savedShadow === 'glow') ? savedShadow : 'shadow',
             borderMode: savedBorder === 'no-border' ? 'no-border' : 'border',
             cornerMode: savedCorner === 'square' ? 'square' : 'rounded',
             rarityMode: savedRarity === 'no-rarity' ? 'no-rarity' : 'rarity',
             rollDotsMode: (savedRollDots === 'no-dots' || savedRollDots === 'colored') ? savedRollDots : 'dots',
-            deadDimMode: savedDeadDim === 'no-dim' ? 'no-dim' : 'dim',
+            deadDimMode: (savedDeadDim === 'no-dim' || savedDeadDim === 'strike') ? savedDeadDim : 'dim',
             scoreMode: savedScore === 'rolls' ? 'rolls' : 'ranking',
             artScoreMode: savedArtScore === 'cv' ? 'cv' : 'score',
             customSplashes: {},
@@ -925,15 +930,26 @@ if (typeof window !== 'undefined') {
         } catch (e) { }
 
         const btnOn = document.getElementById('btn-shadow-on');
+        const btnGlow = document.getElementById('btn-shadow-glow');
         const btnOff = document.getElementById('btn-shadow-off');
 
         if (mode === 'no-shadow') {
             toggleShowcaseClass('mode-no-shadow', true);
+            toggleShowcaseClass('mode-glow-shadow', false);
             if (btnOn) btnOn.classList.remove('active');
+            if (btnGlow) btnGlow.classList.remove('active');
             if (btnOff) btnOff.classList.add('active');
+        } else if (mode === 'glow') {
+            toggleShowcaseClass('mode-no-shadow', false);
+            toggleShowcaseClass('mode-glow-shadow', true);
+            if (btnOn) btnOn.classList.remove('active');
+            if (btnGlow) btnGlow.classList.add('active');
+            if (btnOff) btnOff.classList.remove('active');
         } else {
             toggleShowcaseClass('mode-no-shadow', false);
+            toggleShowcaseClass('mode-glow-shadow', false);
             if (btnOn) btnOn.classList.add('active');
+            if (btnGlow) btnGlow.classList.remove('active');
             if (btnOff) btnOff.classList.remove('active');
         }
     };
@@ -1041,15 +1057,26 @@ if (typeof window !== 'undefined') {
         } catch (e) { }
 
         const btnOn = document.getElementById('btn-deaddim-on');
+        const btnStrike = document.getElementById('btn-deaddim-strike');
         const btnOff = document.getElementById('btn-deaddim-off');
 
         if (mode === 'no-dim') {
             toggleShowcaseClass('mode-no-dead-dim', true);
+            toggleShowcaseClass('mode-strike-dead-dim', false);
             if (btnOn) btnOn.classList.remove('active');
+            if (btnStrike) btnStrike.classList.remove('active');
             if (btnOff) btnOff.classList.add('active');
+        } else if (mode === 'strike') {
+            toggleShowcaseClass('mode-no-dead-dim', false);
+            toggleShowcaseClass('mode-strike-dead-dim', true);
+            if (btnOn) btnOn.classList.remove('active');
+            if (btnStrike) btnStrike.classList.add('active');
+            if (btnOff) btnOff.classList.remove('active');
         } else {
             toggleShowcaseClass('mode-no-dead-dim', false);
+            toggleShowcaseClass('mode-strike-dead-dim', false);
             if (btnOn) btnOn.classList.add('active');
+            if (btnStrike) btnStrike.classList.remove('active');
             if (btnOff) btnOff.classList.remove('active');
         }
     };
