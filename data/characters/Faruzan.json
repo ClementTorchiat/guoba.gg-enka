@@ -64,7 +64,9 @@
         ]
       },
       "hideUIStats": [],
-      "showUIStats": [],
+      "showUIStats": [
+        "atk"
+      ],
       "bestSets": [
         "TenacityOfTheMillelith:4",
         "NoblesseOblige:4",
