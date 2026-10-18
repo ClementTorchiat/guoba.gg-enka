@@ -4738,6 +4738,22 @@ window.exportBuildAsImage = async function () {
         }
     }
 
+    const isModernExport = element.classList.contains('mode-modern') ||
+        (window.customizationState?.cardDesignMode === 'modern') ||
+        (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_card_design') === 'modern');
+    let originalBgFilter = "";
+    let originalBgBlend = "";
+    if (bgDiv && isModernExport) {
+        originalBgFilter = bgDiv.style.filter;
+        originalBgBlend = bgDiv.style.mixBlendMode;
+        const isDarkExport = element.classList.contains('mode-dark') ||
+            (window.customizationState?.themeMode === 'dark') ||
+            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_theme_mode') === 'dark');
+        const brightness = isDarkExport ? '0.25' : '0.35';
+        bgDiv.style.setProperty('filter', `blur(40px) brightness(${brightness}) saturate(1.5) contrast(1.25)`, 'important');
+        bgDiv.style.setProperty('mix-blend-mode', 'screen', 'important');
+    }
+
     await new Promise(r => setTimeout(r, 50));
     element.classList.add('export-mode');
     const exportWidth = 1153;
@@ -4849,6 +4865,77 @@ window.exportBuildAsImage = async function () {
                     el.style.setProperty('opacity', '0.4', 'important');
                 });
             }
+
+            // 6. MODE MODERNE : Filter & blend-mode sur background-splash-art et modern-splash-tint
+            if (isModernExport) {
+                const bgSplash = clonedElement.querySelector('.background-splash-art');
+                if (bgSplash) {
+                    const isDarkExport = clonedElement.classList.contains('mode-dark') ||
+                        (window.customizationState?.themeMode === 'dark') ||
+                        (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_theme_mode') === 'dark');
+                    const brightness = isDarkExport ? '0.25' : '0.35';
+                    bgSplash.style.setProperty('filter', `blur(40px) brightness(${brightness}) saturate(1.5) contrast(1.25)`, 'important');
+                    bgSplash.style.setProperty('mix-blend-mode', 'screen', 'important');
+                }
+
+                const modernTint = clonedElement.querySelector('.modern-splash-tint');
+                if (modernTint) {
+                    modernTint.style.setProperty('opacity', '0.4', 'important');
+                    modernTint.style.setProperty('visibility', 'visible', 'important');
+                    modernTint.style.setProperty('mix-blend-mode', 'soft-light', 'important');
+                    const charHex = clonedElement.style.getPropertyValue('--char-hex') || window.customizationState?.activeHex;
+                    if (charHex) {
+                        modernTint.style.setProperty('background', charHex, 'important');
+                    }
+                }
+
+                // Arrondis adoucis (10px) si non angles carrés
+                if (!hasSquareCorners) {
+                    clonedElement.style.setProperty('border-radius', '10px', 'important');
+                    clonedElement.querySelectorAll(
+                        '.card, .character-portrait-container, .showcase-area-container, .showcase-area-base-stats, .showcase-area-score, .showcase-area-skills, .showcase-area-combat-stats, .buff-category-card, .artifact-card, .weapon-card, .buffs-card'
+                    ).forEach(el => {
+                        el.style.setProperty('border-radius', '10px', 'important');
+                    });
+                }
+
+                // Micro-biseau supérieur (Glass highlight) sur les cartes
+                const modernCards = clonedElement.querySelectorAll(
+                    '.card, .character-portrait-container, .showcase-area-base-stats, .showcase-area-skills, .showcase-area-combat-stats, .buff-category-card, .artifact-card, .weapon-card, .buffs-card'
+                );
+                modernCards.forEach(el => {
+                    if (hasNoShadow) {
+                        el.style.setProperty('box-shadow', 'inset 0 1px 0 0 rgba(255, 255, 255, 0.15)', 'important');
+                    } else {
+                        el.style.setProperty('box-shadow', 'rgb(0, 0, 0) 1px 1px 6px, inset 0 1px 0 0 rgba(255, 255, 255, 0.15)', 'important');
+                    }
+                });
+
+                // Lueur diffuse sur le badge de score
+                const scoreBox = clonedElement.querySelector('.showcase-area-score');
+                if (scoreBox) {
+                    if (!hasNoRarity) {
+                        const gradeColor = scoreBox.style.getPropertyValue('--grade-color') || scoreBox.style.borderColor || '#ffd700';
+                        if (hasNoShadow) {
+                            scoreBox.style.setProperty('box-shadow', `0 0 16px -2px color-mix(in srgb, ${gradeColor} 35%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.2)`, 'important');
+                        } else {
+                            scoreBox.style.setProperty('box-shadow', `rgb(0, 0, 0) 1px 1px 6px, 0 0 16px -2px color-mix(in srgb, ${gradeColor} 35%, transparent), inset 0 1px 0 0 rgba(255, 255, 255, 0.2)`, 'important');
+                        }
+                    } else {
+                        if (hasNoShadow) {
+                            scoreBox.style.setProperty('box-shadow', 'inset 0 1px 0 0 rgba(255, 255, 255, 0.15)', 'important');
+                        } else {
+                            scoreBox.style.setProperty('box-shadow', 'rgb(0, 0, 0) 1px 1px 6px, inset 0 1px 0 0 rgba(255, 255, 255, 0.15)', 'important');
+                        }
+                    }
+                }
+            } else {
+                const modernTint = clonedElement.querySelector('.modern-splash-tint');
+                if (modernTint) {
+                    modernTint.style.setProperty('opacity', '0', 'important');
+                    modernTint.style.setProperty('visibility', 'hidden', 'important');
+                }
+            }
         }
     })
         .then(function (dataUrl) {
@@ -4881,6 +4968,18 @@ window.exportBuildAsImage = async function () {
             }
             if (bgDiv && originalBgImage) {
                 bgDiv.style.backgroundImage = originalBgImage;
+            }
+            if (bgDiv && isModernExport) {
+                if (originalBgFilter) {
+                    bgDiv.style.filter = originalBgFilter;
+                } else {
+                    bgDiv.style.removeProperty('filter');
+                }
+                if (originalBgBlend) {
+                    bgDiv.style.mixBlendMode = originalBgBlend;
+                } else {
+                    bgDiv.style.removeProperty('mix-blend-mode');
+                }
             }
             btns.forEach(btn => {
                 if (originalContents.has(btn)) {
