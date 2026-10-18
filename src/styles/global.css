@@ -635,13 +635,14 @@ main {
     padding: 0 8px 0 0;
     border-radius: 8px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.2s ease;
     flex-direction: row;
     gap: 12px;
 }
 
 .char-card:hover {
     background: var(--bg-hover);
+    transform: translateX(4px);
 }
 
 .char-card.active {
@@ -1857,23 +1858,6 @@ main {
     background: var(--border-subtle);
 }
 
-
-
-
-.roll-badge {
-    background: rgba(255, 177, 59, 0.15);
-    color: var(--accent-gold);
-    font-size: 0.7rem;
-    padding: 1px 6px;
-    border-radius: 4px;
-    margin-left: 5px;
-    font-weight: normal;
-}
-
-.roll-badge:empty {
-    display: none;
-}
-
 .art-score-footer {
     font-size: 0.8rem;
     display: flex;
@@ -2384,54 +2368,218 @@ main {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 2px 6px;
+    gap: 4px;
+    padding: 2px 7px;
     border-radius: 5px;
     font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
     color: var(--text-always-white);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
     cursor: pointer;
-    transition: 0.2s;
     white-space: nowrap;
     height: 22px;
-    border: 1px solid var(--border-subtle);
+    line-height: 1;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 2px 4px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        filter 0.2s ease;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .guoba-badge:hover {
-    filter: brightness(1.2);
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+    border-color: rgba(255, 255, 255, 0.45);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .guoba-badge-icon {
-    font-size: 14px;
-    margin-right: 4px;
+    font-size: 13px;
+    line-height: 1;
+    display: inline-block;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: center center;
+}
+
+.guoba-badge:hover .guoba-badge-icon {
+    transform: scale(1.18) rotate(4deg);
+}
+
+.guoba-badge-name {
+    line-height: 1;
+}
+
+/* Effet Shimmer discret pour les badges de prestige / légendaires */
+.guoba-badge.guoba-badge-legendary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+    transform: skewX(-20deg);
+    animation: guoba-badge-shimmer 4.5s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes guoba-badge-shimmer {
+
+    0%,
+    65% {
+        left: -120%;
+    }
+
+    100% {
+        left: 220%;
+    }
 }
 
 #global-tooltip {
     position: fixed;
     visibility: hidden;
-    background: var(--bg-card);
+    background: color-mix(in srgb, var(--bg-panel) 80%, transparent);
     color: var(--text-primary);
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 11px;
+    padding: 7px 12px;
+    border-radius: 7px;
+    font-size: 11.5px;
+    font-weight: normal;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
     opacity: 0;
-    transition: opacity 0.3s ease, visibility 0.3s, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: opacity 0.15s ease, visibility 0.15s, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 999999;
-    white-space: nowrap;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+    max-width: 290px;
+    width: max-content;
+    white-space: normal;
+    word-break: break-word;
+    text-align: left;
     pointer-events: none;
-    border: 1px solid var(--tooltip-color, var(--accent-gold));
-    transform: translate(-50%, 10px) scale(0.95);
+    border: none;
+    box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.7),
+        0 0 16px -2px color-mix(in srgb, var(--tooltip-color, var(--accent-gold)) 25%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transform: translate(-50%, 4px);
+    box-sizing: border-box;
 }
 
-#global-tooltip::after {
+/* Bordure avec ouverture masquée pour la flèche du haut (placement-bottom par défaut) */
+#global-tooltip:not(.placement-top)::before,
+#global-tooltip.placement-bottom::before {
     content: '';
     position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent var(--tooltip-color, var(--accent-gold)) transparent;
+    inset: 0;
+    border-radius: 7px;
+    border: 1px solid color-mix(in srgb, var(--tooltip-color, var(--accent-gold)) 40%, rgba(255, 255, 255, 0.15));
+    pointer-events: none;
+    mask-image: 
+        linear-gradient(
+            to right,
+            black 0,
+            black calc(var(--arrow-left, 50%) - 5px),
+            transparent calc(var(--arrow-left, 50%) - 5px),
+            transparent calc(var(--arrow-left, 50%) + 5px),
+            black calc(var(--arrow-left, 50%) + 5px),
+            black 100%
+        ),
+        linear-gradient(black, black);
+    -webkit-mask-image: 
+        linear-gradient(
+            to right,
+            black 0,
+            black calc(var(--arrow-left, 50%) - 5px),
+            transparent calc(var(--arrow-left, 50%) - 5px),
+            transparent calc(var(--arrow-left, 50%) + 5px),
+            black calc(var(--arrow-left, 50%) + 5px),
+            black 100%
+        ),
+        linear-gradient(black, black);
+    mask-size: 100% 5px, 100% calc(100% - 5px);
+    -webkit-mask-size: 100% 5px, 100% calc(100% - 5px);
+    mask-position: top, bottom;
+    -webkit-mask-position: top, bottom;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    box-sizing: border-box;
+}
+
+/* Flèche haut (quand le tooltip est positionné sous l'élément - par défaut) */
+#global-tooltip:not(.placement-top)::after,
+#global-tooltip.placement-bottom::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: var(--arrow-left, 50%);
+    transform: translateX(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background: color-mix(in srgb, var(--bg-panel) 80%, transparent);
+    border-left: 1px solid color-mix(in srgb, var(--tooltip-color, var(--accent-gold)) 40%, rgba(255, 255, 255, 0.15));
+    border-top: 1px solid color-mix(in srgb, var(--tooltip-color, var(--accent-gold)) 40%, rgba(255, 255, 255, 0.15));
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    pointer-events: none;
+}
+
+/* Bordure avec ouverture masquée pour la flèche du bas (placement-top) */
+#global-tooltip.placement-top::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 7px;
+    border: 1px solid color-mix(in srgb, var(--tooltip-color, var(--accent-gold)) 40%, rgba(255, 255, 255, 0.15));
+    pointer-events: none;
+    mask-image: 
+        linear-gradient(black, black),
+        linear-gradient(
+            to right,
+            black 0,
+            black calc(var(--arrow-left, 50%) - 5px),
+            transparent calc(var(--arrow-left, 50%) - 5px),
+            transparent calc(var(--arrow-left, 50%) + 5px),
+            black calc(var(--arrow-left, 50%) + 5px),
+            black 100%
+        );
+    -webkit-mask-image: 
+        linear-gradient(black, black),
+        linear-gradient(
+            to right,
+            black 0,
+            black calc(var(--arrow-left, 50%) - 5px),
+            transparent calc(var(--arrow-left, 50%) - 5px),
+            transparent calc(var(--arrow-left, 50%) + 5px),
+            black calc(var(--arrow-left, 50%) + 5px),
+            black 100%
+        );
+    mask-size: 100% calc(100% - 5px), 100% 5px;
+    -webkit-mask-size: 100% calc(100% - 5px), 100% 5px;
+    mask-position: top, bottom;
+    -webkit-mask-position: top, bottom;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    box-sizing: border-box;
+}
+
+/* Flèche bas (quand le tooltip est positionné au-dessus de l'élément) */
+#global-tooltip.placement-top::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: var(--arrow-left, 50%);
+    transform: translateX(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background: color-mix(in srgb, var(--bg-panel) 80%, transparent);
+    border-right: 1px solid color-mix(in srgb, var(--tooltip-color, var(--accent-gold)) 40%, rgba(255, 255, 255, 0.15));
+    border-bottom: 1px solid color-mix(in srgb, var(--tooltip-color, var(--accent-gold)) 40%, rgba(255, 255, 255, 0.15));
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    pointer-events: none;
 }
 
 #combat-stat-tooltip,
@@ -2457,6 +2605,91 @@ main {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75), inset 0 0 1px rgba(255, 255, 255, 0.2);
     pointer-events: none;
     border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+#teammate-tooltip {
+    position: fixed;
+    visibility: hidden;
+    background: color-mix(in srgb, var(--bg-panel) 92%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: var(--text-primary);
+    font-family: 'ShinShin', sans-serif;
+    font-weight: normal;
+    text-transform: none;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 11px;
+    opacity: 0;
+    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.2s ease,
+        transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(6px) scale(0.98);
+    z-index: 999999;
+    width: 310px;
+    max-width: calc(100vw - 24px);
+    box-sizing: border-box;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    border: none;
+}
+
+#teammate-tooltip,
+#teammate-tooltip * {
+    font-weight: normal !important;
+    text-transform: none !important;
+}
+
+#teammate-tooltip.placement-top {
+    transform: translateY(-6px) scale(0.98);
+}
+
+#teammate-tooltip.is-active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Flèche haut (quand positionné sous l'élément allié) */
+#teammate-tooltip.placement-bottom::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: var(--arrow-left, 50%);
+    transform: translateX(-50%) rotate(45deg);
+    width: 9px;
+    height: 9px;
+    background: color-mix(in srgb, var(--bg-panel) 92%, transparent);
+    border: none;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    pointer-events: none;
+}
+
+/* Flèche bas (quand positionné au-dessus de l'élément allié) */
+#teammate-tooltip.placement-top::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: var(--arrow-left, 50%);
+    transform: translateX(-50%) rotate(45deg);
+    width: 9px;
+    height: 9px;
+    background: color-mix(in srgb, var(--bg-panel) 92%, transparent);
+    border: none;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    pointer-events: none;
+}
+
+.team-mate-slot {
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.team-mate-slot:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    filter: brightness(1.08);
+    z-index: 12;
 }
 
 .stat-row.is-buffed {
@@ -4409,6 +4642,10 @@ input:checked+.toggle-track .star-4 {
     align-items: center;
     flex-shrink: 0;
     gap: 0;
+}
+
+.sidebar.sidebar-collapsed .char-card:hover {
+    transform: none;
 }
 
 .sidebar.sidebar-collapsed .char-card-avatar,

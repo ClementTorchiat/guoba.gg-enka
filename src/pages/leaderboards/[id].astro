@@ -937,26 +937,51 @@ if (!pageError && !targetCharConfig) {
 
       window.showGlobalTooltip = function (element, text, color) {
         const tooltip = document.getElementById("global-tooltip");
-        if (!tooltip) return;
+        if (!tooltip || !element) return;
         tooltip.innerHTML = text;
-        tooltip.style.setProperty("--tooltip-color", color);
+        tooltip.style.setProperty("--tooltip-color", color || "var(--accent-gold)");
+
+        tooltip.classList.remove("placement-top", "placement-bottom");
 
         const rect = element.getBoundingClientRect();
+        const tWidth = tooltip.offsetWidth || 180;
+        const tHeight = tooltip.offsetHeight || 34;
+        const gap = 8;
+        const padding = 12;
 
-        tooltip.style.left = rect.left + rect.width / 2 + "px";
-        tooltip.style.top = rect.bottom + "px";
+        const spaceBelow = window.innerHeight - rect.bottom;
+        const placeTop = spaceBelow < (tHeight + gap + 10) && rect.top > (tHeight + gap);
 
+        const top = placeTop ? (rect.top - tHeight - gap) : (rect.bottom + gap);
+        tooltip.classList.add(placeTop ? "placement-top" : "placement-bottom");
+
+        const elemCenterX = rect.left + rect.width / 2;
+        let left = elemCenterX;
+        const halfWidth = tWidth / 2;
+
+        if (left - halfWidth < padding) {
+          left = padding + halfWidth;
+        } else if (left + halfWidth > window.innerWidth - padding) {
+          left = window.innerWidth - padding - halfWidth;
+        }
+
+        const arrowX = Math.max(12, Math.min(tWidth - 12, elemCenterX - (left - halfWidth)));
+        tooltip.style.setProperty("--arrow-left", arrowX + "px");
+
+        tooltip.style.left = left + "px";
+        tooltip.style.top = top + "px";
         tooltip.style.visibility = "visible";
         tooltip.style.opacity = "1";
-        tooltip.style.transform = "translate(-50%, 0) scale(1)";
+        tooltip.style.transform = "translate(-50%, 0)";
       };
 
       window.hideGlobalTooltip = function () {
         const tooltip = document.getElementById("global-tooltip");
         if (tooltip) {
+          const isTop = tooltip.classList.contains("placement-top");
           tooltip.style.visibility = "hidden";
           tooltip.style.opacity = "0";
-          tooltip.style.transform = "translate(-50%, 10px) scale(0.95)";
+          tooltip.style.transform = isTop ? "translate(-50%, -4px)" : "translate(-50%, 4px)";
         }
       };
 

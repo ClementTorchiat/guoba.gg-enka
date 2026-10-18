@@ -286,11 +286,13 @@ export function renderGlobalEvaluation(playerInfo, globalPersoData, uidStr = '')
 
     const badges = badgesData.map(b => {
         const safeDesc = b.desc.replace(/'/g, "\\'");
+        const priorityClass = b.priority === 1 ? ' guoba-badge-legendary' : '';
         return `
-            <div class="guoba-badge" style="background: ${b.bgRgba};"
+            <div class="guoba-badge${priorityClass}" style="background: ${b.bgRgba};"
                  onmouseenter="showGlobalTooltip(this, '${safeDesc}', '${b.tooltipColor}')"
                  onmouseleave="hideGlobalTooltip()">
-                <span class="guoba-badge-icon">${b.icon}</span> ${b.name}
+                <span class="guoba-badge-icon">${b.icon}</span>
+                <span class="guoba-badge-name">${b.name}</span>
             </div>
         `;
     });

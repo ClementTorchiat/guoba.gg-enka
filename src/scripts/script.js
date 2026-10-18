@@ -731,6 +731,7 @@ function clearSearch() {
     if (window.hideArtifactStatTooltip) window.hideArtifactStatTooltip();
     if (window.hideArtifactScoreTooltip) window.hideArtifactScoreTooltip();
     if (window.hideGlobalTooltip) window.hideGlobalTooltip();
+    if (window.hideTeammateTooltip) window.hideTeammateTooltip();
     if (typeof preloadedSplashUrls !== 'undefined') preloadedSplashUrls.clear();
     if (typeof decodedSplashImages !== 'undefined') decodedSplashImages.clear();
     sidebarSortState = { column: 'original', direction: 'desc' };
@@ -3332,32 +3333,415 @@ function ensureAllTooltips() {
     getOrCreateTooltip('artifact-stat-tooltip');
     getOrCreateTooltip('artifact-score-tooltip');
     getOrCreateTooltip('base-stat-tooltip');
+    getOrCreateTooltip('teammate-tooltip');
 }
 
 ensureAllTooltips();
 
 window.showGlobalTooltip = function (element, text, color) {
     const tooltip = getOrCreateTooltip('global-tooltip');
-    if (!tooltip) return;
+    if (!tooltip || !element) return;
     tooltip.innerHTML = text;
-    tooltip.style.setProperty('--tooltip-color', color);
+    tooltip.style.setProperty('--tooltip-color', color || 'var(--accent-gold)');
+
+    tooltip.classList.remove('placement-top', 'placement-bottom');
 
     const rect = element.getBoundingClientRect();
+    const tWidth = tooltip.offsetWidth || 180;
+    const tHeight = tooltip.offsetHeight || 34;
+    const gap = 8;
+    const padding = 12;
 
-    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
-    tooltip.style.top = rect.bottom + 'px';
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const placeTop = spaceBelow < (tHeight + gap + 10) && rect.top > (tHeight + gap);
+
+    const top = placeTop ? (rect.top - tHeight - gap) : (rect.bottom + gap);
+    tooltip.classList.add(placeTop ? 'placement-top' : 'placement-bottom');
+
+    const elemCenterX = rect.left + rect.width / 2;
+    let left = elemCenterX;
+    const halfWidth = tWidth / 2;
+
+    if (left - halfWidth < padding) {
+        left = padding + halfWidth;
+    } else if (left + halfWidth > window.innerWidth - padding) {
+        left = window.innerWidth - padding - halfWidth;
+    }
+
+    const arrowX = Math.max(12, Math.min(tWidth - 12, elemCenterX - (left - halfWidth)));
+    tooltip.style.setProperty('--arrow-left', arrowX + 'px');
+
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
 
     tooltip.style.visibility = 'visible';
     tooltip.style.opacity = '1';
-    tooltip.style.transform = 'translate(-50%, 0) scale(1)';
+    tooltip.style.transform = 'translate(-50%, 0)';
 };
 
 window.hideGlobalTooltip = function () {
     const tooltip = document.getElementById('global-tooltip');
     if (tooltip) {
+        const isTop = tooltip.classList.contains('placement-top');
         tooltip.style.visibility = 'hidden';
         tooltip.style.opacity = '0';
-        tooltip.style.transform = 'translate(-50%, 10px) scale(0.95)';
+        tooltip.style.transform = isTop ? 'translate(-50%, -4px)' : 'translate(-50%, 4px)';
+    }
+};
+
+const ELEMENT_COLORS_MAP = {
+    pyro: '#ef7a35',
+    hydro: '#4bc3f7',
+    dendro: '#a5c83b',
+    electro: '#b07ce8',
+    anemo: '#74c2a8',
+    cryo: '#98c8d8',
+    geo: '#e2b34a'
+};
+
+function formatBuffStatBadge(statKey, val) {
+    const isFr = (window.GUOBA_LANG !== 'en');
+    const STAT_SHORT = {
+        atk: isFr ? 'ATQ' : 'ATK',
+        atk_: isFr ? 'ATQ' : 'ATK',
+        hp: isFr ? 'PV' : 'HP',
+        hp_: isFr ? 'PV' : 'HP',
+        def: isFr ? 'DÉF' : 'DEF',
+        def_: isFr ? 'DÉF' : 'DEF',
+        eleMas: isFr ? 'ME' : 'EM',
+        enerRech_: isFr ? 'RE' : 'ER',
+        critRate_: isFr ? 'TC' : 'CR',
+        critDMG_: isFr ? 'DC' : 'CD',
+        elemental_dmg_: isFr ? 'DGT Élém.' : 'Elem. DMG',
+        pyro_dmg_: isFr ? 'DGT Pyro' : 'Pyro DMG',
+        hydro_dmg_: isFr ? 'DGT Hydro' : 'Hydro DMG',
+        cryo_dmg_: isFr ? 'DGT Cryo' : 'Cryo DMG',
+        electro_dmg_: isFr ? 'DGT Électro' : 'Electro DMG',
+        anemo_dmg_: isFr ? 'DGT Anémo' : 'Anemo DMG',
+        geo_dmg_: isFr ? 'DGT Géo' : 'Geo DMG',
+        dendro_dmg_: isFr ? 'DGT Dendro' : 'Dendro DMG',
+        physical_dmg_: isFr ? 'DGT Phys.' : 'Phys. DMG'
+    };
+
+    let label = STAT_SHORT[statKey] || statKey;
+    let formattedVal = '';
+    const isPercent = statKey.endsWith('_') || ['critRate_', 'critDMG_', 'enerRech_'].includes(statKey);
+
+    if (isPercent) {
+        const pct = (val < 1.0 && val > -1.0) ? (val * 100) : val;
+        formattedVal = (pct >= 0 ? '+' : '') + pct.toFixed(1).replace('.0', '') + '%';
+    } else {
+        formattedVal = (val >= 0 ? '+' : '') + Math.round(val).toLocaleString();
+    }
+
+    return `<span style="display:inline-flex; align-items:center; gap:2px; font-size:10px; font-weight:normal; color:var(--accent-gold); background:rgba(255,215,0,0.12); border:none; border-radius:3px; padding:1px 5px; line-height:1.2;">${formattedVal} ${label}</span>`;
+}
+
+function resolveIconFromKey(key) {
+    if (!key || !window.HASH_TO_KEY || !window.iconToNameHash) return null;
+    const hash = Object.keys(window.HASH_TO_KEY).find(h => window.HASH_TO_KEY[h] === key);
+    if (!hash) return null;
+    for (let [icon, h] of Object.entries(window.iconToNameHash)) {
+        if (String(h) === String(hash)) {
+            let cleanIcon = icon.split('/').pop().replace('.png', '');
+            if (cleanIcon.startsWith('UI_RelicIcon')) {
+                const base = cleanIcon.substring(0, cleanIcon.lastIndexOf('_'));
+                return `https://enka.network/ui/${base}_4.png`;
+            } else {
+                return `https://enka.network/ui/${cleanIcon}.png`;
+            }
+        }
+    }
+    return null;
+}
+
+function getLocalizedItemName(key) {
+    if (!key) return '';
+    if (window.HASH_TO_KEY && window.getText) {
+        const hash = Object.keys(window.HASH_TO_KEY).find(h => window.HASH_TO_KEY[h] === key);
+        if (hash) {
+            const txt = window.getText(hash);
+            if (txt) return txt;
+        }
+    }
+    return key;
+}
+
+window.resolveIconFromKey = resolveIconFromKey;
+window.getLocalizedItemName = getLocalizedItemName;
+
+window.showTeammateTooltip = function (element) {
+    if (!element) return;
+    const raw = element.getAttribute('data-teammate');
+    if (!raw) return;
+
+    let data;
+    try {
+        data = JSON.parse(decodeURIComponent(raw));
+    } catch (e) {
+        return;
+    }
+
+    const tooltip = getOrCreateTooltip('teammate-tooltip');
+    if (!tooltip) return;
+
+    const lang = (window.GUOBA_LANG) || 'fr';
+    const primaryElem = (data.elements && data.elements[0]) ? String(data.elements[0]).toLowerCase() : 'pyro';
+    const elemColor = ELEMENT_COLORS_MAP[primaryElem] || data.color || 'var(--accent-gold)';
+    tooltip.style.setProperty('--tm-color', elemColor);
+
+    let weaponIcon = data.weaponIcon;
+    let weaponName = data.weaponName;
+    if (!weaponIcon && data.weaponKey) {
+        weaponIcon = window.ITEM_ICON_MAP?.[data.weaponKey] || (window.resolveIconFromKey && window.resolveIconFromKey(data.weaponKey));
+    }
+    if (!weaponName && data.weaponKey) {
+        weaponName = (window.getLocalizedItemName && window.getLocalizedItemName(data.weaponKey)) || data.weaponKey;
+    }
+
+    let artifactIcon = data.artifactIcon;
+    let artifactName = data.artifactName;
+    if (!artifactIcon && data.artifactKey) {
+        artifactIcon = window.ITEM_ICON_MAP?.[data.artifactKey] || (window.resolveIconFromKey && window.resolveIconFromKey(data.artifactKey));
+    }
+    if (!artifactName && data.artifactKey) {
+        artifactName = (window.getLocalizedItemName && window.getLocalizedItemName(data.artifactKey)) || data.artifactKey;
+    }
+
+    let portraitBg = data.bgStyle || '';
+    if (!portraitBg) {
+        portraitBg = `background: ${elemColor || '#333'};`;
+    } else if (!portraitBg.endsWith(';')) {
+        portraitBg += ';';
+    }
+
+    let avatarHtml = '';
+    if (data.isDual && data.avatarUrl && data.secondaryAvatarUrl) {
+        avatarHtml = `
+            <div style="position:relative; width:44px; height:44px; border-radius:5px; overflow:hidden; ${portraitBg} border:none; box-shadow:none; flex-shrink:0;">
+                <div style="position:absolute; inset:0; clip-path: polygon(0 0, 100% 0, 0 100%); z-index:2; pointer-events:none;">
+                    <img src="${data.avatarUrl}" style="width:100%; height:100%; object-fit:cover;" decoding="async">
+                </div>
+                <div style="position:absolute; inset:0; clip-path: polygon(100% 0, 100% 100%, 0 100%); z-index:1; pointer-events:none;">
+                    <img src="${data.secondaryAvatarUrl}" style="width:100%; height:100%; object-fit:cover;" decoding="async">
+                </div>
+                <div style="position:absolute; inset:0; background:linear-gradient(to bottom right, transparent 49.5%, var(--text-primary) 49.5%, var(--text-primary) 50.5%, transparent 50.5%); z-index:3; pointer-events:none;"></div>
+            </div>
+        `;
+    } else {
+        const imgFit = data.isArchetype ? 'object-fit:contain; padding:6px; box-sizing:border-box;' : 'object-fit:cover;';
+        avatarHtml = `
+            <div style="position:relative; width:44px; height:44px; border-radius:5px; overflow:hidden; ${portraitBg} border:none; box-shadow:none; flex-shrink:0;">
+                <img src="${data.avatarUrl || '/assets/simulator/icons/icon_empty_slot.svg'}" style="width:100%; height:100%; ${imgFit} pointer-events:none;" decoding="async" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+            </div>
+        `;
+    }
+
+    const displayName = data.isDual
+        ? `${data.resolvedName}${data.secondaryResolvedName ? ' / ' + data.secondaryResolvedName : ''}`
+        : (data.resolvedName || data.role);
+
+    const elemBadges = (data.elements || [primaryElem]).filter(Boolean).map(e => {
+        const elKey = String(e).toLowerCase();
+        const c = ELEMENT_COLORS_MAP[elKey] || '#888';
+        const label = (window.t && window.t(`ui.char.spider.stat.${elKey}`)) || elKey.charAt(0).toUpperCase() + elKey.slice(1);
+        return `
+            <span style="display:inline-flex; align-items:center; gap:3px; padding:1px 6px; border-radius:4px; font-size:10px; font-weight:normal; background:color-mix(in srgb, ${c} 22%, transparent); color:${c}; border:none;">
+                <img src="/assets/simulator/icons/icon_${elKey}.webp" style="width:11px; height:11px; object-fit:contain;" alt="${elKey}">
+                <span>${label}</span>
+            </span>
+        `;
+    }).join('');
+
+    const roleBadge = data.role ? `
+        <span style="display:inline-flex; align-items:center; padding:1px 6px; border-radius:4px; font-size:10px; font-weight:normal; background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.85); border:none;">
+            ${data.role}
+        </span>
+    ` : '';
+
+    let consBadge = '';
+    if (data.cons !== undefined && data.cons !== null && parseInt(data.cons) > 0) {
+        const consText = (window.t && window.t('ui.teammate.constellationRec', data.cons)) || `C${data.cons} recommandé`;
+        consBadge = `
+            <span style="display:inline-flex; align-items:center; padding:1px 6px; border-radius:4px; font-size:10px; font-weight:normal; background:linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,160,0,0.35)); color:#ffd700; border:none;">
+                ${consText}
+            </span>
+        `;
+    }
+
+    const buffsList = [];
+    const allyNames = Array.isArray(data.names) ? data.names : (data.names ? [data.names] : []);
+    const userCons = (data.cons !== null && data.cons !== undefined) ? parseInt(data.cons) : 6;
+
+    allyNames.forEach(n => {
+        if (!n) return;
+        const tmData = window.TEAMMATE_BUFFS?.[n];
+        if (tmData && tmData.buffs) {
+            tmData.buffs.forEach(b => {
+                if (b.cons !== undefined && userCons < b.cons) return;
+                const lbl = typeof b.label === 'object' ? (b.label[lang] || b.label.fr || b.label.en) : b.label;
+                buffsList.push({ label: lbl, stats: b.stats });
+            });
+        }
+    });
+
+    if (data.weaponKey && window.TEAMMATE_WEAPON_BUFFS?.[data.weaponKey]) {
+        const wData = window.TEAMMATE_WEAPON_BUFFS[data.weaponKey];
+        const wBuffs = wData.buffs || [wData];
+        wBuffs.forEach(b => {
+            const lbl = typeof b.label === 'object' ? (b.label[lang] || b.label.fr || b.label.en) : (b.label || weaponName);
+            buffsList.push({ label: lbl, stats: b.stats });
+        });
+    }
+
+    if (data.artifactKey && window.TEAMMATE_SET_BUFFS?.[data.artifactKey]) {
+        const sData = window.TEAMMATE_SET_BUFFS[data.artifactKey];
+        const sBuffs = sData.buffs || [sData];
+        sBuffs.forEach(b => {
+            const lbl = typeof b.label === 'object' ? (b.label[lang] || b.label.fr || b.label.en) : (b.label || artifactName);
+            buffsList.push({ label: lbl, stats: b.stats });
+        });
+    }
+
+    let buffsHtml = '';
+    if (buffsList.length > 0) {
+        const buffsTitle = (window.t && window.t('ui.teammate.teamBuffs')) || 'Buffs & effets apportés';
+        const buffItems = buffsList.map(b => {
+            let statsHtml = '';
+            if (b.stats && typeof b.stats === 'object') {
+                const badges = Object.entries(b.stats).map(([k, v]) => formatBuffStatBadge(k, v)).join(' ');
+                if (badges) {
+                    statsHtml = `<div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:3px;">${badges}</div>`;
+                }
+            }
+            return `
+                <div style="margin-bottom:6px; font-size:11px; line-height:1.35;">
+                    <div style="color:var(--text-always-white); font-weight:normal; display:flex; align-items:flex-start; gap:5px;">
+                        <span style="color:rgba(255,255,255,0.45); font-size:12px; line-height:1; margin-top:1px;">•</span>
+                        <span>${b.label || ''}</span>
+                    </div>
+                    ${statsHtml}
+                </div>
+            `;
+        }).join('');
+
+        buffsHtml = `
+            <div style="height:1px; background:rgba(255,255,255,0.1); margin:9px 0;"></div>
+            <div>
+                <div style="font-size:10px; color:rgba(255,255,255,0.5); font-weight:normal; margin-bottom:7px;">
+                    ${buffsTitle} (${buffsList.length})
+                </div>
+                <div style="display:flex; flex-direction:column;">
+                    ${buffItems}
+                </div>
+            </div>
+        `;
+    }
+
+    const configTitle = (window.t && window.t('ui.teammate.recommendedConfig')) || 'Équipement recommandé';
+    const weaponLabel = (window.t && window.t('ui.teammate.weapon')) || 'Arme';
+    const artifactLabel = (window.t && window.t('ui.teammate.artifact')) || 'Set d\'artéfacts';
+    const unrestrictedLabel = (window.t && window.t('ui.teammate.unrestricted')) || 'Libre / Non requis';
+
+    const weaponImgHtml = weaponIcon
+        ? `<img src="${weaponIcon}" style="width:28px; height:28px; border-radius:5px; object-fit:cover; background:var(--shadow-subtle); border:none; flex-shrink:0;" alt="weapon" decoding="async">`
+        : `<div style="width:28px; height:28px; border-radius:5px; background:var(--shadow-subtle); border:none; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><img src="/assets/simulator/icons/icon_sword.webp" style="width:16px; height:16px; object-fit:contain; opacity:0.4;"></div>`;
+
+    const artifactImgHtml = artifactIcon
+        ? `<img src="${artifactIcon}" style="width:28px; height:28px; border-radius:5px; object-fit:cover; background:var(--shadow-subtle); border:none; flex-shrink:0;" alt="artifact" decoding="async">`
+        : `<div style="width:28px; height:28px; border-radius:5px; background:var(--shadow-subtle); border:none; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><img src="/assets/simulator/icons/icon_unknown.webp" style="width:16px; height:16px; object-fit:contain; opacity:0.4;"></div>`;
+
+    tooltip.innerHTML = `
+        <div style="display:flex; flex-direction:column;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                ${avatarHtml}
+                <div style="min-width:0; flex:1; display:flex; flex-direction:column; gap:3px;">
+                    <div style="font-size:13.5px; font-weight:normal; color:var(--text-always-white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        ${displayName}
+                    </div>
+                    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:4px;">
+                        ${elemBadges}
+                        ${roleBadge}
+                        ${consBadge}
+                    </div>
+                </div>
+            </div>
+
+            <div style="height:1px; background:rgba(255,255,255,0.1); margin:9px 0;"></div>
+
+            <div>
+                <div style="font-size:10px; color:rgba(255,255,255,0.5); font-weight:normal; margin-bottom:7px;">
+                    ${configTitle}
+                </div>
+                
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                    ${weaponImgHtml}
+                    <div style="min-width:0; flex:1;">
+                        <div style="font-size:9.5px; color:rgba(255,255,255,0.4); line-height:1;">${weaponLabel}</div>
+                        <div style="font-size:11.5px; font-weight:normal; color:${weaponName ? 'var(--text-always-white)' : 'rgba(255,255,255,0.45)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px;">
+                            ${weaponName || unrestrictedLabel}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:8px;">
+                    ${artifactImgHtml}
+                    <div style="min-width:0; flex:1;">
+                        <div style="font-size:9.5px; color:rgba(255,255,255,0.4); line-height:1;">${artifactLabel}</div>
+                        <div style="font-size:11.5px; font-weight:normal; color:${artifactName ? 'var(--text-always-white)' : 'rgba(255,255,255,0.45)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px;">
+                            ${artifactName || unrestrictedLabel}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            ${buffsHtml}
+        </div>
+    `;
+
+    tooltip.classList.remove('placement-top', 'placement-bottom');
+    tooltip.style.visibility = 'hidden';
+    tooltip.style.display = 'block';
+
+    const rect = element.getBoundingClientRect();
+    const tWidth = tooltip.offsetWidth || 310;
+    const tHeight = tooltip.offsetHeight || 180;
+    const gap = 9;
+    const padding = 12;
+
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const placeTop = spaceBelow < (tHeight + gap + 10) && rect.top > (tHeight + gap);
+
+    const top = placeTop ? (rect.top - tHeight - gap) : (rect.bottom + gap);
+    tooltip.classList.add(placeTop ? 'placement-top' : 'placement-bottom');
+
+    const elemCenterX = rect.left + rect.width / 2;
+    let left = elemCenterX - tWidth / 2;
+
+    if (left < padding) {
+        left = padding;
+    } else if (left + tWidth > window.innerWidth - padding) {
+        left = window.innerWidth - padding - tWidth;
+    }
+
+    const arrowX = Math.max(14, Math.min(tWidth - 14, elemCenterX - left));
+    tooltip.style.setProperty('--arrow-left', arrowX + 'px');
+
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+    tooltip.style.visibility = 'visible';
+    tooltip.style.opacity = '1';
+    tooltip.style.transform = 'translateY(0) scale(1)';
+};
+
+window.hideTeammateTooltip = function () {
+    const tooltip = document.getElementById('teammate-tooltip');
+    if (tooltip) {
+        tooltip.classList.remove('is-active');
+        const isTop = tooltip.classList.contains('placement-top');
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+        tooltip.style.transform = isTop ? 'translateY(-6px) scale(0.98)' : 'translateY(6px) scale(0.98)';
     }
 };
 
@@ -5292,5 +5676,7 @@ if (typeof window !== 'undefined') {
     window.hideArtifactScoreTooltip = hideArtifactScoreTooltip;
     window.showBaseStatTooltip = showBaseStatTooltip;
     window.hideBaseStatTooltip = hideBaseStatTooltip;
+    window.showTeammateTooltip = showTeammateTooltip;
+    window.hideTeammateTooltip = hideTeammateTooltip;
     window.showShowcaseTooltip = window.showCombatStatTooltip;
 }

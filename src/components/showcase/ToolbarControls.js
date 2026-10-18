@@ -51,7 +51,7 @@ export function renderToolbarControls(persoObj, charIndex) {
         const charElement = persoObj.combatStats?.dmgBonusKey ? persoObj.combatStats.dmgBonusKey.replace('_dmg_', '') : 'pyro';
         const charBg = ELEMENT_COLORS[charElement] || '#333';
         const charImg = persoObj.image ? persoObj.image.replace('Side_', '') : '';
-        const charIcon = `<img src="${charImg}" style="width:40px; height:40px; border-radius:5px; border:1px solid rgba(255,255,255,0.5); box-shadow:0 0 5px rgba(0,0,0,0.5); object-fit:cover; background:${charBg};" title="${persoObj.nom}" decoding="async">`;
+        const charIcon = `<img src="${charImg}" style="width:40px; height:40px; border-radius:5px; border:1px solid rgba(255,255,255,0.5); box-shadow:0 0 5px rgba(0,0,0,0.5); object-fit:cover; background:${charBg}; cursor:default;" decoding="async">`;
 
         const resolveTeammateNameFn = (typeof window !== 'undefined' && window.resolveTeammateName) ? window.resolveTeammateName : (n => n);
 
@@ -79,19 +79,18 @@ export function renderToolbarControls(persoObj, charIndex) {
             }
 
             let innerHtml = '';
+            const isArchetype = (ARCHETYPE_ROLES.has(mate.role) && !names[0]) || (!names[0] && !elems[0]);
             if (!isDual) {
                 const url = getIconUrl(names[0], elems[0], mate.role);
                 const fallback = elems[0] ? `${ICON_BASE_PATH}icon_${elems[0]}.webp` : `${ICON_BASE_PATH}icon_unknown.webp`;
-                const isArchetype = (ARCHETYPE_ROLES.has(mate.role) && !names[0]) || (!names[0] && !elems[0]);
-                const imgStyle = isArchetype
+                const imgStyle = (isArchetype
                     ? "width:100%; height:100%; object-fit:contain; padding:6px; box-sizing:border-box; opacity:0.8;"
-                    : "width:100%; height:100%; object-fit:cover;";
+                    : "width:100%; height:100%; object-fit:cover;") + " pointer-events:none;";
 
                 innerHtml = `
                     <img src="${url}" 
                          style="${imgStyle}"
                          onerror="this.src='${fallback}'" 
-                         title="${mate.role}: ${names[0] ? resolveTeammateNameFn(names[0]) : (elems[0] || t('data.unknown'))}"
                          decoding="async">
                 `;
             } else {
@@ -101,10 +100,10 @@ export function renderToolbarControls(persoObj, charIndex) {
                 const fb2 = (elems[1] || elems[0]) ? `${ICON_BASE_PATH}icon_${elems[1] || elems[0]}.webp` : `${ICON_BASE_PATH}icon_unknown.webp`;
 
                 innerHtml = `
-                    <div style="position:absolute; inset:0; clip-path: polygon(0 0, 100% 0, 0 100%); z-index:2;">
+                    <div style="position:absolute; inset:0; clip-path: polygon(0 0, 100% 0, 0 100%); z-index:2; pointer-events:none;">
                         <img src="${url1}" onerror="this.src='${fb1}'" style="width:100%; height:100%; object-fit:cover;" decoding="async">
                     </div>
-                    <div style="position:absolute; inset:0; clip-path: polygon(100% 0, 100% 100%, 0 100%); z-index:1;">
+                    <div style="position:absolute; inset:0; clip-path: polygon(100% 0, 100% 100%, 0 100%); z-index:1; pointer-events:none;">
                         <img src="${url2}" onerror="this.src='${fb2}'" style="width:100%; height:100%; object-fit:cover;" decoding="async">
                     </div>
                     <div style="position:absolute; inset:0; background:linear-gradient(to bottom right, transparent 49.5%, var(--text-primary) 49.5%, var(--text-primary) 50.5%, transparent 50.5%); z-index:3; pointer-events:none;"></div>
@@ -146,19 +145,49 @@ export function renderToolbarControls(persoObj, charIndex) {
             const artifactName = mate.artifact ? getLocalizedName(mate.artifact).replace(/"/g, '&quot;') : '';
 
             const weaponBadge = weaponIcon
-                ? `<img src="${weaponIcon}" title="${weaponName}" style="position:absolute; bottom:0; left:0; width:16px; height:16px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" decoding="async">`
+                ? `<img src="${weaponIcon}" style="position:absolute; bottom:0; left:0; width:16px; height:16px; border-radius:4px; z-index:10; background: var(--bg-panel); pointer-events:none;" onerror="this.style.display='none'" decoding="async">`
                 : '';
 
             const artifactBadge = artifactIcon
-                ? `<img src="${artifactIcon}" title="${artifactName}" style="position:absolute; bottom:0; right:0; width:16px; height:16px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" decoding="async">`
+                ? `<img src="${artifactIcon}" style="position:absolute; bottom:0; right:0; width:16px; height:16px; border-radius:4px; z-index:10; background: var(--bg-panel); pointer-events:none;" onerror="this.style.display='none'" decoding="async">`
                 : '';
 
             const consBadge = (mate.cons && mate.cons > 0)
-                ? `<span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:700; color:var(--text-always-white); text-shadow:0 0 3px #000; z-index:10;">C${mate.cons}</span>`
+                ? `<span style="position:absolute; top:1px; right:2px; font-size:9px; font-weight:700; color:var(--text-always-white); text-shadow:0 0 3px #000; z-index:10; pointer-events:none;">C${mate.cons}</span>`
                 : '';
 
+            const elemName = elems[0] ? (typeof t === 'function' ? t(`ui.char.spider.stat.${elems[0]}`) || elems[0] : elems[0]) : '';
+            const resolvedName = names[0] ? resolveTeammateNameFn(names[0]) : (elemName ? `${mate.role} ${elemName}` : mate.role);
+            const secondaryResolvedName = names[1] ? resolveTeammateNameFn(names[1]) : null;
+
+            const matePayload = {
+                names: names,
+                resolvedName: resolvedName,
+                secondaryResolvedName: secondaryResolvedName,
+                role: mate.role,
+                elements: elems,
+                cons: mate.cons || null,
+                avatarUrl: getIconUrl(names[0], elems[0], mate.role),
+                secondaryAvatarUrl: isDual ? getIconUrl(names[1] || names[0], elems[1] || elems[0], mate.role) : null,
+                isDual: isDual,
+                isArchetype: isArchetype,
+                weaponKey: mate.weapon || null,
+                weaponName: weaponName,
+                weaponIcon: weaponIcon,
+                artifactKey: mate.artifact || null,
+                artifactName: artifactName,
+                artifactIcon: artifactIcon,
+                color: ELEMENT_COLORS[elems[0]] || '#333',
+                bgStyle: bgStyle
+            };
+            const jsonPayload = encodeURIComponent(JSON.stringify(matePayload));
+
             return `
-                <div style="position:relative; width:40px; height:40px; border-radius:5px; ${bgStyle} overflow:hidden;" title="${mate.role}">
+                <div class="team-mate-slot"
+                     data-teammate="${jsonPayload}"
+                     onmouseenter="showTeammateTooltip(this)"
+                     onmouseleave="hideTeammateTooltip()"
+                     style="position:relative; width:40px; height:40px; border-radius:5px; ${bgStyle} overflow:hidden;">
                     ${innerHtml}
                     ${weaponBadge}
                     ${artifactBadge}
