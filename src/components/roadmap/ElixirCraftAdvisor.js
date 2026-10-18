@@ -307,8 +307,26 @@ export function getElixirCraftRecommendations(characters, focusCharNom = null, b
     return recommendations.slice(0, 6);
 }
 
-export function renderElixirCraftAdvisor(characters, focusCharNom = null, budgetFilter = (typeof window !== 'undefined' ? (window.roadmapElixirBudget || 'all') : 'all')) {
-    const recs = getElixirCraftRecommendations(characters, focusCharNom, budgetFilter);
+export function renderElixirCraftAdvisor(
+    characters,
+    focusCharNom = null,
+    budgetFilter = (typeof window !== 'undefined' ? (window.roadmapElixirBudget || 'all') : 'all'),
+    scopeFilter = (typeof window !== 'undefined' ? (window.roadmapElixirScope || 'all') : 'all')
+) {
+    let targetCharacters = characters || [];
+    if (scopeFilter === 'showcase') {
+        targetCharacters = targetCharacters.filter(c => !c.isArchived);
+    } else if (scopeFilter === 'reserve') {
+        targetCharacters = targetCharacters.filter(c => c.isArchived);
+    }
+
+    const recs = getElixirCraftRecommendations(targetCharacters, focusCharNom, budgetFilter);
+
+    const scopes = [
+        { key: 'all', label: t('roadmap.scope.all') },
+        { key: 'showcase', label: t('roadmap.scope.showcase') },
+        { key: 'reserve', label: t('roadmap.scope.reserve') }
+    ];
 
     const budgets = [
         { key: 'all', label: t('roadmap.elixir.budget.all'), count: null },
@@ -321,7 +339,7 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
     return `
         <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
             
-            <!-- Header du Module avec Filtres de Budget -->
+            <!-- Header du Module avec Filtres de Portée et de Budget -->
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
                 <div>
                     <div style="display:flex; align-items:center; gap:8px;">
@@ -334,9 +352,30 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                     </p>
                 </div>
 
-                <!-- Sélecteur de Budget d'Élixirs -->
-                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                    ${budgets.map(b => {
+                <!-- Filtres : Portée (Gauche) + Séparateur + Budget (Droite) -->
+                <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                    <!-- Sélecteur de Portée : Tous vs Vitrine vs Réserve -->
+                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                        ${scopes.map(s => {
+        const isSelected = String(scopeFilter) === String(s.key);
+        return `
+                            <button data-action="set-elixir-scope"
+                                    data-scope="${s.key}"
+                                    type="button"
+                                    class="button-unlink"
+                                    style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${isSelected ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${isSelected ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${isSelected ? '#60a5fa' : 'var(--text-grey)'};">
+                                <span>${s.label}</span>
+                            </button>
+                        `;
+    }).join('')}
+                    </div>
+
+                    <!-- Séparateur vertical -->
+                    <div style="width:1px; height:20px; background:var(--border-color);"></div>
+
+                    <!-- Sélecteur de Budget d'Élixirs -->
+                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                        ${budgets.map(b => {
         const isSelected = String(budgetFilter) === String(b.key);
         return `
                             <button data-action="set-elixir-budget"
@@ -350,43 +389,42 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                             </button>
                         `;
     }).join('')}
+                    </div>
                 </div>
             </div>
 
-            <!-- Grille des Recommandations de Craft -->
+            <!-- Grille des Recommandations de Craft : 3 colonnes x 2 lignes, dimensions strictement identiques -->
             ${recs.length === 0 ? `
-                <div style="padding:16px; background:var(--shadow-subtle); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
+                <div style="padding:24px; background:var(--shadow-subtle); border-radius:8px; color:var(--text-grey); font-size:13px; text-align:center;">
                     ${t('roadmap.elixir.empty')}
                 </div>
             ` : `
-                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;">
+                <div style="display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; gap:12px;">
                     ${recs.map(rec => `
-                        <div style="background:${rec.isFocus ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${rec.isFocus ? '1px solid rgba(59,130,246,0.4)' : 'none'}; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:12px; position:relative;">
+                        <div style="background:${rec.isFocus ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${rec.isFocus ? '1px solid rgba(59,130,246,0.4)' : '1px solid rgba(255,255,255,0)'}; border-radius:10px; padding:14px; display:flex; flex-direction:column; justify-content:space-between; gap:12px; position:relative; box-sizing:border-box; min-width:0; height:100%;">
                             
                             <!-- Ligne 1 : Perso + Build + Coût Élixir -->
-                            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-                                <div style="display:flex; align-items:center; gap:8px; min-width:0;">
-                                    <img src="${rec.persoImage}" alt="${rec.persoNom}" style="width:34px; height:34px; border-radius:6px; background:var(--shadow-subtle); flex-shrink:0; border:${rec.isFocus ? '1px solid #60a5fa' : 'none'};">
-                                    <div style="min-width:0;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; min-height: 38px; box-sizing: border-box;">
+                                <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
+                                    <img src="${rec.persoImage}" alt="${rec.persoNom}" style="width:34px; height:34px; border-radius:6px; background:var(--shadow-subtle); flex-shrink:0; border:${rec.isFocus ? '1px solid #60a5fa' : 'none'}; object-fit:cover;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                                    <div style="min-width:0; flex:1;">
                                         <div style="display:flex; align-items:center; gap:6px;">
                                             <span style="font-size:13px; font-weight:normal; color:${rec.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                                                 ${rec.persoNom}
                                             </span>
                                             ${rec.isFocus ? `
-                                                <span style="font-size:9px; font-weight:normal; padding:1px 5px; border-radius:6px; background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4);">
+                                                <span style="font-size:9px; font-weight:normal; padding:1px 5px; border-radius:6px; background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); flex-shrink:0;">
                                                     ${t('roadmap.elixir.focusPriority')}
                                                 </span>
                                             ` : ''}
                                         </div>
-                                        ${rec.buildName ? `
-                                            <div style="font-size:10px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                                                ${rec.buildName}
-                                            </div>
-                                        ` : ''}
+                                        <div style="font-size:10px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-height:13px;">
+                                            ${rec.buildName || '&nbsp;'}
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+                                <div style="display:flex; align-items:center; gap:6px; flex-shrink:0; margin-left:6px;">
                                     <!-- Badge Coût Élixirs avec SVG Minimaliste -->
                                     <span style="font-size:11px; font-weight:normal; padding:3px 8px; border-radius:8px; background:rgba(245,158,11,0.15); color:#f59e0b; display:inline-flex; align-items:center; gap:4px;">
                                         <span>${rec.cost}</span>
@@ -396,11 +434,11 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                             </div>
 
                             <!-- Ligne 2 : Détail du Craft Prévu (Set, Slot, Mainstat & Substats) -->
-                            <div style="display:flex; flex-direction:column; gap:8px; background:var(--shadow-subtle); padding:10px; border-radius:8px;">
+                            <div style="display:flex; flex-direction:column; gap:8px; background:var(--shadow-subtle); padding:10px; border-radius:8px; flex:1; justify-content:center;">
                                 <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-                                    <div style="display:flex; align-items:center; gap:8px; min-width:0;">
+                                    <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
                                         ${rec.pieceIcon ? `<img src="${rec.pieceIcon}" alt="${rec.setName}" style="width:28px; height:28px; border-radius:4px; background:var(--shadow-subtle); object-fit:contain; flex-shrink:0;" onerror="this.style.display='none'">` : ''}
-                                        <div style="display:flex; flex-direction:column; min-width:0;">
+                                        <div style="display:flex; flex-direction:column; min-width:0; flex:1;">
                                             <span style="font-size:12px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                                                 ${rec.slotName}
                                             </span>
@@ -418,35 +456,35 @@ export function renderElixirCraftAdvisor(characters, focusCharNom = null, budget
                                 <!-- Les 2 Substats Garanties -->
                                 <div style="display:flex; flex-direction:column; gap:4px; font-size:11px;">
                                     <span style="color:var(--text-grey); font-size:10px;">${t('roadmap.elixir.substats')}</span>
-                                    <div style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;">
-                                        <span style="background:rgba(245,158,11,0.12); color:#fbbf24; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:normal; display:flex; align-items:center; gap:3px;">
-                                            <img src="${ICON_BASE_PATH}${ICON_MAP[rec.chosenSub1.key] || ICON_MAP['unknown']}" style="width:10px; height:10px;" alt="">
-                                            ${rec.chosenSub1.label}
+                                    <div style="display:flex; align-items:center; gap:5px; flex-wrap:nowrap; overflow:hidden;">
+                                        <span style="background:rgba(245,158,11,0.12); color:#fbbf24; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:normal; display:inline-flex; align-items:center; gap:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; max-width:50%;">
+                                            <img src="${ICON_BASE_PATH}${ICON_MAP[rec.chosenSub1.key] || ICON_MAP['unknown']}" style="width:10px; height:10px; flex-shrink:0;" alt="">
+                                            <span style="overflow:hidden; text-overflow:ellipsis;">${rec.chosenSub1.label}</span>
                                         </span>
-                                        <span style="background:rgba(245,158,11,0.12); color:#fbbf24; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:normal; display:flex; align-items:center; gap:3px;">
-                                            <img src="${ICON_BASE_PATH}${ICON_MAP[rec.chosenSub2.key] || ICON_MAP['unknown']}" style="width:10px; height:10px;" alt="">
-                                            ${rec.chosenSub2.label}
+                                        <span style="background:rgba(245,158,11,0.12); color:#fbbf24; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:normal; display:inline-flex; align-items:center; gap:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; max-width:50%;">
+                                            <img src="${ICON_BASE_PATH}${ICON_MAP[rec.chosenSub2.key] || ICON_MAP['unknown']}" style="width:10px; height:10px; flex-shrink:0;" alt="">
+                                            <span style="overflow:hidden; text-overflow:ellipsis;">${rec.chosenSub2.label}</span>
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Ligne 3 : Comparatif Score Actuel vs Espéré & Rentabilité -->
-                            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-                                <div style="display:flex; flex-direction:column; gap:2px;">
-                                    <div style="font-size:10px; color:var(--text-grey);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; min-height:36px; box-sizing:border-box;">
+                                <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                                    <div style="font-size:10px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                                         ${t('roadmap.elixir.currentPiece')} <span style="color:${rec.curGradeColor}; font-weight:normal;">${rec.curScore} pts (${rec.curGrade})</span>
                                     </div>
-                                    <div style="font-size:12px; font-weight:normal; color:var(--accent-green);">
+                                    <div style="font-size:12px; font-weight:normal; color:var(--accent-green); white-space:nowrap;">
                                         ${t('roadmap.elixir.expectedGain', rec.deltaScore)}
                                     </div>
                                 </div>
 
-                                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
-                                    <span style="font-size:10px; font-weight:normal; padding:2px 7px; border-radius:6px; background:${rec.verdictColor}18; color:${rec.verdictColor};">
+                                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px; flex-shrink:0;">
+                                    <span style="font-size:10px; font-weight:normal; padding:2px 7px; border-radius:6px; background:${rec.verdictColor}18; color:${rec.verdictColor}; white-space:nowrap;">
                                         ${t('roadmap.elixir.verdict.' + rec.verdict)}
                                     </span>
-                                    <span style="font-size:10px; color:var(--text-grey);">
+                                    <span style="font-size:10px; color:var(--text-grey); white-space:nowrap;">
                                         ${t('roadmap.elixir.savedResin', rec.savedResin)}
                                     </span>
                                 </div>

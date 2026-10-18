@@ -144,7 +144,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
     const usedCharacters = new Set();
 
     for (const teamData of evaluatedTeams) {
-        if (topTeams.length >= 3) break;
+        if (topTeams.length >= 6) break;
 
         const teamNames = teamData.build.activeTeamNames;
 
@@ -223,7 +223,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                     ${t('roadmap.teams.noDuplicates')}
                 </button>
             </div>
-            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;">
+            <div style="display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:12px;">
                 ${topTeams.map((teamData, index) => {
         const dps = teamData.dps;
         const build = teamData.build;

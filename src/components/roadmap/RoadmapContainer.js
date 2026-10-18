@@ -186,6 +186,39 @@ if (typeof window !== 'undefined') {
                 return;
             }
 
+            const setElixirScopeBtn = e.target.closest('[data-action="set-elixir-scope"]');
+            if (setElixirScopeBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const scope = setElixirScopeBtn.getAttribute('data-scope') || 'all';
+                if (window.roadmapElixirScope !== scope) {
+                    window.roadmapElixirScope = scope;
+                    const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
+                        ? cachedRoadmapCharacters
+                        : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+                    const container = document.getElementById('main-container');
+                    if (container && chars.length > 0) {
+                        container.innerHTML = renderRoadmapContainer(chars, window.roadmapFocusCharNom);
+                    }
+                }
+                return;
+            }
+
+            const toggleRankingsBtn = e.target.closest('[data-action="toggle-rankings-summary-expand"]');
+            if (toggleRankingsBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.roadmapRankingsExpanded = !window.roadmapRankingsExpanded;
+                const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
+                    ? cachedRoadmapCharacters
+                    : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+                const container = document.getElementById('main-container');
+                if (container && chars.length > 0) {
+                    container.innerHTML = renderRoadmapContainer(chars, window.roadmapFocusCharNom);
+                }
+                return;
+            }
+
             const toggleDuplicateTeamsBtn = e.target.closest('[data-action="toggle-roadmap-duplicate-teams"]');
             if (toggleDuplicateTeamsBtn) {
                 e.preventDefault();
@@ -285,10 +318,14 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                                 </div>
                             </div>
                             
-                            <!-- Grille des personnages -->
-                            ${characters.map(c => {
-            const isSelected = focusCharNom === c.nom;
-            return `
+                            <!-- Grille des personnages : Vitrine + Séparateur Réserve si persos archivés -->
+                            ${(() => {
+            const showcaseChars = characters.filter(c => !c.isArchived);
+            const archivedChars = characters.filter(c => c.isArchived);
+
+            const renderCard = (c) => {
+                const isSelected = focusCharNom === c.nom;
+                return `
                                     <div class="char-card ${isSelected ? 'active' : ''}"
                                          data-action="set-roadmap-focus"
                                          data-char="${c.nom}"
@@ -300,7 +337,22 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
                                         </div>
                                     </div>
                                 `;
-        }).join('')}
+            };
+
+            return `
+                                ${showcaseChars.map(renderCard).join('')}
+                                ${archivedChars.length > 0 ? `
+                                    <div style="grid-column: 1 / -1; display:flex; align-items:center; gap:24px; margin: 8px 0 4px 0; padding: 0 4px;">
+                                        <div style="flex:1; height:1px; background:var(--text-always-white);"></div>
+                                        <span style="font-size:12px; color:var(--text-always-white); letter-spacing:0.8px; font-weight:normal;">
+                                            ${t('roadmap.focus.reserveTitle')}
+                                        </span>
+                                        <div style="flex:1; height:1px; background:var(--text-always-white);"></div>
+                                    </div>
+                                    ${archivedChars.map(renderCard).join('')}
+                                ` : ''}
+                            `;
+        })()}
                         </div>
                     </div>
                 </div>
@@ -343,7 +395,12 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
             ${dottedDivider}
 
             <!-- Module 7 : Conseiller d'Élixir Sanctifiant (Transmutateur) -->
-            ${renderElixirCraftAdvisor(characters, focusCharNom, typeof window !== 'undefined' ? (window.roadmapElixirBudget || 'all') : 'all')}
+            ${renderElixirCraftAdvisor(
+            characters,
+            focusCharNom,
+            typeof window !== 'undefined' ? (window.roadmapElixirBudget || 'all') : 'all',
+            typeof window !== 'undefined' ? (window.roadmapElixirScope || 'all') : 'all'
+        )}
 
             ${dottedDivider}
 

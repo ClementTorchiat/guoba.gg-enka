@@ -111,6 +111,9 @@ export function renderRankingsSummary(characters, focusCharNom = null) {
         `;
     }).join('');
 
+    const isExpanded = typeof window !== 'undefined' ? !!window.roadmapRankingsExpanded : false;
+    const shouldShowToggle = sortedChars.length > 8;
+
     return `
         <div id="roadmap-rankings-summary" style="display:flex; flex-direction:column; gap:16px; padding: 40px 0;">
             <div style="display:flex; flex-direction:column;">
@@ -118,9 +121,30 @@ export function renderRankingsSummary(characters, focusCharNom = null) {
                 <p style="font-size: 12px; color: var(--text-grey); margin: 4px 0 0 0;">${t('roadmap.rankings.subtitle')}</p>
             </div>
             
-            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:12px; width:100%;">
-                ${cardsHtml}
+            <div style="position:relative; width:100%;">
+                <div id="roadmap-rankings-grid-container" style="max-height: ${(!isExpanded && shouldShowToggle) ? '310px' : 'none'}; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1); width:100%;">
+                    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:12px; width:100%;">
+                        ${cardsHtml}
+                    </div>
+                </div>
+                ${(!isExpanded && shouldShowToggle) ? `
+                    <div style="position:absolute; bottom:0; left:0; right:0; height:80px; background:linear-gradient(to bottom, rgba(0,0,0,0), var(--bg-body, #121318)); pointer-events:none; border-radius: 8px 8px 0 0;"></div>
+                ` : ''}
             </div>
+
+            ${shouldShowToggle ? `
+                <div style="display:flex; justify-content:center; margin-top:4px;">
+                    <button data-action="toggle-rankings-summary-expand"
+                            type="button"
+                            class="button-unlink hover-bg-hover"
+                            style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:8px; font-size:12px; font-weight:normal; cursor:pointer; background:var(--bg-panel); color:var(--text-primary); transition:all 0.2s ease;">
+                        <span>${isExpanded ? t('roadmap.rankings.showLess') : t('roadmap.rankings.showAll', sortedChars.length)}</span>
+                        <svg style="width:14px; height:14px; transition:transform 0.25s ease; transform:${isExpanded ? 'rotate(180deg)' : 'rotate(0deg)'};" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+            ` : ''}
         </div>
     `;
 }

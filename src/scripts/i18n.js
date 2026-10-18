@@ -936,13 +936,18 @@ export const T = {
         "roadmap.focus.strongboxPriority": "Synthèse Prioritaire",
         "roadmap.scope.showcase": "Vitrine",
         "roadmap.scope.allChars": "Tous les persos",
+        "roadmap.scope.all": "Tous",
+        "roadmap.scope.reserve": "Réserve",
         "roadmap.toggleAllChars.label": "Tous les persos du jeu",
         "roadmap.toggleAllChars.active": "Vitrine uniquement",
         "roadmap.outsideShowcase": "Hors-vitrine",
         "roadmap.noCharacters": "Aucun personnage chargé. Entrez votre UID pour afficher le Bilan.",
+        "roadmap.focus.reserveTitle": "En réserve",
 
         "roadmap.rankings.title": "Résumé des classements",
         "roadmap.rankings.subtitle": "Résumé des meilleurs classements actuels de vos personnages.",
+        "roadmap.rankings.showAll": (c) => `Tout voir (${c} personnages)`,
+        "roadmap.rankings.showLess": "Voir moins",
 
 
         // Module 1 : Baromètre de Maturité
@@ -2022,13 +2027,18 @@ export const T = {
         "roadmap.focus.strongboxPriority": "Priority Strongbox",
         "roadmap.scope.showcase": "Showcase",
         "roadmap.scope.allChars": "All characters",
+        "roadmap.scope.all": "All",
+        "roadmap.scope.reserve": "Reserve",
         "roadmap.toggleAllChars.label": "All game characters",
         "roadmap.toggleAllChars.active": "Showcase only",
         "roadmap.outsideShowcase": "Outside showcase",
         "roadmap.noCharacters": "No characters loaded. Enter your UID to view the Account Review.",
+        "roadmap.focus.reserveTitle": "In Reserve",
 
         "roadmap.rankings.title": "Rankings Summary",
         "roadmap.rankings.subtitle": "Summary of your characters' current best rankings.",
+        "roadmap.rankings.showAll": (c) => `Show all (${c} characters)`,
+        "roadmap.rankings.showLess": "Show less",
 
 
         // Module 1 : Maturity Barometer
