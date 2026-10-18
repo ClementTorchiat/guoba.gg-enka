@@ -55,7 +55,7 @@ export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 
                 
                 <div class="item-header" style="height: 50px; display: flex; flex-direction: row; align-items: center; gap: 12px;">
                     <div style="position:relative; display:inline-block; flex-shrink: 0;">
-                        <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : art.stars === 4 ? '#a855f7' : '#6b7280'}; object-fit:cover;" alt="${pieceName || 'Artéfact'}" crossorigin="anonymous" decoding="async">
+                        <img src="${art.icon}" class="item-img" style="border: 2px solid ${art.stars === 5 ? '#FFB13B' : art.stars === 4 ? '#a855f7' : '#6b7280'}; object-fit:cover;" alt="${pieceName || t('artifact.default')}" crossorigin="anonymous" decoding="async">
                         <p style="position:absolute; bottom:7px; right:1px; background:rgba(0, 0, 0, 0.4); color:rgba(255, 255, 255, 0.8); font-size:11px; padding: 1px 5px 1px 4px; border-radius:8px;">+${art.level}</p>
                     </div>
                     <div style="overflow:hidden; display:flex; flex-direction:column; justify-content:center;">
@@ -102,7 +102,7 @@ export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 
                     <div class="art-footer-cv" style="display:flex; justify-content:space-between; align-items: center; width: 100%;">
                         <div style="display:flex; align-items:center; gap: 5px;">
                             <img src="/assets/simulator/icons/icon_crit_rate.webp" style="width: 19px; height: 19px;" alt="Crit Value" decoding="async">
-                            <p style="margin:0;">Crit Value</p>
+                            <p style="margin:0;">${t('custom.artscore.cv')}</p>
                         </div>
                         <div style="display: flex; flex-direction: row; gap: 4px;">
                             <p style="margin:0;">${((critRate * 2) + critDmg).toFixed(1)}</p>

@@ -1,5 +1,6 @@
 // src/components/showcase/CustomizationBar.js
 import { t } from '../../scripts/i18n.js';
+import { openCustomColorPicker } from './CustomColorPicker.js';
 
 function normalizeHex(hex) {
     if (!hex) return '#4B5563';
@@ -87,7 +88,7 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
     return `
         <div class="customization-bar">
             <!-- Titre de la section -->
-            <h3 class="custom-title">Personnalisation</h3>
+            <h3 class="custom-title" data-i18n="custom.title">${t('custom.title')}</h3>
 
             <!-- Séparateur -->
             <div class="custom-divider"></div>
@@ -96,7 +97,7 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
             <input type="file" id="custom-image-input" accept="image/*" style="display: none;" onchange="window.handleCustomImageUpload && window.handleCustomImageUpload(this, '${charKey}')">
 
             <div class="custom-row-with-reset">
-                <div class="custom-image-control" onclick="window.openCustomImagePicker && window.openCustomImagePicker()" title="Changer l'image du personnage (portrait et fond)">
+                <div class="custom-image-control" onclick="window.openCustomImagePicker && window.openCustomImagePicker()" title="${t('custom.image.change')}" data-i18n-title="custom.image.change">
                     <div class="custom-image-btn-content">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-photo-up">
                             <path d="M15 8h.01"></path>
@@ -106,83 +107,83 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
                             <path d="M19 22v-6"></path>
                             <path d="M22 19l-3 -3l-3 3"></path>
                         </svg>
-                        <span>Image</span>
+                        <span data-i18n="custom.image.label">${t('custom.image.label')}</span>
                     </div>
                 </div>
-                <button type="button" class="custom-reset-btn" title="Réinitialiser l'image et le cadrage (Master Reset)" onclick="window.resetCustomImage && window.resetCustomImage('${charKey}', '${safeDefaultSplash}', ${defaultOffset})">
+                <button type="button" class="custom-reset-btn" title="${t('custom.image.reset')}" data-i18n-title="custom.image.reset" onclick="window.resetCustomImage && window.resetCustomImage('${charKey}', '${safeDefaultSplash}', ${defaultOffset})">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
-                        <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
-                        <path d="M20 4v5h-5"></path>
+                        <path d="M4.067 13.041a8 8 0 1 0 9.925 -8.788c-3.899 -1 -7.935 1.007 -9.425 4.747"></path>
+                        <path d="M4 4v5h5"></path>
                     </svg>
                 </button>
             </div>
 
             <!-- Contrôle B : Décalage horizontal X -->
             <div class="custom-row-with-reset">
-                <div class="custom-offset-control" title="Décalage horizontal du portrait">
-                    <button type="button" class="custom-offset-btn" id="btn-offset-left" onclick="window.adjustPortraitOffset && window.adjustPortraitOffset('${charKey}', -2, ${defaultOffset}, event)" title="Déplacer vers la gauche (Shift pour aller plus vite)">
+                <div class="custom-offset-control" title="${t('custom.offsetX.title')}" data-i18n-title="custom.offsetX.title">
+                    <button type="button" class="custom-offset-btn" id="btn-offset-left" onclick="window.adjustPortraitOffset && window.adjustPortraitOffset('${charKey}', -2, ${defaultOffset}, event)" title="${t('custom.offsetX.left')}" data-i18n-title="custom.offsetX.left">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="15 18 9 12 15 6"></polyline>
                         </svg>
                     </button>
-                    <span id="custom-offset-value" class="custom-offset-value" title="Position horizontale actuelle">${currentOffsetX}%</span>
-                    <button type="button" class="custom-offset-btn" id="btn-offset-right" onclick="window.adjustPortraitOffset && window.adjustPortraitOffset('${charKey}', 2, ${defaultOffset}, event)" title="Déplacer vers la droite (Shift pour aller plus vite)">
+                    <input type="text" id="custom-offset-value" class="custom-offset-value custom-offset-input" value="${currentOffsetX}%" title="${t('custom.offsetX.current')}" data-i18n-title="custom.offsetX.current" autocomplete="off" spellcheck="false" onfocus="this.select()" oninput="window.handlePortraitInput && window.handlePortraitInput('offsetX', '${charKey}', this, ${defaultOffset})" onkeydown="window.handlePortraitInputKey && window.handlePortraitInputKey('offsetX', '${charKey}', this, ${defaultOffset}, event)" onblur="window.commitPortraitInput && window.commitPortraitInput('offsetX', '${charKey}', this, ${defaultOffset})">
+                    <button type="button" class="custom-offset-btn" id="btn-offset-right" onclick="window.adjustPortraitOffset && window.adjustPortraitOffset('${charKey}', 2, ${defaultOffset}, event)" title="${t('custom.offsetX.right')}" data-i18n-title="custom.offsetX.right">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                     </button>
                 </div>
-                <button type="button" class="custom-reset-btn" id="btn-offset-reset" title="Réinitialiser la position horizontale (${defaultOffset}%)" onclick="window.resetPortraitOffset && window.resetPortraitOffset('${charKey}', ${defaultOffset})">
+                <button type="button" class="custom-reset-btn" id="btn-offset-reset" title="${t('custom.offsetX.reset', defaultOffset)}" data-i18n-title="custom.offsetX.reset" data-i18n-title-val="${defaultOffset}" onclick="window.resetPortraitOffset && window.resetPortraitOffset('${charKey}', ${defaultOffset})">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
-                        <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
-                        <path d="M20 4v5h-5"></path>
+                        <path d="M4.067 13.041a8 8 0 1 0 9.925 -8.788c-3.899 -1 -7.935 1.007 -9.425 4.747"></path>
+                        <path d="M4 4v5h5"></path>
                     </svg>
                 </button>
             </div>
 
             <!-- Contrôle C : Décalage vertical Y -->
             <div class="custom-row-with-reset">
-                <div class="custom-offset-control" title="Décalage vertical du portrait">
-                    <button type="button" class="custom-offset-btn" id="btn-offset-y-up" onclick="window.adjustPortraitOffsetY && window.adjustPortraitOffsetY('${charKey}', -2, ${defaultOffset}, event)" title="Déplacer vers le haut (Shift pour aller plus vite)">
+                <div class="custom-offset-control" title="${t('custom.offsetY.title')}" data-i18n-title="custom.offsetY.title">
+                    <button type="button" class="custom-offset-btn" id="btn-offset-y-up" onclick="window.adjustPortraitOffsetY && window.adjustPortraitOffsetY('${charKey}', -2, ${defaultOffset}, event)" title="${t('custom.offsetY.up')}" data-i18n-title="custom.offsetY.up">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="18 15 12 9 6 15"></polyline>
                         </svg>
                     </button>
-                    <span id="custom-offset-y-value" class="custom-offset-value" title="Position verticale actuelle">${currentOffsetY}%</span>
-                    <button type="button" class="custom-offset-btn" id="btn-offset-y-down" onclick="window.adjustPortraitOffsetY && window.adjustPortraitOffsetY('${charKey}', 2, ${defaultOffset}, event)" title="Déplacer vers le bas (Shift pour aller plus vite)">
+                    <input type="text" id="custom-offset-y-value" class="custom-offset-value custom-offset-input" value="${currentOffsetY}%" title="${t('custom.offsetY.current')}" data-i18n-title="custom.offsetY.current" autocomplete="off" spellcheck="false" onfocus="this.select()" oninput="window.handlePortraitInput && window.handlePortraitInput('offsetY', '${charKey}', this, ${defaultOffset})" onkeydown="window.handlePortraitInputKey && window.handlePortraitInputKey('offsetY', '${charKey}', this, ${defaultOffset}, event)" onblur="window.commitPortraitInput && window.commitPortraitInput('offsetY', '${charKey}', this, ${defaultOffset})">
+                    <button type="button" class="custom-offset-btn" id="btn-offset-y-down" onclick="window.adjustPortraitOffsetY && window.adjustPortraitOffsetY('${charKey}', 2, ${defaultOffset}, event)" title="${t('custom.offsetY.down')}" data-i18n-title="custom.offsetY.down">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </button>
                 </div>
-                <button type="button" class="custom-reset-btn" id="btn-offset-y-reset" title="Réinitialiser la position verticale (0%)" onclick="window.resetPortraitOffsetY && window.resetPortraitOffsetY('${charKey}', ${defaultOffset})">
+                <button type="button" class="custom-reset-btn" id="btn-offset-y-reset" title="${t('custom.offsetY.reset')}" data-i18n-title="custom.offsetY.reset" onclick="window.resetPortraitOffsetY && window.resetPortraitOffsetY('${charKey}', ${defaultOffset})">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
-                        <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
-                        <path d="M20 4v5h-5"></path>
+                        <path d="M4.067 13.041a8 8 0 1 0 9.925 -8.788c-3.899 -1 -7.935 1.007 -9.425 4.747"></path>
+                        <path d="M4 4v5h5"></path>
                     </svg>
                 </button>
             </div>
 
             <!-- Contrôle D : Zoom / Échelle -->
             <div class="custom-row-with-reset">
-                <div class="custom-offset-control" title="Zoom / Échelle du portrait">
-                    <button type="button" class="custom-offset-btn" id="btn-scale-down" onclick="window.adjustPortraitScale && window.adjustPortraitScale('${charKey}', -5, ${defaultOffset}, event)" title="Dézoomer (Shift pour aller plus vite)">
+                <div class="custom-offset-control" title="${t('custom.scale.title')}" data-i18n-title="custom.scale.title">
+                    <button type="button" class="custom-offset-btn" id="btn-scale-down" onclick="window.adjustPortraitScale && window.adjustPortraitScale('${charKey}', -5, ${defaultOffset}, event)" title="${t('custom.scale.down')}" data-i18n-title="custom.scale.down">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                         </svg>
                     </button>
-                    <span id="custom-scale-value" class="custom-offset-value" title="Zoom actuel">${currentScale}%</span>
-                    <button type="button" class="custom-offset-btn" id="btn-scale-up" onclick="window.adjustPortraitScale && window.adjustPortraitScale('${charKey}', 5, ${defaultOffset}, event)" title="Zoomer (Shift pour aller plus vite)">
+                    <input type="text" id="custom-scale-value" class="custom-offset-value custom-offset-input" value="${currentScale}%" title="${t('custom.scale.current')}" data-i18n-title="custom.scale.current" autocomplete="off" spellcheck="false" onfocus="this.select()" oninput="window.handlePortraitInput && window.handlePortraitInput('scale', '${charKey}', this, ${defaultOffset})" onkeydown="window.handlePortraitInputKey && window.handlePortraitInputKey('scale', '${charKey}', this, ${defaultOffset}, event)" onblur="window.commitPortraitInput && window.commitPortraitInput('scale', '${charKey}', this, ${defaultOffset})">
+                    <button type="button" class="custom-offset-btn" id="btn-scale-up" onclick="window.adjustPortraitScale && window.adjustPortraitScale('${charKey}', 5, ${defaultOffset}, event)" title="${t('custom.scale.up')}" data-i18n-title="custom.scale.up">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="12" y1="5" x2="12" y2="19"></line>
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                         </svg>
                     </button>
                 </div>
-                <button type="button" class="custom-reset-btn" id="btn-scale-reset" title="Réinitialiser le zoom (100%)" onclick="window.resetPortraitScale && window.resetPortraitScale('${charKey}', ${defaultOffset})">
+                <button type="button" class="custom-reset-btn" id="btn-scale-reset" title="${t('custom.scale.reset')}" data-i18n-title="custom.scale.reset" onclick="window.resetPortraitScale && window.resetPortraitScale('${charKey}', ${defaultOffset})">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
-                        <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
-                        <path d="M20 4v5h-5"></path>
+                        <path d="M4.067 13.041a8 8 0 1 0 9.925 -8.788c-3.899 -1 -7.935 1.007 -9.425 4.747"></path>
+                        <path d="M4 4v5h5"></path>
                     </svg>
                 </button>
             </div>
@@ -191,14 +192,14 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
             <input type="color" id="custom-color-input" value="${validDefault}" style="position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0;" oninput="window.updateCharHex && window.updateCharHex(this.value)" onchange="window.updateCharHex && window.updateCharHex(this.value)">
 
             <div class="custom-row-with-reset">
-                <div class="custom-color-control" onclick="window.openCustomColorPicker && window.openCustomColorPicker()" title="Changer la couleur">
+                <div class="custom-color-control" onclick="window.openCustomColorPicker && window.openCustomColorPicker(this, '${validDefault}')" title="${t('custom.color.change')}" data-i18n-title="custom.color.change">
                     <div id="custom-color-swatch" class="custom-color-swatch" style="background-color: ${validDefault};"></div>
                     <span id="custom-color-hex" class="custom-color-hex">${validDefault.toUpperCase()}</span>
                 </div>
-                <button type="button" class="custom-reset-btn" title="Réinitialiser la couleur par défaut" onclick="window.resetCharHex && window.resetCharHex('${validDefault}')">
+                <button type="button" class="custom-reset-btn" title="${t('custom.color.reset')}" data-i18n-title="custom.color.reset" onclick="window.resetCharHex && window.resetCharHex('${validDefault}')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-rotate-2">
-                        <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
-                        <path d="M20 4v5h-5"></path>
+                        <path d="M4.067 13.041a8 8 0 1 0 9.925 -8.788c-3.899 -1 -7.935 1.007 -9.425 4.747"></path>
+                        <path d="M4 4v5h5"></path>
                     </svg>
                 </button>
             </div>
@@ -208,30 +209,30 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
 
             <!-- Contrôle 2 : Frost ou Transparent -->
             <div class="custom-toggle-group">
-                <button type="button" class="custom-toggle-btn ${!isTransparent ? 'active' : ''}" id="btn-style-frost" onclick="window.setStyleMode && window.setStyleMode('frost')" title="Frost (apparence actuelle)">
+                <button type="button" class="custom-toggle-btn ${!isTransparent ? 'active' : ''}" id="btn-style-frost" onclick="window.setStyleMode && window.setStyleMode('frost')" title="${t('custom.style.frost')}" data-i18n-title="custom.style.frost">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-palette"><path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"></path><path d="M7.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M11.5 7.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M15.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${isTransparent ? 'active' : ''}" id="btn-style-transparent" onclick="window.setStyleMode && window.setStyleMode('transparent')" title="Transparent">
+                <button type="button" class="custom-toggle-btn ${isTransparent ? 'active' : ''}" id="btn-style-transparent" onclick="window.setStyleMode && window.setStyleMode('transparent')" title="${t('custom.style.transparent')}" data-i18n-title="custom.style.transparent">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-circle-half-2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M12 3v18"></path><path d="M12 14l7 -7"></path><path d="M12 19l8.5 -8.5"></path><path d="M12 9l4.5 -4.5"></path></svg>
                 </button>
             </div>
 
             <!-- Contrôle 3 : Light ou Dark -->
             <div class="custom-toggle-group" style="margin-top: 8px;">
-                <button type="button" class="custom-toggle-btn ${!isDark ? 'active' : ''}" id="btn-theme-light" onclick="window.setThemeMode && window.setThemeMode('light')" title="Light (apparence actuelle)">
+                <button type="button" class="custom-toggle-btn ${!isDark ? 'active' : ''}" id="btn-theme-light" onclick="window.setThemeMode && window.setThemeMode('light')" title="${t('custom.theme.light')}" data-i18n-title="custom.theme.light">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-sun"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${isDark ? 'active' : ''}" id="btn-theme-dark" onclick="window.setThemeMode && window.setThemeMode('dark')" title="Dark">
+                <button type="button" class="custom-toggle-btn ${isDark ? 'active' : ''}" id="btn-theme-dark" onclick="window.setThemeMode && window.setThemeMode('dark')" title="${t('custom.theme.dark')}" data-i18n-title="custom.theme.dark">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-moon"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008"></path></svg>
                 </button>
             </div>
 
             <!-- Contrôle 4 : Fond illustré ou Fond uni -->
             <div class="custom-toggle-group" style="margin-top: 8px;">
-                <button type="button" class="custom-toggle-btn ${!hasNoBgSplash ? 'active' : ''}" id="btn-bgsplash-on" onclick="window.setBgSplashMode && window.setBgSplashMode('splash')" title="Fond illustré">
+                <button type="button" class="custom-toggle-btn ${!hasNoBgSplash ? 'active' : ''}" id="btn-bgsplash-on" onclick="window.setBgSplashMode && window.setBgSplashMode('splash')" title="${t('custom.bgsplash.on')}" data-i18n-title="custom.bgsplash.on">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-photo"><path d="M15 8h.01"></path><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"></path><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"></path><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${hasNoBgSplash ? 'active' : ''}" id="btn-bgsplash-off" onclick="window.setBgSplashMode && window.setBgSplashMode('no-splash')" title="Fond uni (sans illustration)">
+                <button type="button" class="custom-toggle-btn ${hasNoBgSplash ? 'active' : ''}" id="btn-bgsplash-off" onclick="window.setBgSplashMode && window.setBgSplashMode('no-splash')" title="${t('custom.bgsplash.off')}" data-i18n-title="custom.bgsplash.off">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-photo-off"><path d="M15 8h.01"></path><path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153"></path><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"></path><path d="M16.32 12.34c.577 -.059 1.162 .162 1.68 .66l3 3"></path><path d="M3 3l18 18"></path></svg>
                 </button>
             </div>
@@ -241,40 +242,40 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
 
             <!-- Contrôle 5 : Shadow ou Sans Shadow -->
             <div class="custom-toggle-group">
-                <button type="button" class="custom-toggle-btn ${!hasNoShadow ? 'active' : ''}" id="btn-shadow-on" onclick="window.setShadowMode && window.setShadowMode('shadow')" title="Avec ombres">
+                <button type="button" class="custom-toggle-btn ${!hasNoShadow ? 'active' : ''}" id="btn-shadow-on" onclick="window.setShadowMode && window.setShadowMode('shadow')" title="${t('custom.shadow.on')}" data-i18n-title="custom.shadow.on">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-shadow"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M13 12h5"></path><path d="M13 15h4"></path><path d="M13 18h1"></path><path d="M13 9h4"></path><path d="M13 6h1"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${hasNoShadow ? 'active' : ''}" id="btn-shadow-off" onclick="window.setShadowMode && window.setShadowMode('no-shadow')" title="Sans ombres">
+                <button type="button" class="custom-toggle-btn ${hasNoShadow ? 'active' : ''}" id="btn-shadow-off" onclick="window.setShadowMode && window.setShadowMode('no-shadow')" title="${t('custom.shadow.off')}" data-i18n-title="custom.shadow.off">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-shadow-off"><path d="M5.634 5.638a9 9 0 0 0 12.728 12.727m1.68 -2.32a9 9 0 0 0 -12.086 -12.088"></path><path d="M16 12h2"></path><path d="M13 15h2"></path><path d="M13 18h1"></path><path d="M13 9h4"></path><path d="M13 6h1"></path><path d="M3 3l18 18"></path></svg>
                 </button>
             </div>
 
             <!-- Contrôle 6 : Border ou Sans Border -->
             <div class="custom-toggle-group" style="margin-top: 8px;">
-                <button type="button" class="custom-toggle-btn ${!hasNoBorder ? 'active' : ''}" id="btn-border-on" onclick="window.setBorderMode && window.setBorderMode('border')" title="Avec bordures">
+                <button type="button" class="custom-toggle-btn ${!hasNoBorder ? 'active' : ''}" id="btn-border-on" onclick="window.setBorderMode && window.setBorderMode('border')" title="${t('custom.border.on')}" data-i18n-title="custom.border.on">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-square"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${hasNoBorder ? 'active' : ''}" id="btn-border-off" onclick="window.setBorderMode && window.setBorderMode('no-border')" title="Sans bordures">
+                <button type="button" class="custom-toggle-btn ${hasNoBorder ? 'active' : ''}" id="btn-border-off" onclick="window.setBorderMode && window.setBorderMode('no-border')" title="${t('custom.border.off')}" data-i18n-title="custom.border.off">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-square-off"><path d="M8 4h10a2 2 0 0 1 2 2v10m-.584 3.414a2 2 0 0 1 -1.416 .586h-12a2 2 0 0 1 -2 -2v-12c0 -.547 .218 -1.043 .573 -1.402"></path><path d="M3 3l18 18"></path></svg>
                 </button>
             </div>
 
             <!-- Contrôle 7 : Angles arrondis ou Carrés -->
             <div class="custom-toggle-group" style="margin-top: 8px;">
-                <button type="button" class="custom-toggle-btn ${!isSquareCorners ? 'active' : ''}" id="btn-corners-rounded" onclick="window.setCornerMode && window.setCornerMode('rounded')" title="Angles arrondis">
+                <button type="button" class="custom-toggle-btn ${!isSquareCorners ? 'active' : ''}" id="btn-corners-rounded" onclick="window.setCornerMode && window.setCornerMode('rounded')" title="${t('custom.corner.rounded')}" data-i18n-title="custom.corner.rounded">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-border-corner-rounded"><path d="M4 20v-10a6 6 0 0 1 6 -6h10"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${isSquareCorners ? 'active' : ''}" id="btn-corners-square" onclick="window.setCornerMode && window.setCornerMode('square')" title="Angles carrés">
+                <button type="button" class="custom-toggle-btn ${isSquareCorners ? 'active' : ''}" id="btn-corners-square" onclick="window.setCornerMode && window.setCornerMode('square')" title="${t('custom.corner.square')}" data-i18n-title="custom.corner.square">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-border-corner-square"><path d="M4 20v-16h16"></path></svg>
                 </button>
             </div>
 
             <!-- Contrôle 8 : Rareté et Grade -->
             <div class="custom-toggle-group" style="margin-top: 8px;">
-                <button type="button" class="custom-toggle-btn ${!hasNoRarity ? 'active' : ''}" id="btn-rarity-on" onclick="window.setRarityMode && window.setRarityMode('rarity')" title="Avec couleurs de rareté et grade">
+                <button type="button" class="custom-toggle-btn ${!hasNoRarity ? 'active' : ''}" id="btn-rarity-on" onclick="window.setRarityMode && window.setRarityMode('rarity')" title="${t('custom.rarity.on')}" data-i18n-title="custom.rarity.on">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-star"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${hasNoRarity ? 'active' : ''}" id="btn-rarity-off" onclick="window.setRarityMode && window.setRarityMode('no-rarity')" title="Sans couleurs de rareté et grade">
+                <button type="button" class="custom-toggle-btn ${hasNoRarity ? 'active' : ''}" id="btn-rarity-off" onclick="window.setRarityMode && window.setRarityMode('no-rarity')" title="${t('custom.rarity.off')}" data-i18n-title="custom.rarity.off">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-star-off"><path d="M3 3l18 18"></path><path d="M10.012 6.016l1.981 -4.014l3.086 6.253l6.9 1l-4.421 4.304m.012 4.01l.588 3.426l-6.158 -3.245l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l.856 -1.733"></path></svg>
                 </button>
             </div>
@@ -284,47 +285,47 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
 
             <!-- Contrôle 9 : Points de rolls des substats (Afficher / Masquer) -->
             <div class="custom-toggle-group">
-                <button type="button" class="custom-toggle-btn ${!hasNoRollDots ? 'active' : ''}" id="btn-rolldots-on" onclick="window.setRollDotsMode && window.setRollDotsMode('dots')" title="Afficher les points de rolls">
+                <button type="button" class="custom-toggle-btn ${!hasNoRollDots ? 'active' : ''}" id="btn-rolldots-on" onclick="window.setRollDotsMode && window.setRollDotsMode('dots')" title="${t('custom.rolldots.on')}" data-i18n-title="custom.rolldots.on">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dots"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${hasNoRollDots ? 'active' : ''}" id="btn-rolldots-off" onclick="window.setRollDotsMode && window.setRollDotsMode('no-dots')" title="Masquer les points de rolls">
+                <button type="button" class="custom-toggle-btn ${hasNoRollDots ? 'active' : ''}" id="btn-rolldots-off" onclick="window.setRollDotsMode && window.setRollDotsMode('no-dots')" title="${t('custom.rolldots.off')}" data-i18n-title="custom.rolldots.off">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dots-off"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M3 3l18 18"></path></svg>
                 </button>
             </div>
 
             <!-- Contrôle 10 : Stats inutiles (Griser / Ne pas griser) -->
             <div class="custom-toggle-group" style="margin-top: 8px; margin-bottom: 8px;">
-                <button type="button" class="custom-toggle-btn ${!hasNoDeadDim ? 'active' : ''}" id="btn-deaddim-on" onclick="window.setDeadDimMode && window.setDeadDimMode('dim')" title="Griser les stats inutiles (opacité 40%)">
+                <button type="button" class="custom-toggle-btn ${!hasNoDeadDim ? 'active' : ''}" id="btn-deaddim-on" onclick="window.setDeadDimMode && window.setDeadDimMode('dim')" title="${t('custom.deaddim.on')}" data-i18n-title="custom.deaddim.on">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-filter"><path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.828 4.828a2 2 0 0 0 -.586 1.414v4.172l-4 2v-6.172a2 2 0 0 0 -.586 -1.414l-4.828 -4.828a2 2 0 0 1 -.586 -1.414v-2.172z"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${hasNoDeadDim ? 'active' : ''}" id="btn-deaddim-off" onclick="window.setDeadDimMode && window.setDeadDimMode('no-dim')" title="Ne pas griser les stats inutiles (opacité 100%)">
+                <button type="button" class="custom-toggle-btn ${hasNoDeadDim ? 'active' : ''}" id="btn-deaddim-off" onclick="window.setDeadDimMode && window.setDeadDimMode('no-dim')" title="${t('custom.deaddim.off')}" data-i18n-title="custom.deaddim.off">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-filter-off"><path d="M3 3l18 18"></path><path d="M9 5h11a1 1 0 0 1 1 1v2a1 1 0 0 1 -.293 .707l-4.707 4.707v4.586l-4 2v-4.586m-2.293 -2.293l-3.414 -3.414a1 1 0 0 1 -.293 -.707v-2a1 1 0 0 1 1 -1h2"></path></svg>
                 </button>
             </div>
 
             <!-- Contrôle 11 : Classement ou Rolls Totaux -->
             <div class="custom-segmented-vertical">
-                <button type="button" class="custom-segmented-item ${!isScoreRolls ? 'active' : ''}" id="btn-score-ranking" onclick="window.setScoreDisplayMode && window.setScoreDisplayMode('ranking')">
-                    Classement
+                <button type="button" class="custom-segmented-item ${!isScoreRolls ? 'active' : ''}" id="btn-score-ranking" onclick="window.setScoreDisplayMode && window.setScoreDisplayMode('ranking')" data-i18n="custom.score.ranking">
+                    ${t('custom.score.ranking')}
                 </button>
-                <button type="button" class="custom-segmented-item ${isScoreRolls ? 'active' : ''}" id="btn-score-rolls" onclick="window.setScoreDisplayMode && window.setScoreDisplayMode('rolls')">
-                    Rolls totaux
+                <button type="button" class="custom-segmented-item ${isScoreRolls ? 'active' : ''}" id="btn-score-rolls" onclick="window.setScoreDisplayMode && window.setScoreDisplayMode('rolls')" data-i18n="custom.score.rolls">
+                    ${t('custom.score.rolls')}
                 </button>
             </div>
 
             <!-- Contrôle 12 : Score d'artéfact ou Crit Value -->
             <div class="custom-segmented-vertical" style="margin-top: 8px;">
-                <button type="button" class="custom-segmented-item ${!isArtifactCv ? 'active' : ''}" id="btn-artscore-score" onclick="window.setArtifactScoreMode && window.setArtifactScoreMode('score')">
-                    Score
+                <button type="button" class="custom-segmented-item ${!isArtifactCv ? 'active' : ''}" id="btn-artscore-score" onclick="window.setArtifactScoreMode && window.setArtifactScoreMode('score')" data-i18n="custom.artscore.score">
+                    ${t('custom.artscore.score')}
                 </button>
-                <button type="button" class="custom-segmented-item ${isArtifactCv ? 'active' : ''}" id="btn-artscore-cv" onclick="window.setArtifactScoreMode && window.setArtifactScoreMode('cv')">
-                    Crit Value
+                <button type="button" class="custom-segmented-item ${isArtifactCv ? 'active' : ''}" id="btn-artscore-cv" onclick="window.setArtifactScoreMode && window.setArtifactScoreMode('cv')" data-i18n="custom.artscore.cv">
+                    ${t('custom.artscore.cv')}
                 </button>
             </div>
 
             <!-- Section Exportation (Tout en bas de la barre) -->
             <div class="custom-export-section">
-                <button type="button" onclick="exportBuildAsImage()" class="custom-bar-export-btn" title="${t('ui.exportBtn')}">
+                <button type="button" onclick="exportBuildAsImage()" class="custom-bar-export-btn" title="${t('ui.exportBtn')}" data-i18n-title="ui.exportBtn">
                     <svg width="14px" fill="var(--text-always-white)" aria-hidden="true" viewBox="0 0 179 197" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 2px; flex-shrink: 0;">
                         <g clip-path="url(#clip0_976_726_custom)">
                             <path d="M178.41 72.16L163.84 72.13C163.447 72.13 163.125 72.5801 163.125 73.1303V141.13C163.125 141.68 163.447 142.13 163.84 142.13H178.388C178.782 142.13 179.104 141.68 179.104 141.13L179.125 73.1503C179.125 72.6001 178.803 72.16 178.417 72.15L178.41 72.16Z"></path>
@@ -533,15 +534,26 @@ if (typeof window !== 'undefined') {
             bgSplash.nextElementSibling.src = defaultSplash;
         }
 
-        const valX = document.getElementById('custom-offset-value');
-        if (valX) valX.textContent = `${defX}%`;
+        function updateDisplayElement(id, text) {
+            const el = document.getElementById(id);
+            if (el) {
+                if ('value' in el) el.value = text;
+                el.textContent = text;
+            }
+        }
 
-        const valY = document.getElementById('custom-offset-y-value');
-        if (valY) valY.textContent = '0%';
-
-        const valScale = document.getElementById('custom-scale-value');
-        if (valScale) valScale.textContent = '100%';
+        updateDisplayElement('custom-offset-value', `${defX}%`);
+        updateDisplayElement('custom-offset-y-value', '0%');
+        updateDisplayElement('custom-scale-value', '100%');
     };
+
+    function updateDisplayElement(id, text) {
+        const el = document.getElementById(id);
+        if (el) {
+            if ('value' in el) el.value = text;
+            el.textContent = text;
+        }
+    }
 
     window.adjustPortraitOffset = function (charKey, delta, defaultOffset, event) {
         window.customizationState = window.customizationState || {};
@@ -564,10 +576,7 @@ if (typeof window !== 'undefined') {
 
         window.applyPortraitTransform(charKey, defaultOffset);
 
-        const valDisplay = document.getElementById('custom-offset-value');
-        if (valDisplay) {
-            valDisplay.textContent = `${nextOffset}%`;
-        }
+        updateDisplayElement('custom-offset-value', `${nextOffset}%`);
     };
 
     window.resetPortraitOffset = function (charKey, defaultOffset) {
@@ -580,10 +589,7 @@ if (typeof window !== 'undefined') {
 
         window.applyPortraitTransform(charKey, defaultOffset);
 
-        const valDisplay = document.getElementById('custom-offset-value');
-        if (valDisplay) {
-            valDisplay.textContent = `${defaultOffset}%`;
-        }
+        updateDisplayElement('custom-offset-value', `${defaultOffset}%`);
     };
 
     window.adjustPortraitOffsetY = function (charKey, delta, defaultOffset, event) {
@@ -607,10 +613,7 @@ if (typeof window !== 'undefined') {
 
         window.applyPortraitTransform(charKey, defaultOffset);
 
-        const valDisplay = document.getElementById('custom-offset-y-value');
-        if (valDisplay) {
-            valDisplay.textContent = `${nextOffset}%`;
-        }
+        updateDisplayElement('custom-offset-y-value', `${nextOffset}%`);
     };
 
     window.resetPortraitOffsetY = function (charKey, defaultOffset) {
@@ -623,10 +626,7 @@ if (typeof window !== 'undefined') {
 
         window.applyPortraitTransform(charKey, defaultOffset);
 
-        const valDisplay = document.getElementById('custom-offset-y-value');
-        if (valDisplay) {
-            valDisplay.textContent = '0%';
-        }
+        updateDisplayElement('custom-offset-y-value', '0%');
     };
 
     window.adjustPortraitScale = function (charKey, delta, defaultOffset, event) {
@@ -650,10 +650,7 @@ if (typeof window !== 'undefined') {
 
         window.applyPortraitTransform(charKey, defaultOffset);
 
-        const valDisplay = document.getElementById('custom-scale-value');
-        if (valDisplay) {
-            valDisplay.textContent = `${nextScale}%`;
-        }
+        updateDisplayElement('custom-scale-value', `${nextScale}%`);
     };
 
     window.resetPortraitScale = function (charKey, defaultOffset) {
@@ -666,15 +663,130 @@ if (typeof window !== 'undefined') {
 
         window.applyPortraitTransform(charKey, defaultOffset);
 
-        const valDisplay = document.getElementById('custom-scale-value');
-        if (valDisplay) {
-            valDisplay.textContent = '100%';
+        updateDisplayElement('custom-scale-value', '100%');
+    };
+
+    window.handlePortraitInput = function (type, charKey, inputEl, defaultOffset) {
+        if (!inputEl) return;
+        window.customizationState = window.customizationState || {};
+
+        let raw = inputEl.value.trim().replace('%', '').replace(',', '.');
+        let num = parseFloat(raw);
+        if (isNaN(num)) return;
+
+        if (type === 'offsetX') {
+            num = Math.round(num * 10) / 10;
+            num = Math.max(-200, Math.min(200, num));
+            window.customizationState.customOffsets = window.customizationState.customOffsets || {};
+            window.customizationState.customOffsets[charKey] = num;
+            try { localStorage.setItem('guoba_custom_offset_' + charKey, num.toString()); } catch (e) { }
+            window.applyPortraitTransform(charKey, defaultOffset);
+        } else if (type === 'offsetY') {
+            num = Math.round(num * 10) / 10;
+            num = Math.max(-200, Math.min(200, num));
+            window.customizationState.customOffsetsY = window.customizationState.customOffsetsY || {};
+            window.customizationState.customOffsetsY[charKey] = num;
+            try { localStorage.setItem('guoba_custom_offset_y_' + charKey, num.toString()); } catch (e) { }
+            window.applyPortraitTransform(charKey, defaultOffset);
+        } else if (type === 'scale') {
+            num = Math.round(num * 10) / 10;
+            num = Math.max(20, Math.min(300, num));
+            window.customizationState.customScales = window.customizationState.customScales || {};
+            window.customizationState.customScales[charKey] = num;
+            try { localStorage.setItem('guoba_custom_scale_' + charKey, num.toString()); } catch (e) { }
+            window.applyPortraitTransform(charKey, defaultOffset);
         }
     };
 
-    window.openCustomColorPicker = function () {
-        const input = document.getElementById('custom-color-input');
-        if (input) input.click();
+    window.commitPortraitInput = function (type, charKey, inputEl, defaultOffset) {
+        if (!inputEl) return;
+        window.customizationState = window.customizationState || {};
+
+        let raw = inputEl.value.trim().replace('%', '').replace(',', '.');
+        let num = parseFloat(raw);
+
+        if (isNaN(num)) {
+            window.revertPortraitInput(type, charKey, inputEl, defaultOffset);
+            return;
+        }
+
+        if (type === 'offsetX') {
+            num = Math.round(num * 10) / 10;
+            num = Math.max(-200, Math.min(200, num));
+            window.customizationState.customOffsets = window.customizationState.customOffsets || {};
+            window.customizationState.customOffsets[charKey] = num;
+            try { localStorage.setItem('guoba_custom_offset_' + charKey, num.toString()); } catch (e) { }
+            window.applyPortraitTransform(charKey, defaultOffset);
+            inputEl.value = `${num}%`;
+        } else if (type === 'offsetY') {
+            num = Math.round(num * 10) / 10;
+            num = Math.max(-200, Math.min(200, num));
+            window.customizationState.customOffsetsY = window.customizationState.customOffsetsY || {};
+            window.customizationState.customOffsetsY[charKey] = num;
+            try { localStorage.setItem('guoba_custom_offset_y_' + charKey, num.toString()); } catch (e) { }
+            window.applyPortraitTransform(charKey, defaultOffset);
+            inputEl.value = `${num}%`;
+        } else if (type === 'scale') {
+            num = Math.round(num * 10) / 10;
+            num = Math.max(20, Math.min(300, num));
+            window.customizationState.customScales = window.customizationState.customScales || {};
+            window.customizationState.customScales[charKey] = num;
+            try { localStorage.setItem('guoba_custom_scale_' + charKey, num.toString()); } catch (e) { }
+            window.applyPortraitTransform(charKey, defaultOffset);
+            inputEl.value = `${num}%`;
+        }
+    };
+
+    window.revertPortraitInput = function (type, charKey, inputEl, defaultOffset) {
+        if (!inputEl) return;
+        window.customizationState = window.customizationState || {};
+
+        if (type === 'offsetX') {
+            const cur = window.customizationState.customOffsets?.[charKey] ??
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_offset_' + charKey) !== null ? Number(localStorage.getItem('guoba_custom_offset_' + charKey)) : defaultOffset);
+            inputEl.value = `${cur}%`;
+        } else if (type === 'offsetY') {
+            const cur = window.customizationState.customOffsetsY?.[charKey] ??
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_offset_y_' + charKey) !== null ? Number(localStorage.getItem('guoba_custom_offset_y_' + charKey)) : 0);
+            inputEl.value = `${cur}%`;
+        } else if (type === 'scale') {
+            const cur = window.customizationState.customScales?.[charKey] ??
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_scale_' + charKey) !== null ? Number(localStorage.getItem('guoba_custom_scale_' + charKey)) : 100);
+            inputEl.value = `${cur}%`;
+        }
+    };
+
+    window.handlePortraitInputKey = function (type, charKey, inputEl, defaultOffset, event) {
+        if (!event) return;
+        if (event.key === 'Enter') {
+            inputEl.blur();
+        } else if (event.key === 'Escape') {
+            window.revertPortraitInput(type, charKey, inputEl, defaultOffset);
+            inputEl.blur();
+        } else if (event.key === 'ArrowUp') {
+            event.preventDefault();
+            const step = type === 'scale' ? 5 : 2;
+            if (type === 'offsetX') window.adjustPortraitOffset(charKey, step, defaultOffset, event);
+            else if (type === 'offsetY') window.adjustPortraitOffsetY(charKey, step, defaultOffset, event);
+            else if (type === 'scale') window.adjustPortraitScale(charKey, step, defaultOffset, event);
+            setTimeout(() => inputEl.select(), 10);
+        } else if (event.key === 'ArrowDown') {
+            event.preventDefault();
+            const step = type === 'scale' ? -5 : -2;
+            if (type === 'offsetX') window.adjustPortraitOffset(charKey, step, defaultOffset, event);
+            else if (type === 'offsetY') window.adjustPortraitOffsetY(charKey, step, defaultOffset, event);
+            else if (type === 'scale') window.adjustPortraitScale(charKey, step, defaultOffset, event);
+            setTimeout(() => inputEl.select(), 10);
+        }
+    };
+
+    window.openCustomColorPicker = function (triggerEl, defaultColor) {
+        if (openCustomColorPicker) {
+            openCustomColorPicker(triggerEl || document.querySelector('.custom-color-control'), defaultColor);
+        } else {
+            const input = document.getElementById('custom-color-input');
+            if (input) input.click();
+        }
     };
 
     window.updateCharHex = function (color) {
@@ -704,6 +816,9 @@ if (typeof window !== 'undefined') {
 
     window.resetCharHex = function (defaultColor) {
         window.updateCharHex(defaultColor);
+        if (window.customColorPickerSetHex) {
+            window.customColorPickerSetHex(defaultColor, false);
+        }
     };
 
     function toggleShowcaseClass(cls, add) {
