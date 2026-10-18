@@ -74,9 +74,9 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
     const hasNoRarity = (typeof window !== 'undefined') &&
         (window.customizationState?.rarityMode === 'no-rarity' ||
             (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rarity_mode') === 'no-rarity'));
-    const hasNoRollDots = (typeof window !== 'undefined') &&
-        (window.customizationState?.rollDotsMode === 'no-dots' ||
-            (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'no-dots'));
+    const rollDotsMode = (typeof window !== 'undefined')
+        ? (window.customizationState?.rollDotsMode || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_custom_rolldots_mode') : null) || 'dots')
+        : (typeof localStorage !== 'undefined' ? (localStorage.getItem('guoba_custom_rolldots_mode') || 'dots') : 'dots');
     const hasNoDeadDim = (typeof window !== 'undefined') &&
         (window.customizationState?.deadDimMode === 'no-dim' ||
             (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode') === 'no-dim'));
@@ -295,12 +295,19 @@ export function renderCustomizationBar(persoObj, defaultColor, charIndex, config
             <!-- Séparateur -->
             <div class="custom-divider"></div>
 
-            <!-- Contrôle 9 : Points de rolls des substats (Afficher / Masquer) -->
+            <!-- Contrôle 9 : Points de rolls des substats (Afficher / Coloriser / Masquer) -->
             <div class="custom-toggle-group">
-                <button type="button" class="custom-toggle-btn ${!hasNoRollDots ? 'active' : ''}" id="btn-rolldots-on" onclick="window.setRollDotsMode && window.setRollDotsMode('dots')" title="${t('custom.rolldots.on')}" data-i18n-title="custom.rolldots.on">
+                <button type="button" class="custom-toggle-btn ${rollDotsMode === 'dots' ? 'active' : ''}" id="btn-rolldots-on" onclick="window.setRollDotsMode && window.setRollDotsMode('dots')" title="${t('custom.rolldots.on')}" data-i18n-title="custom.rolldots.on">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dots"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path></svg>
                 </button>
-                <button type="button" class="custom-toggle-btn ${hasNoRollDots ? 'active' : ''}" id="btn-rolldots-off" onclick="window.setRollDotsMode && window.setRollDotsMode('no-dots')" title="${t('custom.rolldots.off')}" data-i18n-title="custom.rolldots.off">
+                <button type="button" class="custom-toggle-btn ${rollDotsMode === 'colored' ? 'active' : ''}" id="btn-rolldots-colored" onclick="window.setRollDotsMode && window.setRollDotsMode('colored')" title="${t('custom.rolldots.colored')}" data-i18n-title="custom.rolldots.colored">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                        <circle cx="5" cy="12" r="2.2" fill="#6CED75" />
+                        <circle cx="12" cy="12" r="2.2" fill="#00BFE9" />
+                        <circle cx="19" cy="12" r="2.2" fill="#EE72F7" />
+                    </svg>
+                </button>
+                <button type="button" class="custom-toggle-btn ${rollDotsMode === 'no-dots' ? 'active' : ''}" id="btn-rolldots-off" onclick="window.setRollDotsMode && window.setRollDotsMode('no-dots')" title="${t('custom.rolldots.off')}" data-i18n-title="custom.rolldots.off">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dots-off"><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path><path d="M3 3l18 18"></path></svg>
                 </button>
             </div>
@@ -385,7 +392,7 @@ if (typeof window !== 'undefined') {
             borderMode: savedBorder === 'no-border' ? 'no-border' : 'border',
             cornerMode: savedCorner === 'square' ? 'square' : 'rounded',
             rarityMode: savedRarity === 'no-rarity' ? 'no-rarity' : 'rarity',
-            rollDotsMode: savedRollDots === 'no-dots' ? 'no-dots' : 'dots',
+            rollDotsMode: (savedRollDots === 'no-dots' || savedRollDots === 'colored') ? savedRollDots : 'dots',
             deadDimMode: savedDeadDim === 'no-dim' ? 'no-dim' : 'dim',
             scoreMode: savedScore === 'rolls' ? 'rolls' : 'ranking',
             artScoreMode: savedArtScore === 'cv' ? 'cv' : 'score',
@@ -1002,15 +1009,26 @@ if (typeof window !== 'undefined') {
         } catch (e) { }
 
         const btnOn = document.getElementById('btn-rolldots-on');
+        const btnColored = document.getElementById('btn-rolldots-colored');
         const btnOff = document.getElementById('btn-rolldots-off');
 
         if (mode === 'no-dots') {
             toggleShowcaseClass('mode-no-roll-dots', true);
+            toggleShowcaseClass('mode-colored-roll-dots', false);
             if (btnOn) btnOn.classList.remove('active');
+            if (btnColored) btnColored.classList.remove('active');
             if (btnOff) btnOff.classList.add('active');
+        } else if (mode === 'colored') {
+            toggleShowcaseClass('mode-no-roll-dots', false);
+            toggleShowcaseClass('mode-colored-roll-dots', true);
+            if (btnOn) btnOn.classList.remove('active');
+            if (btnColored) btnColored.classList.add('active');
+            if (btnOff) btnOff.classList.remove('active');
         } else {
             toggleShowcaseClass('mode-no-roll-dots', false);
+            toggleShowcaseClass('mode-colored-roll-dots', false);
             if (btnOn) btnOn.classList.add('active');
+            if (btnColored) btnColored.classList.remove('active');
             if (btnOff) btnOff.classList.remove('active');
         }
     };

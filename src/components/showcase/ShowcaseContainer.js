@@ -52,6 +52,9 @@ export function renderShowcaseComponent(persoObj, charIndex) {
     const hasNoRollDots = (typeof window !== 'undefined') &&
         (window.customizationState?.rollDotsMode === 'no-dots' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'no-dots'));
+    const isRollDotsColored = (typeof window !== 'undefined') &&
+        (window.customizationState?.rollDotsMode === 'colored' ||
+         (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'colored'));
     const hasNoDeadDim = (typeof window !== 'undefined') &&
         (window.customizationState?.deadDimMode === 'no-dim' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode') === 'no-dim'));
@@ -61,7 +64,7 @@ export function renderShowcaseComponent(persoObj, charIndex) {
     const isArtifactCv = (typeof window !== 'undefined') &&
         (window.customizationState?.artScoreMode === 'cv' ||
          (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_artscore_mode') === 'cv'));
-    const modeClasses = `${isModern ? ' mode-modern' : ''}${isTransparent ? ' mode-transparent' : ''}${isDark ? ' mode-dark' : ''}${hasNoBgSplash ? ' mode-no-bg-splash' : ''}${hasNoShadow ? ' mode-no-shadow' : ''}${hasNoBorder ? ' mode-no-border' : ''}${isSquareCorners ? ' mode-square-corners' : ''}${hasNoRarity ? ' mode-no-rarity' : ''}${hasNoRollDots ? ' mode-no-roll-dots' : ''}${hasNoDeadDim ? ' mode-no-dead-dim' : ''}${isScoreRolls ? ' mode-score-rolls' : ''}${isArtifactCv ? ' mode-artifact-cv' : ''}`;
+    const modeClasses = `${isModern ? ' mode-modern' : ''}${isTransparent ? ' mode-transparent' : ''}${isDark ? ' mode-dark' : ''}${hasNoBgSplash ? ' mode-no-bg-splash' : ''}${hasNoShadow ? ' mode-no-shadow' : ''}${hasNoBorder ? ' mode-no-border' : ''}${isSquareCorners ? ' mode-square-corners' : ''}${hasNoRarity ? ' mode-no-rarity' : ''}${hasNoRollDots ? ' mode-no-roll-dots' : ''}${isRollDotsColored ? ' mode-colored-roll-dots' : ''}${hasNoDeadDim ? ' mode-no-dead-dim' : ''}${isScoreRolls ? ' mode-score-rolls' : ''}${isArtifactCv ? ' mode-artifact-cv' : ''}`;
     const wrapperClass = `showcase-wrapper${modeClasses}`;
 
     return `

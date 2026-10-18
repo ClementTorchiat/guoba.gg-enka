@@ -1,7 +1,8 @@
 // src/components/showcase/ArtifactCard.js
 import { t } from '../../scripts/i18n.js';
 import ICON_MAP from '../../data/icon_map.json';
-import { formatValueDisplay } from '../../scripts/data.js';
+import { formatValueDisplay, BASE_ROLLS, BASE_ROLLS_4 } from '../../scripts/data.js';
+import { getRollDetails } from '../../scripts/scoring.js';
 
 export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 0) {
     if (!art) return '';
@@ -22,6 +23,37 @@ export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 
             ? window.getRollCount(sub.key, sub.value, art.stars || 5)
             : 1;
 
+        const stars = art.stars || 5;
+        const details = (typeof window !== 'undefined' && window.getRollDetails)
+            ? window.getRollDetails(sub.key, sub.value, stars)
+            : getRollDetails(sub.key, sub.value, stars);
+
+        const rollsArray = (details && details.rolls && details.rolls.length > 0)
+            ? details.rolls
+            : (rolls > 0 ? Array(rolls).fill(sub.value / (rolls || 1)) : []);
+
+        const baseRollsRef = (stars === 4
+            ? ((typeof window !== 'undefined' && window.BASE_ROLLS_4) ? window.BASE_ROLLS_4 : BASE_ROLLS_4)
+            : ((typeof window !== 'undefined' && window.BASE_ROLLS) ? window.BASE_ROLLS : BASE_ROLLS));
+        const baseRolls = baseRollsRef?.[sub.key] || [];
+        const rollTierColors = ['#6CED75', '#00E497', '#00BFE9', '#EE72F7'];
+
+        const dotsHtml = rollsArray.map(rollVal => {
+            let tierIndex = baseRolls.indexOf(rollVal);
+            if (tierIndex === -1 && baseRolls.length > 0) {
+                let minDiff = Infinity;
+                baseRolls.forEach((br, i) => {
+                    const diff = Math.abs(br - rollVal);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        tierIndex = i;
+                    }
+                });
+            }
+            const dotColor = (tierIndex >= 0 && tierIndex < rollTierColors.length) ? rollTierColors[tierIndex] : '#6CED75';
+            return `<div class="substat-roll-dot" style="--dot-color: ${dotColor};"></div>`;
+        }).join('');
+
         subsHtml += `
             <div style="color: var(--text-always-white); display: flex; justify-content: space-between; align-items: center;" 
                  class="substat-row ${isDead ? 'dead' : ''}"
@@ -34,11 +66,9 @@ export function renderArtifactCard(art, weights = {}, charIndex = 0, artIndex = 
                 <div style="display:flex; flex-direction: row; align-items:center; gap:5px;">
                     <img src="${ICON_BASE_PATH}${ICON_MAP[sub.key] || ICON_MAP['unknown']}" style="width: 17px; height: 17px;" alt="${sub.key}" decoding="async">
                     <p style="font-size: 12px; margin:0;">${sub.label}</p>
-                    ${rolls > 0 ? `
+                    ${rollsArray.length > 0 ? `
                         <div class="substat-rolls-indicator" style="display: flex; gap: 3px; align-items: center;">
-                            ${Array(rolls).fill('').map(() => `
-                                <div style="width: 2px; height: 2px; border-radius: 100%; background-color: rgba(255, 255, 255, 0.6);"></div>
-                            `).join('')}
+                            ${dotsHtml}
                         </div>
                     ` : ''}
                 </div>

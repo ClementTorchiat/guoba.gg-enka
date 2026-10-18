@@ -1597,6 +1597,18 @@ main {
 }
 
 /* --- POINTS DE ROLLS SUBSTATS --- */
+.substat-roll-dot {
+    width: 2.5px;
+    height: 2.5px;
+    border-radius: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+    transition: background-color 0.2s ease;
+}
+
+:is(.showcase-wrapper, .top-row).mode-colored-roll-dots .substat-roll-dot {
+    background-color: var(--dot-color, rgba(255, 255, 255, 0.6)) !important;
+}
+
 :is(.showcase-wrapper, .top-row).mode-no-roll-dots .substat-rolls-indicator {
     display: none !important;
 }

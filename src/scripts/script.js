@@ -4685,6 +4685,7 @@ window.exportBuildAsImage = async function () {
         { key: 'guoba_custom_corner_mode', val: 'square', cls: 'mode-square-corners' },
         { key: 'guoba_custom_rarity_mode', val: 'no-rarity', cls: 'mode-no-rarity' },
         { key: 'guoba_custom_rolldots_mode', val: 'no-dots', cls: 'mode-no-roll-dots' },
+        { key: 'guoba_custom_rolldots_mode', val: 'colored', cls: 'mode-colored-roll-dots' },
         { key: 'guoba_custom_deaddim_mode', val: 'no-dim', cls: 'mode-no-dead-dim' },
         { key: 'guoba_custom_score_mode', val: 'rolls', cls: 'mode-score-rolls' },
         { key: 'guoba_custom_artscore_mode', val: 'cv', cls: 'mode-artifact-cv' },
@@ -4863,6 +4864,28 @@ window.exportBuildAsImage = async function () {
             } else {
                 clonedElement.querySelectorAll('.substat-row.dead').forEach(el => {
                     el.style.setProperty('opacity', '0.4', 'important');
+                });
+            }
+
+            // 5b. POINTS DE ROLLS SUBSTATS (Masqués / Colorisés / Blancs)
+            const isRollDotsColored = clonedElement.classList.contains('mode-colored-roll-dots') ||
+                (window.customizationState?.rollDotsMode === 'colored') ||
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'colored');
+
+            const hasNoRollDots = clonedElement.classList.contains('mode-no-roll-dots') ||
+                (window.customizationState?.rollDotsMode === 'no-dots') ||
+                (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_rolldots_mode') === 'no-dots');
+
+            if (hasNoRollDots) {
+                clonedElement.querySelectorAll('.substat-rolls-indicator').forEach(el => {
+                    el.style.setProperty('display', 'none', 'important');
+                });
+            } else if (isRollDotsColored) {
+                clonedElement.querySelectorAll('.substat-roll-dot').forEach(el => {
+                    const dotColor = el.style.getPropertyValue('--dot-color');
+                    if (dotColor) {
+                        el.style.setProperty('background-color', dotColor, 'important');
+                    }
                 });
             }
 
