@@ -4714,7 +4714,7 @@ window.exportBuildAsImage = async function () {
             const computedStyle = window.getComputedStyle(bgDiv);
             const bgUrlMatch = computedStyle.backgroundImage.match(/url\(["']?([^"']*)["']?\)/);
 
-            if (bgUrlMatch && bgUrlMatch[1]) {
+            if (bgUrlMatch && bgUrlMatch[1] && !bgUrlMatch[1].startsWith('data:') && !bgUrlMatch[1].startsWith('blob:')) {
                 const imgUrl = bgUrlMatch[1];
                 originalBgImage = bgDiv.style.backgroundImage;
 
@@ -4817,6 +4817,8 @@ window.exportBuildAsImage = async function () {
             const isDeadDimStrike = clonedElement.classList.contains('mode-strike-dead-dim') ||
                 (window.customizationState?.deadDimMode === 'strike') ||
                 (typeof localStorage !== 'undefined' && localStorage.getItem('guoba_custom_deaddim_mode') === 'strike');
+
+            const isModern = isModernExport || clonedElement.classList.contains('mode-modern');
 
             // 1. OMBRES : supprimer box-shadow si no-shadow, ou appliquer lueur colorée si glow en mode classique
             if (hasNoShadow) {
