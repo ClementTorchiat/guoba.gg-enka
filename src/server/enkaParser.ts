@@ -87,7 +87,6 @@ export async function parseEnkaData(enkaRawData: any) {
     const avatarsDb = await getEnkaAvatars();
     const hashToKeyDb = await getHashToKey();
     const iconToNameHashDb = await getIconToNameHash();
-    const locFrDb = await getLocFr();
 
     const persos = enkaRawData.avatarInfoList.map((avatar: any) => {
         // Enka stocke le taux critique total du perso à l'index "20"
@@ -162,7 +161,6 @@ export async function parseEnkaData(enkaRawData: any) {
                 }
                 
                 equippedWeapon = {
-                    nameText: locFrDb[String(flat.nameTextMapHash)] || String(flat.nameTextMapHash || ""),
                     icon: flat.icon ? flat.icon.replace('.png', '') : "",
                     level: weaponData.level || 1,
                     refinement: refinement

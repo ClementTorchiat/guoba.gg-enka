@@ -448,6 +448,16 @@ if (!pageError && !targetCharConfig) {
                   // Fallback pour les stats globales
                   const stats = data.stats || { critRate: 0.05, critDMG: 0.5, enerRech: 1.0 };
 
+                  // Support des nouvelles clés uniformisées et fallback legacy
+                  const hpVal = stats.hp !== undefined ? stats.hp : (stats.maxHp || 0);
+                  const atkVal = stats.atk !== undefined ? stats.atk : (stats.curAttack || 0);
+                  const defVal = stats.def !== undefined ? stats.def : (stats.curDefense || 0);
+                  const emVal = stats.eleMas !== undefined ? stats.eleMas : (stats.em || 0);
+                  const crVal = stats.critRate_ !== undefined ? stats.critRate_ : (stats.critRate || 0.05) * 100;
+                  const cdVal = stats.critDMG_ !== undefined ? stats.critDMG_ : (stats.critDMG || 0.5) * 100;
+                  const erVal = stats.enerRech_ !== undefined ? stats.enerRech_ : (stats.enerRech || 1.0) * 100;
+                  const dmgVal = stats.dmgBonus_ !== undefined ? stats.dmgBonus_ : (stats.dmgBonus || 0) * 100;
+
                   // Calcul manuel du CV et des sets à partir des artefacts
                   let totalCV = 0;
                   let bestSetName: string | null = null;
@@ -474,10 +484,10 @@ if (!pageError && !targetCharConfig) {
                   // 1. On privilégie les données pré-calculées par l'API (nouveaux builds)
                   if (data.computed) {
                     totalCV = data.computed.totalCV || 0;
-                    if (!data.artefacts) {
-                      bestSetName = data.computed.bestSetName || null;
-                      bestSetCount = data.computed.bestSetCount || 0;
-                    }
+                    bestSetName = data.computed.bestSetName || bestSetName;
+                    bestSetCount = data.computed.bestSetCount || bestSetCount;
+                    secondBestSetName = data.computed.secondBestSetName || secondBestSetName;
+                    secondBestSetCount = data.computed.secondBestSetCount || secondBestSetCount;
                   }
                   // 2. Fallback pour les anciens builds déjà en base de données
                   else {
@@ -522,14 +532,14 @@ if (!pageError && !targetCharConfig) {
 
                   const tooltipPayload = {
                     stats: {
-                      hp: stats.maxHp || stats.hp || 0,
-                      atk: stats.curAttack || stats.atk || 0,
-                      def: stats.curDefense || stats.def || 0,
-                      em: stats.eleMas || stats.em || 0,
-                      cr: (stats.critRate || 0) * 100,
-                      cd: (stats.critDMG || 0) * 100,
-                      er: (stats.enerRech || 0) * 100,
-                      dmg: (stats.dmgBonus || 0) * 100,
+                      hp: hpVal,
+                      atk: atkVal,
+                      def: defVal,
+                      em: emVal,
+                      cr: crVal,
+                      cd: cdVal,
+                      er: erVal,
+                      dmg: dmgVal,
                     },
                     weapon: {
                       ...data.weapon,
@@ -544,7 +554,7 @@ if (!pageError && !targetCharConfig) {
                   };
 
                   return (
-                    <a href={`/?uid=${build.uid}&char=${targetCharName}`} class="leaderboard-list-row" data-er={Math.round((stats.enerRech || 1) * 100)} data-build-info={JSON.stringify(tooltipPayload)} style={`position: relative; overflow: hidden; padding: 10px; padding-right: 20px; padding-left: 10px; border-radius: 8px; background-color: ${bgColor}; display:flex; flex-direction: row; align-items: center; justify-content: space-between; cursor: pointer; text-decoration: none; color: inherit; transition: background-color 0.2s ease;`}>
+                    <a href={`/?uid=${build.uid}&char=${targetCharName}`} class="leaderboard-list-row" data-er={Math.round(erVal)} data-build-info={JSON.stringify(tooltipPayload)} style={`position: relative; overflow: hidden; padding: 10px; padding-right: 20px; padding-left: 10px; border-radius: 8px; background-color: ${bgColor}; display:flex; flex-direction: row; align-items: center; justify-content: space-between; cursor: pointer; text-decoration: none; color: inherit; transition: background-color 0.2s ease;`}>
                       <span class="rank-number" style="flex: 0.2;">
                         {offset + index + 1}
                       </span>
@@ -590,15 +600,15 @@ if (!pageError && !targetCharConfig) {
 
                       <div style="flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center; gap:8px;">
                         <div style="display: flex; flex-direction: row; align-items: center; opacity:0.5; font-size: 12px;">
-                          <span>{(stats.critRate * 100).toFixed(1)}%</span>
-                          <span> : {(stats.critDMG * 100).toFixed(1)}%</span>
+                          <span>{crVal.toFixed(1)}%</span>
+                          <span> : {cdVal.toFixed(1)}%</span>
                         </div>
                         <span style="font-size: 14px; color: var(--accent-gold);">{totalCV.toFixed(1)} CV</span>
                       </div>
 
                       <div style="flex: 1; display:flex; flex-direction: row; align-items: center; justify-content: center; gap:6px;">
                         <img src="/assets/simulator/icons/icon_er.webp" alt="" style="width: 22px; height: 22px;" />
-                        <span style="font-size: 14px;">{(stats.enerRech * 100).toFixed(1)}%</span>
+                        <span style="font-size: 14px;">{erVal.toFixed(1)}%</span>
                       </div>
 
                       <div style="flex: 0.5; text-align: right;">

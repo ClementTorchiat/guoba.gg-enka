@@ -318,22 +318,60 @@ app.get('/player/:uid', async (c) => {
           const sortedSets = Object.entries(setsCounter).sort((a, b) => b[1] - a[1]);
           const bestSetName = sortedSets.length > 0 ? sortedSets[0][0] : null;
           const bestSetCount = sortedSets.length > 0 ? sortedSets[0][1] : 0;
+          const secondBestSetName = sortedSets.length > 1 ? sortedSets[1][0] : null;
+          const secondBestSetCount = sortedSets.length > 1 ? sortedSets[1][1] : 0;
 
-          // On purge 'evaluation' car ça n'a plus de sens dans un objet 'build' partagé
-          const dataToSave = { ...res.persoData };
-          delete dataToSave.evaluation;
+          const rawStats = res.persoData.stats || {};
+          const cleanStats = {
+            hp: Math.round(rawStats.maxHp || rawStats.hp || 0),
+            atk: Math.round(rawStats.curAttack || rawStats.atk || 0),
+            def: Math.round(rawStats.curDefense || rawStats.def || 0),
+            eleMas: Math.round(rawStats.eleMas || rawStats.em || 0),
+            critRate_: parseFloat(((rawStats.critRate !== undefined ? rawStats.critRate * 100 : rawStats.critRate_) || 0).toFixed(1)),
+            critDMG_: parseFloat(((rawStats.critDMG !== undefined ? rawStats.critDMG * 100 : rawStats.critDMG_) || 0).toFixed(1)),
+            enerRech_: parseFloat(((rawStats.enerRech !== undefined ? rawStats.enerRech * 100 : rawStats.enerRech_) || 100).toFixed(1)),
+            dmgBonus_: parseFloat(((rawStats.dmgBonus !== undefined ? rawStats.dmgBonus * 100 : rawStats.dmgBonus_) || 0).toFixed(1))
+          };
 
-          dataToSave.computed = {
-            totalCV,
-            bestSetName,
-            bestSetCount
+          const cleanWeapon = res.persoData.weapon ? {
+            icon: res.persoData.weapon.icon || "",
+            level: Number(res.persoData.weapon.level) || 1,
+            refinement: Number(res.persoData.weapon.refinement) || 1
+          } : null;
+
+          const cleanArtefacts = (res.persoData.artefacts || []).map((art: any) => ({
+            type: art.type,
+            setKey: art.setKey,
+            icon: art.icon,
+            stars: Number(art.stars) || 5,
+            mainStat: {
+              key: art.mainStat?.key,
+              value: Number(art.mainStat?.value)
+            },
+            subStats: (art.subStats || []).map((sub: any) => ({
+              key: sub.key,
+              value: Number(sub.value)
+            }))
+          }));
+
+          const dataToSave = {
+            level: Number(res.persoData.level) || 90,
+            cons: Number(res.persoData.cons) || 0,
+            stats: cleanStats,
+            weapon: cleanWeapon,
+            computed: {
+              totalCV: parseFloat(totalCV.toFixed(1)),
+              bestSetName,
+              bestSetCount,
+              secondBestSetName,
+              secondBestSetCount
+            },
+            artefacts: cleanArtefacts
           };
 
           uniqueBuildsMap.set(buildKey, {
             uid: uid,
             avatar_id: String(res.id),
-            archetype: res.archetype, // Satisfait le NOT NULL de l'ancienne base
-            score: res.score,         // Satisfait le NOT NULL de l'ancienne base
             data: dataToSave
           });
         }
