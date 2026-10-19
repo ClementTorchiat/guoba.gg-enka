@@ -5058,6 +5058,95 @@ input:checked+.toggle-track .star-4 {
     background-color: var(--bg-hover) !important;
 }
 
+/* --- Settings Modal Layout (Unlinked vs Linked) --- */
+#settings-modal {
+    transition: max-width 0.25s ease;
+}
+
+.settings-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.settings-left-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.settings-card {
+    background: var(--bg-body);
+    padding: 15px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.settings-separator {
+    display: none;
+}
+
+/* LINKED STATE (Horizontal 2 columns) */
+#settings-modal.is-linked {
+    max-width: 1100px !important;
+}
+
+#settings-modal.is-linked .settings-modal-body {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 24px;
+}
+
+#settings-modal.is-linked .settings-left-col {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 340px;
+    min-width: 0;
+    gap: 16px;
+}
+
+#settings-modal.is-linked .settings-left-col .button-logout {
+    margin-top: auto;
+    width: 100%;
+}
+
+#settings-modal.is-linked .settings-separator {
+    display: block;
+    width: 0px;
+    border: none;
+    border-left: 1px solid var(--border-color);
+    align-self: stretch;
+    flex-shrink: 0;
+}
+
+#settings-modal.is-linked #settings-preferences-view {
+    flex: 1.25 1 420px;
+    min-width: 0;
+}
+
+@media (max-width: 860px) {
+    #settings-modal.is-linked {
+        max-width: 500px !important;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    #settings-modal.is-linked .settings-modal-body {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    #settings-modal.is-linked .settings-separator {
+        display: none;
+    }
+
+    #settings-modal.is-linked .settings-left-col .button-logout {
+        margin-top: 16px;
+    }
+}
+
 /* Timeline Account Settings */
 .timeline-container {
     display: flex;

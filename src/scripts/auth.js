@@ -163,9 +163,11 @@ async function updateSettingsUiState(uid) {
     const unlinkedView = document.getElementById('settings-unlinked-view');
     const linkedView = document.getElementById('settings-linked-view');
     const prefsView = document.getElementById('settings-preferences-view');
+    const modalEl = document.getElementById('settings-modal');
 
     if (uid) {
         // Vue LIÉ
+        if (modalEl) modalEl.classList.add('is-linked');
         if (unlinkedView) unlinkedView.style.display = 'none';
         if (linkedView) linkedView.style.display = 'flex';
         if (prefsView) prefsView.style.display = 'flex';
@@ -343,6 +345,7 @@ async function updateSettingsUiState(uid) {
         }
     } else {
         // Vue NON LIÉ
+        if (modalEl) modalEl.classList.remove('is-linked');
         if (unlinkedView) unlinkedView.style.display = 'flex';
         if (linkedView) linkedView.style.display = 'none';
         if (prefsView) prefsView.style.display = 'none';

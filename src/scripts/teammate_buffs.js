@@ -457,7 +457,7 @@ window.TEAMMATE_BUFFS = {
         element: "geo",
         buffs: [
             {
-                label: { fr: "Pacte du forge-torche (Si le personnage est Lunaire - EM)", en: "Universal Naturalist Archive (If the character is Moonsign - EM)" },
+                label: { fr: "Archive naturaliste universelle (Si le personnage est Lunaire - EM)", en: "Universal Naturalist Archive (If the character is Moonsign - EM)" },
                 active: false,
                 stats: { eleMas: 120 }
             }

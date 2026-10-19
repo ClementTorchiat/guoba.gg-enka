@@ -207,17 +207,20 @@ const finalSchema = schema || defaultSchema;
 
         <script is:inline>
             function copyVerificationCode(btn) {
-                const display = document.getElementById('verification-code-display');
+                const display = document.getElementById("verification-code-display");
                 if (!display) return;
-                navigator.clipboard.writeText(display.textContent).then(() => {
-                    const originalSvg = btn.innerHTML;
-                    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-                    setTimeout(() => {
-                        btn.innerHTML = originalSvg;
-                    }, 2000);
-                }).catch(err => {
-                    console.error('Erreur lors de la copie du code:', err);
-                });
+                navigator.clipboard
+                    .writeText(display.textContent)
+                    .then(() => {
+                        const originalSvg = btn.innerHTML;
+                        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                        setTimeout(() => {
+                            btn.innerHTML = originalSvg;
+                        }, 2000);
+                    })
+                    .catch((err) => {
+                        console.error("Erreur lors de la copie du code:", err);
+                    });
             }
 
             function openLoginModal() {
@@ -267,9 +270,9 @@ const finalSchema = schema || defaultSchema;
                     const padding = 12;
 
                     const spaceBelow = window.innerHeight - rect.bottom;
-                    const placeTop = spaceBelow < (tHeight + gap + 10) && rect.top > (tHeight + gap);
+                    const placeTop = spaceBelow < tHeight + gap + 10 && rect.top > tHeight + gap;
 
-                    const top = placeTop ? (rect.top - tHeight - gap) : (rect.bottom + gap);
+                    const top = placeTop ? rect.top - tHeight - gap : rect.bottom + gap;
                     tooltip.classList.add(placeTop ? "placement-top" : "placement-bottom");
 
                     const elemCenterX = rect.left + rect.width / 2;
@@ -306,38 +309,48 @@ const finalSchema = schema || defaultSchema;
 
             if (typeof window !== "undefined") {
                 const ELEMENT_COLORS_MAP = {
-                    pyro: '#ef7a35', hydro: '#4bc3f7', dendro: '#a5c83b', electro: '#b07ce8',
-                    anemo: '#74c2a8', cryo: '#98c8d8', geo: '#e2b34a'
+                    pyro: "#ef7a35",
+                    hydro: "#4bc3f7",
+                    dendro: "#a5c83b",
+                    electro: "#b07ce8",
+                    anemo: "#74c2a8",
+                    cryo: "#98c8d8",
+                    geo: "#e2b34a",
                 };
 
                 function formatBuffStatBadge(statKey, val) {
-                    const isFr = (window.GUOBA_LANG !== 'en');
+                    const isFr = window.GUOBA_LANG !== "en";
                     const STAT_SHORT = {
-                        atk: isFr ? 'ATQ' : 'ATK', atk_: isFr ? 'ATQ' : 'ATK',
-                        hp: isFr ? 'PV' : 'HP', hp_: isFr ? 'PV' : 'HP',
-                        def: isFr ? 'DÉF' : 'DEF', def_: isFr ? 'DÉF' : 'DEF',
-                        eleMas: isFr ? 'ME' : 'EM', enerRech_: isFr ? 'RE' : 'ER',
-                        critRate_: isFr ? 'TC' : 'CR', critDMG_: isFr ? 'DC' : 'CD',
-                        elemental_dmg_: isFr ? 'DGT Élém.' : 'Elem. DMG',
-                        pyro_dmg_: isFr ? 'DGT Pyro' : 'Pyro DMG',
-                        hydro_dmg_: isFr ? 'DGT Hydro' : 'Hydro DMG',
-                        cryo_dmg_: isFr ? 'DGT Cryo' : 'Cryo DMG',
-                        electro_dmg_: isFr ? 'DGT Électro' : 'Electro DMG',
-                        anemo_dmg_: isFr ? 'DGT Anémo' : 'Anemo DMG',
-                        geo_dmg_: isFr ? 'DGT Géo' : 'Geo DMG',
-                        dendro_dmg_: isFr ? 'DGT Dendro' : 'Dendro DMG',
-                        physical_dmg_: isFr ? 'DGT Phys.' : 'Phys. DMG'
+                        atk: isFr ? "ATQ" : "ATK",
+                        atk_: isFr ? "ATQ" : "ATK",
+                        hp: isFr ? "PV" : "HP",
+                        hp_: isFr ? "PV" : "HP",
+                        def: isFr ? "DÉF" : "DEF",
+                        def_: isFr ? "DÉF" : "DEF",
+                        eleMas: isFr ? "ME" : "EM",
+                        enerRech_: isFr ? "RE" : "ER",
+                        critRate_: isFr ? "TC" : "CR",
+                        critDMG_: isFr ? "DC" : "CD",
+                        elemental_dmg_: isFr ? "DGT Élém." : "Elem. DMG",
+                        pyro_dmg_: isFr ? "DGT Pyro" : "Pyro DMG",
+                        hydro_dmg_: isFr ? "DGT Hydro" : "Hydro DMG",
+                        cryo_dmg_: isFr ? "DGT Cryo" : "Cryo DMG",
+                        electro_dmg_: isFr ? "DGT Électro" : "Electro DMG",
+                        anemo_dmg_: isFr ? "DGT Anémo" : "Anemo DMG",
+                        geo_dmg_: isFr ? "DGT Géo" : "Geo DMG",
+                        dendro_dmg_: isFr ? "DGT Dendro" : "Dendro DMG",
+                        physical_dmg_: isFr ? "DGT Phys." : "Phys. DMG",
                     };
 
                     let label = STAT_SHORT[statKey] || statKey;
-                    let formattedVal = '';
-                    const isPercent = statKey.endsWith('_') || ['critRate_', 'critDMG_', 'enerRech_'].includes(statKey);
+                    let formattedVal = "";
+                    const isPercent = statKey.endsWith("_") || ["critRate_", "critDMG_", "enerRech_"].includes(statKey);
 
                     if (isPercent) {
-                        const pct = (val < 1.0 && val > -1.0) ? (val * 100) : val;
-                        formattedVal = (pct >= 0 ? '+' : '') + pct.toFixed(1).replace('.0', '') + '%';
+                        const pct = val < 1.0 && val > -1.0 ? val * 100 : val;
+                        formattedVal = (pct >= 0 ? "+" : "") + pct.toFixed(1).replace(".0", "") + "%";
                     } else {
-                        formattedVal = (val >= 0 ? '+' : '') + Math.round(val).toLocaleString();
+                        formattedVal = (val >= 0 ? "+" : "") + Math.round(val).toLocaleString();
                     }
 
                     return `<span style="display:inline-flex; align-items:center; gap:2px; font-size:10px; font-weight:normal; color:var(--accent-gold); background:rgba(255,215,0,0.12); border:none; border-radius:3px; padding:1px 5px; line-height:1.2;">${formattedVal} ${label}</span>`;
@@ -345,8 +358,8 @@ const finalSchema = schema || defaultSchema;
 
                 window.showTeammateTooltip = function (element) {
                     if (!element) return;
-                    const slot = (element.closest ? element.closest('.team-mate-slot') : null) || element;
-                    const raw = slot.getAttribute('data-teammate');
+                    const slot = (element.closest ? element.closest(".team-mate-slot") : null) || element;
+                    const raw = slot.getAttribute("data-teammate");
                     if (!raw) return;
 
                     let data;
@@ -356,17 +369,17 @@ const finalSchema = schema || defaultSchema;
                         return;
                     }
 
-                    let tooltip = document.getElementById('teammate-tooltip');
+                    let tooltip = document.getElementById("teammate-tooltip");
                     if (!tooltip) {
-                        tooltip = document.createElement('div');
-                        tooltip.id = 'teammate-tooltip';
+                        tooltip = document.createElement("div");
+                        tooltip.id = "teammate-tooltip";
                         document.body.appendChild(tooltip);
                     }
 
-                    const lang = (window.GUOBA_LANG) || 'fr';
-                    const primaryElem = (data.elements && data.elements[0]) ? String(data.elements[0]).toLowerCase() : 'pyro';
-                    const elemColor = ELEMENT_COLORS_MAP[primaryElem] || data.color || 'var(--accent-gold)';
-                    tooltip.style.setProperty('--tm-color', elemColor);
+                    const lang = window.GUOBA_LANG || "fr";
+                    const primaryElem = data.elements && data.elements[0] ? String(data.elements[0]).toLowerCase() : "pyro";
+                    const elemColor = ELEMENT_COLORS_MAP[primaryElem] || data.color || "var(--accent-gold)";
+                    tooltip.style.setProperty("--tm-color", elemColor);
 
                     let weaponIcon = data.weaponIcon;
                     let weaponName = data.weaponName;
@@ -386,14 +399,14 @@ const finalSchema = schema || defaultSchema;
                         artifactName = (window.getLocalizedItemName && window.getLocalizedItemName(data.artifactKey)) || data.artifactKey;
                     }
 
-                    let portraitBg = data.bgStyle || '';
+                    let portraitBg = data.bgStyle || "";
                     if (!portraitBg) {
-                        portraitBg = `background: ${elemColor || '#333'};`;
-                    } else if (!portraitBg.endsWith(';')) {
-                        portraitBg += ';';
+                        portraitBg = `background: ${elemColor || "#333"};`;
+                    } else if (!portraitBg.endsWith(";")) {
+                        portraitBg += ";";
                     }
 
-                    let avatarHtml = '';
+                    let avatarHtml = "";
                     if (data.isDual && data.avatarUrl && data.secondaryAvatarUrl) {
                         avatarHtml = `
                             <div style="position:relative; width:44px; height:44px; border-radius:5px; overflow:hidden; ${portraitBg} border:none; box-shadow:none; flex-shrink:0;">
@@ -407,39 +420,42 @@ const finalSchema = schema || defaultSchema;
                             </div>
                         `;
                     } else {
-                        const imgFit = data.isArchetype ? 'object-fit:contain; padding:6px; box-sizing:border-box;' : 'object-fit:cover;';
+                        const imgFit = data.isArchetype ? "object-fit:contain; padding:6px; box-sizing:border-box;" : "object-fit:cover;";
                         avatarHtml = `
                             <div style="position:relative; width:44px; height:44px; border-radius:5px; overflow:hidden; ${portraitBg} border:none; box-shadow:none; flex-shrink:0;">
-                                <img src="${data.avatarUrl || '/assets/simulator/icons/icon_empty_slot.svg'}" style="width:100%; height:100%; ${imgFit} pointer-events:none;" decoding="async" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                                <img src="${data.avatarUrl || "/assets/simulator/icons/icon_empty_slot.svg"}" style="width:100%; height:100%; ${imgFit} pointer-events:none;" decoding="async" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                             </div>
                         `;
                     }
 
-                    const displayName = data.isDual
-                        ? `${data.resolvedName}${data.secondaryResolvedName ? ' / ' + data.secondaryResolvedName : ''}`
-                        : (data.resolvedName || data.role);
+                    const displayName = data.isDual ? `${data.resolvedName}${data.secondaryResolvedName ? " / " + data.secondaryResolvedName : ""}` : data.resolvedName || data.role;
 
-                    const elemBadges = (data.elements || [primaryElem]).filter(Boolean).map(e => {
-                        const elKey = String(e).toLowerCase();
-                        const c = ELEMENT_COLORS_MAP[elKey] || '#888';
-                        const label = (window.t && window.t(`ui.char.spider.stat.${elKey}`)) || elKey.charAt(0).toUpperCase() + elKey.slice(1);
-                        return `
+                    const elemBadges = (data.elements || [primaryElem])
+                        .filter(Boolean)
+                        .map((e) => {
+                            const elKey = String(e).toLowerCase();
+                            const c = ELEMENT_COLORS_MAP[elKey] || "#888";
+                            const label = (window.t && window.t(`ui.char.spider.stat.${elKey}`)) || elKey.charAt(0).toUpperCase() + elKey.slice(1);
+                            return `
                             <span style="display:inline-flex; align-items:center; gap:3px; padding:1px 6px; border-radius:4px; font-size:10px; font-weight:normal; background:color-mix(in srgb, ${c} 22%, transparent); color:${c}; border:none;">
                                 <img src="/assets/simulator/icons/icon_${elKey}.webp" style="width:11px; height:11px; object-fit:contain;" alt="${elKey}" onerror="this.style.display='none'">
                                 <span>${label}</span>
                             </span>
                         `;
-                    }).join('');
+                        })
+                        .join("");
 
-                    const roleBadge = data.role ? `
+                    const roleBadge = data.role
+                        ? `
                         <span style="display:inline-flex; align-items:center; padding:1px 6px; border-radius:4px; font-size:10px; font-weight:normal; background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.85); border:none;">
                             ${data.role}
                         </span>
-                    ` : '';
+                    `
+                        : "";
 
-                    let consBadge = '';
+                    let consBadge = "";
                     if (data.cons !== undefined && data.cons !== null && parseInt(data.cons) > 0) {
-                        const consText = (window.t && window.t('ui.teammate.constellationRec', data.cons)) || `C${data.cons} recommandé`;
+                        const consText = (window.t && window.t("ui.teammate.constellationRec", data.cons)) || `C${data.cons} recommandé`;
                         consBadge = `
                             <span style="display:inline-flex; align-items:center; padding:1px 6px; border-radius:4px; font-size:10px; font-weight:normal; background:linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,160,0,0.35)); color:#ffd700; border:none;">
                                 ${consText}
@@ -448,16 +464,16 @@ const finalSchema = schema || defaultSchema;
                     }
 
                     const buffsList = [];
-                    const allyNames = Array.isArray(data.names) ? data.names : (data.names ? [data.names] : []);
-                    const userCons = (data.cons !== null && data.cons !== undefined) ? parseInt(data.cons) : 6;
+                    const allyNames = Array.isArray(data.names) ? data.names : data.names ? [data.names] : [];
+                    const userCons = data.cons !== null && data.cons !== undefined ? parseInt(data.cons) : 6;
 
-                    allyNames.forEach(n => {
+                    allyNames.forEach((n) => {
                         if (!n) return;
                         const tmData = window.TEAMMATE_BUFFS?.[n];
                         if (tmData && tmData.buffs) {
-                            tmData.buffs.forEach(b => {
+                            tmData.buffs.forEach((b) => {
                                 if (b.cons !== undefined && userCons < b.cons) return;
-                                const lbl = typeof b.label === 'object' ? (b.label[lang] || b.label.fr || b.label.en) : b.label;
+                                const lbl = typeof b.label === "object" ? b.label[lang] || b.label.fr || b.label.en : b.label;
                                 buffsList.push({ label: lbl, stats: b.stats });
                             });
                         }
@@ -466,8 +482,8 @@ const finalSchema = schema || defaultSchema;
                     if (data.weaponKey && window.TEAMMATE_WEAPON_BUFFS?.[data.weaponKey]) {
                         const wData = window.TEAMMATE_WEAPON_BUFFS[data.weaponKey];
                         const wBuffs = wData.buffs || [wData];
-                        wBuffs.forEach(b => {
-                            const lbl = typeof b.label === 'object' ? (b.label[lang] || b.label.fr || b.label.en) : (b.label || weaponName);
+                        wBuffs.forEach((b) => {
+                            const lbl = typeof b.label === "object" ? b.label[lang] || b.label.fr || b.label.en : b.label || weaponName;
                             buffsList.push({ label: lbl, stats: b.stats });
                         });
                     }
@@ -475,33 +491,37 @@ const finalSchema = schema || defaultSchema;
                     if (data.artifactKey && window.TEAMMATE_SET_BUFFS?.[data.artifactKey]) {
                         const sData = window.TEAMMATE_SET_BUFFS[data.artifactKey];
                         const sBuffs = sData.buffs || [sData];
-                        sBuffs.forEach(b => {
-                            const lbl = typeof b.label === 'object' ? (b.label[lang] || b.label.fr || b.label.en) : (b.label || artifactName);
+                        sBuffs.forEach((b) => {
+                            const lbl = typeof b.label === "object" ? b.label[lang] || b.label.fr || b.label.en : b.label || artifactName;
                             buffsList.push({ label: lbl, stats: b.stats });
                         });
                     }
 
-                    let buffsHtml = '';
+                    let buffsHtml = "";
                     if (buffsList.length > 0) {
-                        const buffsTitle = (window.t && window.t('ui.teammate.teamBuffs')) || 'Buffs & effets apportés';
-                        const buffItems = buffsList.map(b => {
-                            let statsHtml = '';
-                            if (b.stats && typeof b.stats === 'object') {
-                                const badges = Object.entries(b.stats).map(([k, v]) => formatBuffStatBadge(k, v)).join(' ');
-                                if (badges) {
-                                    statsHtml = `<div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:3px;">${badges}</div>`;
+                        const buffsTitle = (window.t && window.t("ui.teammate.teamBuffs")) || "Buffs & effets apportés";
+                        const buffItems = buffsList
+                            .map((b) => {
+                                let statsHtml = "";
+                                if (b.stats && typeof b.stats === "object") {
+                                    const badges = Object.entries(b.stats)
+                                        .map(([k, v]) => formatBuffStatBadge(k, v))
+                                        .join(" ");
+                                    if (badges) {
+                                        statsHtml = `<div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:3px;">${badges}</div>`;
+                                    }
                                 }
-                            }
-                            return `
+                                return `
                                 <div style="margin-bottom:6px; font-size:11px; line-height:1.35;">
                                     <div style="color:var(--text-always-white); font-weight:normal; display:flex; align-items:flex-start; gap:5px;">
                                         <span style="color:rgba(255,255,255,0.45); font-size:12px; line-height:1; margin-top:1px;">•</span>
-                                        <span>${b.label || ''}</span>
+                                        <span>${b.label || ""}</span>
                                     </div>
                                     ${statsHtml}
                                 </div>
                             `;
-                        }).join('');
+                            })
+                            .join("");
 
                         buffsHtml = `
                             <div style="height:1px; background:rgba(255,255,255,0.1); margin:9px 0;"></div>
@@ -516,18 +536,14 @@ const finalSchema = schema || defaultSchema;
                         `;
                     }
 
-                    const configTitle = (window.t && window.t('ui.teammate.recommendedConfig')) || 'Équipement recommandé';
-                    const weaponLabel = (window.t && window.t('ui.teammate.weapon')) || 'Arme';
-                    const artifactLabel = (window.t && window.t('ui.teammate.artifact')) || 'Set d\'artéfacts';
-                    const unrestrictedLabel = (window.t && window.t('ui.teammate.unrestricted')) || 'Libre / Non requis';
+                    const configTitle = (window.t && window.t("ui.teammate.recommendedConfig")) || "Équipement recommandé";
+                    const weaponLabel = (window.t && window.t("ui.teammate.weapon")) || "Arme";
+                    const artifactLabel = (window.t && window.t("ui.teammate.artifact")) || "Set d'artéfacts";
+                    const unrestrictedLabel = (window.t && window.t("ui.teammate.unrestricted")) || "Libre / Non requis";
 
-                    const weaponImgHtml = weaponIcon
-                        ? `<img src="${weaponIcon}" style="width:28px; height:28px; border-radius:5px; object-fit:cover; background:var(--shadow-subtle); border:none; flex-shrink:0;" alt="weapon" decoding="async">`
-                        : `<div style="width:28px; height:28px; border-radius:5px; background:var(--shadow-subtle); border:none; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><img src="/assets/simulator/icons/icon_sword.webp" style="width:16px; height:16px; object-fit:contain; opacity:0.4;"></div>`;
+                    const weaponImgHtml = weaponIcon ? `<img src="${weaponIcon}" style="width:28px; height:28px; border-radius:5px; object-fit:cover; background:var(--shadow-subtle); border:none; flex-shrink:0;" alt="weapon" decoding="async">` : `<div style="width:28px; height:28px; border-radius:5px; background:var(--shadow-subtle); border:none; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><img src="/assets/simulator/icons/icon_sword.webp" style="width:16px; height:16px; object-fit:contain; opacity:0.4;"></div>`;
 
-                    const artifactImgHtml = artifactIcon
-                        ? `<img src="${artifactIcon}" style="width:28px; height:28px; border-radius:5px; object-fit:cover; background:var(--shadow-subtle); border:none; flex-shrink:0;" alt="artifact" decoding="async">`
-                        : `<div style="width:28px; height:28px; border-radius:5px; background:var(--shadow-subtle); border:none; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><img src="/assets/simulator/icons/icon_unknown.webp" style="width:16px; height:16px; object-fit:contain; opacity:0.4;"></div>`;
+                    const artifactImgHtml = artifactIcon ? `<img src="${artifactIcon}" style="width:28px; height:28px; border-radius:5px; object-fit:cover; background:var(--shadow-subtle); border:none; flex-shrink:0;" alt="artifact" decoding="async">` : `<div style="width:28px; height:28px; border-radius:5px; background:var(--shadow-subtle); border:none; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><img src="/assets/simulator/icons/icon_unknown.webp" style="width:16px; height:16px; object-fit:contain; opacity:0.4;"></div>`;
 
                     tooltip.innerHTML = `
                         <div style="display:flex; flex-direction:column;">
@@ -556,7 +572,7 @@ const finalSchema = schema || defaultSchema;
                                     ${weaponImgHtml}
                                     <div style="min-width:0; flex:1;">
                                         <div style="font-size:9.5px; color:rgba(255,255,255,0.4); line-height:1;">${weaponLabel}</div>
-                                        <div style="font-size:11.5px; font-weight:normal; color:${weaponName ? 'var(--text-always-white)' : 'rgba(255,255,255,0.45)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px;">
+                                        <div style="font-size:11.5px; font-weight:normal; color:${weaponName ? "var(--text-always-white)" : "rgba(255,255,255,0.45)"}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px;">
                                             ${weaponName || unrestrictedLabel}
                                         </div>
                                     </div>
@@ -566,7 +582,7 @@ const finalSchema = schema || defaultSchema;
                                     ${artifactImgHtml}
                                     <div style="min-width:0; flex:1;">
                                         <div style="font-size:9.5px; color:rgba(255,255,255,0.4); line-height:1;">${artifactLabel}</div>
-                                        <div style="font-size:11.5px; font-weight:normal; color:${artifactName ? 'var(--text-always-white)' : 'rgba(255,255,255,0.45)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px;">
+                                        <div style="font-size:11.5px; font-weight:normal; color:${artifactName ? "var(--text-always-white)" : "rgba(255,255,255,0.45)"}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px;">
                                             ${artifactName || unrestrictedLabel}
                                         </div>
                                     </div>
@@ -577,9 +593,9 @@ const finalSchema = schema || defaultSchema;
                         </div>
                     `;
 
-                    tooltip.classList.remove('placement-top', 'placement-bottom');
-                    tooltip.style.visibility = 'hidden';
-                    tooltip.style.display = 'block';
+                    tooltip.classList.remove("placement-top", "placement-bottom");
+                    tooltip.style.visibility = "hidden";
+                    tooltip.style.display = "block";
 
                     const rect = slot.getBoundingClientRect();
                     const tWidth = tooltip.offsetWidth || 310;
@@ -588,10 +604,10 @@ const finalSchema = schema || defaultSchema;
                     const padding = 12;
 
                     const spaceBelow = window.innerHeight - rect.bottom;
-                    const placeTop = spaceBelow < (tHeight + gap + 10) && rect.top > (tHeight + gap);
+                    const placeTop = spaceBelow < tHeight + gap + 10 && rect.top > tHeight + gap;
 
-                    const top = placeTop ? (rect.top - tHeight - gap) : (rect.bottom + gap);
-                    tooltip.classList.add(placeTop ? 'placement-top' : 'placement-bottom');
+                    const top = placeTop ? rect.top - tHeight - gap : rect.bottom + gap;
+                    tooltip.classList.add(placeTop ? "placement-top" : "placement-bottom");
 
                     const elemCenterX = rect.left + rect.width / 2;
                     let left = elemCenterX - tWidth / 2;
@@ -603,22 +619,22 @@ const finalSchema = schema || defaultSchema;
                     }
 
                     const arrowX = Math.max(14, Math.min(tWidth - 14, elemCenterX - left));
-                    tooltip.style.setProperty('--arrow-left', arrowX + 'px');
+                    tooltip.style.setProperty("--arrow-left", arrowX + "px");
 
-                    tooltip.style.left = left + 'px';
-                    tooltip.style.top = top + 'px';
-                    tooltip.style.visibility = 'visible';
-                    tooltip.style.opacity = '1';
-                    tooltip.style.transform = 'translateY(0) scale(1)';
+                    tooltip.style.left = left + "px";
+                    tooltip.style.top = top + "px";
+                    tooltip.style.visibility = "visible";
+                    tooltip.style.opacity = "1";
+                    tooltip.style.transform = "translateY(0) scale(1)";
                 };
 
                 window.hideTeammateTooltip = function () {
-                    const tooltip = document.getElementById('teammate-tooltip');
+                    const tooltip = document.getElementById("teammate-tooltip");
                     if (tooltip) {
-                        const isTop = tooltip.classList.contains('placement-top');
-                        tooltip.style.visibility = 'hidden';
-                        tooltip.style.opacity = '0';
-                        tooltip.style.transform = isTop ? 'translateY(-6px) scale(0.98)' : 'translateY(6px) scale(0.98)';
+                        const isTop = tooltip.classList.contains("placement-top");
+                        tooltip.style.visibility = "hidden";
+                        tooltip.style.opacity = "0";
+                        tooltip.style.transform = isTop ? "translateY(-6px) scale(0.98)" : "translateY(6px) scale(0.98)";
                     }
                 };
             }
@@ -626,6 +642,18 @@ const finalSchema = schema || defaultSchema;
             function openSettingsModal() {
                 const modal = document.getElementById("settings-modal-overlay");
                 if (modal) {
+                    const settingsModalEl = document.getElementById("settings-modal");
+                    const linkedViewEl = document.getElementById("settings-linked-view");
+                    const cachedUid = localStorage.getItem("guoba_discord_uid");
+                    const isLinked = (linkedViewEl && linkedViewEl.style.display !== "none") || !!cachedUid;
+                    if (settingsModalEl) {
+                        if (isLinked) {
+                            settingsModalEl.classList.add("is-linked");
+                        } else {
+                            settingsModalEl.classList.remove("is-linked");
+                        }
+                    }
+
                     const updateDiscordBtn = document.getElementById("settings-update-discord-btn");
                     if (updateDiscordBtn) {
                         const userAccount = document.getElementById("user-account");
@@ -633,7 +661,7 @@ const finalSchema = schema || defaultSchema;
                         updateDiscordBtn.style.display = isConnected ? "flex" : "none";
                     }
 
-                    if (typeof window.updateArchivedCountLabel === 'function') {
+                    if (typeof window.updateArchivedCountLabel === "function") {
                         window.updateArchivedCountLabel();
                     }
 
@@ -655,11 +683,11 @@ const finalSchema = schema || defaultSchema;
                             sidebarLabel.innerText = window.t(key);
                         }
                     }
-                    document.querySelectorAll('#sidebar-display-custom-menu .custom-select-item').forEach(item => {
-                        if (item.getAttribute('data-value') === sidebarPref) {
-                            item.classList.add('active');
+                    document.querySelectorAll("#sidebar-display-custom-menu .custom-select-item").forEach((item) => {
+                        if (item.getAttribute("data-value") === sidebarPref) {
+                            item.classList.add("active");
                         } else {
-                            item.classList.remove('active');
+                            item.classList.remove("active");
                         }
                     });
 
@@ -677,11 +705,11 @@ const finalSchema = schema || defaultSchema;
                             decimalsLabel.innerText = window.t(key);
                         }
                     }
-                    document.querySelectorAll('#ranking-decimals-custom-menu .custom-select-item').forEach(item => {
-                        if (item.getAttribute('data-value') === decimalsPref) {
-                            item.classList.add('active');
+                    document.querySelectorAll("#ranking-decimals-custom-menu .custom-select-item").forEach((item) => {
+                        if (item.getAttribute("data-value") === decimalsPref) {
+                            item.classList.add("active");
                         } else {
-                            item.classList.remove('active');
+                            item.classList.remove("active");
                         }
                     });
 
@@ -736,11 +764,11 @@ const finalSchema = schema || defaultSchema;
                 const menu = document.getElementById("sidebar-display-custom-menu");
                 if (menu) menu.classList.remove("show");
 
-                document.querySelectorAll('#sidebar-display-custom-menu .custom-select-item').forEach(item => {
-                    if (item.getAttribute('data-value') === value) {
-                        item.classList.add('active');
+                document.querySelectorAll("#sidebar-display-custom-menu .custom-select-item").forEach((item) => {
+                    if (item.getAttribute("data-value") === value) {
+                        item.classList.add("active");
                     } else {
-                        item.classList.remove('active');
+                        item.classList.remove("active");
                     }
                 });
 
@@ -760,11 +788,11 @@ const finalSchema = schema || defaultSchema;
                 const menu = document.getElementById("ranking-decimals-custom-menu");
                 if (menu) menu.classList.remove("show");
 
-                document.querySelectorAll('#ranking-decimals-custom-menu .custom-select-item').forEach(item => {
-                    if (item.getAttribute('data-value') === value) {
-                        item.classList.add('active');
+                document.querySelectorAll("#ranking-decimals-custom-menu .custom-select-item").forEach((item) => {
+                    if (item.getAttribute("data-value") === value) {
+                        item.classList.add("active");
                     } else {
-                        item.classList.remove('active');
+                        item.classList.remove("active");
                     }
                 });
 
@@ -774,7 +802,7 @@ const finalSchema = schema || defaultSchema;
 
         <!-- SETTINGS MODAL -->
         <div id="settings-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-            <div id="settings-modal" style="background: var(--bg-panel); border-radius: 8px; padding: 24px; width: 90%; max-width: 500px; position: relative; display: flex; flex-direction: column; gap: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            <div id="settings-modal" style="background: var(--bg-panel); border-radius: 8px; padding: 24px; width: 90%; max-width: 500px; position: relative; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
                 <div style="position: absolute; top: 12px; right: 12px; display: flex; align-items: center; gap: 4px;">
                     <button id="settings-update-discord-btn" class="modal-close-btn" onclick="if(window.hideGlobalTooltip) window.hideGlobalTooltip(); updateDiscordAvatar()" onmouseenter="if(window.showGlobalTooltip) window.showGlobalTooltip(this, window.t ? window.t('account.settings.updateDiscordAvatar') : 'Mettre à jour la photo de profil Discord', 'rgba(255,255,255,0.4)')" onmouseleave="if(window.hideGlobalTooltip) window.hideGlobalTooltip()" style="display: none; background: none; border: none; cursor: pointer; width: 40px; height: 40px; border-radius: 8px; align-items: center; justify-content: center; transition: background-color 0.2s ease;" aria-label="Mettre à jour la photo de profil Discord">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: stroke 0.2s ease, transform 0.2s ease;">
@@ -795,151 +823,159 @@ const finalSchema = schema || defaultSchema;
                     <h3 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 20px; font-weight: normal; padding-left: 15px;" data-i18n="account.settings.title">Paramètres du compte</h3>
                 </div>
 
-                <div style="background: var(--bg-body); padding: 15px; border-radius: 8px; display: flex; flex-direction: column; gap: 12px; padding-top:0;">
-                    <!-- VUE NON LIÉ -->
-                    <div id="settings-unlinked-view" style="display: flex; flex-direction: column; gap: 12px;">
-                        <h4 style="margin: 0; color: var(--text-primary); font-size: 16px; font-weight: normal;" data-i18n="account.settings.linkTitle">Lier un compte Genshin</h4>
+                <div class="settings-modal-body" id="settings-modal-body">
+                    <!-- COLONNE GAUCHE -->
+                    <div class="settings-left-col" id="settings-left-col">
+                        <!-- VUE NON LIÉ -->
+                        <div id="settings-unlinked-view" class="settings-card" style="display: flex; flex-direction: column; gap: 12px;">
+                            <h4 style="margin: 0; color: var(--text-primary); font-size: 16px; font-weight: normal;" data-i18n="account.settings.linkTitle">Lier un compte Genshin</h4>
 
-                        <div class="timeline-container">
-                            <div class="timeline-step" id="timeline-step-1">
-                                <div class="timeline-icon"></div>
-                                <div class="timeline-content">
-                                    <span style="color: var(--text-muted); font-size: 13px;"><strong data-i18n="account.settings.step1">Étape 1 :</strong> <span data-i18n="account.settings.step1Desc">Entrez votre UID Genshin ci-dessous.</span></span>
-                                    <div style="display: flex; gap: 8px; margin-top: 12px;">
-                                        <input type="text" id="link-uid-input" data-i18n-placeholder="account.settings.placeholder" placeholder="Votre UID" style="flex: 1; padding: 10px; border-radius: 8px; border: none; background: var(--shadow-subtle); color: var(--text-primary); font-family: inherit;" onkeydown="if(event.key === 'Enter') generateVerificationCode()" />
-                                        <button id="generate-code-btn" onclick="generateVerificationCode()" data-i18n="account.settings.generate">Générer un code</button>
-                                    </div>
-                                    <p id="uid-format-error" style="color: #ef4444; font-size: 12px; margin: 8px 0 0 0; display: none;" data-i18n="account.settings.errorFormat">Veuillez entrer un UID valide (constitué uniquement de chiffres, 9 à 10 caractères).</p>
-                                    <p id="uid-linked-error" style="color: #ef4444; font-size: 12px; margin: 8px 0 0 0; display: none;" data-i18n="account.settings.errorAlreadyLinked">Cet UID est déjà lié à un autre compte.</p>
-                                </div>
-                            </div>
-
-                            <div id="verification-step" style="display: none;">
-                                <div class="timeline-step step-anim" style="animation-delay: 0.1s;">
+                            <div class="timeline-container">
+                                <div class="timeline-step" id="timeline-step-1">
                                     <div class="timeline-icon"></div>
                                     <div class="timeline-content">
-                                        <span style="color: var(--text-muted); font-size: 13px;"><strong data-i18n="account.settings.step2">Étape 2 :</strong> <span data-i18n="account.settings.step2Desc">Copiez ce code dans votre signature en jeu.</span></span>
-                                        <div style="background: var(--bg-panel); padding: 10px; border-radius: 6px; border: 1px dashed var(--text-muted); margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                            <span id="verification-code-display" style="color: var(--text-primary); font-size: 18px; letter-spacing: 2px;">guoba-xxxx</span>
-                                            <button onclick="copyVerificationCode(this)" style="background: none; border: none; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; transition: color 0.2s;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-muted)'" title="Copier le code">
-                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                                            </button>
+                                        <span style="color: var(--text-muted); font-size: 13px;"><strong data-i18n="account.settings.step1">Étape 1 :</strong> <span data-i18n="account.settings.step1Desc">Entrez votre UID Genshin ci-dessous.</span></span>
+                                        <div style="display: flex; gap: 8px; margin-top: 12px;">
+                                            <input type="text" id="link-uid-input" data-i18n-placeholder="account.settings.placeholder" placeholder="Votre UID" style="flex: 1; padding: 10px; border-radius: 8px; border: none; background: var(--shadow-subtle); color: var(--text-primary); font-family: inherit;" onkeydown="if(event.key === 'Enter') generateVerificationCode()" />
+                                            <button id="generate-code-btn" onclick="generateVerificationCode()" data-i18n="account.settings.generate">Générer un code</button>
+                                        </div>
+                                        <p id="uid-format-error" style="color: #ef4444; font-size: 12px; margin: 8px 0 0 0; display: none;" data-i18n="account.settings.errorFormat">Veuillez entrer un UID valide (constitué uniquement de chiffres, 9 à 10 caractères).</p>
+                                        <p id="uid-linked-error" style="color: #ef4444; font-size: 12px; margin: 8px 0 0 0; display: none;" data-i18n="account.settings.errorAlreadyLinked">Cet UID est déjà lié à un autre compte.</p>
+                                    </div>
+                                </div>
+
+                                <div id="verification-step" style="display: none;">
+                                    <div class="timeline-step step-anim" style="animation-delay: 0.1s;">
+                                        <div class="timeline-icon"></div>
+                                        <div class="timeline-content">
+                                            <span style="color: var(--text-muted); font-size: 13px;"><strong data-i18n="account.settings.step2">Étape 2 :</strong> <span data-i18n="account.settings.step2Desc">Copiez ce code dans votre signature en jeu.</span></span>
+                                            <div style="background: var(--bg-panel); padding: 10px; border-radius: 6px; border: 1px dashed var(--text-muted); margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                                <span id="verification-code-display" style="color: var(--text-primary); font-size: 18px; letter-spacing: 2px;">guoba-xxxx</span>
+                                                <button onclick="copyVerificationCode(this)" style="background: none; border: none; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px; transition: color 0.2s;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-muted)'" title="Copier le code">
+                                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-step step-anim" style="animation-delay: 0.2s;">
+                                        <div class="timeline-icon"></div>
+                                        <div class="timeline-content">
+                                            <span style="color: var(--text-muted); font-size: 13px;"><strong data-i18n="account.settings.step3">Étape 3 :</strong> <span data-i18n="account.settings.step3Desc">Déconnectez-vous du jeu pour qu'il actualise les données de votre profil.</span></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="timeline-step last-step step-anim" style="animation-delay: 0.3s; padding-bottom: 0;">
+                                        <div class="timeline-icon"></div>
+                                        <div class="timeline-content">
+                                            <span style="color: var(--text-muted); font-size: 13px;"><strong data-i18n="account.settings.step4">Étape 4 :</strong> <span data-i18n="account.settings.step4Desc">Cliquez sur Vérifier.</span></span>
+                                            <button id="verify-code-btn" onclick="verifyUidSignature()" data-i18n="account.settings.verify">Vérifier</button>
+                                            <p id="verification-error" style="color: #ef4444; font-size: 12px; margin: 8px 0 0 0; display: none;" data-i18n="account.settings.errorVerify">Signature introuvable ou incorrecte. Assurez-vous d'avoir bien quitté le profil en jeu pour que la sauvegarde s'effectue.</p>
+                                            <p id="verification-success" style="color: var(--accent-gold); font-size: 12px; margin: 8px 0 0 0; display: none;" data-i18n="account.settings.success">Compte associé avec succès !</p>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <div class="timeline-step step-anim" style="animation-delay: 0.2s;">
-                                    <div class="timeline-icon"></div>
-                                    <div class="timeline-content">
-                                        <span style="color: var(--text-muted); font-size: 13px;"><strong data-i18n="account.settings.step3">Étape 3 :</strong> <span data-i18n="account.settings.step3Desc">Déconnectez-vous du jeu pour qu'il actualise les données de votre profil.</span></span>
-                                    </div>
-                                </div>
+                        <!-- VUE LIÉ -->
+                        <div id="settings-linked-view" class="settings-card" style="display: none; flex-direction: column; gap: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h4 style="margin: 0; color: var(--text-primary); font-size: 16px; font-weight: normal;" data-i18n="account.settings.linkedTitle">Compte Genshin associé</h4>
+                                <button onclick="unlinkUid()" class="button-unlink" data-i18n="account.settings.unlink">Délier le compte</button>
+                            </div>
 
-                                <div class="timeline-step last-step step-anim" style="animation-delay: 0.3s; padding-bottom: 0;">
-                                    <div class="timeline-icon"></div>
-                                    <div class="timeline-content">
-                                        <span style="color: var(--text-muted); font-size: 13px;"><strong data-i18n="account.settings.step4">Étape 4 :</strong> <span data-i18n="account.settings.step4Desc">Cliquez sur Vérifier.</span></span>
-                                        <button id="verify-code-btn" onclick="verifyUidSignature()" data-i18n="account.settings.verify">Vérifier</button>
-                                        <p id="verification-error" style="color: #ef4444; font-size: 12px; margin: 8px 0 0 0; display: none;" data-i18n="account.settings.errorVerify">Signature introuvable ou incorrecte. Assurez-vous d'avoir bien quitté le profil en jeu pour que la sauvegarde s'effectue.</p>
-                                        <p id="verification-success" style="color: var(--accent-gold); font-size: 12px; margin: 8px 0 0 0; display: none;" data-i18n="account.settings.success">Compte associé avec succès !</p>
+                            <div class="player-profile-card" style="margin-top: 5px; height: 80px; box-shadow: 0 4px 15px var(--shadow-subtle);">
+                                <img class="player-profile-bg" id="settings-linked-bg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="" crossorigin="anonymous" style="display: none;" />
+                                <div class="player-profile-content">
+                                    <img class="player-profile-avatar" id="settings-linked-avatar" src="https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png" alt="" crossorigin="anonymous" />
+                                    <div class="player-profile-identity">
+                                        <div class="player-profile-name-row">
+                                            <span class="player-profile-name" id="settings-linked-name">Joueur</span>
+                                            <span class="player-profile-uid" id="settings-linked-uid" style="text-decoration: none;">UID</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <button id="settings-logout-btn" onclick="logoutUser()" class="button-logout" data-i18n="account.settings.logout">Se déconnecter</button>
                     </div>
 
-                    <!-- VUE LIÉ -->
-                    <div id="settings-linked-view" style="display: none; flex-direction: column; gap: 12px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h4 style="margin: 0; color: var(--text-primary); font-size: 16px; font-weight: normal;" data-i18n="account.settings.linkedTitle">Compte Genshin associé</h4>
-                            <button onclick="unlinkUid()" class="button-unlink" data-i18n="account.settings.unlink">Délier le compte</button>
-                        </div>
+                    <!-- SÉPARATEUR VERTICAL -->
+                    <div id="settings-separator" class="settings-separator" style="border-left: 1px solid var(--border-color);"></div>
 
-                        <div class="player-profile-card" style="margin-top: 5px; height: 80px; box-shadow: 0 4px 15px var(--shadow-subtle);">
-                            <img class="player-profile-bg" id="settings-linked-bg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="" crossorigin="anonymous" style="display: none;" />
-                            <div class="player-profile-content">
-                                <img class="player-profile-avatar" id="settings-linked-avatar" src="https://enka.network/ui/UI_AvatarIcon_PlayerBoy_Circle.png" alt="" crossorigin="anonymous" />
-                                <div class="player-profile-identity">
-                                    <div class="player-profile-name-row">
-                                        <span class="player-profile-name" id="settings-linked-name">Joueur</span>
-                                        <span class="player-profile-uid" id="settings-linked-uid" style="text-decoration: none;">UID</span>
-                                    </div>
+                    <!-- COLONNE DROITE : PRÉFÉRENCES -->
+                    <div id="settings-preferences-view" class="settings-card" style="background: var(--bg-body); padding: 15px; border-radius: 8px; display: none; flex-direction: column; gap: 20px;">
+                        <h4 style="margin: 0; color: var(--text-primary); font-size: 16px; font-weight: normal;" data-i18n="account.settings.preferences">Préférences</h4>
+                        <div style="display: flex; flex-direction: column; gap: 12px; padding-left: 10px;">
+                            <span style="font-size: 13px; color: var(--text-grey);" data-i18n="account.settings.appearance">Apparence</span>
+                            <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text-primary); font-size: 14px;">
+                                <span data-i18n="account.settings.optout">Ne pas apparaître dans les classements (Opt-out)</span>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="leaderboard-optout-checkbox" onchange="toggleLeaderboardOptOut(this.checked)" />
+                                    <span class="toggle-slider"></span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="settings-preferences-view" style="background: var(--bg-body); padding: 15px; border-radius: 8px; display: none; flex-direction: column; gap: 20px;">
-                    <h4 style="margin: 0; color: var(--text-primary); font-size: 16px; font-weight: normal;" data-i18n="account.settings.preferences">Préférences</h4>
-                    <div style="display: flex; flex-direction: column; gap: 12px; padding-left: 10px;">
-                        <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text-primary); font-size: 14px;">
-                            <span data-i18n="account.settings.optout">Ne pas apparaître dans les classements (Opt-out)</span>
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="leaderboard-optout-checkbox" onchange="toggleLeaderboardOptOut(this.checked)" />
-                                <span class="toggle-slider"></span>
-                            </div>
-                        </label>
-                        <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text-primary); font-size: 14px;">
-                            <span data-i18n="account.settings.reduceTransparency">Réduire les effets de transparence</span>
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="reduce-transparency-checkbox" onchange="toggleReduceTransparency(this.checked)" />
-                                <span class="toggle-slider"></span>
-                            </div>
-                        </label>
-                        <div style="display: flex; align-items: center; justify-content: space-between; color: var(--text-primary); font-size: 14px;">
-                            <span data-i18n="account.settings.sidebarDisplay">Affichage dans la sidebar</span>
-                            <div class="custom-select-container">
-                                <button onclick="toggleSidebarDisplayMenu(event)" class="link-button hover-bg-hover" style="width: 150px; justify-content: space-between; border: none; background: var(--shadow-subtle); color: var(--text-primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: normal; outline: none; display: flex; align-items: center; transition: background-color 0.2s ease;">
-                                    <span id="active-sidebar-display-text" data-i18n="account.settings.sidebarDisplay.score" style="white-space: nowrap;">Score et Grade</span>
-                                    <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px;" />
-                                </button>
-
-                                <div id="sidebar-display-custom-menu" class="custom-select-menu" style="width: 150px;">
-                                    <div class="custom-select-item" data-value="score_grade" onclick="selectCustomSidebarDisplay(event, 'score_grade', 'account.settings.sidebarDisplay.score')">
-                                        <span data-i18n="account.settings.sidebarDisplay.score">Score et Grade</span>
-                                    </div>
-                                    <div class="custom-select-item" data-value="top_percent" onclick="selectCustomSidebarDisplay(event, 'top_percent', 'account.settings.sidebarDisplay.top')">
-                                        <span data-i18n="account.settings.sidebarDisplay.top">Top X%</span>
-                                    </div>
-                                    <div class="custom-select-item" data-value="both" onclick="selectCustomSidebarDisplay(event, 'both', 'account.settings.sidebarDisplay.both')">
-                                        <span data-i18n="account.settings.sidebarDisplay.both">Les deux</span>
-                                    </div>
+                            </label>
+                            <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text-primary); font-size: 14px;">
+                                <span data-i18n="account.settings.reduceTransparency">Réduire les effets de transparence</span>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="reduce-transparency-checkbox" onchange="toggleReduceTransparency(this.checked)" />
+                                    <span class="toggle-slider"></span>
                                 </div>
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center; justify-content: space-between; color: var(--text-primary); font-size: 14px;">
-                            <span data-i18n="account.settings.rankingDecimals">Précision des classements</span>
-                            <div class="custom-select-container">
-                                <button onclick="toggleRankingDecimalsMenu(event)" class="link-button hover-bg-hover" style="width: 150px; justify-content: space-between; border: none; background: var(--shadow-subtle); color: var(--text-primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: normal; outline: none; display: flex; align-items: center; transition: background-color 0.2s ease;">
-                                    <span id="active-ranking-decimals-text" data-i18n="account.settings.decimals1" style="white-space: nowrap;">1 décimale</span>
-                                    <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px;" />
-                                </button>
-
-                                <div id="ranking-decimals-custom-menu" class="custom-select-menu" style="width: 150px;">
-                                    <div class="custom-select-item" data-value="0" onclick="selectCustomRankingDecimals(event, '0', 'account.settings.decimals0')">
-                                        <span data-i18n="account.settings.decimals0">0 décimale</span>
-                                    </div>
-                                    <div class="custom-select-item" data-value="1" onclick="selectCustomRankingDecimals(event, '1', 'account.settings.decimals1')">
-                                        <span data-i18n="account.settings.decimals1">1 décimale</span>
-                                    </div>
-                                    <div class="custom-select-item" data-value="2" onclick="selectCustomRankingDecimals(event, '2', 'account.settings.decimals2')">
-                                        <span data-i18n="account.settings.decimals2">2 décimales</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="border-top: 1px solid var(--border-color); padding-top: 14px; margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
-                            <span style="font-size: 13px; color: var(--text-grey);" data-i18n="account.settings.dataManagement">Gestion des données</span>
+                            </label>
                             <div style="display: flex; align-items: center; justify-content: space-between; color: var(--text-primary); font-size: 14px;">
-                                <span id="settings-archived-count-label">0 personnage en réserve</span>
-                                <button onclick="clearArchivedSnapshots()" class="button-unlink" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.25); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: all 0.2s ease;" data-i18n="account.settings.clearSnapshots">Effacer la réserve</button>
+                                <span data-i18n="account.settings.sidebarDisplay">Affichage dans la sidebar</span>
+                                <div class="custom-select-container">
+                                    <button onclick="toggleSidebarDisplayMenu(event)" class="link-button hover-bg-hover" style="width: 150px; justify-content: space-between; border: none; background: var(--shadow-subtle); color: var(--text-primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: normal; outline: none; display: flex; align-items: center; transition: background-color 0.2s ease;">
+                                        <span id="active-sidebar-display-text" data-i18n="account.settings.sidebarDisplay.score" style="white-space: nowrap;">Score et Grade</span>
+                                        <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px;" />
+                                    </button>
+
+                                    <div id="sidebar-display-custom-menu" class="custom-select-menu" style="width: 150px;">
+                                        <div class="custom-select-item" data-value="score_grade" onclick="selectCustomSidebarDisplay(event, 'score_grade', 'account.settings.sidebarDisplay.score')">
+                                            <span data-i18n="account.settings.sidebarDisplay.score">Score et Grade</span>
+                                        </div>
+                                        <div class="custom-select-item" data-value="top_percent" onclick="selectCustomSidebarDisplay(event, 'top_percent', 'account.settings.sidebarDisplay.top')">
+                                            <span data-i18n="account.settings.sidebarDisplay.top">Top X%</span>
+                                        </div>
+                                        <div class="custom-select-item" data-value="both" onclick="selectCustomSidebarDisplay(event, 'both', 'account.settings.sidebarDisplay.both')">
+                                            <span data-i18n="account.settings.sidebarDisplay.both">Les deux</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; color: var(--text-primary); font-size: 14px;">
+                                <span data-i18n="account.settings.rankingDecimals">Précision des classements</span>
+                                <div class="custom-select-container">
+                                    <button onclick="toggleRankingDecimalsMenu(event)" class="link-button hover-bg-hover" style="width: 150px; justify-content: space-between; border: none; background: var(--shadow-subtle); color: var(--text-primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: normal; outline: none; display: flex; align-items: center; transition: background-color 0.2s ease;">
+                                        <span id="active-ranking-decimals-text" data-i18n="account.settings.decimals1" style="white-space: nowrap;">1 décimale</span>
+                                        <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px;" />
+                                    </button>
+
+                                    <div id="ranking-decimals-custom-menu" class="custom-select-menu" style="width: 150px;">
+                                        <div class="custom-select-item" data-value="0" onclick="selectCustomRankingDecimals(event, '0', 'account.settings.decimals0')">
+                                            <span data-i18n="account.settings.decimals0">0 décimale</span>
+                                        </div>
+                                        <div class="custom-select-item" data-value="1" onclick="selectCustomRankingDecimals(event, '1', 'account.settings.decimals1')">
+                                            <span data-i18n="account.settings.decimals1">1 décimale</span>
+                                        </div>
+                                        <div class="custom-select-item" data-value="2" onclick="selectCustomRankingDecimals(event, '2', 'account.settings.decimals2')">
+                                            <span data-i18n="account.settings.decimals2">2 décimales</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="border-top: 1px solid var(--border-color); padding-top: 14px; margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
+                                <span style="font-size: 13px; color: var(--text-grey);" data-i18n="account.settings.dataManagement">Gestion des données</span>
+                                <div style="display: flex; align-items: center; justify-content: space-between; color: var(--text-primary); font-size: 14px;">
+                                    <span id="settings-archived-count-label">0 personnage en réserve</span>
+                                    <button onclick="clearArchivedSnapshots()" class="button-unlink" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.25); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: all 0.2s ease;" data-i18n="account.settings.clearSnapshots">Effacer la réserve</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <button onclick="logoutUser()" class="button-logout" data-i18n="account.settings.logout">Se déconnecter</button>
             </div>
         </div>
     </body>
