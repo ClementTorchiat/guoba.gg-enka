@@ -59,7 +59,7 @@ export async function checkSessionAndUpdateUI() {
             // Mise à jour visuelle basique (Discord Info)
             const nameEl = document.getElementById('user-account-name');
             const avatarEl = document.getElementById('user-account-avatar');
-            
+
             const discordName = session.user.user_metadata?.full_name || session.user.user_metadata?.name;
             if (discordName) {
                 localStorage.setItem('guoba_discord_name', discordName);
@@ -202,7 +202,7 @@ async function updateSettingsUiState(uid) {
                     };
                 }
             }
-        } catch (_) {}
+        } catch (_) { }
 
         // Affichage immédiat depuis le cache local (zéro latence, zéro clignotement)
         if (cached) {
@@ -244,7 +244,7 @@ async function updateSettingsUiState(uid) {
                                 window.pfpsData = window.pfpsData || idb.pfps;
                                 window.charData = window.charData || idb.chars;
                             }
-                        } catch (_) {}
+                        } catch (_) { }
                     }
 
                     // 1ère image : Avatar (profilePicUrl)
@@ -291,7 +291,7 @@ async function updateSettingsUiState(uid) {
                                     bannerUrl = `https://enka.network${ncData[String(p.nameCardId)].Icon}`;
                                 }
                             }
-                        } catch (_) {}
+                        } catch (_) { }
                     }
 
                     updateLinkedBg(bannerUrl);
@@ -306,7 +306,7 @@ async function updateSettingsUiState(uid) {
                             nameCardId: p.nameCardId,
                             ts: Date.now()
                         }));
-                    } catch (_) {}
+                    } catch (_) { }
 
                     // Mise à jour des profils récents pour l'accueil
                     try {
@@ -326,7 +326,7 @@ async function updateSettingsUiState(uid) {
                             recents.unshift(profileEntry);
                         }
                         localStorage.setItem('guoba_recent_profiles', JSON.stringify(recents));
-                        
+
                         // Forcer le rafraîchissement UNIQUEMENT si l'utilisateur est actuellement sur la page d'accueil
                         const isHome = (window.location.pathname === '/' || window.location.pathname === '') &&
                             !new URLSearchParams(window.location.search).get('uid') &&
@@ -403,7 +403,7 @@ export async function generateVerificationCode() {
     const uidInput = document.getElementById('link-uid-input');
     const formatErrorEl = document.getElementById('uid-format-error');
     const linkedErrorEl = document.getElementById('uid-linked-error');
-    
+
     if (formatErrorEl) formatErrorEl.style.display = 'none';
     if (linkedErrorEl) linkedErrorEl.style.display = 'none';
 
@@ -411,7 +411,7 @@ export async function generateVerificationCode() {
     // Un UID valide fait généralement 9 chiffres (Genshin, HSR) ou 10 chiffres (ZZZ)
     // On garde 8 à 10 pour être large au cas où.
     const uidRegex = /^[0-9]{8,10}$/;
-    
+
     if (!uidValue || !uidRegex.test(uidValue)) {
         if (formatErrorEl) {
             formatErrorEl.style.display = 'block';
