@@ -698,6 +698,7 @@ const finalSchema = schema || defaultSchema;
                             "0": "account.settings.decimals0",
                             "1": "account.settings.decimals1",
                             "2": "account.settings.decimals2",
+                            "3": "account.settings.decimals3",
                         };
                         const key = keys[decimalsPref] || keys["1"];
                         decimalsLabel.setAttribute("data-i18n", key);
@@ -911,13 +912,6 @@ const finalSchema = schema || defaultSchema;
                         <div style="display: flex; flex-direction: column; gap: 12px; padding-left: 10px;">
                             <span style="font-size: 13px; color: var(--text-grey);" data-i18n="account.settings.appearance">Apparence</span>
                             <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text-primary); font-size: 14px;">
-                                <span data-i18n="account.settings.optout">Ne pas apparaître dans les classements (Opt-out)</span>
-                                <div class="toggle-switch">
-                                    <input type="checkbox" id="leaderboard-optout-checkbox" onchange="toggleLeaderboardOptOut(this.checked)" />
-                                    <span class="toggle-slider"></span>
-                                </div>
-                            </label>
-                            <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text-primary); font-size: 14px;">
                                 <span data-i18n="account.settings.reduceTransparency">Réduire les effets de transparence</span>
                                 <div class="toggle-switch">
                                     <input type="checkbox" id="reduce-transparency-checkbox" onchange="toggleReduceTransparency(this.checked)" />
@@ -963,11 +957,21 @@ const finalSchema = schema || defaultSchema;
                                         <div class="custom-select-item" data-value="2" onclick="selectCustomRankingDecimals(event, '2', 'account.settings.decimals2')">
                                             <span data-i18n="account.settings.decimals2">2 décimales</span>
                                         </div>
+                                        <div class="custom-select-item" data-value="3" onclick="selectCustomRankingDecimals(event, '3', 'account.settings.decimals3')">
+                                            <span data-i18n="account.settings.decimals3">3 décimales</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div style="border-top: 1px solid var(--border-color); padding-top: 14px; margin-top: 4px; display: flex; flex-direction: column; gap: 8px;">
+                            <div style="border-top: 1px solid var(--border-color); padding-top: 14px; margin-top: 4px; display: flex; flex-direction: column; gap: 12px;">
                                 <span style="font-size: 13px; color: var(--text-grey);" data-i18n="account.settings.dataManagement">Gestion des données</span>
+                                <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--text-primary); font-size: 14px;">
+                                    <span data-i18n="account.settings.optout">Ne pas apparaître dans les classements (Opt-out)</span>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="leaderboard-optout-checkbox" onchange="toggleLeaderboardOptOut(this.checked)" />
+                                        <span class="toggle-slider"></span>
+                                    </div>
+                                </label>
                                 <div style="display: flex; align-items: center; justify-content: space-between; color: var(--text-primary); font-size: 14px;">
                                     <span id="settings-archived-count-label">0 personnage en réserve</span>
                                     <button onclick="clearArchivedSnapshots()" class="button-unlink" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.25); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 12px; transition: all 0.2s ease;" data-i18n="account.settings.clearSnapshots">Effacer la réserve</button>

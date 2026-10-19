@@ -1087,8 +1087,8 @@ if (!pageError && !targetCharConfig) {
 
               statsContainer.innerHTML = statsHtml;
 
-              if (data.weapon && data.weapon.nameText) {
-                const translatedWepName = data.weapon.nameTranslations ? data.weapon.nameTranslations[actualLang] : data.weapon.nameText;
+              if (data.weapon && (data.weapon.icon || data.weapon.nameTranslations || data.weapon.nameText)) {
+                const translatedWepName = data.weapon.nameTranslations ? data.weapon.nameTranslations[actualLang] : (data.weapon.nameText || (window.t && window.t("lb.unknownWeapon")) || "Arme inconnue");
 
                 weaponName.textContent = translatedWepName || (window.t && window.t("lb.unknownWeapon")) || "Arme inconnue";
                 const refEl = document.getElementById("tt-weapon-refinement");

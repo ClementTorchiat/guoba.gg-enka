@@ -38,8 +38,10 @@ window.formatTopPercentage = function (rank, total) {
         return Math.max(1, Math.round(rawPct)).toString();
     } else if (decimals === 1) {
         return Math.max(0.1, parseFloat(rawPct.toFixed(1))).toFixed(1);
-    } else {
+    } else if (decimals === 2) {
         return Math.max(0.01, parseFloat(rawPct.toFixed(2))).toFixed(2);
+    } else {
+        return Math.max(0.001, parseFloat(rawPct.toFixed(3))).toFixed(3);
     }
 };
 
