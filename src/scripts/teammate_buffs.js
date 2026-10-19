@@ -1,3 +1,5 @@
+import TEAMMATE_NAME_ALIASES from '../data/teammate_name_aliases.json';
+
 window.TEAMMATE_WEAPON_BUFFS = {
     "ThrillingTalesOfDragonSlayers": {
         label: { fr: "Contes des chasseurs de dragons : ATQ% à l'allié suivant", en: "Thrilling Tales Of Dragon Slayers: ATK% to next ally" },
@@ -491,9 +493,4 @@ window.TEAMMATE_BUFFS = {
     },
 };
 
-window.TEAMMATE_NAME_ALIASES = {
-    "Qin": { fr: "Jean", en: "Jean" },
-    "SkirkNew": { fr: "Skirk", en: "Skirk" },
-    "Liuyun": { fr: "Xianyun", en: "Xianyun" },
-    "Olorun": { fr: "Ororon", en: "Ororon" }
-};
+window.TEAMMATE_NAME_ALIASES = TEAMMATE_NAME_ALIASES;

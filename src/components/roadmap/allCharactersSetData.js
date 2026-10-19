@@ -3,7 +3,7 @@ import CONFIG_NAME_ALIASES_EN_TO_FR from '../../data/config_name_aliases_en_to_f
 
 const charJsonFiles = import.meta.glob('../../../data/characters/*.json', { eager: true });
 
-const ENKA_ICON_MAP = {
+export const ENKA_ICON_MAP = {
     "Alhaitham": "Alhatham",
     "Amber": "Ambor",
     "Arataki_Itto": "Itto",

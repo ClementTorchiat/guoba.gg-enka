@@ -27,6 +27,7 @@ import { loadRollTable } from './rollTableLoader.js';
 import { mergeShowcaseWithSnapshots, updateSnapshotCharacter } from './snapshotManager.js';
 
 import { t } from './i18n.js';
+import TEAMMATE_NAME_ALIASES from '../data/teammate_name_aliases.json';
 
 const ICON_BASE_PATH = "/assets/simulator/icons/";
 
@@ -2900,11 +2901,13 @@ function resolveTeammateName(name, element = null) {
         }
     }
 
-    const alias = window.TEAMMATE_NAME_ALIASES?.[name];
-    if (alias) return alias[window.GUOBA_LANG] ?? alias.en ?? name;
+    const lang = (typeof window !== 'undefined' && window.GUOBA_LANG) || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_lang') : null) || 'fr';
+    const alias = (typeof window !== 'undefined' && window.TEAMMATE_NAME_ALIASES?.[name]) || TEAMMATE_NAME_ALIASES?.[name];
+    if (alias) return alias[lang] ?? alias.en ?? alias.fr ?? name;
 
-    if (window.GUOBA_LANG === 'fr') {
-        return CONFIG_NAME_ALIASES_EN_TO_FR[name] ?? name;
+    if (lang === 'fr') {
+        const CONFIG_ALIASES = (typeof window !== 'undefined' && window.CONFIG_NAME_ALIASES_EN_TO_FR) || CONFIG_NAME_ALIASES_EN_TO_FR || {};
+        return CONFIG_ALIASES[name] ?? name;
     }
     return name;
 }

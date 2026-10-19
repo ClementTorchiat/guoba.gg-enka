@@ -3,13 +3,49 @@ import { t } from '../../scripts/i18n.js';
 import { calculateCharacterScore, calculateMaxTheoreticalScore } from '../../scripts/scoring.js';
 import DPS_LIST from '../../data/dps_list.json';
 import CONFIG_NAME_ALIASES_EN_TO_FR from '../../data/config_name_aliases_en_to_fr.json';
-import { ALL_GAME_CHARACTERS } from './allCharactersSetData.js';
+import TEAMMATE_NAME_ALIASES from '../../data/teammate_name_aliases.json';
+import { ALL_GAME_CHARACTERS, ENKA_ICON_MAP } from './allCharactersSetData.js';
+
+const resolveTeammate = (name, element = null) => {
+    if (!name) return name;
+    if (typeof window !== 'undefined' && typeof window.resolveTeammateName === 'function') {
+        const res = window.resolveTeammateName(name, element);
+        if (res && res !== name) return res;
+    }
+    if (name === "PlayerBoy" || name === "PlayerGirl" || name === "Traveler" || name === "Voyageur") {
+        if (element) {
+            const capElem = element.charAt(0).toUpperCase() + element.slice(1).toLowerCase();
+            name = `Traveler ${capElem}`;
+        }
+    }
+    const lang = (typeof window !== 'undefined' && window.GUOBA_LANG) || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_lang') : null) || 'fr';
+    const alias = (typeof window !== 'undefined' && window.TEAMMATE_NAME_ALIASES?.[name]) || TEAMMATE_NAME_ALIASES[name];
+    if (alias) return alias[lang] ?? alias.en ?? alias.fr ?? name;
+    if (lang === 'fr') {
+        return CONFIG_NAME_ALIASES_EN_TO_FR[name] ?? name;
+    }
+    return name;
+};
 
 const getInternalName = (nom) => {
     if (!nom) return nom;
-    const mappedNom = CONFIG_NAME_ALIASES_EN_TO_FR[nom] || nom;
-    const charData = ALL_GAME_CHARACTERS.find(c => c.nom === mappedNom);
+    const resolved = resolveTeammate(nom);
+    const mappedNom = CONFIG_NAME_ALIASES_EN_TO_FR[resolved] || CONFIG_NAME_ALIASES_EN_TO_FR[nom] || resolved;
+    const charData = ALL_GAME_CHARACTERS.find(c => c.nom === mappedNom || c.id === mappedNom || c.nom === nom || c.id === nom);
     return charData ? charData.id : mappedNom;
+};
+
+const findOwnedCharacter = (name, elem, characters) => {
+    if (!name || !characters || characters.length === 0) return null;
+    const resolved = resolveTeammate(name, elem);
+    const internal = getInternalName(resolved) || getInternalName(name);
+    return characters.find(c =>
+        c.nom === resolved ||
+        c.nom === name ||
+        c.nom?.toLowerCase() === resolved?.toLowerCase() ||
+        c.nom?.toLowerCase() === name?.toLowerCase() ||
+        (internal && getInternalName(c.nom) === internal)
+    ) || null;
 };
 
 const ELEMENT_COLORS = (typeof window !== 'undefined' && window.ELEMENT_COLORS) || {
@@ -20,7 +56,6 @@ const ELEMENT_COLORS = (typeof window !== 'undefined' && window.ELEMENT_COLORS) 
 export function renderTeamAdvisor(characters, focusCharNom = null) {
     if (!characters || characters.length === 0) return '';
 
-    const showcaseNames = characters.map(c => c.nom);
     const dpsCharacters = characters.filter(c => {
         const internal = getInternalName(c.nom);
         return DPS_LIST.includes(internal);
@@ -28,7 +63,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
 
     if (dpsCharacters.length === 0) return '';
 
-    const resolveTeammateNameFn = (typeof window !== 'undefined' && window.resolveTeammateName) ? window.resolveTeammateName : (n => n);
+    const resolveTeammateNameFn = resolveTeammate;
 
     const evaluatedTeams = [];
 
@@ -72,28 +107,21 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
 
                 let usedName = names[0];
                 let usedElem = elems[0];
+                let inShowcase = false;
+
                 for (let i = 0; i < names.length; i++) {
                     const n = names[i];
                     const e = elems[i] || elems[0];
-                    const resolvedName = resolveTeammateNameFn(n, e);
-                    if (showcaseNames.includes(resolvedName)) {
+                    const ownedChar = findOwnedCharacter(n, e, characters);
+                    if (ownedChar) {
                         usedName = n;
                         usedElem = e;
-                        break;
-                    }
-                }
-                activeTeamNames.push(resolveTeammateNameFn(usedName, usedElem));
-
-                let inShowcase = false;
-                for (let i = 0; i < names.length; i++) {
-                    const n = names[i];
-                    const e = elems[i] || elems[0];
-                    const resolvedName = resolveTeammateNameFn(n, e);
-                    if (showcaseNames.includes(resolvedName)) {
                         inShowcase = true;
                         break;
                     }
                 }
+                activeTeamNames.push(resolveTeammate(usedName, usedElem));
+
                 if (inShowcase) {
                     showcaseCount++;
                 }
@@ -102,8 +130,8 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                     for (let i = 0; i < names.length; i++) {
                         const n = names[i];
                         const e = elems[i] || elems[0];
-                        const resolvedName = resolveTeammateNameFn(n, e);
-                        if (getInternalName(resolvedName) === getInternalName(focusCharNom)) {
+                        const resolvedName = resolveTeammate(n, e);
+                        if (getInternalName(resolvedName) === getInternalName(focusCharNom) || getInternalName(n) === getInternalName(focusCharNom)) {
                             containsFocus = true;
                             break;
                         }
@@ -173,12 +201,12 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
 
         for (let i = 0; i < names.length; i++) {
             const currentElem = elems[i] || elems[0];
-            const resolvedName = resolveTeammateNameFn(names[i], currentElem);
-            if (showcaseNames.includes(resolvedName)) {
+            const ownedChar = findOwnedCharacter(names[i], currentElem, characters);
+            if (ownedChar) {
                 displayedName = names[i];
                 displayedElem = currentElem;
                 inShowcase = true;
-                showcaseChar = characters.find(c => c.nom === resolvedName);
+                showcaseChar = ownedChar;
                 break;
             }
         }
@@ -186,17 +214,20 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
         const opacity = inShowcase ? '1' : '0.6';
         const filter = inShowcase ? 'none' : 'grayscale(70%)';
 
-        let iconPath = `https://enka.network/ui/UI_AvatarIcon_${displayedName}.png`;
+        let cleanIconKey = displayedName.replace(/_/g, ' ');
+        let enkaKey = ENKA_ICON_MAP[displayedName] || ENKA_ICON_MAP[cleanIconKey] || displayedName;
+        let iconPath = `https://enka.network/ui/UI_AvatarIcon_${enkaKey}.png`;
         if (showcaseChar && showcaseChar.image) {
             iconPath = showcaseChar.image.replace('Side_', '');
         }
 
         const bgStyle = displayedElem && ELEMENT_COLORS[displayedElem] ? `background: ${ELEMENT_COLORS[displayedElem]}` : 'background: #333';
+        const resolvedDisplayName = resolveTeammate(displayedName, displayedElem);
 
         return `
             <div style="display:flex; flex-direction:column; align-items:center; gap:4px; opacity: ${opacity}; filter: ${filter};">
-                <img src="${iconPath}" alt="${displayedName}" style="width:48px; height:48px; border-radius:6px; ${bgStyle}; border: 2px solid var(--border-color); object-fit:cover;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'" decoding="async" title="${resolveTeammateNameFn(displayedName, displayedElem)}">
-                <span style="font-size:11px; color:var(--text-grey); white-space:nowrap;">${resolveTeammateNameFn(displayedName, displayedElem)}</span>
+                <img src="${iconPath}" alt="${displayedName}" style="width:48px; height:48px; border-radius:6px; ${bgStyle}; border: 2px solid var(--border-color); object-fit:cover;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'" decoding="async" title="${resolvedDisplayName}">
+                <span style="font-size:11px; color:var(--text-grey); white-space:nowrap;">${resolvedDisplayName}</span>
             </div>
         `;
     };
