@@ -133,7 +133,7 @@ export const T = {
         "ui.teammate.unrestricted": "Libre",
         "ui.teammate.teamBuffs": "Buffs & effets apportés",
         "ui.teammate.constellationReq": (c) => `C${c} requis`,
-        "ui.teammate.constellationRec": (c) => `C${c} recommandé`,
+        "ui.teammate.constellationRec": (c) => `C${c} recommandée`,
         "ui.statTooltip.unbuffed": "Sans buffs",
         "ui.statTooltip.activeBuffs": "Buffs actifs",
         "ui.statTooltip.buffedTotal": "Total sous buffs",
