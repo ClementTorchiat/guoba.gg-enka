@@ -97,12 +97,21 @@ export async function getEnkaAvatarMap() {
 
 export function getFinalEnkaName(localName: string) {
   const enkaName = LOCAL_TO_ENKA_NAME[localName] || localName;
-  const isTraveler = enkaName.includes("Traveler") || enkaName.includes("Voyageur") || enkaName.includes("Manekin") || enkaName.includes("Player");
+  if (enkaName === "Manekin" || enkaName === "Manekina" || enkaName.includes("Manekin")) {
+    return "MannequinBoy";
+  }
+  const isTraveler = enkaName.includes("Traveler") || enkaName.includes("Voyageur") || enkaName.includes("Player");
   return isTraveler ? "PlayerBoy" : enkaName;
 }
 
 export function getEnkaImages(localName: string) {
   const finalEnkaName = getFinalEnkaName(localName);
+  if (finalEnkaName === "MannequinBoy" || finalEnkaName === "MannequinGirl") {
+    return {
+      avatarImg: `https://enka.network/ui/UI_AvatarIcon_${finalEnkaName}.png`,
+      gachaImg: `https://enka.network/ui/UI_Gacha_AvatarImg_${finalEnkaName}.png`,
+    };
+  }
   return {
     avatarImg: `https://enka.network/ui/UI_AvatarIcon_${finalEnkaName}.png`,
     gachaImg: `https://enka.network/ui/UI_Gacha_AvatarImg_${finalEnkaName}.webp`,
@@ -183,7 +192,57 @@ export async function getIconTranslationMap() {
   return map;
 }
 
+export const TRAVELER_ELEMENT_INFO: Record<string, { fr: string, en: string, element: string }> = {
+  Traveler_Anemo: { fr: "Voyageur Anémo", en: "Anemo Traveler", element: "anemo" },
+  Traveler_Geo: { fr: "Voyageur Géo", en: "Geo Traveler", element: "geo" },
+  Traveler_Electro: { fr: "Voyageur Électro", en: "Electro Traveler", element: "electro" },
+  Traveler_Dendro: { fr: "Voyageur Dendro", en: "Dendro Traveler", element: "dendro" },
+  Traveler_Hydro: { fr: "Voyageur Hydro", en: "Hydro Traveler", element: "hydro" },
+  Traveler_Pyro: { fr: "Voyageur Pyro", en: "Pyro Traveler", element: "pyro" },
+  Traveler_Cryo: { fr: "Voyageur Cryo", en: "Cryo Traveler", element: "cryo" },
+};
+
+export function getCharElementAndWeapon(charName: string, enkaAvatarMap: Record<string, any>) {
+  if (TRAVELER_ELEMENT_INFO[charName]) {
+    return {
+      element: TRAVELER_ELEMENT_INFO[charName].element,
+      weapon: "sword"
+    };
+  }
+  if (charName === "Manekin" || charName === "Manekina") {
+    return {
+      element: "anemo",
+      weapon: "sword"
+    };
+  }
+  const finalEnkaName = getFinalEnkaName(charName);
+  let element = "physical";
+  let weapon = "sword";
+  if (enkaAvatarMap[finalEnkaName]) {
+    const enkaAvatar = enkaAvatarMap[finalEnkaName];
+    if (enkaAvatar.Element) {
+      element = ENKA_ELEMENT_MAP[enkaAvatar.Element] || enkaAvatar.Element.toLowerCase();
+    }
+    if (enkaAvatar.WeaponType) {
+      weapon = enkaAvatar.WeaponType.toLowerCase().replace("weapon_", "").replace("_one_hand", "").replace("pole", "polearm");
+    }
+  }
+  return { element, weapon };
+}
+
 export async function getCharNamesTranslations(charName: string) {
+  if (TRAVELER_ELEMENT_INFO[charName]) {
+    return {
+      fr: TRAVELER_ELEMENT_INFO[charName].fr,
+      en: TRAVELER_ELEMENT_INFO[charName].en
+    };
+  }
+  if (charName === "Manekin" || charName === "Manekina") {
+    return {
+      fr: "Manekin",
+      en: "Manekin"
+    };
+  }
   const locs = getLocs();
   const enkaAvatarMap = await getEnkaAvatarMap();
   const finalEnkaName = getFinalEnkaName(charName);

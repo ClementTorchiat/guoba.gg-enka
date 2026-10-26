@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 
 // Dictionnaire de traduction des noms de leaderboards
 import leaderboardsNames from "../../data/leaderboards_names.json";
-import { getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getCharNamesTranslations, getAssetTranslations } from "../../server/characters";
+import { getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getCharNamesTranslations, getAssetTranslations, getCharElementAndWeapon } from "../../server/characters";
 import teammateAssets from "../../data/teammate_assets.json";
 // Désactiver le prerendering car on a besoin d'interroger Supabase en temps réel
 export const prerender = false;
@@ -69,12 +69,7 @@ try {
     const finalEnkaName = getFinalEnkaName(charName);
     const { avatarImg: enkaAvatarImg, gachaImg: enkaGachaImg } = getEnkaImages(charName);
 
-    let mainElem = 'physical';
-    
-    if (enkaAvatarMap[finalEnkaName] && enkaAvatarMap[finalEnkaName].Element) {
-      const enkaElem = enkaAvatarMap[finalEnkaName].Element;
-      mainElem = ENKA_ELEMENT_MAP[enkaElem] || enkaElem.toLowerCase();
-    }
+    const { element: mainElem } = getCharElementAndWeapon(charName, enkaAvatarMap);
 
     const charTranslations = await getCharNamesTranslations(charName);
 
@@ -230,7 +225,7 @@ try {
             {characterList.map((char) => {
               const charTotalEntries = char.totalEntries || 0;
               return (
-              <div class="character-group" data-char-name={char.name.toLowerCase()} data-entries={charTotalEntries} data-is-new={char.isNew ? "true" : "false"}>
+              <div class="character-group" data-char-name={`${char.name} ${char.translations?.fr || ''} ${char.translations?.en || ''}`.toLowerCase()} data-entries={charTotalEntries} data-is-new={char.isNew ? "true" : "false"}>
                 <!-- Ligne principale du Personnage -->
                 <div class="leaderboard-list-row cursor-pointer" data-char={char.originalName} style={`position: relative; overflow: hidden; padding: 2px; padding-right: 20px; border-radius: 8px; background-color: var(--char-bg-alpha, rgb(from ${char.color} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); display:flex; flex-direction: row; gap: 13px; align-items: center; cursor: pointer;`}>
                   <img src={char.gachaImg} alt="" loading="lazy" decoding="async" crossorigin="anonymous" class="background-splash-art" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8);" />

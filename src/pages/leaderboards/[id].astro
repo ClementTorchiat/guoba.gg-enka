@@ -5,7 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 
 // Dictionnaire
 import leaderboardsNames from "../../data/leaderboards_names.json";
-import { getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getAssetTranslations, getCharNamesTranslations, getIconTranslationMap } from "../../server/characters";
+import { getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getAssetTranslations, getCharNamesTranslations, getIconTranslationMap, getCharElementAndWeapon } from "../../server/characters";
 import teammateAssets from "../../data/teammate_assets.json";
 import SET_NAME_MAPPING from "../../data/set_name_mapping.json";
 
@@ -188,17 +188,10 @@ try {
       chartDataByBucket[b] = ALL_GRADES.map((g) => distributionsByBucket[b][g]);
     }
 
-    // On cherche les infos officielles depuis Enka
-    if (enkaAvatarMap[finalEnkaName]) {
-      const enkaAvatar = enkaAvatarMap[finalEnkaName];
-
-      if (enkaAvatar.Element) {
-        mainElem = ENKA_ELEMENT_MAP[enkaAvatar.Element] || enkaAvatar.Element.toLowerCase();
-      }
-      if (enkaAvatar.WeaponType) {
-        mainWeapon = enkaAvatar.WeaponType.toLowerCase().replace("weapon_", "").replace("_one_hand", "").replace("pole", "polearm");
-      }
-    }
+    // On cherche les infos officielles depuis Enka ou la configuration dédiée (Voyageur/Manekin)
+    const { element: charElem, weapon: charWeapon } = getCharElementAndWeapon(targetCharName, enkaAvatarMap);
+    mainElem = charElem;
+    mainWeapon = charWeapon;
   }
 } catch (e: any) {
   pageError = e.message || String(e);

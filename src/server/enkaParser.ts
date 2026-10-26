@@ -96,10 +96,32 @@ export async function parseEnkaData(enkaRawData: any) {
 
         // Trouver le nom propre du personnage
         const avatarId = String(avatar.avatarId);
-        const avatarInfo = avatarsDb[avatarId] || {};
+        let infoKey = avatarId;
+        if (["10000005", "10000007", "10000117", "10000118"].includes(avatarId) && avatar.skillDepotId) {
+            const compoundKey = `${avatarId}-${avatar.skillDepotId}`;
+            if (avatarsDb[compoundKey]) infoKey = compoundKey;
+        }
+        const avatarInfo = avatarsDb[infoKey] || {};
         const iconNameRaw = avatarInfo.SideIconName || avatarInfo.iconName || avatarInfo.IconName || "";
         const clean = iconNameRaw.replace(/\.png$/i, "");
         let nom = clean.split('_').pop() || "Unknown";
+
+        if (["10000117", "10000118"].includes(avatarId)) {
+            nom = "Manekin";
+        } else if (["10000005", "10000007"].includes(avatarId)) {
+            const elemKey = avatarInfo.Element || "Wind";
+            const elemMap: Record<string, string> = {
+                Wind: "Anemo",
+                Rock: "Geo",
+                Electric: "Electro",
+                Grass: "Dendro",
+                Water: "Hydro",
+                Fire: "Pyro",
+                Ice: "Cryo"
+            };
+            const suffix = elemMap[elemKey] || "Anemo";
+            nom = `Traveler_${suffix}`;
+        }
 
         const artefacts: any[] = [];
         let equippedWeapon: any = null;

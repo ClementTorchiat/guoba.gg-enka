@@ -2411,7 +2411,8 @@ async function processData(data, uid = null) {
                     .replace("UI_AvatarIcon_Side_", "")
                     .replace("UI_AvatarIcon_", "");
 
-                splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.webp`;
+                const splashExt = cleanName.includes("Mannequin") ? "png" : "webp";
+                splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.${splashExt}`;
             }
             else {
                 let cleanName = iconNameRaw
@@ -2422,7 +2423,8 @@ async function processData(data, uid = null) {
 
                 if (!cleanName.includes("/")) {
                     sideIconUrl = `https://enka.network/ui/UI_AvatarIcon_Side_${cleanName}.png`;
-                    splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.webp`;
+                    const splashExt = cleanName.includes("Mannequin") ? "png" : "webp";
+                    splashUrl = `https://enka.network/ui/UI_Gacha_AvatarImg_${cleanName}.${splashExt}`;
                 }
             }
         }
@@ -2731,12 +2733,31 @@ async function processData(data, uid = null) {
         let targetIdx = 0;
         const urlChar = new URLSearchParams(window.location.search).get('char');
         if (urlChar) {
-            const found = globalPersoData.findIndex(p => p.nom.toLowerCase() === urlChar.toLowerCase());
+            const found = findCharacterIndexByUrlName(globalPersoData, urlChar);
             if (found !== -1) targetIdx = found;
         }
         renderShowcase(targetIdx);
         preloadSplashArts(globalPersoData, targetIdx);
     }
+}
+
+function findCharacterIndexByUrlName(characters, urlChar) {
+    if (!characters || !urlChar) return -1;
+    const cleanUrl = urlChar.toLowerCase().replace(/_/g, ' ').trim();
+    return characters.findIndex(p => {
+        if (!p || !p.nom) return false;
+        const cleanNom = p.nom.toLowerCase().trim();
+        if (cleanNom === cleanUrl) return true;
+        if (cleanNom.replace(/[^a-z0-9]/g, '') === cleanUrl.replace(/[^a-z0-9]/g, '')) return true;
+        if (cleanUrl.includes('traveler') || cleanUrl.includes('voyageur')) {
+            const elems = ['anemo', 'geo', 'electro', 'dendro', 'hydro', 'pyro', 'cryo'];
+            for (const el of elems) {
+                if (cleanUrl.includes(el) && cleanNom.normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(el)) return true;
+            }
+        }
+        if (cleanUrl.includes('manekin') && cleanNom.includes('manekin')) return true;
+        return false;
+    });
 }
 
 const preloadedSplashUrls = new Set();
@@ -5491,7 +5512,7 @@ function initMainPageApp() {
             if ((urlView === 'account-review' || urlView === 'roadmap') && globalPersoData && globalPersoData.length > 0) {
                 showAccountRoadmap();
             } else if (urlChar && globalPersoData && globalPersoData.length > 0) {
-                const targetIndex = globalPersoData.findIndex(p => p.nom.toLowerCase() === urlChar.toLowerCase());
+                const targetIndex = findCharacterIndexByUrlName(globalPersoData, urlChar);
 
                 if (targetIndex !== -1) {
                     renderShowcase(targetIndex);

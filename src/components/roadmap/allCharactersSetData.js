@@ -62,8 +62,10 @@ for (const path in charJsonFiles) {
     }
 
     let iconKey = ENKA_ICON_MAP[fileName] || ENKA_ICON_MAP[cleanNoUnderscore] || fileName;
-    if (fileName.startsWith('Traveler_') || fileName === 'Manekin') {
+    if (fileName.startsWith('Traveler_')) {
         iconKey = 'PlayerBoy';
+    } else if (fileName === 'Manekin') {
+        iconKey = 'MannequinBoy';
     }
     const image = `https://enka.network/ui/UI_AvatarIcon_Side_${iconKey}.png`;
 
