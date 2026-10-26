@@ -3,6 +3,7 @@ import { t, LANG } from '../../scripts/i18n.js';
 import ARTIFACT_DOMAINS from '../../data/artifact_domains.json';
 import SET_NAME_MAPPING from '../../data/set_name_mapping.json';
 import STRONGBOX_SETS from '../../data/strongbox_sets.json';
+import TEAMMATE_ASSETS from '../../data/teammate_assets.json';
 import { getNonVitrineCharactersForSet } from './allCharactersSetData.js';
 
 export const GRADE_RANKS = {
@@ -270,7 +271,12 @@ export function getSetIcon(setKey, characters = []) {
         return itemIcon;
     }
 
-    // 3. Résolution via HASH_TO_KEY et iconToNameHash
+    // 3. Fallback direct via teammate_assets.json (garantit l'icône fleur même sans persos équipés)
+    if (TEAMMATE_ASSETS && TEAMMATE_ASSETS[cleanKey]) {
+        return TEAMMATE_ASSETS[cleanKey];
+    }
+
+    // 4. Résolution via HASH_TO_KEY et iconToNameHash
     if (typeof window !== 'undefined' && window.HASH_TO_KEY && window.iconToNameHash) {
         const hash = Object.keys(window.HASH_TO_KEY).find(h => window.HASH_TO_KEY[h] === cleanKey);
         if (hash) {
@@ -298,6 +304,47 @@ export function getSetIcon(setKey, characters = []) {
 export function renderInlineSetBadge(setName, iconUrl, color = '#60a5fa') {
     if (!setName) return '';
     return `<span style="display:inline-flex; align-items:center; vertical-align:middle; gap:4px; color:${color}; font-weight:500; border-bottom:1px solid ${color}; padding-bottom:1px; line-height:1.2;">${iconUrl ? `<img src="${iconUrl}" alt="" style="width:14px; height:14px; border-radius:3px; object-fit:contain; display:inline-block; vertical-align:middle; background:rgba(255,255,255,0.05);" onerror="this.style.display='none'">` : ''}${setName}</span>`;
+}
+
+/**
+ * Rendu d'un icône combiné diagonal représentant les fleurs des deux sets du domaine.
+ */
+export function renderDomainSplitIcon(set1Icon, set2Icon, set1Name = '', set2Name = '', size = 32) {
+    if (!set1Icon && !set2Icon) return '';
+
+    const titleAttr = (set1Name && set2Name) ? `${set1Name} / ${set2Name}` : (set1Name || set2Name);
+
+    // Si seulement l'un des deux icônes est disponible
+    if (!set1Icon || !set2Icon) {
+        const icon = set1Icon || set2Icon;
+        const name = set1Name || set2Name;
+        return `
+            <div style="width:${size}px; height:${size}px; border-radius:6px; overflow:hidden; background:var(--shadow-subtle); border:1px solid rgba(255,255,255,0.1); flex-shrink:0; display:flex; align-items:center; justify-content:center;" title="${name}">
+                <img src="${icon}" alt="${name}" style="width:100%; height:100%; object-fit:contain;" onerror="this.style.display='none'">
+            </div>
+        `;
+    }
+
+    // Coupe diagonale des deux fleurs (haut-gauche pour set 1, bas-droite pour set 2)
+    return `
+        <div style="position:relative; width:${size}px; height:${size}px; border-radius:6px; overflow:hidden; background:var(--shadow-subtle); flex-shrink:0;" title="${titleAttr}">
+            <!-- Set 1 (Moitié haute-gauche) -->
+            <img src="${set1Icon}" 
+                 alt="${set1Name}" 
+                 style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; clip-path:polygon(0 0, 100% 0, 0 100%); pointer-events:none;" 
+                 onerror="this.style.display='none'; const other = this.parentElement.querySelector('img:not([style*=\\'none\\'])'); if(other) other.style.clipPath='none'; const s = this.parentElement.querySelector('svg'); if(s) s.style.display='none';">
+            <!-- Set 2 (Moitié basse-droite) -->
+            <img src="${set2Icon}" 
+                 alt="${set2Name}" 
+                 style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; clip-path:polygon(100% 0, 100% 100%, 0 100%); pointer-events:none;" 
+                 onerror="this.style.display='none'; const other = this.parentElement.querySelector('img:not([style*=\\'none\\'])'); if(other) other.style.clipPath='none'; const s = this.parentElement.querySelector('svg'); if(s) s.style.display='none';">
+            <!-- Ligne de séparation diagonale avec ombre -->
+            <svg style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:2;" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <line x1="100" y1="0" x2="0" y2="100" stroke="rgba(0,0,0,0.5)" stroke-width="2.5" />
+                <line x1="100" y1="0" x2="0" y2="100" stroke="rgba(255,255,255,0.45)" stroke-width="1.2" />
+            </svg>
+        </div>
+    `;
 }
 
 export function calculateDomainRankings(characters, focusCharNom = null, scope = 'priorities') {
@@ -520,9 +567,12 @@ export function renderDomainPlanner(characters, focusCharNom = null, scope = (ty
         return `
                             <div style="background:${d.isFocusTarget ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${d.isFocusTarget ? '1px solid rgba(59,130,246,0.4)' : 'none'}; border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:12px; position:relative; flex-grow: 1;">
                                 <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
-                                    <div>
-                                        <div style="font-size:14px; font-weight:normal; color:var(--text-primary);">${d.domainName}</div>
-                                        <div style="font-size:11px; color:var(--text-grey);">${d.regionName}</div>
+                                    <div style="display:flex; align-items:center; gap:10px;">
+                                        ${renderDomainSplitIcon(d.set1.icon, d.set2.icon, d.set1.name, d.set2.name)}
+                                        <div>
+                                            <div style="font-size:14px; font-weight:normal; color:var(--text-primary);">${d.domainName}</div>
+                                            <div style="font-size:11px; color:var(--text-grey);">${d.regionName}</div>
+                                        </div>
                                     </div>
                                     <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
                                         ${d.isFocusTarget ? `

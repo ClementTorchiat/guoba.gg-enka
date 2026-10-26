@@ -971,7 +971,7 @@ export const T = {
         "roadmap.breakdown.weapons": "Armes à monter Niv. 90",
         "roadmap.breakdown.weapons.ok": "Toutes vos armes équipées sont au niveau maximal.",
         "roadmap.breakdown.levels": "Niveaux de Personnages",
-        "roadmap.breakdown.levels.ok": "Tous vos personnages sont au niveau maximal recommandé.",
+        "roadmap.breakdown.levels.ok": "Tous vos personnages sont au niveau recommandé.",
         "roadmap.breakdown.talents": "Aptitudes Clés à améliorer",
         "roadmap.breakdown.talents.ok": "Toutes les aptitudes clés sont au niveau recommandé.",
         "roadmap.breakdown.mainstats": "Stats Principales à corriger",
