@@ -93,3 +93,29 @@ export function getNonVitrineCharactersForSet(setKey, vitrineCharacters = []) {
         return c.bestSets.includes(cleanKey);
     });
 }
+
+/**
+ * Récupère la configuration brute (builds, idealMainStats, weights) d'un personnage par son nom.
+ * @param {string} charNom
+ * @returns {Object|null}
+ */
+export function getRawCharacterConfig(charNom) {
+    if (!charNom) return null;
+    const cleanNom = charNom.toLowerCase().trim();
+    for (const path in charJsonFiles) {
+        const raw = charJsonFiles[path].default || charJsonFiles[path];
+        const fileName = path.split('/').pop().replace('.json', '');
+        const cleanNoUnderscore = fileName.replace(/_/g, ' ');
+        const frName = CONFIG_NAME_ALIASES_EN_TO_FR[cleanNoUnderscore] || CONFIG_NAME_ALIASES_EN_TO_FR[fileName] || cleanNoUnderscore;
+
+        if (
+            fileName.toLowerCase() === cleanNom ||
+            cleanNoUnderscore.toLowerCase() === cleanNom ||
+            frName.toLowerCase() === cleanNom
+        ) {
+            return raw;
+        }
+    }
+    return null;
+}
+

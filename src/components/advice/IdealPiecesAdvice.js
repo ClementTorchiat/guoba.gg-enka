@@ -6,7 +6,7 @@ import SET_NAME_MAPPING from '../../data/set_name_mapping.json';
 import SLOT_POSSIBLE_MAIN_STATS from '../../data/slot_possible_main_stats.json';
 import { ICON_MAP } from '../../scripts/icons.js';
 
-export function renderIdealPiecesAdvice(persoObj, config) {
+export function computeIdealCardsData(persoObj, config) {
     const ICON_BASE_PATH = "/assets/simulator/icons/";
     const SLOT_ORDER_WTL = ["EQUIP_BRACER", "EQUIP_NECKLACE", "EQUIP_SHOES", "EQUIP_RING", "EQUIP_DRESS"];
     const FIXED_MAIN = {
@@ -204,6 +204,13 @@ export function renderIdealPiecesAdvice(persoObj, config) {
 
         return { slotType, pieceName, targetSetKey, setNameFR, iconUrl, mainStats, subSlots };
     });
+
+    return cards;
+}
+
+export function renderIdealPiecesAdvice(persoObj, config) {
+    const ICON_BASE_PATH = "/assets/simulator/icons/";
+    const cards = computeIdealCardsData(persoObj, config);
 
     const cardHtml = cards.map(card => {
         const isOffSet = card.targetSetKey === 'Hors-Set';

@@ -10,6 +10,7 @@ import { renderWorstPiecesAudit } from './WorstPiecesAudit.js';
 import { renderElixirCraftAdvisor } from './ElixirCraftAdvisor.js';
 import { renderTeamAdvisor } from './TeamAdvisor.js';
 import { renderBestPiecesShowcase } from './BestPiecesShowcase.js';
+import './TargetPieceTooltip.js';
 
 let cachedRoadmapCharacters = [];
 
@@ -70,10 +71,9 @@ if (typeof window !== 'undefined') {
             if (setDomainScopeBtn) {
                 e.preventDefault();
                 e.stopPropagation();
-                const scope = setDomainScopeBtn.getAttribute('data-scope');
-                const shouldShowAll = (scope === 'all');
-                if (window.roadmapShowAllDomainChars !== shouldShowAll) {
-                    window.roadmapShowAllDomainChars = shouldShowAll;
+                const scope = setDomainScopeBtn.getAttribute('data-scope') || 'priorities';
+                if (window.roadmapDomainScope !== scope) {
+                    window.roadmapDomainScope = scope;
                     const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
                         ? cachedRoadmapCharacters
                         : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
@@ -140,10 +140,9 @@ if (typeof window !== 'undefined') {
             if (setStrongboxScopeBtn) {
                 e.preventDefault();
                 e.stopPropagation();
-                const scope = setStrongboxScopeBtn.getAttribute('data-scope');
-                const shouldShowAll = (scope === 'all');
-                if (window.roadmapShowAllStrongboxChars !== shouldShowAll) {
-                    window.roadmapShowAllStrongboxChars = shouldShowAll;
+                const scope = setStrongboxScopeBtn.getAttribute('data-scope') || 'priorities';
+                if (window.roadmapStrongboxScope !== scope) {
+                    window.roadmapStrongboxScope = scope;
                     const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
                         ? cachedRoadmapCharacters
                         : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
@@ -407,10 +406,10 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
             <!-- Deux colonnes pour Donjons & Synthèse Mystique -->
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:40px;">
                 <!-- Module 4 : Planificateur de Donjons -->
-                ${renderDomainPlanner(characters, focusCharNom, typeof window !== 'undefined' ? !!window.roadmapShowAllDomainChars : false)}
+                ${renderDomainPlanner(characters, focusCharNom, typeof window !== 'undefined' ? (window.roadmapDomainScope || 'priorities') : 'priorities')}
 
                 <!-- Module 5 : Conseiller de Synthèse Mystique -->
-                ${renderStrongboxAdvisor(characters, focusCharNom, typeof window !== 'undefined' ? !!window.roadmapShowAllStrongboxChars : false)}
+                ${renderStrongboxAdvisor(characters, focusCharNom, typeof window !== 'undefined' ? (window.roadmapStrongboxScope || 'priorities') : 'priorities')}
             </div>
             
         </div>

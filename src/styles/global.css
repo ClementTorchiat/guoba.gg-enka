@@ -2710,6 +2710,88 @@ main {
     pointer-events: none;
 }
 
+#roadmap-target-piece-tooltip {
+    position: fixed;
+    visibility: hidden;
+    background: color-mix(in srgb, var(--bg-panel) 94%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: var(--text-primary);
+    font-family: 'ShinShin', sans-serif;
+    font-weight: normal;
+    text-transform: none;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 11px;
+    opacity: 0;
+    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.2s ease,
+        transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(6px) scale(0.98);
+    z-index: 999999;
+    width: max-content;
+    max-width: min(calc(100vw - 24px), 820px);
+    box-sizing: border-box;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    pointer-events: auto;
+    border: none;
+}
+
+#roadmap-target-piece-tooltip,
+#roadmap-target-piece-tooltip * {
+    font-family: 'ShinShin', sans-serif !important;
+}
+
+#roadmap-target-piece-tooltip.placement-top {
+    transform: translateY(-6px) scale(0.98);
+}
+
+#roadmap-target-piece-tooltip.is-active {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+#roadmap-target-piece-tooltip.placement-bottom::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: var(--arrow-left, 50%);
+    transform: translateX(-50%) rotate(45deg);
+    width: 9px;
+    height: 9px;
+    background: color-mix(in srgb, var(--bg-panel) 94%, transparent);
+    border: none;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    pointer-events: none;
+}
+
+#roadmap-target-piece-tooltip.placement-top::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: var(--arrow-left, 50%);
+    transform: translateX(-50%) rotate(45deg);
+    width: 9px;
+    height: 9px;
+    background: color-mix(in srgb, var(--bg-panel) 94%, transparent);
+    border: none;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    pointer-events: none;
+}
+
+.mini-target-cards-row::-webkit-scrollbar {
+    height: 4px;
+}
+.mini-target-cards-row::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+.mini-target-cards-row::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
 .team-mate-slot {
     cursor: pointer;
     transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease, filter 0.2s ease;
