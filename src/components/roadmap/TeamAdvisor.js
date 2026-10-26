@@ -225,9 +225,9 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
         const resolvedDisplayName = resolveTeammate(displayedName, displayedElem);
 
         return `
-            <div style="display:flex; flex-direction:column; align-items:center; gap:4px; opacity: ${opacity}; filter: ${filter};">
-                <img src="${iconPath}" alt="${displayedName}" style="width:48px; height:48px; border-radius:6px; ${bgStyle}; border: 2px solid var(--border-color); object-fit:cover;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'" decoding="async" title="${resolvedDisplayName}">
-                <span style="font-size:11px; color:var(--text-grey); white-space:nowrap;">${resolvedDisplayName}</span>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:4px; opacity: ${opacity}; filter: ${filter}; width:58px; min-width:0; max-width:58px;">
+                <img src="${iconPath}" alt="${displayedName}" style="width:58px; height:58px; border-radius:6px; ${bgStyle}; border: 2px solid var(--border-color); object-fit:cover;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'" decoding="async" title="${resolvedDisplayName}">
+                <span style="font-size:11px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; text-align:center; display:block;" title="${resolvedDisplayName}">${resolvedDisplayName}</span>
             </div>
         `;
     };
@@ -286,10 +286,10 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                                 </div>
                             </div>
                             
-                            <div style="display:flex; align-items:center; gap:12px; justify-content:center;">
-                                <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
-                                    <img src="${dpsIconPath}" alt="${dps.nom}" style="width:48px; height:48px; border-radius:6px; background:${dpsBg}; border: 1px solid rgba(255, 255, 255, 0.5); object-fit:cover;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'" decoding="async" title="${resolveTeammateNameFn(dps.nom)}">
-                                    <span style="font-size:11px; color:var(--text-primary); white-space:nowrap; font-weight:normal;">${resolveTeammateNameFn(dps.nom)}</span>
+                            <div style="display:flex; align-items:flex-start; gap:12px; justify-content:center;">
+                                <div style="display:flex; flex-direction:column; align-items:center; gap:4px; width:58px; min-width:0; max-width:58px;">
+                                    <img src="${dpsIconPath}" alt="${dps.nom}" style="width:58px; height:58px; border-radius:6px; background:${dpsBg}; border: 1px solid rgba(255, 255, 255, 0.5); object-fit:cover;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'" decoding="async" title="${resolveTeammateNameFn(dps.nom)}">
+                                    <span style="font-size:11px; color:var(--text-primary); white-space:nowrap; font-weight:normal; overflow:hidden; text-overflow:ellipsis; width:100%; text-align:center; display:block;" title="${resolveTeammateNameFn(dps.nom)}">${resolveTeammateNameFn(dps.nom)}</span>
                                 </div>
                                 ${teamSlots.map(slot => renderSlot(slot)).join('')}
                             </div>
