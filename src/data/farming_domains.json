@@ -998,5 +998,1197 @@
         }
       }
     ]
+  },
+  {
+    "id": "cecilia_garden",
+    "name": {
+      "fr": "Jardin Cécilia",
+      "en": "Cecilia Garden"
+    },
+    "region": {
+      "fr": "Mondstadt",
+      "en": "Mondstadt"
+    },
+    "category": "weapon",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "decarabian",
+        "name": {
+          "fr": "Décarabian",
+          "en": "Decarabian"
+        },
+        "items": {
+          "green": {
+            "id": 114001,
+            "name": {
+              "fr": "Tuile cassée de Décarabian",
+              "en": "Tile of Decarabian's Tower"
+            },
+            "icon": "UI_ItemIcon_114001"
+          },
+          "blue": {
+            "id": 114002,
+            "name": {
+              "fr": "Mur abattu de Décarabian",
+              "en": "Debris of Decarabian's City"
+            },
+            "icon": "UI_ItemIcon_114002"
+          },
+          "purple": {
+            "id": 114003,
+            "name": {
+              "fr": "Fragment dispersé de Décarabian",
+              "en": "Fragment of Decarabian's Epic"
+            },
+            "icon": "UI_ItemIcon_114003"
+          },
+          "gold": {
+            "id": 114004,
+            "name": {
+              "fr": "Rêve brisé de Décarabian",
+              "en": "Scattered Piece of Decarabian's Dream"
+            },
+            "icon": "UI_ItemIcon_114004"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "boreal_wolf",
+        "name": {
+          "fr": "Loup boréal",
+          "en": "Boreal Wolf"
+        },
+        "items": {
+          "green": {
+            "id": 114005,
+            "name": {
+              "fr": "Dent de lait du Loup boréal",
+              "en": "Boreal Wolf's Milk Tooth"
+            },
+            "icon": "UI_ItemIcon_114005"
+          },
+          "blue": {
+            "id": 114006,
+            "name": {
+              "fr": "Croc brisé du Loup boréal",
+              "en": "Boreal Wolf's Cracked Tooth"
+            },
+            "icon": "UI_ItemIcon_114006"
+          },
+          "purple": {
+            "id": 114007,
+            "name": {
+              "fr": "Croc fendu du Loup boréal",
+              "en": "Boreal Wolf's Broken Fang"
+            },
+            "icon": "UI_ItemIcon_114007"
+          },
+          "gold": {
+            "id": 114008,
+            "name": {
+              "fr": "Nostalgie du Loup boréal",
+              "en": "Boreal Wolf's Nostalgia"
+            },
+            "icon": "UI_ItemIcon_114008"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "dandelion_gladiator",
+        "name": {
+          "fr": "Croc de Lion",
+          "en": "Dandelion Gladiator"
+        },
+        "items": {
+          "green": {
+            "id": 114009,
+            "name": {
+              "fr": "Entraves du Chevalier du Croc de Lion",
+              "en": "Fetters of the Dandelion Gladiator"
+            },
+            "icon": "UI_ItemIcon_114009"
+          },
+          "blue": {
+            "id": 114010,
+            "name": {
+              "fr": "Chaînes du Chevalier du Croc de Lion",
+              "en": "Chains of the Dandelion Gladiator"
+            },
+            "icon": "UI_ItemIcon_114010"
+          },
+          "purple": {
+            "id": 114011,
+            "name": {
+              "fr": "Menottes du Chevalier du Croc de Lion",
+              "en": "Shackles of the Dandelion Gladiator"
+            },
+            "icon": "UI_ItemIcon_114011"
+          },
+          "gold": {
+            "id": 114012,
+            "name": {
+              "fr": "Idéaux du Chevalier du Croc de Lion",
+              "en": "Dream of the Dandelion Gladiator"
+            },
+            "icon": "UI_ItemIcon_114012"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lianshan_formula",
+    "name": {
+      "fr": "Palais de Lianshan",
+      "en": "Hidden Palace of Lianshan Formula"
+    },
+    "region": {
+      "fr": "Liyue",
+      "en": "Liyue"
+    },
+    "category": "weapon",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "guyun",
+        "name": {
+          "fr": "Guyun",
+          "en": "Guyun"
+        },
+        "items": {
+          "green": {
+            "id": 114013,
+            "name": {
+              "fr": "Sable lumineux de Guyun",
+              "en": "Luminous Sands from Guyun"
+            },
+            "icon": "UI_ItemIcon_114013"
+          },
+          "blue": {
+            "id": 114014,
+            "name": {
+              "fr": "Roche lustrée de Guyun",
+              "en": "Lustrous Stone from Guyun"
+            },
+            "icon": "UI_ItemIcon_114014"
+          },
+          "purple": {
+            "id": 114015,
+            "name": {
+              "fr": "Squelette sacré de Guyun",
+              "en": "Relic from Guyun"
+            },
+            "icon": "UI_ItemIcon_114015"
+          },
+          "gold": {
+            "id": 114016,
+            "name": {
+              "fr": "Corps divin de Guyun",
+              "en": "Divine Body from Guyun"
+            },
+            "icon": "UI_ItemIcon_114016"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "mist_veiled",
+        "name": {
+          "fr": "Plomb karstique",
+          "en": "Mist Veiled"
+        },
+        "items": {
+          "green": {
+            "id": 114017,
+            "name": {
+              "fr": "Plomb karstique",
+              "en": "Mist Veiled Lead Elixir"
+            },
+            "icon": "UI_ItemIcon_114017"
+          },
+          "blue": {
+            "id": 114018,
+            "name": {
+              "fr": "Mercure karstique",
+              "en": "Mist Veiled Mercury Elixir"
+            },
+            "icon": "UI_ItemIcon_114018"
+          },
+          "purple": {
+            "id": 114019,
+            "name": {
+              "fr": "Argent karstique",
+              "en": "Mist Veiled Gold Elixir"
+            },
+            "icon": "UI_ItemIcon_114019"
+          },
+          "gold": {
+            "id": 114020,
+            "name": {
+              "fr": "Or karstique",
+              "en": "Mist Veiled Primo Elixir"
+            },
+            "icon": "UI_ItemIcon_114020"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "aerosiderite",
+        "name": {
+          "fr": "Aérosidérite",
+          "en": "Aerosiderite"
+        },
+        "items": {
+          "green": {
+            "id": 114021,
+            "name": {
+              "fr": "Grain d'aérosidérite noire",
+              "en": "Grain of Aerosiderite"
+            },
+            "icon": "UI_ItemIcon_114021"
+          },
+          "blue": {
+            "id": 114022,
+            "name": {
+              "fr": "Éclat d'aérosidérite noire",
+              "en": "Piece of Aerosiderite"
+            },
+            "icon": "UI_ItemIcon_114022"
+          },
+          "purple": {
+            "id": 114023,
+            "name": {
+              "fr": "Fragment d'aérosidérite noire",
+              "en": "Bit of Aerosiderite"
+            },
+            "icon": "UI_ItemIcon_114023"
+          },
+          "gold": {
+            "id": 114024,
+            "name": {
+              "fr": "Morceau d'aérosidérite noire",
+              "en": "Chunk of Aerosiderite"
+            },
+            "icon": "UI_ItemIcon_114024"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "court_of_flowing_sand",
+    "name": {
+      "fr": "Cour des sables",
+      "en": "Court of Flowing Sand"
+    },
+    "region": {
+      "fr": "Inazuma",
+      "en": "Inazuma"
+    },
+    "category": "weapon",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "distant_sea",
+        "name": {
+          "fr": "Branche marine",
+          "en": "Distant Sea"
+        },
+        "items": {
+          "green": {
+            "id": 114025,
+            "name": {
+              "fr": "Branche marine de corail",
+              "en": "Coral Branch of a Distant Sea"
+            },
+            "icon": "UI_ItemIcon_114025"
+          },
+          "blue": {
+            "id": 114026,
+            "name": {
+              "fr": "Branche marine de gemme",
+              "en": "Jeweled Branch of a Distant Sea"
+            },
+            "icon": "UI_ItemIcon_114026"
+          },
+          "purple": {
+            "id": 114027,
+            "name": {
+              "fr": "Branche marine de jade",
+              "en": "Jade Branch of a Distant Sea"
+            },
+            "icon": "UI_ItemIcon_114027"
+          },
+          "gold": {
+            "id": 114028,
+            "name": {
+              "fr": "Branche marine d'or",
+              "en": "Golden Branch of a Distant Sea"
+            },
+            "icon": "UI_ItemIcon_114028"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "narukami",
+        "name": {
+          "fr": "Narukami",
+          "en": "Narukami"
+        },
+        "items": {
+          "green": {
+            "id": 114029,
+            "name": {
+              "fr": "Sagesse de Narukami",
+              "en": "Narukami's Wisdom"
+            },
+            "icon": "UI_ItemIcon_114029"
+          },
+          "blue": {
+            "id": 114030,
+            "name": {
+              "fr": "Joie de Narukami",
+              "en": "Narukami's Joy"
+            },
+            "icon": "UI_ItemIcon_114030"
+          },
+          "purple": {
+            "id": 114031,
+            "name": {
+              "fr": "Affection de Narukami",
+              "en": "Narukami's Affection"
+            },
+            "icon": "UI_ItemIcon_114031"
+          },
+          "gold": {
+            "id": 114032,
+            "name": {
+              "fr": "Vaillance de Narukami",
+              "en": "Narukami's Valor"
+            },
+            "icon": "UI_ItemIcon_114032"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "mask",
+        "name": {
+          "fr": "Masque",
+          "en": "Mask"
+        },
+        "items": {
+          "green": {
+            "id": 114033,
+            "name": {
+              "fr": "Masque du lieutenant pernicieux",
+              "en": "Mask of the Wicked Lieutenant"
+            },
+            "icon": "UI_ItemIcon_114033"
+          },
+          "blue": {
+            "id": 114034,
+            "name": {
+              "fr": "Masque de la morsure du tigre",
+              "en": "Mask of the Tiger's Bite"
+            },
+            "icon": "UI_ItemIcon_114034"
+          },
+          "purple": {
+            "id": 114035,
+            "name": {
+              "fr": "Masque du cornu",
+              "en": "Mask of the One-Horned"
+            },
+            "icon": "UI_ItemIcon_114035"
+          },
+          "gold": {
+            "id": 114036,
+            "name": {
+              "fr": "Masque du kijin",
+              "en": "Mask of the Kijin"
+            },
+            "icon": "UI_ItemIcon_114036"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tower_of_abject_pride",
+    "name": {
+      "fr": "Tour de la fierté",
+      "en": "Tower of Abject Pride"
+    },
+    "region": {
+      "fr": "Sumeru",
+      "en": "Sumeru"
+    },
+    "category": "weapon",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "forest_dew",
+        "name": {
+          "fr": "Rosée",
+          "en": "Forest Dew"
+        },
+        "items": {
+          "green": {
+            "id": 114037,
+            "name": {
+              "fr": "Talisman en cuivre de la rosée",
+              "en": "Copper Talisman of the Forest Dew"
+            },
+            "icon": "UI_ItemIcon_114037"
+          },
+          "blue": {
+            "id": 114038,
+            "name": {
+              "fr": "Talisman en fer de la rosée",
+              "en": "Iron Talisman of the Forest Dew"
+            },
+            "icon": "UI_ItemIcon_114038"
+          },
+          "purple": {
+            "id": 114039,
+            "name": {
+              "fr": "Talisman en argent de la rosée",
+              "en": "Silver Talisman of the Forest Dew"
+            },
+            "icon": "UI_ItemIcon_114039"
+          },
+          "gold": {
+            "id": 114040,
+            "name": {
+              "fr": "Talisman en or de la rosée",
+              "en": "Golden Talisman of the Forest Dew"
+            },
+            "icon": "UI_ItemIcon_114040"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "oasis_garden",
+        "name": {
+          "fr": "Jardin d'oasis",
+          "en": "Oasis Garden"
+        },
+        "items": {
+          "green": {
+            "id": 114041,
+            "name": {
+              "fr": "Souvenir du jardin d'oasis",
+              "en": "Oasis Garden's Reminiscence"
+            },
+            "icon": "UI_ItemIcon_114041"
+          },
+          "blue": {
+            "id": 114042,
+            "name": {
+              "fr": "Gentillesse du jardin d'oasis",
+              "en": "Oasis Garden's Kindness"
+            },
+            "icon": "UI_ItemIcon_114042"
+          },
+          "purple": {
+            "id": 114043,
+            "name": {
+              "fr": "Deuil du jardin d'oasis",
+              "en": "Oasis Garden's Mourning"
+            },
+            "icon": "UI_ItemIcon_114043"
+          },
+          "gold": {
+            "id": 114044,
+            "name": {
+              "fr": "Vérité du jardin d'oasis",
+              "en": "Oasis Garden's Truth"
+            },
+            "icon": "UI_ItemIcon_114044"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "scorching_might",
+        "name": {
+          "fr": "Pouvoir brûlant",
+          "en": "Scorching Might"
+        },
+        "items": {
+          "green": {
+            "id": 114045,
+            "name": {
+              "fr": "Dernier écho du pouvoir brûlant",
+              "en": "Echo of Scorching Might"
+            },
+            "icon": "UI_ItemIcon_114045"
+          },
+          "blue": {
+            "id": 114046,
+            "name": {
+              "fr": "Éclat subsistant du pouvoir brûlant",
+              "en": "Remnant Glow of Scorching Might"
+            },
+            "icon": "UI_ItemIcon_114046"
+          },
+          "purple": {
+            "id": 114047,
+            "name": {
+              "fr": "Rêve dominant du pouvoir brûlant",
+              "en": "Dream of Scorching Might"
+            },
+            "icon": "UI_ItemIcon_114047"
+          },
+          "gold": {
+            "id": 114048,
+            "name": {
+              "fr": "Passé glorieux du pouvoir brûlant",
+              "en": "Olden Days of Scorching Might"
+            },
+            "icon": "UI_ItemIcon_114048"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "echoes_of_the_deep_tides",
+    "name": {
+      "fr": "Échos des marées profondes",
+      "en": "Echoes of the Deep Tides"
+    },
+    "region": {
+      "fr": "Fontaine",
+      "en": "Fontaine"
+    },
+    "category": "weapon",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "ancient_chord",
+        "name": {
+          "fr": "Accord ancien",
+          "en": "Ancient Chord"
+        },
+        "items": {
+          "green": {
+            "id": 114049,
+            "name": {
+              "fr": "Fragment d'un accord ancien",
+              "en": "Fragment of an Ancient Chord"
+            },
+            "icon": "UI_ItemIcon_114049"
+          },
+          "blue": {
+            "id": 114050,
+            "name": {
+              "fr": "Chapitre d'un accord ancien",
+              "en": "Chapter of an Ancient Chord"
+            },
+            "icon": "UI_ItemIcon_114050"
+          },
+          "purple": {
+            "id": 114051,
+            "name": {
+              "fr": "Mouvement d'un accord ancien",
+              "en": "Movement of an Ancient Chord"
+            },
+            "icon": "UI_ItemIcon_114051"
+          },
+          "gold": {
+            "id": 114052,
+            "name": {
+              "fr": "Écho d'un accord ancien",
+              "en": "Echo of an Ancient Chord"
+            },
+            "icon": "UI_ItemIcon_114052"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "dewdrop",
+        "name": {
+          "fr": "Goutte de rosée",
+          "en": "Dewdrop"
+        },
+        "items": {
+          "green": {
+            "id": 114053,
+            "name": {
+              "fr": "Résidu de rosée sacrée pure",
+              "en": "Dross of Pure Sacred Dewdrop"
+            },
+            "icon": "UI_ItemIcon_114053"
+          },
+          "blue": {
+            "id": 114054,
+            "name": {
+              "fr": "Sublimation de rosée sacrée pure",
+              "en": "Sublimation of Pure Sacred Dewdrop"
+            },
+            "icon": "UI_ItemIcon_114054"
+          },
+          "purple": {
+            "id": 114055,
+            "name": {
+              "fr": "Source de rosée sacrée pure",
+              "en": "Spring of Pure Sacred Dewdrop"
+            },
+            "icon": "UI_ItemIcon_114055"
+          },
+          "gold": {
+            "id": 114056,
+            "name": {
+              "fr": "Essence de rosée sacrée pure",
+              "en": "Essence of Pure Sacred Dewdrop"
+            },
+            "icon": "UI_ItemIcon_114056"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "pristine_sea",
+        "name": {
+          "fr": "Mer immaculée",
+          "en": "Pristine Sea"
+        },
+        "items": {
+          "green": {
+            "id": 114057,
+            "name": {
+              "fr": "Gobelet brisé de la mer immaculée",
+              "en": "Broken Goblet of the Pristine Sea"
+            },
+            "icon": "UI_ItemIcon_114057"
+          },
+          "blue": {
+            "id": 114058,
+            "name": {
+              "fr": "Gobelet à vin de la mer immaculée",
+              "en": "Wine Goblet of the Pristine Sea"
+            },
+            "icon": "UI_ItemIcon_114058"
+          },
+          "purple": {
+            "id": 114059,
+            "name": {
+              "fr": "Gobelet d'argent de la mer immaculée",
+              "en": "Silver Goblet of the Pristine Sea"
+            },
+            "icon": "UI_ItemIcon_114059"
+          },
+          "gold": {
+            "id": 114060,
+            "name": {
+              "fr": "Gobelet d'or de la mer immaculée",
+              "en": "Golden Goblet of the Pristine Sea"
+            },
+            "icon": "UI_ItemIcon_114060"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ancient_lookout",
+    "name": {
+      "fr": "Vigie sacrée ancienne",
+      "en": "Ancient Lookout"
+    },
+    "region": {
+      "fr": "Natlan",
+      "en": "Natlan"
+    },
+    "category": "weapon",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "blazing_heart",
+        "name": {
+          "fr": "Cœur flamboyant",
+          "en": "Blazing Heart"
+        },
+        "items": {
+          "green": {
+            "id": 114061,
+            "name": {
+              "fr": "Terreur du cœur sacrificiel flamboyant",
+              "en": "Blazing Sacrificial Heart's Terror"
+            },
+            "icon": "UI_ItemIcon_114061"
+          },
+          "blue": {
+            "id": 114062,
+            "name": {
+              "fr": "Hésitation du cœur sacrificiel flamboyant",
+              "en": "Blazing Sacrificial Heart's Hesitance"
+            },
+            "icon": "UI_ItemIcon_114062"
+          },
+          "purple": {
+            "id": 114063,
+            "name": {
+              "fr": "Résolution du cœur sacrificiel flamboyant",
+              "en": "Blazing Sacrificial Heart's Resolve"
+            },
+            "icon": "UI_ItemIcon_114063"
+          },
+          "gold": {
+            "id": 114064,
+            "name": {
+              "fr": "Splendeur du cœur sacrificiel flamboyant",
+              "en": "Blazing Sacrificial Heart's Splendor"
+            },
+            "icon": "UI_ItemIcon_114064"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "delirious_decadence",
+        "name": {
+          "fr": "Décadence délirante",
+          "en": "Delirious Decadence"
+        },
+        "items": {
+          "green": {
+            "id": 114065,
+            "name": {
+              "fr": "Décadence délirante du seigneur sacré",
+              "en": "Delirious Decadence of the Sacred Lord"
+            },
+            "icon": "UI_ItemIcon_114065"
+          },
+          "blue": {
+            "id": 114066,
+            "name": {
+              "fr": "Désolation délirante du seigneur sacré",
+              "en": "Delirious Desolation of the Sacred Lord"
+            },
+            "icon": "UI_ItemIcon_114066"
+          },
+          "purple": {
+            "id": 114067,
+            "name": {
+              "fr": "Attitude délirante du seigneur sacré",
+              "en": "Delirious Demeanor of the Sacred Lord"
+            },
+            "icon": "UI_ItemIcon_114067"
+          },
+          "gold": {
+            "id": 114068,
+            "name": {
+              "fr": "Divinité délirante du seigneur sacré",
+              "en": "Delirious Divinity of the Sacred Lord"
+            },
+            "icon": "UI_ItemIcon_114068"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "night_wind",
+        "name": {
+          "fr": "Vent nocturne",
+          "en": "Night-Wind"
+        },
+        "items": {
+          "green": {
+            "id": 114069,
+            "name": {
+              "fr": "Considération mystique du vent nocturne",
+              "en": "Night-Wind's Mystic Consideration"
+            },
+            "icon": "UI_ItemIcon_114069"
+          },
+          "blue": {
+            "id": 114070,
+            "name": {
+              "fr": "Prémonition mystique du vent nocturne",
+              "en": "Night-Wind's Mystic Premonition"
+            },
+            "icon": "UI_ItemIcon_114070"
+          },
+          "purple": {
+            "id": 114071,
+            "name": {
+              "fr": "Augure mystique du vent nocturne",
+              "en": "Night-Wind's Mystic Augury"
+            },
+            "icon": "UI_ItemIcon_114071"
+          },
+          "gold": {
+            "id": 114072,
+            "name": {
+              "fr": "Révélation mystique du vent nocturne",
+              "en": "Night-Wind's Mystic Revelation"
+            },
+            "icon": "UI_ItemIcon_114072"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "misty_hollow",
+    "name": {
+      "fr": "Cité sous les brumes",
+      "en": "Misty Hollow"
+    },
+    "region": {
+      "fr": "Nod-Krai",
+      "en": "Nod-Krai"
+    },
+    "category": "weapon",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "artful_device",
+        "name": {
+          "fr": "Appareil artistique",
+          "en": "Artful Device"
+        },
+        "items": {
+          "green": {
+            "id": 114073,
+            "name": {
+              "fr": "Fragment d'appareil artistique",
+              "en": "Artful Device Fragment"
+            },
+            "icon": "UI_ItemIcon_114073"
+          },
+          "blue": {
+            "id": 114074,
+            "name": {
+              "fr": "Réplique d'appareil artistique",
+              "en": "Artful Device Replica"
+            },
+            "icon": "UI_ItemIcon_114074"
+          },
+          "purple": {
+            "id": 114075,
+            "name": {
+              "fr": "Succession d'appareil artistique",
+              "en": "Artful Device Inheritance"
+            },
+            "icon": "UI_ItemIcon_114075"
+          },
+          "gold": {
+            "id": 114076,
+            "name": {
+              "fr": "Souhait d'appareil artistique",
+              "en": "Artful Device Wish"
+            },
+            "icon": "UI_ItemIcon_114076"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "long_night",
+        "name": {
+          "fr": "Silex de longue nuit",
+          "en": "Long Night Flint"
+        },
+        "items": {
+          "green": {
+            "id": 114077,
+            "name": {
+              "fr": "Braise de silex de longue nuit",
+              "en": "Ember of Long Night Flint"
+            },
+            "icon": "UI_ItemIcon_114077"
+          },
+          "blue": {
+            "id": 114078,
+            "name": {
+              "fr": "Lueur de silex de longue nuit",
+              "en": "Afterglow of Long Night Flint"
+            },
+            "icon": "UI_ItemIcon_114078"
+          },
+          "purple": {
+            "id": 114079,
+            "name": {
+              "fr": "Flamme de silex de longue nuit",
+              "en": "Flare of Long Night Flint"
+            },
+            "icon": "UI_ItemIcon_114079"
+          },
+          "gold": {
+            "id": 114080,
+            "name": {
+              "fr": "Embrasement de silex de longue nuit",
+              "en": "Blaze of Long Night Flint"
+            },
+            "icon": "UI_ItemIcon_114080"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "scions_glory",
+        "name": {
+          "fr": "Gloire du grand nord",
+          "en": "Scions' Glory"
+        },
+        "items": {
+          "green": {
+            "id": 114081,
+            "name": {
+              "fr": "Gloire brisée des héritiers du grand nord",
+              "en": "Sundered Glory of the Far-North Scions"
+            },
+            "icon": "UI_ItemIcon_114081"
+          },
+          "blue": {
+            "id": 114082,
+            "name": {
+              "fr": "Illusion inflexible des héritiers du grand nord",
+              "en": "Unyielding Delusion of the Far-North Scions"
+            },
+            "icon": "UI_ItemIcon_114082"
+          },
+          "purple": {
+            "id": 114083,
+            "name": {
+              "fr": "Oblation des héritiers du grand nord",
+              "en": "Oblation of the Far-North Scions"
+            },
+            "icon": "UI_ItemIcon_114083"
+          },
+          "gold": {
+            "id": 114084,
+            "name": {
+              "fr": "Rayonnement doré des héritiers du grand nord",
+              "en": "Aureate Radiance of the Far-North Scions"
+            },
+            "icon": "UI_ItemIcon_114084"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "zapolyarny_bastion",
+    "name": {
+      "fr": "Bastion de Zapolyarny",
+      "en": "Zapolyarny Bastion"
+    },
+    "region": {
+      "fr": "Snezhnaya",
+      "en": "Snezhnaya"
+    },
+    "category": "weapon",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "pale_star",
+        "name": {
+          "fr": "Armée pâle",
+          "en": "Pale Star"
+        },
+        "items": {
+          "green": {
+            "id": 114085,
+            "name": {
+              "fr": "Montée de l'armée pâle",
+              "en": "Rise of the Pale Star Army"
+            },
+            "icon": "UI_ItemIcon_114085"
+          },
+          "blue": {
+            "id": 114086,
+            "name": {
+              "fr": "Rassemblement de l'armée pâle",
+              "en": "Muster of the Pale Star Army"
+            },
+            "icon": "UI_ItemIcon_114086"
+          },
+          "purple": {
+            "id": 114087,
+            "name": {
+              "fr": "Clairon de l'armée pâle",
+              "en": "Clarion of the Pale Star Army"
+            },
+            "icon": "UI_ItemIcon_114087"
+          },
+          "gold": {
+            "id": 114088,
+            "name": {
+              "fr": "Triomphe de l'armée pâle",
+              "en": "Triumph of the Pale Star Army"
+            },
+            "icon": "UI_ItemIcon_114088"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "spiritual_nectar",
+        "name": {
+          "fr": "Nectar spirituel",
+          "en": "Spiritual Nectar"
+        },
+        "items": {
+          "green": {
+            "id": 114089,
+            "name": {
+              "fr": "Versement mesuré de nectar spirituel en cave",
+              "en": "Measured Pour of the Cellared Spiritual Nectar"
+            },
+            "icon": "UI_ItemIcon_114089"
+          },
+          "blue": {
+            "id": 114090,
+            "name": {
+              "fr": "Ébriété de nectar spirituel en cave",
+              "en": "Intoxication of the Cellared Spiritual Nectar"
+            },
+            "icon": "UI_ItemIcon_114090"
+          },
+          "purple": {
+            "id": 114091,
+            "name": {
+              "fr": "Ivresse de nectar spirituel en cave",
+              "en": "Exhilaration of the Cellared Spiritual Nectar"
+            },
+            "icon": "UI_ItemIcon_114091"
+          },
+          "gold": {
+            "id": 114092,
+            "name": {
+              "fr": "Rêverie de nectar spirituel en cave",
+              "en": "Revelry of the Cellared Spiritual Nectar"
+            },
+            "icon": "UI_ItemIcon_114092"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "frost_emperor",
+        "name": {
+          "fr": "Empereur glacial",
+          "en": "Frost Emperor"
+        },
+        "items": {
+          "green": {
+            "id": 114093,
+            "name": {
+              "fr": "Renaissance de l'empereur glacial",
+              "en": "The Frost Emperor's Revival"
+            },
+            "icon": "UI_ItemIcon_114093"
+          },
+          "blue": {
+            "id": 114094,
+            "name": {
+              "fr": "Cérémonie de l'empereur glacial",
+              "en": "The Frost Emperor's Ceremony"
+            },
+            "icon": "UI_ItemIcon_114094"
+          },
+          "purple": {
+            "id": 114095,
+            "name": {
+              "fr": "Complainte de l'empereur glacial",
+              "en": "The Frost Emperor's Lament"
+            },
+            "icon": "UI_ItemIcon_114095"
+          },
+          "gold": {
+            "id": 114096,
+            "name": {
+              "fr": "Adieu de l'empereur glacial",
+              "en": "The Frost Emperor's Farewell"
+            },
+            "icon": "UI_ItemIcon_114096"
+          }
+        }
+      }
+    ]
   }
 ]

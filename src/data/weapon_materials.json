@@ -1,0 +1,5022 @@
+{
+  "Absolution": {
+    "rarity": 5,
+    "materialKey": "ancient_chord",
+    "eliteMat": {
+      "id": 112092,
+      "name": {
+        "fr": "Vieille montre à gousset d'opérateur",
+        "en": "Old Operative's Pocket Watch"
+      },
+      "icon": "UI_ItemIcon_112092"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "Akuoumaru": {
+    "rarity": 4,
+    "materialKey": "distant_sea",
+    "eliteMat": {
+      "id": 112056,
+      "name": {
+        "fr": "Griffe dissimulée",
+        "en": "Concealed Claw"
+      },
+      "icon": "UI_ItemIcon_112056"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "AlleyHunter": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "AmenomaKageuchi": {
+    "rarity": 4,
+    "materialKey": "distant_sea",
+    "eliteMat": {
+      "id": 112047,
+      "name": {
+        "fr": "Engrenage du chaos",
+        "en": "Chaos Gear"
+      },
+      "icon": "UI_ItemIcon_112047"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "AmosBow": {
+    "rarity": 5,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "AngelosHeptades": {
+    "rarity": 5,
+    "materialKey": "artful_device",
+    "eliteMat": {
+      "id": 112140,
+      "name": {
+        "fr": "Poignée enflammée délavée",
+        "en": "Faded Flaming Hilt"
+      },
+      "icon": "UI_ItemIcon_112140"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "ApprenticesNotes": {
+    "rarity": 1,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "AquaSimulacra": {
+    "rarity": 5,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112017,
+      "name": {
+        "fr": "Statuette sinistre",
+        "en": "Gloomy Statuette"
+      },
+      "icon": "UI_ItemIcon_112017"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "AquilaFavonia": {
+    "rarity": 5,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "AshGravenDrinkingHorn": {
+    "rarity": 4,
+    "materialKey": "night_wind",
+    "eliteMat": {
+      "id": 112113,
+      "name": {
+        "fr": "Axe de la source secrète",
+        "en": "Axis of the Secret Source"
+      },
+      "icon": "UI_ItemIcon_112113"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "AstralVulturesCrimsonPlumage": {
+    "rarity": 5,
+    "materialKey": "night_wind",
+    "eliteMat": {
+      "id": 112116,
+      "name": {
+        "fr": "Bourgeon réfractif",
+        "en": "Refractive Bud"
+      },
+      "icon": "UI_ItemIcon_112116"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "ATeaspoonOfTranscendence": {
+    "rarity": 5,
+    "materialKey": "scions_glory",
+    "eliteMat": {
+      "id": 112143,
+      "name": {
+        "fr": "Fer de lune endommagé",
+        "en": "Fractured Lunar Iron"
+      },
+      "icon": "UI_ItemIcon_112143"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "AthameArtis": {
+    "rarity": 5,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112128,
+      "name": {
+        "fr": "Lueur de givrenuit",
+        "en": "Frostnight's Glimmer"
+      },
+      "icon": "UI_ItemIcon_112128"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "AThousandBlazingSuns": {
+    "rarity": 5,
+    "materialKey": "blazing_heart",
+    "eliteMat": {
+      "id": 112113,
+      "name": {
+        "fr": "Axe de la source secrète",
+        "en": "Axis of the Secret Source"
+      },
+      "icon": "UI_ItemIcon_112113"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "AThousandFloatingDreams": {
+    "rarity": 5,
+    "materialKey": "oasis_garden",
+    "eliteMat": {
+      "id": 112071,
+      "name": {
+        "fr": "Prisme endommagé",
+        "en": "Damaged Prism"
+      },
+      "icon": "UI_ItemIcon_112071"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "Azurelight": {
+    "rarity": 5,
+    "materialKey": "night_wind",
+    "eliteMat": {
+      "id": 112116,
+      "name": {
+        "fr": "Bourgeon réfractif",
+        "en": "Refractive Bud"
+      },
+      "icon": "UI_ItemIcon_112116"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "BalladOfTheBoundlessBlue": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "BalladOfTheFjords": {
+    "rarity": 4,
+    "materialKey": "pristine_sea",
+    "eliteMat": {
+      "id": 112077,
+      "name": {
+        "fr": "Fleur non épanouie d'origine inconnue",
+        "en": "A Flower Yet to Bloom"
+      },
+      "icon": "UI_ItemIcon_112077"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "BeaconOfTheReedSea": {
+    "rarity": 5,
+    "materialKey": "scorching_might",
+    "eliteMat": {
+      "id": 112074,
+      "name": {
+        "fr": "Coque desséchée",
+        "en": "Desiccated Shell"
+      },
+      "icon": "UI_ItemIcon_112074"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "BeginnersProtector": {
+    "rarity": 1,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "BeyondTheChrysalis": {
+    "rarity": 5,
+    "materialKey": "pale_star",
+    "eliteMat": {
+      "id": 112155,
+      "name": {
+        "fr": "Racine creuse de vie",
+        "en": "Hollow Root of Life"
+      },
+      "icon": "UI_ItemIcon_112155"
+    },
+    "commonMat": {
+      "id": 112149,
+      "name": {
+        "fr": "Graine chimérique",
+        "en": "Chimeric Core"
+      },
+      "icon": "UI_ItemIcon_112149"
+    }
+  },
+  "BlackcliffAgate": {
+    "rarity": 4,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "BlackcliffLongsword": {
+    "rarity": 4,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "BlackcliffPole": {
+    "rarity": 4,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "BlackcliffSlasher": {
+    "rarity": 4,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "BlackcliffWarbow": {
+    "rarity": 4,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "BlackmarrowLantern": {
+    "rarity": 4,
+    "materialKey": "artful_device",
+    "eliteMat": {
+      "id": 112128,
+      "name": {
+        "fr": "Lueur de givrenuit",
+        "en": "Frostnight's Glimmer"
+      },
+      "icon": "UI_ItemIcon_112128"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "BlackTassel": {
+    "rarity": 3,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "BladeOfAtonement": {
+    "rarity": 4,
+    "materialKey": "pale_star",
+    "eliteMat": {
+      "id": 112155,
+      "name": {
+        "fr": "Racine creuse de vie",
+        "en": "Hollow Root of Life"
+      },
+      "icon": "UI_ItemIcon_112155"
+    },
+    "commonMat": {
+      "id": 112149,
+      "name": {
+        "fr": "Graine chimérique",
+        "en": "Chimeric Core"
+      },
+      "icon": "UI_ItemIcon_112149"
+    }
+  },
+  "BloodsoakedRuins": {
+    "rarity": 5,
+    "materialKey": "long_night",
+    "eliteMat": {
+      "id": 112134,
+      "name": {
+        "fr": "Incarnation de brumevoile",
+        "en": "Mistshroud Manifestation"
+      },
+      "icon": "UI_ItemIcon_112134"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "BloodstainedGreatsword": {
+    "rarity": 3,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "BreezeborneRefrain": {
+    "rarity": 4,
+    "materialKey": "frost_emperor",
+    "eliteMat": {
+      "id": 112152,
+      "name": {
+        "fr": "Fragment sédimenté",
+        "en": "Accreted Fragment"
+      },
+      "icon": "UI_ItemIcon_112152"
+    },
+    "commonMat": {
+      "id": 112149,
+      "name": {
+        "fr": "Graine chimérique",
+        "en": "Chimeric Core"
+      },
+      "icon": "UI_ItemIcon_112149"
+    }
+  },
+  "CalamityOfEshu": {
+    "rarity": 4,
+    "materialKey": "delirious_decadence",
+    "eliteMat": {
+      "id": 112116,
+      "name": {
+        "fr": "Bourgeon réfractif",
+        "en": "Refractive Bud"
+      },
+      "icon": "UI_ItemIcon_112116"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "CalamityQueller": {
+    "rarity": 5,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "CashflowSupervision": {
+    "rarity": 5,
+    "materialKey": "pristine_sea",
+    "eliteMat": {
+      "id": 112092,
+      "name": {
+        "fr": "Vieille montre à gousset d'opérateur",
+        "en": "Old Operative's Pocket Watch"
+      },
+      "icon": "UI_ItemIcon_112092"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "ChainBreaker": {
+    "rarity": 4,
+    "materialKey": "night_wind",
+    "eliteMat": {
+      "id": 112095,
+      "name": {
+        "fr": "Aileron plumeux",
+        "en": "Feathery Fin"
+      },
+      "icon": "UI_ItemIcon_112095"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "CinnabarSpindle": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "ClashOfKings": {
+    "rarity": 4,
+    "materialKey": "forest_dew",
+    "eliteMat": {
+      "id": 112071,
+      "name": {
+        "fr": "Prisme endommagé",
+        "en": "Damaged Prism"
+      },
+      "icon": "UI_ItemIcon_112071"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "Cloudforged": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112098,
+      "name": {
+        "fr": "Pommeau abîmé",
+        "en": "Ruined Hilt"
+      },
+      "icon": "UI_ItemIcon_112098"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "CompoundBow": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "CoolSteel": {
+    "rarity": 3,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "CovenantOfFrostAndSnow": {
+    "rarity": 4,
+    "materialKey": "pale_star",
+    "eliteMat": {
+      "id": 112155,
+      "name": {
+        "fr": "Racine creuse de vie",
+        "en": "Hollow Root of Life"
+      },
+      "icon": "UI_ItemIcon_112155"
+    },
+    "commonMat": {
+      "id": 112149,
+      "name": {
+        "fr": "Graine chimérique",
+        "en": "Chimeric Core"
+      },
+      "icon": "UI_ItemIcon_112149"
+    }
+  },
+  "CranesEchoingCall": {
+    "rarity": 5,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112095,
+      "name": {
+        "fr": "Aileron plumeux",
+        "en": "Feathery Fin"
+      },
+      "icon": "UI_ItemIcon_112095"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "CrescentPike": {
+    "rarity": 4,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "CrimsonMoonsSemblance": {
+    "rarity": 5,
+    "materialKey": "pristine_sea",
+    "eliteMat": {
+      "id": 112098,
+      "name": {
+        "fr": "Pommeau abîmé",
+        "en": "Ruined Hilt"
+      },
+      "icon": "UI_ItemIcon_112098"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "DarkIronSword": {
+    "rarity": 3,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "DawningFrost": {
+    "rarity": 4,
+    "materialKey": "artful_device",
+    "eliteMat": {
+      "id": 112128,
+      "name": {
+        "fr": "Lueur de givrenuit",
+        "en": "Frostnight's Glimmer"
+      },
+      "icon": "UI_ItemIcon_112128"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "Deathmatch": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "DebateClub": {
+    "rarity": 3,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "DialoguesOfTheDesertSages": {
+    "rarity": 4,
+    "materialKey": "forest_dew",
+    "eliteMat": {
+      "id": 112095,
+      "name": {
+        "fr": "Aileron plumeux",
+        "en": "Feathery Fin"
+      },
+      "icon": "UI_ItemIcon_112095"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "DisasterAndRemorse": {
+    "rarity": 5,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112131,
+      "name": {
+        "fr": "Os nélucide",
+        "en": "Lightless Bone"
+      },
+      "icon": "UI_ItemIcon_112131"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "DodocoTales": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "DragonsBane": {
+    "rarity": 4,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "DragonspineSpear": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "DullBlade": {
+    "rarity": 1,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "EarthShaker": {
+    "rarity": 4,
+    "materialKey": "blazing_heart",
+    "eliteMat": {
+      "id": 112110,
+      "name": {
+        "fr": "Pierre enflammée",
+        "en": "Ignited Stone"
+      },
+      "icon": "UI_ItemIcon_112110"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "EchoesOfTheHeart": {
+    "rarity": 4,
+    "materialKey": "pale_star",
+    "eliteMat": {
+      "id": 112152,
+      "name": {
+        "fr": "Fragment sédimenté",
+        "en": "Accreted Fragment"
+      },
+      "icon": "UI_ItemIcon_112152"
+    },
+    "commonMat": {
+      "id": 112146,
+      "name": {
+        "fr": "Paillette éthérée",
+        "en": "Ethereal Glimmershard"
+      },
+      "icon": "UI_ItemIcon_112146"
+    }
+  },
+  "ElegyForTheEnd": {
+    "rarity": 5,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "Emberwell": {
+    "rarity": 4,
+    "materialKey": "pale_star",
+    "eliteMat": {
+      "id": 112152,
+      "name": {
+        "fr": "Fragment sédimenté",
+        "en": "Accreted Fragment"
+      },
+      "icon": "UI_ItemIcon_112152"
+    },
+    "commonMat": {
+      "id": 112146,
+      "name": {
+        "fr": "Paillette éthérée",
+        "en": "Ethereal Glimmershard"
+      },
+      "icon": "UI_ItemIcon_112146"
+    }
+  },
+  "EmeraldOrb": {
+    "rarity": 3,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "EndOfTheLine": {
+    "rarity": 4,
+    "materialKey": "scorching_might",
+    "eliteMat": {
+      "id": 112062,
+      "name": {
+        "fr": "Noyau fongique inactivé",
+        "en": "Inactivated Fungal Nucleus"
+      },
+      "icon": "UI_ItemIcon_112062"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "EngulfingLightning": {
+    "rarity": 5,
+    "materialKey": "mask",
+    "eliteMat": {
+      "id": 112047,
+      "name": {
+        "fr": "Engrenage du chaos",
+        "en": "Chaos Gear"
+      },
+      "icon": "UI_ItemIcon_112047"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "EtherlightSpindlelute": {
+    "rarity": 4,
+    "materialKey": "scions_glory",
+    "eliteMat": {
+      "id": 112131,
+      "name": {
+        "fr": "Os nélucide",
+        "en": "Lightless Bone"
+      },
+      "icon": "UI_ItemIcon_112131"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "EverlastingMoonglow": {
+    "rarity": 5,
+    "materialKey": "distant_sea",
+    "eliteMat": {
+      "id": 112050,
+      "name": {
+        "fr": "Prisme sombre",
+        "en": "Dismal Prism"
+      },
+      "icon": "UI_ItemIcon_112050"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "EyeOfPerception": {
+    "rarity": 4,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "FadingTwilight": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "FangOfTheMountainKing": {
+    "rarity": 5,
+    "materialKey": "delirious_decadence",
+    "eliteMat": {
+      "id": 112110,
+      "name": {
+        "fr": "Pierre enflammée",
+        "en": "Ignited Stone"
+      },
+      "icon": "UI_ItemIcon_112110"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "FavoniusCodex": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "FavoniusGreatsword": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "FavoniusLance": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "FavoniusSword": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "FavoniusWarbow": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "FerrousShadow": {
+    "rarity": 3,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "FesteringDesire": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "FilletBlade": {
+    "rarity": 3,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "FinaleOfTheDeep": {
+    "rarity": 4,
+    "materialKey": "dewdrop",
+    "eliteMat": {
+      "id": 112086,
+      "name": {
+        "fr": "Goutte d'eau croupie",
+        "en": "Drop of Tainted Water"
+      },
+      "icon": "UI_ItemIcon_112086"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "FlameForgedInsight": {
+    "rarity": 4,
+    "materialKey": "delirious_decadence",
+    "eliteMat": {
+      "id": 112119,
+      "name": {
+        "fr": "Coquille brisée froide",
+        "en": "Cold-Cracked Shellshard"
+      },
+      "icon": "UI_ItemIcon_112119"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "FleuveCendreFerryman": {
+    "rarity": 4,
+    "materialKey": "ancient_chord",
+    "eliteMat": {
+      "id": 112086,
+      "name": {
+        "fr": "Goutte d'eau croupie",
+        "en": "Drop of Tainted Water"
+      },
+      "icon": "UI_ItemIcon_112086"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "FlowerWreathedFeathers": {
+    "rarity": 4,
+    "materialKey": "night_wind",
+    "eliteMat": {
+      "id": 112110,
+      "name": {
+        "fr": "Pierre enflammée",
+        "en": "Ignited Stone"
+      },
+      "icon": "UI_ItemIcon_112110"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "FlowingPurity": {
+    "rarity": 4,
+    "materialKey": "dewdrop",
+    "eliteMat": {
+      "id": 112089,
+      "name": {
+        "fr": "Noyau de faille",
+        "en": "Rift Core"
+      },
+      "icon": "UI_ItemIcon_112089"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "FluteOfEzpitzal": {
+    "rarity": 4,
+    "materialKey": "blazing_heart",
+    "eliteMat": {
+      "id": 112098,
+      "name": {
+        "fr": "Pommeau abîmé",
+        "en": "Ruined Hilt"
+      },
+      "icon": "UI_ItemIcon_112098"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "FootprintOfTheRainbow": {
+    "rarity": 4,
+    "materialKey": "delirious_decadence",
+    "eliteMat": {
+      "id": 112113,
+      "name": {
+        "fr": "Axe de la source secrète",
+        "en": "Axis of the Secret Source"
+      },
+      "icon": "UI_ItemIcon_112113"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "ForestRegalia": {
+    "rarity": 4,
+    "materialKey": "forest_dew",
+    "eliteMat": {
+      "id": 112068,
+      "name": {
+        "fr": "Conteneur du chaos",
+        "en": "Chaos Storage"
+      },
+      "icon": "UI_ItemIcon_112068"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "ForgedByTheGoldenMelody": {
+    "rarity": 4,
+    "materialKey": "dewdrop",
+    "eliteMat": {
+      "id": 112098,
+      "name": {
+        "fr": "Pommeau abîmé",
+        "en": "Ruined Hilt"
+      },
+      "icon": "UI_ItemIcon_112098"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "FracturedHalo": {
+    "rarity": 5,
+    "materialKey": "blazing_heart",
+    "eliteMat": {
+      "id": 112119,
+      "name": {
+        "fr": "Coquille brisée froide",
+        "en": "Cold-Cracked Shellshard"
+      },
+      "icon": "UI_ItemIcon_112119"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "FreedomSworn": {
+    "rarity": 5,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Frostbearer": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "Frostbreath": {
+    "rarity": 4,
+    "materialKey": "spiritual_nectar",
+    "eliteMat": {
+      "id": 112152,
+      "name": {
+        "fr": "Fragment sédimenté",
+        "en": "Accreted Fragment"
+      },
+      "icon": "UI_ItemIcon_112152"
+    },
+    "commonMat": {
+      "id": 112149,
+      "name": {
+        "fr": "Graine chimérique",
+        "en": "Chimeric Core"
+      },
+      "icon": "UI_ItemIcon_112149"
+    }
+  },
+  "FruitfulHook": {
+    "rarity": 4,
+    "materialKey": "night_wind",
+    "eliteMat": {
+      "id": 112113,
+      "name": {
+        "fr": "Axe de la source secrète",
+        "en": "Axis of the Secret Source"
+      },
+      "icon": "UI_ItemIcon_112113"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "FruitOfFulfillment": {
+    "rarity": 4,
+    "materialKey": "oasis_garden",
+    "eliteMat": {
+      "id": 112017,
+      "name": {
+        "fr": "Statuette sinistre",
+        "en": "Gloomy Statuette"
+      },
+      "icon": "UI_ItemIcon_112017"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "GestOfTheMightyWolf": {
+    "rarity": 5,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112137,
+      "name": {
+        "fr": "Œil fracturé des fonds",
+        "en": "Fractured Eye of the Deep Shadow"
+      },
+      "icon": "UI_ItemIcon_112137"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "GoldenFrostboundOath": {
+    "rarity": 5,
+    "materialKey": "long_night",
+    "eliteMat": {
+      "id": 112140,
+      "name": {
+        "fr": "Poignée enflammée délavée",
+        "en": "Faded Flaming Hilt"
+      },
+      "icon": "UI_ItemIcon_112140"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "HakushinRing": {
+    "rarity": 4,
+    "materialKey": "distant_sea",
+    "eliteMat": {
+      "id": 112050,
+      "name": {
+        "fr": "Prisme sombre",
+        "en": "Dismal Prism"
+      },
+      "icon": "UI_ItemIcon_112050"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Halberd": {
+    "rarity": 3,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "Hamayumi": {
+    "rarity": 4,
+    "materialKey": "narukami",
+    "eliteMat": {
+      "id": 112050,
+      "name": {
+        "fr": "Prisme sombre",
+        "en": "Dismal Prism"
+      },
+      "icon": "UI_ItemIcon_112050"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "HaranGeppakuFutsu": {
+    "rarity": 5,
+    "materialKey": "narukami",
+    "eliteMat": {
+      "id": 112017,
+      "name": {
+        "fr": "Statuette sinistre",
+        "en": "Gloomy Statuette"
+      },
+      "icon": "UI_ItemIcon_112017"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "HarbingerOfDawn": {
+    "rarity": 3,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "HereticsMoltenBlade": {
+    "rarity": 4,
+    "materialKey": "blazing_heart",
+    "eliteMat": {
+      "id": 112119,
+      "name": {
+        "fr": "Coquille brisée froide",
+        "en": "Cold-Cracked Shellshard"
+      },
+      "icon": "UI_ItemIcon_112119"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "HuntersBow": {
+    "rarity": 1,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "HuntersPath": {
+    "rarity": 5,
+    "materialKey": "scorching_might",
+    "eliteMat": {
+      "id": 112062,
+      "name": {
+        "fr": "Noyau fongique inactivé",
+        "en": "Inactivated Fungal Nucleus"
+      },
+      "icon": "UI_ItemIcon_112062"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "HymnOfTheMaelstrom": {
+    "rarity": 5,
+    "materialKey": "spiritual_nectar",
+    "eliteMat": {
+      "id": 112152,
+      "name": {
+        "fr": "Fragment sédimenté",
+        "en": "Accreted Fragment"
+      },
+      "icon": "UI_ItemIcon_112152"
+    },
+    "commonMat": {
+      "id": 112146,
+      "name": {
+        "fr": "Paillette éthérée",
+        "en": "Ethereal Glimmershard"
+      },
+      "icon": "UI_ItemIcon_112146"
+    }
+  },
+  "IbisPiercer": {
+    "rarity": 4,
+    "materialKey": "forest_dew",
+    "eliteMat": {
+      "id": 112077,
+      "name": {
+        "fr": "Fleur non épanouie d'origine inconnue",
+        "en": "A Flower Yet to Bloom"
+      },
+      "icon": "UI_ItemIcon_112077"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "IronPoint": {
+    "rarity": 2,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "IronSting": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "JadefallsSplendor": {
+    "rarity": 5,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112077,
+      "name": {
+        "fr": "Fleur non épanouie d'origine inconnue",
+        "en": "A Flower Yet to Bloom"
+      },
+      "icon": "UI_ItemIcon_112077"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "JadeVista": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "KagotsurubeIsshin": {
+    "rarity": 4,
+    "materialKey": "mask",
+    "eliteMat": {
+      "id": 112017,
+      "name": {
+        "fr": "Statuette sinistre",
+        "en": "Gloomy Statuette"
+      },
+      "icon": "UI_ItemIcon_112017"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "KagurasVerity": {
+    "rarity": 5,
+    "materialKey": "mask",
+    "eliteMat": {
+      "id": 112056,
+      "name": {
+        "fr": "Griffe dissimulée",
+        "en": "Concealed Claw"
+      },
+      "icon": "UI_ItemIcon_112056"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "KatsuragikiriNagamasa": {
+    "rarity": 4,
+    "materialKey": "narukami",
+    "eliteMat": {
+      "id": 112047,
+      "name": {
+        "fr": "Engrenage du chaos",
+        "en": "Chaos Gear"
+      },
+      "icon": "UI_ItemIcon_112047"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "KeyOfKhajNisut": {
+    "rarity": 5,
+    "materialKey": "forest_dew",
+    "eliteMat": {
+      "id": 112071,
+      "name": {
+        "fr": "Prisme endommagé",
+        "en": "Damaged Prism"
+      },
+      "icon": "UI_ItemIcon_112071"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "KingsSquire": {
+    "rarity": 4,
+    "materialKey": "scorching_might",
+    "eliteMat": {
+      "id": 112062,
+      "name": {
+        "fr": "Noyau fongique inactivé",
+        "en": "Inactivated Fungal Nucleus"
+      },
+      "icon": "UI_ItemIcon_112062"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "KitainCrossSpear": {
+    "rarity": 4,
+    "materialKey": "mask",
+    "eliteMat": {
+      "id": 112047,
+      "name": {
+        "fr": "Engrenage du chaos",
+        "en": "Chaos Gear"
+      },
+      "icon": "UI_ItemIcon_112047"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "LightbearingMoonshard": {
+    "rarity": 5,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112134,
+      "name": {
+        "fr": "Incarnation de brumevoile",
+        "en": "Mistshroud Manifestation"
+      },
+      "icon": "UI_ItemIcon_112134"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "LightofFoliarIncision": {
+    "rarity": 5,
+    "materialKey": "forest_dew",
+    "eliteMat": {
+      "id": 112074,
+      "name": {
+        "fr": "Coque desséchée",
+        "en": "Desiccated Shell"
+      },
+      "icon": "UI_ItemIcon_112074"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "LionsRoar": {
+    "rarity": 4,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "LithicBlade": {
+    "rarity": 4,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "LithicSpear": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "LostPrayerToTheSacredWinds": {
+    "rarity": 5,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "LumidouceElegy": {
+    "rarity": 5,
+    "materialKey": "pristine_sea",
+    "eliteMat": {
+      "id": 112098,
+      "name": {
+        "fr": "Pommeau abîmé",
+        "en": "Ruined Hilt"
+      },
+      "icon": "UI_ItemIcon_112098"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "LuxuriousSeaLord": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "MagicGuide": {
+    "rarity": 3,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "MailedFlower": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112074,
+      "name": {
+        "fr": "Coque desséchée",
+        "en": "Desiccated Shell"
+      },
+      "icon": "UI_ItemIcon_112074"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "MakhairaAquamarine": {
+    "rarity": 4,
+    "materialKey": "scorching_might",
+    "eliteMat": {
+      "id": 112068,
+      "name": {
+        "fr": "Conteneur du chaos",
+        "en": "Chaos Storage"
+      },
+      "icon": "UI_ItemIcon_112068"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "MappaMare": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "MasterKey": {
+    "rarity": 4,
+    "materialKey": "scions_glory",
+    "eliteMat": {
+      "id": 112131,
+      "name": {
+        "fr": "Os nélucide",
+        "en": "Lightless Bone"
+      },
+      "icon": "UI_ItemIcon_112131"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "MemoryOfDust": {
+    "rarity": 5,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "Messenger": {
+    "rarity": 3,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "MissiveWindspear": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112017,
+      "name": {
+        "fr": "Statuette sinistre",
+        "en": "Gloomy Statuette"
+      },
+      "icon": "UI_ItemIcon_112017"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "MistsplitterReforged": {
+    "rarity": 5,
+    "materialKey": "distant_sea",
+    "eliteMat": {
+      "id": 112047,
+      "name": {
+        "fr": "Engrenage du chaos",
+        "en": "Chaos Gear"
+      },
+      "icon": "UI_ItemIcon_112047"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "MitternachtsWaltz": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "Moonpiercer": {
+    "rarity": 4,
+    "materialKey": "oasis_garden",
+    "eliteMat": {
+      "id": 112068,
+      "name": {
+        "fr": "Conteneur du chaos",
+        "en": "Chaos Storage"
+      },
+      "icon": "UI_ItemIcon_112068"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "MoonweaversDawn": {
+    "rarity": 4,
+    "materialKey": "scions_glory",
+    "eliteMat": {
+      "id": 112131,
+      "name": {
+        "fr": "Os nélucide",
+        "en": "Lightless Bone"
+      },
+      "icon": "UI_ItemIcon_112131"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "MountainBracingBolt": {
+    "rarity": 4,
+    "materialKey": "delirious_decadence",
+    "eliteMat": {
+      "id": 112110,
+      "name": {
+        "fr": "Pierre enflammée",
+        "en": "Ignited Stone"
+      },
+      "icon": "UI_ItemIcon_112110"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "MouunsMoon": {
+    "rarity": 4,
+    "materialKey": "narukami",
+    "eliteMat": {
+      "id": 112050,
+      "name": {
+        "fr": "Prisme sombre",
+        "en": "Dismal Prism"
+      },
+      "icon": "UI_ItemIcon_112050"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "NewBough": {
+    "rarity": 4,
+    "materialKey": "spiritual_nectar",
+    "eliteMat": {
+      "id": 112155,
+      "name": {
+        "fr": "Racine creuse de vie",
+        "en": "Hollow Root of Life"
+      },
+      "icon": "UI_ItemIcon_112155"
+    },
+    "commonMat": {
+      "id": 112149,
+      "name": {
+        "fr": "Graine chimérique",
+        "en": "Chimeric Core"
+      },
+      "icon": "UI_ItemIcon_112149"
+    }
+  },
+  "NightweaversLookingGlass": {
+    "rarity": 5,
+    "materialKey": "artful_device",
+    "eliteMat": {
+      "id": 112128,
+      "name": {
+        "fr": "Lueur de givrenuit",
+        "en": "Frostnight's Glimmer"
+      },
+      "icon": "UI_ItemIcon_112128"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "NocturnesCurtainCall": {
+    "rarity": 5,
+    "materialKey": "scions_glory",
+    "eliteMat": {
+      "id": 112137,
+      "name": {
+        "fr": "Œil fracturé des fonds",
+        "en": "Fractured Eye of the Deep Shadow"
+      },
+      "icon": "UI_ItemIcon_112137"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "OathswornEye": {
+    "rarity": 4,
+    "materialKey": "distant_sea",
+    "eliteMat": {
+      "id": 112056,
+      "name": {
+        "fr": "Griffe dissimulée",
+        "en": "Concealed Claw"
+      },
+      "icon": "UI_ItemIcon_112056"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "OldMercsPal": {
+    "rarity": 2,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "OtherworldlyStory": {
+    "rarity": 3,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "PeakPatrolSong": {
+    "rarity": 5,
+    "materialKey": "night_wind",
+    "eliteMat": {
+      "id": 112113,
+      "name": {
+        "fr": "Axe de la source secrète",
+        "en": "Axis of the Secret Source"
+      },
+      "icon": "UI_ItemIcon_112113"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "PocketGrimoire": {
+    "rarity": 2,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "PolarStar": {
+    "rarity": 5,
+    "materialKey": "mask",
+    "eliteMat": {
+      "id": 112056,
+      "name": {
+        "fr": "Griffe dissimulée",
+        "en": "Concealed Claw"
+      },
+      "icon": "UI_ItemIcon_112056"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "PortablePowerSaw": {
+    "rarity": 4,
+    "materialKey": "pristine_sea",
+    "eliteMat": {
+      "id": 112089,
+      "name": {
+        "fr": "Noyau de faille",
+        "en": "Rift Core"
+      },
+      "icon": "UI_ItemIcon_112089"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "Predator": {
+    "rarity": 4,
+    "materialKey": "narukami",
+    "eliteMat": {
+      "id": 112050,
+      "name": {
+        "fr": "Prisme sombre",
+        "en": "Dismal Prism"
+      },
+      "icon": "UI_ItemIcon_112050"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "PrimordialJadeCutter": {
+    "rarity": 5,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "PrimordialJadeWingedSpear": {
+    "rarity": 5,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "ProspectorsDrill": {
+    "rarity": 4,
+    "materialKey": "ancient_chord",
+    "eliteMat": {
+      "id": 112092,
+      "name": {
+        "fr": "Vieille montre à gousset d'opérateur",
+        "en": "Old Operative's Pocket Watch"
+      },
+      "icon": "UI_ItemIcon_112092"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "ProspectorsShovel": {
+    "rarity": 4,
+    "materialKey": "long_night",
+    "eliteMat": {
+      "id": 112134,
+      "name": {
+        "fr": "Incarnation de brumevoile",
+        "en": "Mistshroud Manifestation"
+      },
+      "icon": "UI_ItemIcon_112134"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "PrototypeAmber": {
+    "rarity": 4,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "PrototypeArchaic": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "PrototypeCrescent": {
+    "rarity": 4,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "PrototypeRancour": {
+    "rarity": 4,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "PrototypeStarglitter": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "RainbowSerpentsRainBow": {
+    "rarity": 4,
+    "materialKey": "night_wind",
+    "eliteMat": {
+      "id": 112116,
+      "name": {
+        "fr": "Bourgeon réfractif",
+        "en": "Refractive Bud"
+      },
+      "icon": "UI_ItemIcon_112116"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "Rainslasher": {
+    "rarity": 4,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "RangeGauge": {
+    "rarity": 4,
+    "materialKey": "ancient_chord",
+    "eliteMat": {
+      "id": 112086,
+      "name": {
+        "fr": "Goutte d'eau croupie",
+        "en": "Drop of Tainted Water"
+      },
+      "icon": "UI_ItemIcon_112086"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "RavenBow": {
+    "rarity": 3,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "RecurveBow": {
+    "rarity": 3,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "RedhornStonethresher": {
+    "rarity": 5,
+    "materialKey": "narukami",
+    "eliteMat": {
+      "id": 112056,
+      "name": {
+        "fr": "Griffe dissimulée",
+        "en": "Concealed Claw"
+      },
+      "icon": "UI_ItemIcon_112056"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "ReliquaryOfTruth": {
+    "rarity": 5,
+    "materialKey": "oasis_garden",
+    "eliteMat": {
+      "id": 112131,
+      "name": {
+        "fr": "Os nélucide",
+        "en": "Lightless Bone"
+      },
+      "icon": "UI_ItemIcon_112131"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "RightfulReward": {
+    "rarity": 4,
+    "materialKey": "pristine_sea",
+    "eliteMat": {
+      "id": 112089,
+      "name": {
+        "fr": "Noyau de faille",
+        "en": "Rift Core"
+      },
+      "icon": "UI_ItemIcon_112089"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "RingOfYaxche": {
+    "rarity": 4,
+    "materialKey": "delirious_decadence",
+    "eliteMat": {
+      "id": 112107,
+      "name": {
+        "fr": "Fragment de volonté brisée",
+        "en": "Shard of a Shattered Will"
+      },
+      "icon": "UI_ItemIcon_112107"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "RoyalBow": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "RoyalGreatsword": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "RoyalGrimoire": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "RoyalLongsword": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "RoyalSpear": {
+    "rarity": 4,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "Rust": {
+    "rarity": 4,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "SacrificersStaff": {
+    "rarity": 4,
+    "materialKey": "long_night",
+    "eliteMat": {
+      "id": 112134,
+      "name": {
+        "fr": "Incarnation de brumevoile",
+        "en": "Mistshroud Manifestation"
+      },
+      "icon": "UI_ItemIcon_112134"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "SacrificialBow": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "SacrificialFragments": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "SacrificialGreatsword": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "SacrificialJade": {
+    "rarity": 4,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "SacrificialSword": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "SapwoodBlade": {
+    "rarity": 4,
+    "materialKey": "forest_dew",
+    "eliteMat": {
+      "id": 112068,
+      "name": {
+        "fr": "Conteneur du chaos",
+        "en": "Chaos Storage"
+      },
+      "icon": "UI_ItemIcon_112068"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "ScionOfTheBlazingSun": {
+    "rarity": 4,
+    "materialKey": "scorching_might",
+    "eliteMat": {
+      "id": 112077,
+      "name": {
+        "fr": "Fleur non épanouie d'origine inconnue",
+        "en": "A Flower Yet to Bloom"
+      },
+      "icon": "UI_ItemIcon_112077"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "SeasonedHuntersBow": {
+    "rarity": 2,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "SequenceOfSolitude": {
+    "rarity": 4,
+    "materialKey": "ancient_chord",
+    "eliteMat": {
+      "id": 112119,
+      "name": {
+        "fr": "Coquille brisée froide",
+        "en": "Cold-Cracked Shellshard"
+      },
+      "icon": "UI_ItemIcon_112119"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "SerenitysCall": {
+    "rarity": 4,
+    "materialKey": "artful_device",
+    "eliteMat": {
+      "id": 112128,
+      "name": {
+        "fr": "Lueur de givrenuit",
+        "en": "Frostnight's Glimmer"
+      },
+      "icon": "UI_ItemIcon_112128"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "SerpentSpine": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "SharpshootersOath": {
+    "rarity": 3,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "SilverLight": {
+    "rarity": 4,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "SilvershowerHeartstrings": {
+    "rarity": 5,
+    "materialKey": "dewdrop",
+    "eliteMat": {
+      "id": 112095,
+      "name": {
+        "fr": "Aileron plumeux",
+        "en": "Feathery Fin"
+      },
+      "icon": "UI_ItemIcon_112095"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "SilverSword": {
+    "rarity": 2,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "SkyriderGreatsword": {
+    "rarity": 3,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "SkyriderSword": {
+    "rarity": 3,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "SkywardAtlas": {
+    "rarity": 5,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "SkywardBlade": {
+    "rarity": 5,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "SkywardHarp": {
+    "rarity": 5,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "SkywardPride": {
+    "rarity": 5,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "SkywardSpine": {
+    "rarity": 5,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Slingshot": {
+    "rarity": 3,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "SnareHook": {
+    "rarity": 4,
+    "materialKey": "long_night",
+    "eliteMat": {
+      "id": 112134,
+      "name": {
+        "fr": "Incarnation de brumevoile",
+        "en": "Mistshroud Manifestation"
+      },
+      "icon": "UI_ItemIcon_112134"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "SnowTombedStarsilver": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "SolarPearl": {
+    "rarity": 4,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "SongOfBrokenPines": {
+    "rarity": 5,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "SongOfStillness": {
+    "rarity": 4,
+    "materialKey": "ancient_chord",
+    "eliteMat": {
+      "id": 112086,
+      "name": {
+        "fr": "Goutte d'eau croupie",
+        "en": "Drop of Tainted Water"
+      },
+      "icon": "UI_ItemIcon_112086"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "SongOfTheVigil": {
+    "rarity": 4,
+    "materialKey": "frost_emperor",
+    "eliteMat": {
+      "id": 112155,
+      "name": {
+        "fr": "Racine creuse de vie",
+        "en": "Hollow Root of Life"
+      },
+      "icon": "UI_ItemIcon_112155"
+    },
+    "commonMat": {
+      "id": 112146,
+      "name": {
+        "fr": "Paillette éthérée",
+        "en": "Ethereal Glimmershard"
+      },
+      "icon": "UI_ItemIcon_112146"
+    }
+  },
+  "SplendorOfTranquilWaters": {
+    "rarity": 5,
+    "materialKey": "dewdrop",
+    "eliteMat": {
+      "id": 112086,
+      "name": {
+        "fr": "Goutte d'eau croupie",
+        "en": "Drop of Tainted Water"
+      },
+      "icon": "UI_ItemIcon_112086"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "StaffOfHoma": {
+    "rarity": 5,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "StaffOfTheScarletSands": {
+    "rarity": 5,
+    "materialKey": "oasis_garden",
+    "eliteMat": {
+      "id": 112068,
+      "name": {
+        "fr": "Conteneur du chaos",
+        "en": "Chaos Storage"
+      },
+      "icon": "UI_ItemIcon_112068"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "StarcallersWatch": {
+    "rarity": 5,
+    "materialKey": "delirious_decadence",
+    "eliteMat": {
+      "id": 112107,
+      "name": {
+        "fr": "Fragment de volonté brisée",
+        "en": "Shard of a Shattered Will"
+      },
+      "icon": "UI_ItemIcon_112107"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "SturdyBone": {
+    "rarity": 4,
+    "materialKey": "blazing_heart",
+    "eliteMat": {
+      "id": 112107,
+      "name": {
+        "fr": "Fragment de volonté brisée",
+        "en": "Shard of a Shattered Will"
+      },
+      "icon": "UI_ItemIcon_112107"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "SummitShaper": {
+    "rarity": 5,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "SunnyMorningSleepIn": {
+    "rarity": 5,
+    "materialKey": "narukami",
+    "eliteMat": {
+      "id": 112110,
+      "name": {
+        "fr": "Pierre enflammée",
+        "en": "Ignited Stone"
+      },
+      "icon": "UI_ItemIcon_112110"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "SurfsUp": {
+    "rarity": 5,
+    "materialKey": "blazing_heart",
+    "eliteMat": {
+      "id": 112107,
+      "name": {
+        "fr": "Fragment de volonté brisée",
+        "en": "Shard of a Shattered Will"
+      },
+      "icon": "UI_ItemIcon_112107"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "SwordOfDescension": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "SwordOfNarzissenkreuz": {
+    "rarity": 4,
+    "materialKey": "ancient_chord",
+    "eliteMat": {
+      "id": 112092,
+      "name": {
+        "fr": "Vieille montre à gousset d'opérateur",
+        "en": "Old Operative's Pocket Watch"
+      },
+      "icon": "UI_ItemIcon_112092"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "SymphonistOfScents": {
+    "rarity": 5,
+    "materialKey": "dewdrop",
+    "eliteMat": {
+      "id": 112086,
+      "name": {
+        "fr": "Goutte d'eau croupie",
+        "en": "Drop of Tainted Water"
+      },
+      "icon": "UI_ItemIcon_112086"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "TalkingStick": {
+    "rarity": 4,
+    "materialKey": "oasis_garden",
+    "eliteMat": {
+      "id": 112074,
+      "name": {
+        "fr": "Coque desséchée",
+        "en": "Desiccated Shell"
+      },
+      "icon": "UI_ItemIcon_112074"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "TamayurateiNoOhanashi": {
+    "rarity": 4,
+    "materialKey": "mask",
+    "eliteMat": {
+      "id": 112116,
+      "name": {
+        "fr": "Bourgeon réfractif",
+        "en": "Refractive Bud"
+      },
+      "icon": "UI_ItemIcon_112116"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "TheAlleyFlash": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "TheBell": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "TheBlackSword": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "TheCatch": {
+    "rarity": 4,
+    "materialKey": "mask",
+    "eliteMat": {
+      "id": 112047,
+      "name": {
+        "fr": "Engrenage du chaos",
+        "en": "Chaos Gear"
+      },
+      "icon": "UI_ItemIcon_112047"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "TheDaybreakChronicles": {
+    "rarity": 5,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "TheDockhandsAssistant": {
+    "rarity": 4,
+    "materialKey": "dewdrop",
+    "eliteMat": {
+      "id": 112092,
+      "name": {
+        "fr": "Vieille montre à gousset d'opérateur",
+        "en": "Old Operative's Pocket Watch"
+      },
+      "icon": "UI_ItemIcon_112092"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "TheFirstGreatMagic": {
+    "rarity": 5,
+    "materialKey": "ancient_chord",
+    "eliteMat": {
+      "id": 112086,
+      "name": {
+        "fr": "Goutte d'eau croupie",
+        "en": "Drop of Tainted Water"
+      },
+      "icon": "UI_ItemIcon_112086"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "TheFlute": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "TheStringless": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "TheUnforged": {
+    "rarity": 5,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "TheViridescentHunt": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112014,
+      "name": {
+        "fr": "Corne lourde",
+        "en": "Heavy Horn"
+      },
+      "icon": "UI_ItemIcon_112014"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "TheWidsith": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "ThrillingTalesOfDragonSlayers": {
+    "rarity": 3,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Thundering Pulse": {
+    "rarity": 5,
+    "materialKey": "narukami",
+    "eliteMat": {
+      "id": 112050,
+      "name": {
+        "fr": "Prisme sombre",
+        "en": "Dismal Prism"
+      },
+      "icon": "UI_ItemIcon_112050"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "TidalShadow": {
+    "rarity": 4,
+    "materialKey": "pristine_sea",
+    "eliteMat": {
+      "id": 112089,
+      "name": {
+        "fr": "Noyau de faille",
+        "en": "Rift Core"
+      },
+      "icon": "UI_ItemIcon_112089"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "TomeOfTheEternalFlow": {
+    "rarity": 5,
+    "materialKey": "dewdrop",
+    "eliteMat": {
+      "id": 112089,
+      "name": {
+        "fr": "Noyau de faille",
+        "en": "Rift Core"
+      },
+      "icon": "UI_ItemIcon_112089"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "ToukabouShigure": {
+    "rarity": 4,
+    "materialKey": "narukami",
+    "eliteMat": {
+      "id": 112071,
+      "name": {
+        "fr": "Prisme endommagé",
+        "en": "Damaged Prism"
+      },
+      "icon": "UI_ItemIcon_112071"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "TravelersHandySword": {
+    "rarity": 3,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "TulaytullahsRemembrance": {
+    "rarity": 5,
+    "materialKey": "scorching_might",
+    "eliteMat": {
+      "id": 112062,
+      "name": {
+        "fr": "Noyau fongique inactivé",
+        "en": "Inactivated Fungal Nucleus"
+      },
+      "icon": "UI_ItemIcon_112062"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "TwinNephrite": {
+    "rarity": 3,
+    "materialKey": "mist_veiled",
+    "eliteMat": {
+      "id": 112026,
+      "name": {
+        "fr": "Pollen d'herbe brumeuse",
+        "en": "Mist Grass Pollen"
+      },
+      "icon": "UI_ItemIcon_112026"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "UltimateOverlordsMegaMagicSword": {
+    "rarity": 4,
+    "materialKey": "pristine_sea",
+    "eliteMat": {
+      "id": 112092,
+      "name": {
+        "fr": "Vieille montre à gousset d'opérateur",
+        "en": "Old Operative's Pocket Watch"
+      },
+      "icon": "UI_ItemIcon_112092"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "UrakuMisugiri": {
+    "rarity": 5,
+    "materialKey": "distant_sea",
+    "eliteMat": {
+      "id": 112047,
+      "name": {
+        "fr": "Engrenage du chaos",
+        "en": "Chaos Gear"
+      },
+      "icon": "UI_ItemIcon_112047"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "Verdict": {
+    "rarity": 5,
+    "materialKey": "ancient_chord",
+    "eliteMat": {
+      "id": 112089,
+      "name": {
+        "fr": "Noyau de faille",
+        "en": "Rift Core"
+      },
+      "icon": "UI_ItemIcon_112089"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "VividNotions": {
+    "rarity": 5,
+    "materialKey": "delirious_decadence",
+    "eliteMat": {
+      "id": 112119,
+      "name": {
+        "fr": "Coquille brisée froide",
+        "en": "Cold-Cracked Shellshard"
+      },
+      "icon": "UI_ItemIcon_112119"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "VortexVanquisher": {
+    "rarity": 5,
+    "materialKey": "aerosiderite",
+    "eliteMat": {
+      "id": 112041,
+      "name": {
+        "fr": "Fragment d'os fragile",
+        "en": "Fragile Bone Shard"
+      },
+      "icon": "UI_ItemIcon_112041"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "WanderingEvenstar": {
+    "rarity": 4,
+    "materialKey": "oasis_garden",
+    "eliteMat": {
+      "id": 112062,
+      "name": {
+        "fr": "Noyau fongique inactivé",
+        "en": "Inactivated Fungal Nucleus"
+      },
+      "icon": "UI_ItemIcon_112062"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "WasterGreatsword": {
+    "rarity": 1,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "WavebreakersFin": {
+    "rarity": 4,
+    "materialKey": "mask",
+    "eliteMat": {
+      "id": 112056,
+      "name": {
+        "fr": "Griffe dissimulée",
+        "en": "Concealed Claw"
+      },
+      "icon": "UI_ItemIcon_112056"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "WaveridingWhirl": {
+    "rarity": 4,
+    "materialKey": "blazing_heart",
+    "eliteMat": {
+      "id": 112107,
+      "name": {
+        "fr": "Fragment de volonté brisée",
+        "en": "Shard of a Shattered Will"
+      },
+      "icon": "UI_ItemIcon_112107"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "Whiteblind": {
+    "rarity": 4,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "WhiteIronGreatsword": {
+    "rarity": 3,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "WhitelakeFrostfeather": {
+    "rarity": 5,
+    "materialKey": "spiritual_nectar",
+    "eliteMat": {
+      "id": 112155,
+      "name": {
+        "fr": "Racine creuse de vie",
+        "en": "Hollow Root of Life"
+      },
+      "icon": "UI_ItemIcon_112155"
+    },
+    "commonMat": {
+      "id": 112149,
+      "name": {
+        "fr": "Graine chimérique",
+        "en": "Chimeric Core"
+      },
+      "icon": "UI_ItemIcon_112149"
+    }
+  },
+  "WhiteTassel": {
+    "rarity": 3,
+    "materialKey": "guyun",
+    "eliteMat": {
+      "id": 112029,
+      "name": {
+        "fr": "Dague de chasse rituelle",
+        "en": "Hunter's Sacrificial Knife"
+      },
+      "icon": "UI_ItemIcon_112029"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "WindblumeOde": {
+    "rarity": 4,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "WineAndSong": {
+    "rarity": 4,
+    "materialKey": "boreal_wolf",
+    "eliteMat": {
+      "id": 112020,
+      "name": {
+        "fr": "Branche morte des lignes énergétiques",
+        "en": "Dead Ley Line Branch"
+      },
+      "icon": "UI_ItemIcon_112020"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "WintersHeavyHeart": {
+    "rarity": 4,
+    "materialKey": "frost_emperor",
+    "eliteMat": {
+      "id": 112155,
+      "name": {
+        "fr": "Racine creuse de vie",
+        "en": "Hollow Root of Life"
+      },
+      "icon": "UI_ItemIcon_112155"
+    },
+    "commonMat": {
+      "id": 112146,
+      "name": {
+        "fr": "Paillette éthérée",
+        "en": "Ethereal Glimmershard"
+      },
+      "icon": "UI_ItemIcon_112146"
+    }
+  },
+  "WolfFang": {
+    "rarity": 4,
+    "materialKey": "decarabian",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "WolfsGravestone": {
+    "rarity": 5,
+    "materialKey": "dandelion_gladiator",
+    "eliteMat": {
+      "id": 112023,
+      "name": {
+        "fr": "Dispositif du chaos",
+        "en": "Chaos Device"
+      },
+      "icon": "UI_ItemIcon_112023"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "XiphosMoonlight": {
+    "rarity": 4,
+    "materialKey": "forest_dew",
+    "eliteMat": {
+      "id": 112071,
+      "name": {
+        "fr": "Prisme endommagé",
+        "en": "Damaged Prism"
+      },
+      "icon": "UI_ItemIcon_112071"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  }
+}

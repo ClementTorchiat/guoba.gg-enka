@@ -266,6 +266,24 @@ if (typeof window !== 'undefined') {
                 }
                 return;
             }
+
+            const setFarmingCategoryBtn = e.target.closest('[data-action="set-farming-category"]');
+            if (setFarmingCategoryBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const cat = setFarmingCategoryBtn.getAttribute('data-category') || 'all';
+                if (window.roadmapFarmingCategory !== cat) {
+                    window.roadmapFarmingCategory = cat;
+                    const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
+                        ? cachedRoadmapCharacters
+                        : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+                    const container = document.getElementById('main-container');
+                    if (container && chars.length > 0) {
+                        container.innerHTML = renderRoadmapContainer(chars, window.roadmapFocusCharNom);
+                    }
+                }
+                return;
+            }
         });
     }
 }
@@ -402,10 +420,23 @@ export function renderRoadmapContainer(characters, focusCharNom = (typeof window
             ${dottedDivider}
 
             <!-- Module 2 : Plan d'action par paliers (Quick Wins) + Total Compte -->
-            ${renderQuickWinsPlan(characters, focusCharNom, renderFarmingAccountTotalBadge(characters, focusCharNom))}
+            ${renderQuickWinsPlan(
+                characters,
+                focusCharNom,
+                renderFarmingAccountTotalBadge(
+                    characters,
+                    focusCharNom,
+                    typeof window !== 'undefined' ? (window.roadmapFarmingCategory || 'all') : 'all'
+                )
+            )}
 
             <!-- Feuille de Route Quotidienne & Calendrier Hebdomadaire -->
-            ${renderDailyFarmingRoadmap(characters, focusCharNom, typeof window !== 'undefined' ? (window.roadmapSelectedFarmingDay || 'today') : 'today')}
+            ${renderDailyFarmingRoadmap(
+                characters,
+                focusCharNom,
+                typeof window !== 'undefined' ? (window.roadmapSelectedFarmingDay || 'today') : 'today',
+                typeof window !== 'undefined' ? (window.roadmapFarmingCategory || 'all') : 'all'
+            )}
 
             ${dottedDivider}
 

@@ -9,7 +9,8 @@
     "prebuild": "node scripts/generate_buckets.js",
     "build": "astro build",
     "preview": "astro preview",
-    "update-locs": "curl -o locs.json https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json"
+    "update-locs": "curl -o locs.json https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/locs.json",
+    "update-farming": "node scripts/generate_farming_data.cjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

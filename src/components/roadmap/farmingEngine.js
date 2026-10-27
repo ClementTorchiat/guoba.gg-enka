@@ -1,8 +1,12 @@
 // src/components/roadmap/farmingEngine.js
 import FARMING_DOMAINS from '../../data/farming_domains.json';
 import CHARACTER_MATERIALS from '../../data/character_materials.json';
+import WEAPON_MATERIALS from '../../data/weapon_materials.json';
+import WEAPON_NAME_MAPPING from '../../data/weapon_name_mapping.json';
 import CONFIG_NAME_ALIASES_EN_TO_FR from '../../data/config_name_aliases_en_to_fr.json';
 import { t, LANG } from '../../scripts/i18n.js';
+
+const ICON_BASE_PATH = "/assets/simulator/icons/";
 
 /**
  * Résout le nom localisé d'un matériau ou domaine avec repli sécurisé sur l'anglais si 'fr' est vide.
@@ -32,20 +36,56 @@ export const TALENT_COST_PER_LEVEL = {
     10: { teachings: 0, guides: 0, philosophies: 16, weeklyBoss: 2, crown: 1, mora: 700000 }
 };
 
-// Indexation rapide des 24 rotations de livres
+// Table universelle des matériaux requis par palier d'élévation d'arme (selon rareté 3★, 4★, 5★)
+export const WEAPON_ASCENSION_COSTS = {
+    5: {
+        1: { green: 5, blue: 0, purple: 0, gold: 0, mora: 10000 },
+        2: { green: 0, blue: 5, purple: 0, gold: 0, mora: 20000 },
+        3: { green: 0, blue: 9, purple: 0, gold: 0, mora: 30000 },
+        4: { green: 0, blue: 0, purple: 5, gold: 0, mora: 45000 },
+        5: { green: 0, blue: 0, purple: 9, gold: 0, mora: 55000 },
+        6: { green: 0, blue: 0, purple: 0, gold: 6, mora: 65000 }
+    },
+    4: {
+        1: { green: 3, blue: 0, purple: 0, gold: 0, mora: 5000 },
+        2: { green: 0, blue: 3, purple: 0, gold: 0, mora: 15000 },
+        3: { green: 0, blue: 6, purple: 0, gold: 0, mora: 20000 },
+        4: { green: 0, blue: 0, purple: 3, gold: 0, mora: 30000 },
+        5: { green: 0, blue: 0, purple: 6, gold: 0, mora: 35000 },
+        6: { green: 0, blue: 0, purple: 0, gold: 4, mora: 45000 }
+    },
+    3: {
+        1: { green: 2, blue: 0, purple: 0, gold: 0, mora: 5000 },
+        2: { green: 0, blue: 2, purple: 0, gold: 0, mora: 10000 },
+        3: { green: 0, blue: 4, purple: 0, gold: 0, mora: 15000 },
+        4: { green: 0, blue: 0, purple: 2, gold: 0, mora: 20000 },
+        5: { green: 0, blue: 0, purple: 4, gold: 0, mora: 25000 },
+        6: { green: 0, blue: 0, purple: 0, gold: 3, mora: 30000 }
+    }
+};
+
+// Indexation rapide des 24 rotations de livres et 24 rotations d'armes
 const BOOK_ROTATION_MAP = {};
+const WEAPON_ROTATION_MAP = {};
+
 if (Array.isArray(FARMING_DOMAINS)) {
     FARMING_DOMAINS.forEach(dom => {
         if (Array.isArray(dom.rotations)) {
             dom.rotations.forEach(rot => {
-                BOOK_ROTATION_MAP[rot.itemKey] = {
+                const entry = {
                     domainId: dom.id,
                     domainName: dom.name,
                     region: dom.region,
+                    category: dom.category,
                     days: rot.days || [],
                     name: rot.name,
                     items: rot.items
                 };
+                if (dom.category === 'weapon') {
+                    WEAPON_ROTATION_MAP[rot.itemKey] = entry;
+                } else {
+                    BOOK_ROTATION_MAP[rot.itemKey] = entry;
+                }
             });
         }
     });
@@ -104,6 +144,133 @@ export function resolveBookRotation(bookKey) {
 }
 
 /**
+ * Résout les métadonnées d'une arme à partir de sa clé PascalCase ou de son nom localisé.
+ * @param {string} keyOrName 
+ * @returns {Object|null}
+ */
+export function resolveWeaponMaterials(keyOrName) {
+    if (!keyOrName) return null;
+    if (WEAPON_MATERIALS && WEAPON_MATERIALS[keyOrName]) return WEAPON_MATERIALS[keyOrName];
+    if (WEAPON_NAME_MAPPING && WEAPON_NAME_MAPPING[keyOrName]) {
+        const mapped = WEAPON_NAME_MAPPING[keyOrName];
+        if (WEAPON_MATERIALS && WEAPON_MATERIALS[mapped]) return WEAPON_MATERIALS[mapped];
+    }
+    const norm = String(keyOrName).replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+    if (WEAPON_MATERIALS) {
+        for (const [k, v] of Object.entries(WEAPON_MATERIALS)) {
+            if (k.toLowerCase() === norm) return v;
+        }
+    }
+    return null;
+}
+
+/**
+ * Récupère les données complètes de rotation et domaine pour une clé de matériau d'arme donnée.
+ * @param {string} matKey 
+ * @returns {Object|null}
+ */
+export function resolveWeaponRotation(matKey) {
+    if (!matKey) return null;
+    return WEAPON_ROTATION_MAP[matKey] || null;
+}
+
+/**
+ * Calcule les matériaux d'arme requis de l'élévation curAsc à tgtAsc.
+ * @param {number} rarity 3, 4 ou 5
+ * @param {number} fromAsc 0 à 6
+ * @param {number} toAsc 1 à 6
+ * @returns {Object}
+ */
+export function calculateWeaponCost(rarity = 4, fromAsc = 0, toAsc = 6) {
+    const star = [3, 4, 5].includes(parseInt(rarity, 10)) ? parseInt(rarity, 10) : 4;
+    const curAsc = Math.max(0, Math.min(6, parseInt(fromAsc, 10) || 0));
+    const tgtAsc = Math.max(curAsc, Math.min(6, parseInt(toAsc, 10) || 6));
+
+    const cost = {
+        green: 0,
+        blue: 0,
+        purple: 0,
+        gold: 0,
+        mora: 0,
+        estimatedResin: 0,
+        estimatedRuns: 0
+    };
+
+    if (curAsc >= tgtAsc) return cost;
+
+    const table = WEAPON_ASCENSION_COSTS[star];
+    for (let asc = curAsc + 1; asc <= tgtAsc; asc++) {
+        const step = table[asc];
+        if (step) {
+            cost.green += step.green;
+            cost.blue += step.blue;
+            cost.purple += step.purple;
+            cost.gold += step.gold;
+            cost.mora += step.mora;
+        }
+    }
+
+    // Equivalent vert (3:1 pour chaque rang)
+    const greenEq = cost.green + (cost.blue * 3) + (cost.purple * 9) + (cost.gold * 27);
+    // Moyenne ~16.7 équivalents verts par run de 20 résines
+    cost.estimatedRuns = Math.ceil(greenEq / 16.7);
+    cost.estimatedResin = cost.estimatedRuns * 20;
+
+    return cost;
+}
+
+/**
+ * Analyse l'arme d'un personnage et détermine si elle nécessite des matériaux de donjon.
+ * @param {Object} perso 
+ * @returns {Object|null}
+ */
+export function getWeaponFarmingNeeds(perso) {
+    if (!perso || !perso.weapon) return null;
+
+    const w = perso.weapon;
+    const wLvl = Number(w.level) || 1;
+    let wAsc = w.ascension !== undefined ? Number(w.ascension) : (w.promoteLevel !== undefined ? Number(w.promoteLevel) : undefined);
+
+    if (wAsc === undefined) {
+        if (wLvl >= 80) wAsc = 6;
+        else if (wLvl >= 70) wAsc = 5;
+        else if (wLvl >= 60) wAsc = 4;
+        else if (wLvl >= 50) wAsc = 3;
+        else if (wLvl >= 40) wAsc = 2;
+        else if (wLvl >= 20) wAsc = 1;
+        else wAsc = 0;
+    }
+
+    // Une arme est considérée terminée si elle est niveau 90 ou (niveau >= 80 avec ascension 6)
+    const isMaxed = (wLvl >= 90) || (wLvl >= 80 && wAsc >= 6);
+    if (isMaxed) return null;
+
+    const keyOrName = w.key || w.name;
+    const weaponMats = resolveWeaponMaterials(keyOrName) || {};
+    const rarity = weaponMats.rarity || w.stars || w.rankLevel || 4;
+    const weaponRotation = resolveWeaponRotation(weaponMats.materialKey);
+
+    const totalCost = calculateWeaponCost(rarity, wAsc, 6);
+
+    return {
+        type: 'weapon',
+        charNom: perso.nom,
+        charAvatar: perso.image ? perso.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '',
+        weaponKey: w.key || w.name,
+        weaponName: w.name || w.key || 'Arme',
+        weaponIcon: w.icon || `${ICON_BASE_PATH}icon_weapon.svg`,
+        rarity,
+        currentLvl: wLvl,
+        currentAsc: wAsc,
+        targetLvl: 90,
+        targetAsc: 6,
+        weaponRotation,
+        weaponMaterials: weaponMats,
+        totalCost
+    };
+}
+
+/**
  * Calcule les matériaux exacts requis pour faire progresser une aptitude de fromLvl à toLvl.
  * @param {number} fromLvl 
  * @param {number} toLvl 
@@ -139,12 +306,8 @@ export function calculateTalentCost(fromLvl, toLvl) {
         }
     }
 
-    // Calcul de l'équivalent en livres 4★ (Philosophies) : 3 Teachings = 1 Guide, 3 Guides = 1 Philosophie
     const eqPhil = cost.philosophies + (cost.guides / 3) + (cost.teachings / 9);
     cost.equivalentPhilosophies = Math.round(eqPhil * 10) / 10;
-
-    // En donjon de niveau IV (AR 45+) : moyenne de ~1.12 Philosophie équivalente par 20 résines
-    // Soit environ ~18 résines par Philosophie équivalente
     cost.estimatedResin = Math.ceil(eqPhil * 18);
     cost.estimatedRuns = Math.ceil(cost.estimatedResin / 20);
 
@@ -178,75 +341,86 @@ export function getCharacterFarmingNeeds(perso) {
         weeklyBoss: 0,
         crown: 0,
         mora: 0,
-        equivalentPhilosophies: 0,
         estimatedResin: 0,
         estimatedRuns: 0
     };
 
-    if (Array.isArray(perso.talents) && perso.talents.length >= 3) {
-        keyMap.forEach((k, idx) => {
-            const targetLvl = targets[k] || 1;
-            const currentLvl = perso.talents[idx]?.level || 1;
+    keyMap.forEach((key, index) => {
+        let currentLvl = 1;
+        let talentIcon = null;
 
-            if (targetLvl > 1 && currentLvl < targetLvl) {
-                const cost = calculateTalentCost(currentLvl, targetLvl);
-                const talentObj = perso.talents[idx];
+        if (Array.isArray(perso.talents) && perso.talents[index]) {
+            currentLvl = Number(perso.talents[index].level) || 1;
+            talentIcon = perso.talents[index].icon || null;
+        } else if (perso.talents && typeof perso.talents[key] === 'number') {
+            currentLvl = Number(perso.talents[key]) || 1;
+        } else if (Array.isArray(perso.skills) && perso.skills[index]) {
+            currentLvl = Number(perso.skills[index].level) || 1;
+            talentIcon = perso.skills[index].icon || null;
+        }
 
-                talentGaps.push({
-                    talentKey: k,
-                    talentLabel: t('talents.' + k) || k,
-                    talentIcon: talentObj?.icon || '',
-                    currentLvl,
-                    targetLvl,
-                    cost
-                });
+        const targetLvl = targets[key] || 1;
 
-                totalCost.teachings += cost.teachings;
-                totalCost.guides += cost.guides;
-                totalCost.philosophies += cost.philosophies;
-                totalCost.weeklyBoss += cost.weeklyBoss;
-                totalCost.crown += cost.crown;
-                totalCost.mora += cost.mora;
-                totalCost.equivalentPhilosophies += cost.equivalentPhilosophies;
-                totalCost.estimatedResin += cost.estimatedResin;
-            }
-        });
-    }
+        if (targetLvl > 1 && currentLvl < targetLvl) {
+            const stepCost = calculateTalentCost(currentLvl, targetLvl);
 
-    totalCost.equivalentPhilosophies = Math.round(totalCost.equivalentPhilosophies * 10) / 10;
+            totalCost.teachings += stepCost.teachings;
+            totalCost.guides += stepCost.guides;
+            totalCost.philosophies += stepCost.philosophies;
+            totalCost.weeklyBoss += stepCost.weeklyBoss;
+            totalCost.crown += stepCost.crown;
+            totalCost.mora += stepCost.mora;
+
+            const talentLabel = t(`talents.${key}`) || t(`ui.talent.${key}`) || t(`advice.talent.${key}`) || key;
+
+            talentGaps.push({
+                talentKey: key,
+                talentLabel,
+                talentIcon,
+                currentLvl,
+                targetLvl,
+                cost: stepCost
+            });
+        }
+    });
+
+    const eqPhil = totalCost.philosophies + (totalCost.guides / 3) + (totalCost.teachings / 9);
+    totalCost.estimatedResin = Math.ceil(eqPhil * 18);
     totalCost.estimatedRuns = Math.ceil(totalCost.estimatedResin / 20);
 
-    const hasTalentNeeds = talentGaps.length > 0;
-
-    // Détection des besoins d'élévation de niveau (< 90 et non 80/90)
     const pLvl = perso.level || 1;
     const pAsc = perso.ascension || 0;
-    const needsAscension = pLvl < 90 && !(pLvl >= 80 && pAsc >= 6);
+    const needsAscension = (pLvl < 90 && !(pLvl >= 80 && pAsc >= 6));
+
+    const hasTalentNeeds = (talentGaps.length > 0 && bookRotation !== null);
 
     return {
+        type: 'character',
         charNom,
         charAvatar: perso.image ? perso.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '',
-        bookKey: matData.talentBookKey || null,
+        element: perso.element || '',
         bookRotation,
+        weeklyBoss: matData.weeklyBoss || null,
+        worldBoss: matData.worldBoss || null,
+        specialty: matData.specialty || null,
+        commonMat: matData.commonMat || null,
         talentGaps,
         totalCost,
         hasTalentNeeds,
         needsAscension,
-        currentLevel: pLvl,
-        weeklyBoss: matData.weeklyBoss || null,
-        worldBoss: matData.worldBoss || null,
-        specialty: matData.specialty || null,
-        commonMat: matData.commonMat || null
+        currentLvl: pLvl,
+        currentAsc: pAsc
     };
 }
 
 /**
- * Construit la feuille de route hebdomadaire complète (du Lundi au Dimanche).
+ * Construit la feuille de route hebdomadaire complète (du Lundi au Dimanche) pour les aptitudes et les armes.
  * @param {Array} characters 
  * @param {string|null} focusCharNom 
+ * @param {string} categoryFilter 'all' | 'talents' | 'weapons'
  * @returns {Object}
  */
-export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null) {
+export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null, categoryFilter = 'all') {
     const todayIndex = new Date().getDay(); // 0 = Dimanche, 1 = Lundi, ...
 
     const DAY_NAMES = {
@@ -255,8 +429,8 @@ export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null) {
     };
     const currentLang = (LANG === 'en') ? 'en' : 'fr';
 
-    // Analyse tous les personnages
-    const analyzed = (characters || []).map(p => {
+    // 1. Analyse des aptitudes des personnages
+    const analyzedChars = (characters || []).map(p => {
         const needs = getCharacterFarmingNeeds(p);
         if (needs) {
             needs.isFocus = focusCharNom ? (p.nom === focusCharNom) : false;
@@ -264,68 +438,134 @@ export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null) {
         return needs;
     }).filter(Boolean);
 
-    // Personnages qui ont au moins un besoin en aptitudes
-    const charactersWithTalentNeeds = analyzed.filter(p => {
+    const charactersWithTalentNeeds = analyzedChars.filter(p => {
         if (focusCharNom) return p.isFocus && p.hasTalentNeeds;
         return p.hasTalentNeeds;
     });
 
-    // Structure des 7 jours (0 à 6)
+    // 2. Analyse des armes équipées
+    const analyzedWeapons = (characters || []).map(p => {
+        const needs = getWeaponFarmingNeeds(p);
+        if (needs) {
+            needs.isFocus = focusCharNom ? (p.nom === focusCharNom) : false;
+        }
+        return needs;
+    }).filter(Boolean);
+
+    const weaponsWithNeeds = analyzedWeapons.filter(w => {
+        if (focusCharNom) return w.isFocus;
+        return true;
+    });
+
+    // 3. Structure des 7 jours (0 à 6)
     const scheduleByDay = [0, 1, 2, 3, 4, 5, 6].map(dayIdx => {
         const isToday = (dayIdx === todayIndex);
         const dayLabel = DAY_NAMES[currentLang][dayIdx];
+        const isSunday = (dayIdx === 0);
 
-        // Quels personnages peuvent être farmés ce jour-là ?
+        // Personnages d'aptitudes pour ce jour
         let charsForDay = [];
-
-        if (dayIdx === 0) {
-            // Le Dimanche : TOUS les donjons sont ouverts !
+        if (isSunday) {
             charsForDay = charactersWithTalentNeeds;
         } else {
-            // Jours réguliers (1 à 6) : uniquement si le donjon de leur livre est ouvert ce jour-là
             charsForDay = charactersWithTalentNeeds.filter(p => {
                 const days = p.bookRotation?.days || [];
                 return days.includes(dayIdx);
             });
         }
 
-        // Regroupe par domaine pour une présentation claire
-        const domainsMap = {};
-        let dayTotalResin = 0;
+        // Armes pour ce jour
+        let weaponsForDay = [];
+        if (isSunday) {
+            weaponsForDay = weaponsWithNeeds;
+        } else {
+            weaponsForDay = weaponsWithNeeds.filter(w => {
+                const days = w.weaponRotation?.days || [];
+                return days.includes(dayIdx);
+            });
+        }
 
+        // Regroupement par domaine
+        const talentDomainsMap = {};
         charsForDay.forEach(p => {
             const rot = p.bookRotation;
             if (!rot) return;
             const domId = rot.domainId;
 
-            if (!domainsMap[domId]) {
-                domainsMap[domId] = {
+            if (!talentDomainsMap[domId]) {
+                talentDomainsMap[domId] = {
                     domainId: domId,
                     domainName: getLocalizedItemName(rot.domainName, currentLang, domId),
                     region: getLocalizedItemName(rot.region, currentLang, ''),
                     bookName: getLocalizedItemName(rot.name, currentLang, ''),
+                    category: 'talent',
                     items: rot.items || {},
                     characters: []
                 };
             }
-
-            domainsMap[domId].characters.push(p);
-            dayTotalResin += p.totalCost.estimatedResin || 0;
+            talentDomainsMap[domId].characters.push(p);
         });
+
+        const weaponDomainsMap = {};
+        weaponsForDay.forEach(w => {
+            const rot = w.weaponRotation;
+            if (!rot) return;
+            const domId = rot.domainId;
+
+            if (!weaponDomainsMap[domId]) {
+                weaponDomainsMap[domId] = {
+                    domainId: domId,
+                    domainName: getLocalizedItemName(rot.domainName, currentLang, domId),
+                    region: getLocalizedItemName(rot.region, currentLang, ''),
+                    bookName: getLocalizedItemName(rot.name, currentLang, ''),
+                    category: 'weapon',
+                    items: rot.items || {},
+                    weapons: []
+                };
+            }
+            weaponDomainsMap[domId].weapons.push(w);
+        });
+
+        // Filtrage selon categoryFilter ('all', 'talents', 'weapons')
+        let includedDomains = [];
+        if (categoryFilter === 'weapons') {
+            includedDomains = Object.values(weaponDomainsMap);
+        } else if (categoryFilter === 'talents') {
+            includedDomains = Object.values(talentDomainsMap);
+        } else {
+            includedDomains = [...Object.values(talentDomainsMap), ...Object.values(weaponDomainsMap)];
+        }
+
+        let dayTotalResin = 0;
+        let dayTotalMora = 0;
+
+        if (categoryFilter !== 'weapons') {
+            charsForDay.forEach(p => {
+                dayTotalResin += p.totalCost?.estimatedResin || 0;
+                dayTotalMora += p.totalCost?.mora || 0;
+            });
+        }
+        if (categoryFilter !== 'talents') {
+            weaponsForDay.forEach(w => {
+                dayTotalResin += w.totalCost?.estimatedResin || 0;
+                dayTotalMora += w.totalCost?.mora || 0;
+            });
+        }
 
         return {
             dayIndex: dayIdx,
             dayName: dayLabel,
             isToday,
-            isSunday: (dayIdx === 0),
+            isSunday,
             characters: charsForDay,
-            domains: Object.values(domainsMap),
+            weapons: weaponsForDay,
+            domains: includedDomains,
             totalResin: dayTotalResin,
+            totalMora: dayTotalMora,
             runsCount: Math.ceil(dayTotalResin / 20)
         };
     });
 
-    // Ordonne la semaine du Lundi (1) au Dimanche (0) pour l'affichage européen naturel
     const weekOrdered = [
         scheduleByDay[1], // Lundi
         scheduleByDay[2], // Mardi
@@ -338,8 +578,22 @@ export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null) {
 
     const todaySchedule = scheduleByDay[todayIndex];
 
-    const totalAccountResin = charactersWithTalentNeeds.reduce((acc, p) => acc + (p.totalCost?.estimatedResin || 0), 0);
-    const totalAccountMora = charactersWithTalentNeeds.reduce((acc, p) => acc + (p.totalCost?.mora || 0), 0);
+    // Totaux compte selon le filtre
+    let totalAccountResin = 0;
+    let totalAccountMora = 0;
+
+    if (categoryFilter !== 'weapons') {
+        charactersWithTalentNeeds.forEach(p => {
+            totalAccountResin += p.totalCost?.estimatedResin || 0;
+            totalAccountMora += p.totalCost?.mora || 0;
+        });
+    }
+    if (categoryFilter !== 'talents') {
+        weaponsWithNeeds.forEach(w => {
+            totalAccountResin += w.totalCost?.estimatedResin || 0;
+            totalAccountMora += w.totalCost?.mora || 0;
+        });
+    }
 
     return {
         todayIndex,
@@ -347,6 +601,7 @@ export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null) {
         weekSchedule: weekOrdered,
         scheduleByDay,
         allCharactersWithNeeds: charactersWithTalentNeeds,
+        allWeaponsWithNeeds: weaponsWithNeeds,
         totalAccountResin,
         totalAccountMora,
         totalAccountRuns: Math.ceil(totalAccountResin / 20)

@@ -2496,6 +2496,8 @@ async function processData(data, uid = null) {
                     name: getText(flat.nameTextMapHash),
                     key: weaponKey,
                     level: item.weapon.level,
+                    promoteLevel: item.weapon.promoteLevel || 0,
+                    ascension: item.weapon.promoteLevel || 0,
                     rank: (item.weapon.affixMap ? Object.values(item.weapon.affixMap)[0] : 0) + 1,
                     icon: `https://enka.network/ui/${flat.icon}.png`,
                     baseAtk: main,
