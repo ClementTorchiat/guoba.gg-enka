@@ -1036,6 +1036,8 @@ export const T = {
         "roadmap.swaps.swapPiece": (charA, charB, pieceName) => `Échanger la ${pieceName} entre ${charA} et ${charB}`,
         "roadmap.swaps.givesPiece": (charA, charB, pieceName) => `${charA} cède sa ${pieceName} à ${charB}`,
         "roadmap.swaps.focusGain": (char) => `Gain pour ${char}`,
+        "roadmap.swaps.showAll": (c) => `Tout voir (${c} permutations)`,
+        "roadmap.swaps.showLess": "Voir moins",
 
         // Module 4 : Planificateur de Domaines
         "roadmap.domains.title": "Planificateur de Domaines",
@@ -2184,6 +2186,8 @@ export const T = {
         "roadmap.swaps.swapPiece": (charA, charB, pieceName) => `Swap ${pieceName} between ${charA} and ${charB}`,
         "roadmap.swaps.givesPiece": (charA, charB, pieceName) => `${charA} passes ${pieceName} to ${charB}`,
         "roadmap.swaps.focusGain": (char) => `Upgrade for ${char}`,
+        "roadmap.swaps.showAll": (c) => `Show all (${c} swaps)`,
+        "roadmap.swaps.showLess": "Show less",
 
         // Module 4 : Domain Planner
         "roadmap.domains.title": "Domain Value Index & Resin Planner",

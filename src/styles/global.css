@@ -4019,6 +4019,25 @@ input:checked+.toggle-track .star-4 {
     }
 }
 
+.roadmap-swaps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 1024px) {
+    .roadmap-swaps-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 680px) {
+    .roadmap-swaps-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .roadmap-card {
     border-radius: 8px;
     padding: 40px 0;

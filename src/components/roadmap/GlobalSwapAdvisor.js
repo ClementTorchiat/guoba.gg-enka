@@ -92,6 +92,10 @@ export function findGlobalProfitableSwaps(characters, focusCharNom = null) {
 export function renderGlobalSwapAdvisor(characters, focusCharNom = null) {
     const swaps = findGlobalProfitableSwaps(characters, focusCharNom);
 
+    const isExpanded = typeof window !== 'undefined' ? !!window.roadmapSwapsExpanded : false;
+    const shouldShowToggle = swaps.length > 6;
+    const visibleSwaps = (!isExpanded && shouldShowToggle) ? swaps.slice(0, 6) : swaps;
+
     return `
         <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
@@ -108,58 +112,96 @@ export function renderGlobalSwapAdvisor(characters, focusCharNom = null) {
                     ${t('roadmap.swaps.noSwaps')}
                 </div>
             ` : `
-                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;">
-                    ${swaps.slice(0, 4).map(swap => `
-                        <div style="background:${swap.isFocusGain ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${swap.isFocusGain ? '1px solid rgba(59,130,246,0.4)' : '0'}; border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:10px; position:relative;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    ${swap.artA.icon || swap.artB.icon ? `
-                                        <img src="${swap.artA.icon || swap.artB.icon}" alt="${swap.slotName}" style="width:28px; height:28px; border-radius:4px; object-fit:contain; background:var(--shadow-subtle);">
-                                    ` : ''}
-                                    <span style="font-size:12px; font-weight:normal; color:var(--text-primary);">
-                                        ${swap.slotName}
-                                    </span>
-                                </div>
-                                <div style="display:flex; align-items:center; gap:6px;">
-                                    ${swap.isFocusGain ? `
-                                        <span style="font-size:9px; font-weight:normal; padding:2px 6px; border-radius:10px; background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); white-space:nowrap;">
-                                            ${t('roadmap.swaps.focusGain', focusCharNom)}
+                <div class="roadmap-swaps-grid">
+                    ${visibleSwaps.map(swap => {
+        const setA = swap.artA.setName;
+        const setB = swap.artB.setName;
+        const setLabel = (setA === setB)
+            ? setA
+            : (setA && setB ? `${setA} / ${setB}` : (setA || setB || ''));
+
+        return `
+                            <div style="background:var(--bg-panel); border-radius:8px; padding:6px; display:flex; flex-direction:column; justify-content:space-between; gap:6px; box-sizing:border-box; min-width:0; height:100%;">
+                                <!-- En-tête : Pièce (slot + set) & Gain Net -->
+                                <div style="display:flex; justify-content:space-between; align-items:center; min-height:30px; gap:8px;">
+                                    <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
+                                        ${swap.artA.icon || swap.artB.icon ? `
+                                            <img src="${swap.artA.icon || swap.artB.icon}" alt="${swap.slotName}" style="width:28px; height:28px; border-radius:4px; object-fit:contain; background:var(--shadow-subtle); flex-shrink:0;">
+                                        ` : ''}
+                                        <div style="min-width:0; display:flex; flex-direction:column;">
+                                            <span style="font-size:13px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                                ${swap.slotName}
+                                            </span>
+                                            <span style="font-size:10px; font-weight:normal; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${setLabel}">
+                                                ${setLabel}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+                                        ${swap.isFocusGain ? `
+                                            <span style="font-size:9px; font-weight:normal; padding:2px 6px; border-radius:6px; background:rgba(59,130,246,0.2); color:#60a5fa; white-space:nowrap;">
+                                                ${t('roadmap.swaps.focusGain', focusCharNom)}
+                                            </span>
+                                        ` : ''}
+                                        <span style="font-size:11px; font-weight:normal; color:var(--accent-green); background:rgba(34,197,94,0.12); padding:2px 6px; border-radius:6px; white-space:nowrap;">
+                                            +${swap.netGain} pts net
                                         </span>
-                                    ` : ''}
-                                    <span style="font-size:11px; color:var(--text-grey); font-weight:normal; max-width:160px; text-align:right; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${swap.artA.setName === swap.artB.setName ? swap.artA.setName : `${swap.artA.setName} / ${swap.artB.setName}`}">
-                                        ${swap.artA.setName === swap.artB.setName ? swap.artA.setName : `${swap.artA.setName} / ${swap.artB.setName}`}
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div style="display:flex; align-items:center; justify-content:space-between; border-radius:8px; gap:8px;">
-                                <!-- Perso A -->
-                                <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
-                                    <img src="${swap.charA.image}" alt="${swap.charA.nom}" style="width:42px; height:42px; border-radius:6px; background:var(--shadow-subtle); flex-shrink:0; border:${swap.charA.isFocus ? '2px solid #60a5fa' : 'none'};">
-                                    <div style="min-width:0;">
-                                        <div style="font-size:12px; font-weight:normal; color:${swap.charA.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${swap.charA.nom}</div>
-                                        <div style="font-size:11px; font-weight:normal; color:${swap.charA.delta >= 0 ? 'var(--accent-green)' : '#ef4444'};">
-                                            ${swap.charA.delta >= 0 ? '+' : ''}${swap.charA.delta} pts
-                                        </div>
                                     </div>
                                 </div>
 
-                                <div style="font-size:16px; color:var(--text-grey); flex-shrink:0;">⮂</div>
-
-                                <!-- Perso B -->
-                                <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0; justify-content:flex-end; text-align:right;">
-                                    <div style="min-width:0;">
-                                        <div style="font-size:12px; font-weight:normal; color:${swap.charB.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${swap.charB.nom}</div>
-                                        <div style="font-size:11px; font-weight:normal; color:${swap.charB.delta >= 0 ? 'var(--accent-green)' : '#ef4444'};">
-                                            ${swap.charB.delta >= 0 ? '+' : ''}${swap.charB.delta} pts
+                                <!-- Sous-carte : Personnages & Évolution de score -->
+                                <div style="background:var(--shadow-subtle); border-radius:6px; padding:8px 12px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:8px; min-width:0;">
+                                    <!-- Perso A -->
+                                    <div style="display:flex; align-items:center; gap:8px; min-width:0;">
+                                        <img src="${swap.charA.image}" alt="${swap.charA.nom}" style="width:38px; height:38px; border-radius:6px; object-fit:cover; flex-shrink:0; background:var(--bg-panel);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                                        <div style="min-width:0; overflow:hidden;">
+                                            <div style="font-size:13px; font-weight:normal; color:${swap.charA.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                                ${swap.charA.nom}
+                                            </div>
+                                            <div style="font-size:11px; font-weight:normal; color:${swap.charA.delta >= 0 ? 'var(--accent-green)' : '#ef4444'}; white-space:nowrap;">
+                                                ${swap.charA.delta >= 0 ? '+' : ''}${swap.charA.delta} pts
+                                            </div>
                                         </div>
                                     </div>
-                                    <img src="${swap.charB.image}" alt="${swap.charB.nom}" style="width:42px; height:42px; border-radius:6px; background:var(--shadow-subtle); flex-shrink:0; border:${swap.charB.isFocus ? '2px solid #60a5fa' : 'none'};">
+
+                                    <!-- Icône d'échange centrale -->
+                                    <div style="display:flex; align-items:center; justify-content:center; color:var(--text-grey); flex-shrink:0; padding:0 4px;">
+                                        <svg style="width:16px; height:16px; opacity:0.8;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                                        </svg>
+                                    </div>
+
+                                    <!-- Perso B -->
+                                    <div style="display:flex; align-items:center; justify-content:flex-end; gap:8px; min-width:0; text-align:right;">
+                                        <div style="min-width:0; overflow:hidden;">
+                                            <div style="font-size:13px; font-weight:normal; color:${swap.charB.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                                ${swap.charB.nom}
+                                            </div>
+                                            <div style="font-size:11px; font-weight:normal; color:${swap.charB.delta >= 0 ? 'var(--accent-green)' : '#ef4444'}; white-space:nowrap;">
+                                                ${swap.charB.delta >= 0 ? '+' : ''}${swap.charB.delta} pts
+                                            </div>
+                                        </div>
+                                        <img src="${swap.charB.image}" alt="${swap.charB.nom}" style="width:38px; height:38px; border-radius:6px; object-fit:cover; flex-shrink:0; background:var(--bg-panel);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `).join('')}
+                        `;
+    }).join('')}
                 </div>
+
+                ${shouldShowToggle ? `
+                    <div style="display:flex; justify-content:center; margin-top:6px;">
+                        <button data-action="toggle-swaps-expand"
+                                type="button"
+                                class="button-unlink hover-bg-hover"
+                                style="display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:8px; font-size:12px; font-weight:normal; cursor:pointer; background:var(--bg-panel); color:var(--text-primary); transition:all 0.2s ease;">
+                            <span>${isExpanded ? t('roadmap.swaps.showLess') : t('roadmap.swaps.showAll', swaps.length)}</span>
+                            <svg style="width:14px; height:14px; transition:transform 0.25s ease; transform:${isExpanded ? 'rotate(180deg)' : 'rotate(0deg)'};" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                ` : ''}
             `}
         </div>
     `;
