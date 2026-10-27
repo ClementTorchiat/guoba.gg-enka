@@ -57,7 +57,8 @@
                     "enerRech_"
                 ],
                 "EQUIP_RING": [
-                    "atk_"
+                    "atk_",
+                    "electro_dmg_"
                 ],
                 "EQUIP_DRESS": [
                     "atk_",
@@ -67,8 +68,8 @@
             "hideUIStats": [],
             "showUIStats": [],
             "bestSets": [
-                "HeartOfTheFurnace:4",
-                "NoblesseOblige:4"
+                "NoblesseOblige:4",
+                "HeartOfTheFurnace:4"
             ],
             "goodSets": [
                 "GladiatorsFinale:2",
