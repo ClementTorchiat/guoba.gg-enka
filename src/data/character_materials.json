@@ -1,0 +1,4321 @@
+{
+  "Aino": {
+    "talentBookKey": "elysium",
+    "weeklyBoss": {
+      "id": 113061,
+      "name": {
+        "fr": "Plume soyeuse",
+        "en": "Silken Feather"
+      },
+      "icon": "UI_ItemIcon_113061"
+    },
+    "worldBoss": {
+      "id": 113077,
+      "name": {
+        "fr": "Moule d'estampage kuuvahkique de précision",
+        "en": "Precision Kuuvahki Stamping Die"
+      },
+      "icon": "UI_ItemIcon_113077"
+    },
+    "specialty": {
+      "id": 101257,
+      "name": {
+        "fr": "Roulement portable",
+        "en": "Portable Bearing"
+      },
+      "icon": "UI_ItemIcon_101257"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "Albedo": {
+    "talentBookKey": "ballad",
+    "weeklyBoss": {
+      "id": 113013,
+      "name": {
+        "fr": "Corne de Monoceros Caeli",
+        "en": "Tusk of Monoceros Caeli"
+      },
+      "icon": "UI_ItemIcon_113013"
+    },
+    "worldBoss": {
+      "id": 113009,
+      "name": {
+        "fr": "Pilier de basalte",
+        "en": "Basalt Pillar"
+      },
+      "icon": "UI_ItemIcon_113009"
+    },
+    "specialty": {
+      "id": 100023,
+      "name": {
+        "fr": "Cécilia",
+        "en": "Cecilia"
+      },
+      "icon": "UI_ItemIcon_100023"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Alhaitham": {
+    "talentBookKey": "ingenuity",
+    "weeklyBoss": {
+      "id": 113042,
+      "name": {
+        "fr": "Miroir de mushin",
+        "en": "Mirror of Mushin"
+      },
+      "icon": "UI_ItemIcon_113042"
+    },
+    "worldBoss": {
+      "id": 113044,
+      "name": {
+        "fr": "Pseudo-étamines",
+        "en": "Pseudo-Stamens"
+      },
+      "icon": "UI_ItemIcon_113044"
+    },
+    "specialty": {
+      "id": 101222,
+      "name": {
+        "fr": "Pupe graisseuse des sables",
+        "en": "Sand Grease Pupa"
+      },
+      "icon": "UI_ItemIcon_101222"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "Aloy": {
+    "talentBookKey": "freedom",
+    "weeklyBoss": {
+      "id": 113025,
+      "name": {
+        "fr": "Moment en fusion",
+        "en": "Molten Moment"
+      },
+      "icon": "UI_ItemIcon_113025"
+    },
+    "worldBoss": {
+      "id": 113020,
+      "name": {
+        "fr": "Fleur cristalline",
+        "en": "Crystalline Bloom"
+      },
+      "icon": "UI_ItemIcon_113020"
+    },
+    "specialty": {
+      "id": 101203,
+      "name": {
+        "fr": "Moelle cristalline",
+        "en": "Crystal Marrow"
+      },
+      "icon": "UI_ItemIcon_101203"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "Alyosha": {
+    "talentBookKey": "fortitude",
+    "weeklyBoss": {
+      "id": 113083,
+      "name": {
+        "fr": "Élixir de l'hérétique",
+        "en": "Elixir of the Heretic"
+      },
+      "icon": "UI_ItemIcon_113083"
+    },
+    "worldBoss": {
+      "id": 113091,
+      "name": {
+        "fr": "Queue coupée du rôdeur céleste",
+        "en": "Severed Tail of the Sky-Roamer"
+      },
+      "icon": "UI_ItemIcon_113091"
+    },
+    "specialty": {
+      "id": 101276,
+      "name": {
+        "fr": "Floc-d'herbe",
+        "en": "Flockingweed"
+      },
+      "icon": "UI_ItemIcon_101276"
+    },
+    "commonMat": {
+      "id": 112149,
+      "name": {
+        "fr": "Graine chimérique",
+        "en": "Chimeric Core"
+      },
+      "icon": "UI_ItemIcon_112149"
+    }
+  },
+  "Amber": {
+    "talentBookKey": "freedom",
+    "weeklyBoss": {
+      "id": 113005,
+      "name": {
+        "fr": "Souffle de Stormterror",
+        "en": "Dvalin's Sigh"
+      },
+      "icon": "UI_ItemIcon_113005"
+    },
+    "worldBoss": {
+      "id": 113011,
+      "name": {
+        "fr": "Graine de feu",
+        "en": "Everflame Seed"
+      },
+      "icon": "UI_ItemIcon_113011"
+    },
+    "specialty": {
+      "id": 100055,
+      "name": {
+        "fr": "Herbe à lampe",
+        "en": "Small Lamp Grass"
+      },
+      "icon": "UI_ItemIcon_100055"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "Arataki_Itto": {
+    "talentBookKey": "elegance",
+    "weeklyBoss": {
+      "id": 113027,
+      "name": {
+        "fr": "Cœur de cendre",
+        "en": "Ashen Heart"
+      },
+      "icon": "UI_ItemIcon_113027"
+    },
+    "worldBoss": {
+      "id": 113030,
+      "name": {
+        "fr": "Régalia de faille",
+        "en": "Riftborn Regalia"
+      },
+      "icon": "UI_ItemIcon_113030"
+    },
+    "specialty": {
+      "id": 101201,
+      "name": {
+        "fr": "Scarabuto",
+        "en": "Onikabuto"
+      },
+      "icon": "UI_ItemIcon_101201"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "Arlecchino": {
+    "talentBookKey": "order",
+    "weeklyBoss": {
+      "id": 113060,
+      "name": {
+        "fr": "Bougie vacillante",
+        "en": "Fading Candle"
+      },
+      "icon": "UI_ItemIcon_113060"
+    },
+    "worldBoss": {
+      "id": 113059,
+      "name": {
+        "fr": "Fragment d'une mélodie dorée",
+        "en": "Fragment of a Golden Melody"
+      },
+      "icon": "UI_ItemIcon_113059"
+    },
+    "specialty": {
+      "id": 101236,
+      "name": {
+        "fr": "Rose arc-en-ciel",
+        "en": "Rainbow Rose"
+      },
+      "icon": "UI_ItemIcon_101236"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "Baizhu": {
+    "talentBookKey": "gold",
+    "weeklyBoss": {
+      "id": 113046,
+      "name": {
+        "fr": "Fougère du monde luxuriant",
+        "en": "Worldspan Fern"
+      },
+      "icon": "UI_ItemIcon_113046"
+    },
+    "worldBoss": {
+      "id": 113045,
+      "name": {
+        "fr": "Anneau de sombreur éternelle",
+        "en": "Evergloom Ring"
+      },
+      "icon": "UI_ItemIcon_113045"
+    },
+    "specialty": {
+      "id": 100034,
+      "name": {
+        "fr": "Muguet bleu",
+        "en": "Violetgrass"
+      },
+      "icon": "UI_ItemIcon_100034"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "Barbara": {
+    "talentBookKey": "freedom",
+    "weeklyBoss": {
+      "id": 113007,
+      "name": {
+        "fr": "Vertèbre de Borée",
+        "en": "Ring of Boreas"
+      },
+      "icon": "UI_ItemIcon_113007"
+    },
+    "worldBoss": {
+      "id": 113012,
+      "name": {
+        "fr": "Cœur d'eau pure",
+        "en": "Cleansing Heart"
+      },
+      "icon": "UI_ItemIcon_113012"
+    },
+    "specialty": {
+      "id": 100025,
+      "name": {
+        "fr": "Champignon anémophile",
+        "en": "Philanemo Mushroom"
+      },
+      "icon": "UI_ItemIcon_100025"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Beidou": {
+    "talentBookKey": "gold",
+    "weeklyBoss": {
+      "id": 113005,
+      "name": {
+        "fr": "Souffle de Stormterror",
+        "en": "Dvalin's Sigh"
+      },
+      "icon": "UI_ItemIcon_113005"
+    },
+    "worldBoss": {
+      "id": 113002,
+      "name": {
+        "fr": "Prisme d'éclair",
+        "en": "Lightning Prism"
+      },
+      "icon": "UI_ItemIcon_113002"
+    },
+    "specialty": {
+      "id": 100028,
+      "name": {
+        "fr": "Jade noctiluque",
+        "en": "Noctilucous Jade"
+      },
+      "icon": "UI_ItemIcon_100028"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "Bennett": {
+    "talentBookKey": "resistance",
+    "weeklyBoss": {
+      "id": 113003,
+      "name": {
+        "fr": "Plume de Stormterror",
+        "en": "Dvalin's Plume"
+      },
+      "icon": "UI_ItemIcon_113003"
+    },
+    "worldBoss": {
+      "id": 113011,
+      "name": {
+        "fr": "Graine de feu",
+        "en": "Everflame Seed"
+      },
+      "icon": "UI_ItemIcon_113011"
+    },
+    "specialty": {
+      "id": 100024,
+      "name": {
+        "fr": "Chrysanthème à aubes",
+        "en": "Windwheel Aster"
+      },
+      "icon": "UI_ItemIcon_100024"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "Candace": {
+    "talentBookKey": "admonition",
+    "weeklyBoss": {
+      "id": 113033,
+      "name": {
+        "fr": "Larmes de la divinité calamiteuse",
+        "en": "Tears of the Calamitous God"
+      },
+      "icon": "UI_ItemIcon_113033"
+    },
+    "worldBoss": {
+      "id": 113039,
+      "name": {
+        "fr": "Tétraèdre de lumière",
+        "en": "Light Guiding Tetrahedron"
+      },
+      "icon": "UI_ItemIcon_113039"
+    },
+    "specialty": {
+      "id": 101220,
+      "name": {
+        "fr": "Quandong",
+        "en": "Henna Berry"
+      },
+      "icon": "UI_ItemIcon_101220"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "Charlotte": {
+    "talentBookKey": "justice",
+    "weeklyBoss": {
+      "id": 113054,
+      "name": {
+        "fr": "Ficelle de soie sans lumière",
+        "en": "Lightless Silk String"
+      },
+      "icon": "UI_ItemIcon_113054"
+    },
+    "worldBoss": {
+      "id": 113052,
+      "name": {
+        "fr": "« Appareil Tourbillon »",
+        "en": "\"Tourbillon Device\""
+      },
+      "icon": "UI_ItemIcon_113052"
+    },
+    "specialty": {
+      "id": 101232,
+      "name": {
+        "fr": "Conque de béryl",
+        "en": "Beryl Conch"
+      },
+      "icon": "UI_ItemIcon_101232"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "Chasca": {
+    "talentBookKey": "conflict",
+    "weeklyBoss": {
+      "id": 113061,
+      "name": {
+        "fr": "Plume soyeuse",
+        "en": "Silken Feather"
+      },
+      "icon": "UI_ItemIcon_113061"
+    },
+    "worldBoss": {
+      "id": 113067,
+      "name": {
+        "fr": "Regard enchevêtrant",
+        "en": "Ensnaring Gaze"
+      },
+      "icon": "UI_ItemIcon_113067"
+    },
+    "specialty": {
+      "id": 101253,
+      "name": {
+        "fr": "Pourprinfleur fanée",
+        "en": "Withering Purpurbloom"
+      },
+      "icon": "UI_ItemIcon_101253"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "Chevreuse": {
+    "talentBookKey": "order",
+    "weeklyBoss": {
+      "id": 113055,
+      "name": {
+        "fr": "Œil de tourbillon sans lumière",
+        "en": "Lightless Eye of the Maelstrom"
+      },
+      "icon": "UI_ItemIcon_113055"
+    },
+    "worldBoss": {
+      "id": 113053,
+      "name": {
+        "fr": "Corne fontemarine",
+        "en": "Fontemer Unihorn"
+      },
+      "icon": "UI_ItemIcon_113053"
+    },
+    "specialty": {
+      "id": 101235,
+      "name": {
+        "fr": "Clochette de Lumidouce",
+        "en": "Lumidouce Bell"
+      },
+      "icon": "UI_ItemIcon_101235"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "Chiori": {
+    "talentBookKey": "light",
+    "weeklyBoss": {
+      "id": 113054,
+      "name": {
+        "fr": "Ficelle de soie sans lumière",
+        "en": "Lightless Silk String"
+      },
+      "icon": "UI_ItemIcon_113054"
+    },
+    "worldBoss": {
+      "id": 113049,
+      "name": {
+        "fr": "Engrenage artificié de rechange : Coppelia",
+        "en": "Artificed Spare Clockwork Component — Coppelia"
+      },
+      "icon": "UI_ItemIcon_113049"
+    },
+    "specialty": {
+      "id": 101204,
+      "name": {
+        "fr": "Dendrobium sanglant",
+        "en": "Dendrobium"
+      },
+      "icon": "UI_ItemIcon_101204"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "Chongyun": {
+    "talentBookKey": "diligence",
+    "weeklyBoss": {
+      "id": 113005,
+      "name": {
+        "fr": "Souffle de Stormterror",
+        "en": "Dvalin's Sigh"
+      },
+      "icon": "UI_ItemIcon_113005"
+    },
+    "worldBoss": {
+      "id": 113010,
+      "name": {
+        "fr": "Duramen de glace",
+        "en": "Hoarfrost Core"
+      },
+      "icon": "UI_ItemIcon_113010"
+    },
+    "specialty": {
+      "id": 100058,
+      "name": {
+        "fr": "Cœur de lapis",
+        "en": "Cor Lapis"
+      },
+      "icon": "UI_ItemIcon_100058"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "Citlali": {
+    "talentBookKey": "kindling",
+    "weeklyBoss": {
+      "id": 113062,
+      "name": {
+        "fr": "Verdict négatif",
+        "en": "Denial and Judgment"
+      },
+      "icon": "UI_ItemIcon_113062"
+    },
+    "worldBoss": {
+      "id": 113071,
+      "name": {
+        "fr": "Talisman d'une terre mystérieuse",
+        "en": "Talisman of the Enigmatic Land"
+      },
+      "icon": "UI_ItemIcon_113071"
+    },
+    "specialty": {
+      "id": 101249,
+      "name": {
+        "fr": "Baie de quenettier",
+        "en": "Quenepa Berry"
+      },
+      "icon": "UI_ItemIcon_101249"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "Clorinde": {
+    "talentBookKey": "justice",
+    "weeklyBoss": {
+      "id": 113048,
+      "name": {
+        "fr": "Constambre",
+        "en": "Everamber"
+      },
+      "icon": "UI_ItemIcon_113048"
+    },
+    "worldBoss": {
+      "id": 113053,
+      "name": {
+        "fr": "Corne fontemarine",
+        "en": "Fontemer Unihorn"
+      },
+      "icon": "UI_ItemIcon_113053"
+    },
+    "specialty": {
+      "id": 101237,
+      "name": {
+        "fr": "Sombrétoile",
+        "en": "Lumitoile"
+      },
+      "icon": "UI_ItemIcon_101237"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "Collei": {
+    "talentBookKey": "praxis",
+    "weeklyBoss": {
+      "id": 113033,
+      "name": {
+        "fr": "Larmes de la divinité calamiteuse",
+        "en": "Tears of the Calamitous God"
+      },
+      "icon": "UI_ItemIcon_113033"
+    },
+    "worldBoss": {
+      "id": 113036,
+      "name": {
+        "fr": "Bec crochu majestueux",
+        "en": "Majestic Hooked Beak"
+      },
+      "icon": "UI_ItemIcon_113036"
+    },
+    "specialty": {
+      "id": 101213,
+      "name": {
+        "fr": "Champignon sacramental",
+        "en": "Rukkhashava Mushrooms"
+      },
+      "icon": "UI_ItemIcon_101213"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "Columbina": {
+    "talentBookKey": "light",
+    "weeklyBoss": {
+      "id": 113081,
+      "name": {
+        "fr": "Masque du médecin vertueux",
+        "en": "Mask of the Virtuous Doctor"
+      },
+      "icon": "UI_ItemIcon_113081"
+    },
+    "worldBoss": {
+      "id": 113079,
+      "name": {
+        "fr": "Corne radieuse",
+        "en": "Radiant Antler"
+      },
+      "icon": "UI_ItemIcon_113079"
+    },
+    "specialty": {
+      "id": 101268,
+      "name": {
+        "fr": "Glacelée d'hiver",
+        "en": "Winter Icelea"
+      },
+      "icon": "UI_ItemIcon_101266"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "Cyno": {
+    "talentBookKey": "admonition",
+    "weeklyBoss": {
+      "id": 113032,
+      "name": {
+        "fr": "Mudra du général maléfique",
+        "en": "Mudra of the Malefic General"
+      },
+      "icon": "UI_ItemIcon_113032"
+    },
+    "worldBoss": {
+      "id": 113037,
+      "name": {
+        "fr": "Fruit du tonnerre",
+        "en": "Thunderclap Fruitcore"
+      },
+      "icon": "UI_ItemIcon_113037"
+    },
+    "specialty": {
+      "id": 101225,
+      "name": {
+        "fr": "Scarabée",
+        "en": "Scarab"
+      },
+      "icon": "UI_ItemIcon_101225"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Dahlia": {
+    "talentBookKey": "ballad",
+    "weeklyBoss": {
+      "id": 113070,
+      "name": {
+        "fr": "Plume érodée",
+        "en": "Eroded Scale-Feather"
+      },
+      "icon": "UI_ItemIcon_113070"
+    },
+    "worldBoss": {
+      "id": 113076,
+      "name": {
+        "fr": "Accumulateur d'air de source secrète",
+        "en": "Secret Source Airflow Accumulator"
+      },
+      "icon": "UI_ItemIcon_113076"
+    },
+    "specialty": {
+      "id": 100056,
+      "name": {
+        "fr": "Lys calla",
+        "en": "Calla Lily"
+      },
+      "icon": "UI_ItemIcon_100056"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "Dehya": {
+    "talentBookKey": "praxis",
+    "weeklyBoss": {
+      "id": 113041,
+      "name": {
+        "fr": "Fils de marionnette",
+        "en": "Puppet Strings"
+      },
+      "icon": "UI_ItemIcon_113041"
+    },
+    "worldBoss": {
+      "id": 113039,
+      "name": {
+        "fr": "Tétraèdre de lumière",
+        "en": "Light Guiding Tetrahedron"
+      },
+      "icon": "UI_ItemIcon_113039"
+    },
+    "specialty": {
+      "id": 101222,
+      "name": {
+        "fr": "Pupe graisseuse des sables",
+        "en": "Sand Grease Pupa"
+      },
+      "icon": "UI_ItemIcon_101222"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "Diluc": {
+    "talentBookKey": "resistance",
+    "weeklyBoss": {
+      "id": 113003,
+      "name": {
+        "fr": "Plume de Stormterror",
+        "en": "Dvalin's Plume"
+      },
+      "icon": "UI_ItemIcon_113003"
+    },
+    "worldBoss": {
+      "id": 113011,
+      "name": {
+        "fr": "Graine de feu",
+        "en": "Everflame Seed"
+      },
+      "icon": "UI_ItemIcon_113011"
+    },
+    "specialty": {
+      "id": 100055,
+      "name": {
+        "fr": "Herbe à lampe",
+        "en": "Small Lamp Grass"
+      },
+      "icon": "UI_ItemIcon_100055"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "Diona": {
+    "talentBookKey": "freedom",
+    "weeklyBoss": {
+      "id": 113014,
+      "name": {
+        "fr": "Fragment du démon",
+        "en": "Shard of a Foul Legacy"
+      },
+      "icon": "UI_ItemIcon_113014"
+    },
+    "worldBoss": {
+      "id": 113010,
+      "name": {
+        "fr": "Duramen de glace",
+        "en": "Hoarfrost Core"
+      },
+      "icon": "UI_ItemIcon_113010"
+    },
+    "specialty": {
+      "id": 100056,
+      "name": {
+        "fr": "Lys calla",
+        "en": "Calla Lily"
+      },
+      "icon": "UI_ItemIcon_100056"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "Dori": {
+    "talentBookKey": "ingenuity",
+    "weeklyBoss": {
+      "id": 113018,
+      "name": {
+        "fr": "Branche de jade cramoisi",
+        "en": "Bloodjade Branch"
+      },
+      "icon": "UI_ItemIcon_113018"
+    },
+    "worldBoss": {
+      "id": 113037,
+      "name": {
+        "fr": "Fruit du tonnerre",
+        "en": "Thunderclap Fruitcore"
+      },
+      "icon": "UI_ItemIcon_113037"
+    },
+    "specialty": {
+      "id": 101217,
+      "name": {
+        "fr": "Kalpalotus",
+        "en": "Kalpalata Lotus"
+      },
+      "icon": "UI_ItemIcon_101217"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "Durin": {
+    "talentBookKey": "ballad",
+    "weeklyBoss": {
+      "id": 113069,
+      "name": {
+        "fr": "Rayon érodé",
+        "en": "Eroded Sunfire"
+      },
+      "icon": "UI_ItemIcon_113069"
+    },
+    "worldBoss": {
+      "id": 113080,
+      "name": {
+        "fr": "Noyau kuuvahkique militaire de type cyclique",
+        "en": "Cyclic Military Kuuvahki Core"
+      },
+      "icon": "UI_ItemIcon_113080"
+    },
+    "specialty": {
+      "id": 101261,
+      "name": {
+        "fr": "Fleur lampe-de-givre",
+        "en": "Frostlamp Flower"
+      },
+      "icon": "UI_ItemIcon_101261"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "Escoffier": {
+    "talentBookKey": "justice",
+    "weeklyBoss": {
+      "id": 113068,
+      "name": {
+        "fr": "Corne érodée",
+        "en": "Eroded Horn"
+      },
+      "icon": "UI_ItemIcon_113068"
+    },
+    "worldBoss": {
+      "id": 113076,
+      "name": {
+        "fr": "Accumulateur d'air de source secrète",
+        "en": "Secret Source Airflow Accumulator"
+      },
+      "icon": "UI_ItemIcon_113076"
+    },
+    "specialty": {
+      "id": 101232,
+      "name": {
+        "fr": "Conque de béryl",
+        "en": "Beryl Conch"
+      },
+      "icon": "UI_ItemIcon_101232"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "Eula": {
+    "talentBookKey": "resistance",
+    "weeklyBoss": {
+      "id": 113017,
+      "name": {
+        "fr": "Couronne du roi-dragon",
+        "en": "Dragon Lord's Crown"
+      },
+      "icon": "UI_ItemIcon_113017"
+    },
+    "worldBoss": {
+      "id": 113020,
+      "name": {
+        "fr": "Fleur cristalline",
+        "en": "Crystalline Bloom"
+      },
+      "icon": "UI_ItemIcon_113020"
+    },
+    "specialty": {
+      "id": 100057,
+      "name": {
+        "fr": "Graines de pissenlit",
+        "en": "Dandelion Seed"
+      },
+      "icon": "UI_ItemIcon_100057"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "Faruzan": {
+    "talentBookKey": "admonition",
+    "weeklyBoss": {
+      "id": 113041,
+      "name": {
+        "fr": "Fils de marionnette",
+        "en": "Puppet Strings"
+      },
+      "icon": "UI_ItemIcon_113041"
+    },
+    "worldBoss": {
+      "id": 113039,
+      "name": {
+        "fr": "Tétraèdre de lumière",
+        "en": "Light Guiding Tetrahedron"
+      },
+      "icon": "UI_ItemIcon_113039"
+    },
+    "specialty": {
+      "id": 101220,
+      "name": {
+        "fr": "Quandong",
+        "en": "Henna Berry"
+      },
+      "icon": "UI_ItemIcon_101220"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "Fischl": {
+    "talentBookKey": "ballad",
+    "weeklyBoss": {
+      "id": 113008,
+      "name": {
+        "fr": "Esprit de Borée",
+        "en": "Spirit Locket of Boreas"
+      },
+      "icon": "UI_ItemIcon_113008"
+    },
+    "worldBoss": {
+      "id": 113002,
+      "name": {
+        "fr": "Prisme d'éclair",
+        "en": "Lightning Prism"
+      },
+      "icon": "UI_ItemIcon_113002"
+    },
+    "specialty": {
+      "id": 100055,
+      "name": {
+        "fr": "Herbe à lampe",
+        "en": "Small Lamp Grass"
+      },
+      "icon": "UI_ItemIcon_100055"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "Flins": {
+    "talentBookKey": "vagrancy",
+    "weeklyBoss": {
+      "id": 113075,
+      "name": {
+        "fr": "Échantillon ascensionné : Dame",
+        "en": "Ascended Sample: Queen"
+      },
+      "icon": "UI_ItemIcon_113075"
+    },
+    "worldBoss": {
+      "id": 113077,
+      "name": {
+        "fr": "Moule d'estampage kuuvahkique de précision",
+        "en": "Precision Kuuvahki Stamping Die"
+      },
+      "icon": "UI_ItemIcon_113077"
+    },
+    "specialty": {
+      "id": 101261,
+      "name": {
+        "fr": "Fleur lampe-de-givre",
+        "en": "Frostlamp Flower"
+      },
+      "icon": "UI_ItemIcon_101261"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "Fréminet": {
+    "talentBookKey": "justice",
+    "weeklyBoss": {
+      "id": 113046,
+      "name": {
+        "fr": "Fougère du monde luxuriant",
+        "en": "Worldspan Fern"
+      },
+      "icon": "UI_ItemIcon_113046"
+    },
+    "worldBoss": {
+      "id": 113050,
+      "name": {
+        "fr": "Engrenage artificié de rechange : Coppelius",
+        "en": "Artificed Spare Clockwork Component — Coppelius"
+      },
+      "icon": "UI_ItemIcon_113050"
+    },
+    "specialty": {
+      "id": 101233,
+      "name": {
+        "fr": "Fleur romaritime",
+        "en": "Romaritime Flower"
+      },
+      "icon": "UI_ItemIcon_101233"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "Furina": {
+    "talentBookKey": "justice",
+    "weeklyBoss": {
+      "id": 113056,
+      "name": {
+        "fr": "Masse sans lumière",
+        "en": "Lightless Mass"
+      },
+      "icon": "UI_ItemIcon_113056"
+    },
+    "worldBoss": {
+      "id": 113057,
+      "name": {
+        "fr": "Eau n'ayant pas transcendé",
+        "en": "Water That Failed To Transcend"
+      },
+      "icon": "UI_ItemIcon_113057"
+    },
+    "specialty": {
+      "id": 101238,
+      "name": {
+        "fr": "Lys lacmineux",
+        "en": "Lakelight Lily"
+      },
+      "icon": "UI_ItemIcon_101238"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "Gaming": {
+    "talentBookKey": "prosperity",
+    "weeklyBoss": {
+      "id": 113056,
+      "name": {
+        "fr": "Masse sans lumière",
+        "en": "Lightless Mass"
+      },
+      "icon": "UI_ItemIcon_113056"
+    },
+    "worldBoss": {
+      "id": 113051,
+      "name": {
+        "fr": "Résolution de l'empereur",
+        "en": "Emperor's Resolution"
+      },
+      "icon": "UI_ItemIcon_113051"
+    },
+    "specialty": {
+      "id": 100033,
+      "name": {
+        "fr": "Conque d'étoile",
+        "en": "Starconch"
+      },
+      "icon": "UI_ItemIcon_100033"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "Ganyu": {
+    "talentBookKey": "diligence",
+    "weeklyBoss": {
+      "id": 113015,
+      "name": {
+        "fr": "Ombre du guerrier",
+        "en": "Shadow of the Warrior"
+      },
+      "icon": "UI_ItemIcon_113015"
+    },
+    "worldBoss": {
+      "id": 113010,
+      "name": {
+        "fr": "Duramen de glace",
+        "en": "Hoarfrost Core"
+      },
+      "icon": "UI_ItemIcon_113010"
+    },
+    "specialty": {
+      "id": 100031,
+      "name": {
+        "fr": "Fleur de Qingxin",
+        "en": "Qingxin"
+      },
+      "icon": "UI_ItemIcon_100031"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "Gorou": {
+    "talentBookKey": "light",
+    "weeklyBoss": {
+      "id": 113025,
+      "name": {
+        "fr": "Moment en fusion",
+        "en": "Molten Moment"
+      },
+      "icon": "UI_ItemIcon_113025"
+    },
+    "worldBoss": {
+      "id": 113023,
+      "name": {
+        "fr": "Cœur perpétuel",
+        "en": "Perpetual Heart"
+      },
+      "icon": "UI_ItemIcon_113023"
+    },
+    "specialty": {
+      "id": 101207,
+      "name": {
+        "fr": "Perle de corail",
+        "en": "Sango Pearl"
+      },
+      "icon": "UI_ItemIcon_101207"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "Hu_Tao": {
+    "talentBookKey": "diligence",
+    "weeklyBoss": {
+      "id": 113014,
+      "name": {
+        "fr": "Fragment du démon",
+        "en": "Shard of a Foul Legacy"
+      },
+      "icon": "UI_ItemIcon_113014"
+    },
+    "worldBoss": {
+      "id": 113016,
+      "name": {
+        "fr": "Jade juvénile",
+        "en": "Juvenile Jade"
+      },
+      "icon": "UI_ItemIcon_113016"
+    },
+    "specialty": {
+      "id": 100029,
+      "name": {
+        "fr": "Fleur de soie",
+        "en": "Silk Flower"
+      },
+      "icon": "UI_ItemIcon_100029"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "Iansan": {
+    "talentBookKey": "contention",
+    "weeklyBoss": {
+      "id": 113062,
+      "name": {
+        "fr": "Verdict négatif",
+        "en": "Denial and Judgment"
+      },
+      "icon": "UI_ItemIcon_113062"
+    },
+    "worldBoss": {
+      "id": 113067,
+      "name": {
+        "fr": "Regard enchevêtrant",
+        "en": "Ensnaring Gaze"
+      },
+      "icon": "UI_ItemIcon_113067"
+    },
+    "specialty": {
+      "id": 101255,
+      "name": {
+        "fr": "Dracolite",
+        "en": "Dracolite"
+      },
+      "icon": "UI_ItemIcon_101255"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "Ifa": {
+    "talentBookKey": "conflict",
+    "weeklyBoss": {
+      "id": 113074,
+      "name": {
+        "fr": "Échantillon ascensionné : Tour",
+        "en": "Ascended Sample: Rook"
+      },
+      "icon": "UI_ItemIcon_113074"
+    },
+    "worldBoss": {
+      "id": 113072,
+      "name": {
+        "fr": "Noyau inerte de statue",
+        "en": "Sparkless Statue Core"
+      },
+      "icon": "UI_ItemIcon_113072"
+    },
+    "specialty": {
+      "id": 101250,
+      "name": {
+        "fr": "Patte saurienne",
+        "en": "Saurian Claw Succulent"
+      },
+      "icon": "UI_ItemIcon_101250"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "Illuga": {
+    "talentBookKey": "elysium",
+    "weeklyBoss": {
+      "id": 113068,
+      "name": {
+        "fr": "Corne érodée",
+        "en": "Eroded Horn"
+      },
+      "icon": "UI_ItemIcon_113068"
+    },
+    "worldBoss": {
+      "id": 113080,
+      "name": {
+        "fr": "Noyau kuuvahkique militaire de type cyclique",
+        "en": "Cyclic Military Kuuvahki Core"
+      },
+      "icon": "UI_ItemIcon_113080"
+    },
+    "specialty": {
+      "id": 101269,
+      "name": {
+        "fr": "Ambre de pin",
+        "en": "Pine Amber"
+      },
+      "icon": "UI_ItemIcon_101269"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "Ineffa": {
+    "talentBookKey": "conflict",
+    "weeklyBoss": {
+      "id": 113069,
+      "name": {
+        "fr": "Rayon érodé",
+        "en": "Eroded Sunfire"
+      },
+      "icon": "UI_ItemIcon_113069"
+    },
+    "worldBoss": {
+      "id": 113076,
+      "name": {
+        "fr": "Accumulateur d'air de source secrète",
+        "en": "Secret Source Airflow Accumulator"
+      },
+      "icon": "UI_ItemIcon_113076"
+    },
+    "specialty": {
+      "id": 101252,
+      "name": {
+        "fr": "Champicorne brillant",
+        "en": "Glowing Hornshroom"
+      },
+      "icon": "UI_ItemIcon_101252"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "Jahoda": {
+    "talentBookKey": "vagrancy",
+    "weeklyBoss": {
+      "id": 113073,
+      "name": {
+        "fr": "Échantillon ascensionné : Cavalier",
+        "en": "Ascended Sample: Knight"
+      },
+      "icon": "UI_ItemIcon_113073"
+    },
+    "worldBoss": {
+      "id": 113078,
+      "name": {
+        "fr": "Plume-écaille luminifère",
+        "en": "Lightbearing Scale-Feather"
+      },
+      "icon": "UI_ItemIcon_113078"
+    },
+    "specialty": {
+      "id": 101257,
+      "name": {
+        "fr": "Roulement portable",
+        "en": "Portable Bearing"
+      },
+      "icon": "UI_ItemIcon_101257"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "Jean": {
+    "talentBookKey": "resistance",
+    "weeklyBoss": {
+      "id": 113003,
+      "name": {
+        "fr": "Plume de Stormterror",
+        "en": "Dvalin's Plume"
+      },
+      "icon": "UI_ItemIcon_113003"
+    },
+    "worldBoss": {
+      "id": 113001,
+      "name": {
+        "fr": "Graine d'ouragan",
+        "en": "Hurricane Seed"
+      },
+      "icon": "UI_ItemIcon_113001"
+    },
+    "specialty": {
+      "id": 100057,
+      "name": {
+        "fr": "Graines de pissenlit",
+        "en": "Dandelion Seed"
+      },
+      "icon": "UI_ItemIcon_100057"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "Kachina": {
+    "talentBookKey": "conflict",
+    "weeklyBoss": {
+      "id": 113060,
+      "name": {
+        "fr": "Bougie vacillante",
+        "en": "Fading Candle"
+      },
+      "icon": "UI_ItemIcon_113060"
+    },
+    "worldBoss": {
+      "id": 113065,
+      "name": {
+        "fr": "Flamboigrenade surmûre",
+        "en": "Overripe Flamegranate"
+      },
+      "icon": "UI_ItemIcon_113065"
+    },
+    "specialty": {
+      "id": 101249,
+      "name": {
+        "fr": "Baie de quenettier",
+        "en": "Quenepa Berry"
+      },
+      "icon": "UI_ItemIcon_101249"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "Kaedehara_Kazuha": {
+    "talentBookKey": "diligence",
+    "weeklyBoss": {
+      "id": 113019,
+      "name": {
+        "fr": "Écaille dorée",
+        "en": "Gilded Scale"
+      },
+      "icon": "UI_ItemIcon_113019"
+    },
+    "worldBoss": {
+      "id": 113022,
+      "name": {
+        "fr": "Mécanisme oni",
+        "en": "Marionette Core"
+      },
+      "icon": "UI_ItemIcon_113022"
+    },
+    "specialty": {
+      "id": 101206,
+      "name": {
+        "fr": "Ganoderma marin",
+        "en": "Sea Ganoderma"
+      },
+      "icon": "UI_ItemIcon_101206"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "Kaeya": {
+    "talentBookKey": "ballad",
+    "weeklyBoss": {
+      "id": 113008,
+      "name": {
+        "fr": "Esprit de Borée",
+        "en": "Spirit Locket of Boreas"
+      },
+      "icon": "UI_ItemIcon_113008"
+    },
+    "worldBoss": {
+      "id": 113010,
+      "name": {
+        "fr": "Duramen de glace",
+        "en": "Hoarfrost Core"
+      },
+      "icon": "UI_ItemIcon_113010"
+    },
+    "specialty": {
+      "id": 100056,
+      "name": {
+        "fr": "Lys calla",
+        "en": "Calla Lily"
+      },
+      "icon": "UI_ItemIcon_100056"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "Kamisato_Ayaka": {
+    "talentBookKey": "elegance",
+    "weeklyBoss": {
+      "id": 113018,
+      "name": {
+        "fr": "Branche de jade cramoisi",
+        "en": "Bloodjade Branch"
+      },
+      "icon": "UI_ItemIcon_113018"
+    },
+    "worldBoss": {
+      "id": 113023,
+      "name": {
+        "fr": "Cœur perpétuel",
+        "en": "Perpetual Heart"
+      },
+      "icon": "UI_ItemIcon_113023"
+    },
+    "specialty": {
+      "id": 101202,
+      "name": {
+        "fr": "Fleur de cerisier",
+        "en": "Sakura Bloom"
+      },
+      "icon": "UI_ItemIcon_101202"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "Kamisato_Ayato": {
+    "talentBookKey": "elegance",
+    "weeklyBoss": {
+      "id": 113032,
+      "name": {
+        "fr": "Mudra du général maléfique",
+        "en": "Mudra of the Malefic General"
+      },
+      "icon": "UI_ItemIcon_113032"
+    },
+    "worldBoss": {
+      "id": 113028,
+      "name": {
+        "fr": "Rosée du rejet",
+        "en": "Dew of Repudiation"
+      },
+      "icon": "UI_ItemIcon_113028"
+    },
+    "specialty": {
+      "id": 101202,
+      "name": {
+        "fr": "Fleur de cerisier",
+        "en": "Sakura Bloom"
+      },
+      "icon": "UI_ItemIcon_101202"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "Kaveh": {
+    "talentBookKey": "ingenuity",
+    "weeklyBoss": {
+      "id": 113047,
+      "name": {
+        "fr": "Floraison première de l'oasis",
+        "en": "Primordial Greenbloom"
+      },
+      "icon": "UI_ItemIcon_113047"
+    },
+    "worldBoss": {
+      "id": 113040,
+      "name": {
+        "fr": "Liane d'oblitération",
+        "en": "Quelled Creeper"
+      },
+      "icon": "UI_ItemIcon_113040"
+    },
+    "specialty": {
+      "id": 101223,
+      "name": {
+        "fr": "Fleur funéraire",
+        "en": "Mourning Flower"
+      },
+      "icon": "UI_ItemIcon_101223"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "Keqing": {
+    "talentBookKey": "prosperity",
+    "weeklyBoss": {
+      "id": 113007,
+      "name": {
+        "fr": "Vertèbre de Borée",
+        "en": "Ring of Boreas"
+      },
+      "icon": "UI_ItemIcon_113007"
+    },
+    "worldBoss": {
+      "id": 113002,
+      "name": {
+        "fr": "Prisme d'éclair",
+        "en": "Lightning Prism"
+      },
+      "icon": "UI_ItemIcon_113002"
+    },
+    "specialty": {
+      "id": 100058,
+      "name": {
+        "fr": "Cœur de lapis",
+        "en": "Cor Lapis"
+      },
+      "icon": "UI_ItemIcon_100058"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "Kinich": {
+    "talentBookKey": "kindling",
+    "weeklyBoss": {
+      "id": 113062,
+      "name": {
+        "fr": "Verdict négatif",
+        "en": "Denial and Judgment"
+      },
+      "icon": "UI_ItemIcon_113062"
+    },
+    "worldBoss": {
+      "id": 113065,
+      "name": {
+        "fr": "Flamboigrenade surmûre",
+        "en": "Overripe Flamegranate"
+      },
+      "icon": "UI_ItemIcon_113065"
+    },
+    "specialty": {
+      "id": 101250,
+      "name": {
+        "fr": "Patte saurienne",
+        "en": "Saurian Claw Succulent"
+      },
+      "icon": "UI_ItemIcon_101250"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "Kirara": {
+    "talentBookKey": "transience",
+    "weeklyBoss": {
+      "id": 113048,
+      "name": {
+        "fr": "Constambre",
+        "en": "Everamber"
+      },
+      "icon": "UI_ItemIcon_113048"
+    },
+    "worldBoss": {
+      "id": 113045,
+      "name": {
+        "fr": "Anneau de sombreur éternelle",
+        "en": "Evergloom Ring"
+      },
+      "icon": "UI_ItemIcon_113045"
+    },
+    "specialty": {
+      "id": 101208,
+      "name": {
+        "fr": "Fruit d'Amakumo",
+        "en": "Amakumo Fruit"
+      },
+      "icon": "UI_ItemIcon_101208"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "Klee": {
+    "talentBookKey": "freedom",
+    "weeklyBoss": {
+      "id": 113007,
+      "name": {
+        "fr": "Vertèbre de Borée",
+        "en": "Ring of Boreas"
+      },
+      "icon": "UI_ItemIcon_113007"
+    },
+    "worldBoss": {
+      "id": 113011,
+      "name": {
+        "fr": "Graine de feu",
+        "en": "Everflame Seed"
+      },
+      "icon": "UI_ItemIcon_113011"
+    },
+    "specialty": {
+      "id": 100025,
+      "name": {
+        "fr": "Champignon anémophile",
+        "en": "Philanemo Mushroom"
+      },
+      "icon": "UI_ItemIcon_100025"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Kujou_Sara": {
+    "talentBookKey": "elegance",
+    "weeklyBoss": {
+      "id": 113027,
+      "name": {
+        "fr": "Cœur de cendre",
+        "en": "Ashen Heart"
+      },
+      "icon": "UI_ItemIcon_113027"
+    },
+    "worldBoss": {
+      "id": 113029,
+      "name": {
+        "fr": "Perles tempestives",
+        "en": "Storm Beads"
+      },
+      "icon": "UI_ItemIcon_113029"
+    },
+    "specialty": {
+      "id": 101204,
+      "name": {
+        "fr": "Dendrobium sanglant",
+        "en": "Dendrobium"
+      },
+      "icon": "UI_ItemIcon_101204"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "Kuki_Shinobu": {
+    "talentBookKey": "elegance",
+    "weeklyBoss": {
+      "id": 113033,
+      "name": {
+        "fr": "Larmes de la divinité calamiteuse",
+        "en": "Tears of the Calamitous God"
+      },
+      "icon": "UI_ItemIcon_113033"
+    },
+    "worldBoss": {
+      "id": 113035,
+      "name": {
+        "fr": "Croc runique",
+        "en": "Runic Fang"
+      },
+      "icon": "UI_ItemIcon_113035"
+    },
+    "specialty": {
+      "id": 101205,
+      "name": {
+        "fr": "Herbe à sanglots",
+        "en": "Naku Weed"
+      },
+      "icon": "UI_ItemIcon_101205"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "Lan_Yan": {
+    "talentBookKey": "diligence",
+    "weeklyBoss": {
+      "id": 113069,
+      "name": {
+        "fr": "Rayon érodé",
+        "en": "Eroded Sunfire"
+      },
+      "icon": "UI_ItemIcon_113069"
+    },
+    "worldBoss": {
+      "id": 113066,
+      "name": {
+        "fr": "Noyau source aux motifs dorés secrets",
+        "en": "Gold-Inscribed Secret Source Core"
+      },
+      "icon": "UI_ItemIcon_113066"
+    },
+    "specialty": {
+      "id": 101241,
+      "name": {
+        "fr": "Jade cristallin",
+        "en": "Clearwater Jade"
+      },
+      "icon": "UI_ItemIcon_101241"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "Lauma": {
+    "talentBookKey": "light",
+    "weeklyBoss": {
+      "id": 113070,
+      "name": {
+        "fr": "Plume érodée",
+        "en": "Eroded Scale-Feather"
+      },
+      "icon": "UI_ItemIcon_113070"
+    },
+    "worldBoss": {
+      "id": 113078,
+      "name": {
+        "fr": "Plume-écaille luminifère",
+        "en": "Lightbearing Scale-Feather"
+      },
+      "icon": "UI_ItemIcon_113078"
+    },
+    "specialty": {
+      "id": 101263,
+      "name": {
+        "fr": "Argent de lune déchue",
+        "en": "Moonfall Silver"
+      },
+      "icon": "UI_ItemIcon_101263"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "Layla": {
+    "talentBookKey": "ingenuity",
+    "weeklyBoss": {
+      "id": 113042,
+      "name": {
+        "fr": "Miroir de mushin",
+        "en": "Mirror of Mushin"
+      },
+      "icon": "UI_ItemIcon_113042"
+    },
+    "worldBoss": {
+      "id": 113038,
+      "name": {
+        "fr": "Calibre perpétuel",
+        "en": "Perpetual Caliber"
+      },
+      "icon": "UI_ItemIcon_113038"
+    },
+    "specialty": {
+      "id": 101215,
+      "name": {
+        "fr": "Nilotpalotus",
+        "en": "Nilotpala Lotus"
+      },
+      "icon": "UI_ItemIcon_101215"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Linnea": {
+    "talentBookKey": "vagrancy",
+    "weeklyBoss": {
+      "id": 113083,
+      "name": {
+        "fr": "Élixir de l'hérétique",
+        "en": "Elixir of the Heretic"
+      },
+      "icon": "UI_ItemIcon_113083"
+    },
+    "worldBoss": {
+      "id": 113086,
+      "name": {
+        "fr": "Plume de veilleur déchu",
+        "en": "Plume of the Fallen Watcher"
+      },
+      "icon": "UI_ItemIcon_113086"
+    },
+    "specialty": {
+      "id": 101272,
+      "name": {
+        "fr": "Papillon à ailes d'éther",
+        "en": "Etherwing Moth"
+      },
+      "icon": "UI_ItemIcon_101272"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "Lisa": {
+    "talentBookKey": "ballad",
+    "weeklyBoss": {
+      "id": 113004,
+      "name": {
+        "fr": "Griffe de Stormterror",
+        "en": "Dvalin's Claw"
+      },
+      "icon": "UI_ItemIcon_113004"
+    },
+    "worldBoss": {
+      "id": 113002,
+      "name": {
+        "fr": "Prisme d'éclair",
+        "en": "Lightning Prism"
+      },
+      "icon": "UI_ItemIcon_113002"
+    },
+    "specialty": {
+      "id": 100022,
+      "name": {
+        "fr": "Tombaie",
+        "en": "Valberry"
+      },
+      "icon": "UI_ItemIcon_100022"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "Lohen": {
+    "talentBookKey": "resistance",
+    "weeklyBoss": {
+      "id": 113073,
+      "name": {
+        "fr": "Échantillon ascensionné : Cavalier",
+        "en": "Ascended Sample: Knight"
+      },
+      "icon": "UI_ItemIcon_113073"
+    },
+    "worldBoss": {
+      "id": 113085,
+      "name": {
+        "fr": "Queue coupée prismatique",
+        "en": "Prismatic Severed Tail"
+      },
+      "icon": "UI_ItemIcon_113085"
+    },
+    "specialty": {
+      "id": 101272,
+      "name": {
+        "fr": "Papillon à ailes d'éther",
+        "en": "Etherwing Moth"
+      },
+      "icon": "UI_ItemIcon_101272"
+    },
+    "commonMat": {
+      "id": 112011,
+      "name": {
+        "fr": "Pointe de flèche robuste",
+        "en": "Firm Arrowhead"
+      },
+      "icon": "UI_ItemIcon_112011"
+    }
+  },
+  "Lynette": {
+    "talentBookKey": "order",
+    "weeklyBoss": {
+      "id": 113048,
+      "name": {
+        "fr": "Constambre",
+        "en": "Everamber"
+      },
+      "icon": "UI_ItemIcon_113048"
+    },
+    "worldBoss": {
+      "id": 113049,
+      "name": {
+        "fr": "Engrenage artificié de rechange : Coppelia",
+        "en": "Artificed Spare Clockwork Component — Coppelia"
+      },
+      "icon": "UI_ItemIcon_113049"
+    },
+    "specialty": {
+      "id": 101235,
+      "name": {
+        "fr": "Clochette de Lumidouce",
+        "en": "Lumidouce Bell"
+      },
+      "icon": "UI_ItemIcon_101235"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "Lyney": {
+    "talentBookKey": "equity",
+    "weeklyBoss": {
+      "id": 113047,
+      "name": {
+        "fr": "Floraison première de l'oasis",
+        "en": "Primordial Greenbloom"
+      },
+      "icon": "UI_ItemIcon_113047"
+    },
+    "worldBoss": {
+      "id": 113051,
+      "name": {
+        "fr": "Résolution de l'empereur",
+        "en": "Emperor's Resolution"
+      },
+      "icon": "UI_ItemIcon_113051"
+    },
+    "specialty": {
+      "id": 101236,
+      "name": {
+        "fr": "Rose arc-en-ciel",
+        "en": "Rainbow Rose"
+      },
+      "icon": "UI_ItemIcon_101236"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "Manekin": {
+    "talentBookKey": null,
+    "weeklyBoss": null,
+    "worldBoss": {
+      "id": 100024,
+      "name": {
+        "fr": "Chrysanthème à aubes",
+        "en": "Windwheel Aster"
+      },
+      "icon": "UI_ItemIcon_100024"
+    },
+    "specialty": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    },
+    "commonMat": null
+  },
+  "Mavuika": {
+    "talentBookKey": "contention",
+    "weeklyBoss": {
+      "id": 113068,
+      "name": {
+        "fr": "Corne érodée",
+        "en": "Eroded Horn"
+      },
+      "icon": "UI_ItemIcon_113068"
+    },
+    "worldBoss": {
+      "id": 113066,
+      "name": {
+        "fr": "Noyau source aux motifs dorés secrets",
+        "en": "Gold-Inscribed Secret Source Core"
+      },
+      "icon": "UI_ItemIcon_113066"
+    },
+    "specialty": {
+      "id": 101253,
+      "name": {
+        "fr": "Pourprinfleur fanée",
+        "en": "Withering Purpurbloom"
+      },
+      "icon": "UI_ItemIcon_101253"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "Mika": {
+    "talentBookKey": "ballad",
+    "weeklyBoss": {
+      "id": 113042,
+      "name": {
+        "fr": "Miroir de mushin",
+        "en": "Mirror of Mushin"
+      },
+      "icon": "UI_ItemIcon_113042"
+    },
+    "worldBoss": {
+      "id": 113044,
+      "name": {
+        "fr": "Pseudo-étamines",
+        "en": "Pseudo-Stamens"
+      },
+      "icon": "UI_ItemIcon_113044"
+    },
+    "specialty": {
+      "id": 100021,
+      "name": {
+        "fr": "Baie à crochet",
+        "en": "Wolfhook"
+      },
+      "icon": "UI_ItemIcon_100021"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "Mona": {
+    "talentBookKey": "resistance",
+    "weeklyBoss": {
+      "id": 113007,
+      "name": {
+        "fr": "Vertèbre de Borée",
+        "en": "Ring of Boreas"
+      },
+      "icon": "UI_ItemIcon_113007"
+    },
+    "worldBoss": {
+      "id": 113012,
+      "name": {
+        "fr": "Cœur d'eau pure",
+        "en": "Cleansing Heart"
+      },
+      "icon": "UI_ItemIcon_113012"
+    },
+    "specialty": {
+      "id": 100025,
+      "name": {
+        "fr": "Champignon anémophile",
+        "en": "Philanemo Mushroom"
+      },
+      "icon": "UI_ItemIcon_100025"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "Mualani": {
+    "talentBookKey": "contention",
+    "weeklyBoss": {
+      "id": 113056,
+      "name": {
+        "fr": "Masse sans lumière",
+        "en": "Lightless Mass"
+      },
+      "icon": "UI_ItemIcon_113056"
+    },
+    "worldBoss": {
+      "id": 113064,
+      "name": {
+        "fr": "Marque de bénédiction liante",
+        "en": "Mark of the Binding Blessing"
+      },
+      "icon": "UI_ItemIcon_113064"
+    },
+    "specialty": {
+      "id": 101247,
+      "name": {
+        "fr": "Branchie mousseplume",
+        "en": "Sprayfeather Gill"
+      },
+      "icon": "UI_ItemIcon_101247"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "Nahida": {
+    "talentBookKey": "ingenuity",
+    "weeklyBoss": {
+      "id": 113041,
+      "name": {
+        "fr": "Fils de marionnette",
+        "en": "Puppet Strings"
+      },
+      "icon": "UI_ItemIcon_113041"
+    },
+    "worldBoss": {
+      "id": 113040,
+      "name": {
+        "fr": "Liane d'oblitération",
+        "en": "Quelled Creeper"
+      },
+      "icon": "UI_ItemIcon_113040"
+    },
+    "specialty": {
+      "id": 101217,
+      "name": {
+        "fr": "Kalpalotus",
+        "en": "Kalpalata Lotus"
+      },
+      "icon": "UI_ItemIcon_101217"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "Navia": {
+    "talentBookKey": "equity",
+    "weeklyBoss": {
+      "id": 113054,
+      "name": {
+        "fr": "Ficelle de soie sans lumière",
+        "en": "Lightless Silk String"
+      },
+      "icon": "UI_ItemIcon_113054"
+    },
+    "worldBoss": {
+      "id": 113050,
+      "name": {
+        "fr": "Engrenage artificié de rechange : Coppelius",
+        "en": "Artificed Spare Clockwork Component — Coppelius"
+      },
+      "icon": "UI_ItemIcon_113050"
+    },
+    "specialty": {
+      "id": 101240,
+      "name": {
+        "fr": "Source des premières rosées",
+        "en": "Spring of the First Dewdrop"
+      },
+      "icon": "UI_ItemIcon_101240"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "Nefer": {
+    "talentBookKey": "elysium",
+    "weeklyBoss": {
+      "id": 113074,
+      "name": {
+        "fr": "Échantillon ascensionné : Tour",
+        "en": "Ascended Sample: Rook"
+      },
+      "icon": "UI_ItemIcon_113074"
+    },
+    "worldBoss": {
+      "id": 113079,
+      "name": {
+        "fr": "Corne radieuse",
+        "en": "Radiant Antler"
+      },
+      "icon": "UI_ItemIcon_113079"
+    },
+    "specialty": {
+      "id": 101263,
+      "name": {
+        "fr": "Argent de lune déchue",
+        "en": "Moonfall Silver"
+      },
+      "icon": "UI_ItemIcon_101263"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "Neuvillette": {
+    "talentBookKey": "equity",
+    "weeklyBoss": {
+      "id": 113048,
+      "name": {
+        "fr": "Constambre",
+        "en": "Everamber"
+      },
+      "icon": "UI_ItemIcon_113048"
+    },
+    "worldBoss": {
+      "id": 113053,
+      "name": {
+        "fr": "Corne fontemarine",
+        "en": "Fontemer Unihorn"
+      },
+      "icon": "UI_ItemIcon_113053"
+    },
+    "specialty": {
+      "id": 101237,
+      "name": {
+        "fr": "Sombrétoile",
+        "en": "Lumitoile"
+      },
+      "icon": "UI_ItemIcon_101237"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "Nicole": {
+    "talentBookKey": "elysium",
+    "weeklyBoss": {
+      "id": 113087,
+      "name": {
+        "fr": "Résine contrefaite",
+        "en": "Counterfeit Resin"
+      },
+      "icon": "UI_ItemIcon_113087"
+    },
+    "worldBoss": {
+      "id": 113084,
+      "name": {
+        "fr": "Reste flétri de l'aile du cauchemar",
+        "en": "Remnant of the Dreadwing"
+      },
+      "icon": "UI_ItemIcon_113084"
+    },
+    "specialty": {
+      "id": 101269,
+      "name": {
+        "fr": "Ambre de pin",
+        "en": "Pine Amber"
+      },
+      "icon": "UI_ItemIcon_101269"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "Nilou": {
+    "talentBookKey": "praxis",
+    "weeklyBoss": {
+      "id": 113033,
+      "name": {
+        "fr": "Larmes de la divinité calamiteuse",
+        "en": "Tears of the Calamitous God"
+      },
+      "icon": "UI_ItemIcon_113033"
+    },
+    "worldBoss": {
+      "id": 113038,
+      "name": {
+        "fr": "Calibre perpétuel",
+        "en": "Perpetual Caliber"
+      },
+      "icon": "UI_ItemIcon_113038"
+    },
+    "specialty": {
+      "id": 101214,
+      "name": {
+        "fr": "Padisachidée",
+        "en": "Padisarah"
+      },
+      "icon": "UI_ItemIcon_101214"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "Ningguang": {
+    "talentBookKey": "prosperity",
+    "weeklyBoss": {
+      "id": 113008,
+      "name": {
+        "fr": "Esprit de Borée",
+        "en": "Spirit Locket of Boreas"
+      },
+      "icon": "UI_ItemIcon_113008"
+    },
+    "worldBoss": {
+      "id": 113009,
+      "name": {
+        "fr": "Pilier de basalte",
+        "en": "Basalt Pillar"
+      },
+      "icon": "UI_ItemIcon_113009"
+    },
+    "specialty": {
+      "id": 100030,
+      "name": {
+        "fr": "Lys verni",
+        "en": "Glaze Lily"
+      },
+      "icon": "UI_ItemIcon_100030"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "Nomade": {
+    "talentBookKey": "praxis",
+    "weeklyBoss": {
+      "id": 113043,
+      "name": {
+        "fr": "Cloche de daka",
+        "en": "Daka's Bell"
+      },
+      "icon": "UI_ItemIcon_113043"
+    },
+    "worldBoss": {
+      "id": 113038,
+      "name": {
+        "fr": "Calibre perpétuel",
+        "en": "Perpetual Caliber"
+      },
+      "icon": "UI_ItemIcon_113038"
+    },
+    "specialty": {
+      "id": 101213,
+      "name": {
+        "fr": "Champignon sacramental",
+        "en": "Rukkhashava Mushrooms"
+      },
+      "icon": "UI_ItemIcon_101213"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "Noëlle": {
+    "talentBookKey": "resistance",
+    "weeklyBoss": {
+      "id": 113004,
+      "name": {
+        "fr": "Griffe de Stormterror",
+        "en": "Dvalin's Claw"
+      },
+      "icon": "UI_ItemIcon_113004"
+    },
+    "worldBoss": {
+      "id": 113009,
+      "name": {
+        "fr": "Pilier de basalte",
+        "en": "Basalt Pillar"
+      },
+      "icon": "UI_ItemIcon_113009"
+    },
+    "specialty": {
+      "id": 100022,
+      "name": {
+        "fr": "Tombaie",
+        "en": "Valberry"
+      },
+      "icon": "UI_ItemIcon_100022"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "Odette": {
+    "talentBookKey": "charity",
+    "weeklyBoss": {
+      "id": 113088,
+      "name": {
+        "fr": "Branche flétrie et tordue",
+        "en": "Twisted Withered Branch"
+      },
+      "icon": "UI_ItemIcon_113088"
+    },
+    "worldBoss": {
+      "id": 113090,
+      "name": {
+        "fr": "Branche fleurie imbrûlable",
+        "en": "Unscorched Blossom Branch"
+      },
+      "icon": "UI_ItemIcon_113090"
+    },
+    "specialty": {
+      "id": 101275,
+      "name": {
+        "fr": "Fleur de féegivre",
+        "en": "Frostfairy Flower"
+      },
+      "icon": "UI_ItemIcon_101275"
+    },
+    "commonMat": {
+      "id": 112146,
+      "name": {
+        "fr": "Paillette éthérée",
+        "en": "Ethereal Glimmershard"
+      },
+      "icon": "UI_ItemIcon_112146"
+    }
+  },
+  "Ororon": {
+    "talentBookKey": "kindling",
+    "weeklyBoss": {
+      "id": 113054,
+      "name": {
+        "fr": "Ficelle de soie sans lumière",
+        "en": "Lightless Silk String"
+      },
+      "icon": "UI_ItemIcon_113054"
+    },
+    "worldBoss": {
+      "id": 113064,
+      "name": {
+        "fr": "Marque de bénédiction liante",
+        "en": "Mark of the Binding Blessing"
+      },
+      "icon": "UI_ItemIcon_113064"
+    },
+    "specialty": {
+      "id": 101252,
+      "name": {
+        "fr": "Champicorne brillant",
+        "en": "Glowing Hornshroom"
+      },
+      "icon": "UI_ItemIcon_101252"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "Prune": {
+    "talentBookKey": "resistance",
+    "weeklyBoss": {
+      "id": 113081,
+      "name": {
+        "fr": "Masque du médecin vertueux",
+        "en": "Mask of the Virtuous Doctor"
+      },
+      "icon": "UI_ItemIcon_113081"
+    },
+    "worldBoss": {
+      "id": 113079,
+      "name": {
+        "fr": "Corne radieuse",
+        "en": "Radiant Antler"
+      },
+      "icon": "UI_ItemIcon_113079"
+    },
+    "specialty": {
+      "id": 101268,
+      "name": {
+        "fr": "Glacelée d'hiver",
+        "en": "Winter Icelea"
+      },
+      "icon": "UI_ItemIcon_101266"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "Qiqi": {
+    "talentBookKey": "prosperity",
+    "weeklyBoss": {
+      "id": 113006,
+      "name": {
+        "fr": "Queue de Borée",
+        "en": "Tail of Boreas"
+      },
+      "icon": "UI_ItemIcon_113006"
+    },
+    "worldBoss": {
+      "id": 113010,
+      "name": {
+        "fr": "Duramen de glace",
+        "en": "Hoarfrost Core"
+      },
+      "icon": "UI_ItemIcon_113010"
+    },
+    "specialty": {
+      "id": 100034,
+      "name": {
+        "fr": "Muguet bleu",
+        "en": "Violetgrass"
+      },
+      "icon": "UI_ItemIcon_100034"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Razor": {
+    "talentBookKey": "resistance",
+    "weeklyBoss": {
+      "id": 113004,
+      "name": {
+        "fr": "Griffe de Stormterror",
+        "en": "Dvalin's Claw"
+      },
+      "icon": "UI_ItemIcon_113004"
+    },
+    "worldBoss": {
+      "id": 113002,
+      "name": {
+        "fr": "Prisme d'éclair",
+        "en": "Lightning Prism"
+      },
+      "icon": "UI_ItemIcon_113002"
+    },
+    "specialty": {
+      "id": 100021,
+      "name": {
+        "fr": "Baie à crochet",
+        "en": "Wolfhook"
+      },
+      "icon": "UI_ItemIcon_100021"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "Rosalia": {
+    "talentBookKey": "ballad",
+    "weeklyBoss": {
+      "id": 113015,
+      "name": {
+        "fr": "Ombre du guerrier",
+        "en": "Shadow of the Warrior"
+      },
+      "icon": "UI_ItemIcon_113015"
+    },
+    "worldBoss": {
+      "id": 113010,
+      "name": {
+        "fr": "Duramen de glace",
+        "en": "Hoarfrost Core"
+      },
+      "icon": "UI_ItemIcon_113010"
+    },
+    "specialty": {
+      "id": 100022,
+      "name": {
+        "fr": "Tombaie",
+        "en": "Valberry"
+      },
+      "icon": "UI_ItemIcon_100022"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "Sandrone": {
+    "talentBookKey": "vagrancy",
+    "weeklyBoss": {
+      "id": 113082,
+      "name": {
+        "fr": "Contrainte du fou",
+        "en": "Madman's Restraint"
+      },
+      "icon": "UI_ItemIcon_113082"
+    },
+    "worldBoss": {
+      "id": 113086,
+      "name": {
+        "fr": "Plume de veilleur déchu",
+        "en": "Plume of the Fallen Watcher"
+      },
+      "icon": "UI_ItemIcon_113086"
+    },
+    "specialty": {
+      "id": 101239,
+      "name": {
+        "fr": "Unité de sous-détection",
+        "en": "Subdetection Unit"
+      },
+      "icon": "UI_ItemIcon_101239"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "Sangonomiya_Kokomi": {
+    "talentBookKey": "transience",
+    "weeklyBoss": {
+      "id": 113026,
+      "name": {
+        "fr": "Papillon infernal",
+        "en": "Hellfire Butterfly"
+      },
+      "icon": "UI_ItemIcon_113026"
+    },
+    "worldBoss": {
+      "id": 113028,
+      "name": {
+        "fr": "Rosée du rejet",
+        "en": "Dew of Repudiation"
+      },
+      "icon": "UI_ItemIcon_113028"
+    },
+    "specialty": {
+      "id": 101207,
+      "name": {
+        "fr": "Perle de corail",
+        "en": "Sango Pearl"
+      },
+      "icon": "UI_ItemIcon_101207"
+    },
+    "commonMat": {
+      "id": 112053,
+      "name": {
+        "fr": "Coquille spectrale",
+        "en": "Spectral Husk"
+      },
+      "icon": "UI_ItemIcon_112053"
+    }
+  },
+  "Sayu": {
+    "talentBookKey": "light",
+    "weeklyBoss": {
+      "id": 113019,
+      "name": {
+        "fr": "Écaille dorée",
+        "en": "Gilded Scale"
+      },
+      "icon": "UI_ItemIcon_113019"
+    },
+    "worldBoss": {
+      "id": 113022,
+      "name": {
+        "fr": "Mécanisme oni",
+        "en": "Marionette Core"
+      },
+      "icon": "UI_ItemIcon_113022"
+    },
+    "specialty": {
+      "id": 101203,
+      "name": {
+        "fr": "Moelle cristalline",
+        "en": "Crystal Marrow"
+      },
+      "icon": "UI_ItemIcon_101203"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "Sethos": {
+    "talentBookKey": "praxis",
+    "weeklyBoss": {
+      "id": 113043,
+      "name": {
+        "fr": "Cloche de daka",
+        "en": "Daka's Bell"
+      },
+      "icon": "UI_ItemIcon_113043"
+    },
+    "worldBoss": {
+      "id": 113058,
+      "name": {
+        "fr": "Écaille nuageuse",
+        "en": "Cloudseam Scale"
+      },
+      "icon": "UI_ItemIcon_113058"
+    },
+    "specialty": {
+      "id": 101224,
+      "name": {
+        "fr": "Trishiraite",
+        "en": "Trishiraite"
+      },
+      "icon": "UI_ItemIcon_101224"
+    },
+    "commonMat": {
+      "id": 112065,
+      "name": {
+        "fr": "Satin rouge délavé",
+        "en": "Faded Red Satin"
+      },
+      "icon": "UI_ItemIcon_112065"
+    }
+  },
+  "Shenhe": {
+    "talentBookKey": "prosperity",
+    "weeklyBoss": {
+      "id": 113026,
+      "name": {
+        "fr": "Papillon infernal",
+        "en": "Hellfire Butterfly"
+      },
+      "icon": "UI_ItemIcon_113026"
+    },
+    "worldBoss": {
+      "id": 113031,
+      "name": {
+        "fr": "Fausse nageoire de l'héritier du dragon",
+        "en": "Dragonheir's False Fin"
+      },
+      "icon": "UI_ItemIcon_113031"
+    },
+    "specialty": {
+      "id": 100031,
+      "name": {
+        "fr": "Fleur de Qingxin",
+        "en": "Qingxin"
+      },
+      "icon": "UI_ItemIcon_100031"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "Shikanoin_Heizou": {
+    "talentBookKey": "transience",
+    "weeklyBoss": {
+      "id": 113034,
+      "name": {
+        "fr": "Signification d'une éternité",
+        "en": "The Meaning of Aeons"
+      },
+      "icon": "UI_ItemIcon_113034"
+    },
+    "worldBoss": {
+      "id": 113035,
+      "name": {
+        "fr": "Croc runique",
+        "en": "Runic Fang"
+      },
+      "icon": "UI_ItemIcon_113035"
+    },
+    "specialty": {
+      "id": 101201,
+      "name": {
+        "fr": "Scarabuto",
+        "en": "Onikabuto"
+      },
+      "icon": "UI_ItemIcon_101201"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "Shogun_Raiden": {
+    "talentBookKey": "light",
+    "weeklyBoss": {
+      "id": 113025,
+      "name": {
+        "fr": "Moment en fusion",
+        "en": "Molten Moment"
+      },
+      "icon": "UI_ItemIcon_113025"
+    },
+    "worldBoss": {
+      "id": 113029,
+      "name": {
+        "fr": "Perles tempestives",
+        "en": "Storm Beads"
+      },
+      "icon": "UI_ItemIcon_113029"
+    },
+    "specialty": {
+      "id": 101208,
+      "name": {
+        "fr": "Fruit d'Amakumo",
+        "en": "Amakumo Fruit"
+      },
+      "icon": "UI_ItemIcon_101208"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "Sigewinne": {
+    "talentBookKey": "equity",
+    "weeklyBoss": {
+      "id": 113055,
+      "name": {
+        "fr": "Œil de tourbillon sans lumière",
+        "en": "Lightless Eye of the Maelstrom"
+      },
+      "icon": "UI_ItemIcon_113055"
+    },
+    "worldBoss": {
+      "id": 113057,
+      "name": {
+        "fr": "Eau n'ayant pas transcendé",
+        "en": "Water That Failed To Transcend"
+      },
+      "icon": "UI_ItemIcon_113057"
+    },
+    "specialty": {
+      "id": 101233,
+      "name": {
+        "fr": "Fleur romaritime",
+        "en": "Romaritime Flower"
+      },
+      "icon": "UI_ItemIcon_101233"
+    },
+    "commonMat": {
+      "id": 112080,
+      "name": {
+        "fr": "Perle transocéanique",
+        "en": "Transoceanic Pearl"
+      },
+      "icon": "UI_ItemIcon_112080"
+    }
+  },
+  "Skirk": {
+    "talentBookKey": "contention",
+    "weeklyBoss": {
+      "id": 113073,
+      "name": {
+        "fr": "Échantillon ascensionné : Cavalier",
+        "en": "Ascended Sample: Knight"
+      },
+      "icon": "UI_ItemIcon_113073"
+    },
+    "worldBoss": {
+      "id": 113067,
+      "name": {
+        "fr": "Regard enchevêtrant",
+        "en": "Ensnaring Gaze"
+      },
+      "icon": "UI_ItemIcon_113067"
+    },
+    "specialty": {
+      "id": 101254,
+      "name": {
+        "fr": "Floraigemme brise-ciel",
+        "en": "Skysplit Gembloom"
+      },
+      "icon": "UI_ItemIcon_101254"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "Sucrose": {
+    "talentBookKey": "freedom",
+    "weeklyBoss": {
+      "id": 113008,
+      "name": {
+        "fr": "Esprit de Borée",
+        "en": "Spirit Locket of Boreas"
+      },
+      "icon": "UI_ItemIcon_113008"
+    },
+    "worldBoss": {
+      "id": 113001,
+      "name": {
+        "fr": "Graine d'ouragan",
+        "en": "Hurricane Seed"
+      },
+      "icon": "UI_ItemIcon_113001"
+    },
+    "specialty": {
+      "id": 100024,
+      "name": {
+        "fr": "Chrysanthème à aubes",
+        "en": "Windwheel Aster"
+      },
+      "icon": "UI_ItemIcon_100024"
+    },
+    "commonMat": {
+      "id": 112038,
+      "name": {
+        "fr": "Nectar de Fleur mensongère",
+        "en": "Whopperflower Nectar"
+      },
+      "icon": "UI_ItemIcon_112038"
+    }
+  },
+  "Tartaglia": {
+    "talentBookKey": "freedom",
+    "weeklyBoss": {
+      "id": 113014,
+      "name": {
+        "fr": "Fragment du démon",
+        "en": "Shard of a Foul Legacy"
+      },
+      "icon": "UI_ItemIcon_113014"
+    },
+    "worldBoss": {
+      "id": 113012,
+      "name": {
+        "fr": "Cœur d'eau pure",
+        "en": "Cleansing Heart"
+      },
+      "icon": "UI_ItemIcon_113012"
+    },
+    "specialty": {
+      "id": 100033,
+      "name": {
+        "fr": "Conque d'étoile",
+        "en": "Starconch"
+      },
+      "icon": "UI_ItemIcon_100033"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "Thomas": {
+    "talentBookKey": "transience",
+    "weeklyBoss": {
+      "id": 113026,
+      "name": {
+        "fr": "Papillon infernal",
+        "en": "Hellfire Butterfly"
+      },
+      "icon": "UI_ItemIcon_113026"
+    },
+    "worldBoss": {
+      "id": 113024,
+      "name": {
+        "fr": "Perle brûlante",
+        "en": "Smoldering Pearl"
+      },
+      "icon": "UI_ItemIcon_113024"
+    },
+    "specialty": {
+      "id": 101209,
+      "name": {
+        "fr": "Champignon fluorescent",
+        "en": "Fluorescent Fungus"
+      },
+      "icon": "UI_ItemIcon_101209"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "Tighnari": {
+    "talentBookKey": "admonition",
+    "weeklyBoss": {
+      "id": 113034,
+      "name": {
+        "fr": "Signification d'une éternité",
+        "en": "The Meaning of Aeons"
+      },
+      "icon": "UI_ItemIcon_113034"
+    },
+    "worldBoss": {
+      "id": 113036,
+      "name": {
+        "fr": "Bec crochu majestueux",
+        "en": "Majestic Hooked Beak"
+      },
+      "icon": "UI_ItemIcon_113036"
+    },
+    "specialty": {
+      "id": 101215,
+      "name": {
+        "fr": "Nilotpalotus",
+        "en": "Nilotpala Lotus"
+      },
+      "icon": "UI_ItemIcon_101215"
+    },
+    "commonMat": {
+      "id": 112059,
+      "name": {
+        "fr": "Spores de Fongus",
+        "en": "Fungal Spores"
+      },
+      "icon": "UI_ItemIcon_112059"
+    }
+  },
+  "Traveler_Anemo": {
+    "talentBookKey": "ballad",
+    "weeklyBoss": {
+      "id": 113005,
+      "name": {
+        "fr": "Souffle de Stormterror",
+        "en": "Dvalin's Sigh"
+      },
+      "icon": "UI_ItemIcon_113005"
+    },
+    "worldBoss": null,
+    "specialty": null,
+    "commonMat": null
+  },
+  "Traveler_Cryo": {
+    "talentBookKey": "glory",
+    "weeklyBoss": {
+      "id": 113075,
+      "name": {
+        "fr": "Échantillon ascensionné : Dame",
+        "en": "Ascended Sample: Queen"
+      },
+      "icon": "UI_ItemIcon_113075"
+    },
+    "worldBoss": null,
+    "specialty": null,
+    "commonMat": null
+  },
+  "Traveler_Dendro": {
+    "talentBookKey": "praxis",
+    "weeklyBoss": {
+      "id": 113032,
+      "name": {
+        "fr": "Mudra du général maléfique",
+        "en": "Mudra of the Malefic General"
+      },
+      "icon": "UI_ItemIcon_113032"
+    },
+    "worldBoss": null,
+    "specialty": null,
+    "commonMat": null
+  },
+  "Traveler_Electro": {
+    "talentBookKey": "light",
+    "weeklyBoss": {
+      "id": 113017,
+      "name": {
+        "fr": "Couronne du roi-dragon",
+        "en": "Dragon Lord's Crown"
+      },
+      "icon": "UI_ItemIcon_113017"
+    },
+    "worldBoss": null,
+    "specialty": null,
+    "commonMat": null
+  },
+  "Traveler_Geo": {
+    "talentBookKey": "gold",
+    "weeklyBoss": {
+      "id": 113006,
+      "name": {
+        "fr": "Queue de Borée",
+        "en": "Tail of Boreas"
+      },
+      "icon": "UI_ItemIcon_113006"
+    },
+    "worldBoss": null,
+    "specialty": null,
+    "commonMat": null
+  },
+  "Traveler_Hydro": {
+    "talentBookKey": "order",
+    "weeklyBoss": {
+      "id": 113046,
+      "name": {
+        "fr": "Fougère du monde luxuriant",
+        "en": "Worldspan Fern"
+      },
+      "icon": "UI_ItemIcon_113046"
+    },
+    "worldBoss": null,
+    "specialty": null,
+    "commonMat": null
+  },
+  "Traveler_Pyro": {
+    "talentBookKey": "conflict",
+    "weeklyBoss": {
+      "id": 113063,
+      "name": {
+        "fr": "Pierre angulaire des étoiles et des flammes",
+        "en": "The Cornerstone of Stars and Flames"
+      },
+      "icon": "UI_ItemIcon_113063"
+    },
+    "worldBoss": null,
+    "specialty": null,
+    "commonMat": null
+  },
+  "Varesa": {
+    "talentBookKey": "conflict",
+    "weeklyBoss": {
+      "id": 113070,
+      "name": {
+        "fr": "Plume érodée",
+        "en": "Eroded Scale-Feather"
+      },
+      "icon": "UI_ItemIcon_113070"
+    },
+    "worldBoss": {
+      "id": 113072,
+      "name": {
+        "fr": "Noyau inerte de statue",
+        "en": "Sparkless Statue Core"
+      },
+      "icon": "UI_ItemIcon_113072"
+    },
+    "specialty": {
+      "id": 101254,
+      "name": {
+        "fr": "Floraigemme brise-ciel",
+        "en": "Skysplit Gembloom"
+      },
+      "icon": "UI_ItemIcon_101254"
+    },
+    "commonMat": {
+      "id": 112101,
+      "name": {
+        "fr": "Croc juvénile",
+        "en": "Juvenile Fang"
+      },
+      "icon": "UI_ItemIcon_112101"
+    }
+  },
+  "Varka": {
+    "talentBookKey": "freedom",
+    "weeklyBoss": {
+      "id": 113074,
+      "name": {
+        "fr": "Échantillon ascensionné : Tour",
+        "en": "Ascended Sample: Rook"
+      },
+      "icon": "UI_ItemIcon_113074"
+    },
+    "worldBoss": {
+      "id": 113085,
+      "name": {
+        "fr": "Queue coupée prismatique",
+        "en": "Prismatic Severed Tail"
+      },
+      "icon": "UI_ItemIcon_113085"
+    },
+    "specialty": {
+      "id": 100021,
+      "name": {
+        "fr": "Baie à crochet",
+        "en": "Wolfhook"
+      },
+      "icon": "UI_ItemIcon_100021"
+    },
+    "commonMat": {
+      "id": 112122,
+      "name": {
+        "fr": "Arbre de transmission cassé",
+        "en": "Broken Drive Shaft"
+      },
+      "icon": "UI_ItemIcon_112122"
+    }
+  },
+  "Venti": {
+    "talentBookKey": "ballad",
+    "weeklyBoss": {
+      "id": 113006,
+      "name": {
+        "fr": "Queue de Borée",
+        "en": "Tail of Boreas"
+      },
+      "icon": "UI_ItemIcon_113006"
+    },
+    "worldBoss": {
+      "id": 113001,
+      "name": {
+        "fr": "Graine d'ouragan",
+        "en": "Hurricane Seed"
+      },
+      "icon": "UI_ItemIcon_113001"
+    },
+    "specialty": {
+      "id": 100023,
+      "name": {
+        "fr": "Cécilia",
+        "en": "Cecilia"
+      },
+      "icon": "UI_ItemIcon_100023"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "Vesna": {
+    "talentBookKey": "glory",
+    "weeklyBoss": {
+      "id": 113089,
+      "name": {
+        "fr": "Pousse profane",
+        "en": "Profaned Sprout"
+      },
+      "icon": "UI_ItemIcon_113089"
+    },
+    "worldBoss": {
+      "id": 113092,
+      "name": {
+        "fr": "Armure fissurée de vagabond",
+        "en": "Vagabond's Cracked Armor"
+      },
+      "icon": "UI_ItemIcon_113092"
+    },
+    "specialty": {
+      "id": 101277,
+      "name": {
+        "fr": "Fougère dorée",
+        "en": "Golden Fern"
+      },
+      "icon": "UI_ItemIcon_101277"
+    },
+    "commonMat": {
+      "id": 112146,
+      "name": {
+        "fr": "Paillette éthérée",
+        "en": "Ethereal Glimmershard"
+      },
+      "icon": "UI_ItemIcon_112146"
+    }
+  },
+  "Vodyanitsa": {
+    "talentBookKey": "fortitude",
+    "weeklyBoss": {
+      "id": 113082,
+      "name": {
+        "fr": "Contrainte du fou",
+        "en": "Madman's Restraint"
+      },
+      "icon": "UI_ItemIcon_113082"
+    },
+    "worldBoss": {
+      "id": 113090,
+      "name": {
+        "fr": "Branche fleurie imbrûlable",
+        "en": "Unscorched Blossom Branch"
+      },
+      "icon": "UI_ItemIcon_113090"
+    },
+    "specialty": {
+      "id": 101275,
+      "name": {
+        "fr": "Fleur de féegivre",
+        "en": "Frostfairy Flower"
+      },
+      "icon": "UI_ItemIcon_101275"
+    },
+    "commonMat": {
+      "id": 112149,
+      "name": {
+        "fr": "Graine chimérique",
+        "en": "Chimeric Core"
+      },
+      "icon": "UI_ItemIcon_112149"
+    }
+  },
+  "Wriothesley": {
+    "talentBookKey": "order",
+    "weeklyBoss": {
+      "id": 113047,
+      "name": {
+        "fr": "Floraison première de l'oasis",
+        "en": "Primordial Greenbloom"
+      },
+      "icon": "UI_ItemIcon_113047"
+    },
+    "worldBoss": {
+      "id": 113052,
+      "name": {
+        "fr": "« Appareil Tourbillon »",
+        "en": "\"Tourbillon Device\""
+      },
+      "icon": "UI_ItemIcon_113052"
+    },
+    "specialty": {
+      "id": 101239,
+      "name": {
+        "fr": "Unité de sous-détection",
+        "en": "Subdetection Unit"
+      },
+      "icon": "UI_ItemIcon_101239"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  },
+  "Xiangling": {
+    "talentBookKey": "diligence",
+    "weeklyBoss": {
+      "id": 113004,
+      "name": {
+        "fr": "Griffe de Stormterror",
+        "en": "Dvalin's Claw"
+      },
+      "icon": "UI_ItemIcon_113004"
+    },
+    "worldBoss": {
+      "id": 113011,
+      "name": {
+        "fr": "Graine de feu",
+        "en": "Everflame Seed"
+      },
+      "icon": "UI_ItemIcon_113011"
+    },
+    "specialty": {
+      "id": 100027,
+      "name": {
+        "fr": "Piment de Jueyun",
+        "en": "Jueyun Chili"
+      },
+      "icon": "UI_ItemIcon_100027"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "Xianyun": {
+    "talentBookKey": "gold",
+    "weeklyBoss": {
+      "id": 113055,
+      "name": {
+        "fr": "Œil de tourbillon sans lumière",
+        "en": "Lightless Eye of the Maelstrom"
+      },
+      "icon": "UI_ItemIcon_113055"
+    },
+    "worldBoss": {
+      "id": 113058,
+      "name": {
+        "fr": "Écaille nuageuse",
+        "en": "Cloudseam Scale"
+      },
+      "icon": "UI_ItemIcon_113058"
+    },
+    "specialty": {
+      "id": 101241,
+      "name": {
+        "fr": "Jade cristallin",
+        "en": "Clearwater Jade"
+      },
+      "icon": "UI_ItemIcon_101241"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Xiao": {
+    "talentBookKey": "prosperity",
+    "weeklyBoss": {
+      "id": 113015,
+      "name": {
+        "fr": "Ombre du guerrier",
+        "en": "Shadow of the Warrior"
+      },
+      "icon": "UI_ItemIcon_113015"
+    },
+    "worldBoss": {
+      "id": 113016,
+      "name": {
+        "fr": "Jade juvénile",
+        "en": "Juvenile Jade"
+      },
+      "icon": "UI_ItemIcon_113016"
+    },
+    "specialty": {
+      "id": 100031,
+      "name": {
+        "fr": "Fleur de Qingxin",
+        "en": "Qingxin"
+      },
+      "icon": "UI_ItemIcon_100031"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "Xilonen": {
+    "talentBookKey": "kindling",
+    "weeklyBoss": {
+      "id": 113042,
+      "name": {
+        "fr": "Miroir de mushin",
+        "en": "Mirror of Mushin"
+      },
+      "icon": "UI_ItemIcon_113042"
+    },
+    "worldBoss": {
+      "id": 113066,
+      "name": {
+        "fr": "Noyau source aux motifs dorés secrets",
+        "en": "Gold-Inscribed Secret Source Core"
+      },
+      "icon": "UI_ItemIcon_113066"
+    },
+    "specialty": {
+      "id": 101248,
+      "name": {
+        "fr": "Chrysanthème brillant",
+        "en": "Brilliant Chrysanthemum"
+      },
+      "icon": "UI_ItemIcon_101248"
+    },
+    "commonMat": {
+      "id": 112104,
+      "name": {
+        "fr": "Sifflet en bois de sentinelle",
+        "en": "Sentry's Wooden Whistle"
+      },
+      "icon": "UI_ItemIcon_112104"
+    }
+  },
+  "Xingqiu": {
+    "talentBookKey": "gold",
+    "weeklyBoss": {
+      "id": 113006,
+      "name": {
+        "fr": "Queue de Borée",
+        "en": "Tail of Boreas"
+      },
+      "icon": "UI_ItemIcon_113006"
+    },
+    "worldBoss": {
+      "id": 113012,
+      "name": {
+        "fr": "Cœur d'eau pure",
+        "en": "Cleansing Heart"
+      },
+      "icon": "UI_ItemIcon_113012"
+    },
+    "specialty": {
+      "id": 100029,
+      "name": {
+        "fr": "Fleur de soie",
+        "en": "Silk Flower"
+      },
+      "icon": "UI_ItemIcon_100029"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "Xinyan": {
+    "talentBookKey": "gold",
+    "weeklyBoss": {
+      "id": 113013,
+      "name": {
+        "fr": "Corne de Monoceros Caeli",
+        "en": "Tusk of Monoceros Caeli"
+      },
+      "icon": "UI_ItemIcon_113013"
+    },
+    "worldBoss": {
+      "id": 113011,
+      "name": {
+        "fr": "Graine de feu",
+        "en": "Everflame Seed"
+      },
+      "icon": "UI_ItemIcon_113011"
+    },
+    "specialty": {
+      "id": 100034,
+      "name": {
+        "fr": "Muguet bleu",
+        "en": "Violetgrass"
+      },
+      "icon": "UI_ItemIcon_100034"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "Yae_Miko": {
+    "talentBookKey": "light",
+    "weeklyBoss": {
+      "id": 113034,
+      "name": {
+        "fr": "Signification d'une éternité",
+        "en": "The Meaning of Aeons"
+      },
+      "icon": "UI_ItemIcon_113034"
+    },
+    "worldBoss": {
+      "id": 113031,
+      "name": {
+        "fr": "Fausse nageoire de l'héritier du dragon",
+        "en": "Dragonheir's False Fin"
+      },
+      "icon": "UI_ItemIcon_113031"
+    },
+    "specialty": {
+      "id": 101206,
+      "name": {
+        "fr": "Ganoderma marin",
+        "en": "Sea Ganoderma"
+      },
+      "icon": "UI_ItemIcon_101206"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "Yanfei": {
+    "talentBookKey": "gold",
+    "weeklyBoss": {
+      "id": 113018,
+      "name": {
+        "fr": "Branche de jade cramoisi",
+        "en": "Bloodjade Branch"
+      },
+      "icon": "UI_ItemIcon_113018"
+    },
+    "worldBoss": {
+      "id": 113016,
+      "name": {
+        "fr": "Jade juvénile",
+        "en": "Juvenile Jade"
+      },
+      "icon": "UI_ItemIcon_113016"
+    },
+    "specialty": {
+      "id": 100028,
+      "name": {
+        "fr": "Jade noctiluque",
+        "en": "Noctilucous Jade"
+      },
+      "icon": "UI_ItemIcon_100028"
+    },
+    "commonMat": {
+      "id": 112035,
+      "name": {
+        "fr": "Insigne des Pilleurs",
+        "en": "Treasure Hoarder Insignia"
+      },
+      "icon": "UI_ItemIcon_112035"
+    }
+  },
+  "Yaoyao": {
+    "talentBookKey": "diligence",
+    "weeklyBoss": {
+      "id": 113043,
+      "name": {
+        "fr": "Cloche de daka",
+        "en": "Daka's Bell"
+      },
+      "icon": "UI_ItemIcon_113043"
+    },
+    "worldBoss": {
+      "id": 113040,
+      "name": {
+        "fr": "Liane d'oblitération",
+        "en": "Quelled Creeper"
+      },
+      "icon": "UI_ItemIcon_113040"
+    },
+    "specialty": {
+      "id": 100027,
+      "name": {
+        "fr": "Piment de Jueyun",
+        "en": "Jueyun Chili"
+      },
+      "icon": "UI_ItemIcon_100027"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "Yelan": {
+    "talentBookKey": "prosperity",
+    "weeklyBoss": {
+      "id": 113019,
+      "name": {
+        "fr": "Écaille dorée",
+        "en": "Gilded Scale"
+      },
+      "icon": "UI_ItemIcon_113019"
+    },
+    "worldBoss": {
+      "id": 113035,
+      "name": {
+        "fr": "Croc runique",
+        "en": "Runic Fang"
+      },
+      "icon": "UI_ItemIcon_113035"
+    },
+    "specialty": {
+      "id": 100033,
+      "name": {
+        "fr": "Conque d'étoile",
+        "en": "Starconch"
+      },
+      "icon": "UI_ItemIcon_100033"
+    },
+    "commonMat": {
+      "id": 112032,
+      "name": {
+        "fr": "Insigne de nouvelle recrue",
+        "en": "Recruit's Insignia"
+      },
+      "icon": "UI_ItemIcon_112032"
+    }
+  },
+  "Yoimiya": {
+    "talentBookKey": "transience",
+    "weeklyBoss": {
+      "id": 113017,
+      "name": {
+        "fr": "Couronne du roi-dragon",
+        "en": "Dragon Lord's Crown"
+      },
+      "icon": "UI_ItemIcon_113017"
+    },
+    "worldBoss": {
+      "id": 113024,
+      "name": {
+        "fr": "Perle brûlante",
+        "en": "Smoldering Pearl"
+      },
+      "icon": "UI_ItemIcon_113024"
+    },
+    "specialty": {
+      "id": 101205,
+      "name": {
+        "fr": "Herbe à sanglots",
+        "en": "Naku Weed"
+      },
+      "icon": "UI_ItemIcon_101205"
+    },
+    "commonMat": {
+      "id": 112008,
+      "name": {
+        "fr": "Parchemin divinatoire",
+        "en": "Divining Scroll"
+      },
+      "icon": "UI_ItemIcon_112008"
+    }
+  },
+  "Yumemizuki_Mizuki": {
+    "talentBookKey": "transience",
+    "weeklyBoss": {
+      "id": 113060,
+      "name": {
+        "fr": "Bougie vacillante",
+        "en": "Fading Candle"
+      },
+      "icon": "UI_ItemIcon_113060"
+    },
+    "worldBoss": {
+      "id": 113071,
+      "name": {
+        "fr": "Talisman d'une terre mystérieuse",
+        "en": "Talisman of the Enigmatic Land"
+      },
+      "icon": "UI_ItemIcon_113071"
+    },
+    "specialty": {
+      "id": 101206,
+      "name": {
+        "fr": "Ganoderma marin",
+        "en": "Sea Ganoderma"
+      },
+      "icon": "UI_ItemIcon_101206"
+    },
+    "commonMat": {
+      "id": 112044,
+      "name": {
+        "fr": "Garde-main ancien",
+        "en": "Old Handguard"
+      },
+      "icon": "UI_ItemIcon_112044"
+    }
+  },
+  "Yun_Jin": {
+    "talentBookKey": "diligence",
+    "weeklyBoss": {
+      "id": 113027,
+      "name": {
+        "fr": "Cœur de cendre",
+        "en": "Ashen Heart"
+      },
+      "icon": "UI_ItemIcon_113027"
+    },
+    "worldBoss": {
+      "id": 113030,
+      "name": {
+        "fr": "Régalia de faille",
+        "en": "Riftborn Regalia"
+      },
+      "icon": "UI_ItemIcon_113030"
+    },
+    "specialty": {
+      "id": 100030,
+      "name": {
+        "fr": "Lys verni",
+        "en": "Glaze Lily"
+      },
+      "icon": "UI_ItemIcon_100030"
+    },
+    "commonMat": {
+      "id": 112005,
+      "name": {
+        "fr": "Masque endommagé",
+        "en": "Damaged Mask"
+      },
+      "icon": "UI_ItemIcon_112005"
+    }
+  },
+  "Zhongli": {
+    "talentBookKey": "gold",
+    "weeklyBoss": {
+      "id": 113013,
+      "name": {
+        "fr": "Corne de Monoceros Caeli",
+        "en": "Tusk of Monoceros Caeli"
+      },
+      "icon": "UI_ItemIcon_113013"
+    },
+    "worldBoss": {
+      "id": 113009,
+      "name": {
+        "fr": "Pilier de basalte",
+        "en": "Basalt Pillar"
+      },
+      "icon": "UI_ItemIcon_113009"
+    },
+    "specialty": {
+      "id": 100058,
+      "name": {
+        "fr": "Cœur de lapis",
+        "en": "Cor Lapis"
+      },
+      "icon": "UI_ItemIcon_100058"
+    },
+    "commonMat": {
+      "id": 112002,
+      "name": {
+        "fr": "Bave de Blob",
+        "en": "Slime Condensate"
+      },
+      "icon": "UI_ItemIcon_112002"
+    }
+  },
+  "Zibai": {
+    "talentBookKey": "gold",
+    "weeklyBoss": {
+      "id": 113075,
+      "name": {
+        "fr": "Échantillon ascensionné : Dame",
+        "en": "Ascended Sample: Queen"
+      },
+      "icon": "UI_ItemIcon_113075"
+    },
+    "worldBoss": {
+      "id": 113084,
+      "name": {
+        "fr": "Reste flétri de l'aile du cauchemar",
+        "en": "Remnant of the Dreadwing"
+      },
+      "icon": "UI_ItemIcon_113084"
+    },
+    "specialty": {
+      "id": 100030,
+      "name": {
+        "fr": "Lys verni",
+        "en": "Glaze Lily"
+      },
+      "icon": "UI_ItemIcon_100030"
+    },
+    "commonMat": {
+      "id": 112125,
+      "name": {
+        "fr": "Mandat en lambeaux",
+        "en": "Tattered Warrant"
+      },
+      "icon": "UI_ItemIcon_112125"
+    }
+  },
+  "Émilie": {
+    "talentBookKey": "order",
+    "weeklyBoss": {
+      "id": 113061,
+      "name": {
+        "fr": "Plume soyeuse",
+        "en": "Silken Feather"
+      },
+      "icon": "UI_ItemIcon_113061"
+    },
+    "worldBoss": {
+      "id": 113059,
+      "name": {
+        "fr": "Fragment d'une mélodie dorée",
+        "en": "Fragment of a Golden Melody"
+      },
+      "icon": "UI_ItemIcon_113059"
+    },
+    "specialty": {
+      "id": 101238,
+      "name": {
+        "fr": "Lys lacmineux",
+        "en": "Lakelight Lily"
+      },
+      "icon": "UI_ItemIcon_101238"
+    },
+    "commonMat": {
+      "id": 112083,
+      "name": {
+        "fr": "Engrenage de maillage",
+        "en": "Meshing Gear"
+      },
+      "icon": "UI_ItemIcon_112083"
+    }
+  }
+}

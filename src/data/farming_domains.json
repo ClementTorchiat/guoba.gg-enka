@@ -1,0 +1,1002 @@
+[
+  {
+    "id": "forsaken_rift",
+    "name": {
+      "fr": "Gorge de l'oubli",
+      "en": "Forsaken Rift"
+    },
+    "region": {
+      "fr": "Mondstadt",
+      "en": "Mondstadt"
+    },
+    "category": "talent",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "freedom",
+        "name": {
+          "fr": "Liberté",
+          "en": "Freedom"
+        },
+        "items": {
+          "teachings": {
+            "id": 104301,
+            "name": {
+              "fr": "Enseignement de la Liberté",
+              "en": "Teachings of Freedom"
+            },
+            "icon": "UI_ItemIcon_104301"
+          },
+          "guide": {
+            "id": 104302,
+            "name": {
+              "fr": "Guide de la Liberté",
+              "en": "Guide to Freedom"
+            },
+            "icon": "UI_ItemIcon_104302"
+          },
+          "philosophy": {
+            "id": 104303,
+            "name": {
+              "fr": "Philosophie de la Liberté",
+              "en": "Philosophies of Freedom"
+            },
+            "icon": "UI_ItemIcon_104303"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "resistance",
+        "name": {
+          "fr": "Résistance",
+          "en": "Resistance"
+        },
+        "items": {
+          "teachings": {
+            "id": 104304,
+            "name": {
+              "fr": "Enseignement de la Résistance",
+              "en": "Teachings of Resistance"
+            },
+            "icon": "UI_ItemIcon_104304"
+          },
+          "guide": {
+            "id": 104305,
+            "name": {
+              "fr": "Guide de la Résistance",
+              "en": "Guide to Resistance"
+            },
+            "icon": "UI_ItemIcon_104305"
+          },
+          "philosophy": {
+            "id": 104306,
+            "name": {
+              "fr": "Philosophie de la Résistance",
+              "en": "Philosophies of Resistance"
+            },
+            "icon": "UI_ItemIcon_104306"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "ballad",
+        "name": {
+          "fr": "Poésie",
+          "en": "Ballad"
+        },
+        "items": {
+          "teachings": {
+            "id": 104307,
+            "name": {
+              "fr": "Enseignement de la Poésie",
+              "en": "Teachings of Ballad"
+            },
+            "icon": "UI_ItemIcon_104307"
+          },
+          "guide": {
+            "id": 104308,
+            "name": {
+              "fr": "Guide de la Poésie",
+              "en": "Guide to Ballad"
+            },
+            "icon": "UI_ItemIcon_104308"
+          },
+          "philosophy": {
+            "id": 104309,
+            "name": {
+              "fr": "Philosophie de la Poésie",
+              "en": "Philosophies of Ballad"
+            },
+            "icon": "UI_ItemIcon_104309"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "taishan_mansion",
+    "name": {
+      "fr": "Manoir Taishan",
+      "en": "Taishan Mansion"
+    },
+    "region": {
+      "fr": "Liyue",
+      "en": "Liyue"
+    },
+    "category": "talent",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "prosperity",
+        "name": {
+          "fr": "Prospérité",
+          "en": "Prosperity"
+        },
+        "items": {
+          "teachings": {
+            "id": 104310,
+            "name": {
+              "fr": "Enseignement de la Prospérité",
+              "en": "Teachings of Prosperity"
+            },
+            "icon": "UI_ItemIcon_104310"
+          },
+          "guide": {
+            "id": 104311,
+            "name": {
+              "fr": "Guide de la Prospérité",
+              "en": "Guide to Prosperity"
+            },
+            "icon": "UI_ItemIcon_104311"
+          },
+          "philosophy": {
+            "id": 104312,
+            "name": {
+              "fr": "Philosophie de la Prospérité",
+              "en": "Philosophies of Prosperity"
+            },
+            "icon": "UI_ItemIcon_104312"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "diligence",
+        "name": {
+          "fr": "Diligence",
+          "en": "Diligence"
+        },
+        "items": {
+          "teachings": {
+            "id": 104313,
+            "name": {
+              "fr": "Enseignement de la Diligence",
+              "en": "Teachings of Diligence"
+            },
+            "icon": "UI_ItemIcon_104313"
+          },
+          "guide": {
+            "id": 104314,
+            "name": {
+              "fr": "Guide de la Diligence",
+              "en": "Guide to Diligence"
+            },
+            "icon": "UI_ItemIcon_104314"
+          },
+          "philosophy": {
+            "id": 104315,
+            "name": {
+              "fr": "Philosophie de la Diligence",
+              "en": "Philosophies of Diligence"
+            },
+            "icon": "UI_ItemIcon_104315"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "gold",
+        "name": {
+          "fr": "Or",
+          "en": "Gold"
+        },
+        "items": {
+          "teachings": {
+            "id": 104316,
+            "name": {
+              "fr": "Enseignement de l'Or",
+              "en": "Teachings of Gold"
+            },
+            "icon": "UI_ItemIcon_104316"
+          },
+          "guide": {
+            "id": 104317,
+            "name": {
+              "fr": "Guide de l'Or",
+              "en": "Guide to Gold"
+            },
+            "icon": "UI_ItemIcon_104317"
+          },
+          "philosophy": {
+            "id": 104318,
+            "name": {
+              "fr": "Philosophie de l'Or",
+              "en": "Philosophies of Gold"
+            },
+            "icon": "UI_ItemIcon_104318"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "violet_court",
+    "name": {
+      "fr": "Cour violette",
+      "en": "Violet Court"
+    },
+    "region": {
+      "fr": "Inazuma",
+      "en": "Inazuma"
+    },
+    "category": "talent",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "transience",
+        "name": {
+          "fr": "Éphémère",
+          "en": "Transience"
+        },
+        "items": {
+          "teachings": {
+            "id": 104320,
+            "name": {
+              "fr": "Enseignement de l'Éphémère",
+              "en": "Teachings of Transience"
+            },
+            "icon": "UI_ItemIcon_104320"
+          },
+          "guide": {
+            "id": 104321,
+            "name": {
+              "fr": "Guide de l'Éphémère",
+              "en": "Guide to Transience"
+            },
+            "icon": "UI_ItemIcon_104321"
+          },
+          "philosophy": {
+            "id": 104322,
+            "name": {
+              "fr": "Philosophie de l'Éphémère",
+              "en": "Philosophies of Transience"
+            },
+            "icon": "UI_ItemIcon_104322"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "elegance",
+        "name": {
+          "fr": "Élégance",
+          "en": "Elegance"
+        },
+        "items": {
+          "teachings": {
+            "id": 104323,
+            "name": {
+              "fr": "Enseignement de l'Élégance",
+              "en": "Teachings of Elegance"
+            },
+            "icon": "UI_ItemIcon_104323"
+          },
+          "guide": {
+            "id": 104324,
+            "name": {
+              "fr": "Guide de l'Élégance",
+              "en": "Guide to Elegance"
+            },
+            "icon": "UI_ItemIcon_104324"
+          },
+          "philosophy": {
+            "id": 104325,
+            "name": {
+              "fr": "Philosophie de l'Élégance",
+              "en": "Philosophies of Elegance"
+            },
+            "icon": "UI_ItemIcon_104325"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "light",
+        "name": {
+          "fr": "Lumière",
+          "en": "Light"
+        },
+        "items": {
+          "teachings": {
+            "id": 104326,
+            "name": {
+              "fr": "Enseignement de la Lumière",
+              "en": "Teachings of Light"
+            },
+            "icon": "UI_ItemIcon_104326"
+          },
+          "guide": {
+            "id": 104327,
+            "name": {
+              "fr": "Guide de la Lumière",
+              "en": "Guide to Light"
+            },
+            "icon": "UI_ItemIcon_104327"
+          },
+          "philosophy": {
+            "id": 104328,
+            "name": {
+              "fr": "Philosophie de la Lumière",
+              "en": "Philosophies of Light"
+            },
+            "icon": "UI_ItemIcon_104328"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "steeple_of_ignorance",
+    "name": {
+      "fr": "Tour de l'ignorance",
+      "en": "Steeple of Ignorance"
+    },
+    "region": {
+      "fr": "Sumeru",
+      "en": "Sumeru"
+    },
+    "category": "talent",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "admonition",
+        "name": {
+          "fr": "Admonestation",
+          "en": "Admonition"
+        },
+        "items": {
+          "teachings": {
+            "id": 104329,
+            "name": {
+              "fr": "Enseignement de l'Admonestation",
+              "en": "Teachings of Admonition"
+            },
+            "icon": "UI_ItemIcon_104329"
+          },
+          "guide": {
+            "id": 104330,
+            "name": {
+              "fr": "Guide de l'Admonestation",
+              "en": "Guide to Admonition"
+            },
+            "icon": "UI_ItemIcon_104330"
+          },
+          "philosophy": {
+            "id": 104331,
+            "name": {
+              "fr": "Philosophie de l'Admonestation",
+              "en": "Philosophies of Admonition"
+            },
+            "icon": "UI_ItemIcon_104331"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "ingenuity",
+        "name": {
+          "fr": "Ingénuité",
+          "en": "Ingenuity"
+        },
+        "items": {
+          "teachings": {
+            "id": 104332,
+            "name": {
+              "fr": "Enseignement de l'Ingénuité",
+              "en": "Teachings of Ingenuity"
+            },
+            "icon": "UI_ItemIcon_104332"
+          },
+          "guide": {
+            "id": 104333,
+            "name": {
+              "fr": "Guide de l'Ingénuité",
+              "en": "Guide to Ingenuity"
+            },
+            "icon": "UI_ItemIcon_104333"
+          },
+          "philosophy": {
+            "id": 104334,
+            "name": {
+              "fr": "Philosophie de l'Ingénuité",
+              "en": "Philosophies of Ingenuity"
+            },
+            "icon": "UI_ItemIcon_104334"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "praxis",
+        "name": {
+          "fr": "Usage",
+          "en": "Praxis"
+        },
+        "items": {
+          "teachings": {
+            "id": 104335,
+            "name": {
+              "fr": "Enseignement de l'Usage",
+              "en": "Teachings of Praxis"
+            },
+            "icon": "UI_ItemIcon_104335"
+          },
+          "guide": {
+            "id": 104336,
+            "name": {
+              "fr": "Guide de l'Usage",
+              "en": "Guide to Praxis"
+            },
+            "icon": "UI_ItemIcon_104336"
+          },
+          "philosophy": {
+            "id": 104337,
+            "name": {
+              "fr": "Philosophie de l'Usage",
+              "en": "Philosophies of Praxis"
+            },
+            "icon": "UI_ItemIcon_104337"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pale_forgotten_glory",
+    "name": {
+      "fr": "Gloire céleste déchue",
+      "en": "Pale Forgotten Glory"
+    },
+    "region": {
+      "fr": "Fontaine",
+      "en": "Fontaine"
+    },
+    "category": "talent",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "equity",
+        "name": {
+          "fr": "Équité",
+          "en": "Equity"
+        },
+        "items": {
+          "teachings": {
+            "id": 104338,
+            "name": {
+              "fr": "Enseignement de l'Équité",
+              "en": "Teachings of Equity"
+            },
+            "icon": "UI_ItemIcon_104338"
+          },
+          "guide": {
+            "id": 104339,
+            "name": {
+              "fr": "Guide de l'Équité",
+              "en": "Guide to Equity"
+            },
+            "icon": "UI_ItemIcon_104339"
+          },
+          "philosophy": {
+            "id": 104340,
+            "name": {
+              "fr": "Philosophie de l'Équité",
+              "en": "Philosophies of Equity"
+            },
+            "icon": "UI_ItemIcon_104340"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "justice",
+        "name": {
+          "fr": "Justice",
+          "en": "Justice"
+        },
+        "items": {
+          "teachings": {
+            "id": 104341,
+            "name": {
+              "fr": "Enseignement de la Justice",
+              "en": "Teachings of Justice"
+            },
+            "icon": "UI_ItemIcon_104341"
+          },
+          "guide": {
+            "id": 104342,
+            "name": {
+              "fr": "Guide de la Justice",
+              "en": "Guide to Justice"
+            },
+            "icon": "UI_ItemIcon_104342"
+          },
+          "philosophy": {
+            "id": 104343,
+            "name": {
+              "fr": "Philosophie de la Justice",
+              "en": "Philosophies of Justice"
+            },
+            "icon": "UI_ItemIcon_104343"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "order",
+        "name": {
+          "fr": "Ordre",
+          "en": "Order"
+        },
+        "items": {
+          "teachings": {
+            "id": 104344,
+            "name": {
+              "fr": "Enseignement de l'Ordre",
+              "en": "Teachings of Order"
+            },
+            "icon": "UI_ItemIcon_104344"
+          },
+          "guide": {
+            "id": 104345,
+            "name": {
+              "fr": "Guide de l'Ordre",
+              "en": "Guide to Order"
+            },
+            "icon": "UI_ItemIcon_104345"
+          },
+          "philosophy": {
+            "id": 104346,
+            "name": {
+              "fr": "Philosophie de l'Ordre",
+              "en": "Philosophies of Order"
+            },
+            "icon": "UI_ItemIcon_104346"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "blazing_ruins",
+    "name": {
+      "fr": "Ruines embrasées",
+      "en": "Blazing Ruins"
+    },
+    "region": {
+      "fr": "Natlan",
+      "en": "Natlan"
+    },
+    "category": "talent",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "contention",
+        "name": {
+          "fr": "Compétition",
+          "en": "Contention"
+        },
+        "items": {
+          "teachings": {
+            "id": 104347,
+            "name": {
+              "fr": "Enseignement de la Compétition",
+              "en": "Teachings of Contention"
+            },
+            "icon": "UI_ItemIcon_104347"
+          },
+          "guide": {
+            "id": 104348,
+            "name": {
+              "fr": "Guide de la Compétition",
+              "en": "Guide to Contention"
+            },
+            "icon": "UI_ItemIcon_104348"
+          },
+          "philosophy": {
+            "id": 104349,
+            "name": {
+              "fr": "Philosophie de la Compétition",
+              "en": "Philosophies of Contention"
+            },
+            "icon": "UI_ItemIcon_104349"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "kindling",
+        "name": {
+          "fr": "Petit bois",
+          "en": "Kindling"
+        },
+        "items": {
+          "teachings": {
+            "id": 104350,
+            "name": {
+              "fr": "Enseignement du Petit bois",
+              "en": "Teachings of Kindling"
+            },
+            "icon": "UI_ItemIcon_104350"
+          },
+          "guide": {
+            "id": 104351,
+            "name": {
+              "fr": "Guide du Petit bois",
+              "en": "Guide to Kindling"
+            },
+            "icon": "UI_ItemIcon_104351"
+          },
+          "philosophy": {
+            "id": 104352,
+            "name": {
+              "fr": "Philosophie du Petit bois",
+              "en": "Philosophies of Kindling"
+            },
+            "icon": "UI_ItemIcon_104352"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "conflict",
+        "name": {
+          "fr": "Conflit",
+          "en": "Conflict"
+        },
+        "items": {
+          "teachings": {
+            "id": 104353,
+            "name": {
+              "fr": "Enseignement du Conflit",
+              "en": "Teachings of Conflict"
+            },
+            "icon": "UI_ItemIcon_104353"
+          },
+          "guide": {
+            "id": 104354,
+            "name": {
+              "fr": "Guide du Conflit",
+              "en": "Guide to Conflict"
+            },
+            "icon": "UI_ItemIcon_104354"
+          },
+          "philosophy": {
+            "id": 104355,
+            "name": {
+              "fr": "Philosophie du Conflit",
+              "en": "Philosophies of Conflict"
+            },
+            "icon": "UI_ItemIcon_104355"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lightless_capital",
+    "name": {
+      "fr": "Capitale sans-lumière",
+      "en": "Lightless Capital"
+    },
+    "region": {
+      "fr": "Nod-Krai",
+      "en": "Nod-Krai"
+    },
+    "category": "talent",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "moonlight",
+        "name": {
+          "fr": "Lune",
+          "en": "Moonlight"
+        },
+        "items": {
+          "teachings": {
+            "id": 104356,
+            "name": {
+              "fr": "Enseignement de la Lune",
+              "en": "Teachings of Moonlight"
+            },
+            "icon": "UI_ItemIcon_104356"
+          },
+          "guide": {
+            "id": 104357,
+            "name": {
+              "fr": "Guide de la Lune",
+              "en": "Guide to Moonlight"
+            },
+            "icon": "UI_ItemIcon_104357"
+          },
+          "philosophy": {
+            "id": 104358,
+            "name": {
+              "fr": "Philosophie de la Lune",
+              "en": "Philosophies of Moonlight"
+            },
+            "icon": "UI_ItemIcon_104358"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "elysium",
+        "name": {
+          "fr": "Élysium",
+          "en": "Elysium"
+        },
+        "items": {
+          "teachings": {
+            "id": 104359,
+            "name": {
+              "fr": "Enseignement de l'Élysium",
+              "en": "Teachings of Elysium"
+            },
+            "icon": "UI_ItemIcon_104359"
+          },
+          "guide": {
+            "id": 104360,
+            "name": {
+              "fr": "Guide de l'Élysium",
+              "en": "Guide to Elysium"
+            },
+            "icon": "UI_ItemIcon_104360"
+          },
+          "philosophy": {
+            "id": 104361,
+            "name": {
+              "fr": "Philosophie de l'Élysium",
+              "en": "Philosophies of Elysium"
+            },
+            "icon": "UI_ItemIcon_104361"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "vagrancy",
+        "name": {
+          "fr": "Errance",
+          "en": "Vagrancy"
+        },
+        "items": {
+          "teachings": {
+            "id": 104362,
+            "name": {
+              "fr": "Enseignement de l'Errance",
+              "en": "Teachings of Vagrancy"
+            },
+            "icon": "UI_ItemIcon_104362"
+          },
+          "guide": {
+            "id": 104363,
+            "name": {
+              "fr": "Guide de l'Errance",
+              "en": "Guide to Vagrancy"
+            },
+            "icon": "UI_ItemIcon_104363"
+          },
+          "philosophy": {
+            "id": 104364,
+            "name": {
+              "fr": "Philosophie de l'Errance",
+              "en": "Philosophies of Vagrancy"
+            },
+            "icon": "UI_ItemIcon_104364"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "relics_fallen_grace",
+    "name": {
+      "fr": "Relique de la grâce déchue",
+      "en": "Relics of the Fallen Grace"
+    },
+    "region": {
+      "fr": "Snezhnaya",
+      "en": "Snezhnaya"
+    },
+    "category": "talent",
+    "rotations": [
+      {
+        "days": [
+          1,
+          4
+        ],
+        "itemKey": "charity",
+        "name": {
+          "fr": "Charité",
+          "en": "Charity"
+        },
+        "items": {
+          "teachings": {
+            "id": 104365,
+            "name": {
+              "fr": "Enseignement de la Charité",
+              "en": "Teachings of Charity"
+            },
+            "icon": "UI_ItemIcon_104365"
+          },
+          "guide": {
+            "id": 104366,
+            "name": {
+              "fr": "Guide de la Charité",
+              "en": "Guide to Charity"
+            },
+            "icon": "UI_ItemIcon_104366"
+          },
+          "philosophy": {
+            "id": 104367,
+            "name": {
+              "fr": "Philosophie de la Charité",
+              "en": "Philosophies of Charity"
+            },
+            "icon": "UI_ItemIcon_104367"
+          }
+        }
+      },
+      {
+        "days": [
+          2,
+          5
+        ],
+        "itemKey": "fortitude",
+        "name": {
+          "fr": "Persévérance",
+          "en": "Fortitude"
+        },
+        "items": {
+          "teachings": {
+            "id": 104368,
+            "name": {
+              "fr": "Enseignement de la Persévérance",
+              "en": "Teachings of Fortitude"
+            },
+            "icon": "UI_ItemIcon_104368"
+          },
+          "guide": {
+            "id": 104369,
+            "name": {
+              "fr": "Guide de la Persévérance",
+              "en": "Guide to Fortitude"
+            },
+            "icon": "UI_ItemIcon_104369"
+          },
+          "philosophy": {
+            "id": 104370,
+            "name": {
+              "fr": "Philosophie de la Persévérance",
+              "en": "Philosophies of Fortitude"
+            },
+            "icon": "UI_ItemIcon_104370"
+          }
+        }
+      },
+      {
+        "days": [
+          3,
+          6
+        ],
+        "itemKey": "glory",
+        "name": {
+          "fr": "Gloire",
+          "en": "Glory"
+        },
+        "items": {
+          "teachings": {
+            "id": 104371,
+            "name": {
+              "fr": "Enseignement de la Gloire",
+              "en": "Teachings of Glory"
+            },
+            "icon": "UI_ItemIcon_104371"
+          },
+          "guide": {
+            "id": 104372,
+            "name": {
+              "fr": "Guide de la Gloire",
+              "en": "Guide to Glory"
+            },
+            "icon": "UI_ItemIcon_104372"
+          },
+          "philosophy": {
+            "id": 104373,
+            "name": {
+              "fr": "Philosophie de la Gloire",
+              "en": "Philosophies of Glory"
+            },
+            "icon": "UI_ItemIcon_104373"
+          }
+        }
+      }
+    ]
+  }
+]

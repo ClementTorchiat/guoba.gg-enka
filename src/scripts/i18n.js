@@ -1000,6 +1000,21 @@ export const T = {
         "roadmap.action.completeSet": (char, neededSet) => `Compléter le set 4p de ${char} (${neededSet})`,
         "roadmap.action.noActions": "Toutes les étapes prioritaires sont déjà accomplies !",
 
+        // Module : Feuille de Route Quotidienne (Farming)
+        "roadmap.farming.title": "Feuille de Route Quotidienne & Calendrier",
+        "roadmap.farming.desc": "Planning hebdomadaire intelligent selon les donjons d'aptitudes ouverts et les besoins réels de vos personnages.",
+        "roadmap.farming.today": "Aujourd'hui",
+        "roadmap.farming.fullWeek": "Semaine complète",
+        "roadmap.farming.resinBadge": (resin, runs) => `~${resin} résines requises (~${runs} runs)`,
+        "roadmap.farming.sundayJokerTitle": "Dimanche Joker — Tous les donjons d'aptitudes sont ouverts !",
+        "roadmap.farming.sundayJokerDesc": "C'est la journée idéale pour rattraper tous vos retards et vaincre vos Boss hebdomadaires avant la réinitialisation.",
+        "roadmap.farming.todayPriorities": "Vos priorités recommandées pour aujourd'hui :",
+        "roadmap.farming.freeDayTitle": "Journée libre d'aptitudes",
+        "roadmap.farming.freeDayDesc": "Aucun donjon d'aptitude n'est requis aujourd'hui pour votre sélection. Profitez-en pour récolter les ressources de monde ci-dessous ou farmer vos artéfacts.",
+        "roadmap.farming.freeDayDescNoMats": "Aucun donjon d'aptitude n'est requis aujourd'hui pour votre sélection. Tous vos personnages ont déjà atteint leur niveau cible : vous pouvez consacrer votre résine du jour à vos donjons d'artéfacts ou à vos boss de la semaine.",
+        "roadmap.farming.worldMatsTitle": "Matériaux d'élévation (Boss de monde & Spécialités)",
+        "roadmap.farming.allMaxed": "Toutes les aptitudes de votre sélection sont déjà au niveau cible !",
+
         // Module 3 : Optimiseur de Swaps Croisés
         "roadmap.swaps.title": "Optimiseur de Swaps Croisés",
         "roadmap.swaps.desc": "Réallocations immédiates d'artéfacts entre vos personnages pour maximiser le score total du compte sans dépenser de résine.",
@@ -2119,6 +2134,21 @@ export const T = {
         "roadmap.action.fixMainStat": (char, slot, curStat, bestStat) => `Fix main stat on ${char}'s ${slot} (${curStat} ➔ ${bestStat})`,
         "roadmap.action.completeSet": (char, neededSet) => `Complete 4pc set for ${char} (${neededSet})`,
         "roadmap.action.noActions": "All priority steps are already completed!",
+
+        // Module: Daily Farming Roadmap
+        "roadmap.farming.title": "Daily Farming Roadmap & Weekly Schedule",
+        "roadmap.farming.desc": "Smart weekly schedule based on open talent domains and your characters' actual progression needs.",
+        "roadmap.farming.today": "Today",
+        "roadmap.farming.fullWeek": "Full Week",
+        "roadmap.farming.resinBadge": (resin, runs) => `~${resin} resin required (~${runs} runs)`,
+        "roadmap.farming.sundayJokerTitle": "Sunday Joker — All talent domains are unlocked!",
+        "roadmap.farming.sundayJokerDesc": "The best day to catch up on any talent book and complete your weekly bosses before the reset.",
+        "roadmap.farming.todayPriorities": "Your recommended priorities for today:",
+        "roadmap.farming.freeDayTitle": "Talent Free Day",
+        "roadmap.farming.freeDayDesc": "No talent domains required today for your selection. Take advantage to gather open-world resources below or farm artifact domains.",
+        "roadmap.farming.freeDayDescNoMats": "No talent domains required today for your selection. All characters already reached target level: you can dedicate today's resin to artifact farming or weekly bosses.",
+        "roadmap.farming.worldMatsTitle": "Ascension Materials (World Bosses & Specialties)",
+        "roadmap.farming.allMaxed": "All talents for your selected characters are already at target levels!",
 
         // Module 3 : Cross-Character Swap Optimizer
         "roadmap.swaps.title": "Cross-Character Swap Optimizer",

@@ -300,7 +300,7 @@ if (typeof window !== 'undefined') {
     if (window.toggleRoadmapDemoData !== undefined) delete window.toggleRoadmapDemoData;
 }
 
-export function renderQuickWinsPlan(characters, focusCharNom = null) {
+export function renderQuickWinsPlan(characters, focusCharNom = null, extraHeaderRight = '') {
     const data = getAccountBarometerDetails(characters, focusCharNom);
 
     const sections = [
@@ -337,12 +337,15 @@ export function renderQuickWinsPlan(characters, focusCharNom = null) {
     ];
 
     return `
-        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
-            <div>
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <h3 style="font-size:24px; font-weight:normal; color:var(--text-primary); margin:0;">${t('roadmap.breakdown.title')}</h3>
+        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px; padding-bottom:20px !important;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+                <div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <h3 style="font-size:24px; font-weight:normal; color:var(--text-primary); margin:0;">${t('roadmap.breakdown.title')}</h3>
+                    </div>
+                    <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.breakdown.desc')}</p>
                 </div>
-                <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.breakdown.desc')}</p>
+                ${extraHeaderRight ? extraHeaderRight : ''}
             </div>
 
             <div style="display:grid; grid-template-columns: repeat(6, 1fr); gap:14px;">

@@ -24,6 +24,7 @@
   "devDependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "dom-to-image-more": "^3.10.2",
+    "genshin-db": "^5.2.14",
     "vite-plugin-compression": "^0.5.1"
   }
 }

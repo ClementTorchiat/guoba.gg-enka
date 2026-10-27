@@ -4,7 +4,7 @@ const CSP_POLICY = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' data:",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://enka.network https://cdn.prod.website-files.com https://cdn.discordapp.com https://media.discordapp.net https://static.wikia.nocookie.net",
+  "img-src 'self' data: blob: https://enka.network https://cdn.prod.website-files.com https://cdn.discordapp.com https://media.discordapp.net https://static.wikia.nocookie.net https://gi.yatta.moe",
   "font-src 'self' data:",
   "connect-src 'self' https://*.supabase.co https://enka.network https://*.workers.dev https://raw.githubusercontent.com ws: http:",
   "worker-src 'self' blob:",
