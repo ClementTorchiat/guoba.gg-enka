@@ -1015,6 +1015,7 @@ export const T = {
         "roadmap.farming.freeDayTitle": "Journée libre d'aptitudes",
         "roadmap.farming.freeDayDesc": "Aucun donjon d'aptitude n'est requis aujourd'hui pour votre sélection. Profitez-en pour récolter les ressources de monde ci-dessous ou farmer vos artéfacts.",
         "roadmap.farming.freeDayDescNoMats": "Aucun donjon d'aptitude n'est requis aujourd'hui pour votre sélection. Tous vos personnages ont déjà atteint leur niveau cible : vous pouvez consacrer votre résine du jour à vos donjons d'artéfacts ou à vos boss de la semaine.",
+        "roadmap.farming.worldMatsTitle": "Matériaux d'élévation (Boss du monde & Spécialités)",
         "roadmap.farming.allMaxed": "Toutes les aptitudes de votre sélection sont déjà au niveau cible !",
         "roadmap.farming.allWeaponsMaxed": "Toutes les armes de votre sélection sont déjà au niveau 90 !",
         "roadmap.farming.allTalentsAndWeaponsMaxed": "Toutes les aptitudes et armes de votre sélection sont déjà au niveau cible !",

@@ -223,17 +223,17 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
                                             <div style="font-size:11px; color:var(--text-grey); margin-top:2px;">Matériaux d'élévation</div>
                                         </div>
                                     </div>
-                                    <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+                                    <div style="display:flex; flex-direction:column; gap:6px; flex-shrink:0;">
                                         ${c.worldBoss?.icon ? `
                                             <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); border:none; padding:4px 8px; border-radius:6px;" title="${getLocalizedItemName(c.worldBoss.name)}">
                                                 ${getItemIconHtml(c.worldBoss.icon, getLocalizedItemName(c.worldBoss.name), 'width:20px; height:20px; object-fit:contain;')}
-                                                <span style="font-size:11px; color:var(--text-primary); font-weight:normal; max-width:90px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${getLocalizedItemName(c.worldBoss.name)}</span>
+                                                <span style="font-size:11px; color:var(--text-primary); font-weight:normal; max-width:130px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${getLocalizedItemName(c.worldBoss.name)}</span>
                                             </div>
                                         ` : ''}
                                         ${c.specialty?.icon ? `
                                             <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); border:none; padding:4px 8px; border-radius:6px;" title="${getLocalizedItemName(c.specialty.name)}">
                                                 ${getItemIconHtml(c.specialty.icon, getLocalizedItemName(c.specialty.name), 'width:20px; height:20px; object-fit:contain;')}
-                                                <span style="font-size:11px; color:var(--text-primary); font-weight:normal; max-width:90px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${getLocalizedItemName(c.specialty.name)}</span>
+                                                <span style="font-size:11px; color:var(--text-primary); font-weight:normal; max-width:130px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${getLocalizedItemName(c.specialty.name)}</span>
                                             </div>
                                         ` : ''}
                                     </div>
