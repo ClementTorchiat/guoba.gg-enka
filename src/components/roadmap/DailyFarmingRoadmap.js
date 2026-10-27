@@ -1,6 +1,6 @@
 // src/components/roadmap/DailyFarmingRoadmap.js
 import { t, LANG } from '../../scripts/i18n.js';
-import { getWeeklyFarmingSchedule } from './farmingEngine.js';
+import { getWeeklyFarmingSchedule, getLocalizedItemName } from './farmingEngine.js';
 
 const ENKA_CDN = 'https://enka.network/ui/';
 const YATTA_CDN = 'https://gi.yatta.moe/assets/UI/';
@@ -15,9 +15,14 @@ function formatMora(num) {
 /**
  * Génère le tag HTML pour une icône de matériau avec fallback automatique vers yatta.moe si Enka renvoie 404.
  */
-function getItemIconHtml(iconName, label = '', style = 'width:20px; height:20px; object-fit:contain; flex-shrink:0;') {
-    if (!iconName) return '';
-    const clean = iconName.replace('.png', '');
+function getItemIconHtml(iconOrObj, label = '', style = 'width:20px; height:20px; object-fit:contain; flex-shrink:0;') {
+    if (!iconOrObj) return '';
+    const raw = typeof iconOrObj === 'object' ? (iconOrObj.icon || iconOrObj.id) : iconOrObj;
+    if (!raw) return '';
+    let clean = String(raw).replace('.png', '').trim();
+    if (/^\d+$/.test(clean)) {
+        clean = `UI_ItemIcon_${clean}`;
+    }
     const isFullUrl = clean.startsWith('http');
     const primaryUrl = isFullUrl ? clean : `${ENKA_CDN}${clean}.png`;
     const fallbackUrl = isFullUrl ? '' : `${YATTA_CDN}${clean}.png`;
@@ -49,7 +54,7 @@ function renderCharacterFarmingCard(charData) {
     const cost = charData.totalCost;
 
     return `
-        <div style="background:var(--shadow-subtle); border:none; border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:10px; transition:all 0.2s ease;">
+        <div style="background:var(--shadow-subtle); border:none; border-radius:8px; padding: 6px; display:flex; flex-direction:column; gap:10px; transition:all 0.2s ease;">
             <!-- Header Personnage -->
             <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
                 <div style="display:flex; align-items:center; gap:10px; min-width:0;">
@@ -60,7 +65,7 @@ function renderCharacterFarmingCard(charData) {
                             ${charData.isFocus ? `<span style="font-size:9px; background:var(--accent-blue); color:#fff; padding:1px 5px; border-radius:4px; font-weight:normal; text-transform:uppercase;">Focus</span>` : ''}
                         </div>
                         <div style="font-size:11px; color:var(--text-grey); display:flex; align-items:center; gap:4px; margin-top:2px;">
-                            <span>${rot?.name?.[LANG] || rot?.name?.fr || ''}</span>
+                            <span>${getLocalizedItemName(rot?.name)}</span>
                             <span>•</span>
                             <span style="color:var(--accent-green); font-weight:normal;">~${cost.estimatedResin} résines</span>
                         </div>
@@ -69,8 +74,8 @@ function renderCharacterFarmingCard(charData) {
 
                 <!-- Badge livre représentatif (Philosophie 4★) -->
                 ${items.philosophy?.icon ? `
-                    <div style="display:flex; align-items:center; gap:6px; background:var(--shadow-subtle); padding:4px 8px; border-radius:6px; border:none; flex-shrink:0;" title="${items.philosophy.name?.[LANG] || items.philosophy.name?.fr || ''}">
-                        ${getItemIconHtml(items.philosophy.icon, items.philosophy.name?.[LANG] || items.philosophy.name?.fr || '', 'width:24px; height:24px; object-fit:contain;')}
+                    <div style="display:flex; align-items:center; gap:6px; background:var(--shadow-subtle); padding:4px 8px; border-radius:6px; border:none; flex-shrink:0;" title="${getLocalizedItemName(items.philosophy.name)}">
+                        ${getItemIconHtml(items.philosophy.icon, getLocalizedItemName(items.philosophy.name), 'width:24px; height:24px; object-fit:contain;')}
                         <span style="font-size:11px; font-weight:normal; color:#eab308;">${cost.philosophies + Math.floor(cost.guides / 3)} eq.</span>
                     </div>
                 ` : ''}
@@ -95,10 +100,10 @@ function renderCharacterFarmingCard(charData) {
 
             <!-- Matériaux réels requis avec icônes officielles -->
             <div style="display:flex; flex-wrap:wrap; align-items:center; gap:6px; padding-top:2px;">
-                ${renderMaterialPill(items.teachings?.icon, cost.teachings, items.teachings?.name?.[LANG] || items.teachings?.name?.fr, '#4ade80')}
-                ${renderMaterialPill(items.guide?.icon, cost.guides, items.guide?.name?.[LANG] || items.guide?.name?.fr, '#60a5fa')}
-                ${renderMaterialPill(items.philosophy?.icon, cost.philosophies, items.philosophy?.name?.[LANG] || items.philosophy?.name?.fr, '#c084fc')}
-                ${renderMaterialPill(charData.weeklyBoss?.icon, cost.weeklyBoss, charData.weeklyBoss?.name?.[LANG] || charData.weeklyBoss?.name?.fr, '#f59e0b')}
+                ${renderMaterialPill(items.teachings?.icon, cost.teachings, getLocalizedItemName(items.teachings?.name), '#4ade80')}
+                ${renderMaterialPill(items.guide?.icon, cost.guides, getLocalizedItemName(items.guide?.name), '#60a5fa')}
+                ${renderMaterialPill(items.philosophy?.icon, cost.philosophies, getLocalizedItemName(items.philosophy?.name), '#c084fc')}
+                ${renderMaterialPill(charData.weeklyBoss?.icon, cost.weeklyBoss, getLocalizedItemName(charData.weeklyBoss?.name), '#f59e0b')}
                 ${cost.crown > 0 ? renderMaterialPill('UI_ItemIcon_104319', cost.crown, 'Couronne de la sagesse', '#f59e0b') : ''}
                 ${cost.mora > 0 ? renderMaterialPill('UI_ItemIcon_202', formatMora(cost.mora), 'Moras', '#fbbf24') : ''}
             </div>
@@ -154,15 +159,15 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = []) {
                                     </div>
                                     <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
                                         ${c.worldBoss?.icon ? `
-                                            <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); border:none; padding:4px 8px; border-radius:6px;" title="${c.worldBoss.name?.[LANG] || c.worldBoss.name?.fr || ''}">
-                                                ${getItemIconHtml(c.worldBoss.icon, c.worldBoss.name?.[LANG] || c.worldBoss.name?.fr || '', 'width:20px; height:20px; object-fit:contain;')}
-                                                <span style="font-size:11px; color:var(--text-primary); font-weight:normal; max-width:90px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.worldBoss.name?.[LANG] || c.worldBoss.name?.fr || ''}</span>
+                                            <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); border:none; padding:4px 8px; border-radius:6px;" title="${getLocalizedItemName(c.worldBoss.name)}">
+                                                ${getItemIconHtml(c.worldBoss.icon, getLocalizedItemName(c.worldBoss.name), 'width:20px; height:20px; object-fit:contain;')}
+                                                <span style="font-size:11px; color:var(--text-primary); font-weight:normal; max-width:90px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${getLocalizedItemName(c.worldBoss.name)}</span>
                                             </div>
                                         ` : ''}
                                         ${c.specialty?.icon ? `
-                                            <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); border:none; padding:4px 8px; border-radius:6px;" title="${c.specialty.name?.[LANG] || c.specialty.name?.fr || ''}">
-                                                ${getItemIconHtml(c.specialty.icon, c.specialty.name?.[LANG] || c.specialty.name?.fr || '', 'width:20px; height:20px; object-fit:contain;')}
-                                                <span style="font-size:11px; color:var(--text-primary); font-weight:normal; max-width:90px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.specialty.name?.[LANG] || c.specialty.name?.fr || ''}</span>
+                                            <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); border:none; padding:4px 8px; border-radius:6px;" title="${getLocalizedItemName(c.specialty.name)}">
+                                                ${getItemIconHtml(c.specialty.icon, getLocalizedItemName(c.specialty.name), 'width:20px; height:20px; object-fit:contain;')}
+                                                <span style="font-size:11px; color:var(--text-primary); font-weight:normal; max-width:90px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${getLocalizedItemName(c.specialty.name)}</span>
                                             </div>
                                         ` : ''}
                                     </div>
@@ -202,9 +207,9 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = []) {
 
                             <!-- Aperçu des 3 livres -->
                             <div style="display:flex; align-items:center; gap:4px;">
-                                ${getItemIconHtml(dom.items.teachings?.icon, dom.items.teachings?.name?.[LANG] || dom.items.teachings?.name?.fr || '', 'width:20px; height:20px; object-fit:contain;')}
-                                ${getItemIconHtml(dom.items.guide?.icon, dom.items.guide?.name?.[LANG] || dom.items.guide?.name?.fr || '', 'width:20px; height:20px; object-fit:contain;')}
-                                ${getItemIconHtml(dom.items.philosophy?.icon, dom.items.philosophy?.name?.[LANG] || dom.items.philosophy?.name?.fr || '', 'width:20px; height:20px; object-fit:contain;')}
+                                ${getItemIconHtml(dom.items.teachings?.icon, getLocalizedItemName(dom.items.teachings?.name), 'width:20px; height:20px; object-fit:contain;')}
+                                ${getItemIconHtml(dom.items.guide?.icon, getLocalizedItemName(dom.items.guide?.name), 'width:20px; height:20px; object-fit:contain;')}
+                                ${getItemIconHtml(dom.items.philosophy?.icon, getLocalizedItemName(dom.items.philosophy?.name), 'width:20px; height:20px; object-fit:contain;')}
                             </div>
                         </div>
 
@@ -340,10 +345,10 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
             <!-- Sélecteur des jours de la semaine (style DomainPlanner) -->
             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                 ${tabsOrder.map(tab => {
-                    const isTabActive = (selectedDay === tab.key) || (selectedDay === 'today' && tab.key === 'today');
-                    const isTodayBtn = tab.key === 'today' || tab.key === String(todayIdx);
+        const isTabActive = (selectedDay === tab.key) || (selectedDay === 'today' && tab.key === 'today');
+        const isTodayBtn = tab.key === 'today' || tab.key === String(todayIdx);
 
-                    return `
+        return `
                         <button
                             data-action="set-farming-day"
                             data-day="${tab.key}"
@@ -355,7 +360,7 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
                             <span>${tab.label}</span>
                         </button>
                     `;
-                }).join('')}
+    }).join('')}
             </div>
 
             <!-- Zone de contenu -->
@@ -364,10 +369,10 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
                     <div style="font-size:13px; font-weight:normal; color:var(--text-primary);">${t('roadmap.farming.allMaxed')}</div>
                 </div>
             ` : (
-                isFullWeekMode
-                    ? renderFullWeekSchedule(schedule.weekSchedule)
-                    : renderSingleDaySchedule(currentDaySchedule, schedule.allCharactersWithNeeds)
-            )}
+            isFullWeekMode
+                ? renderFullWeekSchedule(schedule.weekSchedule)
+                : renderSingleDaySchedule(currentDaySchedule, schedule.allCharactersWithNeeds)
+        )}
         </div>
     `;
 }

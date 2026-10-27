@@ -4,6 +4,21 @@ import CHARACTER_MATERIALS from '../../data/character_materials.json';
 import CONFIG_NAME_ALIASES_EN_TO_FR from '../../data/config_name_aliases_en_to_fr.json';
 import { t, LANG } from '../../scripts/i18n.js';
 
+/**
+ * Résout le nom localisé d'un matériau ou domaine avec repli sécurisé sur l'anglais si 'fr' est vide.
+ */
+export function getLocalizedItemName(nameObj, currentLang = LANG, defaultVal = '') {
+    if (!nameObj) return defaultVal;
+    if (typeof nameObj === 'string') return nameObj;
+    const current = nameObj[currentLang];
+    if (current && typeof current === 'string' && current.trim().length > 0) return current;
+    const fr = nameObj.fr;
+    if (fr && typeof fr === 'string' && fr.trim().length > 0) return fr;
+    const en = nameObj.en;
+    if (en && typeof en === 'string' && en.trim().length > 0) return en;
+    return defaultVal;
+}
+
 // Table universelle officielle du coût par palier de niveau d'aptitude (2 à 10)
 export const TALENT_COST_PER_LEVEL = {
     2: { teachings: 3, guides: 0, philosophies: 0, weeklyBoss: 0, crown: 0, mora: 12500 },
@@ -286,9 +301,9 @@ export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null) {
             if (!domainsMap[domId]) {
                 domainsMap[domId] = {
                     domainId: domId,
-                    domainName: rot.domainName?.[currentLang] || rot.domainName?.fr || domId,
-                    region: rot.region?.[currentLang] || rot.region?.fr || '',
-                    bookName: rot.name?.[currentLang] || rot.name?.fr || '',
+                    domainName: getLocalizedItemName(rot.domainName, currentLang, domId),
+                    region: getLocalizedItemName(rot.region, currentLang, ''),
+                    bookName: getLocalizedItemName(rot.name, currentLang, ''),
                     items: rot.items || {},
                     characters: []
                 };
