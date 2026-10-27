@@ -20,7 +20,7 @@ export const SLOT_SHORT_NAMES = {
         EQUIP_NECKLACE: 'Plume',
         EQUIP_SHOES: 'Sablier',
         EQUIP_RING: 'Coupe',
-        EQUIP_DRESS: 'Casque'
+        EQUIP_DRESS: 'Diadème'
     },
     en: {
         EQUIP_BRACER: 'Flower',
@@ -381,7 +381,7 @@ export function calculateDomainRankings(characters, focusCharNom = null, scope =
                 }
 
                 set1Chars.push({
-                    perso,
+                    perso: { ...perso, image: perso.image ? perso.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '' },
                     role: 'best',
                     need: need1,
                     label,
@@ -419,7 +419,7 @@ export function calculateDomainRankings(characters, focusCharNom = null, scope =
                 }
 
                 set2Chars.push({
-                    perso,
+                    perso: { ...perso, image: perso.image ? perso.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '' },
                     role: 'best',
                     need: need2,
                     label,

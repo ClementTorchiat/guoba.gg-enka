@@ -266,7 +266,7 @@ export function getElixirCraftRecommendations(characters, focusCharNom = null, b
 
             recommendations.push({
                 persoNom: perso.nom,
-                persoImage: perso.image,
+                persoImage: perso.image ? perso.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '',
                 buildName,
                 slotType,
                 slotName: t('artifact.' + slotType),
@@ -337,7 +337,7 @@ export function renderElixirCraftAdvisor(
     ];
 
     return `
-        <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px;">
+        <div class="roadmap-card" style="padding-top: 0; display:flex; flex-direction:column; gap:16px;">
             
             <!-- Header du Module avec Filtres de Portée et de Budget -->
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">

@@ -37,7 +37,7 @@ export function getStrongboxRecommendations(characters, focusCharNom = null, sco
 
                 charsWithNeed.push({
                     nom: perso.nom,
-                    image: perso.image,
+                    image: perso.image ? perso.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '',
                     need,
                     label,
                     isFocus

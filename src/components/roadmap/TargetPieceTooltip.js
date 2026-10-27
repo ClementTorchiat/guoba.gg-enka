@@ -69,7 +69,7 @@ function resolveCharacterAndBuild(charNom, setKey) {
         if (iconKey.startsWith('Traveler_')) iconKey = 'PlayerBoy';
         perso = {
             nom: allEntry ? allEntry.nom : charNom,
-            image: allEntry ? allEntry.image : `https://enka.network/ui/UI_AvatarIcon_Side_${iconKey}.png`,
+            image: allEntry ? allEntry.image : `https://enka.network/ui/UI_AvatarIcon_${iconKey}.png`,
             charConfig: rawConfig || {},
             artefacts: [],
             setsCounter: {}
@@ -425,7 +425,7 @@ export function showTargetPieceTooltip(element, charNom, setKey, forceAll = fals
             <!-- Entête : Perso + Status -->
             <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
                 <div style="display:flex; align-items:center; gap:8px;">
-                    <img src="${perso.image}" alt="${perso.nom}" style="width:28px; height:28px; border-radius:5px; object-fit:cover; background:var(--shadow-subtle);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                    <img src="${perso.image ? perso.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : ''}" alt="${perso.nom}" style="width:28px; height:28px; border-radius:5px; object-fit:cover; background:var(--shadow-subtle);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                     <span style="font-size:13px; font-weight:normal; color:var(--text-primary);">${perso.nom}</span>
                 </div>
                 ${statusPill}

@@ -67,7 +67,7 @@ for (const path in charJsonFiles) {
     } else if (fileName === 'Manekin') {
         iconKey = 'MannequinBoy';
     }
-    const image = `https://enka.network/ui/UI_AvatarIcon_Side_${iconKey}.png`;
+    const image = `https://enka.network/ui/UI_AvatarIcon_${iconKey}.png`;
 
     ALL_GAME_CHARACTERS.push({
         id: fileName,

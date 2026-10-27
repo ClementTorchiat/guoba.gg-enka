@@ -2783,10 +2783,12 @@ main {
 .mini-target-cards-row::-webkit-scrollbar {
     height: 4px;
 }
+
 .mini-target-cards-row::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
 }
+
 .mini-target-cards-row::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
@@ -4283,6 +4285,33 @@ input:checked+.toggle-track .star-4 {
     border: 1px solid rgba(34, 197, 94, 0.25);
     flex-shrink: 0;
     white-space: nowrap;
+}
+
+.roadmap-action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    max-height: 290px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.roadmap-action-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.roadmap-action-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.roadmap-action-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+.roadmap-action-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 /* Module 3: Global Swaps */

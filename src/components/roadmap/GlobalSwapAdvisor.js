@@ -64,8 +64,8 @@ export function findGlobalProfitableSwaps(characters, focusCharNom = null) {
                     const setA_name = artA.setName || getLocalizedSetName(artA.setKey, characters) || '';
                     const setB_name = artB.setName || getLocalizedSetName(artB.setKey, characters) || '';
                     swapOpportunities.push({
-                        charA: { nom: charA.nom, image: charA.image, delta: deltaA, oldScore: scoreA_orig, newScore: evalA_new.score, isFocus: focusCharNom && charA.nom === focusCharNom },
-                        charB: { nom: charB.nom, image: charB.image, delta: deltaB, oldScore: scoreB_orig, newScore: evalB_new.score, isFocus: focusCharNom && charB.nom === focusCharNom },
+                        charA: { nom: charA.nom, image: charA.image ? charA.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '', delta: deltaA, oldScore: scoreA_orig, newScore: evalA_new.score, isFocus: focusCharNom && charA.nom === focusCharNom },
+                        charB: { nom: charB.nom, image: charB.image ? charB.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '', delta: deltaB, oldScore: scoreB_orig, newScore: evalB_new.score, isFocus: focusCharNom && charB.nom === focusCharNom },
                         slotType,
                         slotName: t('artifact.' + slotType),
                         artA: { name: setA_name, setName: setA_name, icon: artA.icon, mainStat: artA.mainStat, score: artA.score },

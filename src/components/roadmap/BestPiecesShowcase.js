@@ -29,7 +29,7 @@ export function getTopArtifacts(characters, mode = 'cv', focusCharNom = null) {
 
             allPieces.push({
                 persoNom: perso.nom,
-                persoImage: perso.image,
+                persoImage: perso.image ? perso.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '',
                 buildName,
                 type: art.type,
                 typeName: t('artifact.' + art.type),

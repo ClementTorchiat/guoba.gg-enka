@@ -59,7 +59,7 @@ export function getAccountWorstPieces(characters, focusCharNom = null, mode = 's
 
             allPieces.push({
                 persoNom: perso.nom,
-                persoImage: perso.image,
+                persoImage: perso.image ? perso.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '',
                 type: art.type,
                 typeName: t('artifact.' + art.type),
                 setName: art.setName || getLocalizedSetName(art.setKey, characters) || '',

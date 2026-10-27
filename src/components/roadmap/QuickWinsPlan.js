@@ -1,7 +1,7 @@
 // src/components/roadmap/QuickWinsPlan.js
 import { t } from '../../scripts/i18n.js';
 import { ICON_MAP } from '../../scripts/icons.js';
-import { getLocalizedSetName } from './DomainPlanner.js';
+import { getLocalizedSetName, getSetIcon, getSlotShortName } from './DomainPlanner.js';
 
 export function getAccountBarometerDetails(characters, focusCharNom = null) {
     if (!characters || characters.length === 0) {
@@ -23,7 +23,7 @@ export function getAccountBarometerDetails(characters, focusCharNom = null) {
 
     characters.forEach(perso => {
         const charName = perso.nom;
-        const charAvatar = perso.image;
+        const charAvatar = perso.image ? perso.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '';
         const config = perso.activeBuild ? { ...perso.charConfig, ...perso.activeBuild } : (perso.charConfig || {});
         const isFocus = focusCharNom && charName === focusCharNom;
 
@@ -107,7 +107,7 @@ export function getAccountBarometerDetails(characters, focusCharNom = null) {
         if (perso.artefacts && perso.artefacts.length > 0) {
             perso.artefacts.forEach(art => {
                 if (['EQUIP_SHOES', 'EQUIP_RING', 'EQUIP_DRESS'].includes(art.type)) {
-                    const typeName = t('artifact.' + art.type);
+                    const slotName = getSlotShortName(art.type);
                     const ideals = idealMainStats[art.type] || [];
                     const currentKey = art.mainStat?.key;
                     const weight = config.weights?.[currentKey] || 0;
@@ -115,14 +115,16 @@ export function getAccountBarometerDetails(characters, focusCharNom = null) {
                     if (ideals.length > 0 && !ideals.includes(currentKey) && weight < 0.75) {
                         const bestStatLabel = t('stat.' + ideals[0]);
                         const curStatLabel = art.mainStat?.label || currentKey;
+                        const setName = art.setName || getLocalizedSetName(art.setKey, characters) || '';
                         mainstats.push({
                             charName,
                             charAvatar,
-                            pieceName: typeName,
+                            slotName,
+                            setName,
                             pieceIcon: art.icon || `${ICON_BASE_PATH}${ICON_MAP[currentKey] || 'icon_unknown.svg'}`,
                             current: curStatLabel,
                             target: bestStatLabel,
-                            title: t('roadmap.action.fixMainStat', charName, typeName, curStatLabel, bestStatLabel),
+                            title: t('roadmap.action.fixMainStat', charName, slotName, curStatLabel, bestStatLabel),
                             isFocus
                         });
                     }
@@ -138,9 +140,12 @@ export function getAccountBarometerDetails(characters, focusCharNom = null) {
 
         if (!hasOptimalSet && bestSets.length > 0) {
             const setName = getLocalizedSetName(bestSets[0], characters);
+            const setIcon = getSetIcon(bestSets[0], characters);
             sets.push({
                 charName,
                 charAvatar,
+                setName,
+                setIcon: setIcon || `${ICON_BASE_PATH}icon_empty_slot.svg`,
                 current: activeSets.length > 0 ? t('roadmap.breakdown.setBonus2p', activeSets.length) : t('roadmap.breakdown.noSetBonus'),
                 target: `4p ${setName}`,
                 title: t('roadmap.action.completeSet', charName, setName),
@@ -162,6 +167,139 @@ export function getAccountBarometerDetails(characters, focusCharNom = null) {
     return { weapons, levels, talents, mainstats, sets };
 }
 
+function renderWeaponItem(item) {
+    return `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 6px 4px 4px; background:var(--shadow-subtle); border-radius:6px; gap:8px; box-sizing:border-box;" title="${item.title}">
+            <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
+                <img src="${item.weaponIcon}" alt="${item.weaponName}" style="width:32px; height:32px; border-radius:6px; background:var(--shadow-subtle); flex-shrink:0; object-fit:contain;">
+                <div style="min-width:0; flex:1; display:flex; flex-direction:column; gap:2px;">
+                    <div style="font-size:11px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        ${item.weaponName}
+                    </div>
+                    <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        <span>${t('roadmap.breakdown.equippedBy')}</span>
+                        <img src="${item.charAvatar}" alt="${item.charName}" style="width:14px; height:14px; border-radius:50%; background:var(--shadow-subtle); object-fit:cover; flex-shrink:0;">
+                        <span style="color:var(--text-primary);">${item.charName}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:4px; font-size:10px; flex-shrink:0;">
+                <span style="color:var(--text-grey);">${item.current}</span>
+                <span style="color:var(--text-grey);">➔</span>
+                <span style="color:var(--accent-green);">${item.target}</span>
+            </div>
+        </div>
+    `;
+}
+
+function renderLevelItem(item) {
+    return `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 6px 4px 4px; background:var(--shadow-subtle); border-radius:6px; gap:8px; box-sizing:border-box;" title="${item.title}">
+            <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
+                <img src="${item.charAvatar}" alt="${item.charName}" style="width:32px; height:32px; border-radius:6px; background:var(--shadow-subtle); object-fit:cover; flex-shrink:0;">
+                <div style="min-width:0; flex:1;">
+                    <div style="font-size:11px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        ${item.charName}
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:4px; font-size:10px; flex-shrink:0;">
+                <span style="color:var(--text-grey);">${item.current}</span>
+                <span style="color:var(--text-grey);">➔</span>
+                <span style="color:var(--accent-green);">${item.target}</span>
+            </div>
+        </div>
+    `;
+}
+
+function renderTalentItem(item) {
+    return `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 6px 4px 4px; background:var(--shadow-subtle); border-radius:6px; gap:8px; box-sizing:border-box;" title="${item.title}">
+            <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
+                <img src="${item.charAvatar}" alt="${item.charName}" style="width:32px; height:32px; border-radius:6px; background:var(--shadow-subtle); object-fit:cover; flex-shrink:0;">
+                <div style="min-width:0; flex:1; display:flex; flex-direction:column; gap:2px;">
+                    <div style="font-size:11px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        ${item.charName}
+                    </div>
+                    <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        ${item.talentIcon ? `<img src="${item.talentIcon}" alt="" style="width:14px; height:14px; background:var(--shadow-subtle); border-radius:3px; object-fit:contain; flex-shrink:0;">` : ''}
+                        <span>${item.talentName}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:4px; font-size:10px; flex-shrink:0;">
+                <span style="color:var(--text-grey);">${item.current}</span>
+                <span style="color:var(--text-grey);">➔</span>
+                <span style="color:var(--accent-green);">${item.target}</span>
+            </div>
+        </div>
+    `;
+}
+
+function renderMainstatItem(item) {
+    return `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 6px 4px 4px; background:var(--shadow-subtle); border-radius:6px; gap:8px; box-sizing:border-box;" title="${item.title}">
+            <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
+                <img src="${item.pieceIcon}" alt="${item.slotName}" style="width:32px; height:32px; border-radius:6px; background:var(--shadow-subtle); flex-shrink:0; object-fit:contain;">
+                <div style="min-width:0; flex:1; display:flex; flex-direction:column; gap:2px;">
+                    <div style="font-size:11px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        ${item.slotName}${item.setName ? `<span style="color:var(--text-grey); font-size:10px; margin-left:4px;">• ${item.setName}</span>` : ''}
+                    </div>
+                    <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        <img src="${item.charAvatar}" alt="${item.charName}" style="width:14px; height:14px; border-radius:50%; background:var(--shadow-subtle); object-fit:cover; flex-shrink:0;">
+                        <span>${item.charName}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:4px; font-size:10px; flex-shrink:0;">
+                <span style="color:#f87171;">${item.current}</span>
+                <span style="color:var(--text-grey);">➔</span>
+                <span style="color:var(--accent-green);">${item.target}</span>
+            </div>
+        </div>
+    `;
+}
+
+function renderSetItem(item) {
+    return `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 6px 4px 4px; background:var(--shadow-subtle); border-radius:6px; gap:8px; box-sizing:border-box;" title="${item.title}">
+            <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
+                <img src="${item.setIcon}" alt="${item.setName}" style="width:32px; height:32px; border-radius:6px; background:var(--shadow-subtle); flex-shrink:0; object-fit:contain;">
+                <div style="min-width:0; flex:1; display:flex; flex-direction:column; gap:2px;">
+                    <div style="font-size:11px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        4p ${item.setName}
+                    </div>
+                    <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        <img src="${item.charAvatar}" alt="${item.charName}" style="width:14px; height:14px; border-radius:50%; background:var(--shadow-subtle); object-fit:cover; flex-shrink:0;">
+                        <span>${item.charName}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex; align-items:center; font-size:10px; color:var(--text-grey); flex-shrink:0;">
+                <span style="padding:2px 6px; background:rgba(255,255,255,0.05); border-radius:4px;">${item.current}</span>
+            </div>
+        </div>
+    `;
+}
+
+const RENDER_ITEM_MAP = {
+    weapons: renderWeaponItem,
+    levels: renderLevelItem,
+    talents: renderTalentItem,
+    mainstats: renderMainstatItem,
+    sets: renderSetItem
+};
+
+if (typeof window !== 'undefined') {
+    if (window.__ROADMAP_DEMO_MODE__ !== undefined) delete window.__ROADMAP_DEMO_MODE__;
+    if (window.toggleRoadmapDemoData !== undefined) delete window.toggleRoadmapDemoData;
+}
+
 export function renderQuickWinsPlan(characters, focusCharNom = null) {
     const data = getAccountBarometerDetails(characters, focusCharNom);
 
@@ -170,36 +308,31 @@ export function renderQuickWinsPlan(characters, focusCharNom = null) {
             key: 'weapons',
             title: t('roadmap.breakdown.weapons'),
             items: data.weapons,
-            okText: t('roadmap.breakdown.weapons.ok'),
-            badgeColor: '#3b82f6'
+            okText: t('roadmap.breakdown.weapons.ok')
         },
         {
             key: 'levels',
             title: t('roadmap.breakdown.levels'),
             items: data.levels,
-            okText: t('roadmap.breakdown.levels.ok'),
-            badgeColor: 'var(--accent-green)'
+            okText: t('roadmap.breakdown.levels.ok')
         },
         {
             key: 'talents',
             title: t('roadmap.breakdown.talents'),
             items: data.talents,
-            okText: t('roadmap.breakdown.talents.ok'),
-            badgeColor: '#a855f7'
+            okText: t('roadmap.breakdown.talents.ok')
         },
         {
             key: 'mainstats',
             title: t('roadmap.breakdown.mainstats'),
             items: data.mainstats,
-            okText: t('roadmap.breakdown.mainstats.ok'),
-            badgeColor: '#ef4444'
+            okText: t('roadmap.breakdown.mainstats.ok')
         },
         {
             key: 'sets',
             title: t('roadmap.breakdown.sets'),
             items: data.sets,
-            okText: t('roadmap.breakdown.sets.ok'),
-            badgeColor: '#f97316'
+            okText: t('roadmap.breakdown.sets.ok')
         }
     ];
 
@@ -217,45 +350,23 @@ export function renderQuickWinsPlan(characters, focusCharNom = null) {
                     <div style="grid-column: span ${index < 3 ? 2 : 3}; background:var(--bg-panel); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:12px;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="font-size:13px; font-weight:normal; color:var(--text-primary);">${sec.title}</span>
-                            <span style="font-size:10px; font-weight:normal; padding:2px 7px; border-radius:10px; background:${sec.items.length === 0 ? 'rgba(34,197,94,0.15)' : `${sec.badgeColor}20`}; color:${sec.items.length === 0 ? 'var(--accent-green)' : sec.badgeColor}; border:1px solid ${sec.items.length === 0 ? 'rgba(34,197,94,0.3)' : `${sec.badgeColor}40`};">
+                            <span style="font-size:10px; font-weight:normal; padding:2px 7px; border-radius:10px; background:${sec.items.length === 0 ? 'rgba(34,197,94,0.15)' : 'rgba(168,85,247,0.18)'}; color:${sec.items.length === 0 ? 'var(--accent-green)' : '#c084fc'};">
                                 ${sec.items.length === 0 ? t('roadmap.breakdown.optimal') : t('roadmap.breakdown.toDo', sec.items.length)}
                             </span>
                         </div>
 
-                        <div style="display:flex; flex-direction:column; gap:8px;">
-                            ${sec.items.length === 0 ? `
-                                <div style="padding:10px; background:rgba(34,197,94,0.06); border:1px dashed rgba(34,197,94,0.25); border-radius:6px; color:var(--accent-green); font-size:11px; text-align:center;">
-                                    ${sec.okText}
-                                </div>
-                            ` : sec.items.slice(0, 5).map(item => `
-                                <div style="display:flex; justify-content:space-between; align-items:center; padding:6px; background:${item.isFocus ? 'rgba(59,130,246,0.1)' : 'var(--shadow-subtle)'}; border:${item.isFocus ? '1px solid rgba(59,130,246,0.35)' : '0'}; border-radius:6px; gap:8px;">
-                                    <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
-                                        <img src="${item.charAvatar}" alt="${item.charName}" style="width:32px; height:32px; border-radius:5px; background:var(--shadow-subtle); flex-shrink:0; border:${item.isFocus ? '1px solid #60a5fa' : 'none'};">
-                                        <div style="min-width:0; flex:1;">
-                                            <div style="font-size:11px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${item.title}">
-                                                ${item.title}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div style="display:flex; align-items:center; gap:5px; font-size:11px; flex-shrink:0;">
-                                        <span style="color:var(--text-grey); font-size:10px;">${item.current}</span>
-                                        <span style="color:var(--text-grey); font-size:10px;">→</span>
-                                        <span style="color:var(--accent-green); font-weight:normal; font-size:10px;">${item.target}</span>
-                                    </div>
-                                </div>
-                            `).join('')}
-
-                            ${sec.items.length > 5 ? `
-                                <div style="font-size:10px; color:var(--text-grey); text-align:center; padding-top:2px;">
-                                    ${t('roadmap.breakdown.moreItems', sec.items.length - 5)}
-                                </div>
-                            ` : ''}
-                        </div>
+                        ${sec.items.length === 0 ? `
+                            <div style="padding:16px 12px; background:rgba(34,197,94,0.06); border:1px dashed rgba(34,197,94,0.25); border-radius:6px; color:var(--accent-green); font-size:11px; text-align:center; display:flex; align-items:center; justify-content:center; min-height:80px; box-sizing:border-box;">
+                                ${sec.okText}
+                            </div>
+                        ` : `
+                            <div class="roadmap-action-list">
+                                ${sec.items.map(item => RENDER_ITEM_MAP[sec.key](item)).join('')}
+                            </div>
+                        `}
                     </div>
                 `).join('')}
             </div>
         </div>
     `;
 }
-
