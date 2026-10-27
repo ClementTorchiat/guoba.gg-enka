@@ -473,7 +473,7 @@ export function calculateDomainRankings(characters, focusCharNom = null, scope =
                 efficiencyColor = '#60a5fa';
             } else if (isFocusTarget || totalScore >= 7.0 || (bothSetsUseful && totalScore >= 5.0)) {
                 efficiencyKey = 'veryHigh';
-                efficiencyColor = isFocusTarget ? '#3b82f6' : 'var(--accent-green)';
+                efficiencyColor = isFocusTarget ? '#3b82f6' : '#22c55e';
             } else if (totalScore >= 4.0) {
                 efficiencyKey = 'high';
                 efficiencyColor = '#3b82f6';

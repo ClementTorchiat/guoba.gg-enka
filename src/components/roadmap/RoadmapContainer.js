@@ -218,6 +218,21 @@ if (typeof window !== 'undefined') {
                 return;
             }
 
+            const toggleOwnedTeamsBtn = e.target.closest('[data-action="toggle-roadmap-owned-teams"]');
+            if (toggleOwnedTeamsBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.roadmapOnlyOwnedTeams = !window.roadmapOnlyOwnedTeams;
+                const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
+                    ? cachedRoadmapCharacters
+                    : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+                const container = document.getElementById('main-container');
+                if (container && chars.length > 0) {
+                    container.innerHTML = renderRoadmapContainer(chars, window.roadmapFocusCharNom);
+                }
+                return;
+            }
+
             const toggleDuplicateTeamsBtn = e.target.closest('[data-action="toggle-roadmap-duplicate-teams"]');
             if (toggleDuplicateTeamsBtn) {
                 e.preventDefault();

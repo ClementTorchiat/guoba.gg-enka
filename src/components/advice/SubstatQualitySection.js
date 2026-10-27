@@ -142,7 +142,7 @@ export function renderSubstatQualitySection(persoObj, config) {
                 <div style="display:flex; flex-direction:column; padding-top:12px; gap:0;">
                     ${subsHtml}
                 </div>
-                ${!hasDead ? `<p style="margin-top:10px; text-align:center; background:var(--accent-green)20; color:var(--accent-green); padding:4px; border-radius:4px; font-size:12px; border:1px solid var(--accent-green)40;">${t('analysis.s4.optimal')}</p>` : ''}
+                ${!hasDead ? `<p style="margin-top:10px; text-align:center; background:rgba(34,197,94,0.12); color:var(--accent-green); padding:4px; border-radius:4px; font-size:12px; border:1px solid rgba(34,197,94,0.25);">${t('analysis.s4.optimal')}</p>` : ''}
             </div>
         `;
     }).join('');

@@ -256,7 +256,7 @@ export function getElixirCraftRecommendations(characters, focusCharNom = null, b
                 verdictColor = '#c084fc';
             } else if (upgradeChance >= 80 && deltaScoreRaw >= 5) {
                 verdict = 'safe';
-                verdictColor = 'var(--accent-green)';
+                verdictColor = '#22c55e';
             }
 
             // Conversion en score / 100 pour l'affichage
