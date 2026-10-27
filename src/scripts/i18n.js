@@ -1023,6 +1023,10 @@ export const T = {
         "roadmap.farming.catTalents": "Aptitudes",
         "roadmap.farming.catWeapons": "Armes",
         "roadmap.farming.weaponElevation": "Élévation d'arme",
+        "roadmap.farming.allBooks": "Tous les livres",
+        "roadmap.farming.allMaterials": "Tous les matériaux",
+        "roadmap.farming.allBooksAvailable": "Tous les livres disponibles",
+        "roadmap.farming.allMaterialsAvailable": "Tous les matériaux disponibles",
 
         // Module 3 : Optimiseur de Swaps Croisés
         "roadmap.swaps.title": "Optimiseur de Swaps Croisés",
@@ -2167,6 +2171,10 @@ export const T = {
         "roadmap.farming.catTalents": "Talents",
         "roadmap.farming.catWeapons": "Weapons",
         "roadmap.farming.weaponElevation": "Weapon Ascension",
+        "roadmap.farming.allBooks": "All books",
+        "roadmap.farming.allMaterials": "All materials",
+        "roadmap.farming.allBooksAvailable": "All books available",
+        "roadmap.farming.allMaterialsAvailable": "All materials available",
 
         // Module 3 : Cross-Character Swap Optimizer
         "roadmap.swaps.title": "Cross-Character Swap Optimizer",

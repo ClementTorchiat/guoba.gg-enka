@@ -65,11 +65,13 @@ export const WEAPON_ASCENSION_COSTS = {
 };
 
 // Indexation rapide des 24 rotations de livres et 24 rotations d'armes
+const DOMAIN_BY_ID_MAP = {};
 const BOOK_ROTATION_MAP = {};
 const WEAPON_ROTATION_MAP = {};
 
 if (Array.isArray(FARMING_DOMAINS)) {
     FARMING_DOMAINS.forEach(dom => {
+        DOMAIN_BY_ID_MAP[dom.id] = dom;
         if (Array.isArray(dom.rotations)) {
             dom.rotations.forEach(rot => {
                 const entry = {
@@ -493,14 +495,23 @@ export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null, c
             const domId = rot.domainId;
 
             if (!talentDomainsMap[domId]) {
+                const rawDom = DOMAIN_BY_ID_MAP[domId];
+                const sundayItems = isSunday && rawDom?.rotations
+                    ? rawDom.rotations.map(r => r.items?.philosophy).filter(Boolean)
+                    : [];
+
                 talentDomainsMap[domId] = {
                     domainId: domId,
                     domainName: getLocalizedItemName(rot.domainName, currentLang, domId),
                     region: getLocalizedItemName(rot.region, currentLang, ''),
-                    bookName: getLocalizedItemName(rot.name, currentLang, ''),
+                    bookName: isSunday
+                        ? t('roadmap.farming.allBooksAvailable')
+                        : getLocalizedItemName(rot.name, currentLang, ''),
                     category: 'talent',
                     items: rot.items || {},
-                    characters: []
+                    sundayItems,
+                    characters: [],
+                    isSunday
                 };
             }
             talentDomainsMap[domId].characters.push(p);
@@ -513,14 +524,23 @@ export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null, c
             const domId = rot.domainId;
 
             if (!weaponDomainsMap[domId]) {
+                const rawDom = DOMAIN_BY_ID_MAP[domId];
+                const sundayItems = isSunday && rawDom?.rotations
+                    ? rawDom.rotations.map(r => r.items?.gold).filter(Boolean)
+                    : [];
+
                 weaponDomainsMap[domId] = {
                     domainId: domId,
                     domainName: getLocalizedItemName(rot.domainName, currentLang, domId),
                     region: getLocalizedItemName(rot.region, currentLang, ''),
-                    bookName: getLocalizedItemName(rot.name, currentLang, ''),
+                    bookName: isSunday
+                        ? t('roadmap.farming.allMaterialsAvailable')
+                        : getLocalizedItemName(rot.name, currentLang, ''),
                     category: 'weapon',
                     items: rot.items || {},
-                    weapons: []
+                    sundayItems,
+                    weapons: [],
+                    isSunday
                 };
             }
             weaponDomainsMap[domId].weapons.push(w);

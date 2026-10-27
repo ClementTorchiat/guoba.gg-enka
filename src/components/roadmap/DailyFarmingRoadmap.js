@@ -281,7 +281,9 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
 
                             <!-- Aperçu des matériaux du donjon -->
                             <div style="display:flex; align-items:center; gap:4px;">
-                                ${isWeaponDomain ? `
+                                ${dom.isSunday && dom.sundayItems && dom.sundayItems.length > 0 ? `
+                                    ${dom.sundayItems.map(it => getItemIconHtml(it?.icon, getLocalizedItemName(it?.name), 'width:20px; height:20px; object-fit:contain;')).join('')}
+                                ` : (isWeaponDomain ? `
                                     ${getItemIconHtml(dom.items.green?.icon, getLocalizedItemName(dom.items.green?.name), 'width:20px; height:20px; object-fit:contain;')}
                                     ${getItemIconHtml(dom.items.blue?.icon, getLocalizedItemName(dom.items.blue?.name), 'width:20px; height:20px; object-fit:contain;')}
                                     ${getItemIconHtml(dom.items.purple?.icon, getLocalizedItemName(dom.items.purple?.name), 'width:20px; height:20px; object-fit:contain;')}
@@ -290,7 +292,7 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
                                     ${getItemIconHtml(dom.items.teachings?.icon, getLocalizedItemName(dom.items.teachings?.name), 'width:20px; height:20px; object-fit:contain;')}
                                     ${getItemIconHtml(dom.items.guide?.icon, getLocalizedItemName(dom.items.guide?.name), 'width:20px; height:20px; object-fit:contain;')}
                                     ${getItemIconHtml(dom.items.philosophy?.icon, getLocalizedItemName(dom.items.philosophy?.name), 'width:20px; height:20px; object-fit:contain;')}
-                                `}
+                                `)}
                             </div>
                         </div>
 
@@ -338,7 +340,7 @@ function renderFullWeekSchedule(weekSchedule) {
                                 return `
                                 <div style="background:var(--shadow-subtle); border:none; border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:8px;">
                                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                                        <span style="font-size:12px; font-weight:normal; color:${isWep ? '#38bdf8' : '#c084fc'};">${dom.bookName}</span>
+                                        <span style="font-size:12px; font-weight:normal; color:${isWep ? '#38bdf8' : '#c084fc'};">${day.isSunday ? `${dom.domainName} (${isWep ? t('roadmap.farming.allMaterials') : t('roadmap.farming.allBooks')})` : dom.bookName}</span>
                                         <span style="font-size:10px; color:var(--text-grey);">${dom.region}</span>
                                     </div>
                                     <div style="display:flex; flex-wrap:wrap; gap:6px;">
