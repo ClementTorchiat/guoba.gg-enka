@@ -100,46 +100,42 @@ export function renderBestPiecesShowcase(characters, focusCharNom = null, mode =
         const rankColor = index === 0 ? '#f59e0b' : index === 1 ? '#cbd5e1' : index === 2 ? '#b45309' : 'var(--text-grey)';
         const rankBg = index === 0 ? 'rgba(245,158,11,0.15)' : index === 1 ? 'rgba(203,213,225,0.15)' : index === 2 ? 'rgba(180,83,9,0.15)' : 'transparent';
         return `
-                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; padding:12px 14px; background:${p.isFocus ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${p.isFocus ? '1px solid rgba(59,130,246,0.2)' : '1px solid rgba(255,255,255,0)'}; border-radius:8px; gap:12px;">
-                            <div style="display:flex; align-items:top; gap:10px; flex:1; min-width:180px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 14px; background:${p.isFocus ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${p.isFocus ? '1px solid rgba(59,130,246,0.25)' : '1px solid rgba(255,255,255,0)'}; border-radius:8px; gap:12px; min-height:72px; box-sizing:border-box;">
+                            <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
                                 ${p.icon ? `<img src="${p.icon}" alt="${p.typeName}" style="width:34px; height:34px; border-radius:4px; object-fit:contain; flex-shrink:0; background:var(--shadow-subtle);">` : ''}
-                                <div style="display:flex; flex-direction:column;">
-                                    <div style="display:flex; align-items:center; gap:6px;">
-                                        <span style="font-size:13px; font-weight:normal; color:var(--text-primary);">${p.typeName}</span>
+                                <div style="display:flex; flex-direction:column; min-width:0; flex:1;">
+                                    <div style="display:flex; align-items:center; gap:6px; min-width:0;">
+                                        <span style="font-size:13px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.typeName}</span>
                                     </div>
-                                    <div style="display:flex; align-items:center; gap:4px; margin-top:3px;">
-                                        <span style="font-size:11px; color:var(--text-grey);">${p.setName}</span>
+                                    <div style="display:flex; align-items:center; gap:4px; margin-top:2px; min-width:0;">
+                                        <span style="font-size:11px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.setName}</span>
                                     </div>
-                                    <div style="display:flex; align-items:center; gap:6px; margin-top:4px;">
-                                        <img src="${p.persoImage}" style="width:16px; height:16px; border-radius:2px; background:var(--shadow-subtle);">
-                                        <span style="font-size:11px; font-weight:normal; color:${p.isFocus ? '#60a5fa' : 'var(--text-primary)'};">${p.persoNom}</span>
-                                        <span style="font-size:11px; color:var(--text-grey);">•</span>
-                                        <div style="display:flex; align-items:center; gap:3px;">
-                                            <img src="${ICON_BASE_PATH}${ICON_MAP[p.mainStatKey] || ICON_MAP['unknown']}" style="width:12px; height:12px;" alt="">
-                                            <span style="font-size:11px; color:var(--text-primary);">${p.mainStatLabel}</span>
+                                    <div style="display:flex; align-items:center; gap:6px; margin-top:3px; min-width:0; font-size:11px;">
+                                        <img src="${p.persoImage}" style="width:16px; height:16px; border-radius:2px; background:var(--shadow-subtle); flex-shrink:0;">
+                                        <span style="font-weight:normal; color:${p.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:130px;" title="${p.persoNom}">${p.persoNom}</span>
+                                        <span style="color:var(--text-grey); flex-shrink:0;">•</span>
+                                        <div style="display:flex; align-items:center; gap:3px; min-width:0; flex-shrink:1;">
+                                            <img src="${ICON_BASE_PATH}${ICON_MAP[p.mainStatKey] || ICON_MAP['unknown']}" style="width:12px; height:12px; flex-shrink:0;" alt="">
+                                            <span style="color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${p.mainStatLabel}">${p.mainStatLabel}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Value (Score or CV) -->
-                            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
+                            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px; flex-shrink:0;">
                                 ${mode === 'cv' ? `
-                                    <div style="display:flex; flex-direction:column; align-items:flex-end;">
-                                        <div style="font-size:16px; font-weight:normal; color:#f59e0b;">
-                                            ${p.cv} <span style="font-size:11px; color:#fbbf24; font-weight:normal;">CV</span>
-                                        </div>
-                                        <div style="font-size:10px; color:var(--text-grey); display:flex; gap:6px;">
-                                            <span>CR: ${p.critRate}%</span>
-                                            <span>CD: ${p.critDmg}%</span>
-                                        </div>
+                                    <div style="font-size:16px; font-weight:normal; color:#f59e0b; text-align:right; white-space:nowrap;">
+                                        ${p.cv} <span style="font-size:11px; color:#fbbf24; font-weight:normal;">CV</span>
+                                    </div>
+                                    <div style="font-size:10px; color:var(--text-grey); display:flex; gap:6px; white-space:nowrap;">
+                                        <span>CR: ${p.critRate}%</span>
+                                        <span>CD: ${p.critDmg}%</span>
                                     </div>
                                 ` : `
-                                    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
-                                        <div style="min-width:60px; text-align:right;">
-                                            <span style="font-size:16px; font-weight:normal; color:${p.gradeColor};">${p.score}</span>
-                                            <span style="font-size:11px; color:${p.gradeColor};">(${p.grade})</span>
-                                        </div>
+                                    <div style="min-width:60px; text-align:right; white-space:nowrap;">
+                                        <span style="font-size:16px; font-weight:normal; color:${p.gradeColor};">${p.score}</span>
+                                        <span style="font-size:11px; color:${p.gradeColor};">(${p.grade})</span>
                                     </div>
                                 `}
                             </div>

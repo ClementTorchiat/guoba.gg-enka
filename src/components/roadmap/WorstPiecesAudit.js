@@ -30,23 +30,31 @@ export function getAccountWorstPieces(characters, focusCharNom = null, mode = 's
             // Diagnostic tip
             let tip = t('roadmap.worst.tip.substats');
             let tipColor = '#eab308';
+            let tipBg = 'rgba(234, 179, 8, 0.12)';
+            let tipBorder = 'rgba(234, 179, 8, 0.3)';
 
             if (art.type === 'EQUIP_BRACER' || art.type === 'EQUIP_NECKLACE') {
                 if (curScoreRaw < 25) {
                     tip = t('roadmap.worst.tip.flowerPlume');
                     tipColor = 'var(--accent-green)';
+                    tipBg = 'rgba(34, 197, 94, 0.12)';
+                    tipBorder = 'rgba(34, 197, 94, 0.3)';
                 }
             } else if (['EQUIP_SHOES', 'EQUIP_RING', 'EQUIP_DRESS'].includes(art.type)) {
                 const idealStats = config.idealMainStats?.[art.type] || config.mainStats?.[art.type] || [];
                 if (idealStats.length > 0 && !idealStats.includes(mainKey) && (config.weights?.[mainKey] || 0) < 0.5) {
                     tip = t('roadmap.worst.tip.badMainStat');
                     tipColor = '#ef4444';
+                    tipBg = 'rgba(239, 68, 68, 0.12)';
+                    tipBorder = 'rgba(239, 68, 68, 0.3)';
                 }
             }
 
             if (isOffPiece && curScoreRaw < 20) {
                 tip = t('roadmap.worst.tip.weakOffPiece');
                 tipColor = '#3b82f6';
+                tipBg = 'rgba(59, 130, 246, 0.12)';
+                tipBorder = 'rgba(59, 130, 246, 0.3)';
             }
 
             let critRate = 0;
@@ -74,6 +82,8 @@ export function getAccountWorstPieces(characters, focusCharNom = null, mode = 's
                 estimate,
                 tip,
                 tipColor,
+                tipBg,
+                tipBorder,
                 isFocus: isFocusPerso,
                 cv,
                 critRate: parseFloat(critRate.toFixed(1)),
@@ -146,57 +156,55 @@ export function renderWorstPiecesAudit(characters, focusCharNom = null, mode = (
             ` : `
                 <div style="display:flex; flex-direction:column; gap:10px;">
                     ${worstPieces.map((p, index) => `
-                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; padding:12px 14px; background:${p.isFocus ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${p.isFocus ? '1px solid rgba(59,130,246,0.2)' : '1px solid rgba(255,255,255,0)'}; border-radius:8px; gap:12px;">
-                            <div style="display:flex; align-items:top; gap:10px; flex:1; min-width:180px;">
+                        <div style="background:${p.isFocus ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${p.isFocus ? '1px solid rgba(59,130,246,0.25)' : '1px solid rgba(255,255,255,0)'}; border-radius:8px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:12px; min-height:72px; box-sizing:border-box;">
+                            <!-- Gauche : Icône, Type, Set, Perso & Stat -->
+                            <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
                                 ${p.icon ? `<img src="${p.icon}" alt="${p.typeName}" style="width:34px; height:34px; border-radius:4px; object-fit:contain; flex-shrink:0; background:var(--shadow-subtle);">` : ''}
-                                <div style="display:flex; flex-direction:column;">
-                                    <div style="display:flex; align-items:center; gap:6px;">
-                                        <span style="font-size:13px; font-weight:normal; color:var(--text-primary);">${p.typeName}</span>
-                                        ${p.isOffPiece ? `<span style="font-size:9px; color:var(--accent-green); background:rgba(34,197,94,0.12); padding:1px 5px; border-radius:3px; border:1px solid rgba(34,197,94,0.25);">${t('roadmap.worst.offPieceBadge')}</span>` : ''}
+                                <div style="display:flex; flex-direction:column; min-width:0; flex:1;">
+                                    <div style="display:flex; align-items:center; gap:6px; min-width:0;">
+                                        <span style="font-size:13px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.typeName}</span>
+                                        ${p.isOffPiece ? `<span style="font-size:9px; color:var(--accent-green); background:rgba(34,197,94,0.12); padding:1px 5px; border-radius:3px; border:1px solid rgba(34,197,94,0.25); flex-shrink:0;">${t('roadmap.worst.offPieceBadge')}</span>` : ''}
                                     </div>
-                                    <div style="display:flex; align-items:center; gap:4px; margin-top:3px;">
-                                        <span style="font-size:11px; color:var(--text-grey);">${p.setName}</span>
+                                    <div style="display:flex; align-items:center; gap:4px; margin-top:2px; min-width:0;">
+                                        <span style="font-size:11px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.setName}</span>
                                     </div>
-                                    <div style="display:flex; align-items:center; gap:6px; margin-top:4px;">
-                                        <img src="${p.persoImage}" style="width:16px; height:16px; border-radius:2px; background:var(--shadow-subtle);">
-                                        <span style="font-size:11px; font-weight:normal; color:${p.isFocus ? '#60a5fa' : 'var(--text-primary)'};">${p.persoNom}</span>
-                                        <span style="font-size:11px; color:var(--text-grey);">•</span>
-                                        <div style="display:flex; align-items:center; gap:3px;">
-                                            <img src="${ICON_BASE_PATH}${ICON_MAP[p.mainStatKey] || ICON_MAP['unknown']}" style="width:12px; height:12px;" alt="">
-                                            <span style="font-size:11px; color:var(--text-primary);">${p.mainStatLabel}</span>
+                                    <div style="display:flex; align-items:center; gap:6px; margin-top:3px; min-width:0; font-size:11px;">
+                                        <img src="${p.persoImage}" style="width:16px; height:16px; border-radius:2px; background:var(--shadow-subtle); flex-shrink:0;">
+                                        <span style="font-weight:normal; color:${p.isFocus ? '#60a5fa' : 'var(--text-primary)'}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:115px; flex-shrink:0;" title="${p.persoNom}">${p.persoNom}</span>
+                                        <span style="color:var(--text-grey); flex-shrink:0;">•</span>
+                                        <div style="display:flex; align-items:center; gap:3px; min-width:0; flex-shrink:1;">
+                                            <img src="${ICON_BASE_PATH}${ICON_MAP[p.mainStatKey] || ICON_MAP['unknown']}" style="width:12px; height:12px; flex-shrink:0;" alt="">
+                                            <span style="color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${p.mainStatLabel}">${p.mainStatLabel}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Score, Résine & Tag -->
-                            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
+                            <!-- Droite : Score/CV, Résine & Badge Conseil -->
+                            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:3px; flex-shrink:0;">
                                 ${mode === 'cv' ? `
-                                    <div style="display:flex; flex-direction:column; align-items:flex-end;">
-                                        <div style="font-size:16px; font-weight:normal; color:#f59e0b;">
-                                            ${p.cv} <span style="font-size:11px; color:#fbbf24; font-weight:normal;">CV</span>
-                                        </div>
-                                        <div style="font-size:10px; color:var(--text-grey); display:flex; gap:6px;">
+                                    <div style="display:flex; align-items:baseline; gap:8px;">
+                                        <div style="font-size:10px; color:var(--text-grey); display:flex; gap:6px; white-space:nowrap;">
                                             <span>CR: ${p.critRate}%</span>
                                             <span>CD: ${p.critDmg}%</span>
                                         </div>
+                                        <div style="font-size:16px; font-weight:normal; color:#f59e0b; text-align:right; white-space:nowrap;">
+                                            ${p.cv} <span style="font-size:11px; color:#fbbf24; font-weight:normal;">CV</span>
+                                        </div>
                                     </div>
                                 ` : `
-                                    <div style="display:flex; align-items:center; gap:12px;">
-                                        <div style="font-size:10px; color:var(--text-grey);">
-                                            <span>${t('roadmap.worst.resinEstimate', p.estimate.resin, p.estimate.days)}</span>
-                                        </div>
-                                        <div style="min-width:60px; text-align:right;">
+                                    <div style="display:flex; align-items:baseline; gap:8px;">
+                                        <span style="font-size:10px; color:var(--text-grey); white-space:nowrap;">${t('roadmap.worst.resinEstimate', p.estimate.resin, p.estimate.days)}</span>
+                                        <div style="min-width:55px; text-align:right; white-space:nowrap;">
                                             <span style="font-size:16px; font-weight:normal; color:${p.gradeColor};">${p.score}</span>
                                             <span style="font-size:11px; color:${p.gradeColor};">(${p.grade})</span>
                                         </div>
                                     </div>
-                                    <div style="font-size:10px; color:${p.tipColor}; background:${p.tipColor}10; border:1px solid ${p.tipColor}30; padding:2px 6px; border-radius:4px; max-width:200px; text-align:right;">
-                                        ${p.tip}
-                                    </div>
                                 `}
+                                <div style="font-size:9.5px; color:${p.tipColor}; background:${p.tipBg}; border:1px solid ${p.tipBorder}; padding:1px 6px; border-radius:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:180px; text-align:right;" title="${p.tip}">
+                                    ${p.tip}
+                                </div>
                             </div>
-
                         </div>
                     `).join('')}
                 </div>
@@ -204,3 +212,4 @@ export function renderWorstPiecesAudit(characters, focusCharNom = null, mode = (
         </div>
     `;
 }
+
