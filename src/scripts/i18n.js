@@ -485,6 +485,8 @@ export const T = {
         "ob.s3.title": "Lisez votre build d'un coup d'œil",
         "ob.s4.title": "Vérifiez vos Buffs Actifs",
         "ob.s5.title": "La section Analyse & Conseils",
+        "ob.s6.title": "Le Bilan de compte (Roadmap)",
+        "ob.s7.title": "Les Classements (Leaderboards)",
 
         // ── Badges (nom, description) ──────────────────────
         "badge.masterEndgame.name": "Maître de l'Endgame",
@@ -840,7 +842,7 @@ export const T = {
             <li>Attendez ~5 min après déconnexion</li>
         </ul>
         <p>Ensuite, entrez votre <strong>UID</strong> dans la barre de recherche à gauche — et c'est parti !</p>`,
-                image: "assets/onboarding/step1.gif",
+                image: "assets/onboarding/step1.webp",
                 placeholder: false
             },
             {
@@ -848,21 +850,28 @@ export const T = {
                 html: `
         <p>Chaque build est évalué avec <strong>deux métriques complémentaires</strong> :</p>
         <div class="ob-metric">
-            <div class="ob-metric-icon">🎯</div>
+            <div class="ob-metric-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-target"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1"></circle></svg>
+            </div>
             <div class="ob-metric-body">
                 <strong>Le Score — votre puissance réelle</strong>
                 <span>Tient compte des substats, de la mainstat et du set — pondérés selon l'utilité de chaque stat pour <em>ce personnage précis</em>.</span>
             </div>
         </div>
         <div class="ob-metric">
-            <div class="ob-metric-icon">🎲</div>
+            <div class="ob-metric-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dice"><rect x="4" y="4" width="16" height="16" rx="2"></rect><circle cx="8.5" cy="8.5" r=".5" fill="currentColor"></circle><circle cx="15.5" cy="8.5" r=".5" fill="currentColor"></circle><circle cx="15.5" cy="15.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="15.5" r=".5" fill="currentColor"></circle><circle cx="12" cy="12" r=".5" fill="currentColor"></circle></svg>
+            </div>
             <div class="ob-metric-body">
                 <strong>Le Grade (F → ARCHON) — votre chance au RNG</strong>
                 <span>Mesure combien de vos améliorations sont tombées sur de bonnes stats, et à quelle valeur.</span>
             </div>
         </div>
-        <div class="ob-note-blue">💡 Un Grade élevé avec un Score moyen ? Vous avez eu de la chance, mais les pièces ne sont pas optimales. L'inverse ? Bon build, RNG difficile. Les deux ensemble ? C'est le Saint-Graal.</div>`,
-                image: "assets/onboarding/step2.png",
+        <div class="ob-note-blue">
+            <span class="ob-note-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-bulb"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"></path><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"></path><path d="M9.7 17l4.6 0"></path></svg></span>
+            <span class="ob-note-content">Un Grade élevé avec un Score moyen ? Vous avez eu de la chance, mais les pièces ne sont pas optimales. L'inverse ? Bon build, RNG difficile. Les deux ensemble ? C'est le Saint-Graal.</span>
+        </div>`,
+                image: "assets/onboarding/step2.webp",
                 placeholder: false
             },
             {
@@ -874,7 +883,7 @@ export const T = {
             <li>La liste latérale permet de <strong>comparer vos personnages</strong>.</li>
             <li>Le bouton <strong>Exporter image</strong> génère un récap visuel à partager avec vos amis !</li>
         </ul>`,
-                image: "assets/onboarding/step3.png",
+                image: "assets/onboarding/step3.webp",
                 placeholder: false
             },
             {
@@ -882,8 +891,11 @@ export const T = {
                 html: `
         <p>Avant de passer à la partie <strong>conseils</strong>, vérifiez la carte <strong>Buffs Actifs</strong>, en bas à droite de la fiche personnage.</p>
         <p>Certains personnages bénéficient de buffs situationnels — constellation, résonance d'équipe, passifs conditionnels — qui peuvent faire varier les conseils et les stats de combat de façon significative.</p>
-        <div class="ob-note-blue">⚠️ Votre score peut être impacté par un overcap de Taux Critique. Ce malus restera même si vous désactivez les buffs liés au Taux Critique.</div>`,
-                image: "assets/onboarding/step4.png",
+        <div class="ob-note-blue">
+            <span class="ob-note-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-alert-triangle"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path></svg></span>
+            <span class="ob-note-content">Votre score peut être impacté par un overcap de Taux Critique. Ce malus restera même si vous désactivez les buffs liés au Taux Critique.</span>
+        </div>`,
+                image: "assets/onboarding/step4.webp",
                 placeholder: false
             },
             {
@@ -892,37 +904,99 @@ export const T = {
         <p>Accessible depuis la fiche de chaque personnage, cette section se décompose en <strong>6 parties</strong> :</p>
         <div class="ob-grid-2x2">
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">📊</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-chart-bar"><path d="M3 12m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M9 8m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M15 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M4 20l14 0"></path></svg></span>
                 <span class="ob-gc-title">1. Vue d'ensemble</span>
                 <span class="ob-gc-desc">Efficacité du build, facteur chance RNG et score potentiel maximum.</span>
             </div>
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">🔍</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-search"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg></span>
                 <span class="ob-gc-title">2. Analyse stratégique</span>
                 <span class="ob-gc-desc">Taux critique, recharge d'énergie, rolls utiles/morts et pièce hors-set.</span>
             </div>
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">🗺️</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-map"><path d="M3 7l6 -3l6 3l6 -3v13l-6 3l-6 -3l-6 3v-13"></path><path d="M9 4v13"></path><path d="M15 7v13"></path></svg></span>
                 <span class="ob-gc-title">3. Plan d'action</span>
                 <span class="ob-gc-desc">Feuille de route : échanges entre persos, niveau, arme, aptitudes et mainstat.</span>
             </div>
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">✨</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-sparkles"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"></path></svg></span>
                 <span class="ob-gc-title">4. Projection idéale</span>
                 <span class="ob-gc-desc">Simulez ce que vos artéfacts donneraient si vos stats inutiles devenaient optimales.</span>
             </div>
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">🎲</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dice"><rect x="4" y="4" width="16" height="16" rx="2"></rect><circle cx="8.5" cy="8.5" r=".5" fill="currentColor"></circle><circle cx="15.5" cy="8.5" r=".5" fill="currentColor"></circle><circle cx="15.5" cy="15.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="15.5" r=".5" fill="currentColor"></circle><circle cx="12" cy="12" r=".5" fill="currentColor"></circle></svg></span>
                 <span class="ob-gc-title">5. Détails des rolls</span>
                 <span class="ob-gc-desc">La qualité exacte de chaque roll par artéfact, lue dans le code source du jeu.</span>
             </div>
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">♻️</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-refresh"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path></svg></span>
                 <span class="ob-gc-title">6. Simulateur de reroll</span>
                 <span class="ob-gc-desc">Estimez si passer une pièce à l'Offrande Mystique vaut vraiment le risque.</span>
             </div>
         </div>`,
-                image: "assets/onboarding/step5.png",
+                image: "assets/onboarding/step5.webp",
+                placeholder: false
+            },
+            {
+                title: "Le Bilan de compte (Roadmap)",
+                html: `
+        <p>Accessible depuis le bouton <strong>Bilan du compte</strong> en haut de la barre latérale, cette vue offre une <strong>stratégie globale d'optimisation</strong> pour votre compte :</p>
+        <div class="ob-grid-2x2">
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-bolt"><path d="M13 3l-2 9h4l-3 9l8 -11h-4l3 -7z"></path></svg></span>
+                <span class="ob-gc-title">Plan d'action & Quick Wins</span>
+                <span class="ob-gc-desc">Gains immédiats garantis : niveaux 90, armes, aptitudes clés et corrections de mainstat.</span>
+            </div>
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-arrows-exchange"><path d="M17 10h-14l4 -4"></path><path d="M7 14h14l-4 4"></path></svg></span>
+                <span class="ob-gc-title">Échanges d'artéfacts</span>
+                <span class="ob-gc-desc">Réorganise intelligemment vos meilleures pièces entre personnages pour maximiser le score global.</span>
+            </div>
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-users"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path></svg></span>
+                <span class="ob-gc-title">Équipes recommandées</span>
+                <span class="ob-gc-desc">Suggestions des meilleures compositions basées sur les DPS et supports de votre box.</span>
+            </div>
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-target"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1"></circle></svg></span>
+                <span class="ob-gc-title">Priorités de farm</span>
+                <span class="ob-gc-desc">Audit des pièces faibles à remplacer, planning de donjons et conseils d'Offrande Mystique.</span>
+            </div>
+        </div>
+        <div class="ob-note-blue">
+            <span class="ob-note-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-bulb"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"></path><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"></path><path d="M9.7 17l4.6 0"></path></svg></span>
+            <span class="ob-note-content">Astuce : Le bilan analyse l'ensemble des personnages de votre vitrine et de votre archive pour vous fournir des conseils transversaux.</span>
+        </div>`,
+                image: "assets/onboarding/step6.webp",
+                placeholder: false
+            },
+            {
+                title: "Les Classements (Leaderboards)",
+                html: `
+        <p>Mesurez vos builds face à la communauté grâce aux <strong>Classements</strong> (accessibles via le menu de navigation ou directement depuis la fiche de chaque personnage) :</p>
+        <div class="ob-metric">
+            <div class="ob-metric-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-trophy"><path d="M8 21l8 0"></path><path d="M12 17l0 4"></path><path d="M7 4l10 0"></path><path d="M17 4v8a5 5 0 0 1 -10 0v-8"></path><path d="M5 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path></svg>
+            </div>
+            <div class="ob-metric-body">
+                <strong>Classements par archétype</strong>
+                <span>Chaque personnage est classé par équipe et arme de prédilection, avec des exigences de Recharge d'Énergie adaptées.</span>
+            </div>
+        </div>
+        <div class="ob-metric">
+            <div class="ob-metric-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-world"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M3.6 9h16.8"></path><path d="M3.6 15h16.8"></path><path d="M11.5 3a17 17 0 0 0 0 18"></path><path d="M12.5 3a17 17 0 0 1 0 18"></path></svg>
+            </div>
+            <div class="ob-metric-body">
+                <strong>Explorez le top mondial</strong>
+                <span>Consultez les artéfacts, sets et répartitions de stats des meilleurs joueurs mondiaux pour vous inspirer.</span>
+            </div>
+        </div>
+        <div class="ob-note-blue">
+            <span class="ob-note-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-lock"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z"></path><path d="M8 11v-4a4 4 0 0 1 8 0v4"></path></svg></span>
+            <span class="ob-note-content">Respect de la vie privée : Vous préférez rester discret ? L'option d'opt-out dans vos paramètres de compte vous permet de vous retirer des classements publics à tout moment.</span>
+        </div>`,
+                image: "assets/onboarding/step7.webp",
                 placeholder: false
             }
         ],
@@ -1029,6 +1103,16 @@ export const T = {
         "roadmap.farming.allMaterials": "Tous les matériaux",
         "roadmap.farming.allBooksAvailable": "Tous les livres disponibles",
         "roadmap.farming.allMaterialsAvailable": "Tous les matériaux disponibles",
+        "roadmap.farming.totalAccount": "Total compte",
+        "roadmap.farming.totalTarget": (char) => `Total ${char}`,
+        "roadmap.farming.resinCount": (resin) => `~${resin} résines`,
+        "roadmap.farming.mora": "Moras",
+        "roadmap.farming.moraRequired": "Moras requis",
+        "roadmap.farming.crownOfInsight": "Couronne de la sagesse",
+        "roadmap.farming.freeDayBadge": "Journée libre",
+        "roadmap.farming.ascensionMaterialsBadge": "Matériaux d'élévation",
+        "roadmap.farming.jokerBadge": "Joker",
+        "roadmap.farming.noPriorityDomain": "Aucun donjon prioritaire ce jour-là.",
 
         // Module 3 : Optimiseur de Swaps Croisés
         "roadmap.swaps.title": "Optimiseur de Swaps Croisés",
@@ -1635,6 +1719,8 @@ export const T = {
         "ob.s3.title": "Read your build at a glance",
         "ob.s4.title": "Check your Active Buffs",
         "ob.s5.title": "The Analysis & Tips section",
+        "ob.s6.title": "Account Review (Roadmap)",
+        "ob.s7.title": "Community Leaderboards",
 
         // ── Badges ────────────────────────────────────────
         "badge.masterEndgame.name": "Endgame Master",
@@ -1990,7 +2076,7 @@ export const T = {
             <li>Wait ~5 min after logging out</li>
         </ul>
         <p>Then, enter your <strong>UID</strong> in the search bar on the left — and you're good to go!</p>`,
-                image: "assets/onboarding/step1.gif",
+                image: "assets/onboarding/step1.webp",
                 placeholder: false
             },
             {
@@ -1998,21 +2084,28 @@ export const T = {
                 html: `
         <p>Each build is evaluated with <strong>two complementary metrics</strong>:</p>
         <div class="ob-metric">
-            <div class="ob-metric-icon">🎯</div>
+            <div class="ob-metric-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-target"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1"></circle></svg>
+            </div>
             <div class="ob-metric-body">
                 <strong>The Score — your actual power</strong>
                 <span>Takes into account sub-stats, main stat, and set — weighted by each stat's usefulness for <em>this specific character</em>.</span>
             </div>
         </div>
         <div class="ob-metric">
-            <div class="ob-metric-icon">🎲</div>
+            <div class="ob-metric-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dice"><rect x="4" y="4" width="16" height="16" rx="2"></rect><circle cx="8.5" cy="8.5" r=".5" fill="currentColor"></circle><circle cx="15.5" cy="8.5" r=".5" fill="currentColor"></circle><circle cx="15.5" cy="15.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="15.5" r=".5" fill="currentColor"></circle><circle cx="12" cy="12" r=".5" fill="currentColor"></circle></svg>
+            </div>
             <div class="ob-metric-body">
                 <strong>The Grade (F → ARCHON) — your RNG luck</strong>
                 <span>Measures how many of your upgrades landed on good stats, and at what value.</span>
             </div>
         </div>
-        <div class="ob-note-blue">💡 High Grade but average Score? You got lucky, but the pieces aren't optimal. The opposite? Good build, rough RNG. Both together? That's the Holy Grail.</div>`,
-                image: "assets/onboarding/step2.png",
+        <div class="ob-note-blue">
+            <span class="ob-note-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-bulb"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"></path><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"></path><path d="M9.7 17l4.6 0"></path></svg></span>
+            <span class="ob-note-content">High Grade but average Score? You got lucky, but the pieces aren't optimal. The opposite? Good build, rough RNG. Both together? That's the Holy Grail.</span>
+        </div>`,
+                image: "assets/onboarding/step2.webp",
                 placeholder: false
             },
             {
@@ -2024,7 +2117,7 @@ export const T = {
             <li>The side list lets you <strong>compare your characters</strong>.</li>
             <li>The <strong>Export image</strong> button generates a visual summary to share with friends!</li>
         </ul>`,
-                image: "assets/onboarding/step3.png",
+                image: "assets/onboarding/step3.webp",
                 placeholder: false
             },
             {
@@ -2032,8 +2125,11 @@ export const T = {
                 html: `
         <p>Before heading to the <strong>tips</strong> section, check the <strong>Active Buffs</strong> card in the bottom right of the character sheet.</p>
         <p>Some characters benefit from situational buffs — constellations, team resonance, conditional passives — which can significantly affect the tips and combat stats shown.</p>
-        <div class="ob-note-blue">⚠️ Your score can be affected by a Crit Rate overcap. This penalty will persist even if you disable the buffs related to Crit Rate.</div>`,
-                image: "assets/onboarding/step4.png",
+        <div class="ob-note-blue">
+            <span class="ob-note-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-alert-triangle"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path></svg></span>
+            <span class="ob-note-content">Your score can be affected by a Crit Rate overcap. This penalty will persist even if you disable the buffs related to Crit Rate.</span>
+        </div>`,
+                image: "assets/onboarding/step4.webp",
                 placeholder: false
             },
             {
@@ -2042,37 +2138,99 @@ export const T = {
         <p>Accessible from each character's sheet, this section is broken down into <strong>6 parts</strong>:</p>
         <div class="ob-grid-2x2">
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">📊</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-chart-bar"><path d="M3 12m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M9 8m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M15 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path><path d="M4 20l14 0"></path></svg></span>
                 <span class="ob-gc-title">1. Overview</span>
                 <span class="ob-gc-desc">Build efficiency, RNG luck factor, and maximum potential score.</span>
             </div>
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">🔍</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-search"><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg></span>
                 <span class="ob-gc-title">2. Strategic Analysis</span>
                 <span class="ob-gc-desc">Crit rate, energy recharge, useful/wasted rolls, and off-set piece.</span>
             </div>
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">🗺️</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-map"><path d="M3 7l6 -3l6 3l6 -3v13l-6 3l-6 -3l-6 3v-13"></path><path d="M9 4v13"></path><path d="M15 7v13"></path></svg></span>
                 <span class="ob-gc-title">3. Action Plan</span>
                 <span class="ob-gc-desc">Roadmap: character swaps, level, weapon, talents, and main stat.</span>
             </div>
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">✨</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-sparkles"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"></path></svg></span>
                 <span class="ob-gc-title">4. Ideal Projection</span>
                 <span class="ob-gc-desc">Simulate what your artifacts would look like if wasted stats became optimal ones.</span>
             </div>
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">🎲</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-dice"><rect x="4" y="4" width="16" height="16" rx="2"></rect><circle cx="8.5" cy="8.5" r=".5" fill="currentColor"></circle><circle cx="15.5" cy="8.5" r=".5" fill="currentColor"></circle><circle cx="15.5" cy="15.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="15.5" r=".5" fill="currentColor"></circle><circle cx="12" cy="12" r=".5" fill="currentColor"></circle></svg></span>
                 <span class="ob-gc-title">5. Roll Details</span>
                 <span class="ob-gc-desc">The exact quality of each roll per artifact, read directly from the game's source code.</span>
             </div>
             <div class="ob-grid-card">
-                <span class="ob-gc-icon">♻️</span>
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-refresh"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path></svg></span>
                 <span class="ob-gc-title">6. Reroll Simulator</span>
                 <span class="ob-gc-desc">Estimate whether converting a piece via Mystic Offering is actually worth the risk.</span>
             </div>
         </div>`,
-                image: "assets/onboarding/step5.png",
+                image: "assets/onboarding/step5.webp",
+                placeholder: false
+            },
+            {
+                title: "Account Review (Roadmap)",
+                html: `
+        <p>Accessible from the <strong>Account Review</strong> button at the top of the sidebar, this view delivers a <strong>global optimization strategy</strong> for your roster:</p>
+        <div class="ob-grid-2x2">
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-bolt"><path d="M13 3l-2 9h4l-3 9l8 -11h-4l3 -7z"></path></svg></span>
+                <span class="ob-gc-title">Action Plan & Quick Wins</span>
+                <span class="ob-gc-desc">Guaranteed immediate upgrades: level 90 milestones, weapons, key talents, and mainstat fixes.</span>
+            </div>
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-arrows-exchange"><path d="M17 10h-14l4 -4"></path><path d="M7 14h14l-4 4"></path></svg></span>
+                <span class="ob-gc-title">Artifact Swaps</span>
+                <span class="ob-gc-desc">Smart gear transfers across your characters to maximize overall account performance.</span>
+            </div>
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-users"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path></svg></span>
+                <span class="ob-gc-title">Recommended Teams</span>
+                <span class="ob-gc-desc">Optimal team suggestions built around your top DPS and available roster.</span>
+            </div>
+            <div class="ob-grid-card">
+                <span class="ob-gc-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-target"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1"></circle></svg></span>
+                <span class="ob-gc-title">Farming Priorities</span>
+                <span class="ob-gc-desc">Weakest pieces audit, daily domain planner, and Mystic Offering recommendations.</span>
+            </div>
+        </div>
+        <div class="ob-note-blue">
+            <span class="ob-note-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-bulb"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"></path><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"></path><path d="M9.7 17l4.6 0"></path></svg></span>
+            <span class="ob-note-content">Tip: The review analyzes both your active showcase and local archive characters for cross-team synergy.</span>
+        </div>`,
+                image: "assets/onboarding/step6.webp",
+                placeholder: false
+            },
+            {
+                title: "Community Leaderboards",
+                html: `
+        <p>Compare your builds against the community with <strong>Leaderboards</strong> (available from the navigation sidebar or directly on each character card):</p>
+        <div class="ob-metric">
+            <div class="ob-metric-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-trophy"><path d="M8 21l8 0"></path><path d="M12 17l0 4"></path><path d="M7 4l10 0"></path><path d="M17 4v8a5 5 0 0 1 -10 0v-8"></path><path d="M5 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path><path d="M19 9m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path></svg>
+            </div>
+            <div class="ob-metric-body">
+                <strong>Ranked by team archetype</strong>
+                <span>Characters are categorized by their signature team comp and weapon, with tailored Energy Recharge brackets.</span>
+            </div>
+        </div>
+        <div class="ob-metric">
+            <div class="ob-metric-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-world"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M3.6 9h16.8"></path><path d="M3.6 15h16.8"></path><path d="M11.5 3a17 17 0 0 0 0 18"></path><path d="M12.5 3a17 17 0 0 1 0 18"></path></svg>
+            </div>
+            <div class="ob-metric-body">
+                <strong>Inspect top builds</strong>
+                <span>Browse gear choices, set bonuses, and substat distributions from top-ranking builds worldwide for inspiration.</span>
+            </div>
+        </div>
+        <div class="ob-note-blue">
+            <span class="ob-note-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-lock"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z"></path><path d="M8 11v-4a4 4 0 0 1 8 0v4"></path></svg></span>
+            <span class="ob-note-content">Privacy First: Prefer to keep your builds private? You can opt out of public leaderboards at any time in your account settings.</span>
+        </div>`,
+                image: "assets/onboarding/step7.webp",
                 placeholder: false
             }
         ],
@@ -2179,6 +2337,16 @@ export const T = {
         "roadmap.farming.allMaterials": "All materials",
         "roadmap.farming.allBooksAvailable": "All books available",
         "roadmap.farming.allMaterialsAvailable": "All materials available",
+        "roadmap.farming.totalAccount": "Account Total",
+        "roadmap.farming.totalTarget": (char) => `${char} Total`,
+        "roadmap.farming.resinCount": (resin) => `~${resin} resin`,
+        "roadmap.farming.mora": "Mora",
+        "roadmap.farming.moraRequired": "Mora required",
+        "roadmap.farming.crownOfInsight": "Crown of Insight",
+        "roadmap.farming.freeDayBadge": "Free Day",
+        "roadmap.farming.ascensionMaterialsBadge": "Ascension Materials",
+        "roadmap.farming.jokerBadge": "Wildcard",
+        "roadmap.farming.noPriorityDomain": "No priority domains for this day.",
 
         // Module 3 : Cross-Character Swap Optimizer
         "roadmap.swaps.title": "Cross-Character Swap Optimizer",

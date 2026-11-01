@@ -1,5 +1,6 @@
 // src/components/showcase/BuffsPanel.js
 import { t } from '../../scripts/i18n.js';
+import { getLabel } from '../../scripts/data.js';
 import { renderSpiderChartContent, updateSpiderChartDOM } from './SpiderChart.js';
 
 export function renderBuffsPanel(persoObj, charIndex) {
@@ -44,7 +45,8 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
 
     persoObj.buffs.forEach((buff, bIndex) => {
         let charName = persoObj.nom;
-        let charRole = persoObj.activeBuild?.name?.fr || persoObj.activeBuild?.key || '';
+        const activeBuild = persoObj.activeBuild || (persoObj.charConfig?.builds ? Object.values(persoObj.charConfig.builds)[0] : null);
+        let charRole = (activeBuild && getLabel(activeBuild.name)) || activeBuild?.key || '';
         let charImg = persoObj.image ? persoObj.image.replace(/_Side_/g, '_').replace(/Side_/g, '') : '';
         let charSplash = persoObj.splashArt;
         let charHex = 'var(--char-hex)';
@@ -59,7 +61,7 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
             charSplash = `https://enka.network/ui/UI_Gacha_AvatarImg_${internalName}.webp`;
 
             const mate = persoObj.activeBuild?.team?.find(m => m.name === internalName);
-            if (mate && mate.role) charRole = mate.role;
+            charRole = (mate && mate.role) || '';
 
             let queryName = internalName;
             if (internalName.startsWith('Player') || internalName === 'Traveler' || internalName === 'Voyageur') {
@@ -136,6 +138,8 @@ export function renderActiveBuffsSection(persoObj, charIndex) {
 
         if (!characters[charName]) {
             characters[charName] = { img: charImg, splash: charSplash, hex: charHex, role: charRole, origins: {} };
+        } else if (!characters[charName].role && charRole) {
+            characters[charName].role = charRole;
         }
         if (!characters[charName].origins[origin]) {
             characters[charName].origins[origin] = { img: originImg, buffs: [] };

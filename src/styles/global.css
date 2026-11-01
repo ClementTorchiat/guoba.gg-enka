@@ -2,12 +2,12 @@
     overflow: hidden !important;
 }
 
-button[title="Mode d'emploi"],
+.main-content-menu-help,
 .main-content-menu-export {
     transition: all 0.2s ease;
 }
 
-button[title="Mode d'emploi"]:hover,
+.main-content-menu-help:hover,
 .main-content-menu-export:hover {
     background: var(--bg-hover) !important;
     color: var(--text-strong);
@@ -3616,15 +3616,37 @@ input:checked+.toggle-track .star-4 {
     border-radius: 0 6px 6px 0;
     color: #93c5fd;
     font-size: 12.5px;
-    font-style: italic;
     line-height: 1.6;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.ob-note-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--text-always-white, #ffffff);
+}
+
+.ob-note-icon svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.ob-note-content {
+    flex: 1;
+    font-style: italic;
 }
 
 .ob-metric {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: flex-start;
-    padding: 9px 0;
+    padding: 10px 0;
     border-bottom: 1px solid var(--ob-bg-button-dark);
 }
 
@@ -3633,10 +3655,20 @@ input:checked+.toggle-track .star-4 {
 }
 
 .ob-metric-icon {
-    font-size: 16px;
     width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
     margin-top: 1px;
+    color: var(--text-always-white, #ffffff);
+}
+
+.ob-metric-icon svg {
+    width: 20px;
+    height: 20px;
+    display: block;
 }
 
 .ob-metric-body strong {
@@ -3666,11 +3698,20 @@ input:checked+.toggle-track .star-4 {
     padding: 13px 14px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
 }
 
 .ob-grid-card .ob-gc-icon {
-    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
+    color: var(--text-always-white, #ffffff);
+}
+
+.ob-grid-card .ob-gc-icon svg {
+    width: 20px;
+    height: 20px;
+    display: block;
 }
 
 .ob-grid-card .ob-gc-title {

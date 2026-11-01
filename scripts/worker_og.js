@@ -50,7 +50,7 @@ function extractEmbedMetadata(enkaData, charParam, lang = 'fr') {
         return {
             title: isEn ? `${nickname}'s Showcase — guoba.gg` : `Vitrine de ${nickname} — guoba.gg`,
             description: isEn ? 'No characters currently displayed in showcase.' : 'Aucun personnage actuellement visible en vitrine.',
-            image: 'https://guoba.clement-torchiat.fr/assets/global/banner.png'
+            image: 'https://guoba.clement-torchiat.fr/assets/global/banner.webp'
         };
     }
 

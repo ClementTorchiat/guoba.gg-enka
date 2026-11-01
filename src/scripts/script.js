@@ -662,7 +662,8 @@ async function loadGameData(forceRefresh = false) {
             // Remplissage du dictionnaire avec les Armes
             if (weapons) {
                 Object.values(weapons).forEach(weapon => {
-                    const iconName = weapon.Icon || weapon.icon;
+                    const rawIcon = weapon.Icon || weapon.icon;
+                    const iconName = rawIcon ? rawIcon.split('/').pop().replace('.png', '') : null;
                     const nameHash = weapon.NameTextMapHash || weapon.nameTextMapHash;
                     if (iconName && nameHash) {
                         window.iconToNameHash[iconName] = nameHash;
@@ -775,7 +776,8 @@ function hasUnknownShowcaseData(data) {
     const playerInfo = data.playerInfo || {};
     if (playerInfo.nameCardId) {
         const namecards = window.namecardsData || {};
-        if (!namecards[String(playerInfo.nameCardId)]) {
+        if (Object.keys(namecards).length > 0 && !namecards[String(playerInfo.nameCardId)]) {
+            console.log(`[Guoba] Namecard inconnue détectée : ${playerInfo.nameCardId}`);
             return true;
         }
     }
@@ -784,11 +786,13 @@ function hasUnknownShowcaseData(data) {
     const pp = playerInfo.profilePicture || {};
     if (pp.id) {
         const pfps = window.pfpsData || {};
-        if (!pfps[String(pp.id)]) {
+        if (Object.keys(pfps).length > 0 && !pfps[String(pp.id)]) {
+            console.log(`[Guoba] PFP inconnue détectée : ${pp.id}`);
             return true;
         }
     } else if (pp.avatarId) {
-        if (!charData || !charData[String(pp.avatarId)]) {
+        if (charData && !charData[String(pp.avatarId)]) {
+            console.log(`[Guoba] PFP (Avatar) inconnu détecté : ${pp.avatarId}`);
             return true;
         }
     }
@@ -798,7 +802,7 @@ function hasUnknownShowcaseData(data) {
     for (const perso of avatarList) {
         // Personnage inconnu
         const charId = perso.avatarId;
-        if (charId && (!charData || !charData[String(charId)])) {
+        if (charId && charData && !charData[String(charId)]) {
             return true;
         }
 
@@ -808,23 +812,17 @@ function hasUnknownShowcaseData(data) {
                 const flat = item.flat;
                 if (!flat) continue;
 
-                // Arme
+                // Arme inconnue (nom non traduit dans locData)
                 if (item.weapon) {
                     if (flat.nameTextMapHash && getText(flat.nameTextMapHash) === t('data.unknown')) {
                         return true;
                     }
-                    if (flat.icon && window.iconToNameHash && !window.iconToNameHash[flat.icon]) {
-                        return true;
-                    }
                 }
 
-                // Artéfact (Set inconnu)
+                // Artéfact (Set inconnu : nom de set non traduit dans locData)
                 if (flat.itemType === 'ITEM_RELIQUARY') {
                     const targetHash = (window.iconToNameHash && flat.icon && window.iconToNameHash[flat.icon]) || flat.setNameTextMapHash;
                     if (targetHash && getText(targetHash) === t('data.unknown')) {
-                        return true;
-                    }
-                    if (flat.icon && window.iconToNameHash && !window.iconToNameHash[flat.icon]) {
                         return true;
                     }
                 }

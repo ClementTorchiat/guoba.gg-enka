@@ -38,7 +38,7 @@ export function generateEmbedMeta(enkaData, charParam = null, lang = 'fr', extra
     const defaultDesc = isEn
         ? 'Analyze your builds, rate your artifacts and simulate combat buffs directly from your UID.'
         : 'Évaluez vos artéfacts, optimisez vos statistiques et simulez vos buffs en combat directement depuis votre UID.';
-    const defaultImage = 'https://guoba.clement-torchiat.fr/assets/global/banner.png';
+    const defaultImage = 'https://guoba.clement-torchiat.fr/assets/global/banner.webp';
 
     if (!enkaData || !enkaData.avatarInfoList || enkaData.avatarInfoList.length === 0) {
         return {

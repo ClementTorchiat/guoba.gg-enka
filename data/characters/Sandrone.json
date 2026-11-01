@@ -148,11 +148,11 @@
           "artifact": "HeartOfTheFurnace"
         },
         {
-          "role": "Support",
-          "name": "Alyosha",
+          "role": "Sub-DPS",
+          "name": "Mitya",
           "element": "electro",
           "artifact": "NoblesseOblige",
-          "cons": "6"
+          "weapon": "ThrillingTalesOfDragonSlayers"
         }
       ]
     }

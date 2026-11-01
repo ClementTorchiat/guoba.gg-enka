@@ -11,15 +11,17 @@ import { Image, getImage } from "astro:assets";
 import guobaLogo from "../assets/global/favicon.png";
 
 import step1Img from "../assets/onboarding/step1.webp";
-import step2Img from "../assets/onboarding/step2.png";
-import step3Img from "../assets/onboarding/step3.png";
-import step4Img from "../assets/onboarding/step4.png";
-import step5Img from "../assets/onboarding/step5.png";
+import step2Img from "../assets/onboarding/step2.webp";
+import step3Img from "../assets/onboarding/step3.webp";
+import step4Img from "../assets/onboarding/step4.webp";
+import step5Img from "../assets/onboarding/step5.webp";
+import step6Img from "../assets/onboarding/step6.webp";
+import step7Img from "../assets/onboarding/step7.webp";
 
 const optStep2 = await getImage({
     src: step2Img,
     format: "webp",
-    width: 608,
+    width: 900,
     quality: 80,
 });
 const optStep3 = await getImage({
@@ -31,11 +33,23 @@ const optStep3 = await getImage({
 const optStep4 = await getImage({
     src: step4Img,
     format: "webp",
-    width: 500,
+    width: 900,
     quality: 80,
 });
 const optStep5 = await getImage({
     src: step5Img,
+    format: "webp",
+    width: 900,
+    quality: 80,
+});
+const optStep6 = await getImage({
+    src: step6Img,
+    format: "webp",
+    width: 900,
+    quality: 80,
+});
+const optStep7 = await getImage({
+    src: step7Img,
     format: "webp",
     width: 900,
     quality: 80,
@@ -47,11 +61,13 @@ const onboardingImages = {
     step3: optStep3.src,
     step4: optStep4.src,
     step5: optStep5.src,
+    step6: optStep6.src,
+    step7: optStep7.src,
 };
 ---
 
 <Layout titleKey="page.title.default">
-    <HalloweenDecorations />
+    <!--<HalloweenDecorations /> -->
     <!-- <ChristmasDecorations /> -->
     <!-- <LanternRiteDecorations /> -->
     <!-- <EasterDecorations /> -->
@@ -99,7 +115,7 @@ const onboardingImages = {
                         </div>
 
                         <div style="display: flex; flex-direction: row; align-items: center; gap: 8px; width: 240px; min-width: 240px; flex-shrink: 0;">
-                            <button onclick="openOnboarding()" data-i18n-title="ui.helpBtn" data-i18n-aria-label="ui.helpBtn" style="
+                            <button class="main-content-menu-help" onclick="openOnboarding()" data-i18n-title="ui.helpBtn" data-i18n-aria-label="ui.helpBtn" style="
                             background: var(--bg-panel);
                             border: none;
                             border-radius: 8px;
@@ -150,7 +166,7 @@ const onboardingImages = {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24px" fill="var(--text-always-white)" viewBox="0 0 640 640"><path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"></path></svg>
             </button>
             <div class="ob-progress-bar">
-                <div class="ob-progress-fill" id="ob-progress-fill" style="width:20%"></div>
+                <div class="ob-progress-fill" id="ob-progress-fill" style="width:14.3%"></div>
             </div>
             <div class="ob-header">
                 <div class="ob-logo-row">

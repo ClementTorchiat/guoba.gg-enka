@@ -499,6 +499,7 @@ window.TEAMMATE_BUFFS = {
                 active: true,
                 stats: { eleMas: 120 }
             },
+            /*
             {
                 label: { fr: "C1 : L'observateur cherchant ce qui manque (DGT Crit)", en: "C1: The Observer Seeking What Is Missing (Crit DMG)" },
                 cons: 1,
@@ -511,6 +512,7 @@ window.TEAMMATE_BUFFS = {
                 active: true,
                 stats: { eleMas: 123 }
             }
+                */
         ]
     },
     "Valeriy": {

@@ -1,4 +1,4 @@
-import { t } from './i18n.js';
+import { t, LANG } from './i18n.js';
 import STAT_MAPPING_JSON from '../data/stat_mapping.json';
 import STAT_LABELS_JSON from '../data/stat_labels.json';
 import ICON_MAP_JSON from '../data/icon_map.json';
@@ -110,7 +110,7 @@ export function getLabel(label, fallbackIndex) {
     }
     if (typeof label === 'string') return label;
     if (typeof label === 'object') {
-        const lang = (typeof window !== 'undefined' && window.GUOBA_LANG) || 'fr';
+        const lang = (typeof window !== 'undefined' && window.GUOBA_LANG) || LANG || 'fr';
         return label[lang] ?? label.fr ?? label.en ?? Object.values(label)[0] ?? '';
     }
     return String(label);
