@@ -77,8 +77,10 @@
       "bestSets": [],
       "goodSets": [],
       "er_req": 100,
+      "slot": 1,
       "team": [
         {
+          "slot": 2,
           "role": "DPS",
           "name": "",
           "element": "",
@@ -87,6 +89,7 @@
           "cons": ""
         },
         {
+          "slot": 3,
           "role": "Sub-DPS",
           "name": "",
           "element": "",
@@ -95,6 +98,7 @@
           "cons": ""
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "",
           "element": "",

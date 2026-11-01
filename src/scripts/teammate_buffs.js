@@ -97,6 +97,7 @@ window.TEAMMATE_BUFFS = {
             {
                 label: { fr: "Piment de Guoba (ATQ%)", en: "Guoba's pepper (ATK%)" },
                 active: true,
+                slot: 1,
                 stats: { atk_: 0.10 }
             },
             {
@@ -187,6 +188,7 @@ window.TEAMMATE_BUFFS = {
                 label: { fr: "C1 : Théorie de l'équilibre cendres–champs (EM)", en: "C1: The Theory of Ash—Field Equilibrium (EM)" },
                 active: true,
                 cons: 1,
+                slot: 1,
                 stats: { eleMas: 80 }
             },
         ]
@@ -209,6 +211,7 @@ window.TEAMMATE_BUFFS = {
                 label: { fr: "C4 : Supplément discrétionnaire (ER)", en: "C4: Discretionary Supplement (ER)" },
                 active: true,
                 cons: 4,
+                slot: 1,
                 stats: { enerRech_: 0.30 }
             },
         ]
@@ -241,12 +244,14 @@ window.TEAMMATE_BUFFS = {
             {
                 label: { fr: "Tempestrier tengu (ATQ)", en: "Tengu Stormcall (ATK)" },
                 active: true,
+                slot: 1,
                 stats: { atk: 793 }
             },
             {
                 label: { fr: "C6 : Péché d'orgueil (uniquement les DGT Électro - DGT Crit)", en: "C6: Sin of Pride (only Electro DMG - Crit DMG)" },
                 active: true,
                 cons: 6,
+                slot: 1,
                 stats: { critDMG_: 0.60 }
             },
         ]
@@ -340,12 +345,14 @@ window.TEAMMATE_BUFFS = {
             {
                 label: { fr: "Épinglage rapide (DGT Physiques)", en: "Suppressive Barrage (Physical DMG)" },
                 active: true,
+                slot: 1,
                 stats: { physical_dmg_: 0.15 }
             },
             {
                 label: { fr: "Conseil du compagnon (uniquement les DGT Physiques - DGT Crit)", en: "Companion's Counsel (only Physical DMG - Crit DMG)" },
                 active: true,
                 cons: 6,
+                slot: 1,
                 stats: { critDMG_: 0.60 }
             }
         ]
@@ -357,6 +364,7 @@ window.TEAMMATE_BUFFS = {
                 label: { fr: "Tutelle (DGT Dendro)", en: "Adeptus' Tutelage (Dendro DMG)" },
                 active: true,
                 cons: 1,
+                slot: 1,
                 stats: { dendro_dmg_: 0.15 }
             }
         ]
@@ -383,6 +391,7 @@ window.TEAMMATE_BUFFS = {
             {
                 label: { fr: "A4 : Compassion illuminée (EM)", en: "A4: Compassion Illuminated (EM)" },
                 active: true,
+                slot: 1,
                 stats: { eleMas: 250 }
             }
         ]
@@ -393,6 +402,7 @@ window.TEAMMATE_BUFFS = {
             {
                 label: { fr: "C6 : Hymne de source profonde (ATQ%)", en: "C6: Ode to Deep Springs (ATK%)" },
                 cons: 6,
+                slot: 1,
                 active: true,
                 stats: { atk_: 0.10 }
             }
@@ -404,11 +414,13 @@ window.TEAMMATE_BUFFS = {
             {
                 label: { fr: "Ruée fulminante (ATQ)", en: "The Three Principles of Power (ATK)" },
                 active: true,
+                slot: 1,
                 stats: { atk: 810 }
             },
             {
                 label: { fr: "Le plus dangereux, c'est la paresse ! (ATQ%)", en: "Laziness is the Enemy! (ATK%)" },
                 cons: 2,
+                slot: 1,
                 active: true,
                 stats: { atk_: 0.3 }
             }
@@ -420,6 +432,7 @@ window.TEAMMATE_BUFFS = {
             {
                 label: { fr: "Protocole de permutation panoramique (EM)", en: "Panoramic Permutation Protocol (EM)" },
                 active: true,
+                slot: 1,
                 stats: { eleMas: 140 }
             }
         ]
@@ -462,6 +475,7 @@ window.TEAMMATE_BUFFS = {
             {
                 label: { fr: "Archive naturaliste universelle (Si le personnage est Lunaire - EM)", en: "Universal Naturalist Archive (If the character is Moonsign - EM)" },
                 active: false,
+                slot: 1,
                 stats: { eleMas: 120 }
             }
         ]
