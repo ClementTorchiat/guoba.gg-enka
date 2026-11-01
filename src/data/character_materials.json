@@ -4317,5 +4317,75 @@
       },
       "icon": "UI_ItemIcon_112083"
     }
+  },
+  "Mitya": {
+    "talentBookKey": "charity",
+    "weeklyBoss": {
+      "id": 113081,
+      "name": {
+        "fr": "Masque du médecin vertueux",
+        "en": "Mask of the Virtuous Doctor"
+      },
+      "icon": "UI_ItemIcon_113081"
+    },
+    "worldBoss": {
+      "id": 113093,
+      "name": {
+        "fr": "Ancre de stabilité brisée",
+        "en": "Shattered Stability Anchor"
+      },
+      "icon": "UI_ItemIcon_113093"
+    },
+    "specialty": {
+      "id": 101274,
+      "name": {
+        "fr": "Crystalfold",
+        "en": "Crystalfold"
+      },
+      "icon": "UI_ItemIcon_101274"
+    },
+    "commonMat": {
+      "id": 112149,
+      "name": {
+        "fr": "Graine chimérique",
+        "en": "Chimeric Core"
+      },
+      "icon": "UI_ItemIcon_112149"
+    }
+  },
+  "Valeriy": {
+    "talentBookKey": "glory",
+    "weeklyBoss": {
+      "id": 113087,
+      "name": {
+        "fr": "Résine contrefaite",
+        "en": "Counterfeit Resin"
+      },
+      "icon": "UI_ItemIcon_113087"
+    },
+    "worldBoss": {
+      "id": 113091,
+      "name": {
+        "fr": "Queue coupée du rôdeur céleste",
+        "en": "Severed Tail of the Sky-Roamer"
+      },
+      "icon": "UI_ItemIcon_113091"
+    },
+    "specialty": {
+      "id": 101273,
+      "name": {
+        "fr": "Absinthe féerique",
+        "en": "Fairy Wormwood"
+      },
+      "icon": "UI_ItemIcon_101273"
+    },
+    "commonMat": {
+      "id": 112146,
+      "name": {
+        "fr": "Paillette éthérée",
+        "en": "Ethereal Glimmershard"
+      },
+      "icon": "UI_ItemIcon_112146"
+    }
   }
 }

@@ -1,7 +1,8 @@
 {
   "name": "guoba.gg",
   "type": "module",
-  "version": "1.3.0",
+  "version": "2.1.0",
+  "gameVersion": "7.1",
   "scripts": {
     "predev": "node scripts/generate_buckets.js",
     "dev": "astro dev --host",

@@ -838,5 +838,17 @@
   "zibai_lunar_crystallize_dps": {
     "fr": "DPS Sélénocristallisation",
     "en": "Lunar-Crystallize DPS"
+  },
+  "mitya_stellar_conduct_dps": {
+    "fr": "DPS Astroconduction",
+    "en": "Stellar-Conduct DPS"
+  },
+  "mitya_stellar_conduct_subdps": {
+    "fr": "Sub-DPS Astroconduction",
+    "en": "Stellar-Conduct Sub-DPS"
+  },
+  "valeriy_stellar_conduct_support": {
+    "fr": "Support Astroconduction",
+    "en": "Stellar-Conduct Support"
   }
 }

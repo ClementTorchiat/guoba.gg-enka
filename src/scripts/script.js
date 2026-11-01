@@ -27,6 +27,7 @@ import { loadRollTable } from './rollTableLoader.js';
 import { mergeShowcaseWithSnapshots, updateSnapshotCharacter } from './snapshotManager.js';
 
 import { t } from './i18n.js';
+import { CACHE_KEY } from './version.js';
 import TEAMMATE_NAME_ALIASES from '../data/teammate_name_aliases.json';
 
 const ICON_BASE_PATH = "/assets/simulator/icons/";
@@ -579,18 +580,17 @@ function showSkeletonCard() {
 
 let gameDataReady = false;
 let gameDataPromise = null;
+let lastGameDataFetchTime = 0;
 
-async function loadGameData() {
-    if (gameDataReady) return true;
-    if (gameDataPromise) return gameDataPromise;
+async function loadGameData(forceRefresh = false) {
+    if (gameDataReady && !forceRefresh) return true;
+    if (gameDataPromise && !forceRefresh) return gameDataPromise;
 
     gameDataPromise = (async () => {
         const loader = document.getElementById('loading-msg');
         if (loader) loader.innerText = t('error.loadingV2');
         window.iconToNameHash = {};
 
-        // ⚠️ TRÈS IMPORTANT : Passer en v4 pour vider l'ancien cache sans armes
-        const CACHE_KEY = 'guoba_gamedata_idb_v5';
         const CACHE_TTL = 24 * 60 * 60 * 1000;
 
         try {
@@ -604,27 +604,29 @@ async function loadGameData() {
                 searchBtn.disabled = true;
             }
 
-            // 1. Lecture du cache asynchrone depuis IndexedDB
-            const cached = await idbGet(CACHE_KEY);
-            if (cached && (Date.now() - cached.ts < CACHE_TTL)) {
-                charData = cached.chars;
-                locData = cached.locs;
-                window.namecardsData = cached.namecards;
-                window.pfpsData = cached.pfps;
-                window.iconToNameHash = cached.iconToNameHash || {};
-                // Charge la table de rolls en tâche de fond si besoin
-                loadRollTable().catch(() => { });
-                gameDataReady = true;
-                buildHashToKey();
-                if (uidInput) {
-                    uidInput.disabled = false;
-                    uidInput.placeholder = t('ui.search.placeholder');
+            // 1. Lecture du cache asynchrone depuis IndexedDB (sauf si rafraîchissement forcé)
+            if (!forceRefresh) {
+                const cached = await idbGet(CACHE_KEY);
+                if (cached && (Date.now() - cached.ts < CACHE_TTL)) {
+                    charData = cached.chars;
+                    locData = cached.locs;
+                    window.namecardsData = cached.namecards;
+                    window.pfpsData = cached.pfps;
+                    window.iconToNameHash = cached.iconToNameHash || {};
+                    // Charge la table de rolls en tâche de fond si besoin
+                    loadRollTable().catch(() => { });
+                    gameDataReady = true;
+                    buildHashToKey();
+                    if (uidInput) {
+                        uidInput.disabled = false;
+                        uidInput.placeholder = t('ui.search.placeholder');
+                    }
+                    if (searchBtn) {
+                        searchBtn.disabled = false;
+                    }
+                    if (loader) loader.innerText = "";
+                    return true;
                 }
-                if (searchBtn) {
-                    searchBtn.disabled = false;
-                }
-                if (loader) loader.innerText = "";
-                return true;
             }
 
             // 2. Téléchargement des dictionnaires et de la table de rolls
@@ -642,6 +644,7 @@ async function loadGameData() {
             locData = locs;
             window.namecardsData = namecards;
             window.pfpsData = pfps;
+            lastGameDataFetchTime = Date.now();
 
             // Remplissage du dictionnaire avec les Artéfacts
             if (relics && relics.Items && relics.Sets) {
@@ -765,6 +768,73 @@ function clearSearch() {
 let inflightFetchPromise = null;
 let inflightUid = null;
 
+function hasUnknownShowcaseData(data) {
+    if (!data) return false;
+
+    // 1. Détection Namecard inconnue
+    const playerInfo = data.playerInfo || {};
+    if (playerInfo.nameCardId) {
+        const namecards = window.namecardsData || {};
+        if (!namecards[String(playerInfo.nameCardId)]) {
+            return true;
+        }
+    }
+
+    // 2. Détection Photo de profil (PFP) inconnue
+    const pp = playerInfo.profilePicture || {};
+    if (pp.id) {
+        const pfps = window.pfpsData || {};
+        if (!pfps[String(pp.id)]) {
+            return true;
+        }
+    } else if (pp.avatarId) {
+        if (!charData || !charData[String(pp.avatarId)]) {
+            return true;
+        }
+    }
+
+    // 3. Détection Personnage, Arme ou Set inconnu dans la vitrine
+    const avatarList = data.avatarInfoList || [];
+    for (const perso of avatarList) {
+        // Personnage inconnu
+        const charId = perso.avatarId;
+        if (charId && (!charData || !charData[String(charId)])) {
+            return true;
+        }
+
+        // Équipements (Arme et Artéfacts)
+        if (perso.equipList && Array.isArray(perso.equipList)) {
+            for (const item of perso.equipList) {
+                const flat = item.flat;
+                if (!flat) continue;
+
+                // Arme
+                if (item.weapon) {
+                    if (flat.nameTextMapHash && getText(flat.nameTextMapHash) === t('data.unknown')) {
+                        return true;
+                    }
+                    if (flat.icon && window.iconToNameHash && !window.iconToNameHash[flat.icon]) {
+                        return true;
+                    }
+                }
+
+                // Artéfact (Set inconnu)
+                if (flat.itemType === 'ITEM_RELIQUARY') {
+                    const targetHash = (window.iconToNameHash && flat.icon && window.iconToNameHash[flat.icon]) || flat.setNameTextMapHash;
+                    if (targetHash && getText(targetHash) === t('data.unknown')) {
+                        return true;
+                    }
+                    if (flat.icon && window.iconToNameHash && !window.iconToNameHash[flat.icon]) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
 async function fetchUserData(optionalUid) {
     const uid = (optionalUid || document.getElementById('uidInput')?.value || '').trim();
     if (!uid) return alert(t('error.noUid'));
@@ -849,6 +919,12 @@ async function fetchUserData(optionalUid) {
             };
 
             window.currentPlayerNickname = data.playerInfo.nickname || t('data.unknownPlayer');
+
+            // Auto-rafraîchissement Enka si un élément de la vitrine est inconnu dans le cache actuel (perso, arme, set, PFP ou namecard)
+            if (hasUnknownShowcaseData(data) && (Date.now() - lastGameDataFetchTime > 5 * 60 * 1000)) {
+                console.log('[Guoba] Données inconnues détectées dans la vitrine (perso, arme, set, PFP ou namecard), actualisation Enka...');
+                await loadGameData(true);
+            }
 
             // Préchargement ultra-rapide des configurations nécessaires pour le showcase
             await preloadConfigsForShowcase(data, charData, locData, window.HASH_TO_KEY);

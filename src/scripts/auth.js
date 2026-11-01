@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { idbGet } from './db.js';
+import { CACHE_KEY } from './version.js';
 import { getStoredSnapshots, clearStoredSnapshots, countArchivedCharacters } from './snapshotManager.js';
 import { t as i18nT } from './i18n.js';
 
@@ -238,7 +239,7 @@ async function updateSettingsUiState(uid) {
                     // Charger les dictionnaires depuis IndexedDB si non présents en mémoire
                     if (!window.namecardsData || !window.pfpsData) {
                         try {
-                            const idb = await idbGet('guoba_gamedata_idb_v5');
+                            const idb = await idbGet(CACHE_KEY);
                             if (idb) {
                                 window.namecardsData = window.namecardsData || idb.namecards;
                                 window.pfpsData = window.pfpsData || idb.pfps;

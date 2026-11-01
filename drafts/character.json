@@ -1,4 +1,5 @@
 {
+  "isNew": true,
   "color": "",
   "portraitOffset": -35,
   "talents": {
@@ -44,6 +45,7 @@
         "fr": "",
         "en": ""
       },
+      "leaderboard_id": "",
       "weights": {
         "critRate_": 1,
         "critDMG_": 1,
@@ -66,21 +68,14 @@
         "heal_": 0
       },
       "idealMainStats": {
-        "EQUIP_SHOES": [
-        ],
-        "EQUIP_RING": [
-        ],
-        "EQUIP_DRESS": [
-        ]
+        "EQUIP_SHOES": [],
+        "EQUIP_RING": [],
+        "EQUIP_DRESS": []
       },
-      "hideUIStats": [
-      ],
-      "showUIStats": [
-      ],
-      "bestSets": [
-      ],
-      "goodSets": [
-      ],
+      "hideUIStats": [],
+      "showUIStats": [],
+      "bestSets": [],
+      "goodSets": [],
       "er_req": 100,
       "team": [
         {

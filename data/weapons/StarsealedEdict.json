@@ -1,0 +1,109 @@
+{
+  "selectMode": "exclusive",
+  "buffs": [
+    {
+      "label": {
+        "fr": "Après utilisation d'une compétence élémentaire (Maîtrise élémentaire)",
+        "en": "After using an Elemental Skill (EM)"
+      },
+      "active": false,
+      "stats": {
+        "eleMas": [
+          48,
+          12
+        ]
+      }
+    },
+    {
+      "label": {
+        "fr": "1 cumul de Loi de combustion (Maîtrise élémentaire)",
+        "en": "1 stack of Law of Combustion (EM)"
+      },
+      "active": false,
+      "stats": {
+        "eleMas": [
+          72,
+          18
+        ]
+      }
+    },
+    {
+      "label": {
+        "fr": "2 cumuls de Loi de combustion (Maîtrise élémentaire)",
+        "en": "2 stacks of Law of Combustion (EM)"
+      },
+      "active": false,
+      "stats": {
+        "eleMas": [
+          96,
+          24
+        ]
+      }
+    },
+    {
+      "label": {
+        "fr": "3 cumuls de Loi de combustion (Maîtrise élémentaire)",
+        "en": "3 stacks of Law of Combustion (EM)"
+      },
+      "active": false,
+      "stats": {
+        "eleMas": [
+          120,
+          30
+        ]
+      }
+    },
+    {
+      "label": {
+        "fr": "1 cumul (Sous Radiance : Astroconduction - Maîtrise élémentaire, DGT Crit)",
+        "en": "1 stack (Under Radiance: Stellar-Conduct - EM, Crit DMG)"
+      },
+      "active": false,
+      "stats": {
+        "eleMas": [
+          72,
+          18
+        ],
+        "critDMG_": [
+          0.12,
+          0.03
+        ]
+      }
+    },
+    {
+      "label": {
+        "fr": "2 cumuls (Sous Radiance : Astroconduction - Maîtrise élémentaire, DGT Crit)",
+        "en": "2 stacks (Under Radiance: Stellar-Conduct - EM, Crit DMG)"
+      },
+      "active": false,
+      "stats": {
+        "eleMas": [
+          96,
+          24
+        ],
+        "critDMG_": [
+          0.24,
+          0.06
+        ]
+      }
+    },
+    {
+      "label": {
+        "fr": "3 cumuls (Sous Radiance : Astroconduction - Maîtrise élémentaire, DGT Crit)",
+        "en": "3 stacks (Under Radiance: Stellar-Conduct - EM, Crit DMG)"
+      },
+      "active": true,
+      "stats": {
+        "eleMas": [
+          120,
+          30
+        ],
+        "critDMG_": [
+          0.36,
+          0.09
+        ]
+      }
+    }
+  ]
+}
+

@@ -1,3 +1,5 @@
+import { APP_VERSION, GAME_VERSION } from './version.js';
+
 export const SUPPORTED = ['fr', 'en'];
 const stored = typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_lang') : null;
 const browser = typeof navigator !== 'undefined' && navigator.language ? navigator.language.slice(0, 2) : 'fr';
@@ -2387,7 +2389,7 @@ if (typeof window !== 'undefined') {
         updateMeta('meta[property="og:locale"]', t('meta.locale'));
         const versionEl = document.querySelector('.sidebar-text');
         if (versionEl) {
-            versionEl.textContent = t('ui.version', '2.1.0', '7.1');
+            versionEl.textContent = t('ui.version', APP_VERSION, GAME_VERSION);
         }
     };
 

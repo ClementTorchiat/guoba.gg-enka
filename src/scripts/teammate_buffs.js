@@ -491,6 +491,51 @@ window.TEAMMATE_BUFFS = {
             }
         ]
     },
+    "Mitya": {
+        element: "electro",
+        buffs: [
+            {
+                label: { fr: "A1 : Test de contrainte de base (EM)", en: "A1: Baseline Stress Test (EM)" },
+                active: true,
+                stats: { eleMas: 120 }
+            },
+            {
+                label: { fr: "C1 : L'observateur cherchant ce qui manque (DGT Crit)", en: "C1: The Observer Seeking What Is Missing (Crit DMG)" },
+                cons: 1,
+                active: true,
+                stats: { critDMG_: 0.40 }
+            },
+            {
+                label: { fr: "C2 : La matière qui sommeille au-delà de l'inertie (EM)", en: "C2: The Matter That Slumbers Beyond Inertness (EM)" },
+                cons: 2,
+                active: true,
+                stats: { eleMas: 123 }
+            }
+        ]
+    },
+    "Valeriy": {
+        element: "electro",
+        buffs: [
+            {
+                label: { fr: "C2 : Rangs qui chargent à l'unisson (EM)", en: "C2: Ranks That Charge as One (EM)" },
+                cons: 2,
+                active: true,
+                stats: { eleMas: 100 }
+            },
+            {
+                label: { fr: "C6 : La force de percer les lignes ennemies (DGTs Électro uniquement - Taux Crit)", en: "C6: The Strength to Breach Enemy Lines (Electro DMG only - Crit Rate)" },
+                cons: 6,
+                active: true,
+                stats: { critRate_: 0.10 }
+            },
+            {
+                label: { fr: "C6 : La force de percer les lignes ennemies (Astroconduction uniquement - DGT Crit)", en: "C6: The Strength to Breach Enemy Lines (Stellar-Conduct only - Crit DMG)" },
+                cons: 6,
+                active: true,
+                stats: { critDMG_: 0.40 }
+            }
+        ]
+    }
 };
 
 window.TEAMMATE_NAME_ALIASES = TEAMMATE_NAME_ALIASES;

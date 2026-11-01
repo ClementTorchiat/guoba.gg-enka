@@ -5018,5 +5018,25 @@
       },
       "icon": "UI_ItemIcon_112065"
     }
+  },
+  "StarsealedEdict": {
+    "rarity": 5,
+    "materialKey": "frost_emperor",
+    "eliteMat": {
+      "id": 112158,
+      "name": {
+        "fr": "Éclat de cœur né enneigé",
+        "en": "Snowborn Heartshard"
+      },
+      "icon": "UI_ItemIcon_112158"
+    },
+    "commonMat": {
+      "id": 112146,
+      "name": {
+        "fr": "Paillette éthérée",
+        "en": "Ethereal Glimmershard"
+      },
+      "icon": "UI_ItemIcon_112146"
+    }
   }
 }
