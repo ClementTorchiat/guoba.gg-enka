@@ -91,32 +91,19 @@
       "er_req": 220,
       "team": [
         {
-          "role": "Flex",
-          "name": [
-            "Nefer",
-            "Flins"
-          ],
-          "element": [
-            "dendro",
-            "electro"
-          ]
+          "role": "Lunar",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Flex",
-          "name": [
-            "Lauma",
-            "Ineffa"
-          ],
-          "element": [
-            "dendro",
-            "electro"
-          ]
+          "role": "",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Support",
-          "name": "Sucrose",
-          "element": "anemo",
-          "cons": "6"
+          "role": "",
+          "name": "",
+          "element": ""
         }
       ]
     }

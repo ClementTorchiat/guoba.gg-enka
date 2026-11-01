@@ -4,6 +4,7 @@ window.TEAMMATE_WEAPON_BUFFS = {
     "ThrillingTalesOfDragonSlayers": {
         label: { fr: "Contes des chasseurs de dragons : ATQ% à l'allié suivant", en: "Thrilling Tales Of Dragon Slayers: ATK% to next ally" },
         active: true,
+        slot: 1,
         stats: { atk_: 0.48 }
     },
     "XiphosMoonlight": {

@@ -420,7 +420,7 @@ const finalSchema = schema || defaultSchema;
                             </div>
                         `;
                     } else {
-                        const imgFit = data.isArchetype ? "object-fit:contain; padding:6px; box-sizing:border-box;" : "object-fit:cover;";
+                        const imgFit = data.isArchetype ? "object-fit:contain;" : "object-fit:cover;";
                         avatarHtml = `
                             <div style="position:relative; width:44px; height:44px; border-radius:5px; overflow:hidden; ${portraitBg} border:none; box-shadow:none; flex-shrink:0;">
                                 <img src="${data.avatarUrl || "/assets/simulator/icons/icon_empty_slot.svg"}" style="width:100%; height:100%; ${imgFit} pointer-events:none;" decoding="async" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
@@ -474,7 +474,7 @@ const finalSchema = schema || defaultSchema;
                             tmData.buffs.forEach((b) => {
                                 if (b.cons !== undefined && userCons < b.cons) return;
                                 const lbl = typeof b.label === "object" ? b.label[lang] || b.label.fr || b.label.en : b.label;
-                                buffsList.push({ label: lbl, stats: b.stats });
+                                buffsList.push({ label: lbl, stats: b.stats, slot: b.slot ?? b.targetSlot });
                             });
                         }
                     });
@@ -484,7 +484,7 @@ const finalSchema = schema || defaultSchema;
                         const wBuffs = wData.buffs || [wData];
                         wBuffs.forEach((b) => {
                             const lbl = typeof b.label === "object" ? b.label[lang] || b.label.fr || b.label.en : b.label || weaponName;
-                            buffsList.push({ label: lbl, stats: b.stats });
+                            buffsList.push({ label: lbl, stats: b.stats, slot: b.slot ?? b.targetSlot });
                         });
                     }
 
@@ -493,7 +493,7 @@ const finalSchema = schema || defaultSchema;
                         const sBuffs = sData.buffs || [sData];
                         sBuffs.forEach((b) => {
                             const lbl = typeof b.label === "object" ? b.label[lang] || b.label.fr || b.label.en : b.label || artifactName;
-                            buffsList.push({ label: lbl, stats: b.stats });
+                            buffsList.push({ label: lbl, stats: b.stats, slot: b.slot ?? b.targetSlot });
                         });
                     }
 
@@ -511,11 +511,14 @@ const finalSchema = schema || defaultSchema;
                                         statsHtml = `<div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:3px;">${badges}</div>`;
                                     }
                                 }
+                                const slotBadge = (b.slot !== undefined && b.slot !== null)
+                                    ? `<span style="font-size:9px; background:rgba(255,255,255,0.15); border-radius:3px; padding:1px 4px; margin-left:4px; color:var(--text-grey);">Slot ${b.slot}</span>`
+                                    : "";
                                 return `
                                 <div style="margin-bottom:6px; font-size:11px; line-height:1.35;">
                                     <div style="color:var(--text-always-white); font-weight:normal; display:flex; align-items:flex-start; gap:5px;">
                                         <span style="color:rgba(255,255,255,0.45); font-size:12px; line-height:1; margin-top:1px;">•</span>
-                                        <span>${b.label || ""}</span>
+                                        <span>${b.label || ""}${slotBadge}</span>
                                     </div>
                                     ${statsHtml}
                                 </div>

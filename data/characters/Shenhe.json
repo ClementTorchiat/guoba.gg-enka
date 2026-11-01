@@ -107,21 +107,28 @@
         "CelestialGift:2"
       ],
       "er_req": 180,
+      "slot": 4,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "SkirkNew",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "FinaleOfTheDeepGalleries"
         },
         {
+          "slot": 2,
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "GoldenTroupe"
         },
         {
+          "slot": 3,
           "role": "Sub-DPS",
           "name": "Escoffier",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "TenacityOfTheMillelith"
         }
       ]
     }

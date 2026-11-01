@@ -144,18 +144,22 @@
         "SongOfDaysPast:2"
       ],
       "er_req": 200,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Eula",
           "element": "cryo"
         },
         {
+          "slot": 3,
           "role": "Sub-DPS",
           "name": "Furina",
           "element": "hydro"
         },
         {
+          "slot": 4,
           "role": "Sub-DPS",
           "name": "Shougun",
           "element": "electro"

@@ -140,14 +140,17 @@
                 "HeartOfTheFurnace:2"
             ],
             "er_req": 100,
+            "slot": 3,
             "team": [
                 {
+                    "slot": 1,
                     "role": "DPS",
                     "name": "MarionetteNew",
                     "element": "cryo",
                     "artifact": "DisenchantmentInDeepShadow"
                 },
                 {
+                    "slot": 2,
                     "role": "Sub-DPS",
                     "name": "Yae",
                     "element": "electro",
@@ -155,6 +158,7 @@
                     "artifact": "DisenchantmentInDeepShadow"
                 },
                 {
+                    "slot": 4,
                     "role": "Sub-DPS",
                     "name": "Mitya",
                     "element": "electro",
@@ -222,14 +226,17 @@
                 "HeartOfTheFurnace:2"
             ],
             "er_req": 100,
+            "slot": 3,
             "team": [
                 {
+                    "slot": 1,
                     "role": "DPS",
                     "name": "Vesna",
                     "element": "anemo",
                     "artifact": "ScarletProof"
                 },
                 {
+                    "slot": 2,
                     "role": "Sub-DPS",
                     "name": "PlayerBoy",
                     "element": "cryo",
@@ -237,6 +244,7 @@
                     "cons": "6"
                 },
                 {
+                    "slot": 4,
                     "role": "Support",
                     "name": "Vodyanitsa",
                     "element": "hydro",

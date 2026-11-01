@@ -51,6 +51,8 @@ export const ELEMENT_COLORS: Record<string, string> = {
   physical: "#cccccc",
 };
 
+export const ARCHETYPE_ROLES = new Set(["Hexerei", "Lunar", "Stellar"]);
+
 export const ENKA_ELEMENT_MAP: Record<string, string> = {
   Fire: "pyro",
   Water: "hydro",

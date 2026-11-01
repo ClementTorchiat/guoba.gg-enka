@@ -90,8 +90,10 @@
         "HeartOfTheFurnace:2"
       ],
       "er_req": 150,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "Support",
           "name": "Sucrose",
           "element": "anemo",
@@ -99,12 +101,15 @@
           "cons": "6"
         },
         {
+          "slot": 3,
           "role": "Sub-DPS",
           "name": "Fischl",
           "element": "electro",
+          "artifact": "CelestialGift",
           "cons": "6"
         },
         {
+          "slot": 4,
           "role": "Sub-DPS",
           "name": "Xingqiu",
           "element": "hydro",
@@ -185,18 +190,22 @@
         "AubadeOfMorningstarAndMoon:2"
       ],
       "er_req": 150,
+      "slot": 3,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "",
           "element": "dendro"
         },
         {
+          "slot": 2,
           "role": "Sub-DPS",
           "name": "Nahida",
           "element": "dendro"
         },
         {
+          "slot": 4,
           "role": "Sub-DPS",
           "name": "Fischl",
           "element": "electro",

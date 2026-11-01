@@ -80,8 +80,10 @@
         "CelestialGift:2"
       ],
       "er_req": 240,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "Flex",
           "name": [
             "Xiao",
@@ -93,11 +95,13 @@
           ]
         },
         {
+          "slot": 3,
           "role": "",
           "name": "",
           "element": ""
         },
         {
+          "slot": 4,
           "role": "",
           "name": "",
           "element": ""

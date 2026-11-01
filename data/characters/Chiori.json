@@ -79,19 +79,23 @@
         "ArchaicPetra:2"
       ],
       "er_req": 160,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Itto",
           "element": "geo"
         },
         {
+          "slot": 3,
           "role": "Support",
           "name": "Gorou",
           "element": "geo",
           "cons": "6"
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "Zhongli",
           "element": "geo"

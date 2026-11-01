@@ -5,7 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 
 // Dictionnaire
 import leaderboardsNames from "../../data/leaderboards_names.json";
-import { getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getAssetTranslations, getCharNamesTranslations, getIconTranslationMap, getCharElementAndWeapon } from "../../server/characters";
+import { getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getAssetTranslations, getCharNamesTranslations, getIconTranslationMap, getCharElementAndWeapon, ARCHETYPE_ROLES } from "../../server/characters";
 import teammateAssets from "../../data/teammate_assets.json";
 import SET_NAME_MAPPING from "../../data/set_name_mapping.json";
 
@@ -79,7 +79,7 @@ try {
       const lbId = data.leaderboard_id || buildName;
       if (lbId === id) {
         found = true;
-        if (data.team) allVariantsForThisId.push({ team: data.team, name: data.name });
+        if (data.team) allVariantsForThisId.push({ team: data.team, name: data.name, slot: data.slot });
         if (data.er_req) allErReqs.add(data.er_req);
       }
     }
@@ -201,6 +201,55 @@ try {
 if (!pageError && !targetCharConfig) {
   return Astro.redirect("/leaderboards");
 }
+
+function buildOrderedLeaderboardTeam(mainMember: any, allyMembers: any[]) {
+  const slots: any[] = [null, null, null, null];
+  const unplaced: any[] = [];
+
+  const resolvedMainSlot = (mainMember.slot !== undefined && mainMember.slot !== null)
+    ? parseInt(mainMember.slot, 10)
+    : null;
+
+  const hasAnySlot = (resolvedMainSlot !== null && !isNaN(resolvedMainSlot)) ||
+    allyMembers.some(t => t && t.slot !== undefined && t.slot !== null);
+
+  if (!hasAnySlot) {
+    const list = [mainMember];
+    for (let i = 0; i < 3; i++) {
+      list.push(allyMembers[i] || { isMain: false, iconUrl: `/assets/simulator/icons/icon_empty_slot.svg`, bg: "rgba(0,0,0,0.4)" });
+    }
+    return list;
+  }
+
+  if (resolvedMainSlot && resolvedMainSlot >= 1 && resolvedMainSlot <= 4) {
+    slots[resolvedMainSlot - 1] = mainMember;
+  } else {
+    unplaced.push(mainMember);
+  }
+
+  allyMembers.forEach(m => {
+    const s = (m && m.slot !== undefined && m.slot !== null) ? parseInt(m.slot, 10) : null;
+    if (s && s >= 1 && s <= 4 && !slots[s - 1]) {
+      slots[s - 1] = m;
+    } else {
+      unplaced.push(m);
+    }
+  });
+
+  let unplacedIdx = 0;
+  for (let i = 0; i < 4; i++) {
+    if (!slots[i] && unplacedIdx < unplaced.length) {
+      slots[i] = unplaced[unplacedIdx++];
+    }
+  }
+
+  for (let i = 0; i < 4; i++) {
+    if (!slots[i]) {
+      slots[i] = { isMain: false, iconUrl: `/assets/simulator/icons/icon_empty_slot.svg`, bg: "rgba(0,0,0,0.4)" };
+    }
+  }
+  return slots;
+}
 ---
 
 {pageError ? (
@@ -314,16 +363,17 @@ if (!pageError && !targetCharConfig) {
               </div>
               <div class="leaderboard-info-left-teammates-wrapper" style="position: relative;">
                 {
-                  (allVariantsForThisId.length > 0 ? allVariantsForThisId : [{ team: [] }]).map((variant, teamIndex) => {
+                  (allVariantsForThisId.length > 0 ? allVariantsForThisId : [{ team: [], slot: undefined }]).map((variant, teamIndex) => {
                     const mainCharBg = ELEMENT_COLORS[mainElem] || "#333";
 
-                    const teamDisplay: { isMain: boolean; iconUrl: string; bg: string; weapon?: string; set?: string; cons?: number }[] = [];
-                    teamDisplay.push({
+                    const mainMember = {
                       isMain: true,
+                      slot: variant.slot,
                       iconUrl: enkaAvatarImg,
                       bg: mainCharBg,
-                    });
+                    };
 
+                    const allyMembers: { isMain: boolean; slot?: number; iconUrl: string; bg: string; weapon?: string; set?: string; cons?: number; isArchetype?: boolean }[] = [];
                     for (let i = 0; i < 3; i++) {
                       const ally = variant.team[i];
                       if (ally) {
@@ -339,25 +389,31 @@ if (!pageError && !targetCharConfig) {
                         const cons = ally.cons !== undefined ? ally.cons : -1;
 
                         let iconUrl = "";
+                        let isArchetype = false;
                         if (finalAllyEnkaName && !["Unknown", "?", ""].includes(finalAllyEnkaName)) {
                           iconUrl = `https://enka.network/ui/UI_AvatarIcon_${finalAllyEnkaName}.png`;
                         } else if (allyElem) {
                           iconUrl = `/assets/simulator/icons/icon_${allyElem.toLowerCase()}.webp`;
+                        } else if (ally.role && ARCHETYPE_ROLES.has(ally.role)) {
+                          iconUrl = `/assets/simulator/icons/icon_role_${ally.role.toLowerCase()}.svg`;
+                          isArchetype = true;
                         } else {
                           iconUrl = `/assets/simulator/icons/icon_empty_slot.svg`;
                         }
 
-                        teamDisplay.push({ isMain: false, iconUrl, bg, weapon, set, cons });
+                        allyMembers.push({ isMain: false, slot: ally.slot, iconUrl, bg, weapon, set, cons, isArchetype });
                       } else {
-                        teamDisplay.push({ isMain: false, iconUrl: `/assets/simulator/icons/icon_empty_slot.svg`, bg: "rgba(0,0,0,0.4)" });
+                        allyMembers.push({ isMain: false, iconUrl: `/assets/simulator/icons/icon_empty_slot.svg`, bg: "rgba(0,0,0,0.4)" });
                       }
                     }
+
+                    const teamDisplay = buildOrderedLeaderboardTeam(mainMember, allyMembers);
 
                     return (
                       <div class="leaderboard-info-left-teammates" data-team-index={teamIndex} style={`display: ${teamIndex === 0 ? "flex" : "none"}; flex-direction: row; gap: 8px;`}>
                         {teamDisplay.map((member) => (
                           <div style="position: relative; width: 80px; height: 80px; flex-shrink: 0;">
-                            <img loading="lazy" decoding="async" alt="" style={`width: 100%; height: 100%; border-radius: 8px; background: ${member.bg}; ${member.isMain ? "border: 2px solid rgba(255, 255, 255, 0.5);" : ""}`} src={member.iconUrl} onerror="this.onerror=null; this.style.display='none'" />
+                            <img loading="lazy" decoding="async" alt="" style={`width: 100%; height: 100%; border-radius: 8px; background: ${member.bg}; ${member.isArchetype ? 'object-fit: contain;' : 'object-fit: cover;'} ${member.isMain ? "border: 2px solid rgba(255, 255, 255, 0.5);" : ""}`} src={member.iconUrl} onerror="this.onerror=null; this.style.display='none'" />
                             {member.weapon && teammateAssets[member.weapon as keyof typeof teammateAssets] && <img src={teammateAssets[member.weapon as keyof typeof teammateAssets]} alt="" loading="lazy" decoding="async" title={member.weapon} class="dynamic-i18n-title" data-fr={assetTranslations[member.weapon]?.fr || member.weapon} data-en={assetTranslations[member.weapon]?.en || member.weapon} style="position:absolute; bottom:0; left:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />}
                             {member.set && teammateAssets[member.set as keyof typeof teammateAssets] && <img src={teammateAssets[member.set as keyof typeof teammateAssets]} alt="" loading="lazy" decoding="async" title={member.set} class="dynamic-i18n-title" data-fr={assetTranslations[member.set]?.fr || member.set} data-en={assetTranslations[member.set]?.en || member.set} style="position:absolute; bottom:0; right:0; width:28px; height:28px; border-radius:4px; z-index:10; background: var(--bg-panel);" onerror="this.style.display='none'" />}
                             {member.cons !== undefined && member.cons > 0 && <span style="position:absolute; top:2px; right:4px; font-size:12px; font-weight:normal; color:var(--text-always-white); text-shadow:0 0 3px #000; z-index:10;">C{member.cons}</span>}

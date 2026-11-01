@@ -132,20 +132,24 @@
         "NymphsDream:2"
       ],
       "er_req": 200,
+      "slot": 4,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Alhatham",
           "element": "dendro",
           "artifact": "GildedDreams"
         },
         {
+          "slot": 2,
           "role": "Support",
           "name": "Nahida",
           "element": "dendro",
           "artifact": "DeepwoodMemories"
         },
         {
+          "slot": 3,
           "role": "Flex",
           "name": [
             "Shinobu",
@@ -215,20 +219,24 @@
         "NymphsDream:2"
       ],
       "er_req": 170,
+      "slot": 4,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "SkirkNew",
           "element": "cryo",
           "artifact": "FinaleOfTheDeepGalleries"
         },
         {
+          "slot": 2,
           "role": "Support",
           "name": "Furina",
           "element": "hydro",
           "artifact": "TenacityOfTheMillelith"
         },
         {
+          "slot": 3,
           "role": "Sub-DPS",
           "name": "Escoffier",
           "element": "cryo",
@@ -297,20 +305,24 @@
         "AubadeOfMorningstarAndMoon:2"
       ],
       "er_req": 170,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Hutao",
           "element": "pyro",
           "artifact": "ShimenawasReminiscence"
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "Zhongli",
           "element": "geo",
           "artifact": "Instructor"
         },
         {
+          "slot": 3,
           "role": "Sub-DPS",
           "name": "Xingqiu",
           "element": "hydro",

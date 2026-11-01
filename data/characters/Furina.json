@@ -81,25 +81,25 @@
         "VourukashasGlow:2"
       ],
       "er_req": 180,
+      "slot": 2,
       "team": [
         {
-          "role": "DPS",
-          "name": "Neuvillette",
-          "element": "hydro",
-          "artifact": "MarechausseeHunter"
+          "slot": 1,
+          "role": "",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Support",
-          "name": "Xilonen",
-          "element": "geo",
-          "artifact": "ScrollOfTheHeroOfCinderCity"
+          "slot": 3,
+          "role": "",
+          "name": "",
+          "element": ""
         },
         {
-          "role": "Support",
-          "name": "Kazuha",
-          "element": "anemo",
-          "weapon": "XiphosMoonlight",
-          "artifact": "ViridescentVenerer"
+          "slot": 4,
+          "role": "",
+          "name": "",
+          "element": ""
         }
       ]
     }

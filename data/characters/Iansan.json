@@ -87,18 +87,22 @@
         "CelestialGift:2"
       ],
       "er_req": 170,
+      "slot": 4,
       "team": [
         {
+          "slot": 1,
           "role": "",
           "name": "",
           "element": ""
         },
         {
+          "slot": 2,
           "role": "",
           "name": "",
           "element": ""
         },
         {
+          "slot": 3,
           "role": "",
           "name": "",
           "element": ""

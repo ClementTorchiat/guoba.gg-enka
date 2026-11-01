@@ -174,7 +174,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
             }
 
             // Privilégier un personnage possédé dans la vitrine, sinon le premier choix de la liste
-            const chosen = availableCandidates.find(cand => cand.inShowcase) || availableCandidates[0];
+            const chosen = { ...(availableCandidates.find(cand => cand.inShowcase) || availableCandidates[0]), slot: slot.slot };
             resolvedSlots.push(chosen);
             currentTeamInternals.add(chosen.internal);
             if (chosen.isTraveler) {
@@ -395,7 +395,7 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                                     <img src="${dpsIconPath}" alt="${dps.nom}" style="width:58px; height:58px; border-radius:6px; background:${dpsBg}; border: 1px solid rgba(255, 255, 255, 0.5); object-fit:cover;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'" decoding="async" title="${resolveTeammateNameFn(dps.nom)}">
                                     <span style="font-size:11px; color:var(--text-primary); white-space:nowrap; font-weight:normal; overflow:hidden; text-overflow:ellipsis; width:100%; text-align:center; display:block;" title="${resolveTeammateNameFn(dps.nom)}">${resolveTeammateNameFn(dps.nom)}</span>
                                 </div>
-                                ${resolvedSlots.map(slot => renderSlot(slot)).join('')}
+                                ${[...resolvedSlots].sort((a, b) => (a.slot || 99) - (b.slot || 99)).map(slot => renderSlot(slot)).join('')}
                             </div>
                         </div>
                     `;

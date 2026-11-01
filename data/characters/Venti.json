@@ -183,18 +183,21 @@
           "role": "Support",
           "name": "Faruzan",
           "element": "anemo",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "ViridescentVenerer"
         },
         {
           "role": "Sub-DPS",
           "name": "Durin",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ADayCarvedFromRisingWinds"
         },
         {
           "role": "Support",
           "name": "Nicole",
           "element": "pyro",
-          "artifact": "CelestialGift"
+          "artifact": "CelestialGift",
+          "weapon": "ThrillingTalesOfDragonSlayers"
         }
       ]
     }

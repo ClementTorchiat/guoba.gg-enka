@@ -95,19 +95,23 @@
         "Instructor:4"
       ],
       "er_req": 150,
+      "slot": 2,
       "team": [
         {
+          "slot": 4,
           "role": "Support",
           "name": "Nicole",
           "element": "pyro",
           "artifact": "CelestialGift"
         },
         {
+          "slot": 1,
           "role": "",
           "name": "",
           "element": ""
         },
         {
+          "slot": 3,
           "role": "",
           "name": "",
           "element": ""

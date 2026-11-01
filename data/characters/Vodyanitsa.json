@@ -124,13 +124,17 @@
                 "CelestialGift:2"
             ],
             "er_req": 100,
+            "slot": 4,
             "team": [
                 {
+                    "slot": 1,
                     "role": "DPS",
                     "name": "Vesna",
-                    "element": "anemo"
+                    "element": "anemo",
+                    "artifact": "ScarletProof"
                 },
                 {
+                    "slot": 2,
                     "role": "Sub-DPS",
                     "name": "PlayerBoy",
                     "element": "cryo",
@@ -138,9 +142,11 @@
                     "cons": "6"
                 },
                 {
+                    "slot": 3,
                     "role": "Support",
                     "name": "Odette",
-                    "element": "cryo"
+                    "element": "cryo",
+                    "artifact": "HeartOfTheFurnace"
                 }
             ]
         },
@@ -201,21 +207,28 @@
                 "CelestialGift:2"
             ],
             "er_req": 100,
+            "slot": 4,
             "team": [
                 {
+                    "slot": 1,
                     "role": "DPS",
                     "name": "SkirkNew",
-                    "element": "cryo"
+                    "element": "cryo",
+                    "artifact": "FinaleOfTheDeepGalleries"
                 },
                 {
+                    "slot": 2,
                     "role": "Sub-DPS",
                     "name": "Furina",
-                    "element": "hydro"
+                    "element": "hydro",
+                    "artifact": "GoldenTroupe"
                 },
                 {
+                    "slot": 3,
                     "role": "Sub-DPS",
                     "name": "Escoffier",
-                    "element": "cryo"
+                    "element": "cryo",
+                    "artifact": "NoblesseOblige"
                 }
             ]
         }

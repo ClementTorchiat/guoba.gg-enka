@@ -3018,6 +3018,36 @@ function updateTeammateBuffs(p, teamData) {
 
     p.buffs = p.buffs.filter(b => b.source !== 'teammate');
 
+    // Déterminer le slot du personnage actuellement évalué (p)
+    let currentCharSlot = 1;
+    if (p.activeBuild && p.activeBuild.slot !== undefined && p.activeBuild.slot !== null) {
+        currentCharSlot = parseInt(p.activeBuild.slot, 10);
+    } else if (Array.isArray(teamData)) {
+        const takenSlots = new Set(
+            teamData
+                .map(m => (m && m.slot !== undefined && m.slot !== null) ? parseInt(m.slot, 10) : null)
+                .filter(s => s !== null && !isNaN(s))
+        );
+        if (takenSlots.size > 0) {
+            for (let s = 1; s <= 4; s++) {
+                if (!takenSlots.has(s)) {
+                    currentCharSlot = s;
+                    break;
+                }
+            }
+        }
+    }
+
+    const isSlotEligible = (buffDef) => {
+        if (!buffDef) return true;
+        const targetSlot = buffDef.slot ?? buffDef.targetSlot;
+        if (targetSlot === undefined || targetSlot === null) return true;
+        const allowedSlots = Array.isArray(targetSlot)
+            ? targetSlot.map(s => parseInt(s, 10))
+            : [parseInt(targetSlot, 10)];
+        return allowedSlots.includes(currentCharSlot);
+    };
+
     resolveTeammateNames(teamData).forEach(mate => {
         const name = mate.name;
         const tmCons = mate.cons !== undefined ? parseInt(mate.cons) : 6;
@@ -3027,6 +3057,7 @@ function updateTeammateBuffs(p, teamData) {
         if (tmData) {
             tmData.buffs.forEach((buffDef, idx) => {
                 if (buffDef.cons !== undefined && tmCons < buffDef.cons) return;
+                if (!isSlotEligible(buffDef)) return;
                 p.buffs.push({
                     id: `tm_${name}_${idx}`,
                     category: categoryName,
@@ -3045,6 +3076,7 @@ function updateTeammateBuffs(p, teamData) {
                 const wpnBuffs = wpnData.buffs || [wpnData];
                 const selectMode = wpnData.selectMode || 'standard';
                 wpnBuffs.forEach((b, index) => {
+                    if (!isSlotEligible(b)) return;
                     p.buffs.push({
                         id: `tm_${name}_wpn_${index}`,
                         category: categoryName,
@@ -3060,30 +3092,34 @@ function updateTeammateBuffs(p, teamData) {
 
         if (mate.artifact) {
             if (mate.artifact === "CelestialGift") {
-                const charActiveElem = p.combatStats.dmgBonusKey.replace('_dmg_', '');
-                const charEquipperElem = Array.isArray(mate.element) ? mate.element[0] : mate.element;
+                const setData = window.TEAMMATE_SET_BUFFS?.["CelestialGift"];
+                if (isSlotEligible(setData)) {
+                    const charActiveElem = p.combatStats.dmgBonusKey.replace('_dmg_', '');
+                    const charEquipperElem = Array.isArray(mate.element) ? mate.element[0] : mate.element;
 
-                let dynamicBonuses = {};
-                dynamicBonuses[`${charActiveElem}_dmg_`] = 0.40;
-                if (charEquipperElem && charEquipperElem !== charActiveElem) {
-                    dynamicBonuses[`${charEquipperElem}_dmg_`] = 0.40;
+                    let dynamicBonuses = {};
+                    dynamicBonuses[`${charActiveElem}_dmg_`] = 0.40;
+                    if (charEquipperElem && charEquipperElem !== charActiveElem) {
+                        dynamicBonuses[`${charEquipperElem}_dmg_`] = 0.40;
+                    }
+
+                    p.buffs.push({
+                        id: `tm_${name}_set_celestial`,
+                        category: categoryName,
+                        source: 'teammate',
+                        name: getLabel(window.TEAMMATE_SET_BUFFS["CelestialGift"].label),
+                        bonuses: dynamicBonuses,
+                        active: true,
+                        selectMode: 'standard'
+                    });
                 }
-
-                p.buffs.push({
-                    id: `tm_${name}_set_celestial`,
-                    category: categoryName,
-                    source: 'teammate',
-                    name: getLabel(window.TEAMMATE_SET_BUFFS["CelestialGift"].label),
-                    bonuses: dynamicBonuses,
-                    active: true,
-                    selectMode: 'standard'
-                });
             } else {
                 const setData = window.TEAMMATE_SET_BUFFS?.[mate.artifact];
                 if (setData) {
                     const setBuffs = setData.buffs || [setData];
                     const selectMode = setData.selectMode || 'standard';
                     setBuffs.forEach((b, index) => {
+                        if (!isSlotEligible(b)) return;
                         p.buffs.push({
                             id: `tm_${name}_art_${index}`,
                             category: categoryName,
@@ -3655,7 +3691,7 @@ window.showTeammateTooltip = function (element) {
             </div>
         `;
     } else {
-        const imgFit = data.isArchetype ? 'object-fit:contain; padding:6px; box-sizing:border-box;' : 'object-fit:cover;';
+        const imgFit = data.isArchetype ? 'object-fit:contain;' : 'object-fit:cover;';
         avatarHtml = `
             <div style="position:relative; width:44px; height:44px; border-radius:5px; overflow:hidden; ${portraitBg} border:none; box-shadow:none; flex-shrink:0;">
                 <img src="${data.avatarUrl || '/assets/simulator/icons/icon_empty_slot.svg'}" style="width:100%; height:100%; ${imgFit} pointer-events:none;" decoding="async" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
@@ -3706,7 +3742,7 @@ window.showTeammateTooltip = function (element) {
             tmData.buffs.forEach(b => {
                 if (b.cons !== undefined && userCons < b.cons) return;
                 const lbl = typeof b.label === 'object' ? (b.label[lang] || b.label.fr || b.label.en) : b.label;
-                buffsList.push({ label: lbl, stats: b.stats });
+                buffsList.push({ label: lbl, stats: b.stats, slot: b.slot ?? b.targetSlot });
             });
         }
     });
@@ -3716,7 +3752,7 @@ window.showTeammateTooltip = function (element) {
         const wBuffs = wData.buffs || [wData];
         wBuffs.forEach(b => {
             const lbl = typeof b.label === 'object' ? (b.label[lang] || b.label.fr || b.label.en) : (b.label || weaponName);
-            buffsList.push({ label: lbl, stats: b.stats });
+            buffsList.push({ label: lbl, stats: b.stats, slot: b.slot ?? b.targetSlot });
         });
     }
 
@@ -3725,7 +3761,7 @@ window.showTeammateTooltip = function (element) {
         const sBuffs = sData.buffs || [sData];
         sBuffs.forEach(b => {
             const lbl = typeof b.label === 'object' ? (b.label[lang] || b.label.fr || b.label.en) : (b.label || artifactName);
-            buffsList.push({ label: lbl, stats: b.stats });
+            buffsList.push({ label: lbl, stats: b.stats, slot: b.slot ?? b.targetSlot });
         });
     }
 
@@ -3740,11 +3776,14 @@ window.showTeammateTooltip = function (element) {
                     statsHtml = `<div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:3px;">${badges}</div>`;
                 }
             }
+            const slotBadge = (b.slot !== undefined && b.slot !== null)
+                ? `<span style="font-size:9px; background:rgba(255,255,255,0.15); border-radius:3px; padding:1px 4px; margin-left:4px; color:var(--text-grey);">Slot ${b.slot}</span>`
+                : '';
             return `
                 <div style="margin-bottom:6px; font-size:11px; line-height:1.35;">
                     <div style="color:var(--text-always-white); font-weight:normal; display:flex; align-items:flex-start; gap:5px;">
                         <span style="color:rgba(255,255,255,0.45); font-size:12px; line-height:1; margin-top:1px;">•</span>
-                        <span>${b.label || ''}</span>
+                        <span>${b.label || ''}${slotBadge}</span>
                     </div>
                     ${statsHtml}
                 </div>

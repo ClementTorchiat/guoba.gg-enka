@@ -117,7 +117,8 @@
         {
           "role": "Sub-DPS",
           "name": "Durin",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ADayCarvedFromRisingWinds"
         },
         {
           "role": "Support",
@@ -130,7 +131,8 @@
           "role": "Sub-DPS",
           "name": "Fischl",
           "element": "electro",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "CelestialGift"
         }
       ]
     },
@@ -202,7 +204,8 @@
           "role": "Sub-DPS",
           "name": "Rosaria",
           "element": "cryo",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "NoblesseOblige"
         },
         {
           "role": "Support",
@@ -214,7 +217,8 @@
           "role": "Sub-DPS",
           "name": "Fischl",
           "element": "electro",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "CelestialGift"
         }
       ]
     }

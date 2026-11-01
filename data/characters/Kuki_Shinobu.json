@@ -95,19 +95,26 @@
         "DeepwoodMemories:4"
       ],
       "er_req": 130,
+      "slot": 3,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Alhatham",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "GildedDreams"
         },
         {
+          "slot": 2,
           "role": "Sub-DPS",
           "name": "Nahida",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "DeepwoodMemories"
         },
         {
+          "slot": 4,
           "role": "Flex",
+          "artifact": "EmblemOfSeveredFate",
           "name": [
             "Yelan",
             "Xingqiu"
@@ -183,22 +190,29 @@
         "AubadeOfMorningstarAndMoon:2"
       ],
       "er_req": 130,
+      "slot": 3,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Shougun",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "EmblemOfSeveredFate"
         },
         {
+          "slot": 2,
           "role": "Sub-DPS",
           "name": "Nahida",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "DeepwoodMemories"
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "Kazuha",
           "element": "anemo",
-          "weapon": "XiphosMoonlight"
+          "weapon": "XiphosMoonlight",
+          "artifact": "ViridescentVenerer"
         }
       ]
     }

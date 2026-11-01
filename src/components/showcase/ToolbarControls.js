@@ -55,7 +55,7 @@ export function renderToolbarControls(persoObj, charIndex) {
 
         const resolveTeammateNameFn = (typeof window !== 'undefined' && window.resolveTeammateName) ? window.resolveTeammateName : (n => n);
 
-        const matesHtml = persoObj.activeBuild.team.map(mate => {
+        const matesItems = persoObj.activeBuild.team.map(mate => {
             const ARCHETYPE_ROLES = new Set(["Hexerei", "Lunar", "Stellar"]);
 
             const getIconUrl = (name, elem, role) => {
@@ -84,7 +84,7 @@ export function renderToolbarControls(persoObj, charIndex) {
                 const url = getIconUrl(names[0], elems[0], mate.role);
                 const fallback = elems[0] ? `${ICON_BASE_PATH}icon_${elems[0]}.webp` : `${ICON_BASE_PATH}icon_unknown.webp`;
                 const imgStyle = (isArchetype
-                    ? "width:100%; height:100%; object-fit:contain; padding:6px; box-sizing:border-box; opacity:0.8;"
+                    ? "width:100%; height:100%; object-fit:contain;"
                     : "width:100%; height:100%; object-fit:cover;") + " pointer-events:none;";
 
                 innerHtml = `
@@ -182,7 +182,9 @@ export function renderToolbarControls(persoObj, charIndex) {
             };
             const jsonPayload = encodeURIComponent(JSON.stringify(matePayload));
 
-            return `
+            return {
+                slot: mate.slot,
+                html: `
                 <div class="team-mate-slot"
                      data-teammate="${jsonPayload}"
                      onmouseenter="showTeammateTooltip(this)"
@@ -193,10 +195,56 @@ export function renderToolbarControls(persoObj, charIndex) {
                     ${artifactBadge}
                     ${consBadge}
                 </div>
-            `;
-        }).join('');
+            `
+            };
+        });
 
-        teamHtml = `<div style="display:flex; color: var(--text-primary); border: none; border-radius: 8px; padding: 5px; flex-direction: row; align-items:center; gap: 5px; background: var(--bg-panel);">${charIcon}${matesHtml}</div>`;
+        const mainItem = {
+            slot: persoObj.activeBuild.slot,
+            html: charIcon
+        };
+
+        const totalSlots = 4;
+        const slots = new Array(totalSlots).fill(null);
+        const unplaced = [];
+
+        const resolvedMainSlot = (mainItem.slot !== undefined && mainItem.slot !== null)
+            ? parseInt(mainItem.slot, 10)
+            : null;
+
+        const hasAnySlot = (resolvedMainSlot !== null && !isNaN(resolvedMainSlot)) ||
+            matesItems.some(t => t && t.slot !== undefined && t.slot !== null);
+
+        let orderedItems = [];
+        if (!hasAnySlot) {
+            orderedItems = [mainItem, ...matesItems];
+        } else {
+            if (resolvedMainSlot && resolvedMainSlot >= 1 && resolvedMainSlot <= totalSlots) {
+                slots[resolvedMainSlot - 1] = mainItem;
+            } else {
+                unplaced.push(mainItem);
+            }
+
+            matesItems.forEach(m => {
+                const s = (m.slot !== undefined && m.slot !== null) ? parseInt(m.slot, 10) : null;
+                if (s && s >= 1 && s <= totalSlots && !slots[s - 1]) {
+                    slots[s - 1] = m;
+                } else {
+                    unplaced.push(m);
+                }
+            });
+
+            let unplacedIdx = 0;
+            for (let i = 0; i < totalSlots; i++) {
+                if (!slots[i] && unplacedIdx < unplaced.length) {
+                    slots[i] = unplaced[unplacedIdx++];
+                }
+            }
+            orderedItems = slots.filter(Boolean);
+        }
+
+        const teamSlotsHtml = orderedItems.map(item => item.html).join('');
+        teamHtml = `<div style="display:flex; color: var(--text-primary); border: none; border-radius: 8px; padding: 5px; flex-direction: row; align-items:center; gap: 5px; background: var(--bg-panel);">${teamSlotsHtml}</div>`;
     }
 
     const lbId = builds[currentBuildKey].leaderboard_id || currentBuildKey;

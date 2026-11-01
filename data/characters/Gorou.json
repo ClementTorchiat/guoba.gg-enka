@@ -117,18 +117,22 @@
         "CelestialGift:2"
       ],
       "er_req": 220,
+      "slot": 3,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Itto",
           "element": "geo"
         },
         {
+          "slot": 2,
           "role": "Sub-DPS",
           "name": "Chiori",
           "element": "geo"
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "Zhongli",
           "element": "geo"

@@ -113,16 +113,21 @@
         "CelestialGift:2"
       ],
       "er_req": 200,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Varka",
-          "element": "anemo"
+          "element": "anemo",
+          "artifact": "ADayCarvedFromRisingWinds"
         },
         {
+          "slot": 3,
           "role": "Sub-DPS",
           "name": "Durin",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ADayCarvedFromRisingWinds"
         },
         {
           "role": "Support",

@@ -96,23 +96,26 @@
         "FinaleOfTheDeepGalleries:2"
       ],
       "er_req": 140,
+      "slot": 1,
       "team": [
         {
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "GoldenTroupe"
         },
         {
           "role": "Sub-DPS",
           "name": "Escoffier",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "NoblesseOblige"
         },
         {
-          "role": "Flex",
-          "name": "Citlali",
-          "element": "cryo",
+          "role": "Support",
+          "name": "Vodyanitsa",
+          "element": "hydro",
           "weapon": "ThrillingTalesOfDragonSlayers",
-          "artifact": "ScrollOfTheHeroOfCinderCity"
+          "artifact": "TenacityOfTheMillelith"
         }
       ]
     }

@@ -124,8 +124,10 @@
         "ThunderingFury:2"
       ],
       "er_req": 140,
+      "slot": 4,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Neuvillette",
           "element": "hydro"
@@ -208,8 +210,10 @@
         "ThunderingFury:2"
       ],
       "er_req": 120,
+      "slot": 4,
       "team": [
         {
+          "slot": 3,
           "role": "Support",
           "name": "Chevreuse",
           "element": "pyro",
@@ -217,11 +221,13 @@
           "cons": "6"
         },
         {
+          "slot": 1,
           "role": "Flex",
           "name": "",
           "element": "pyro"
         },
         {
+          "slot": 2,
           "role": "Flex",
           "name": "",
           "element": "electro"

@@ -116,19 +116,23 @@
         "HeartOfTheFurnace:2"
       ],
       "er_req": 220,
+      "slot": 3,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Tartaglia",
           "element": "hydro"
         },
         {
+          "slot": 2,
           "role": "Support",
           "name": "Kazuha",
           "element": "anemo",
           "weapon": "XiphosMoonlight"
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "Bennett",
           "element": "pyro",
@@ -208,14 +212,17 @@
         "AubadeOfMorningstarAndMoon:2"
       ],
       "er_req": 220,
+      "slot": 3,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Chongyun",
           "element": "cryo",
           "cons": "6"
         },
         {
+          "slot": 2,
           "role": "Support",
           "name": "Rosaria",
           "element": "cryo",
@@ -223,6 +230,7 @@
           "cons": "6"
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "Bennett",
           "element": "pyro",
@@ -295,19 +303,23 @@
         "HeartOfTheFurnace:2"
       ],
       "er_req": 220,
+      "slot": 3,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Lyney",
           "element": "pyro"
         },
         {
-          "role": "Support",
-          "name": "Zhongli",
-          "element": "geo",
-          "artifact": "TenacityOfTheMillelith"
+          "slot": 2,
+          "role": "Sub-DPS",
+          "name": "Durin",
+          "element": "pyro",
+          "artifact": "ADayCarvedFromRisingWinds"
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "Bennett",
           "element": "pyro",
@@ -380,20 +392,23 @@
         "CelestialGift:2"
       ],
       "er_req": 220,
+      "slot": 2,
       "team": [
         {
-          "role": "Sub-DPS",
-          "name": "Fischl",
-          "element": "electro",
-          "cons": "6"
+          "slot": 1,
+          "role": "DPS",
+          "name": "Clorinde",
+          "element": "electro"
         },
         {
+          "slot": 3,
           "role": "Support",
           "name": "Chevreuse",
           "element": "pyro",
           "cons": "6"
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "Bennett",
           "element": "pyro",

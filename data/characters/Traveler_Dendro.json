@@ -118,22 +118,29 @@
         "DeepwoodMemories:2"
       ],
       "er_req": 200,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Alhatham",
-          "element": "dendro"
+          "element": "dendro",
+          "artifact": "GildedDreams"
         },
         {
+          "slot": 3,
           "role": "Sub-DPS",
           "name": "Shinobu",
           "element": "electro",
-          "cons": "6"
+          "cons": "6",
+          "artifact": "GildedDreams"
         },
         {
+          "slot": 4,
           "role": "Sub-DPS",
           "name": "Yelan",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "EmblemOfSeveredFate"
         }
       ]
     }

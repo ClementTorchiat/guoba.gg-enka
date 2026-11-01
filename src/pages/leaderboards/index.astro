@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 
 // Dictionnaire de traduction des noms de leaderboards
 import leaderboardsNames from "../../data/leaderboards_names.json";
-import { getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getCharNamesTranslations, getAssetTranslations, getCharElementAndWeapon } from "../../server/characters";
+import { getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getCharNamesTranslations, getAssetTranslations, getCharElementAndWeapon, ARCHETYPE_ROLES } from "../../server/characters";
 import teammateAssets from "../../data/teammate_assets.json";
 // Désactiver le prerendering car on a besoin d'interroger Supabase en temps réel
 export const prerender = false;
@@ -59,7 +59,7 @@ try {
       
       // On sauvegarde toutes les variantes d'équipes pour ce leaderboard_id
       if (data.team) {
-        leaderboardsMap.get(lbId).teams.push(data.team);
+        leaderboardsMap.get(lbId).teams.push({ team: data.team, slot: data.slot });
       }
     }
 
@@ -116,6 +116,55 @@ try {
   });
 } catch (e: any) {
   pageError = e.message || String(e);
+}
+
+function buildOrderedLeaderboardTeam(mainMember: any, allyMembers: any[]) {
+  const slots: any[] = [null, null, null, null];
+  const unplaced: any[] = [];
+
+  const resolvedMainSlot = (mainMember.slot !== undefined && mainMember.slot !== null)
+    ? parseInt(mainMember.slot, 10)
+    : null;
+
+  const hasAnySlot = (resolvedMainSlot !== null && !isNaN(resolvedMainSlot)) ||
+    allyMembers.some(t => t && t.slot !== undefined && t.slot !== null);
+
+  if (!hasAnySlot) {
+    const list = [mainMember];
+    for (let i = 0; i < 3; i++) {
+      list.push(allyMembers[i] || { isMain: false, iconUrl: `/assets/simulator/icons/icon_empty_slot.svg`, bg: "rgba(0,0,0,0.4)" });
+    }
+    return list;
+  }
+
+  if (resolvedMainSlot && resolvedMainSlot >= 1 && resolvedMainSlot <= 4) {
+    slots[resolvedMainSlot - 1] = mainMember;
+  } else {
+    unplaced.push(mainMember);
+  }
+
+  allyMembers.forEach(m => {
+    const s = (m && m.slot !== undefined && m.slot !== null) ? parseInt(m.slot, 10) : null;
+    if (s && s >= 1 && s <= 4 && !slots[s - 1]) {
+      slots[s - 1] = m;
+    } else {
+      unplaced.push(m);
+    }
+  });
+
+  let unplacedIdx = 0;
+  for (let i = 0; i < 4; i++) {
+    if (!slots[i] && unplacedIdx < unplaced.length) {
+      slots[i] = unplaced[unplacedIdx++];
+    }
+  }
+
+  for (let i = 0; i < 4; i++) {
+    if (!slots[i]) {
+      slots[i] = { isMain: false, iconUrl: `/assets/simulator/icons/icon_empty_slot.svg`, bg: "rgba(0,0,0,0.4)" };
+    }
+  }
+  return slots;
 }
 ---
 
@@ -257,7 +306,9 @@ try {
                     const bgColor = index % 2 === 0 ? 'var(--shadow-subtle)' : 'var(--bg-panel)';
                     
                     // On prend la première team associée à ce leaderboard_id pour l'aperçu
-                    const previewTeam = lb.teams.length > 0 ? lb.teams[0] : [];
+                    const previewVariant = lb.teams.length > 0 ? lb.teams[0] : null;
+                    const previewTeam = previewVariant ? (Array.isArray(previewVariant) ? previewVariant : previewVariant.team || []) : [];
+                    const previewSlot = previewVariant && !Array.isArray(previewVariant) ? previewVariant.slot : undefined;
                     
                     return (
                       <a href={`/leaderboards/${lb.id}`} data-astro-prefetch="hover" style="text-decoration: none; color: inherit; display: block;">
@@ -269,13 +320,14 @@ try {
                             <div class="leaderboard-list-row-details-team" style="display:flex; flex-direction: row; justify-content: center; gap:5px; flex: 1;">
                               {(() => {
                                 const mainCharBg = ELEMENT_COLORS[char.element] || "#333";
-                                const teamDisplay: any[] = [];
-                                teamDisplay.push({
+                                const mainMember = {
                                   isMain: true,
+                                  slot: previewSlot,
                                   iconUrl: char.avatarImg,
                                   bg: mainCharBg
-                                });
+                                };
 
+                                const allyMembers: any[] = [];
                                 for (let i = 0; i < 3; i++) {
                                   const ally = previewTeam[i];
                                   if (ally) {
@@ -290,26 +342,32 @@ try {
                                     const cons = ally.cons !== undefined ? ally.cons : -1;
                                     
                                     let iconUrl = "";
+                                    let isArchetype = false;
                                     if (finalAllyEnkaName && !['Unknown', '?', ''].includes(finalAllyEnkaName)) {
                                       iconUrl = `https://enka.network/ui/UI_AvatarIcon_${finalAllyEnkaName}.png`;
                                     } else if (allyElem) {
                                       iconUrl = `/assets/simulator/icons/icon_${allyElem.toLowerCase()}.webp`;
+                                    } else if (ally.role && ARCHETYPE_ROLES.has(ally.role)) {
+                                      iconUrl = `/assets/simulator/icons/icon_role_${ally.role.toLowerCase()}.svg`;
+                                      isArchetype = true;
                                     } else {
                                       iconUrl = `/assets/simulator/icons/icon_empty_slot.svg`;
                                     }
                                     
-                                    teamDisplay.push({ isMain: false, iconUrl, bg, weapon, set, cons });
+                                    allyMembers.push({ isMain: false, slot: ally.slot, iconUrl, bg, weapon, set, cons, isArchetype });
                                   } else {
-                                    teamDisplay.push({ isMain: false, iconUrl: `/assets/simulator/icons/icon_empty_slot.svg`, bg: "rgba(0,0,0,0.4)" });
+                                    allyMembers.push({ isMain: false, iconUrl: `/assets/simulator/icons/icon_empty_slot.svg`, bg: "rgba(0,0,0,0.4)" });
                                   }
                                 }
+
+                                const teamDisplay = buildOrderedLeaderboardTeam(mainMember, allyMembers);
 
                                 return teamDisplay.map(member => (
                                   <div style="position: relative; width: 40px; height: 40px; flex-shrink: 0;">
                                     <img 
                                       alt=""
                                       loading="lazy" decoding="async"
-                                      style={`width: 100%; height: 100%; border-radius: 5px; background: ${member.bg}; ${member.isMain ? 'border: 1px solid rgba(255, 255, 255, 0.4);' : ''}`} 
+                                      style={`width: 100%; height: 100%; border-radius: 5px; background: ${member.bg}; ${member.isArchetype ? 'object-fit: contain;' : 'object-fit: cover;'} ${member.isMain ? 'border: 1px solid rgba(255, 255, 255, 0.4);' : ''}`} 
                                       src={member.iconUrl}
                                       onerror="this.onerror=null; this.style.display='none'"
                                     />

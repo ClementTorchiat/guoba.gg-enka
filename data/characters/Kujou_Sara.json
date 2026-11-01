@@ -91,18 +91,23 @@
         "CelestialGift:2"
       ],
       "er_req": 180,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Shougun",
-          "element": "electro"
+          "element": "electro",
+          "artifact": "EmblemOfSeveredFate"
         },
         {
+          "slot": 3,
           "role": "",
           "name": "",
           "element": ""
         },
         {
+          "slot": 4,
           "role": "",
           "name": "",
           "element": ""

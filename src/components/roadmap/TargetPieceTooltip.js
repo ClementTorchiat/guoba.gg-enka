@@ -367,7 +367,8 @@ export function showTargetPieceTooltip(element, charNom, setKey, forceAll = fals
     // Rendu des coéquipiers
     let teamHtml = '';
     if (team && team.length > 0) {
-        const matesAvatars = team.map(mate => {
+        const sortedTeam = [...team].sort((a, b) => (a.slot || 99) - (b.slot || 99));
+        const matesAvatars = sortedTeam.map(mate => {
             const mateName = resolveTeammate(mate.name, mate.element);
             const mateIcon = getTeammateIconUrl(mate.name, mate.element, mate.role);
             const mateElemKey = String(mate.element || '').toLowerCase();

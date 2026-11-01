@@ -68,20 +68,24 @@
         "CelestialGift:2"
       ],
       "er_req": 200,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Nefer",
           "element": "dendro",
           "artifact": "NightOfTheSkysUnveiling"
         },
         {
+          "slot": 3,
           "role": "Sub-DPS",
           "name": "Columbina",
           "element": "hydro",
           "artifact": "SilkenMoonsSerenade"
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "Nahida",
           "element": "dendro",
@@ -149,20 +153,24 @@
         "CelestialGift:2"
       ],
       "er_req": 220,
+      "slot": 2,
       "team": [
         {
+          "slot": 3,
           "role": "Support",
           "name": "Nilou",
           "element": "hydro",
           "artifact": "Instructor"
         },
         {
+          "slot": 1,
           "role": "Sub-DPS",
           "name": "Columbina",
           "element": "hydro",
-          "artifact": "SilkenMoonsSerenade"
+          "artifact": "NightOfTheSkysUnveiling"
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "Nahida",
           "element": "dendro",

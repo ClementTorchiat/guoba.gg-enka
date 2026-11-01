@@ -68,21 +68,28 @@
         "TenacityOfTheMillelith:4"
       ],
       "er_req": 150,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Zibai",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "NightOfTheSkysUnveiling"
         },
         {
+          "slot": 3,
           "role": "Sub-DPS",
           "name": "Columbina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "SilkenMoonsSerenade"
         },
         {
+          "slot": 4,
           "role": "Sub-DPS",
           "name": "Linnea",
-          "element": "geo"
+          "element": "geo",
+          "artifact": "AubadeOfMorningstarAndMoon"
         }
       ]
     }

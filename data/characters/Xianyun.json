@@ -184,20 +184,24 @@
         "SongOfDaysPast:2"
       ],
       "er_req": 200,
+      "slot": 4,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Xiao",
           "element": "anemo",
           "artifact": "LongNightsOath"
         },
         {
+          "slot": 3,
           "role": "Sub-DPS",
           "name": "Furina",
           "element": "hydro",
           "artifact": "GoldenTroupe"
         },
         {
+          "slot": 2,
           "role": "Support",
           "name": "Faruzan",
           "element": "anemo",

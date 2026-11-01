@@ -84,8 +84,10 @@
         "CelestialGift:2"
       ],
       "er_req": 180,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "Flex",
           "name": [
             "Mavuika",
@@ -97,6 +99,7 @@
           ]
         },
         {
+          "slot": 3,
           "role": "Flex",
           "name": [
             "Xilonen",
@@ -108,6 +111,7 @@
           ]
         },
         {
+          "slot": 4,
           "role": "Flex",
           "name": [
             "Bennett",

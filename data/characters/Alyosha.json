@@ -88,14 +88,17 @@
                 "CelestialGift:2"
             ],
             "er_req": 200,
+            "slot": 4,
             "team": [
                 {
+                    "slot": 1,
                     "role": "DPS",
                     "name": "MarionetteNew",
                     "element": "cryo",
                     "artifact": "DisenchantmentInDeepShadow"
                 },
                 {
+                    "slot": 2,
                     "role": "Sub-DPS",
                     "name": "Yae",
                     "cons": "1",
@@ -103,6 +106,7 @@
                     "artifact": "DisenchantmentInDeepShadow"
                 },
                 {
+                    "slot": 3,
                     "role": "Sub-DPS",
                     "name": "Odette",
                     "element": "cryo",

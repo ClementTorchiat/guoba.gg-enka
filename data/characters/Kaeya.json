@@ -103,22 +103,29 @@
         "FinaleOfTheDeepGalleries:2"
       ],
       "er_req": 220,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "Mavuika",
-          "element": "pyro"
+          "element": "pyro",
+          "artifact": "ObsidianCodex"
         },
         {
+          "slot": 3,
           "role": "Support",
           "name": "Xilonen",
           "element": "geo",
           "artifact": "ScrollOfTheHeroOfCinderCity"
         },
         {
+          "slot": 4,
           "role": "Support",
           "name": "Bennett",
-          "element": "pyro"
+          "element": "pyro",
+          "cons": "6",
+          "artifact": "NoblesseOblige"
         }
       ]
     },
@@ -187,21 +194,27 @@
         "FinaleOfTheDeepGalleries:2"
       ],
       "er_req": 150,
+      "slot": 4,
       "team": [
         {
+          "slot": 1,
           "role": "DPS",
           "name": "SkirkNew",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "FinaleOfTheDeepGalleries"
         },
         {
+          "slot": 2,
           "role": "Sub-DPS",
           "name": "Furina",
-          "element": "hydro"
+          "element": "hydro",
+          "artifact": "GoldenTroupe"
         },
         {
           "role": "Sub-DPS",
           "name": "Escoffier",
-          "element": "cryo"
+          "element": "cryo",
+          "artifact": "TenacityOfTheMillelith"
         }
       ]
     }

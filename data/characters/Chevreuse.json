@@ -130,18 +130,22 @@
         "SongOfDaysPast:2"
       ],
       "er_req": 170,
+      "slot": 2,
       "team": [
         {
+          "slot": 1,
           "role": "Flex",
           "name": "",
           "element": "pyro"
         },
         {
+          "slot": 3,
           "role": "Flex",
           "name": "",
           "element": "electro"
         },
         {
+          "slot": 4,
           "role": "Flex",
           "name": "",
           "element": "electro"
