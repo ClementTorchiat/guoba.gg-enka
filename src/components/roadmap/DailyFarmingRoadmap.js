@@ -52,6 +52,7 @@ function renderCharacterFarmingCard(charData) {
     const rot = charData.bookRotation;
     const items = rot?.items || {};
     const cost = charData.totalCost || {};
+    const hasLocked = charData.hasLockedTalents;
 
     return `
         <div style="background:var(--shadow-subtle); border:none; border-radius:8px; padding:6px; display:flex; flex-direction:column; gap:10px; transition:all 0.2s ease;">
@@ -60,34 +61,35 @@ function renderCharacterFarmingCard(charData) {
                 <div style="display:flex; align-items:center; gap:10px; min-width:0;">
                     <img src="${charData.charAvatar}" alt="${charData.charNom}" style="width:40px; height:40px; border-radius:8px; background:var(--shadow-subtle); object-fit:cover; flex-shrink:0; border:none;">
                     <div style="min-width:0;">
-                        <div style="display:flex; align-items:center; gap:6px;">
+                        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                             <span style="font-size:13px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${charData.charNom}</span>
                             ${charData.isFocus ? `<span style="font-size:9px; background:var(--accent-blue); color:#fff; padding:1px 5px; border-radius:4px; font-weight:normal; text-transform:uppercase;">Focus</span>` : ''}
+                            ${hasLocked ? `<span style="font-size:9px; background:rgba(245, 158, 11, 0.18); color:#fbbf24; padding:1px 6px; border-radius:4px; font-weight:normal; display:inline-flex; align-items:center; gap:3px;" title="${t('roadmap.farming.preFarmingTooltip')}">${t('roadmap.farming.preFarmingBadge')}</span>` : ''}
                         </div>
-                        <div style="font-size:11px; color:var(--text-grey); display:flex; align-items:center; gap:4px; margin-top:2px;">
-                            <span>${getLocalizedItemName(rot?.name)}</span>
+                        <div style="font-size:11px; color:var(--text-grey); display:flex; align-items:center; gap:5px; margin-top:2px;">
+                            <div style="display:inline-flex; align-items:center; gap:4px;">
+                                ${getItemIconHtml(items.philosophy?.icon || items.guide?.icon || items.teachings?.icon, getLocalizedItemName(rot?.name), 'width:14px; height:14px; object-fit:contain; flex-shrink:0;')}
+                                <span>${getLocalizedItemName(rot?.name)}</span>
+                            </div>
                             <span>•</span>
                             <span style="color:var(--accent-green); font-weight:normal;">${t('roadmap.farming.resinCount', cost.estimatedResin || 0)}</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- Badge livre représentatif (Philosophie 4★) -->
-                ${items.philosophy?.icon ? `
-                    <div style="display:flex; align-items:center; gap:6px; background:var(--shadow-subtle); padding:4px 8px; border-radius:6px; border:none; flex-shrink:0;" title="${getLocalizedItemName(items.philosophy.name)}">
-                        ${getItemIconHtml(items.philosophy.icon, getLocalizedItemName(items.philosophy.name), 'width:24px; height:24px; object-fit:contain;')}
-                        <span style="font-size:11px; font-weight:normal; color:#eab308;">${(cost.philosophies || 0) + Math.floor((cost.guides || 0) / 3)} eq.</span>
-                    </div>
-                ` : ''}
             </div>
 
             <!-- Liste des aptitudes en retard -->
             <div style="display:flex; flex-direction:column; gap:6px; background:var(--shadow-subtle); padding:8px 10px; border-radius:6px; border:none;">
                 ${(charData.talentGaps || []).map(gap => `
                     <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:11px;">
-                        <div style="display:flex; align-items:center; gap:6px; min-width:0;">
+                        <div style="display:flex; align-items:center; gap:6px; min-width:0; flex-wrap:wrap;">
                             ${gap.talentIcon ? `<img src="${gap.talentIcon}" alt="" style="width:16px; height:16px; object-fit:contain; flex-shrink:0; border-radius:3px; background:var(--shadow-subtle);">` : ''}
                             <span style="color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${gap.talentLabel}</span>
+                            ${gap.isLocked ? `
+                                <span style="font-size:9px; font-family:sans-serif; background:rgba(245, 158, 11, 0.15); color:#fbbf24; padding:1px 5px; border-radius:4px; display:inline-flex; align-items:center; gap:3px; flex-shrink:0;" title="${t('roadmap.farming.ascensionRequiredTooltip', gap.requiredAsc, gap.requiredCharLvlLabel)}">
+                                    ${t('roadmap.farming.ascensionRequiredShort', gap.requiredAsc)}
+                                </span>
+                            ` : ''}
                         </div>
                         <div style="display:flex; align-items:center; gap:4px; flex-shrink:0; font-family:monospace;">
                             <span style="color:var(--text-grey);">${t('ui.char.level', gap.currentLvl)}</span>
@@ -97,6 +99,39 @@ function renderCharacterFarmingCard(charData) {
                     </div>
                 `).join('')}
             </div>
+
+            <!-- Encadré Pré-farming si des talents sont bloqués par l'élévation -->
+            ${hasLocked ? `
+                <div style="background:rgba(245, 158, 11, 0.08); border-radius:6px; padding:8px 10px; display:flex; flex-direction:column; gap:6px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; font-size:11px;">
+                        <div style="display:flex; align-items:center; gap:5px; color:#fbbf24;">
+                            <span>${t('roadmap.farming.ascensionNotice', charData.charNom, charData.currentLvl, charData.currentAsc)}</span>
+                        </div>
+                        <span style="color:var(--text-grey); font-size:10px;">${t('roadmap.farming.ascensionTargetInfo', charData.maxRequiredAsc)}</span>
+                    </div>
+                    ${(charData.worldBoss || charData.specialty) ? `
+                        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding-top:2px;">
+                            <span style="font-size:10px; color:var(--text-grey);">${t('roadmap.farming.toUnlockAscendWith')} :</span>
+                            ${charData.worldBoss?.icon ? `
+                                <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); padding:2px 7px; border-radius:4px;" title="${getLocalizedItemName(charData.worldBoss.name)}">
+                                    ${getItemIconHtml(charData.worldBoss.icon, getLocalizedItemName(charData.worldBoss.name), 'width:16px; height:16px; object-fit:contain;')}
+                                    <span style="font-size:10px; color:var(--text-primary); white-space:nowrap;">
+                                        ${(charData.ascensionCost?.boss > 0) ? `<strong style="color:#fbbf24; font-weight:normal;">${charData.ascensionCost.boss}</strong> ` : ''}${getLocalizedItemName(charData.worldBoss.name)}
+                                    </span>
+                                </div>
+                            ` : ''}
+                            ${charData.specialty?.icon ? `
+                                <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); padding:2px 7px; border-radius:4px;" title="${getLocalizedItemName(charData.specialty.name)}">
+                                    ${getItemIconHtml(charData.specialty.icon, getLocalizedItemName(charData.specialty.name), 'width:16px; height:16px; object-fit:contain;')}
+                                    <span style="font-size:10px; color:var(--text-primary); white-space:nowrap;">
+                                        ${(charData.ascensionCost?.specialty > 0) ? `<strong style="color:#fbbf24; font-weight:normal;">${charData.ascensionCost.specialty}</strong> ` : ''}${getLocalizedItemName(charData.specialty.name)}
+                                    </span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+                </div>
+            ` : ''}
 
             <!-- Matériaux réels requis avec icônes officielles -->
             <div style="display:flex; flex-wrap:wrap; align-items:center; gap:6px; padding-top:2px;">
@@ -134,26 +169,21 @@ function renderWeaponFarmingCard(weaponData) {
                             <span style="font-size:10px; color:#eab308; font-weight:normal;">${weaponData.rarity}★</span>
                             ${weaponData.isFocus ? `<span style="font-size:9px; background:var(--accent-blue); color:#fff; padding:1px 5px; border-radius:4px; font-weight:normal; text-transform:uppercase;">Focus</span>` : ''}
                         </div>
-                        <div style="font-size:11px; color:var(--text-grey); display:flex; align-items:center; gap:4px; margin-top:2px;">
+                        <div style="font-size:11px; color:var(--text-grey); display:flex; align-items:center; gap:5px; margin-top:2px; flex-wrap:wrap;">
                             <div style="display:inline-flex; align-items:center; gap:4px;">
                                 ${weaponData.charAvatar ? `<img src="${weaponData.charAvatar}" alt="" style="width:14px; height:14px; border-radius:50%; object-fit:cover;">` : ''}
                                 <span>${weaponData.charNom}</span>
                             </div>
                             <span>•</span>
-                            <span>${getLocalizedItemName(rot?.name)}</span>
+                            <div style="display:inline-flex; align-items:center; gap:4px;">
+                                ${repMat?.icon ? getItemIconHtml(repMat.icon, getLocalizedItemName(rot?.name), 'width:14px; height:14px; object-fit:contain; flex-shrink:0;') : ''}
+                                <span>${getLocalizedItemName(rot?.name)}</span>
+                            </div>
                             <span>•</span>
                             <span style="color:var(--accent-green); font-weight:normal;">${t('roadmap.farming.resinCount', cost.estimatedResin || 0)}</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- Badge matériau représentatif -->
-                ${repMat?.icon ? `
-                    <div style="display:flex; align-items:center; gap:6px; background:var(--shadow-subtle); padding:4px 8px; border-radius:6px; border:none; flex-shrink:0;" title="${getLocalizedItemName(repMat.name)}">
-                        ${getItemIconHtml(repMat.icon, getLocalizedItemName(repMat.name), 'width:24px; height:24px; object-fit:contain;')}
-                        <span style="font-size:11px; font-weight:normal; color:#eab308;">${cost.gold > 0 ? `${cost.gold} or` : `${cost.purple || 0} vio.`}</span>
-                    </div>
-                ` : ''}
             </div>
 
             <!-- Niveau en retard -->
@@ -202,9 +232,9 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
 
                 <p style="font-size:12px; color:var(--text-grey); margin:0; line-height:1.5;">
                     ${charactersNeedingAscension.length > 0
-                        ? t('roadmap.farming.freeDayDesc')
-                        : t('roadmap.farming.freeDayDescNoMats')
-                    }
+                ? t('roadmap.farming.freeDayDesc')
+                : t('roadmap.farming.freeDayDescNoMats')
+            }
                 </p>
 
                 <!-- Section Boss & Spécialités si des personnages ont besoin d'élévation -->
@@ -213,7 +243,7 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
                         <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:var(--text-grey); font-weight:normal;">
                             ${t('roadmap.farming.worldMatsTitle')}
                         </span>
-                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+                        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap:12px;">
                             ${charactersNeedingAscension.map(c => `
                                 <div style="background:var(--shadow-subtle); border:none; border-radius:8px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
                                     <div style="display:flex; align-items:center; gap:10px; min-width:0;">
@@ -251,22 +281,22 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
             ${isSunday ? `
                 <div style="background:linear-gradient(135deg, rgba(234, 179, 8, 0.12) 0%, rgba(245, 158, 11, 0.04) 100%); border:none; border-radius:8px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px;">
                     <div>
-                        <div style="font-size:13px; font-weight:normal; color:#fbbf24;">${t('roadmap.farming.sundayJokerTitle')}</div>
-                        <div style="font-size:11px; color:var(--text-grey); margin-top:2px;">${t('roadmap.farming.sundayJokerDesc')}</div>
+                        <div style="font-size:13px; font-weight:normal; color:#fbbf24;">${t('roadmap.farming.sundayAllDomainsTitle')}</div>
+                        <div style="font-size:11px; color:var(--text-grey); margin-top:2px;">${t('roadmap.farming.sundayAllDomainsDesc')}</div>
                     </div>
-                    <span style="font-size:10px; text-transform:uppercase; letter-spacing:0.8px; font-weight:normal; background:rgba(234, 179, 8, 0.18); color:#fbbf24; padding:3px 8px; border-radius:4px; flex-shrink:0;">${t('roadmap.farming.jokerBadge')}</span>
+                    <span style="font-size:10px; text-transform:uppercase; letter-spacing:0.8px; font-weight:normal; background:rgba(234, 179, 8, 0.18); color:#fbbf24; padding:3px 8px; border-radius:4px; flex-shrink:0;">${t('roadmap.farming.allDomainsBadge')}</span>
                 </div>
             ` : ''}
 
             <!-- Liste des Domaines (Cartes Région avec --bg-panel et sans border) -->
             <div style="display:flex; flex-direction:column; gap:16px;">
                 ${domains.map(dom => {
-                    const isWeaponDomain = (dom.category === 'weapon');
-                    const categoryBadge = isWeaponDomain
-                        ? t('roadmap.farming.catWeapons')
-                        : t('roadmap.farming.catTalents');
+        const isWeaponDomain = (dom.category === 'weapon');
+        const categoryBadge = isWeaponDomain
+            ? t('roadmap.farming.catWeapons')
+            : t('roadmap.farming.catTalents');
 
-                    return `
+        return `
                     <div style="background:var(--bg-panel); border:none; border-radius:8px; padding:16px; display:flex; flex-direction:column; gap:14px;">
                         <!-- En-tête du Donjon / Région -->
                         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -280,7 +310,7 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
                             </div>
 
                             <!-- Aperçu des matériaux du donjon -->
-                            <div style="display:flex; align-items:center; gap:4px;">
+                            <div style="display:flex;align-items:center;gap:4px;background: var(--shadow-subtle);border-radius: 6px;padding: 2px 4px;">
                                 ${dom.isSunday && dom.sundayItems && dom.sundayItems.length > 0 ? `
                                     ${dom.sundayItems.map(it => getItemIconHtml(it?.icon, getLocalizedItemName(it?.name), 'width:20px; height:20px; object-fit:contain;')).join('')}
                                 ` : (isWeaponDomain ? `
@@ -297,15 +327,15 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
                         </div>
 
                         <!-- Grille des cartes (personnages ou armes) -->
-                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+                        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap:12px;">
                             ${isWeaponDomain
-                                ? (dom.weapons || []).map(renderWeaponFarmingCard).join('')
-                                : (dom.characters || []).map(renderCharacterFarmingCard).join('')
-                            }
+                ? (dom.weapons || []).map(renderWeaponFarmingCard).join('')
+                : (dom.characters || []).map(renderCharacterFarmingCard).join('')
+            }
                         </div>
                     </div>
                 `;
-                }).join('')}
+    }).join('')}
             </div>
         </div>
     `;
@@ -324,7 +354,7 @@ function renderFullWeekSchedule(weekSchedule) {
                         <div style="display:flex; align-items:center; gap:8px;">
                             <span style="font-size:14px; font-weight:normal; color:var(--text-primary);">${day.dayName}</span>
                             ${day.isToday ? `<span style="font-size:10px; background:var(--accent-green); color:#000; padding:1px 6px; border-radius:4px; font-weight:normal; text-transform:uppercase;">${t('roadmap.farming.today')}</span>` : ''}
-                            ${day.isSunday ? `<span style="font-size:10px; background:rgba(234, 179, 8, 0.2); color:#fbbf24; border:none; padding:1px 6px; border-radius:4px; font-weight:normal;">${t('roadmap.farming.jokerBadge')}</span>` : ''}
+                            ${day.isSunday ? `<span style="font-size:10px; background:rgba(234, 179, 8, 0.2); color:#fbbf24; border:none; padding:1px 6px; border-radius:4px; font-weight:normal;">${t('roadmap.farming.allDomainsBadge')}</span>` : ''}
                         </div>
 
                         <div style="font-size:11px; color:var(--text-grey);">
@@ -336,8 +366,8 @@ function renderFullWeekSchedule(weekSchedule) {
                     ${day.domains.length > 0 ? `
                         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:10px;">
                             ${day.domains.map(dom => {
-                                const isWep = (dom.category === 'weapon');
-                                return `
+        const isWep = (dom.category === 'weapon');
+        return `
                                 <div style="background:var(--shadow-subtle); border:none; border-radius:8px; padding:10px 12px; display:flex; flex-direction:column; gap:8px;">
                                     <div style="display:flex; justify-content:space-between; align-items:center;">
                                         <span style="font-size:12px; font-weight:normal; color:${isWep ? '#38bdf8' : '#c084fc'};">${day.isSunday ? `${dom.domainName} (${isWep ? t('roadmap.farming.allMaterials') : t('roadmap.farming.allBooks')})` : dom.bookName}</span>
@@ -358,7 +388,7 @@ function renderFullWeekSchedule(weekSchedule) {
                                     </div>
                                 </div>
                             `;
-                            }).join('')}
+    }).join('')}
                         </div>
                     ` : `
                         <div style="font-size:11px; color:var(--text-grey); padding:6px 0; font-style:italic;">
@@ -437,7 +467,7 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
         { key: '4', label: DAY_NAMES[currentLang][4] },
         { key: '5', label: DAY_NAMES[currentLang][5] },
         { key: '6', label: DAY_NAMES[currentLang][6] },
-        { key: '0', label: `${DAY_NAMES[currentLang][0]} (Joker)` },
+        { key: '0', label: DAY_NAMES[currentLang][0] },
         { key: 'all', label: t('roadmap.farming.fullWeek') }
     ];
 
@@ -451,10 +481,10 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
                 <!-- Sélecteur des jours de la semaine -->
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                     ${tabsOrder.map(tab => {
-                        const isTabActive = (selectedDay === tab.key) || (selectedDay === 'today' && tab.key === 'today');
-                        const isTodayBtn = tab.key === 'today' || tab.key === String(todayIdx);
+        const isTabActive = (selectedDay === tab.key) || (selectedDay === 'today' && tab.key === 'today');
+        const isTodayBtn = tab.key === 'today' || tab.key === String(todayIdx);
 
-                        return `
+        return `
                             <button
                                 data-action="set-farming-day"
                                 data-day="${tab.key}"
@@ -466,14 +496,14 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
                                 <span>${tab.label}</span>
                             </button>
                         `;
-                    }).join('')}
+    }).join('')}
                 </div>
 
                 <!-- Sélecteur de catégorie (Tout / Aptitudes / Armes) -->
                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                     ${categoryOptions.map(cat => {
-                        const isCatActive = (selectedCategory === cat.key);
-                        return `
+        const isCatActive = (selectedCategory === cat.key);
+        return `
                             <button
                                 data-action="set-farming-category"
                                 data-category="${cat.key}"
@@ -484,7 +514,7 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
                                 <span>${cat.label}</span>
                             </button>
                         `;
-                    }).join('')}
+    }).join('')}
                 </div>
             </div>
 
@@ -493,19 +523,19 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
                 <div style="background:var(--bg-panel); border:none; border-radius:8px; padding:20px; text-align:center;">
                     <div style="font-size:13px; font-weight:normal; color:var(--text-primary);">
                         ${selectedCategory === 'weapons'
-                            ? t('roadmap.farming.allWeaponsMaxed')
-                            : (selectedCategory === 'all'
-                                ? t('roadmap.farming.allTalentsAndWeaponsMaxed')
-                                : t('roadmap.farming.allMaxed')
-                            )
-                        }
+                ? t('roadmap.farming.allWeaponsMaxed')
+                : (selectedCategory === 'all'
+                    ? t('roadmap.farming.allTalentsAndWeaponsMaxed')
+                    : t('roadmap.farming.allMaxed')
+                )
+            }
                     </div>
                 </div>
             ` : (
-                isFullWeekMode
-                    ? renderFullWeekSchedule(schedule.weekSchedule)
-                    : renderSingleDaySchedule(currentDaySchedule, schedule.allCharactersWithNeeds, schedule.allWeaponsWithNeeds)
-            )}
+            isFullWeekMode
+                ? renderFullWeekSchedule(schedule.weekSchedule)
+                : renderSingleDaySchedule(currentDaySchedule, schedule.allCharactersWithNeeds, schedule.allWeaponsWithNeeds)
+        )}
         </div>
     `;
 }

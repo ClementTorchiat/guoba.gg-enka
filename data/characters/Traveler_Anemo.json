@@ -13,8 +13,8 @@
   },
   "talents": {
     "auto": 1,
-    "skill": 8,
-    "burst": 8
+    "skill": 6,
+    "burst": 6
   },
   "builds": {
     "Voyageur Anémo": {

@@ -3,8 +3,8 @@
   "portraitOffset": -37,
   "talents": {
     "auto": 1,
-    "skill": 8,
-    "burst": 8
+    "skill": 10,
+    "burst": 9
   },
   "buffs": [
     {

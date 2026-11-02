@@ -3,8 +3,8 @@
   "portraitOffset": -42,
   "talents": {
     "auto": 1,
-    "skill": 9,
-    "burst": 9
+    "skill": 6,
+    "burst": 8
   },
   "builds": {
     "Anemo Support": {

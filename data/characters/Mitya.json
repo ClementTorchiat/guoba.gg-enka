@@ -5,7 +5,7 @@
     "talents": {
         "auto": 9,
         "skill": 9,
-        "burst": 1
+        "burst": 6
     },
     "buffs": [
         {

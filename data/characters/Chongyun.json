@@ -3,8 +3,8 @@
   "portraitOffset": -37,
   "talents": {
     "auto": 1,
-    "skill": 9,
-    "burst": 10
+    "skill": 6,
+    "burst": 9
   },
   "builds": {
     "DPS Fonte": {

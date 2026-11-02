@@ -9,8 +9,8 @@
   },
   "talents": {
     "auto": 1,
-    "skill": 8,
-    "burst": 8
+    "skill": 1,
+    "burst": 1
   },
   "buffs": [
     {

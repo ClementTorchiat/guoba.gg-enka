@@ -36,6 +36,40 @@ export const TALENT_COST_PER_LEVEL = {
     10: { teachings: 0, guides: 0, philosophies: 16, weeklyBoss: 2, crown: 1, mora: 700000 }
 };
 
+// Table universelle officielle du coût en matériaux par palier d'élévation de personnage (1 à 6)
+export const CHARACTER_ASCENSION_COSTS = {
+    1: { boss: 0, specialty: 3, mora: 20000 },
+    2: { boss: 2, specialty: 10, mora: 40000 },
+    3: { boss: 4, specialty: 20, mora: 60000 },
+    4: { boss: 8, specialty: 30, mora: 80000 },
+    5: { boss: 12, specialty: 45, mora: 100000 },
+    6: { boss: 20, specialty: 60, mora: 120000 }
+};
+
+/**
+ * Calcule les matériaux d'élévation de personnage requis de fromAsc à toAsc.
+ * @param {number} fromAsc 0 à 6
+ * @param {number} toAsc 1 à 6
+ * @returns {{ boss: number, specialty: number, mora: number }}
+ */
+export function calculateCharacterAscensionCost(fromAsc = 0, toAsc = 6) {
+    const cur = Math.max(0, Math.min(6, parseInt(fromAsc, 10) || 0));
+    const target = Math.max(cur, Math.min(6, parseInt(toAsc, 10) || 6));
+
+    const cost = { boss: 0, specialty: 0, mora: 0 };
+    if (cur >= target) return cost;
+
+    for (let asc = cur + 1; asc <= target; asc++) {
+        const step = CHARACTER_ASCENSION_COSTS[asc];
+        if (step) {
+            cost.boss += step.boss;
+            cost.specialty += step.specialty;
+            cost.mora += step.mora;
+        }
+    }
+    return cost;
+}
+
 // Table universelle des matériaux requis par palier d'élévation d'arme (selon rareté 3★, 4★, 5★)
 export const WEAPON_ASCENSION_COSTS = {
     5: {
@@ -317,6 +351,60 @@ export function calculateTalentCost(fromLvl, toLvl) {
 }
 
 /**
+ * Retourne le palier d'élévation minimal requis pour atteindre un niveau de talent donné.
+ * @param {number} talentLvl 
+ * @returns {{ asc: number, minCharLvl: number, label: string }}
+ */
+export function getRequiredAscensionForTalentLevel(talentLvl) {
+    const target = parseInt(talentLvl, 10) || 1;
+    if (target <= 1) return { asc: 0, minCharLvl: 1, label: '1' };
+    if (target <= 2) return { asc: 2, minCharLvl: 40, label: '40/50' };
+    if (target <= 4) return { asc: 3, minCharLvl: 50, label: '50/60' };
+    if (target <= 6) return { asc: 4, minCharLvl: 60, label: '60/70' };
+    if (target <= 8) return { asc: 5, minCharLvl: 70, label: '70/80' };
+    return { asc: 6, minCharLvl: 80, label: '80/90' };
+}
+
+/**
+ * Retourne le niveau d'aptitude maximal déblocable pour une phase d'élévation donnée (0 à 6).
+ * @param {number} ascension 
+ * @returns {number}
+ */
+export function getMaxTalentLevelForAscension(ascension) {
+    const asc = Math.max(0, Math.min(6, parseInt(ascension, 10) || 0));
+    if (asc < 2) return 1;
+    if (asc === 2) return 2;
+    if (asc === 3) return 4;
+    if (asc === 4) return 6;
+    if (asc === 5) return 8;
+    return 10;
+}
+
+/**
+ * Détermine l'élévation réelle ou estimée du personnage (0 à 6) avec repli sécurisé sur son niveau.
+ * @param {Object} perso 
+ * @returns {number}
+ */
+export function getCharacterAscension(perso) {
+    if (!perso) return 0;
+    const rawAsc = perso.ascension !== undefined ? Number(perso.ascension) : (perso.promoteLevel !== undefined ? Number(perso.promoteLevel) : undefined);
+    const lvl = Number(perso.level) || 1;
+
+    if (rawAsc !== undefined && !isNaN(rawAsc) && rawAsc > 0) {
+        return Math.min(6, Math.max(0, rawAsc));
+    }
+    // Repli logique basé sur le niveau du personnage si ascension absente
+    if (lvl > 80) return 6;
+    if (lvl >= 80 && rawAsc === 6) return 6;
+    if (lvl >= 71) return 5;
+    if (lvl >= 61) return 4;
+    if (lvl >= 51) return 3;
+    if (lvl >= 41) return 2;
+    if (lvl >= 21) return 1;
+    return (rawAsc !== undefined && !isNaN(rawAsc)) ? rawAsc : 0;
+}
+
+/**
  * Analyse un personnage et détermine l'ensemble de ses besoins en aptitudes et en élévation.
  * @param {Object} perso 
  * @returns {Object|null}
@@ -347,6 +435,10 @@ export function getCharacterFarmingNeeds(perso) {
         estimatedRuns: 0
     };
 
+    const pLvl = perso.level || 1;
+    const pAsc = getCharacterAscension(perso);
+    const maxTalentPossibleNow = getMaxTalentLevelForAscension(pAsc);
+
     keyMap.forEach((key, index) => {
         let currentLvl = 1;
         let talentIcon = null;
@@ -374,6 +466,10 @@ export function getCharacterFarmingNeeds(perso) {
             totalCost.mora += stepCost.mora;
 
             const talentLabel = t(`talents.${key}`) || t(`ui.talent.${key}`) || t(`advice.talent.${key}`) || key;
+            const req = getRequiredAscensionForTalentLevel(targetLvl);
+            const isLocked = (pAsc < req.asc);
+            const canProgressPartially = (currentLvl < maxTalentPossibleNow && isLocked);
+            const fullyLocked = (currentLvl >= maxTalentPossibleNow && isLocked);
 
             talentGaps.push({
                 talentKey: key,
@@ -381,7 +477,13 @@ export function getCharacterFarmingNeeds(perso) {
                 talentIcon,
                 currentLvl,
                 targetLvl,
-                cost: stepCost
+                cost: stepCost,
+                requiredAsc: req.asc,
+                requiredCharLvl: req.minCharLvl,
+                requiredCharLvlLabel: req.label,
+                isLocked,
+                canProgressPartially,
+                fullyLocked
             });
         }
     });
@@ -390,10 +492,12 @@ export function getCharacterFarmingNeeds(perso) {
     totalCost.estimatedResin = Math.ceil(eqPhil * 18);
     totalCost.estimatedRuns = Math.ceil(totalCost.estimatedResin / 20);
 
-    const pLvl = perso.level || 1;
-    const pAsc = perso.ascension || 0;
-    const needsAscension = (pLvl < 90 && !(pLvl >= 80 && pAsc >= 6));
+    const hasLockedTalents = talentGaps.some(g => g.isLocked);
+    const allTalentsFullyLocked = (talentGaps.length > 0 && talentGaps.every(g => g.fullyLocked));
+    const maxRequiredAsc = talentGaps.reduce((max, g) => Math.max(max, g.requiredAsc || 0), 0);
+    const ascensionCost = hasLockedTalents ? calculateCharacterAscensionCost(pAsc, maxRequiredAsc) : { boss: 0, specialty: 0, mora: 0 };
 
+    const needsAscension = (pLvl < 90 && !(pLvl >= 80 && pAsc >= 6));
     const hasTalentNeeds = (talentGaps.length > 0 && bookRotation !== null);
 
     return {
@@ -411,7 +515,12 @@ export function getCharacterFarmingNeeds(perso) {
         hasTalentNeeds,
         needsAscension,
         currentLvl: pLvl,
-        currentAsc: pAsc
+        currentAsc: pAsc,
+        maxTalentPossibleNow,
+        hasLockedTalents,
+        allTalentsFullyLocked,
+        maxRequiredAsc,
+        ascensionCost
     };
 }
 

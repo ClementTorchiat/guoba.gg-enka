@@ -2768,7 +2768,7 @@ async function processData(data, uid = null) {
         const buffedStats = calculateBuffedStats(baseStats, combatStats, buffs);
 
         const persoObj = {
-            id: id, nom, rarity, level, cons: constellations, talents,
+            id: id, nom, rarity, level, ascension: (perso.propMap && perso.propMap['1002']) ? parseInt(perso.propMap['1002'].val, 10) : 0, cons: constellations, talents,
             image: sideIconUrl, splashArt: splashUrl, combatStats, buffedStats, baseStats, fightPropMap: fp,
             weapon, artefacts, setsCounter, buffs, evaluation: null, weights: null,
             charWeapon: charWeaponKey,

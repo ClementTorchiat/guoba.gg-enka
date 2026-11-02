@@ -2,9 +2,9 @@
     "color": "#2ccac0",
     "portraitOffset": -33,
     "talents": {
-        "auto": 8,
-        "skill": 8,
-        "burst": 8
+        "auto": 6,
+        "skill": 6,
+        "burst": 6
     },
     "builds": {
         "Manekin": {

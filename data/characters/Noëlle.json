@@ -2,9 +2,9 @@
   "color": "#b23a54",
   "portraitOffset": -36,
   "talents": {
-    "auto": 10,
-    "skill": 8,
-    "burst": 10
+    "auto": 8,
+    "skill": 6,
+    "burst": 8
   },
   "buffs": [
     {
