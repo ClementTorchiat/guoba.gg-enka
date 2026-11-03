@@ -260,3 +260,116 @@ export async function getCharNamesTranslations(charName: string) {
       en: charName.replace(/_/g, ' ')
   };
 }
+
+export interface BaseCharacterEntry {
+  name: string;
+  originalName: string;
+  translations: { fr: string; en: string };
+  color: string;
+  element: string;
+  avatarImg: string;
+  gachaImg: string;
+  leaderboards: Array<{ id: string; teams: any[] }>;
+  isNew: boolean;
+}
+
+export interface BaseLeaderboardData {
+  baseCharacterList: BaseCharacterEntry[];
+  totalLeaderboards: number;
+  assetTranslations: any;
+}
+
+let cachedBaseLeaderboardData: BaseLeaderboardData | null = null;
+
+export async function getBaseLeaderboardData(teammateAssets: Record<string, string>): Promise<BaseLeaderboardData> {
+  if (cachedBaseLeaderboardData) {
+    return cachedBaseLeaderboardData;
+  }
+
+  const CHAR_CONFIGS = await getCharConfigs();
+  const enkaAvatarMap = await getEnkaAvatarMap();
+  const assetTranslations = await getAssetTranslations(teammateAssets);
+
+  let totalLeaderboards = 0;
+  const baseCharacterList: BaseCharacterEntry[] = [];
+
+  for (const charName in CHAR_CONFIGS) {
+    const config = CHAR_CONFIGS[charName];
+    const color = config.color || "#5053bb";
+    const leaderboardsMap = new Map();
+
+    for (const [buildName, buildData] of Object.entries(config.builds || {})) {
+      const data = buildData as any;
+      const lbId = data.leaderboard_id || buildName;
+
+      if (!leaderboardsMap.has(lbId)) {
+        leaderboardsMap.set(lbId, {
+          id: lbId,
+          teams: []
+        });
+        totalLeaderboards++;
+      }
+
+      if (data.team) {
+        leaderboardsMap.get(lbId).teams.push({ team: data.team, slot: data.slot });
+      }
+    }
+
+    if (leaderboardsMap.size === 0) continue;
+
+    const { avatarImg: enkaAvatarImg, gachaImg: enkaGachaImg } = getEnkaImages(charName);
+    const { element: mainElem } = getCharElementAndWeapon(charName, enkaAvatarMap);
+    const charTranslations = await getCharNamesTranslations(charName);
+
+    baseCharacterList.push({
+      name: charName.replace(/_/g, ' '),
+      originalName: charName,
+      translations: charTranslations,
+      color: color,
+      element: mainElem,
+      avatarImg: enkaAvatarImg,
+      gachaImg: enkaGachaImg,
+      leaderboards: Array.from(leaderboardsMap.values()),
+      isNew: config.isNew || false
+    });
+  }
+
+  cachedBaseLeaderboardData = {
+    baseCharacterList,
+    totalLeaderboards,
+    assetTranslations
+  };
+
+  return cachedBaseLeaderboardData;
+}
+
+let cachedArchetypeCounts: { counts: Record<string, number>; timestamp: number } | null = null;
+const ARCHETYPE_CACHE_TTL_MS = 60 * 1000; // 60s cache mémoire côté serveur
+
+export async function getArchetypeCounts(supabase: any): Promise<Record<string, number>> {
+  const now = Date.now();
+  if (cachedArchetypeCounts && (now - cachedArchetypeCounts.timestamp < ARCHETYPE_CACHE_TTL_MS)) {
+    return cachedArchetypeCounts.counts;
+  }
+
+  try {
+    const { data: buildsData, error } = await supabase.from('build_counts_by_archetype').select('*');
+    if (buildsData && !error) {
+      const counts: Record<string, number> = {};
+      for (const b of buildsData) {
+        counts[b.archetype] = Number(b.count);
+      }
+      cachedArchetypeCounts = { counts, timestamp: now };
+      return counts;
+    } else if (error) {
+      console.error("Erreur lors de la récupération des statistiques:", error);
+    }
+  } catch (err) {
+    console.error("Erreur réseau Supabase:", err);
+  }
+
+  if (cachedArchetypeCounts) {
+    return cachedArchetypeCounts.counts;
+  }
+  return {};
+}

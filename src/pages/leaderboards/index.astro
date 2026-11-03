@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 
 // Dictionnaire de traduction des noms de leaderboards
 import leaderboardsNames from "../../data/leaderboards_names.json";
-import { getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getCharNamesTranslations, getAssetTranslations, getCharElementAndWeapon, ARCHETYPE_ROLES } from "../../server/characters";
+import { getBaseLeaderboardData, getArchetypeCounts, getCharConfigs, getEnkaAvatarMap, getEnkaImages, getFinalEnkaName, ELEMENT_COLORS, ENKA_ELEMENT_MAP, LOCAL_TO_ENKA_NAME, getCharNamesTranslations, getAssetTranslations, getCharElementAndWeapon, ARCHETYPE_ROLES } from "../../server/characters";
 import teammateAssets from "../../data/teammate_assets.json";
 // Désactiver le prerendering car on a besoin d'interroger Supabase en temps réel
 export const prerender = false;
@@ -32,77 +32,28 @@ try {
   
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  // 2. Chargement de toutes les configs de personnages
-  const CHAR_CONFIGS = await getCharConfigs();
-  const enkaAvatarMap = await getEnkaAvatarMap();
-  assetTranslations = await getAssetTranslations(teammateAssets);
+  // 2. Chargement en parallèle : base des personnages (mise en cache mémoire) et statistiques Supabase (mise en cache 60s)
+  const [baseData, counts] = await Promise.all([
+    getBaseLeaderboardData(teammateAssets),
+    getArchetypeCounts(supabase)
+  ]);
 
-  // 3. Extraction des leaderboards par personnage
-  for (const charName in CHAR_CONFIGS) {
-    const config = CHAR_CONFIGS[charName];
-    const color = config.color || "#5053bb";
-    
-    // Utilisation d'une Map pour dédoublonner les leaderboard_id
-    const leaderboardsMap = new Map();
+  archetypeCounts = counts;
+  totalLeaderboards = baseData.totalLeaderboards;
+  assetTranslations = baseData.assetTranslations;
 
-    for (const [buildName, buildData] of Object.entries(config.builds)) {
-      const data = buildData as any;
-      const lbId = data.leaderboard_id || buildName;
-      
-      if (!leaderboardsMap.has(lbId)) {
-        leaderboardsMap.set(lbId, {
-          id: lbId,
-          teams: []
-        });
-        totalLeaderboards++;
-      }
-      
-      // On sauvegarde toutes les variantes d'équipes pour ce leaderboard_id
-      if (data.team) {
-        leaderboardsMap.get(lbId).teams.push({ team: data.team, slot: data.slot });
-      }
-    }
-
-    // Si le personnage n'a aucun build configuré, on l'ignore (optionnel)
-    if (leaderboardsMap.size === 0) continue;
-
-    const finalEnkaName = getFinalEnkaName(charName);
-    const { avatarImg: enkaAvatarImg, gachaImg: enkaGachaImg } = getEnkaImages(charName);
-
-    const { element: mainElem } = getCharElementAndWeapon(charName, enkaAvatarMap);
-
-    const charTranslations = await getCharNamesTranslations(charName);
+  // 3. Calcul du vrai nombre d'entrées (max par personnage pour éviter les doublons)
+  for (const baseChar of baseData.baseCharacterList) {
+    const charTotalEntries = baseChar.leaderboards.reduce(
+      (acc: number, lb: any) => Math.max(acc, (archetypeCounts[lb.id] || 0)),
+      0
+    );
+    totalEntries += charTotalEntries;
 
     characterList.push({
-      name: charName.replace(/_/g, ' '),
-      originalName: charName,
-      translations: charTranslations,
-      color: color,
-      element: mainElem,
-      avatarImg: enkaAvatarImg,
-      gachaImg: enkaGachaImg,
-      leaderboards: Array.from(leaderboardsMap.values()),
-      isNew: config.isNew || false
+      ...baseChar,
+      totalEntries: charTotalEntries
     });
-  }
-
-
-  // 4. Récupération des statistiques depuis Supabase
-  const { data: buildsData, error } = await supabase.from('build_counts_by_archetype').select('*');
-
-  if (buildsData && !error) {
-    for (const b of buildsData) {
-      const count = Number(b.count); // Conversion au cas où PostgreSQL renvoie un bigint(string)
-      archetypeCounts[b.archetype] = count;
-    }
-  } else if (error) {
-    console.error("Erreur lors de la récupération des statistiques:", error);
-  }
-
-  // 5. Calcul du vrai nombre d'entrées (max par personnage pour éviter les doublons)
-  for (const char of characterList) {
-    char.totalEntries = char.leaderboards.reduce((acc: number, lb: any) => Math.max(acc, (archetypeCounts[lb.id] || 0)), 0);
-    totalEntries += char.totalEntries;
   }
 
   // Tri par défaut : Entrées (Décroissant) (avec les "New" en premier, puis alphabétique en cas d'égalité)

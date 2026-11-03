@@ -210,6 +210,16 @@ const { currentPage = "?" } = Astro.props;
         }
 
         if (staticNav) {
+            if (!staticNav.dataset.navClickBound) {
+                staticNav.dataset.navClickBound = "true";
+                staticNav.addEventListener("click", (e) => {
+                    const targetLink = e.target && e.target.closest ? e.target.closest(".snav-item") : null;
+                    if (!targetLink) return;
+                    staticNav.querySelectorAll(".snav-item").forEach((l) => l.classList.remove("snav-item--active"));
+                    targetLink.classList.add("snav-item--active");
+                });
+            }
+
             const links = staticNav.querySelectorAll(".snav-item");
             links.forEach((link) => {
                 const href = link.getAttribute("href");
