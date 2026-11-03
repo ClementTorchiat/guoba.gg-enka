@@ -72,19 +72,17 @@ export function renderBestPiecesShowcase(characters, focusCharNom = null, mode =
                         <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.best.desc')}</p>
                     </div>
                     <!-- Sélecteur CV / Score -->
-                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <div class="roadmap-segmented-group">
                         <button data-action="set-best-pieces-mode"
                                 data-mode="score"
                                 type="button"
-                                class="button-unlink"
-                                style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${mode === 'score' ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${mode === 'score' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${mode === 'score' ? '#60a5fa' : 'var(--text-grey)'};">
+                                class="roadmap-segmented-item ${mode === 'score' ? 'active' : ''}">
                             <span>${t('roadmap.best.modeScore')}</span>
                         </button>
                         <button data-action="set-best-pieces-mode"
                                 data-mode="cv"
                                 type="button"
-                                class="button-unlink"
-                                style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${mode === 'cv' ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${mode === 'cv' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${mode === 'cv' ? '#60a5fa' : 'var(--text-grey)'};">
+                                class="roadmap-segmented-item ${mode === 'cv' ? 'active' : ''}">
                             <span>${t('roadmap.best.modeCV')}</span>
                         </button>
                     </div>

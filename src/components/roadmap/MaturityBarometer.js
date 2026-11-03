@@ -164,10 +164,9 @@ export function calculateAccountMaturity(characters) {
     }
 
     let maturityColor = 'var(--accent-green)';
-    if (globalIndex >= 80) maturityColor = 'var(--accent-green)';
-    else if (globalIndex >= 60) maturityColor = '#3b82f6';
-    else if (globalIndex >= 40) maturityColor = '#eab308';
-    else maturityColor = '#ef4444';
+    if (globalIndex >= 70) maturityColor = 'var(--accent-green)';
+    else if (globalIndex >= 40) maturityColor = '#fb923c';
+    else maturityColor = '#f87171';
 
     return {
         globalIndex,

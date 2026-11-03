@@ -301,22 +301,8 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
         `;
     };
 
-    let btnOwnedStyle = 'display: inline-flex; align-items: center; padding: 5px 11px; border-radius: 8px; font-size: 11px; font-weight: normal; cursor: pointer; transition: all 0.2s ease; ';
-    if (onlyOwned) {
-        btnOwnedStyle += 'border: 1px solid #3b82f6; background: rgba(59, 130, 246, 0.18); color: #60a5fa;';
-    } else {
-        btnOwnedStyle += 'border: 1px solid rgba(255, 255, 255, 0); background: var(--shadow-subtle); color: var(--text-grey);';
-    }
-
-    let btnDupStyle = 'display: inline-flex; align-items: center; padding: 5px 11px; border-radius: 8px; font-size: 11px; font-weight: normal; cursor: pointer; transition: all 0.2s ease; ';
-    if (noDuplicates) {
-        btnDupStyle += 'border: 1px solid #3b82f6; background: rgba(59, 130, 246, 0.18); color: #60a5fa;';
-    } else {
-        btnDupStyle += 'border: 1px solid rgba(255, 255, 255, 0); background: var(--shadow-subtle); color: var(--text-grey);';
-    }
-
     const headerHtml = `
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:8px;">
             <div style="display:flex; flex-direction:column; gap:4px;">
                 <h3 style="font-size:24px; font-weight:normal; color:var(--text-primary); margin:0;">
                     ${t('roadmap.teams.title')}
@@ -326,11 +312,13 @@ export function renderTeamAdvisor(characters, focusCharNom = null) {
                 </p>
             </div>
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                <button data-action="toggle-roadmap-owned-teams" type="button" class="button-unlink" style="${btnOwnedStyle}">
-                    ${t('roadmap.teams.onlyOwned')}
+                <button data-action="toggle-roadmap-owned-teams" type="button" class="roadmap-filter-btn ${onlyOwned ? 'active' : ''}">
+                    ${onlyOwned ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>` : ''}
+                    <span>${t('roadmap.teams.onlyOwned')}</span>
                 </button>
-                <button data-action="toggle-roadmap-duplicate-teams" type="button" class="button-unlink" style="${btnDupStyle}">
-                    ${t('roadmap.teams.noDuplicates')}
+                <button data-action="toggle-roadmap-duplicate-teams" type="button" class="roadmap-filter-btn ${noDuplicates ? 'active' : ''}">
+                    ${noDuplicates ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"></polyline></svg>` : ''}
+                    <span>${t('roadmap.teams.noDuplicates')}</span>
                 </button>
             </div>
         </div>

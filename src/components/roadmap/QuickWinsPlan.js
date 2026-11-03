@@ -338,7 +338,7 @@ export function renderQuickWinsPlan(characters, focusCharNom = null, extraHeader
 
     return `
         <div class="roadmap-card" style="display:flex; flex-direction:column; gap:16px; padding-bottom:20px !important;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px;">
                 <div>
                     <div style="display:flex; align-items:center; gap:8px;">
                         <h3 style="font-size:24px; font-weight:normal; color:var(--text-primary); margin:0;">${t('roadmap.breakdown.title')}</h3>
@@ -353,9 +353,11 @@ export function renderQuickWinsPlan(characters, focusCharNom = null, extraHeader
                     <div style="grid-column: span ${index < 3 ? 2 : 3}; background:var(--bg-panel); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:12px;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <span style="font-size:13px; font-weight:normal; color:var(--text-primary);">${sec.title}</span>
-                            <span style="font-size:10px; font-weight:normal; padding:2px 7px; border-radius:10px; background:${sec.items.length === 0 ? 'rgba(34,197,94,0.15)' : 'rgba(168,85,247,0.18)'}; color:${sec.items.length === 0 ? 'var(--accent-green)' : '#c084fc'};">
-                                ${sec.items.length === 0 ? t('roadmap.breakdown.optimal') : t('roadmap.breakdown.toDo', sec.items.length)}
-                            </span>
+                            ${sec.items.length > 0 ? `
+                                <span style="font-size:10px; font-weight:normal; padding:2px 7px; border-radius:4px; background:var(--shadow-subtle); color:var(--text-always-white);">
+                                    ${t('roadmap.breakdown.toDo', sec.items.length)}
+                                </span>
+                            ` : ''}
                         </div>
 
                         ${sec.items.length === 0 ? `

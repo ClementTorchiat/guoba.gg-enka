@@ -496,6 +496,7 @@ export function getCharacterFarmingNeeds(perso) {
     const allTalentsFullyLocked = (talentGaps.length > 0 && talentGaps.every(g => g.fullyLocked));
     const maxRequiredAsc = talentGaps.reduce((max, g) => Math.max(max, g.requiredAsc || 0), 0);
     const ascensionCost = hasLockedTalents ? calculateCharacterAscensionCost(pAsc, maxRequiredAsc) : { boss: 0, specialty: 0, mora: 0 };
+    const fullAscensionCost = calculateCharacterAscensionCost(pAsc, 6);
 
     const needsAscension = (pLvl < 90 && !(pLvl >= 80 && pAsc >= 6));
     const hasTalentNeeds = (talentGaps.length > 0 && bookRotation !== null);
@@ -520,7 +521,8 @@ export function getCharacterFarmingNeeds(perso) {
         hasLockedTalents,
         allTalentsFullyLocked,
         maxRequiredAsc,
-        ascensionCost
+        ascensionCost,
+        fullAscensionCost
     };
 }
 

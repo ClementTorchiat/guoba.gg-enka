@@ -65,8 +65,8 @@ export function getStrongboxRecommendations(characters, focusCharNom = null, sco
             otherSetHasBeneficiaries = characters.some(p => evaluateCharacterNeedForSet(p, otherSetKey, false) !== null);
         }
 
-        // Le 2ème set indésirable est affiché en rouge #f87171, sinon en bleu #60a5fa
-        const otherSetColor = otherSetHasBeneficiaries ? '#60a5fa' : '#f87171';
+        // Le 2ème set indésirable est affiché en rouge #f87171, sinon en vert
+        const otherSetColor = otherSetHasBeneficiaries ? 'var(--accent-green)' : '#f87171';
         const otherSetBadge = otherSetKey ? renderInlineSetBadge(otherSetName, otherSetIcon, otherSetColor) : '';
 
         // Typologie et scoring d'opportunité de synthèse :
@@ -75,26 +75,26 @@ export function getStrongboxRecommendations(characters, focusCharNom = null, sco
         // 3. Donjon doublement rentable -> OPTIONNEL / ALTERNATIVE (le farm donjon est déjà excellent)
         let priorityType = 'recommended';
         let priorityBadgeText = t('roadmap.strongbox.badge.recommended');
-        let priorityColor = '#c084fc';
+        let priorityColor = '#22c55e';
         let explanationText = '';
         let boxScore = charsWithNeed.length * 10 + (totalWeakCount * 2);
 
         if (!associatedDomain) {
             priorityType = 'mustCraft';
             priorityBadgeText = t('roadmap.strongbox.badge.priority');
-            priorityColor = '#fbbf24';
+            priorityColor = '#22c55e';
             explanationText = t('roadmap.strongbox.reasonBoss', setBadge);
             boxScore += 35;
         } else if (!otherSetHasBeneficiaries) {
             priorityType = 'mustCraft';
             priorityBadgeText = t('roadmap.strongbox.badge.priority');
-            priorityColor = '#c084fc';
+            priorityColor = '#22c55e';
             explanationText = t('roadmap.strongbox.reasonDeadDomain', otherSetBadge, domainName, setBadge);
             boxScore += 45; // Très forte incitation : évite 50% de perte en donjon
         } else {
             priorityType = 'alternative';
             priorityBadgeText = t('roadmap.strongbox.badge.alternative');
-            priorityColor = '#60a5fa';
+            priorityColor = '#fb923c';
             explanationText = t('roadmap.strongbox.reasonFarmableDomain', domainName, setBadge, otherSetBadge);
             boxScore -= 5;
         }
@@ -143,26 +143,23 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, scope = 
                     <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.strongbox.desc')}</p>
                 </div>
                 <!-- Sélecteur de portée : Priorités vs Vitrine vs Tous les persos -->
-                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                <div class="roadmap-segmented-group">
                     <button data-action="set-strongbox-scope" 
                             data-scope="priorities" 
                             type="button" 
-                            class="button-unlink"
-                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${scope === 'priorities' ? '1px solid #3b82f6' : 'none'}; background:${scope === 'priorities' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${scope === 'priorities' ? '#60a5fa' : 'var(--text-grey)'};">
+                            class="roadmap-segmented-item ${scope === 'priorities' ? 'active' : ''}">
                         <span>${t('roadmap.scope.priorities')}</span>
                     </button>
                     <button data-action="set-strongbox-scope" 
                             data-scope="showcase" 
                             type="button" 
-                            class="button-unlink"
-                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${scope === 'showcase' ? '1px solid #3b82f6' : 'none'}; background:${scope === 'showcase' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${scope === 'showcase' ? '#60a5fa' : 'var(--text-grey)'};">
+                            class="roadmap-segmented-item ${scope === 'showcase' ? 'active' : ''}">
                         <span>${t('roadmap.scope.showcase')}</span>
                     </button>
                     <button data-action="set-strongbox-scope" 
                             data-scope="all" 
                             type="button" 
-                            class="button-unlink"
-                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${scope === 'all' ? '1px solid #3b82f6' : 'none'}; background:${scope === 'all' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${scope === 'all' ? '#60a5fa' : 'var(--text-grey)'};">
+                            class="roadmap-segmented-item ${scope === 'all' ? 'active' : ''}">
                         <span>${t('roadmap.scope.allChars')}</span>
                     </button>
                 </div>
@@ -178,7 +175,7 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, scope = 
         const nonVitrine = showAllChars ? getNonVitrineCharactersForSet(rec.setKey, characters) : [];
 
         return `
-                            <div style="background:${rec.isFocusTarget ? 'rgba(168,85,247,0.08)' : 'var(--bg-panel)'}; border:${rec.isFocusTarget ? '1px solid rgba(168,85,247,0.4)' : 'none'}; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:10px; position:relative; flex-grow: 1;">
+                            <div style="background:${rec.isFocusTarget ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)'}; border:${rec.isFocusTarget ? '1px solid rgba(59,130,246,0.4)' : 'none'}; border-radius:10px; padding:14px; display:flex; flex-direction:column; gap:10px; position:relative; flex-grow: 1;">
                                 <div style="display:flex; justify-content:space-between; align-items:center;">
                                     <div style="display:flex; align-items:center; gap:8px;">
                                         ${rec.icon ? `<img src="${rec.icon}" alt="${rec.setName}" style="width:22px; height:22px; border-radius:4px; object-fit:contain; background:var(--shadow-subtle);" onerror="this.style.display='none'">` : ''}
@@ -188,11 +185,11 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, scope = 
                                     </div>
                                     <div style="display:flex; align-items:center; gap:4px;">
                                         ${rec.isFocusTarget ? `
-                                            <span style="font-size:9px; font-weight:normal; padding:2px 6px; border-radius:10px; background:rgba(168,85,247,0.2); color:#c084fc; border:none; white-space:nowrap;">
+                                            <span style="font-size:9px; font-weight:normal; padding:1px 6px; border-radius:4px; background:rgba(59,130,246,0.2); color:#60a5fa; border:none; white-space:nowrap;">
                                                 ${t('roadmap.focus.strongboxPriority')}
                                             </span>
                                         ` : ''}
-                                        <span style="font-size:10px; font-weight:normal; padding:3px 8px; border-radius:12px; background:${rec.priorityColor}18; color:${rec.priorityColor}; border:none; white-space:nowrap;">
+                                        <span style="font-size:9px; font-weight:normal; padding:1px 6px; border-radius:4px; background:${rec.priorityColor}18; color:${rec.priorityColor}; border:none; white-space:nowrap;">
                                             ${rec.priorityBadgeText}
                                         </span>
                                     </div>
@@ -207,12 +204,12 @@ export function renderStrongboxAdvisor(characters, focusCharNom = null, scope = 
                                     <div style="font-size:11px; color:var(--text-grey); margin-bottom:6px;">${t('roadmap.strongbox.targetChars')}</div>
                                     <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                                         ${rec.chars.map(c => `
-                                            <div style="display:flex; align-items:center; gap:5px; background:${c.isFocus ? 'rgba(168,85,247,0.15)' : 'var(--shadow-subtle)'}; padding:3px 7px 3px 3px; border-radius:6px; border:${c.isFocus ? '1px solid rgba(168,85,247,0.4)' : 'none'}; cursor:pointer; transition:transform 0.15s ease;"
+                                            <div style="display:flex; align-items:center; gap:5px; background:${c.isFocus ? 'rgba(59,130,246,0.15)' : 'var(--shadow-subtle)'}; padding:3px 7px 3px 3px; border-radius:6px; border:${c.isFocus ? '1px solid #60a5fa' : 'none'}; cursor:pointer; transition:transform 0.15s ease;"
                                                  onmouseenter="window.showTargetPieceTooltip && window.showTargetPieceTooltip(this, '${c.nom.replace(/'/g, "\\'")}', '${rec.setKey}')"
                                                  onmouseleave="window.scheduleHideTargetPieceTooltip && window.scheduleHideTargetPieceTooltip()">
                                                 <img src="${c.image}" alt="${c.nom}" style="width:24px; height:24px; border-radius:4px; background:var(--shadow-subtle);" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
                                                 <div style="display:flex; flex-direction:column; line-height:1.15;">
-                                                    <span style="font-size:11px; color:${c.isFocus ? '#d8b4fe' : 'var(--text-primary)'}; font-weight:normal;">${c.nom}</span>
+                                                    <span style="font-size:11px; color:${c.isFocus ? '#93c5fd' : 'var(--text-primary)'}; font-weight:normal;">${c.nom}</span>
                                                     <span style="font-size:9px; color:${c.need?.status === 'optimized' ? '#22c55e' : (c.need?.status === 'incomplete' ? '#fbbf24' : 'var(--text-grey)')}; font-weight:${c.need?.status === 'optimized' ? '500' : 'normal'};">${c.label}</span>
                                                 </div>
                                             </div>

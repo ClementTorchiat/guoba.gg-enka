@@ -29,32 +29,32 @@ export function getAccountWorstPieces(characters, focusCharNom = null, mode = 's
 
             // Diagnostic tip
             let tip = t('roadmap.worst.tip.substats');
-            let tipColor = '#eab308';
-            let tipBg = 'rgba(234, 179, 8, 0.12)';
-            let tipBorder = 'rgba(234, 179, 8, 0.3)';
+            let tipColor = '#fb923c';
+            let tipBg = 'rgba(251, 146, 60, 0.12)';
+            let tipBorder = 'none';
 
             if (art.type === 'EQUIP_BRACER' || art.type === 'EQUIP_NECKLACE') {
                 if (curScoreRaw < 25) {
                     tip = t('roadmap.worst.tip.flowerPlume');
                     tipColor = 'var(--accent-green)';
                     tipBg = 'rgba(34, 197, 94, 0.12)';
-                    tipBorder = 'rgba(34, 197, 94, 0.3)';
+                    tipBorder = 'none';
                 }
             } else if (['EQUIP_SHOES', 'EQUIP_RING', 'EQUIP_DRESS'].includes(art.type)) {
                 const idealStats = config.idealMainStats?.[art.type] || config.mainStats?.[art.type] || [];
                 if (idealStats.length > 0 && !idealStats.includes(mainKey) && (config.weights?.[mainKey] || 0) < 0.5) {
                     tip = t('roadmap.worst.tip.badMainStat');
-                    tipColor = '#ef4444';
-                    tipBg = 'rgba(239, 68, 68, 0.12)';
-                    tipBorder = 'rgba(239, 68, 68, 0.3)';
+                    tipColor = '#f87171';
+                    tipBg = 'rgba(248, 113, 113, 0.12)';
+                    tipBorder = 'none';
                 }
             }
 
             if (isOffPiece && curScoreRaw < 20) {
                 tip = t('roadmap.worst.tip.weakOffPiece');
-                tipColor = '#3b82f6';
-                tipBg = 'rgba(59, 130, 246, 0.12)';
-                tipBorder = 'rgba(59, 130, 246, 0.3)';
+                tipColor = '#fb923c';
+                tipBg = 'rgba(251, 146, 60, 0.12)';
+                tipBorder = 'none';
             }
 
             let critRate = 0;
@@ -130,19 +130,17 @@ export function renderWorstPiecesAudit(characters, focusCharNom = null, mode = (
                         <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.worst.desc')}</p>
                     </div>
                     <!-- Sélecteur CV / Score -->
-                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <div class="roadmap-segmented-group">
                         <button data-action="set-worst-pieces-mode"
                                 data-mode="score"
                                 type="button"
-                                class="button-unlink"
-                                style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${mode === 'score' ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${mode === 'score' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${mode === 'score' ? '#60a5fa' : 'var(--text-grey)'};">
+                                class="roadmap-segmented-item ${mode === 'score' ? 'active' : ''}">
                             <span>${t('roadmap.best.modeScore')}</span>
                         </button>
                         <button data-action="set-worst-pieces-mode"
                                 data-mode="cv"
                                 type="button"
-                                class="button-unlink"
-                                style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${mode === 'cv' ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${mode === 'cv' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${mode === 'cv' ? '#60a5fa' : 'var(--text-grey)'};">
+                                class="roadmap-segmented-item ${mode === 'cv' ? 'active' : ''}">
                             <span>${t('roadmap.best.modeCV')}</span>
                         </button>
                     </div>
@@ -163,7 +161,7 @@ export function renderWorstPiecesAudit(characters, focusCharNom = null, mode = (
                                 <div style="display:flex; flex-direction:column; min-width:0; flex:1;">
                                     <div style="display:flex; align-items:center; gap:6px; min-width:0;">
                                         <span style="font-size:13px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.typeName}</span>
-                                        ${p.isOffPiece ? `<span style="font-size:9px; color:var(--accent-green); background:rgba(34,197,94,0.12); padding:1px 5px; border-radius:3px; border:1px solid rgba(34,197,94,0.25); flex-shrink:0;">${t('roadmap.worst.offPieceBadge')}</span>` : ''}
+                                        ${p.isOffPiece ? `<span style="font-size:9px; color:#fbbf24; background:rgba(251,191,36,0.12); padding:1px 6px; border-radius:4px; border:none; flex-shrink:0; white-space:nowrap;">${t('roadmap.worst.offPieceBadge')}</span>` : ''}
                                     </div>
                                     <div style="display:flex; align-items:center; gap:4px; margin-top:2px; min-width:0;">
                                         <span style="font-size:11px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.setName}</span>
@@ -201,7 +199,7 @@ export function renderWorstPiecesAudit(characters, focusCharNom = null, mode = (
                                         </div>
                                     </div>
                                 `}
-                                <div style="font-size:9.5px; color:${p.tipColor}; background:${p.tipBg}; border:1px solid ${p.tipBorder}; padding:1px 6px; border-radius:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:180px; text-align:right;" title="${p.tip}">
+                                <div style="font-size:9px; color:${p.tipColor}; background:${p.tipBg}; border:none; padding:1px 6px; border-radius:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:180px; text-align:right;" title="${p.tip}">
                                     ${p.tip}
                                 </div>
                             </div>

@@ -391,11 +391,11 @@ export function showTargetPieceTooltip(element, charNom, setKey, forceAll = fals
     // Badge de statut global du perso
     let statusPill = '';
     if (need?.status === 'optimized') {
-        statusPill = `<span style="font-size:10px; color:#22c55e; background:rgba(34,197,94,0.12); padding:2px 7px; border-radius:10px; font-weight:normal;">${t('roadmap.domains.optimized', 'Optimisé')}</span>`;
+        statusPill = `<span style="font-size:10px; color:#22c55e; background:rgba(34,197,94,0.12); padding:2px 7px; border-radius:4px; font-weight:normal;">${t('roadmap.domains.optimized', 'Optimisé')}</span>`;
     } else if (need?.status === 'incomplete') {
-        statusPill = `<span style="font-size:10px; color:#fbbf24; background:rgba(251,191,36,0.12); padding:2px 7px; border-radius:10px; font-weight:normal;">${need.targetPieces === 2 ? t('roadmap.domains.need2p') : t('roadmap.domains.need4p')}</span>`;
+        statusPill = `<span style="font-size:10px; color:#fbbf24; background:rgba(251,191,36,0.12); padding:2px 7px; border-radius:4px; font-weight:normal;">${need.targetPieces === 2 ? t('roadmap.domains.need2p') : t('roadmap.domains.need4p')}</span>`;
     } else if (need?.status === 'upgrade') {
-        statusPill = `<span style="font-size:10px; color:#60a5fa; background:rgba(59,130,246,0.12); padding:2px 7px; border-radius:10px; font-weight:normal;">${t('roadmap.domains.needPiece', need.weakCount)}</span>`;
+        statusPill = `<span style="font-size:10px; font-weight:normal; padding:2px 7px; border-radius:4px; background:var(--shadow-subtle); color:var(--text-always-white);">${t('roadmap.domains.needPiece', need.weakCount)}</span>`;
     }
 
     // Bouton de bascule Voir tout / Pièces ciblées
@@ -435,7 +435,7 @@ export function showTargetPieceTooltip(element, charNom, setKey, forceAll = fals
             <!-- Barre Build & Team associée -->
             <div style="background:var(--shadow-subtle); padding:6px 10px; border-radius:6px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; border:none;">
                 <div style="font-size:10.5px; color:var(--text-grey);">
-                    ${t('roadmap.tooltip.build', 'Build')} : <span style="color:#60a5fa; font-weight:normal;">${buildName}</span>
+                    ${t('roadmap.tooltip.build', 'Build')} : <span style="color:var(--text-always-white); font-weight:normal;">${buildName}</span>
                 </div>
                 ${teamHtml}
             </div>

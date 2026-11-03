@@ -4130,6 +4130,78 @@ input:checked+.toggle-track .star-4 {
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* --- SÉLECTEURS ET FILTRES ROADMAP (STYLE BARRE DE PERSONNALISATION) --- */
+.roadmap-segmented-group {
+    display: inline-flex;
+    align-items: center;
+    background: var(--shadow-subtle);
+    border-radius: 6px;
+    padding: 3px;
+    gap: 3px;
+    box-sizing: border-box;
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+.roadmap-segmented-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 26px;
+    padding: 0 10px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-family: inherit;
+    font-weight: normal;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.roadmap-segmented-item:hover:not(.active) {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.roadmap-segmented-item.active {
+    background: var(--bg-active);
+    color: var(--text-always-white);
+}
+
+.roadmap-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 12px;
+    background: var(--shadow-subtle);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-family: inherit;
+    font-weight: normal;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.roadmap-filter-btn:hover:not(.active) {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.roadmap-filter-btn.active {
+    background: var(--bg-active);
+    color: var(--text-always-white);
+}
+
 /* Module 1: Maturity Barometer */
 .maturity-content {
     display: flex;

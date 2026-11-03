@@ -102,7 +102,7 @@ export function renderPrioritiesAdvice(persoObj) {
                         
                         <div style="display:flex; align-items:center; gap:8px;">
                             <p style="font-size: 14px; color:var(--text-primary); margin:0;">${i + 1}. ${prio.piece}</p>
-                            ${prio.isOffPiece ? `<span style="font-size:9px; color:var(--accent-green); background:rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); padding:2px 5px; border-radius:4px; text-transform:uppercase;">${t('ui.art.offPiece')}</span>` : ''}
+                            ${prio.isOffPiece ? `<span style="font-size:9px; color:#fbbf24; background:rgba(251,191,36,0.12); border:none; padding:1px 6px; border-radius:4px;">${t('ui.art.offPiece')}</span>` : ''}
                         </div>
                         
                         <div style="display:flex; align-items:center; gap:5px;">

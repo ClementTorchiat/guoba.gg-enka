@@ -139,11 +139,11 @@ export function renderGlobalSwapAdvisor(characters, focusCharNom = null) {
                                     </div>
                                     <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
                                         ${swap.isFocusGain ? `
-                                            <span style="font-size:9px; font-weight:normal; padding:2px 6px; border-radius:6px; background:rgba(59,130,246,0.2); color:#60a5fa; white-space:nowrap;">
+                                            <span style="font-size:9px; font-weight:normal; padding:1px 6px; border-radius:4px; background:rgba(59,130,246,0.2); color:#60a5fa; border:none; white-space:nowrap;">
                                                 ${t('roadmap.swaps.focusGain', focusCharNom)}
                                             </span>
                                         ` : ''}
-                                        <span style="font-size:11px; font-weight:normal; color:var(--accent-green); background:rgba(34,197,94,0.12); padding:2px 6px; border-radius:6px; white-space:nowrap;">
+                                        <span style="font-size:9px; font-weight:normal; color:var(--accent-green); background:rgba(34,197,94,0.12); padding:1px 6px; border-radius:4px; border:none; white-space:nowrap;">
                                             +${swap.netGain} pts net
                                         </span>
                                     </div>

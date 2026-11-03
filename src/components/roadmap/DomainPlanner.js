@@ -298,10 +298,10 @@ export function getSetIcon(setKey, characters = []) {
 }
 
 /**
- * Rendu d'un badge de set d'artéfact inline avec mini icône de fleur et nom en bleu #60a5fa,
+ * Rendu d'un badge de set d'artéfact inline avec mini icône de fleur et nom en vert,
  * soulignant l'ensemble du span (icône + nom de set).
  */
-export function renderInlineSetBadge(setName, iconUrl, color = '#60a5fa') {
+export function renderInlineSetBadge(setName, iconUrl, color = 'var(--accent-green)') {
     if (!setName) return '';
     return `<span style="display:inline-flex; align-items:center; vertical-align:middle; gap:4px; color:${color}; font-weight:500; border-bottom:1px solid ${color}; padding-bottom:1px; line-height:1.2;">${iconUrl ? `<img src="${iconUrl}" alt="" style="width:14px; height:14px; border-radius:3px; object-fit:contain; display:inline-block; vertical-align:middle; background:rgba(255,255,255,0.05);" onerror="this.style.display='none'">` : ''}${setName}</span>`;
 }
@@ -466,20 +466,20 @@ export function calculateDomainRankings(characters, focusCharNom = null, scope =
 
         if (totalScore > 0) {
             let efficiencyKey = 'low';
-            let efficiencyColor = '#94a3b8';
+            let efficiencyColor = '#f87171';
 
             if (isResinTrap) {
                 efficiencyKey = 'resinTrap';
-                efficiencyColor = '#60a5fa';
-            } else if (isFocusTarget || totalScore >= 7.0 || (bothSetsUseful && totalScore >= 5.0)) {
+                efficiencyColor = '#f87171';
+            } else if (totalScore >= 7.0 || (bothSetsUseful && totalScore >= 5.0)) {
                 efficiencyKey = 'veryHigh';
-                efficiencyColor = isFocusTarget ? '#3b82f6' : '#22c55e';
-            } else if (totalScore >= 4.0) {
+                efficiencyColor = '#22c55e';
+            } else if (totalScore >= 4.0 || isFocusTarget) {
                 efficiencyKey = 'high';
-                efficiencyColor = '#3b82f6';
+                efficiencyColor = '#22c55e';
             } else if (totalScore >= 2.0) {
                 efficiencyKey = 'medium';
-                efficiencyColor = '#eab308';
+                efficiencyColor = '#fb923c';
             }
 
             const domainName = domain.name[LANG] || domain.name['en'] || domain.name['fr'] || domain.id;
@@ -529,26 +529,23 @@ export function renderDomainPlanner(characters, focusCharNom = null, scope = (ty
                     <p style="font-size:12px; color:var(--text-grey); margin:4px 0 0 0;">${t('roadmap.domains.desc')}</p>
                 </div>
                 <!-- Sélecteur de portée : Priorités vs Vitrine vs Tous les persos -->
-                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                <div class="roadmap-segmented-group">
                     <button data-action="set-domain-scope" 
                             data-scope="priorities" 
                             type="button" 
-                            class="button-unlink"
-                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${scope === 'priorities' ? '1px solid #3b82f6' : 'none'}; background:${scope === 'priorities' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${scope === 'priorities' ? '#60a5fa' : 'var(--text-grey)'};">
+                            class="roadmap-segmented-item ${scope === 'priorities' ? 'active' : ''}">
                         <span>${t('roadmap.scope.priorities')}</span>
                     </button>
                     <button data-action="set-domain-scope" 
                             data-scope="showcase" 
                             type="button" 
-                            class="button-unlink"
-                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${scope === 'showcase' ? '1px solid #3b82f6' : 'none'}; background:${scope === 'showcase' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${scope === 'showcase' ? '#60a5fa' : 'var(--text-grey)'};">
+                            class="roadmap-segmented-item ${scope === 'showcase' ? 'active' : ''}">
                         <span>${t('roadmap.scope.showcase')}</span>
                     </button>
                     <button data-action="set-domain-scope" 
                             data-scope="all" 
                             type="button" 
-                            class="button-unlink"
-                            style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${scope === 'all' ? '1px solid #3b82f6' : 'none'}; background:${scope === 'all' ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${scope === 'all' ? '#60a5fa' : 'var(--text-grey)'};">
+                            class="roadmap-segmented-item ${scope === 'all' ? 'active' : ''}">
                         <span>${t('roadmap.scope.allChars')}</span>
                     </button>
                 </div>
@@ -576,11 +573,11 @@ export function renderDomainPlanner(characters, focusCharNom = null, scope = (ty
                                     </div>
                                     <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
                                         ${d.isFocusTarget ? `
-                                            <span style="font-size:9px; font-weight:normal; padding:2px 6px; border-radius:10px; background:rgba(59,130,246,0.2); color:#60a5fa; border:none; white-space:nowrap;">
+                                            <span style="font-size:9px; font-weight:normal; padding:1px 6px; border-radius:4px; background:rgba(59,130,246,0.2); color:#60a5fa; border:none; white-space:nowrap;">
                                                 ${t('roadmap.focus.domainPriority')}
                                             </span>
                                         ` : ''}
-                                        <span style="font-size:10px; font-weight:normal; padding:3px 8px; border-radius:12px; background:${d.efficiencyColor}18; color:${d.efficiencyColor}; border:none; white-space:nowrap;">
+                                        <span style="font-size:9px; font-weight:normal; padding:1px 6px; border-radius:4px; background:${d.efficiencyColor}18; color:${d.efficiencyColor}; border:none; white-space:nowrap;">
                                             ${t('roadmap.domains.efficiency.' + d.efficiencyKey)}
                                         </span>
                                     </div>

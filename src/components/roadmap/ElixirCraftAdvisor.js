@@ -247,13 +247,13 @@ export function getElixirCraftRecommendations(characters, focusCharNom = null, b
 
             // Détermination du verdict
             let verdict = 'moderate';
-            let verdictColor = '#3b82f6';
+            let verdictColor = '#fb923c';
             if (roiComposite >= 30 || (deltaScoreRaw >= 16 && cost <= 2)) {
                 verdict = 'exceptional';
-                verdictColor = '#f59e0b';
+                verdictColor = '#22c55e';
             } else if (roiComposite >= 18 || deltaScoreRaw >= 10) {
                 verdict = 'high';
-                verdictColor = '#c084fc';
+                verdictColor = '#22c55e';
             } else if (upgradeChance >= 80 && deltaScoreRaw >= 5) {
                 verdict = 'safe';
                 verdictColor = '#22c55e';
@@ -355,15 +355,14 @@ export function renderElixirCraftAdvisor(
                 <!-- Filtres : Portée (Gauche) + Séparateur + Budget (Droite) -->
                 <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
                     <!-- Sélecteur de Portée : Tous vs Vitrine vs Réserve -->
-                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <div class="roadmap-segmented-group">
                         ${scopes.map(s => {
         const isSelected = String(scopeFilter) === String(s.key);
         return `
                             <button data-action="set-elixir-scope"
                                     data-scope="${s.key}"
                                     type="button"
-                                    class="button-unlink"
-                                    style="display:inline-flex; align-items:center; padding:5px 11px; border-radius:8px; font-size:11px; font-weight:normal; cursor:pointer; transition:all 0.2s ease; border:${isSelected ? '1px solid #3b82f6' : '1px solid rgba(255,255,255,0)'}; background:${isSelected ? 'rgba(59,130,246,0.18)' : 'var(--shadow-subtle)'}; color:${isSelected ? '#60a5fa' : 'var(--text-grey)'};">
+                                    class="roadmap-segmented-item ${isSelected ? 'active' : ''}">
                                 <span>${s.label}</span>
                             </button>
                         `;
@@ -374,18 +373,17 @@ export function renderElixirCraftAdvisor(
                     <div style="width:1px; height:20px; background:var(--border-color);"></div>
 
                     <!-- Sélecteur de Budget d'Élixirs -->
-                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <div class="roadmap-segmented-group">
                         ${budgets.map(b => {
         const isSelected = String(budgetFilter) === String(b.key);
         return `
                             <button data-action="set-elixir-budget"
                                     data-budget="${b.key}"
                                     type="button"
-                                    class="button-unlink"
-                                    title="${b.fullLabel || b.label}"
-                                    style="display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:8px; font-size:11px; cursor:pointer; transition:all 0.2s ease; border:${isSelected ? '1px solid #f59e0b' : 'none'}; background:${isSelected ? 'rgba(245,158,11,0.18)' : 'var(--shadow-subtle)'}; color:${isSelected ? 'var(--accent-gold, #f59e0b)' : 'var(--text-grey)'};">
+                                    class="roadmap-segmented-item ${isSelected ? 'active' : ''}"
+                                    title="${b.fullLabel || b.label}">
                                 <span>${b.label}</span>
-                                ${b.count ? getFlaskSvg(11, isSelected ? '#f59e0b' : 'var(--text-grey)') : ''}
+                                ${b.count ? getFlaskSvg(11) : ''}
                             </button>
                         `;
     }).join('')}
@@ -413,7 +411,7 @@ export function renderElixirCraftAdvisor(
                                                 ${rec.persoNom}
                                             </span>
                                             ${rec.isFocus ? `
-                                                <span style="font-size:9px; font-weight:normal; padding:1px 5px; border-radius:6px; background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); flex-shrink:0;">
+                                                <span style="font-size:9px; font-weight:normal; padding:1px 6px; border-radius:4px; background:rgba(59,130,246,0.2); color:#60a5fa; border:none; flex-shrink:0; white-space:nowrap;">
                                                     ${t('roadmap.elixir.focusPriority')}
                                                 </span>
                                             ` : ''}
@@ -426,9 +424,9 @@ export function renderElixirCraftAdvisor(
 
                                 <div style="display:flex; align-items:center; gap:6px; flex-shrink:0; margin-left:6px;">
                                     <!-- Badge Coût Élixirs avec SVG Minimaliste -->
-                                    <span style="font-size:11px; font-weight:normal; padding:3px 8px; border-radius:8px; background:rgba(245,158,11,0.15); color:#f59e0b; display:inline-flex; align-items:center; gap:4px;">
+                                    <span style="font-size:11px; font-weight:normal; padding:3px 8px; border-radius:6px; background:var(--shadow-subtle); color:var(--text-always-white); display:inline-flex; align-items:center; gap:4px;">
                                         <span>${rec.cost}</span>
-                                        ${getFlaskSvg(12, '#f59e0b')}
+                                        ${getFlaskSvg(12)}
                                     </span>
                                 </div>
                             </div>
@@ -473,7 +471,7 @@ export function renderElixirCraftAdvisor(
                             <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; min-height:36px; box-sizing:border-box;">
                                 <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
                                     <div style="font-size:10px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                                        ${t('roadmap.elixir.currentPiece')} <span style="color:${rec.curGradeColor}; font-weight:normal;">${rec.curScore} pts (${rec.curGrade})</span>
+                                        ${t('roadmap.elixir.currentPiece')} <span style="color:${rec.curGradeColor}; font-weight:normal;">${rec.curScore} (${rec.curGrade})</span>
                                     </div>
                                     <div style="font-size:12px; font-weight:normal; color:var(--accent-green); white-space:nowrap;">
                                         ${t('roadmap.elixir.expectedGain', rec.deltaScore)}
@@ -481,7 +479,7 @@ export function renderElixirCraftAdvisor(
                                 </div>
 
                                 <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px; flex-shrink:0;">
-                                    <span style="font-size:10px; font-weight:normal; padding:2px 7px; border-radius:6px; background:${rec.verdictColor}18; color:${rec.verdictColor}; white-space:nowrap;">
+                                    <span style="font-size:9px; font-weight:normal; padding:1px 6px; border-radius:4px; background:${rec.verdictColor}18; color:${rec.verdictColor}; border:none; white-space:nowrap;">
                                         ${t('roadmap.elixir.verdict.' + rec.verdict)}
                                     </span>
                                     <span style="font-size:10px; color:var(--text-grey); white-space:nowrap;">
