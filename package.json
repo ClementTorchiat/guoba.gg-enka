@@ -1,7 +1,7 @@
 {
   "name": "guoba.gg",
   "type": "module",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "gameVersion": "7.2",
   "scripts": {
     "predev": "node scripts/generate_buckets.js",
