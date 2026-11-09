@@ -1,6 +1,6 @@
 // src/components/roadmap/DailyFarmingRoadmap.js
 import { t, LANG } from '../../scripts/i18n.js';
-import { getWeeklyFarmingSchedule, getLocalizedItemName, calculateCharacterAscensionCost } from './farmingEngine.js';
+import { getWeeklyFarmingSchedule, getLocalizedItemName, calculateCharacterAscensionCost, ASCENSION_LEVEL_LABELS } from './farmingEngine.js';
 
 const ENKA_CDN = 'https://enka.network/ui/';
 const YATTA_CDN = 'https://gi.yatta.moe/assets/UI/';
@@ -107,7 +107,7 @@ function renderCharacterFarmingCard(charData) {
                         <div style="display:flex; align-items:center; gap:5px; color:#fbbf24;">
                             <span>${t('roadmap.farming.ascensionNotice', charData.charNom, charData.currentLvl, charData.currentAsc)}</span>
                         </div>
-                        <span style="color:var(--text-grey); font-size:10px;">${t('roadmap.farming.ascensionTargetInfo', charData.maxRequiredAsc)}</span>
+                        <span style="color:var(--text-grey); font-size:10px;">${t('roadmap.farming.ascensionTargetInfo', charData.maxRequiredAsc, charData.maxRequiredAscLabel || ASCENSION_LEVEL_LABELS[charData.maxRequiredAsc] || '80/90')}</span>
                     </div>
                     ${(charData.worldBoss || charData.specialty) ? `
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding-top:2px;">
@@ -210,12 +210,12 @@ function renderWeaponFarmingCard(weaponData) {
 /**
  * Rendu d'une journée spécifique (par exemple Lundi, Mardi, ou Dimanche).
  */
-function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWeaponsWithNeeds = []) {
+function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWeaponsWithNeeds = [], schedule = null) {
     const domains = daySchedule.domains || [];
     const isSunday = daySchedule.isSunday;
 
     if (domains.length === 0) {
-        const charactersNeedingAscension = allCharactersWithNeeds.filter(p => p.needsAscension);
+        const charactersNeedingAscension = schedule?.charactersNeedingAscension || allCharactersWithNeeds.filter(p => p.needsAscension);
 
         return `
             <div style="background:var(--bg-panel); border:none; border-radius:8px; padding:16px; display:flex; flex-direction:column; gap:14px;">
@@ -241,7 +241,7 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
                         </span>
                         <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap:12px;">
                             ${charactersNeedingAscension.map(c => {
-        const ascCost = c.fullAscensionCost || c.ascensionCost || (typeof calculateCharacterAscensionCost === 'function' ? calculateCharacterAscensionCost(c.currentAsc, 6) : null);
+        const ascCost = c.recommendedAscensionCost || c.fullAscensionCost || c.ascensionCost || (typeof calculateCharacterAscensionCost === 'function' ? calculateCharacterAscensionCost(c.currentAsc, c.targetAsc || 6) : null);
         const bossCount = ascCost?.boss || 0;
         const specCount = ascCost?.specialty || 0;
 
@@ -255,7 +255,7 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
                                             <div style="display:flex; align-items:center; gap:4px; font-size:10px; margin-top:3px; white-space:nowrap;">
                                                 <span style="color:var(--text-grey);">${t('ui.char.level', c.currentLvl || 1)} (${t('roadmap.farming.ascShort', c.currentAsc || 0)})</span>
                                                 <span style="color:var(--text-grey); font-size:9px;">➔</span>
-                                                <span style="color:var(--accent-green); font-weight:normal;">${t('ui.char.level', '80/90')} (${t('roadmap.farming.ascShort', 6)})</span>
+                                                <span style="color:var(--accent-green); font-weight:normal;">${t('ui.char.level', c.targetLvlLabel || '80/90')} (${t('roadmap.farming.ascShort', c.targetAsc || 6)})</span>
                                             </div>
                                         </div>
                                     </div>
@@ -478,7 +478,7 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
         { key: 'all', label: t('roadmap.farming.fullWeek') }
     ];
 
-    const hasAnyNeeds = (schedule.allCharactersWithNeeds.length > 0 || schedule.allWeaponsWithNeeds.length > 0);
+    const hasAnyNeeds = (schedule.allCharactersWithNeeds.length > 0 || schedule.allWeaponsWithNeeds.length > 0 || (schedule.charactersNeedingAscension && schedule.charactersNeedingAscension.length > 0));
 
     return `
         <div style="display:flex; flex-direction:column; gap:16px; padding-bottom:40px;">
@@ -539,7 +539,7 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
             ` : (
             isFullWeekMode
                 ? renderFullWeekSchedule(schedule.weekSchedule)
-                : renderSingleDaySchedule(currentDaySchedule, schedule.allCharactersWithNeeds, schedule.allWeaponsWithNeeds)
+                : renderSingleDaySchedule(currentDaySchedule, schedule.allCharactersWithNeeds, schedule.allWeaponsWithNeeds, schedule)
         )}
         </div>
     `;

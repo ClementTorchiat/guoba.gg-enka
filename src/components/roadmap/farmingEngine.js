@@ -46,6 +46,17 @@ export const CHARACTER_ASCENSION_COSTS = {
     6: { boss: 20, specialty: 60, mora: 120000 }
 };
 
+// Libellés standards des paliers de niveau selon l'élévation
+export const ASCENSION_LEVEL_LABELS = {
+    0: '1',
+    1: '20/40',
+    2: '40/50',
+    3: '50/60',
+    4: '60/70',
+    5: '70/80',
+    6: '80/90'
+};
+
 /**
  * Calcule les matériaux d'élévation de personnage requis de fromAsc à toAsc.
  * @param {number} fromAsc 0 à 6
@@ -357,12 +368,12 @@ export function calculateTalentCost(fromLvl, toLvl) {
  */
 export function getRequiredAscensionForTalentLevel(talentLvl) {
     const target = parseInt(talentLvl, 10) || 1;
-    if (target <= 1) return { asc: 0, minCharLvl: 1, label: '1' };
-    if (target <= 2) return { asc: 2, minCharLvl: 40, label: '40/50' };
-    if (target <= 4) return { asc: 3, minCharLvl: 50, label: '50/60' };
-    if (target <= 6) return { asc: 4, minCharLvl: 60, label: '60/70' };
-    if (target <= 8) return { asc: 5, minCharLvl: 70, label: '70/80' };
-    return { asc: 6, minCharLvl: 80, label: '80/90' };
+    if (target <= 1) return { asc: 0, minCharLvl: 1, label: ASCENSION_LEVEL_LABELS[0] };
+    if (target <= 2) return { asc: 2, minCharLvl: 40, label: ASCENSION_LEVEL_LABELS[2] };
+    if (target <= 4) return { asc: 3, minCharLvl: 50, label: ASCENSION_LEVEL_LABELS[3] };
+    if (target <= 6) return { asc: 4, minCharLvl: 60, label: ASCENSION_LEVEL_LABELS[4] };
+    if (target <= 8) return { asc: 5, minCharLvl: 70, label: ASCENSION_LEVEL_LABELS[5] };
+    return { asc: 6, minCharLvl: 80, label: ASCENSION_LEVEL_LABELS[6] };
 }
 
 /**
@@ -402,6 +413,121 @@ export function getCharacterAscension(perso) {
     if (lvl >= 41) return 2;
     if (lvl >= 21) return 1;
     return (rawAsc !== undefined && !isNaN(rawAsc)) ? rawAsc : 0;
+}
+
+/**
+ * Détermine l'élévation recommandée pour un personnage selon ses aptitudes cibles,
+ * ses scalers de statistiques (PV, DÉF, EM) et son rôle dans la meta.
+ * @param {Object} perso
+ * @param {Object} config
+ * @param {Object} targets { auto, skill, burst }
+ * @returns {{ targetAsc: number, targetLvlLabel: string, reason: string }}
+ */
+export function getRecommendedCharacterAscension(perso, config = {}, targets = {}) {
+    if (!perso) return { targetAsc: 6, targetLvlLabel: '80/90', reason: 'default' };
+
+    // 1. Dérogation explicite dans la configuration du personnage (JSON)
+    const explicitAsc = config.recommendedAscension ?? config.recommendedAsc ?? config.targetAsc;
+    if (typeof explicitAsc === 'number' && explicitAsc >= 1 && explicitAsc <= 6) {
+        return {
+            targetAsc: explicitAsc,
+            targetLvlLabel: ASCENSION_LEVEL_LABELS[explicitAsc] || '80/90',
+            reason: 'explicit_config'
+        };
+    }
+    const explicitLvl = config.recommendedLevel ?? config.recommendedLvl ?? config.targetLevel;
+    if (typeof explicitLvl === 'number') {
+        if (explicitLvl > 80) return { targetAsc: 6, targetLvlLabel: '80/90', reason: 'explicit_config' };
+        if (explicitLvl > 70) return { targetAsc: 5, targetLvlLabel: '70/80', reason: 'explicit_config' };
+        if (explicitLvl > 60) return { targetAsc: 4, targetLvlLabel: '60/70', reason: 'explicit_config' };
+    }
+
+    // 2. Base déduite des aptitudes cibles (plancher minimum universel = Ascension 4 pour le passif A4)
+    const maxTargetTalent = Math.max(
+        Number(targets?.auto) || 1,
+        Number(targets?.skill) || 1,
+        Number(targets?.burst) || 1
+    );
+
+    let targetAsc = 4; // Minimum 60/70 pour débloquer le passif A4
+    let reason = 'support_a4';
+
+    if (maxTargetTalent >= 9) {
+        targetAsc = 6;
+        reason = 'talents_high';
+    } else if (maxTargetTalent >= 7) {
+        targetAsc = 5;
+        reason = 'talents_mid';
+    }
+
+    // Si l'élévation 6 est déjà requise par les aptitudes, nul besoin de tester les scalings
+    if (targetAsc >= 6) {
+        return {
+            targetAsc: 6,
+            targetLvlLabel: ASCENSION_LEVEL_LABELS[6],
+            reason
+        };
+    }
+
+    // 3. Détection des cas justifiant le palier 6 (80/90) indépendamment des aptitudes
+    const weights = config.weights || {};
+    const element = (perso.element || '').toLowerCase();
+    const charNom = (perso.nom || '').trim().toLowerCase();
+
+    // a. Buffers d'ATQ de base brute (Bennett, Sara dont le buff dépend strictement de l'ATQ de base)
+    if (charNom.includes('bennett') || charNom.includes('sara')) {
+        return {
+            targetAsc: 6,
+            targetLvlLabel: ASCENSION_LEVEL_LABELS[6],
+            reason: 'base_atk_buffer'
+        };
+    }
+
+    // b. Scalers PV & DÉF (le gain de base profite grandement de l'élévation 6)
+    const hpWeight = Math.max(Number(weights.hp_) || 0, Number(weights.hp) || 0);
+    const defWeight = Math.max(Number(weights.def_) || 0, Number(weights.def) || 0);
+    if (hpWeight >= 0.6 || defWeight >= 0.6) {
+        return {
+            targetAsc: 6,
+            targetLvlLabel: ASCENSION_LEVEL_LABELS[6],
+            reason: 'hp_or_def_scaler'
+        };
+    }
+
+    // c. Réactions transformatives & EM (Swirl Anemo, Hyperbloom / Burgeon triggers)
+    const emWeight = Number(weights.eleMas) || 0;
+    if (element === 'anemo' && emWeight >= 0.4) {
+        return {
+            targetAsc: 6,
+            targetLvlLabel: ASCENSION_LEVEL_LABELS[6],
+            reason: 'anemo_swirl'
+        };
+    } else if (['electro', 'pyro', 'dendro'].includes(element) && emWeight >= 0.6) {
+        return {
+            targetAsc: 6,
+            targetLvlLabel: ASCENSION_LEVEL_LABELS[6],
+            reason: 'transformative_reaction'
+        };
+    }
+
+    // d. Personnages incontournables nécessitant le palier max pour les réactions ou passifs même avec aptitudes basses
+    const LEVEL_90_PRIORITY_NAMES = [
+        'kazuha', 'sucrose', 'venti',
+        'shinobu', 'nilou', 'nahida', 'alhaitham', 'cyno', 'tighnari'
+    ];
+    if (LEVEL_90_PRIORITY_NAMES.some(n => charNom.includes(n))) {
+        return {
+            targetAsc: 6,
+            targetLvlLabel: ASCENSION_LEVEL_LABELS[6],
+            reason: 'meta_level90_synergy'
+        };
+    }
+
+    return {
+        targetAsc,
+        targetLvlLabel: ASCENSION_LEVEL_LABELS[targetAsc] || '70/80',
+        reason
+    };
 }
 
 /**
@@ -495,10 +621,15 @@ export function getCharacterFarmingNeeds(perso) {
     const hasLockedTalents = talentGaps.some(g => g.isLocked);
     const allTalentsFullyLocked = (talentGaps.length > 0 && talentGaps.every(g => g.fullyLocked));
     const maxRequiredAsc = talentGaps.reduce((max, g) => Math.max(max, g.requiredAsc || 0), 0);
-    const ascensionCost = hasLockedTalents ? calculateCharacterAscensionCost(pAsc, maxRequiredAsc) : { boss: 0, specialty: 0, mora: 0 };
-    const fullAscensionCost = calculateCharacterAscensionCost(pAsc, 6);
+    const maxRequiredAscLabel = ASCENSION_LEVEL_LABELS[maxRequiredAsc] || '80/90';
 
-    const needsAscension = (pLvl < 90 && !(pLvl >= 80 && pAsc >= 6));
+    const { targetAsc, targetLvlLabel, reason: targetReason } = getRecommendedCharacterAscension(perso, config, targets);
+    const recommendedAscensionCost = calculateCharacterAscensionCost(pAsc, targetAsc);
+    const fullAscensionCost = calculateCharacterAscensionCost(pAsc, 6);
+    const ascensionCost = hasLockedTalents ? calculateCharacterAscensionCost(pAsc, maxRequiredAsc) : { boss: 0, specialty: 0, mora: 0 };
+
+    // Un personnage nécessite une élévation s'il n'a pas encore atteint son palier cible recommandé
+    const needsAscension = (pAsc < targetAsc);
     const hasTalentNeeds = (talentGaps.length > 0 && bookRotation !== null);
 
     return {
@@ -517,11 +648,16 @@ export function getCharacterFarmingNeeds(perso) {
         needsAscension,
         currentLvl: pLvl,
         currentAsc: pAsc,
+        targetAsc,
+        targetLvlLabel,
+        targetReason,
         maxTalentPossibleNow,
         hasLockedTalents,
         allTalentsFullyLocked,
         maxRequiredAsc,
+        maxRequiredAscLabel,
         ascensionCost,
+        recommendedAscensionCost,
         fullAscensionCost
     };
 }
@@ -554,6 +690,11 @@ export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null, c
     const charactersWithTalentNeeds = analyzedChars.filter(p => {
         if (focusCharNom) return p.isFocus && p.hasTalentNeeds;
         return p.hasTalentNeeds;
+    });
+
+    const charactersNeedingAscension = analyzedChars.filter(p => {
+        if (focusCharNom) return p.isFocus && p.needsAscension;
+        return p.needsAscension;
     });
 
     // 2. Analyse des armes équipées
@@ -732,6 +873,7 @@ export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null, c
         weekSchedule: weekOrdered,
         scheduleByDay,
         allCharactersWithNeeds: charactersWithTalentNeeds,
+        charactersNeedingAscension,
         allWeaponsWithNeeds: weaponsWithNeeds,
         totalAccountResin,
         totalAccountMora,

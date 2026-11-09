@@ -1123,7 +1123,7 @@ export const T = {
         "roadmap.farming.ascShort": (asc) => `Élév. ${asc}`,
         "roadmap.farming.ascensionRequiredTooltip": (asc, lvlLabel) => `Nécessite l'élévation ${asc} (${lvlLabel}) pour débloquer ce niveau`,
         "roadmap.farming.ascensionNotice": (name, lvl, asc) => `${name} est Niv. ${lvl} (Élévation ${asc})`,
-        "roadmap.farming.ascensionTargetInfo": (asc) => `Élévation ${asc} (80/90) requise`,
+        "roadmap.farming.ascensionTargetInfo": (asc, lvlLabel) => `Élévation ${asc} (${lvlLabel || '80/90'}) requise`,
         "roadmap.farming.toUnlockAscendWith": "Pour débloquer",
 
         // Module 3 : Optimiseur de Swaps Croisés
@@ -2369,7 +2369,7 @@ export const T = {
         "roadmap.farming.ascShort": (asc) => `Asc. ${asc}`,
         "roadmap.farming.ascensionRequiredTooltip": (asc, lvlLabel) => `Requires Ascension ${asc} (${lvlLabel}) to unlock this level`,
         "roadmap.farming.ascensionNotice": (name, lvl, asc) => `${name} is Lv. ${lvl} (Ascension ${asc})`,
-        "roadmap.farming.ascensionTargetInfo": (asc) => `Ascension ${asc} (80/90) required`,
+        "roadmap.farming.ascensionTargetInfo": (asc, lvlLabel) => `Ascension ${asc} (${lvlLabel || '80/90'}) required`,
         "roadmap.farming.toUnlockAscendWith": "To unlock, ascend with",
 
         // Module 3 : Cross-Character Swap Optimizer
