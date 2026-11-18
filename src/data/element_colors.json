@@ -1,10 +1,10 @@
 {
-  "pyro": "#884A20",
-  "hydro": "#195293",
-  "dendro": "#516514",
-  "electro": "#512C88",
-  "anemo": "#2B7C6C",
-  "cryo": "#1B7A92",
-  "geo": "#886D01",
+  "pyro": "#C25C3C",
+  "hydro": "#3B74BB",
+  "dendro": "#73A23C",
+  "electro": "#8357B0",
+  "anemo": "#2DB88F",
+  "cryo": "#25B3D4",
+  "geo": "#BE9742",
   "physical": "#cccccc"
 }

@@ -41,13 +41,13 @@ for (const [enka, local] of Object.entries(ENKA_TO_LOCAL_NAME)) {
 }
 
 export const ELEMENT_COLORS: Record<string, string> = {
-  pyro: "#884A20",
-  hydro: "#195293",
-  dendro: "#516514",
-  electro: "#512C88",
-  anemo: "#2B7C6C",
-  cryo: "#1B7A92",
-  geo: "#886D01",
+  pyro: "#C25C3C",
+  hydro: "#3B74BB",
+  dendro: "#73A23C",
+  electro: "#8357B0",
+  anemo: "#2DB88F",
+  cryo: "#25B3D4",
+  geo: "#BE9742",
   physical: "#cccccc",
 };
 
@@ -135,45 +135,45 @@ export function getLocs() {
 
 export async function getAssetTranslations(teammateAssets: Record<string, string>) {
   if (assetToLocalizedNames) return assetToLocalizedNames;
-  
+
   const locs = getLocs();
-  
+
   const weaponsRes = await fetch('https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/weapons.json');
   const weapons = await weaponsRes.json();
-  
+
   const relicsRes = await fetch('https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/relics.json');
   const relics = await relicsRes.json();
 
   const iconToHash: Record<string, string> = {};
   cachedIconToHash = iconToHash;
   for (const w of Object.values(weapons as any)) {
-      if ((w as any).Icon) {
-          let iconClean = (w as any).Icon.split('/').pop().replace('.png', '');
-          iconToHash[iconClean] = (w as any).NameTextMapHash;
-      }
+    if ((w as any).Icon) {
+      let iconClean = (w as any).Icon.split('/').pop().replace('.png', '');
+      iconToHash[iconClean] = (w as any).NameTextMapHash;
+    }
   }
   for (const r of Object.values(relics.Items as any)) {
-      if ((r as any).Icon && (r as any).SetId) {
-          let iconClean = (r as any).Icon.split('/').pop().replace('.png', '');
-          const set = relics.Sets[(r as any).SetId];
-          if (set && set.Name) {
-              iconToHash[iconClean] = set.Name;
-          }
+    if ((r as any).Icon && (r as any).SetId) {
+      let iconClean = (r as any).Icon.split('/').pop().replace('.png', '');
+      const set = relics.Sets[(r as any).SetId];
+      if (set && set.Name) {
+        iconToHash[iconClean] = set.Name;
       }
+    }
   }
 
   const res: Record<string, { fr: string, en: string }> = {};
   for (const [key, url] of Object.entries(teammateAssets)) {
-      let icon = url.split('/').pop()?.replace('.png', '');
-      let hash = iconToHash[icon || ''];
-      if (hash) {
-          res[key] = {
-              fr: locs.fr[hash] || key,
-              en: locs.en[hash] || key
-          };
-      } else {
-          res[key] = { fr: key, en: key };
-      }
+    let icon = url.split('/').pop()?.replace('.png', '');
+    let hash = iconToHash[icon || ''];
+    if (hash) {
+      res[key] = {
+        fr: locs.fr[hash] || key,
+        en: locs.en[hash] || key
+      };
+    } else {
+      res[key] = { fr: key, en: key };
+    }
   }
   assetToLocalizedNames = res;
   return res;
@@ -181,15 +181,15 @@ export async function getAssetTranslations(teammateAssets: Record<string, string
 
 export async function getIconTranslationMap() {
   if (!cachedIconToHash) {
-      await getAssetTranslations({});
+    await getAssetTranslations({});
   }
   const locs = getLocs();
   const map: Record<string, { fr: string, en: string }> = {};
   for (const [icon, hash] of Object.entries(cachedIconToHash || {})) {
-      map[icon] = {
-          fr: locs.fr[hash] || icon,
-          en: locs.en[hash] || icon
-      };
+    map[icon] = {
+      fr: locs.fr[hash] || icon,
+      en: locs.en[hash] || icon
+    };
   }
   return map;
 }
@@ -250,14 +250,14 @@ export async function getCharNamesTranslations(charName: string) {
   const finalEnkaName = getFinalEnkaName(charName);
   const avatar = enkaAvatarMap[finalEnkaName];
   if (avatar && avatar.NameTextMapHash) {
-      return {
-          fr: locs.fr[avatar.NameTextMapHash] || charName.replace(/_/g, ' '),
-          en: locs.en[avatar.NameTextMapHash] || charName.replace(/_/g, ' ')
-      };
+    return {
+      fr: locs.fr[avatar.NameTextMapHash] || charName.replace(/_/g, ' '),
+      en: locs.en[avatar.NameTextMapHash] || charName.replace(/_/g, ' ')
+    };
   }
   return {
-      fr: charName.replace(/_/g, ' '),
-      en: charName.replace(/_/g, ' ')
+    fr: charName.replace(/_/g, ' '),
+    en: charName.replace(/_/g, ' ')
   };
 }
 

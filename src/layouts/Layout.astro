@@ -783,6 +783,27 @@ const finalSchema = schema || defaultSchema;
                         }
                     });
 
+                    const homeLayoutPref = localStorage.getItem("guoba_home_layout") || "dashboard";
+                    const homeLayoutLabel = document.getElementById("active-home-layout-text");
+                    if (homeLayoutLabel) {
+                        const keys = {
+                            dashboard: "account.settings.homeLayout.dashboard",
+                            classic: "account.settings.homeLayout.classic",
+                        };
+                        const key = keys[homeLayoutPref] || keys["dashboard"];
+                        homeLayoutLabel.setAttribute("data-i18n", key);
+                        if (typeof window !== "undefined" && window.t) {
+                            homeLayoutLabel.innerText = window.t(key);
+                        }
+                    }
+                    document.querySelectorAll("#home-layout-custom-menu .custom-select-item").forEach((item) => {
+                        if (item.getAttribute("data-value") === homeLayoutPref) {
+                            item.classList.add("active");
+                        } else {
+                            item.classList.remove("active");
+                        }
+                    });
+
                     modal.style.display = "flex";
                     modal.style.opacity = "0";
                     setTimeout(() => {
@@ -867,6 +888,39 @@ const finalSchema = schema || defaultSchema;
                 });
 
                 window.dispatchEvent(new Event("rankingDecimalsChanged"));
+            };
+
+            window.toggleHomeLayoutMenu = function (e) {
+                e.stopPropagation();
+                const menu = document.getElementById("home-layout-custom-menu");
+                document.querySelectorAll(".custom-select-menu").forEach((m) => {
+                    if (m !== menu) m.classList.remove("show");
+                });
+                if (menu) menu.classList.toggle("show");
+            };
+
+            window.selectCustomHomeLayout = function (event, value, i18nKey) {
+                event.stopPropagation();
+                localStorage.setItem("guoba_home_layout", value);
+                const textEl = document.getElementById("active-home-layout-text");
+                if (textEl) {
+                    textEl.setAttribute("data-i18n", i18nKey);
+                    if (typeof window !== "undefined" && window.t) {
+                        textEl.innerText = window.t(i18nKey);
+                    }
+                }
+                const menu = document.getElementById("home-layout-custom-menu");
+                if (menu) menu.classList.remove("show");
+
+                document.querySelectorAll("#home-layout-custom-menu .custom-select-item").forEach((item) => {
+                    if (item.getAttribute("data-value") === value) {
+                        item.classList.add("active");
+                    } else {
+                        item.classList.remove("active");
+                    }
+                });
+
+                window.dispatchEvent(new Event("homeLayoutChanged"));
             };
         </script>
 
@@ -1028,6 +1082,24 @@ const finalSchema = schema || defaultSchema;
                                         </div>
                                         <div class="custom-select-item" data-value="3" onclick="selectCustomRankingDecimals(event, '3', 'account.settings.decimals3')">
                                             <span data-i18n="account.settings.decimals3">3 décimales</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: space-between; color: var(--text-primary); font-size: 14px;">
+                                <span data-i18n="account.settings.homeLayout">Disposition de l'accueil</span>
+                                <div class="custom-select-container">
+                                    <button onclick="toggleHomeLayoutMenu(event)" class="link-button hover-bg-hover" style="width: 150px; justify-content: space-between; border: none; background: var(--shadow-subtle); color: var(--text-primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: normal; outline: none; display: flex; align-items: center; transition: background-color 0.2s ease;">
+                                        <span id="active-home-layout-text" data-i18n="account.settings.homeLayout.dashboard" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tableau de bord</span>
+                                        <img src="/assets/simulator/icons/icon_arrow_down_white.svg" alt="" class="sort-arrow" style="font-size: 12px; opacity: 0.6; margin-left: 8px;" />
+                                    </button>
+
+                                    <div id="home-layout-custom-menu" class="custom-select-menu" style="width: 170px;">
+                                        <div class="custom-select-item" data-value="dashboard" onclick="selectCustomHomeLayout(event, 'dashboard', 'account.settings.homeLayout.dashboard')">
+                                            <span data-i18n="account.settings.homeLayout.dashboard">Tableau de bord</span>
+                                        </div>
+                                        <div class="custom-select-item" data-value="classic" onclick="selectCustomHomeLayout(event, 'classic', 'account.settings.homeLayout.classic')">
+                                            <span data-i18n="account.settings.homeLayout.classic">Grille classique</span>
                                         </div>
                                     </div>
                                 </div>

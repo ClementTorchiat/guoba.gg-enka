@@ -1,9 +1,12 @@
 import { t } from '../../scripts/i18n.js';
+import ELEMENT_COLORS from '../../data/element_colors.json';
 
 export function renderRankingsSummary(characters, focusCharNom = null) {
     if (!characters || characters.length === 0) return '';
 
-    const sortedChars = [...characters].filter(c => {
+    const charsWithIndex = characters.map((c, originalIndex) => ({ c, originalIndex }));
+
+    const sortedChars = charsWithIndex.filter(({ c }) => {
         const lbId = c.activeBuild ? (c.activeBuild.leaderboard_id || c.activeBuild.key) : null;
         if (!lbId) return false;
 
@@ -19,8 +22,8 @@ export function renderRankingsSummary(characters, focusCharNom = null) {
 
     if (hasRanks) {
         sortedChars.sort((a, b) => {
-            const lbIdA = a.activeBuild ? (a.activeBuild.leaderboard_id || a.activeBuild.key) : null;
-            const lbIdB = b.activeBuild ? (b.activeBuild.leaderboard_id || b.activeBuild.key) : null;
+            const lbIdA = a.c.activeBuild ? (a.c.activeBuild.leaderboard_id || a.c.activeBuild.key) : null;
+            const lbIdB = b.c.activeBuild ? (b.c.activeBuild.leaderboard_id || b.c.activeBuild.key) : null;
             const rankA = window.userLeaderboardRanks[lbIdA];
             const rankB = window.userLeaderboardRanks[lbIdB];
 
@@ -33,8 +36,8 @@ export function renderRankingsSummary(characters, focusCharNom = null) {
 
     if (focusCharNom) {
         sortedChars.sort((a, b) => {
-            const isFocusA = a.nom === focusCharNom ? 1 : 0;
-            const isFocusB = b.nom === focusCharNom ? 1 : 0;
+            const isFocusA = a.c.nom === focusCharNom ? 1 : 0;
+            const isFocusB = b.c.nom === focusCharNom ? 1 : 0;
             return isFocusB - isFocusA;
         });
     }
@@ -45,7 +48,7 @@ export function renderRankingsSummary(characters, focusCharNom = null) {
         return num.toString();
     };
 
-    const cardsHtml = sortedChars.map(c => {
+    const cardsHtml = sortedChars.map(({ c, originalIndex }) => {
         const lbId = c.activeBuild ? (c.activeBuild.leaderboard_id || c.activeBuild.key) : null;
         const rankData = hasRanks ? window.userLeaderboardRanks[lbId] : null;
 
@@ -83,30 +86,55 @@ export function renderRankingsSummary(characters, focusCharNom = null) {
         const scoreTxt = c.evaluation?.score ? `${c.evaluation.score} (${c.evaluation.grade?.letter || '?'})` : '?';
         const erTxt = c.activeBuild?.er_req ? `${c.activeBuild.er_req}% ER` : '';
         const faceImage = c.image ? c.image.replace('_Side', '') : '';
+        const splashArt = c.splashArt || (c.image ? c.image.replace('_Side', '').replace('/UI_AvatarIcon_', '/UI_Gacha_AvatarImg_') : '');
+
+        const elementKey = (c.charConfig?.element || c.element || '').toLowerCase();
+        const charColor = c.charConfig?.color || ELEMENT_COLORS[elementKey] || '#3c5ccd';
 
         const isFocus = focusCharNom && c.nom === focusCharNom;
-        const cardBg = isFocus ? 'rgba(59,130,246,0.08)' : 'var(--bg-panel)';
-        const cardBorderColor = isFocus ? 'rgba(59,130,246,0.4)' : scoreColor;
+        const modernBorderColor = `oklch(from ${charColor} 0.78 calc(c * 1.2) h / 0.4)`;
+        const cardBorder = isFocus ? 'border: 1px solid #60a5fa;' : `border: 1px solid var(--char-card-border, ${modernBorderColor});`;
+        const cardShadow = isFocus ? 'box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);' : '';
         const imgBorder = isFocus ? '1px solid #60a5fa' : 'none';
         const nameColor = isFocus ? '#60a5fa' : 'var(--text-primary)';
+        const cardTitle = t('roadmap.rankings.cardTooltip', c.nom);
 
         return `
-            <div style="border-radius:8px; padding:6px; background: ${cardBg}; border:1.5px solid ${cardBorderColor}; display:flex; flex-direction:column; box-sizing:border-box; min-width:0;">
-                <div style="display:flex; align-items:center; gap:10px; min-width:0;">
-                    <img src="${faceImage}" alt="${c.nom}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; background: var(--shadow-subtle); flex-shrink:0; border:${imgBorder}; box-sizing:border-box;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
-                    <div style="display:flex; flex-direction:column; overflow:hidden; min-width:0;">
-                        <span style="font-size:14px; color:${nameColor}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.nom}</span>
-                        <span style="font-size:11px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${buildName}">${buildName}</span>
+            <div class="roadmap-ranking-card"
+                 data-action="open-character-showcase"
+                 data-char-index="${originalIndex}"
+                 data-char-nom="${c.nom.replace(/"/g, '&quot;')}"
+                 role="button"
+                 tabindex="0"
+                 title="${cardTitle.replace(/"/g, '&quot;')}"
+                 aria-label="${cardTitle.replace(/"/g, '&quot;')}"
+                 style="--char-hex: ${charColor}; --char-card-border: ${modernBorderColor}; position:relative; overflow:hidden; border-radius:8px; padding:6px; ${cardBorder} ${cardShadow} display:flex; flex-direction:column; box-sizing:border-box; min-width:0; cursor:pointer;">
+                ${splashArt ? `
+                    <img src="${splashArt}" alt="" loading="lazy" decoding="async" crossorigin="anonymous" class="background-splash-art" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; z-index: 0; filter: blur(10px) brightness(0.7) saturate(0.8); pointer-events: none;" onerror="this.style.display='none'" />
+                ` : ''}
+                <div class="row-overlay" style="position: absolute; inset: 0; background-color: var(--char-bg-alpha, rgb(from ${charColor} calc(r / 3.5) calc(g / 3.5) calc(b / 3.5) / 0.765)); transition: background-color 0.35s; z-index: 1; pointer-events: none;"></div>
+
+                <div style="position:relative; z-index:2; display:flex; flex-direction:column; width:100%; height:100%;">
+                    <div style="display:flex; align-items:center; gap:10px; min-width:0; pointer-events:none;">
+                        <img src="${faceImage}" alt="${c.nom}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; background: rgba(0, 0, 0, 0.4); flex-shrink:0; border:${imgBorder}; box-sizing:border-box;" onerror="this.src='/assets/simulator/icons/icon_unknown.webp'">
+                        <div style="display:flex; flex-direction:column; overflow:hidden; min-width:0;">
+                            <span style="font-size:14px; color:${nameColor}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.nom}</span>
+                            <span style="font-size:11px; color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${buildName}">${buildName}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 10px 0; border-top: 1px solid rgba(255, 255, 255, 0.12); width: 100%;"></div>
+
+                    <div style="display:flex; justify-content:center; align-items:center; gap:8px; pointer-events:none;">
+                        <span style="font-size:12px; color:${scoreColor};">${scoreTxt}</span>
+                        ${erTxt ? `<span style="color:var(--text-grey); font-size:12px;">-</span>
+                        <span style="font-size:12px; color:#60A5FA;">${erTxt}</span>` : ''}
+                    </div>
+                    
+                    <div style="pointer-events:none;">
+                        ${rankHtml}
                     </div>
                 </div>
-                
-                <div style="display:flex; justify-content:center; align-items:center; gap:8px; margin-top:16px;">
-                    <span style="font-size:12px; color:${scoreColor};">${scoreTxt}</span>
-                    ${erTxt ? `<span style="color:var(--text-grey); font-size:12px;">-</span>
-                    <span style="font-size:12px; color:#60A5FA;">${erTxt}</span>` : ''}
-                </div>
-                
-                ${rankHtml}
             </div>
         `;
     }).join('');

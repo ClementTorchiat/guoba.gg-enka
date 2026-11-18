@@ -5,6 +5,7 @@ import WEAPON_MATERIALS from '../../data/weapon_materials.json';
 import WEAPON_NAME_MAPPING from '../../data/weapon_name_mapping.json';
 import CONFIG_NAME_ALIASES_EN_TO_FR from '../../data/config_name_aliases_en_to_fr.json';
 import { t, LANG } from '../../scripts/i18n.js';
+import { getGenshinDayIndex, detectActiveServer } from '../../scripts/genshinTime.js';
 
 const ICON_BASE_PATH = "/assets/simulator/icons/";
 
@@ -669,8 +670,9 @@ export function getCharacterFarmingNeeds(perso) {
  * @param {string} categoryFilter 'all' | 'talents' | 'weapons'
  * @returns {Object}
  */
-export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null, categoryFilter = 'all') {
-    const todayIndex = new Date().getDay(); // 0 = Dimanche, 1 = Lundi, ...
+export function getWeeklyFarmingSchedule(characters = [], focusCharNom = null, categoryFilter = 'all', serverKey = null) {
+    const activeServer = serverKey || detectActiveServer();
+    const todayIndex = getGenshinDayIndex(activeServer);
 
     const DAY_NAMES = {
         fr: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],

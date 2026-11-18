@@ -18,13 +18,15 @@ import { renderAdviceSection } from '../components/advice/AdviceSection.js';
 import { renderCombatStatsAdviceCards } from '../components/advice/CombatStatsSection.js';
 import { renderPlayerProfileCard } from '../components/profile/PlayerHeader.js';
 import { renderGlobalEvaluation as renderGlobalEvaluationComponent } from '../components/profile/GlobalEvaluation.js';
+import { renderHomeDashboardHtml, initHomeDashboardInteractions } from '../components/home/HomeDashboard.js';
+import { detectActiveServer } from './genshinTime.js';
 import { renderSidebarList } from '../components/profile/Sidebar.js';
 import { renderRoadmapContainer } from '../components/roadmap/RoadmapContainer.js';
 import { setUserData, setCharacterList, selectCharacter } from '../stores/appStore.js';
 import { preloadConfigsForShowcase, loadCharacterConfig } from './configLoader.js';
 import { idbGet, idbSet } from './db.js';
 import { loadRollTable } from './rollTableLoader.js';
-import { mergeShowcaseWithSnapshots, updateSnapshotCharacter } from './snapshotManager.js';
+import { mergeShowcaseWithSnapshots, updateSnapshotCharacter, getStoredSnapshots } from './snapshotManager.js';
 
 import { t } from './i18n.js';
 import { CACHE_KEY } from './version.js';
@@ -419,6 +421,7 @@ function showSkeletonCard() {
     }
 
     if (pp) {
+        pp.style.display = '';
         pp.innerHTML = `
             <div class="sk" style="width:400px; height:76px; border-radius:8px;"></div>
         `;
@@ -965,6 +968,7 @@ async function fetchUserData(optionalUid) {
 function renderPlayerProfile(playerInfo, uid) {
     const container = document.getElementById('player-profile');
     if (!container || !playerInfo) return;
+    container.style.display = '';
 
     const namecardsData = window.namecardsData || {};
     const namecard = namecardsData[String(playerInfo.nameCardId)];
@@ -2798,6 +2802,10 @@ async function processData(data, uid = null) {
     setUserData(data, currentUidStr);
     setCharacterList(globalPersoData);
     window.globalPersoData = globalPersoData;
+    window.lastKnownCharacters = globalPersoData;
+    if (currentUidStr) {
+        idbSet(`guoba_cached_chars_${currentUidStr}`, globalPersoData).catch(() => {});
+    }
 
     if (typeof window.updateArchivedCountLabel === 'function') {
         window.updateArchivedCountLabel();
@@ -3226,7 +3234,7 @@ function updateSidebarNavActive(activePage) {
     });
 }
 
-function renderHome() {
+async function renderHome() {
     showSidebarNav();
     updateSidebarNavActive('home');
 
@@ -3250,6 +3258,18 @@ function renderHome() {
 
     if (!container) return;
 
+    const homeLayout = localStorage.getItem('guoba_home_layout') || 'dashboard';
+    const favUid = getFavoriteUid();
+    const discordUid = localStorage.getItem('guoba_discord_uid') || null;
+
+    let effectiveFavUid = favUid;
+    if (favUid && favUid === discordUid) {
+        effectiveFavUid = null;
+        localStorage.removeItem('guoba_favorite_uid');
+    }
+
+    const isDashboard = (profiles.length > 0 && homeLayout === 'dashboard');
+
     let profilesContentHtml = '';
 
     if (profiles.length === 0) {
@@ -3260,6 +3280,54 @@ function renderHome() {
                 <p style="color: var(--text-grey); font-size: 14px;">${t('home.emptyHint')}</p>
             </div>
         `;
+    } else if (isDashboard) {
+        const activeServer = detectActiveServer(discordUid || effectiveFavUid);
+
+        // Récupération des personnages : mémoire active -> mémoire session -> cache IndexedDB -> snapshots
+        let characters = (window.globalPersoData && window.globalPersoData.length > 0)
+            ? window.globalPersoData
+            : (window.lastKnownCharacters && window.lastKnownCharacters.length > 0 ? window.lastKnownCharacters : []);
+
+        const targetUid = discordUid || effectiveFavUid || (profiles[0] && profiles[0].uid);
+        if (characters.length === 0 && targetUid) {
+            try {
+                const cached = await idbGet(`guoba_cached_chars_${targetUid}`);
+                if (cached && Array.isArray(cached) && cached.length > 0) {
+                    characters = cached;
+                    window.lastKnownCharacters = cached;
+                } else {
+                    const snapshots = await getStoredSnapshots(targetUid);
+                    const snapList = Object.values(snapshots || {}).filter(Boolean);
+                    if (snapList.length > 0) {
+                        characters = snapList;
+                        window.lastKnownCharacters = snapList;
+                    }
+                }
+            } catch (err) {
+                console.warn('[Home] Erreur lecture personnages en cache:', err);
+            }
+        }
+
+        // Le dashboard ne comporte pas de global-evaluation en haut
+        if (topHeader) topHeader.style.display = 'none';
+        if (evalContainer) evalContainer.style.display = 'none';
+        if (playerProfile) {
+            playerProfile.innerHTML = '';
+            playerProfile.style.display = '';
+        }
+
+        const focusCharNom = (typeof window !== 'undefined' ? window.roadmapFocusCharNom : null)
+            || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_roadmap_focus_char') : null);
+
+        profilesContentHtml = renderHomeDashboardHtml({
+            profiles,
+            linkedUid: discordUid,
+            favoriteUid: effectiveFavUid,
+            activeServer,
+            characters,
+            focusCharNom,
+            discordName: localStorage.getItem('guoba_discord_name') || ''
+        });
     } else {
         const serverMap = {
             '1': 'CN',
@@ -3273,15 +3341,6 @@ function renderHome() {
             '9': 'TW'
         };
         const ICON = '/assets/simulator/icons/';
-
-        const favUid = getFavoriteUid();
-        const discordUid = localStorage.getItem('guoba_discord_uid') || null;
-
-        let effectiveFavUid = favUid;
-        if (favUid && favUid === discordUid) {
-            effectiveFavUid = null;
-            localStorage.removeItem('guoba_favorite_uid');
-        }
 
         const favProfiles = profiles.filter(p => String(p.uid) === effectiveFavUid);
         const discordProfiles = profiles.filter(p => String(p.uid) === discordUid && String(p.uid) !== effectiveFavUid);
@@ -3393,11 +3452,13 @@ function renderHome() {
     container.innerHTML = `
         <div style="padding-left: 20px; padding-right: 20px; padding-top: 30px; display: flex; flex-direction: column; min-height: calc(100vh - 80px);">
             <div style="flex: 1;">
-                <h2 id="home-title" style="color: var(--text-primary); font-size: 28px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; font-weight: normal;">
-                    ${displayTitle}
-                </h2>
-                <p style="max-width:980px; color: var(--text-grey); font-size: 14px; margin-bottom: 30px;">${t('home.subtitle')}</p>
-                ${profilesContentHtml}
+                ${isDashboard ? profilesContentHtml : `
+                    <h2 id="home-title" style="color: var(--text-primary); font-size: 28px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; font-weight: normal;">
+                        ${displayTitle}
+                    </h2>
+                    <p style="max-width:980px; color: var(--text-grey); font-size: 14px; margin-bottom: 30px;">${t('home.subtitle')}</p>
+                    ${profilesContentHtml}
+                `}
             </div>
             <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 24px; margin-top: 40px;">
                 <p style="color: var(--text-grey); font-size: 12px; margin-bottom: 16px; margin-left: 12px;">
@@ -3476,7 +3537,18 @@ function renderHome() {
             </div>
         </div>
     `;
+
+    if (isDashboard) {
+        initHomeDashboardInteractions();
+    }
 }
+
+window.addEventListener('homeLayoutChanged', () => {
+    const isHome = document.querySelector('.snav-item--active[href="/"]');
+    if (isHome) {
+        renderHome();
+    }
+});
 
 function getOrCreateTooltip(id) {
     let el = document.getElementById(id);
@@ -4983,6 +5055,8 @@ function renderGlobalEvaluation(playerInfo) {
         }
     }
     if (topHeader) topHeader.style.display = "flex";
+    const pp = document.getElementById("player-profile");
+    if (pp) pp.style.display = "";
 
     const currentUidStr = document.getElementById("uidInput") ? document.getElementById("uidInput").value.trim() : "";
     renderGlobalEvaluationComponent(playerInfo, globalPersoData, currentUidStr);
@@ -5146,6 +5220,12 @@ async function updateLeaderboardRank(index) {
 
 function showAccountRoadmap() {
     const container = document.getElementById("main-container");
+    if (!globalPersoData || globalPersoData.length === 0) {
+        if (window.lastKnownCharacters && window.lastKnownCharacters.length > 0) {
+            globalPersoData = window.lastKnownCharacters;
+            window.globalPersoData = window.lastKnownCharacters;
+        }
+    }
     if (!container || !globalPersoData || globalPersoData.length === 0) return;
 
     if (window.currentPlayerNickname) {

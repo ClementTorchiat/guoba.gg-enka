@@ -16,8 +16,19 @@ import './TargetPieceTooltip.js';
 let cachedRoadmapCharacters = [];
 
 if (typeof window !== 'undefined') {
+    if (!window.roadmapFocusCharNom && typeof localStorage !== 'undefined') {
+        window.roadmapFocusCharNom = localStorage.getItem('guoba_roadmap_focus_char') || null;
+    }
+
     window.setRoadmapFocusChar = function (charNom) {
         window.roadmapFocusCharNom = charNom || null;
+        if (typeof localStorage !== 'undefined') {
+            if (charNom) {
+                localStorage.setItem('guoba_roadmap_focus_char', charNom);
+            } else {
+                localStorage.removeItem('guoba_roadmap_focus_char');
+            }
+        }
         const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
             ? cachedRoadmapCharacters
             : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
@@ -219,6 +230,44 @@ if (typeof window !== 'undefined') {
                 return;
             }
 
+            const charCardBtn = e.target.closest('[data-action="open-character-showcase"]');
+            if (charCardBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const indexStr = charCardBtn.getAttribute('data-char-index');
+                const charNom = charCardBtn.getAttribute('data-char-nom');
+                let targetIdx = indexStr !== null ? parseInt(indexStr, 10) : -1;
+                const chars = (cachedRoadmapCharacters && cachedRoadmapCharacters.length > 0)
+                    ? cachedRoadmapCharacters
+                    : ((typeof window !== 'undefined' && window.globalPersoData) ? window.globalPersoData : []);
+
+                if (charNom && (!chars[targetIdx] || chars[targetIdx].nom !== charNom)) {
+                    targetIdx = chars.findIndex(p => p.nom === charNom);
+                }
+
+                if (targetIdx !== -1) {
+                    if (typeof window.renderShowcase === 'function') {
+                        window.renderShowcase(targetIdx);
+                    } else if (window.$guobaStore && typeof window.$guobaStore.selectCharacter === 'function') {
+                        window.$guobaStore.selectCharacter(targetIdx);
+                    }
+
+                    const scrollTarget = document.querySelector('.main-content') || document.querySelector('.main-content-showcase-wrapper') || window;
+                    if (scrollTarget && typeof scrollTarget.scrollTo === 'function') {
+                        scrollTarget.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                    if (typeof window.scrollTo === 'function') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+
+                    const activeSidebarCard = document.querySelector('#sidebar-list .char-card.active');
+                    if (activeSidebarCard && typeof activeSidebarCard.scrollIntoView === 'function') {
+                        activeSidebarCard.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                    }
+                }
+                return;
+            }
+
             const toggleSwapsBtn = e.target.closest('[data-action="toggle-swaps-expand"]');
             if (toggleSwapsBtn) {
                 e.preventDefault();
@@ -298,6 +347,19 @@ if (typeof window !== 'undefined') {
                     }
                 }
                 return;
+            }
+        });
+    }
+
+    if (!window._roadmapKeyDownListenerBound) {
+        window._roadmapKeyDownListenerBound = true;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const targetCard = document.activeElement && document.activeElement.closest && document.activeElement.closest('[data-action="open-character-showcase"]');
+                if (targetCard) {
+                    e.preventDefault();
+                    targetCard.click();
+                }
             }
         });
     }

@@ -1,11 +1,12 @@
 // src/components/roadmap/DailyFarmingRoadmap.js
 import { t, LANG } from '../../scripts/i18n.js';
 import { getWeeklyFarmingSchedule, getLocalizedItemName, calculateCharacterAscensionCost, ASCENSION_LEVEL_LABELS } from './farmingEngine.js';
+import { getEndgameCyclesInfo, detectActiveServer } from '../../scripts/genshinTime.js';
 
 const ENKA_CDN = 'https://enka.network/ui/';
 const YATTA_CDN = 'https://gi.yatta.moe/assets/UI/';
 
-function formatMora(num) {
+export function formatMora(num) {
     if (!num) return '0';
     if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
     if (num >= 1000) return Math.round(num / 1000) + 'k';
@@ -15,7 +16,7 @@ function formatMora(num) {
 /**
  * Génère le tag HTML pour une icône de matériau avec fallback automatique vers yatta.moe si Enka renvoie 404.
  */
-function getItemIconHtml(iconOrObj, label = '', style = 'width:20px; height:20px; object-fit:contain; flex-shrink:0;') {
+export function getItemIconHtml(iconOrObj, label = '', style = 'width:20px; height:20px; object-fit:contain; flex-shrink:0;') {
     if (!iconOrObj) return '';
     const raw = typeof iconOrObj === 'object' ? (iconOrObj.icon || iconOrObj.id) : iconOrObj;
     if (!raw) return '';
@@ -33,7 +34,7 @@ function getItemIconHtml(iconOrObj, label = '', style = 'width:20px; height:20px
 /**
  * Rendu d'une pilule de matériau avec son icône officielle et son compte requis.
  */
-function renderMaterialPill(iconName, count, label = '', rarityColor = 'var(--text-primary)') {
+export function renderMaterialPill(iconName, count, label = '', rarityColor = 'var(--text-primary)') {
     if (count !== '' && count !== null && count !== undefined && count <= 0) return '';
     const imgHtml = getItemIconHtml(iconName, label, 'width:20px; height:20px; object-fit:contain; flex-shrink:0;');
 
@@ -48,7 +49,7 @@ function renderMaterialPill(iconName, count, label = '', rarityColor = 'var(--te
 /**
  * Rendu d'une carte de personnage avec l'ensemble de ses besoins d'aptitudes pour le jour sélectionné.
  */
-function renderCharacterFarmingCard(charData) {
+export function renderCharacterFarmingCard(charData) {
     const rot = charData.bookRotation;
     const items = rot?.items || {};
     const cost = charData.totalCost || {};
@@ -91,7 +92,7 @@ function renderCharacterFarmingCard(charData) {
                                 </span>
                             ` : ''}
                         </div>
-                        <div style="display:flex; align-items:center; gap:4px; flex-shrink:0; font-family:monospace;">
+                        <div style="display:flex; align-items:center; gap:4px; flex-shrink:0;">
                             <span style="color:var(--text-grey);">${t('ui.char.level', gap.currentLvl)}</span>
                             <span style="color:var(--text-grey);">➔</span>
                             <span style="color:var(--accent-green); font-weight:normal;">${t('ui.char.level', gap.targetLvl)}</span>
@@ -149,7 +150,7 @@ function renderCharacterFarmingCard(charData) {
 /**
  * Rendu d'une carte d'arme avec l'ensemble de ses besoins d'élévation pour le jour sélectionné.
  */
-function renderWeaponFarmingCard(weaponData) {
+export function renderWeaponFarmingCard(weaponData) {
     const rot = weaponData.weaponRotation;
     const items = rot?.items || {};
     const cost = weaponData.totalCost || {};
@@ -188,7 +189,7 @@ function renderWeaponFarmingCard(weaponData) {
             <!-- Niveau en retard -->
             <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:11px; background:var(--shadow-subtle); padding:8px 10px; border-radius:6px; border:none;">
                 <span style="color:var(--text-grey);">${t('roadmap.farming.weaponElevation')}</span>
-                <div style="display:flex; align-items:center; gap:4px; font-family:monospace;">
+                <div style="display:flex; align-items:center; gap:4px;">
                     <span style="color:var(--text-grey);">${t('ui.char.level', weaponData.currentLvl)} (${weaponData.currentAsc}★)</span>
                     <span style="color:var(--text-grey);">➔</span>
                     <span style="color:var(--accent-green); font-weight:normal;">${t('ui.char.level', weaponData.targetLvl)} (${weaponData.targetAsc}★)</span>
@@ -210,7 +211,7 @@ function renderWeaponFarmingCard(weaponData) {
 /**
  * Rendu d'une journée spécifique (par exemple Lundi, Mardi, ou Dimanche).
  */
-function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWeaponsWithNeeds = [], schedule = null) {
+function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWeaponsWithNeeds = [], schedule = null, cycles = null) {
     const domains = daySchedule.domains || [];
     const isSunday = daySchedule.isSunday;
 
@@ -225,6 +226,18 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
                         <span style="font-size:13px; font-weight:normal; color:var(--text-primary);">${t('roadmap.farming.freeDayTitle')}</span>
                     </div>
                 </div>
+
+                ${cycles?.stygian?.isBonusActive ? `
+                    <div style="background: rgba(139, 45, 139, 0.4); border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;width: fit-content;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <img src="/assets/endgame/disturbance_outbreak.png" alt="" style="width:32px; height:32px; object-fit:contain; flex-shrink:0;">
+                            <span style="font-size:12px; color:#fef08a;">${t('home.stygianBonusDesc')}</span>
+                        </div>
+                        <span style="font-size:10px; color: var(--text-always-white); background: rgba(139, 45, 139, 0.6); border: 1px solid var(--border-subtle); padding:1px 6px; border-radius:4px; white-space:nowrap;">
+                            ${t('home.remainingTime', cycles.stygian.bonusDaysLeft, cycles.stygian.bonusHoursLeft)}
+                        </span>
+                    </div>
+                ` : ''}
 
                 <p style="font-size:12px; color:var(--text-grey); margin:0; line-height:1.5;">
                     ${charactersNeedingAscension.length > 0
@@ -241,11 +254,11 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
                         </span>
                         <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap:12px;">
                             ${charactersNeedingAscension.map(c => {
-        const ascCost = c.recommendedAscensionCost || c.fullAscensionCost || c.ascensionCost || (typeof calculateCharacterAscensionCost === 'function' ? calculateCharacterAscensionCost(c.currentAsc, c.targetAsc || 6) : null);
-        const bossCount = ascCost?.boss || 0;
-        const specCount = ascCost?.specialty || 0;
+                const ascCost = c.recommendedAscensionCost || c.fullAscensionCost || c.ascensionCost || (typeof calculateCharacterAscensionCost === 'function' ? calculateCharacterAscensionCost(c.currentAsc, c.targetAsc || 6) : null);
+                const bossCount = ascCost?.boss || 0;
+                const specCount = ascCost?.specialty || 0;
 
-        return `
+                return `
                                 <div style="background:var(--shadow-subtle); border:none; border-radius:8px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
                                     <div style="display:flex; align-items:center; gap:10px; min-width:0;">
                                         <img src="${c.charAvatar}" alt="" style="width:36px; height:36px; border-radius:8px; background:var(--shadow-subtle); object-fit:cover; border:none; flex-shrink:0;">
@@ -279,7 +292,7 @@ function renderSingleDaySchedule(daySchedule, allCharactersWithNeeds = [], allWe
                                     </div>
                                 </div>
                             `;
-    }).join('')}
+            }).join('')}
                         </div>
                     </div>
                 ` : ''}
@@ -480,8 +493,28 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
 
     const hasAnyNeeds = (schedule.allCharactersWithNeeds.length > 0 || schedule.allWeaponsWithNeeds.length > 0 || (schedule.charactersNeedingAscension && schedule.charactersNeedingAscension.length > 0));
 
+    const activeServer = detectActiveServer();
+    const cycles = getEndgameCyclesInfo(activeServer);
+    const stygianBannerHtml = cycles.stygian.isBonusActive ? `
+        <div style="background: rgba(139, 45, 139, 0.4); border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; width: fit-content;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <img src="/assets/endgame/disturbance_outbreak.png" alt="" style="width: 32px; height: 32px; object-fit: contain; flex-shrink: 0;">
+                <div>
+                    <div style="color: var(--text-always-white); font-size: 13px; font-weight: normal; display: flex; align-items: center; gap: 8px;">
+                        <span>${t('home.stygianBonusActive')}</span>
+                        <span style="font-size: 11px; color: var(--text-always-white); background: rgba(139, 45, 139, 0.6); border: 1px solid var(--border-subtle); padding: 1px 6px; border-radius: 4px;">${t('home.remainingTime', cycles.stygian.bonusDaysLeft, cycles.stygian.bonusHoursLeft)}</span>
+                    </div>
+                    <div style="color: var(--text-grey); font-size: 12px; margin-top: 2px;">
+                        ${t('home.stygianBonusDesc')}
+                    </div>
+                </div>
+            </div>
+        </div>
+    ` : '';
+
     return `
         <div style="display:flex; flex-direction:column; gap:16px; padding-bottom:40px;">
+            ${stygianBannerHtml}
 
             <!-- Barre de contrôle : Catégorie (Tout / Aptitudes / Armes) & Jours de la semaine -->
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
@@ -539,7 +572,7 @@ export function renderDailyFarmingRoadmap(characters = [], focusCharNom = null, 
             ` : (
             isFullWeekMode
                 ? renderFullWeekSchedule(schedule.weekSchedule)
-                : renderSingleDaySchedule(currentDaySchedule, schedule.allCharactersWithNeeds, schedule.allWeaponsWithNeeds, schedule)
+                : renderSingleDaySchedule(currentDaySchedule, schedule.allCharactersWithNeeds, schedule.allWeaponsWithNeeds, schedule, cycles)
         )}
         </div>
     `;
