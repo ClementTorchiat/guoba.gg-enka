@@ -5622,9 +5622,60 @@ html.reduce-transparency .modern-splash-tint {
     animation: dashFadeIn 0.35s ease;
 }
 
-.dash-dot:hover {
-    transform: scale(1.3);
-    opacity: 1 !important;
+.dash-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    height: 10px;
+}
+
+.dash-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-radius 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.dash-dot:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.2);
+}
+
+.dash-dot.active {
+    width: 24px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: default;
+}
+
+.dash-dot-fill {
+    width: 0%;
+    height: 100%;
+    border-radius: 3px;
+    background: var(--text-always-white, #ffffff);
+}
+
+.dash-dot.active .dash-dot-fill {
+    animation: dashDotProgress 5.5s linear forwards;
+}
+
+#dash-farming-carousel:hover .dash-dot.active .dash-dot-fill {
+    animation-play-state: paused;
+}
+
+@keyframes dashDotProgress {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
 }
 
 @keyframes dashFadeIn {

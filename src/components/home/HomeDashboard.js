@@ -4,10 +4,16 @@
 import { t, LANG } from '../../scripts/i18n.js';
 import { getWeeklyFarmingSchedule, getLocalizedItemName } from '../roadmap/farmingEngine.js';
 import {
-    renderCharacterFarmingCard,
-    renderWeaponFarmingCard,
-    getItemIconHtml
+    getItemIconHtml,
+    renderMaterialPill
 } from '../roadmap/DailyFarmingRoadmap.js';
+import {
+    calculateDomainRankings,
+    renderDomainSplitIcon,
+    getLocalizedSetName,
+    getSetIcon
+} from '../roadmap/DomainPlanner.js';
+import ARTIFACT_DOMAINS from '../../data/artifact_domains.json';
 import FARMING_DOMAINS from '../../data/farming_domains.json';
 import {
     detectActiveServer,
@@ -124,13 +130,266 @@ function renderBossTips(boss, lang) {
 }
 
 /**
- * Construit les diapositives du carrousel de farming pour le jour actif.
- * Chaque slide reprend EXACTEMENT le design des cartes de la feuille de route,
- * précédé de l'en-tête du donjon / matériau correspondant.
+ * Rendu compact et calibré (hauteur uniforme) d'une carte de personnage pour le carrousel de l'accueil.
+ * Organisé en 3 rangées horizontales stables pour éliminer tout décalage vertical (layout shift).
  */
-function buildDailyFarmingSlides(characters = [], activeServer = 'EU', focusCharNom = null) {
+function renderDashboardCharacterCard(charData) {
+    const rot = charData.bookRotation;
+    const items = rot?.items || {};
+    const cost = charData.totalCost || {};
+    const hasLocked = charData.hasLockedTalents;
+
+    // 1. Puces horizontales des aptitudes cibles
+    const talentChipsHtml = (charData.talentGaps || []).map(gap => {
+        const isLocked = gap.isLocked;
+        const titleAttr = isLocked
+            ? `${gap.talentLabel} : ${t('ui.char.level', gap.currentLvl)} ➔ ${t('ui.char.level', gap.targetLvl)} (${t('roadmap.farming.ascensionRequiredShort', gap.requiredAsc)})`
+            : `${gap.talentLabel} : ${t('ui.char.level', gap.currentLvl)} ➔ ${t('ui.char.level', gap.targetLvl)}`;
+
+        const chipBg = isLocked ? 'rgba(245, 158, 11, 0.12)' : 'var(--shadow-subtle)';
+        const chipBorder = isLocked ? '1px solid rgba(245, 158, 11, 0.4)' : '1px solid transparent';
+        const targetColor = isLocked ? '#fbbf24' : 'var(--accent-green)';
+
+        return `
+            <div style="display:inline-flex; align-items:center; gap:5px; background:${chipBg}; border:${chipBorder}; padding:2px 7px; border-radius:5px; font-size:11px; white-space:nowrap; flex-shrink:0;" title="${titleAttr}">
+                ${gap.talentIcon ? `<img src="${gap.talentIcon}" alt="" style="width:14px; height:14px; object-fit:contain; border-radius:3px;">` : ''}
+                <span style="color:var(--text-grey); font-size:10px;">${gap.currentLvl}</span>
+                <span style="color:var(--text-grey); font-size:9px;">➔</span>
+                <span style="color:${targetColor}; font-weight:normal; font-size:11px;">${gap.targetLvl}</span>
+            </div>
+        `;
+    }).join('');
+
+    // 2. Puces de pré-farming intégrées dans la ligne des matériaux si nécessaire
+    const prefarmingPillsHtml = hasLocked ? `
+        ${(charData.worldBoss?.icon && charData.ascensionCost?.boss > 0) ? `
+            <div style="display:inline-flex; align-items:center; gap:4px; background:rgba(245, 158, 11, 0.12); border:1px solid rgba(245, 158, 11, 0.4); padding:2px 6px 2px 4px; border-radius:5px; flex-shrink:0;" title="${t('roadmap.farming.toUnlockAscendWith')} : ${getLocalizedItemName(charData.worldBoss.name)} (${charData.ascensionCost.boss})">
+                ${getItemIconHtml(charData.worldBoss.icon, getLocalizedItemName(charData.worldBoss.name), 'width:18px; height:18px; object-fit:contain; flex-shrink:0;')}
+                <span style="font-size:11px; color:#fbbf24; font-weight:normal; line-height:1;">${charData.ascensionCost.boss}</span>
+            </div>
+        ` : ''}
+        ${(charData.specialty?.icon && charData.ascensionCost?.specialty > 0) ? `
+            <div style="display:inline-flex; align-items:center; gap:4px; background:rgba(245, 158, 11, 0.12); border:1px solid rgba(245, 158, 11, 0.4); padding:2px 6px 2px 4px; border-radius:5px; flex-shrink:0;" title="${t('roadmap.farming.toUnlockAscendWith')} : ${getLocalizedItemName(charData.specialty.name)} (${charData.ascensionCost.specialty})">
+                ${getItemIconHtml(charData.specialty.icon, getLocalizedItemName(charData.specialty.name), 'width:18px; height:18px; object-fit:contain; flex-shrink:0;')}
+                <span style="font-size:11px; color:#fbbf24; font-weight:normal; line-height:1;">${charData.ascensionCost.specialty}</span>
+            </div>
+        ` : ''}
+    ` : '';
+
+    return `
+        <div style="background:var(--shadow-subtle); border-radius:8px; padding:8px 10px; display:flex; flex-direction:column; gap:8px; min-height:124px; box-sizing:border-box; justify-content:space-between;">
+            <!-- Rangée 1 : En-tête Personnage avec infos sous le nom -->
+            <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                <img src="${charData.charAvatar}" alt="${charData.charNom}" style="width:38px; height:38px; border-radius:6px; background:var(--shadow-subtle); object-fit:cover; flex-shrink:0;">
+                <div style="min-width:0; display:flex; flex-direction:column; gap:2px;">
+                    <div style="display:flex; align-items:center; gap:6px; min-width:0; flex-wrap:wrap;">
+                        <span style="font-size:13px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${charData.charNom}</span>
+                        ${charData.isFocus ? `<span style="font-size:9px; background:var(--accent-blue); color:#fff; padding:1px 5px; border-radius:4px; font-weight:normal; text-transform:uppercase;">Focus</span>` : ''}
+                        ${hasLocked ? `<span style="font-size:9px; background:rgba(245, 158, 11, 0.18); color:#fbbf24; padding:1px 6px; border-radius:4px; font-weight:normal; display:inline-flex; align-items:center; gap:3px;" title="${t('roadmap.farming.preFarmingTooltip')} : ${charData.maxRequiredAscLabel || '80/90'}">${t('roadmap.farming.preFarmingBadge')}</span>` : ''}
+                    </div>
+                    <div style="font-size:11px; color:var(--text-grey); display:flex; align-items:center; gap:5px; margin-top:1px;">
+                        <div style="display:inline-flex; align-items:center; gap:4px;">
+                            ${getItemIconHtml(items.philosophy?.icon || items.guide?.icon || items.teachings?.icon, getLocalizedItemName(rot?.name), 'width:14px; height:14px; object-fit:contain; flex-shrink:0;')}
+                            <span>${getLocalizedItemName(rot?.name)}</span>
+                        </div>
+                        <span>•</span>
+                        <span style="color:var(--accent-green); font-weight:normal;">${t('roadmap.farming.resinCount', cost.estimatedResin || 0)}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rangée 2 : Aptitudes cibles (Alignées horizontalement) -->
+            <div style="display:flex; align-items:center; gap:6px; min-height:24px; overflow-x:auto; scrollbar-width:none;">
+                ${talentChipsHtml}
+            </div>
+
+            <!-- Rangée 3 : Matériaux requis (+ matériaux de pré-farming si verrouillé) -->
+            <div style="display:flex; align-items:center; gap:5px; min-height:24px; overflow-x:auto; scrollbar-width:none;">
+                ${renderMaterialPill(items.teachings?.icon, cost.teachings, getLocalizedItemName(items.teachings?.name), '#4ade80')}
+                ${renderMaterialPill(items.guide?.icon, cost.guides, getLocalizedItemName(items.guide?.name), '#60a5fa')}
+                ${renderMaterialPill(items.philosophy?.icon, cost.philosophies, getLocalizedItemName(items.philosophy?.name), '#c084fc')}
+                ${renderMaterialPill(charData.weeklyBoss?.icon, cost.weeklyBoss, getLocalizedItemName(charData.weeklyBoss?.name), '#f59e0b')}
+                ${cost.crown > 0 ? renderMaterialPill('UI_ItemIcon_104319', cost.crown, t('roadmap.farming.crownOfInsight'), '#f59e0b') : ''}
+                ${cost.mora > 0 ? renderMaterialPill('UI_ItemIcon_202', formatMora(cost.mora), t('roadmap.farming.mora'), '#fbbf24') : ''}
+                ${prefarmingPillsHtml}
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Rendu compact et calibré (hauteur uniforme) d'une carte d'arme pour le carrousel de l'accueil.
+ * Organisé avec la même géométrie exacte que la carte de personnage (3 rangées stables).
+ */
+function renderDashboardWeaponCard(weaponData) {
+    const rot = weaponData.weaponRotation;
+    const items = rot?.items || {};
+    const cost = weaponData.totalCost || {};
+    const repMat = items.gold || items.purple || items.blue || items.green;
+
+    return `
+        <div style="background:var(--shadow-subtle); border-radius:8px; padding:8px 10px; display:flex; flex-direction:column; gap:8px; min-height:124px; box-sizing:border-box; justify-content:space-between;">
+            <!-- Rangée 1 : En-tête Arme avec infos sous le nom -->
+            <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                <img src="${weaponData.weaponIcon}" alt="${weaponData.weaponName}" style="width:38px; height:38px; border-radius:6px; background:var(--shadow-subtle); object-fit:contain; flex-shrink:0;">
+                <div style="min-width:0; display:flex; flex-direction:column; gap:2px;">
+                    <div style="display:flex; align-items:center; gap:6px; min-width:0; flex-wrap:wrap;">
+                        <span style="font-size:13px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${weaponData.weaponName}</span>
+                        <span style="font-size:10px; color:#eab308; font-weight:normal;">${weaponData.rarity}★</span>
+                        ${weaponData.isFocus ? `<span style="font-size:9px; background:var(--accent-blue); color:#fff; padding:1px 5px; border-radius:4px; font-weight:normal; text-transform:uppercase;">Focus</span>` : ''}
+                    </div>
+                    <div style="font-size:11px; color:var(--text-grey); display:flex; align-items:center; gap:5px; margin-top:1px; flex-wrap:wrap;">
+                        ${weaponData.charNom ? `
+                            <div style="display:inline-flex; align-items:center; gap:4px;">
+                                ${weaponData.charAvatar ? `<img src="${weaponData.charAvatar}" alt="" style="width:14px; height:14px; border-radius:50%; object-fit:cover;">` : ''}
+                                <span>${weaponData.charNom}</span>
+                            </div>
+                            <span>•</span>
+                        ` : ''}
+                        <div style="display:inline-flex; align-items:center; gap:4px;">
+                            ${repMat?.icon ? getItemIconHtml(repMat.icon, getLocalizedItemName(rot?.name), 'width:14px; height:14px; object-fit:contain; flex-shrink:0;') : ''}
+                            <span>${getLocalizedItemName(rot?.name)}</span>
+                        </div>
+                        <span>•</span>
+                        <span style="color:var(--accent-green); font-weight:normal;">${t('roadmap.farming.resinCount', cost.estimatedResin || 0)}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rangée 2 : Objectif de niveau (Même hauteur que les aptitudes) -->
+            <div style="display:flex; align-items:center; gap:6px; min-height:24px; overflow-x:auto; scrollbar-width:none;">
+                <div style="display:inline-flex; align-items:center; gap:6px; background:var(--shadow-subtle); padding:2px 7px; border-radius:5px; font-size:11px; white-space:nowrap; flex-shrink:0;">
+                    <span style="color:var(--text-grey); font-size:10px;">${t('roadmap.farming.weaponElevation')}</span>
+                    <span style="color:var(--text-grey); font-size:10px;">${t('ui.char.level', weaponData.currentLvl)} (${weaponData.currentAsc}★)</span>
+                    <span style="color:var(--text-grey); font-size:9px;">➔</span>
+                    <span style="color:var(--accent-green); font-weight:normal; font-size:11px;">${t('ui.char.level', weaponData.targetLvl)} (${weaponData.targetAsc}★)</span>
+                </div>
+            </div>
+
+            <!-- Rangée 3 : Matériaux requis -->
+            <div style="display:flex; align-items:center; gap:5px; min-height:24px; overflow-x:auto; scrollbar-width:none;">
+                ${renderMaterialPill(items.green?.icon, cost.green, getLocalizedItemName(items.green?.name), '#4ade80')}
+                ${renderMaterialPill(items.blue?.icon, cost.blue, getLocalizedItemName(items.blue?.name), '#60a5fa')}
+                ${renderMaterialPill(items.purple?.icon, cost.purple, getLocalizedItemName(items.purple?.name), '#c084fc')}
+                ${renderMaterialPill(items.gold?.icon, cost.gold, getLocalizedItemName(items.gold?.name), '#f59e0b')}
+                ${cost.mora > 0 ? renderMaterialPill('UI_ItemIcon_202', formatMora(cost.mora), t('roadmap.farming.mora'), '#fbbf24') : ''}
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Rendu compact et calibré (hauteur uniforme) de la slide recommandation d'artéfacts
+ * pendant la période du bonus Carnage Chtonien (+1 artéfact / 120 résines).
+ */
+function renderDashboardStygianSlide(topDomain, cycles, currentLang, isFallback = false, targetUid = null) {
+    const splitIconHtml = renderDomainSplitIcon(topDomain.set1?.icon, topDomain.set2?.icon, topDomain.set1?.name, topDomain.set2?.name, 30);
+
+    const domainHeaderHtml = `
+        <div style="display:flex; align-items:center; gap:12px; min-width:0; margin-bottom:4px;">
+            <div style="display:inline-flex; align-items:center; gap:3px; border-radius:6px; flex-shrink:0;">
+                ${splitIconHtml || `<img src="/assets/endgame/disturbance_outbreak.png" style="width:30px; height:30px; object-fit:contain;" alt="">`}
+            </div>
+            <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                <span style="font-size:14px; font-weight:normal; color:var(--text-always-white); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                    ${topDomain.domainName}
+                </span>
+                <span style="font-size:11px; color:var(--text-grey); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                    ${t('home.stygianOnslaught')}
+                </span>
+            </div>
+        </div>
+    `;
+
+    // Récupérer les bénéficiaires uniques parmi les deux sets
+    const beneficiaries = [];
+    const seen = new Set();
+    [...(topDomain.set1?.chars || []), ...(topDomain.set2?.chars || [])].forEach(c => {
+        const id = c.perso?.id || c.perso?.nom;
+        if (id && !seen.has(id)) {
+            seen.add(id);
+            beneficiaries.push(c);
+        }
+    });
+
+    const bothSetsUseful = topDomain.bothSetsUseful;
+
+    return `
+        ${domainHeaderHtml}
+        <div onclick="openRoadmapFromHome('${targetUid || ''}')" style="background:rgba(139, 45, 139, 0.4); border-radius:8px; padding:8px 10px; display:flex; flex-direction:column; gap:8px; min-height:124px; box-sizing:border-box; justify-content:space-between; cursor:pointer;" title="${t('home.openRoadmap')}">
+            <!-- Rangée 1 : En-tête Carnage + Badges + Bonus temps -->
+            <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                <img src="/assets/endgame/disturbance_outbreak.png" alt="Carnage Chtonien" style="width:38px; height:38px; object-fit:contain; flex-shrink:0; background:var(--shadow-subtle); border-radius:6px; padding:3px; box-sizing:border-box;">
+                <div style="min-width:0; display:flex; flex-direction:column; gap:2px;">
+                    <div style="display:flex; align-items:center; gap:6px; min-width:0; flex-wrap:wrap;">
+                        <span style="font-size:13px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            ${currentLang === 'en' ? 'Recommended Domain' : 'Donjon d\'artéfacts conseillé'}
+                        </span>
+                        ${bothSetsUseful ? `
+                            <span style="font-size:9px; background:rgba(34, 197, 94, 0.18); color:#4ade80; padding:1px 5px; border-radius:4px; font-weight:normal; white-space:nowrap;">
+                                ${currentLang === 'en' ? 'Dual Value' : 'Double rentabilité'}
+                            </span>
+                        ` : ''}
+                    </div>
+                    <div style="font-size:11px; color:var(--text-grey); display:flex; align-items:center; gap:5px; margin-top:1px;">
+                        <span style="color:var(--text-grey); font-weight:normal;">
+                            ${t('home.remainingTime', cycles.stygian.bonusDaysLeft, cycles.stygian.bonusHoursLeft)}
+                        </span>
+                        <span>•</span>
+                        <span style="color:var(--text-grey);">
+                            ${t('home.stygianBonusDesc')}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rangée 2 : Personnages bénéficiaires (ou indication dernier donjon si aucun) -->
+            <div style="display:flex; align-items:center; gap:6px; min-height:24px; overflow-x:auto; scrollbar-width:none;">
+                ${beneficiaries.length > 0 ? `
+                    <span style="font-size:11px; color:var(--text-grey); flex-shrink:0;">
+                        ${currentLang === 'en' ? 'For :' : 'Pour :'}
+                    </span>
+                    ${beneficiaries.map(c => `
+                        <div style="display:inline-flex; align-items:center; gap:4px; background:var(--shadow-subtle); padding:2px 6px; border-radius:5px; font-size:11px; white-space:nowrap; flex-shrink:0;" title="${c.perso?.nom || ''} (${c.label || ''})">
+                            ${c.perso?.image ? `<img src="${c.perso.image}" alt="" style="width:14px; height:14px; border-radius:50%; object-fit:cover; flex-shrink:0;">` : ''}
+                            <span style="color:var(--text-primary); font-size:11px;">${c.perso?.nom || ''}</span>
+                        </div>
+                    `).join('')}
+                ` : `
+                    <div style="display:inline-flex; align-items:center; gap:6px; font-size:11px; color:var(--text-grey);">
+                        <span>${currentLang === 'en' ? 'Latest artifact domain available' : 'Tout dernier donjon disponible'}</span>
+                    </div>
+                `}
+            </div>
+
+            <!-- Rangée 3 : Les deux sets d'artéfacts du donjon -->
+            <div style="display:flex; align-items:center; gap:6px; min-height:24px; overflow-x:auto; scrollbar-width:none;">
+                ${topDomain.set1?.name ? `
+                    <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); padding:2px 8px; border-radius:5px; font-size:11px; white-space:nowrap; flex-shrink:0;" title="${topDomain.set1.name}">
+                        ${topDomain.set1.icon ? `<img src="${topDomain.set1.icon}" alt="" style="width:16px; height:16px; object-fit:contain; flex-shrink:0;">` : ''}
+                        <span style="color:var(--text-primary); font-size:11px;">${topDomain.set1.name}</span>
+                    </div>
+                ` : ''}
+                ${topDomain.set2?.name ? `
+                    <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); padding:2px 8px; border-radius:5px; font-size:11px; white-space:nowrap; flex-shrink:0;" title="${topDomain.set2.name}">
+                        ${topDomain.set2.icon ? `<img src="${topDomain.set2.icon}" alt="" style="width:16px; height:16px; object-fit:contain; flex-shrink:0;">` : ''}
+                        <span style="color:var(--text-primary); font-size:11px;">${topDomain.set2.name}</span>
+                    </div>
+                ` : ''}
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Construit les diapositives du carrousel de farming pour le jour actif.
+ * Format compact et calibré à hauteur stable dédié au tableau de bord.
+ */
+function buildDailyFarmingSlides(characters = [], activeServer = 'EU', focusCharNom = null, cycles = null, targetUid = null) {
     const currentLang = (LANG === 'en') ? 'en' : 'fr';
     const resolvedFocus = focusCharNom || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_roadmap_focus_char') : null);
+    const resolvedCycles = cycles || getEndgameCyclesInfo(activeServer);
+
     // On passe null comme filtre de focus à getWeeklyFarmingSchedule afin de récupérer TOUS les besoins du jour,
     // puis on priorise le personnage focus en tête des diapositives.
     const schedule = getWeeklyFarmingSchedule(characters, null, 'all', activeServer);
@@ -138,6 +397,45 @@ function buildDailyFarmingSlides(characters = [], activeServer = 'EU', focusChar
     const dayData = schedule.scheduleByDay[dayIdx] || schedule.scheduleByDay[1];
 
     const slides = [];
+
+    // 0. Carte spéciale Recommandation Artéfacts (Carnage Chtonien : +1 artéfact / 120 résines)
+    // Insérée en Slide #1 pendant les 10 jours du bonus actif
+    if (resolvedCycles?.stygian?.isBonusActive) {
+        let topDomain = null;
+        let isFallback = false;
+
+        // Évaluation via le Planificateur de Domaines si des personnages sont disponibles
+        if (characters && characters.length > 0) {
+            const domainRankings = calculateDomainRankings(characters, resolvedFocus, 'priorities');
+            if (domainRankings && domainRankings.length > 0) {
+                topDomain = domainRankings[0];
+            }
+        }
+
+        // Si aucun besoin spécifique ou vitrine vide, fallback sur le tout dernier donjon sorti
+        if (!topDomain && ARTIFACT_DOMAINS && ARTIFACT_DOMAINS.length > 0) {
+            isFallback = true;
+            const lastDom = ARTIFACT_DOMAINS[ARTIFACT_DOMAINS.length - 1];
+            const set1Key = lastDom.sets[0];
+            const set2Key = lastDom.sets[1];
+            topDomain = {
+                domain: lastDom,
+                domainName: lastDom.name[currentLang] || lastDom.name['fr'] || lastDom.name['en'] || lastDom.id,
+                regionName: lastDom.region[currentLang] || lastDom.region['fr'] || lastDom.region['en'] || '',
+                set1: { key: set1Key, name: getLocalizedSetName(set1Key, characters), icon: getSetIcon(set1Key, characters), chars: [] },
+                set2: { key: set2Key, name: getLocalizedSetName(set2Key, characters), icon: getSetIcon(set2Key, characters), chars: [] },
+                bothSetsUseful: false,
+                efficiencyKey: 'veryHigh'
+            };
+        }
+
+        if (topDomain) {
+            slides.push({
+                type: 'stygian-artifact',
+                html: renderDashboardStygianSlide(topDomain, resolvedCycles, currentLang, isFallback, targetUid)
+            });
+        }
+    }
 
     // 1. Personnages ayant des besoins d'aptitudes aujourd'hui
     if (dayData && dayData.characters && dayData.characters.length > 0) {
@@ -174,7 +472,7 @@ function buildDailyFarmingSlides(characters = [], activeServer = 'EU', focusChar
                 type: 'character',
                 html: `
                     ${domainHeaderHtml}
-                    ${renderCharacterFarmingCard(char)}
+                    ${renderDashboardCharacterCard(char)}
                 `
             });
         });
@@ -215,7 +513,7 @@ function buildDailyFarmingSlides(characters = [], activeServer = 'EU', focusChar
                 type: 'weapon',
                 html: `
                     ${domainHeaderHtml}
-                    ${renderWeaponFarmingCard(w)}
+                    ${renderDashboardWeaponCard(w)}
                 `
             });
         });
@@ -223,7 +521,8 @@ function buildDailyFarmingSlides(characters = [], activeServer = 'EU', focusChar
 
     // 3. Fallback : si aucun besoin de personnage/arme enregistré pour aujourd'hui,
     // on affiche les donjons ouverts du jour par nation
-    if (slides.length === 0) {
+    const hasCharOrWeaponNeeds = slides.some(s => s.type === 'character' || s.type === 'weapon');
+    if (!hasCharOrWeaponNeeds) {
         FARMING_DOMAINS.forEach(dom => {
             const matchingRot = (dom.rotations || []).find(r => dayIdx === 0 || (r.days && r.days.includes(dayIdx)));
             if (matchingRot) {
@@ -262,9 +561,14 @@ function buildDailyFarmingSlides(characters = [], activeServer = 'EU', focusChar
                                 </span>
                             </div>
                         </div>
-                        <div style="background:var(--shadow-subtle); border:none; border-radius:8px; padding:12px; display:flex; align-items:center; justify-content:space-between; gap:10px;">
-                            <span style="font-size:12px; color:var(--text-primary);">${isTalent ? t('roadmap.farming.catTalents') : t('roadmap.farming.catWeapons')}</span>
-                            <span style="font-size:11px; color:var(--text-grey);">${regName}</span>
+                        <div style="background:var(--shadow-subtle); border-radius:8px; padding:10px; display:flex; flex-direction:column; justify-content:center; gap:8px; min-height:124px; box-sizing:border-box;">
+                            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                                <span style="font-size:13px; color:var(--text-primary);">${isTalent ? t('roadmap.farming.catTalents') : t('roadmap.farming.catWeapons')}</span>
+                                <span style="font-size:11px; color:var(--text-grey);">${regName}</span>
+                            </div>
+                            <span style="font-size:11px; color:var(--text-muted);">
+                                ${dayIdx === 0 ? (t('roadmap.farming.freeDaySubtitle') || 'Tous les donjons sont ouverts') : domName}
+                            </span>
                         </div>
                     `
                 });
@@ -292,8 +596,6 @@ export function renderHomeDashboardHtml(data) {
     const dayIdx = getGenshinDayIndex(activeServer);
     const dayName = getDayName(dayIdx, currentLang);
     const cycles = getEndgameCyclesInfo(activeServer);
-    const focusCharNom = data.focusCharNom || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_roadmap_focus_char') : null);
-    const slides = buildDailyFarmingSlides(characters, activeServer, focusCharNom);
 
     // Résolution du profil mis en vedette (uniquement si un compte Discord est lié ou si un favori a été défini)
     const featuredProfile = (linkedUid && profiles.find(p => String(p.uid) === String(linkedUid)))
@@ -302,6 +604,9 @@ export function renderHomeDashboardHtml(data) {
 
     // Profil actif pour les données contextuelles des widgets (Endgame, farming)
     const activeProfile = featuredProfile || profiles[0] || null;
+
+    const focusCharNom = data.focusCharNom || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_roadmap_focus_char') : null);
+    const slides = buildDailyFarmingSlides(characters, activeServer, focusCharNom, cycles, activeProfile?.uid);
 
     // Autres comptes récents (en excluant le compte mis en vedette s'il existe)
     const otherProfiles = featuredProfile
@@ -339,6 +644,28 @@ export function renderHomeDashboardHtml(data) {
     const stygianRecordIdx = activeProfile?.stygianIndex;
     const abyssStars = activeProfile?.abyssStars ?? 36;
     const theaterStars = activeProfile?.theaterStars ?? 18;
+
+    const isAbyssEndingSoon = (cycles.abyss?.daysLeft ?? 99) < 3;
+    const isTheaterEndingSoon = (cycles.theater?.daysLeft ?? 99) < 3;
+
+    function renderRemainingTimeBadge(daysLeft, hoursLeft, isEndingSoon) {
+        if (isEndingSoon) {
+            return `
+                <span style="font-size:11px; color:#fbbf24; display:inline-flex; align-items:center; gap:4px;">
+                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    ${t('home.remainingTime', daysLeft, hoursLeft)}
+                </span>
+            `;
+        }
+        return `
+            <span style="font-size:11px; color:var(--text-muted); display:inline-flex; align-items:center; gap:4px;">
+                ${t('home.remainingTime', daysLeft, hoursLeft)}
+            </span>
+        `;
+    }
 
     // Détection des modes récemment réinitialisés (< 24h) pour le badge
     const newResetModesFr = [];
@@ -452,9 +779,7 @@ export function renderHomeDashboardHtml(data) {
                             ${abyssStars}
                         </span>
                     </div>
-                    <span style="font-size:11px; color:var(--text-muted);">
-                        ${t('home.remainingTime', cycles.abyss.daysLeft, cycles.abyss.hoursLeft)}
-                    </span>
+                    ${renderRemainingTimeBadge(cycles.abyss.daysLeft, cycles.abyss.hoursLeft, isAbyssEndingSoon)}
                 </div>
 
                 <!-- THÉÂTRE DE L'IMAGINARIUM -->
@@ -467,9 +792,7 @@ export function renderHomeDashboardHtml(data) {
                         </span>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:11px; color:var(--text-muted);">
-                            ${t('home.remainingTime', cycles.theater.daysLeft, cycles.theater.hoursLeft)}
-                        </span>
+                        ${renderRemainingTimeBadge(cycles.theater.daysLeft, cycles.theater.hoursLeft, isTheaterEndingSoon)}
                         <div style="display:flex; gap:3px;" title="${t('home.requiredElements')}">
                             ${cycles.theater.elements.map(el => elementIconHtml(el, 13)).join('')}
                         </div>
@@ -637,15 +960,19 @@ export function renderHomeDashboardHtml(data) {
                     </div>
 
                     <!-- SLIDES CONTAINER -->
-                    <div class="dash-slides-container" style="min-height:92px;">
+                    <div class="dash-slides-container" style="min-height:166px;">
                         ${slidesHtml}
                     </div>
 
-                    <!-- CONTRÔLES DU CARROUSEL : PETITS POINTS BLANCS CLIQUABLES CENTRÉS -->
+                    <!-- CONTRÔLES DU CARROUSEL : POINTS PROGRESSIFS CLIQUABLES -->
                     ${slides.length > 1 ? `
                         <div style="display:flex; justify-content:center; align-items:center;">
-                            <div class="dash-dots" style="display:flex; gap:8px; align-items:center;">
-                                ${slides.map((_, i) => `<span class="dash-dot ${i === 0 ? 'active' : ''}" data-dot-index="${i}" onclick="goToFarmingSlide(${i})" style="width:7px; height:7px; border-radius:50%; background:${i === 0 ? 'var(--text-primary)' : 'rgba(255,255,255,0.25)'}; cursor:pointer; transition:all 0.2s;" title="${i + 1} / ${slides.length}"></span>`).join('')}
+                            <div class="dash-dots">
+                                ${slides.map((_, i) => `
+                                    <div class="dash-dot ${i === 0 ? 'active' : ''}" data-dot-index="${i}" onclick="goToFarmingSlide(${i})" title="${i + 1} / ${slides.length}">
+                                        <div class="dash-dot-fill"></div>
+                                    </div>
+                                `).join('')}
                             </div>
                         </div>
                     ` : ''}
@@ -662,13 +989,12 @@ export function renderHomeDashboardHtml(data) {
 }
 
 /**
- * Initialise les comportements interactifs du Dashboard (Carrousel automatique, pause au survol).
+ * Initialise les comportements interactifs du Dashboard (Carrousel automatique avec remplissage progressif).
  */
 export function initHomeDashboardInteractions() {
     let currentSlide = 0;
     const slides = document.querySelectorAll('.dash-farming-slide');
     const dots = document.querySelectorAll('.dash-dot');
-    let autoTimer = null;
 
     function showSlide(index) {
         if (!slides || slides.length <= 1) return;
@@ -679,48 +1005,50 @@ export function initHomeDashboardInteractions() {
         });
 
         dots.forEach((d, i) => {
-            d.style.background = (i === currentSlide) ? 'var(--text-primary)' : 'rgba(255,255,255,0.2)';
+            const fill = d.querySelector('.dash-dot-fill');
+            if (i === currentSlide) {
+                d.classList.add('active');
+                if (fill) {
+                    fill.style.animation = 'none';
+                    void fill.offsetWidth; // Forcer le reflow pour redémarrer l'animation
+                    fill.style.animation = '';
+                }
+            } else {
+                d.classList.remove('active');
+                if (fill) {
+                    fill.style.animation = 'none';
+                }
+            }
         });
     }
 
-    function startAutoCycle() {
-        stopAutoCycle();
-        if (slides.length > 1) {
-            autoTimer = setInterval(() => {
-                showSlide(currentSlide + 1);
-            }, 5500);
-        }
-    }
+    if (slides.length > 1) {
+        dots.forEach((d, i) => {
+            const fill = d.querySelector('.dash-dot-fill');
+            if (fill) {
+                fill.addEventListener('animationend', (e) => {
+                    if (e.animationName === 'dashDotProgress' && i === currentSlide) {
+                        showSlide(currentSlide + 1);
+                    }
+                });
+            }
+        });
 
-    function stopAutoCycle() {
-        if (autoTimer) {
-            clearInterval(autoTimer);
-            autoTimer = null;
-        }
+        // Démarre la première slide et son animation de progression
+        showSlide(0);
     }
 
     window.goToFarmingSlide = function (idx) {
         showSlide(idx);
-        startAutoCycle();
     };
 
     window.nextFarmingSlide = function () {
         showSlide(currentSlide + 1);
-        startAutoCycle();
     };
 
     window.prevFarmingSlide = function () {
         showSlide(currentSlide - 1);
-        startAutoCycle();
     };
-
-    const carouselEl = document.getElementById('dash-farming-carousel');
-    if (carouselEl) {
-        carouselEl.addEventListener('mouseenter', stopAutoCycle);
-        carouselEl.addEventListener('mouseleave', startAutoCycle);
-    }
-
-    startAutoCycle();
 
     window.toggleServerQuickMenu = function (e) {
         e.stopPropagation();

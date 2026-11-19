@@ -210,16 +210,12 @@ export function evaluateCharacterNeedForSet(perso, setKey, allowOptimized = fals
 export function getLocalizedSetName(setKey, characters = []) {
     if (!setKey) return '';
     const cleanKey = setKey.split(':')[0];
+    const currentLang = (typeof window !== 'undefined' && window.GUOBA_LANG)
+        || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_lang') : null)
+        || LANG
+        || 'fr';
 
-    // 1. Depuis un artéfact équipé dans characters
-    if (characters && Array.isArray(characters)) {
-        for (const perso of characters) {
-            const match = (perso.artefacts || []).find(a => a.setKey === cleanKey);
-            if (match && match.setName) return match.setName;
-        }
-    }
-
-    // 2. Via window.HASH_TO_KEY et window.getText
+    // 1. Via window.HASH_TO_KEY et window.getText (source de vérité officielle multilingue en direct)
     if (typeof window !== 'undefined' && window.HASH_TO_KEY && window.getText) {
         const hash = Object.keys(window.HASH_TO_KEY).find(h => window.HASH_TO_KEY[h] === cleanKey);
         if (hash) {
@@ -230,19 +226,22 @@ export function getLocalizedSetName(setKey, characters = []) {
         }
     }
 
-    // 3. Si langue FR, chercher dans SET_NAME_MAPPING
-    if (LANG === 'fr') {
+    // 2. Si langue FR, chercher dans SET_NAME_MAPPING (clé EN -> nom FR)
+    if (currentLang === 'fr') {
         const frEntry = Object.entries(SET_NAME_MAPPING).find(([frName, enKey]) => enKey === cleanKey);
         if (frEntry) return frEntry[0];
+
+        // Fallback depuis un artéfact équipé UNIQUEMENT si on est en français
+        if (characters && Array.isArray(characters)) {
+            for (const perso of characters) {
+                const match = (perso.artefacts || []).find(a => a.setKey === cleanKey);
+                if (match && match.setName) return match.setName;
+            }
+        }
     }
 
-    // 4. Si langue EN ou autre, formater le CamelCase en fallback
-    if (LANG !== 'fr') {
-        return cleanKey.replace(/([A-Z])/g, ' $1').trim();
-    }
-
-    const frEntry = Object.entries(SET_NAME_MAPPING).find(([frName, enKey]) => enKey === cleanKey);
-    return frEntry ? frEntry[0] : cleanKey;
+    // 3. Si langue EN ou autre, formater le CamelCase en fallback (ex: "MarechausseeHunter" -> "Marechaussee Hunter")
+    return cleanKey.replace(/([A-Z])/g, ' $1').trim();
 }
 
 export function getSetIcon(setKey, characters = []) {
@@ -482,8 +481,12 @@ export function calculateDomainRankings(characters, focusCharNom = null, scope =
                 efficiencyColor = '#fb923c';
             }
 
-            const domainName = domain.name[LANG] || domain.name['en'] || domain.name['fr'] || domain.id;
-            const regionName = domain.region[LANG] || domain.region['en'] || domain.region['fr'] || '';
+            const currentLang = (typeof window !== 'undefined' && window.GUOBA_LANG)
+                || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_lang') : null)
+                || LANG
+                || 'fr';
+            const domainName = domain.name[currentLang] || domain.name['en'] || domain.name['fr'] || domain.id;
+            const regionName = domain.region[currentLang] || domain.region['en'] || domain.region['fr'] || '';
             const set1Name = getLocalizedSetName(set1Key, characters);
             const set2Name = getLocalizedSetName(set2Key, characters);
             const set1Icon = getSetIcon(set1Key, characters);

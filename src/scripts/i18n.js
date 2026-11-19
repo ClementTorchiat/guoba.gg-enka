@@ -2049,7 +2049,7 @@ export const T = {
         "home.newBadge": "New!",
         "home.stygianOnslaught": "Stygian Onslaught",
         "home.stygianBonusActive": "Artifact bonus active",
-        "home.stygianBonusDesc": "+1 bonus artifact every 120 resin (any domain)",
+        "home.stygianBonusDesc": "+1 bonus artifact every 120 resin",
         "home.stygianBonusBadge": "+1 artifact / 120 resin!",
         "home.stygianRecord": "Personal Best",
         "home.stygianBosses": "Rotation Bosses",
