@@ -729,7 +729,42 @@ function toggleSearchIcon(isLoaded) {
     }
 }
 
+let searchCooldownInterval = null;
+
+function stopSearchCooldown() {
+    if (searchCooldownInterval) {
+        clearInterval(searchCooldownInterval);
+        searchCooldownInterval = null;
+    }
+    const bar = document.getElementById('searchCooldownBar');
+    if (bar) bar.classList.remove('is-active');
+}
+
+function startSearchCooldown(expiryTimestamp) {
+    stopSearchCooldown();
+
+    const bar = document.getElementById('searchCooldownBar');
+    const textEl = document.getElementById('searchCooldownText');
+    if (!bar || !textEl) return;
+
+    const tick = () => {
+        const remaining = Math.max(0, Math.ceil((expiryTimestamp - Date.now()) / 1000));
+        if (remaining <= 0) {
+            stopSearchCooldown();
+            return;
+        }
+        textEl.textContent = t('ui.search.cooldown', remaining);
+        if (!bar.classList.contains('is-active')) {
+            bar.classList.add('is-active');
+        }
+    };
+
+    tick();
+    searchCooldownInterval = setInterval(tick, 1000);
+}
+
 function clearSearch() {
+    stopSearchCooldown();
     const uidInput = document.getElementById('uidInput');
     if (uidInput) uidInput.value = '';
     window.history.pushState({}, '', window.location.pathname);
@@ -863,7 +898,11 @@ async function fetchUserData(optionalUid) {
 
         const loader = document.getElementById('loading-msg');
 
-        if (apiSessionCache[uid] && (Date.now() - apiSessionCache[uid].timestamp < 180000)) {
+        const storedExpiry = sessionStorage.getItem(`guoba_cooldown_${uid}`);
+        const cooldownRemaining = storedExpiry ? Math.ceil((parseInt(storedExpiry, 10) - Date.now()) / 1000) : 0;
+
+        if (apiSessionCache[uid] && cooldownRemaining > 0) {
+            startSearchCooldown(parseInt(storedExpiry, 10));
             const cachedData = apiSessionCache[uid].data;
             window.currentPlayerNickname = cachedData.playerInfo.nickname || t('data.unknownPlayer');
             await preloadConfigsForShowcase(cachedData, charData, locData, window.HASH_TO_KEY);
@@ -895,6 +934,7 @@ async function fetchUserData(optionalUid) {
             if (!res.ok) {
                 if (res.status === 404) throw new Error("404");
                 else if (res.status === 429) throw new Error("429");
+                else if (res.status === 424) throw new Error("424");
                 else throw new Error("SERVER");
             }
 
@@ -911,12 +951,23 @@ async function fetchUserData(optionalUid) {
             }
 
             // Envoi des données en tâche de fond pour mettre à jour le leaderboard (Fire and Forget)
-            // On stocke la Promise dans une variable globale pour pouvoir l'attendre au moment d'afficher le classement
-            window.leaderboardUpdatePromise = fetch(`/api/player/${uid}`).catch(e => console.log('Mise à jour du leaderboard ignorée (ou erreur) :', e));
+            // On transmet enkaData en POST pour éviter que le backend ne refasse une 2ème requête vers Enka
+            window.leaderboardUpdatePromise = fetch(`/api/player/${uid}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ enkaData: data })
+            }).catch(e => console.log('Mise à jour du leaderboard ignorée (ou erreur) :', e));
+
+            // Lecture du TTL dynamique Enka (en secondes) et démarrage du cooldown
+            const ttlSec = (typeof data.ttl === 'number' && data.ttl > 0) ? data.ttl : 60;
+            const expiry = Date.now() + (ttlSec * 1000);
+            sessionStorage.setItem(`guoba_cooldown_${uid}`, String(expiry));
+            startSearchCooldown(expiry);
 
             apiSessionCache[uid] = {
                 data: data,
-                timestamp: Date.now()
+                timestamp: Date.now(),
+                ttl: ttlSec
             };
 
             window.currentPlayerNickname = data.playerInfo.nickname || t('data.unknownPlayer');
@@ -949,6 +1000,8 @@ async function fetchUserData(optionalUid) {
                 alert(t('error.notFound'));
             } else if (e.message === '429') {
                 alert(t('error.rateLimit'));
+            } else if (e.message === '424') {
+                alert(t('error.gameMaintenance'));
             } else if (e.message === 'SERVER') {
                 alert(t('error.serverDown'));
             } else {
@@ -5273,6 +5326,19 @@ function setupUidInputBinding() {
                 event.preventDefault();
                 fetchUserData();
             }
+        });
+
+        uidInput.addEventListener('input', function () {
+            const val = uidInput.value.trim();
+            if (/^\d{9,10}$/.test(val)) {
+                const stored = sessionStorage.getItem(`guoba_cooldown_${val}`);
+                const rem = stored ? Math.ceil((parseInt(stored, 10) - Date.now()) / 1000) : 0;
+                if (rem > 0) {
+                    startSearchCooldown(parseInt(stored, 10));
+                    return;
+                }
+            }
+            stopSearchCooldown();
         });
     }
 }

@@ -484,8 +484,8 @@ export async function verifyUidSignature() {
         btn.disabled = true;
         errorEl.style.display = 'none';
 
-        // On fait appel à l'API via le proxy Cloudflare (pour éviter les erreurs CORS de Enka)
-        const proxyUrl = `https://guobagg.clement-torchiat.workers.dev/?uid=${uid}`;
+        // On fait appel à l'API via le proxy Cloudflare avec le paramètre léger ?info (uniquement playerInfo, pas les persos)
+        const proxyUrl = `https://guobagg.clement-torchiat.workers.dev/?uid=${uid}&info=true`;
         const res = await fetch(proxyUrl);
         if (!res.ok) throw new Error(t('account.auth.fetchProfileError'));
 

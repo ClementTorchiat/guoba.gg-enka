@@ -127,7 +127,7 @@ app.get('/test-db', async (c) => {
   });
 });
 
-app.get('/player/:uid', async (c) => {
+const handlePlayer = async (c: any) => {
   const uid = c.req.param('uid');
   const supabase = getSupabase(c);
 
@@ -152,22 +152,34 @@ app.get('/player/:uid', async (c) => {
     }
   }
 
-  // --- 2. Le Fetch vers Enka.Network ---
+  // --- 2. Récupération des données Enka (soit transmises en POST pour éviter le double fetch, soit fetch direct) ---
   try {
-    const enkaRes = await fetch(`https://enka.network/api/uid/${uid}`, {
-      headers: {
-        'User-Agent': 'guoba.gg-backend/1.0 (https://guoba.gg)'
-      }
-    });
-
-    if (!enkaRes.ok) {
-      return c.json({
-        status: 'erreur_enka',
-        message: `Impossible de récupérer les données Enka (Code ${enkaRes.status})`
-      }, enkaRes.status as any);
+    let enkaData: any = null;
+    if (c.req.method === 'POST') {
+      try {
+        const body = await c.req.json();
+        if (body && body.enkaData && body.enkaData.avatarInfoList) {
+          enkaData = body.enkaData;
+        }
+      } catch (_) { }
     }
 
-    const enkaData = await enkaRes.json();
+    if (!enkaData) {
+      const enkaRes = await fetch(`https://enka.network/api/uid/${uid}`, {
+        headers: {
+          'User-Agent': 'guoba.gg-backend/1.0 (https://guoba.gg)'
+        }
+      });
+
+      if (!enkaRes.ok) {
+        return c.json({
+          status: 'erreur_enka',
+          message: `Impossible de récupérer les données Enka (Code ${enkaRes.status})`
+        }, enkaRes.status as any);
+      }
+
+      enkaData = await enkaRes.json();
+    }
 
     // 1. Parsing brut -> Objet Guoba
     const persos = await parseEnkaData(enkaData);
@@ -438,7 +450,10 @@ app.get('/player/:uid', async (c) => {
       message: 'Une erreur est survenue lors du fetch vers Enka.'
     }, 500);
   }
-});
+};
+
+app.get('/player/:uid', handlePlayer);
+app.post('/player/:uid', handlePlayer);
 
 app.post('/player/:uid/optout-clean', async (c) => {
   const uid = c.req.param('uid');

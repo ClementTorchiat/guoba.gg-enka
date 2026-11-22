@@ -481,11 +481,14 @@ main {
 
 .search-container {
     position: relative;
+    background: var(--bg-panel);
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
 }
 
 .search-input {
     width: 100%;
-    background: var(--bg-panel);
+    background: transparent;
     border: none;
     border-radius: 8px;
     font-family: 'ShinShin', sans-serif;
@@ -513,8 +516,8 @@ main {
     position: absolute;
     top: 5px;
     right: 5px;
-    height: calc(100% - 10px);
-    aspect-ratio: 1 / 1;
+    height: 38px;
+    width: 38px;
     padding: 0;
     display: flex;
     align-items: center;
@@ -528,6 +531,48 @@ main {
 
 .search-btn:hover {
     background-color: var(--bg-hover);
+}
+
+/* Cooldown expansion under search bar */
+.search-cooldown-bar {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+    pointer-events: none;
+}
+
+.search-cooldown-bar.is-active {
+    max-height: 40px;
+    opacity: 1;
+}
+
+.search-cooldown-line {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 0 12px;
+}
+
+.search-cooldown-info {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px 9px 14px;
+    font-size: 11px;
+    color: var(--text-muted, rgba(255, 255, 255, 0.55));
+    user-select: none;
+}
+
+.search-cooldown-icon {
+    flex-shrink: 0;
+    color: currentColor;
+    opacity: 0.85;
+    animation: cooldown-pulse 2s infinite ease-in-out;
+}
+
+@keyframes cooldown-pulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
 }
 
 .sidebar-characters {
@@ -5016,6 +5061,10 @@ input:checked+.toggle-track .star-4 {
 
 .sidebar.sidebar-collapsed .search-input::placeholder {
     color: transparent;
+}
+
+.sidebar.sidebar-collapsed .search-cooldown-bar {
+    display: none !important;
 }
 
 .sidebar.sidebar-collapsed .search-btn,

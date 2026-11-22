@@ -203,7 +203,10 @@ export default {
 
         // Cas 2 : Proxy API standard vers Enka.Network pour le client
         if (uid) {
-            const enkaUrl = `https://enka.network/api/uid/${uid}/`;
+            const hasInfo = url.searchParams.has('info');
+            const enkaUrl = hasInfo 
+                ? `https://enka.network/api/uid/${uid}/?info` 
+                : `https://enka.network/api/uid/${uid}/`;
             const enkaResponse = await fetch(enkaUrl, {
                 headers: { 'User-Agent': 'guobagg-proxy/1.0' }
             });

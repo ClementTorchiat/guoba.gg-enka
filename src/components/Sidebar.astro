@@ -23,6 +23,16 @@ const { currentPage = "?" } = Astro.props;
         <form action="/" method="GET" class="search-container" id="sidebar-search-form" onsubmit="if(window.location.pathname === '/' || window.location.pathname === '') { event.preventDefault(); if(window.fetchUserData) window.fetchUserData(); }">
             <input type="text" name="uid" id="uidInput" class="search-input" data-i18n-placeholder="ui.search.placeholder" placeholder="Entrez un UID..." autocomplete="off" />
             <button type="submit" id="searchBtn" class="search-btn" data-i18n-aria-label="ui.searchBtn" aria-label="Rechercher"><img src="/assets/simulator/icons/icon_search_white.svg" alt="" style="width: 20px; height: 20px;" /></button>
+            <div id="searchCooldownBar" class="search-cooldown-bar" aria-live="polite">
+                <div class="search-cooldown-line"></div>
+                <div class="search-cooldown-info">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-cooldown-icon">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span id="searchCooldownText"></span>
+                </div>
+            </div>
         </form>
     </div>
     <div id="roadmap-sidebar-area" style="display: none;">
