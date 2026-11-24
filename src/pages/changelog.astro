@@ -2,17 +2,45 @@
 import Layout from "../layouts/Layout.astro";
 import StaticLayout from "../layouts/StaticLayout.astro";
 
-const frLogs = await Astro.glob("../data/changelogs/fr/*.md");
-const enLogs = await Astro.glob("../data/changelogs/en/*.md");
+const frRawLogs = await Astro.glob("../data/changelogs/fr/*.md");
+const enRawLogs = await Astro.glob("../data/changelogs/en/*.md");
 
 // Tri par date décroissante
-frLogs.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
-enLogs.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+frRawLogs.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+enRawLogs.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+
+const frLogs = await Promise.all(
+    frRawLogs.map(async (log) => {
+        const headings = await log.getHeadings();
+        const raw = log.rawContent ? log.rawContent() : "";
+        const wordCount = raw.trim().split(/\s+/).length;
+        const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
+        return {
+            ...log,
+            headings: headings.filter((h) => h.depth <= 2),
+            readTimeMinutes,
+        };
+    }),
+);
+
+const enLogs = await Promise.all(
+    enRawLogs.map(async (log) => {
+        const headings = await log.getHeadings();
+        const raw = log.rawContent ? log.rawContent() : "";
+        const wordCount = raw.trim().split(/\s+/).length;
+        const readTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
+        return {
+            ...log,
+            headings: headings.filter((h) => h.depth <= 2),
+            readTimeMinutes,
+        };
+    }),
+);
 ---
 
 <Layout title="Patch Notes — guoba.gg" titleKey="page.changelog.title" description="Historique des mises à jour de guoba.gg">
     <style is:inline>
-        /* CSS logic to toggle language based on HTML root lang */
+        /* Toggles langue */
         html[lang="en"] .lang-fr {
             display: none !important;
         }
@@ -20,120 +48,879 @@ enLogs.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontm
             display: none !important;
         }
 
-        .changelog-entry {
-            background: var(--bg-panel);
-            border-radius: 8px;
-            padding: 24px;
+        /* ── Barre de sélection des versions ── */
+        .changelog-version-bar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
             margin-bottom: 24px;
+            background: var(--bg-panel);
+            border-radius: 10px;
+            padding: 10px 16px;
+            flex-wrap: wrap;
         }
 
-        .changelog-entry h1 {
-            margin-top: 32px;
-            margin-bottom: 8px;
-            padding-top: 32px;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            border-top: 1px solid var(--text-primary);
+        .changelog-version-label {
+            font-size: 0.85rem;
             font-weight: normal;
-        }
-
-        .changelog-entry h2 {
-            margin-top: 24px;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            font-weight: normal;
-        }
-        .changelog-date {
             color: var(--text-secondary);
+        }
+
+        .changelog-version-pills {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .version-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px;
+            background: var(--bg-card);
+            border: none;
+            border-radius: 8px;
+            color: var(--text-grey);
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: normal;
+            font-family: inherit;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .version-pill:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .version-pill.is-active {
+            background: var(--bg-active);
+            color: var(--text-primary);
+        }
+
+        .version-pill.is-active .pill-number {
+            color: var(--text-primary);
+            font-weight: normal;
+        }
+
+        .pill-number {
+            background: var(--shadow-subtle);
+            color: var(--text-primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .pill-date {
+            font-size: 0.78rem;
+            opacity: 0.6;
+            font-weight: normal;
+        }
+
+        /* ── Vue d'une version (Layout 2 colonnes) ── */
+        .changelog-version-view {
+            display: none;
+            width: 100%;
+        }
+
+        .changelog-version-view.is-active {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 260px;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* Colonne principale */
+        .changelog-main-col {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* En-tête de version */
+        .changelog-version-header {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 4px 0 12px 0;
+            background: transparent;
+        }
+
+        .version-main-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: normal;
+            color: var(--text-primary);
+            line-height: 1.25;
+        }
+
+        .version-meta {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: normal;
+        }
+
+        .version-date,
+        .version-read-time {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: normal;
+        }
+
+        /* ── Conteneur Markdown modulaire (Option B : Section avec rail à gauche) ── */
+        .changelog-markdown-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 0;
+            background: transparent;
+            color: var(--text-grey);
+            line-height: 1.7;
+        }
+
+        /* Section parent englobant chaque H1 et ses cartes */
+        .changelog-section {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 32px;
+        }
+
+        .changelog-section:last-child {
+            margin-bottom: 0;
+        }
+
+        /* H1 = Titre de grande section agrandi */
+        .changelog-section h1,
+        .changelog-markdown-body h1 {
+            font-size: 1.45rem;
+            font-weight: normal;
+            color: var(--text-primary);
+            margin-top: 12px;
+            margin-bottom: 16px;
+            padding-left: 0;
+            background: transparent;
+            border: none;
+            scroll-margin-top: 24px;
+        }
+
+        .changelog-markdown-body h1:first-child,
+        .changelog-section:first-child h1 {
+            margin-top: 0;
+        }
+
+        /* Rail vertical à gauche reliant visuellement toutes les cartes d'un même H1 */
+        .changelog-section-cards {
+            border-left: 2px solid rgba(255, 255, 255, 0.08);
+            padding-left: 20px;
+            margin-left: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* ── Cartes individuelles par sujet (## H2) ── */
+        .changelog-card {
+            background: var(--bg-panel);
+            border-radius: 10px;
+            padding: 22px 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* H2 = Titre du sujet dans sa carte */
+        .changelog-card h2 {
+            font-size: 1.15rem;
+            font-weight: normal;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            border: none;
+            scroll-margin-top: 24px;
+        }
+
+        /* H3 mineurs dans une carte */
+        .changelog-card h3 {
+            font-size: 0.95rem;
+            font-weight: normal;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            margin-bottom: 4px;
+            padding: 0;
+            border: none;
+            scroll-margin-top: 24px;
+        }
+
+        .changelog-card p {
+            margin: 0;
+            color: var(--text-grey);
             font-size: 0.9rem;
-            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        /* Listes à puces dans la carte */
+        .changelog-card ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .changelog-card li {
+            position: relative;
+            padding-left: 18px;
+            margin: 0;
+            color: var(--text-grey);
+            font-size: 0.9rem;
+            font-weight: normal;
+            line-height: 1.7;
+        }
+
+        .changelog-card li::before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 10px;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Sous-puces imbriquées (Mapping, détails) */
+        .changelog-card li ul {
+            margin-top: 6px;
+            margin-bottom: 4px;
+            padding-left: 16px;
+            gap: 6px;
+        }
+
+        .changelog-card li ul li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            font-weight: normal;
+        }
+
+        .changelog-card li ul li::before {
+            left: 4px;
+            top: 9px;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .changelog-card li ul li ul {
+            padding-left: 16px;
+            gap: 4px;
+        }
+
+        .changelog-card li ul li ul li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            opacity: 0.85;
+            margin-bottom: 2px;
+        }
+
+        .changelog-card li ul li ul li::before {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        /* Le gras : distingué uniquement par la couleur pure white (sans graisse) */
+        .changelog-card strong {
+            font-weight: normal;
+            color: var(--text-primary);
+        }
+
+        .changelog-card em {
+            color: var(--text-secondary);
+            font-style: italic;
+            font-weight: normal;
+        }
+
+        .changelog-card a {
+            color: var(--text-primary);
+            text-decoration: underline;
+            font-weight: normal;
+            transition: opacity 0.15s ease;
+        }
+
+        .changelog-card a:hover {
+            opacity: 0.8;
+        }
+
+        .changelog-card code {
+            background: rgba(255, 255, 255, 0.06);
+            border: none;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: var(--text-primary);
+            font-weight: normal;
+            font-family: "Courier New", monospace;
+        }
+
+        /* ── Sommaire interactif à droite (TOC) ── */
+        .changelog-toc-sidebar {
+            position: sticky;
+            top: 24px;
+            max-height: calc(100vh - 48px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toc-sticky-card {
+            background: var(--bg-panel);
+            border: none;
+            border-radius: 10px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: calc(100vh - 60px);
+        }
+
+        .toc-header {
+            font-size: 0.85rem;
+            font-weight: normal;
+            color: var(--text-secondary);
+            padding-bottom: 8px;
+        }
+
+        .toc-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            overflow-y: auto;
+            padding-right: 4px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+        }
+
+        .toc-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+        .toc-nav::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .toc-link {
+            display: block;
+            font-size: 0.83rem;
+            color: var(--text-grey);
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: none;
+            font-weight: normal;
+            transition: all 0.15s ease;
+            line-height: 1.35;
+        }
+
+        .toc-link:hover {
+            color: var(--text-primary);
+            background: var(--bg-hover);
+        }
+
+        .toc-link.depth-1 {
+            color: var(--text-primary);
+            margin-top: 6px;
+            font-weight: normal;
+        }
+
+        .toc-link.depth-2 {
+            padding-left: 18px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-weight: normal;
+        }
+
+        .toc-link.is-active {
+            color: var(--text-primary);
+            background: var(--bg-active);
+            font-weight: normal;
+        }
+
+        .toc-link.depth-2.is-active {
+            color: var(--text-primary);
+            background: var(--bg-active);
+            font-weight: normal;
+        }
+
+        .toc-label {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             display: block;
             font-weight: normal;
         }
-        .changelog-content {
-            color: var(--text-primary);
-            line-height: 1.6;
+
+        .toc-footer {
+            padding-top: 8px;
+            margin-top: 2px;
         }
-        .changelog-content h3 {
-            margin-top: 24px;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-            font-size: 1.1rem;
-        }
-        .changelog-content ul {
-            padding-left: 20px;
-            margin-bottom: 16px;
-        }
-        .changelog-content li {
-            margin-bottom: 16px;
-            color: rgba(255, 255, 255, 0.8);
+
+        .toc-back-to-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            background: var(--bg-card);
+            border: none;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            padding: 6px;
+            font-size: 0.78rem;
             font-weight: normal;
-            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
-        .changelog-content li strong {
-            color: rgba(255, 255, 255, 1);
-            font-weight: normal;
+
+        .toc-back-to-top:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
         }
-        .changelog-content a {
-            color: #e2a25b;
-            text-decoration: none;
-        }
-        .changelog-content a:hover {
-            text-decoration: underline;
+
+        /* ── Responsive ── */
+        @media (max-width: 1024px) {
+            .changelog-version-view.is-active {
+                display: flex;
+                flex-direction: column-reverse;
+                gap: 20px;
+            }
+
+            .changelog-toc-sidebar {
+                position: static;
+                max-height: none;
+                width: 100%;
+            }
+
+            .toc-sticky-card {
+                max-height: 280px;
+            }
         }
     </style>
 
     <StaticLayout currentPage="changelog">
         <div class="static-page">
             <div class="static-page-hero">
-                <h1 class="static-page-title" data-i18n="page.changelog.title">Patch Notes</h1>
-                <p class="static-page-lead" data-i18n="page.changelog.lead">Retrouvez ici l'historique des mises à jour et nouveautés de guoba.gg.</p>
+                <h1 class="static-page-title" data-i18n="page.changelog.title">
+                    Patch Notes
+                </h1>
+                <p class="static-page-lead" data-i18n="page.changelog.lead">
+                    Retrouvez ici l'historique des mises à jour et nouveautés de guoba.gg.
+                </p>
             </div>
 
             <div class="static-page-body">
-                <!-- French Version -->
-                <div class="lang-fr">
-                    {
-                        frLogs.map((log) => (
-                            <div class="changelog-entry">
-                                <h2 style="margin-top: 0px;">{log.frontmatter.title}</h2>
-                                <span class="changelog-date">
-                                    {new Date(log.frontmatter.date).toLocaleDateString("fr-FR", {
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "numeric",
-                                    })}
-                                </span>
-                                <div class="changelog-content">
+                <!-- Version Française -->
+                <div class="lang-fr" data-lang="fr">
+                    <div class="changelog-version-bar">
+                        <span class="changelog-version-label" data-i18n="page.changelog.versions_label">
+                            Versions :
+                        </span>
+                        <div class="changelog-version-pills" role="tablist">
+                            {frLogs.map((log, idx) => (
+                                <button type="button" class={`version-pill ${idx === 0 ? "is-active" : ""}`} data-version-btn={log.frontmatter.version} role="tab" aria-selected={idx === 0 ? "true" : "false"}>
+                                    <span class="pill-number">v{log.frontmatter.version}</span>
+                                    <span class="pill-date">
+                                        {new Date(log.frontmatter.date).toLocaleDateString("fr-FR", {
+                                            year: "numeric",
+                                            month: "short",
+                                            day: "numeric",
+                                        })}
+                                    </span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {frLogs.map((log, idx) => (
+                        <div class={`changelog-version-view ${idx === 0 ? "is-active" : ""}`} data-version-view={log.frontmatter.version}>
+                            <div class="changelog-main-col">
+                                <header class="changelog-version-header">
+                                    <h2 class="version-main-title">{log.frontmatter.title}</h2>
+                                    <div class="version-meta">
+                                        <span class="version-date">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                                <line x1="16" y1="2" x2="16" y2="6" />
+                                                <line x1="8" y1="2" x2="8" y2="6" />
+                                                <line x1="3" y1="10" x2="21" y2="10" />
+                                            </svg>
+                                            {new Date(log.frontmatter.date).toLocaleDateString("fr-FR", {
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                            })}
+                                        </span>
+                                        <span class="version-read-time">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <polyline points="12 6 12 12 16 14" />
+                                            </svg>
+                                            ~{log.readTimeMinutes} min
+                                        </span>
+                                    </div>
+                                </header>
+
+                                <div class="changelog-markdown-body">
                                     <log.Content />
                                 </div>
                             </div>
-                        ))
-                    }
+
+                            <aside class="changelog-toc-sidebar">
+                                <div class="toc-sticky-card">
+                                    <div class="toc-header">
+                                        <span data-i18n="page.changelog.toc_title">Sur cette page</span>
+                                    </div>
+                                    <nav class="toc-nav" aria-label="Sommaire de la version">
+                                        {log.headings.map((h) => (
+                                            <a href={`#${h.slug}`} class={`toc-link depth-${h.depth}`} data-toc-target={h.slug} title={h.text}>
+                                                <span class="toc-label">{h.text}</span>
+                                            </a>
+                                        ))}
+                                    </nav>
+                                    <div class="toc-footer">
+                                        <button type="button" class="toc-back-to-top">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M18 15l-6-6-6 6" />
+                                            </svg>
+                                            <span data-i18n="page.changelog.scroll_to_top">Haut de page</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    ))}
                 </div>
 
-                <!-- English Version -->
-                <div class="lang-en">
-                    {
-                        enLogs.map((log) => (
-                            <div class="changelog-entry">
-                                <h2 style="margin-top: 0px;">{log.frontmatter.title}</h2>
-                                <span class="changelog-date">
-                                    {new Date(log.frontmatter.date).toLocaleDateString("en-US", {
-                                        year: "numeric",
-                                        month: "long",
-                                        day: "numeric",
-                                    })}
-                                </span>
-                                <div class="changelog-content">
+                <!-- Version Anglaise -->
+                <div class="lang-en" data-lang="en">
+                    <div class="changelog-version-bar">
+                        <span class="changelog-version-label" data-i18n="page.changelog.versions_label">
+                            Versions:
+                        </span>
+                        <div class="changelog-version-pills" role="tablist">
+                            {enLogs.map((log, idx) => (
+                                <button type="button" class={`version-pill ${idx === 0 ? "is-active" : ""}`} data-version-btn={log.frontmatter.version} role="tab" aria-selected={idx === 0 ? "true" : "false"}>
+                                    <span class="pill-number">v{log.frontmatter.version}</span>
+                                    <span class="pill-date">
+                                        {new Date(log.frontmatter.date).toLocaleDateString("en-US", {
+                                            year: "numeric",
+                                            month: "short",
+                                            day: "numeric",
+                                        })}
+                                    </span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {enLogs.map((log, idx) => (
+                        <div class={`changelog-version-view ${idx === 0 ? "is-active" : ""}`} data-version-view={log.frontmatter.version}>
+                            <div class="changelog-main-col">
+                                <header class="changelog-version-header">
+                                    <h2 class="version-main-title">{log.frontmatter.title}</h2>
+                                    <div class="version-meta">
+                                        <span class="version-date">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                                <line x1="16" y1="2" x2="16" y2="6" />
+                                                <line x1="8" y1="2" x2="8" y2="6" />
+                                                <line x1="3" y1="10" x2="21" y2="10" />
+                                            </svg>
+                                            {new Date(log.frontmatter.date).toLocaleDateString("en-US", {
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                            })}
+                                        </span>
+                                        <span class="version-read-time">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <polyline points="12 6 12 12 16 14" />
+                                            </svg>
+                                            ~{log.readTimeMinutes} min
+                                        </span>
+                                    </div>
+                                </header>
+
+                                <div class="changelog-markdown-body">
                                     <log.Content />
                                 </div>
                             </div>
-                        ))
-                    }
+
+                            <aside class="changelog-toc-sidebar">
+                                <div class="toc-sticky-card">
+                                    <div class="toc-header">
+                                        <span data-i18n="page.changelog.toc_title">On this page</span>
+                                    </div>
+                                    <nav class="toc-nav" aria-label="Version outline">
+                                        {log.headings.map((h) => (
+                                            <a href={`#${h.slug}`} class={`toc-link depth-${h.depth}`} data-toc-target={h.slug} title={h.text}>
+                                                <span class="toc-label">{h.text}</span>
+                                            </a>
+                                        ))}
+                                    </nav>
+                                    <div class="toc-footer">
+                                        <button type="button" class="toc-back-to-top">
+                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M18 15l-6-6-6 6" />
+                                            </svg>
+                                            <span data-i18n="page.changelog.scroll_to_top">Back to top</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
     </StaticLayout>
 </Layout>
+
+<script is:inline>
+    (function initChangelogUI() {
+        // Regroupe les H1 et leurs cartes dans des sections avec rail vertical à gauche
+        function wrapChangelogCards() {
+            document.querySelectorAll(".changelog-markdown-body").forEach((container) => {
+                if (container.dataset.grouped) return;
+                container.dataset.grouped = "true";
+
+                const children = Array.from(container.childNodes);
+                container.innerHTML = "";
+
+                let currentSection = null;
+                let currentCardsContainer = null;
+                let currentCard = null;
+
+                function ensureSection() {
+                    if (!currentSection) {
+                        currentSection = document.createElement("div");
+                        currentSection.className = "changelog-section";
+                        container.appendChild(currentSection);
+
+                        currentCardsContainer = document.createElement("div");
+                        currentCardsContainer.className = "changelog-section-cards";
+                        currentSection.appendChild(currentCardsContainer);
+                    }
+                }
+
+                children.forEach((node) => {
+                    if (node.nodeType === Node.ELEMENT_NODE && node.tagName === "H1") {
+                        // Nouveau H1 = Nouvelle section
+                        currentSection = document.createElement("div");
+                        currentSection.className = "changelog-section";
+                        container.appendChild(currentSection);
+
+                        currentSection.appendChild(node);
+
+                        currentCardsContainer = document.createElement("div");
+                        currentCardsContainer.className = "changelog-section-cards";
+                        currentSection.appendChild(currentCardsContainer);
+
+                        currentCard = null;
+                    } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === "H2") {
+                        ensureSection();
+                        currentCard = document.createElement("div");
+                        currentCard.className = "changelog-card";
+                        currentCardsContainer.appendChild(currentCard);
+                        currentCard.appendChild(node);
+                    } else if (currentCard) {
+                        currentCard.appendChild(node);
+                    } else {
+                        // Nœuds avant le premier H2 (ex: intro sous H1)
+                        if (node.nodeType === Node.ELEMENT_NODE || (node.nodeType === Node.TEXT_NODE && node.textContent.trim())) {
+                            ensureSection();
+                            const introCard = document.createElement("div");
+                            introCard.className = "changelog-card";
+                            currentCardsContainer.appendChild(introCard);
+                            introCard.appendChild(node);
+                            currentCard = introCard;
+                        }
+                    }
+                });
+            });
+        }
+
+        function setup() {
+            wrapChangelogCards();
+
+            const scrollContainer = document.getElementById("main-container") || window;
+
+            function getCurrentLangWrapper() {
+                const isEn = document.documentElement.lang === "en";
+                return document.querySelector(isEn ? ".lang-en" : ".lang-fr");
+            }
+
+            function selectVersion(version, updateUrl = true) {
+                // Mettre à jour les pilules de version partout (FR et EN)
+                document.querySelectorAll("[data-version-btn]").forEach((btn) => {
+                    const match = btn.getAttribute("data-version-btn") === version;
+                    btn.classList.toggle("is-active", match);
+                    btn.setAttribute("aria-selected", match ? "true" : "false");
+                });
+
+                // Mettre à jour les conteneurs de version partout (FR et EN)
+                document.querySelectorAll("[data-version-view]").forEach((view) => {
+                    const match = view.getAttribute("data-version-view") === version;
+                    view.classList.toggle("is-active", match);
+                });
+
+                // Mettre à jour l'URL sans rechargement
+                if (updateUrl) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.set("v", version);
+                    window.history.replaceState(null, "", url.toString());
+                }
+
+                // Remonter en haut du container
+                if (scrollContainer && scrollContainer.scrollTo) {
+                    scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+                }
+
+                // Ré-exécuter le scrollspy
+                setTimeout(updateScrollspy, 50);
+            }
+
+            // Écouteur sur les boutons de version
+            document.querySelectorAll("[data-version-btn]").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const ver = btn.getAttribute("data-version-btn");
+                    if (ver) selectVersion(ver, true);
+                });
+            });
+
+            // Boutons "Haut de page"
+            document.querySelectorAll(".toc-back-to-top").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    if (scrollContainer && scrollContainer.scrollTo) {
+                        scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                });
+            });
+
+            // Clic sur les liens du sommaire (smooth scroll vers le titre)
+            document.querySelectorAll(".toc-link").forEach((link) => {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const targetSlug = link.getAttribute("data-toc-target");
+                    if (!targetSlug) return;
+
+                    const activeView = link.closest(".changelog-version-view");
+                    if (!activeView) return;
+
+                    // Chercher le heading de façon résiliente
+                    let targetEl = null;
+                    const headings = activeView.querySelectorAll("h1, h2, h3");
+                    for (let i = 0; i < headings.length; i++) {
+                        if (headings[i].id === targetSlug) {
+                            targetEl = headings[i];
+                            break;
+                        }
+                    }
+
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+                        history.replaceState(null, "", `#${targetSlug}`);
+                    }
+                });
+            });
+
+            // Scrollspy dynamique
+            let isTicking = false;
+            function updateScrollspy() {
+                const parent = getCurrentLangWrapper();
+                if (!parent) return;
+
+                const activeView = parent.querySelector(".changelog-version-view.is-active");
+                if (!activeView) return;
+
+                const headings = Array.from(activeView.querySelectorAll(".changelog-markdown-body h1, .changelog-markdown-body h2"));
+                if (headings.length === 0) return;
+
+                const containerTop = scrollContainer === window ? 0 : scrollContainer.getBoundingClientRect().top;
+
+                // Trouver le heading actif le plus proche du haut
+                let currentHeading = headings[0];
+                for (let i = 0; i < headings.length; i++) {
+                    const rect = headings[i].getBoundingClientRect();
+                    const topOffset = rect.top - containerTop;
+                    if (topOffset <= 120) {
+                        currentHeading = headings[i];
+                    } else {
+                        break;
+                    }
+                }
+
+                if (currentHeading && currentHeading.id) {
+                    const currentId = currentHeading.id;
+                    const tocLinks = activeView.querySelectorAll(".toc-link");
+                    tocLinks.forEach((l) => {
+                        const match = l.getAttribute("data-toc-target") === currentId;
+                        l.classList.toggle("is-active", match);
+                    });
+                }
+
+                isTicking = false;
+            }
+
+            const targetScrollEvent = scrollContainer === window ? window : scrollContainer;
+            targetScrollEvent.addEventListener(
+                "scroll",
+                () => {
+                    if (!isTicking) {
+                        window.requestAnimationFrame(updateScrollspy);
+                        isTicking = true;
+                    }
+                },
+                { passive: true },
+            );
+
+            // Initialisation avec l'URL (?v=2.0.1 ou #slug)
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialVersion = urlParams.get("v");
+            if (initialVersion) {
+                selectVersion(initialVersion, false);
+            }
+
+            const initialHash = window.location.hash ? window.location.hash.substring(1) : "";
+            if (initialHash) {
+                setTimeout(() => {
+                    const activeView = document.querySelector(".changelog-version-view.is-active");
+                    if (activeView) {
+                        let el = null;
+                        const headings = activeView.querySelectorAll("h1, h2, h3");
+                        for (let i = 0; i < headings.length; i++) {
+                            if (headings[i].id === initialHash) {
+                                el = headings[i];
+                                break;
+                            }
+                        }
+                        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                }, 150);
+            }
+
+            // Exécuter un premier coup pour le scrollspy
+            updateScrollspy();
+        }
+
+        // Support navigation Astro view transitions
+        document.addEventListener("astro:page-load", setup);
+        if (document.readyState === "complete" || document.readyState === "interactive") {
+            setup();
+        }
+    })();
+</script>

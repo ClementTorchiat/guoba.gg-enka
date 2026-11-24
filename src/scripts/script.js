@@ -2788,9 +2788,21 @@ async function processData(data, uid = null) {
         if (weapon && G_WEAPON_PASSIVES[weapon.key]) {
             const wConfig = G_WEAPON_PASSIVES[weapon.key];
             const isAdvanced = wConfig.buffs && Array.isArray(wConfig.buffs);
-            const wMode = isAdvanced ? (wConfig.selectMode || 'standard') : 'standard';
-            const wData = isAdvanced ? wConfig.buffs : wConfig;
-            addBuffs(weapon.key, `${weapon.name} ${t('ui.buff.weapon')}`, wData, wMode, weapon.rank);
+            const isGrouped = isAdvanced && wConfig.buffs.length > 0 && (wConfig.buffs[0].buffs || wConfig.buffs[0].data);
+            if (isGrouped) {
+                wConfig.buffs.forEach(group => {
+                    const list = group.data || group.buffs;
+                    if (list && list.length > 0) {
+                        const grpLabel = getLabel(group.category);
+                        const categoryName = grpLabel ? `${weapon.name} - ${grpLabel} ${t('ui.buff.weapon')}` : `${weapon.name} ${t('ui.buff.weapon')}`;
+                        addBuffs(weapon.key, categoryName, list, group.selectMode || 'standard', weapon.rank);
+                    }
+                });
+            } else {
+                const wMode = isAdvanced ? (wConfig.selectMode || 'standard') : 'standard';
+                const wData = isAdvanced ? wConfig.buffs : wConfig;
+                addBuffs(weapon.key, `${weapon.name} ${t('ui.buff.weapon')}`, wData, wMode, weapon.rank);
+            }
         }
 
         if (G_SET_PASSIVES) {
