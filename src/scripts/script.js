@@ -772,6 +772,7 @@ function clearSearch() {
     window.currentPlayerNickname = null;
     globalPersoData = [];
     window.globalPersoData = [];
+    window.globalPersoUid = null;
     if (window.hideCombatStatTooltip) window.hideCombatStatTooltip();
     if (window.hideBaseStatTooltip) window.hideBaseStatTooltip();
     if (window.hideArtifactStatTooltip) window.hideArtifactStatTooltip();
@@ -2867,7 +2868,9 @@ async function processData(data, uid = null) {
     setUserData(data, currentUidStr);
     setCharacterList(globalPersoData);
     window.globalPersoData = globalPersoData;
+    window.globalPersoUid = currentUidStr || null;
     window.lastKnownCharacters = globalPersoData;
+    window.lastKnownCharactersUid = currentUidStr || null;
     if (currentUidStr) {
         idbSet(`guoba_cached_chars_${currentUidStr}`, globalPersoData).catch(() => {});
     }
@@ -3348,28 +3351,34 @@ async function renderHome() {
     } else if (isDashboard) {
         const activeServer = detectActiveServer(discordUid || effectiveFavUid);
 
-        // Récupération des personnages : mémoire active -> mémoire session -> cache IndexedDB -> snapshots
-        let characters = (window.globalPersoData && window.globalPersoData.length > 0)
-            ? window.globalPersoData
-            : (window.lastKnownCharacters && window.lastKnownCharacters.length > 0 ? window.lastKnownCharacters : []);
-
         const targetUid = discordUid || effectiveFavUid || (profiles[0] && profiles[0].uid);
-        if (characters.length === 0 && targetUid) {
-            try {
-                const cached = await idbGet(`guoba_cached_chars_${targetUid}`);
-                if (cached && Array.isArray(cached) && cached.length > 0) {
-                    characters = cached;
-                    window.lastKnownCharacters = cached;
-                } else {
-                    const snapshots = await getStoredSnapshots(targetUid);
-                    const snapList = Object.values(snapshots || {}).filter(Boolean);
-                    if (snapList.length > 0) {
-                        characters = snapList;
-                        window.lastKnownCharacters = snapList;
+
+        // Récupération des personnages du compte ciblé par le dashboard uniquement
+        let characters = [];
+        if (targetUid) {
+            if (window.globalPersoData && window.globalPersoData.length > 0 && String(window.globalPersoUid) === String(targetUid)) {
+                characters = window.globalPersoData;
+            } else if (window.lastKnownCharacters && window.lastKnownCharacters.length > 0 && String(window.lastKnownCharactersUid) === String(targetUid)) {
+                characters = window.lastKnownCharacters;
+            } else {
+                try {
+                    const cached = await idbGet(`guoba_cached_chars_${targetUid}`);
+                    if (cached && Array.isArray(cached) && cached.length > 0) {
+                        characters = cached;
+                        window.lastKnownCharacters = cached;
+                        window.lastKnownCharactersUid = targetUid;
+                    } else {
+                        const snapshots = await getStoredSnapshots(targetUid);
+                        const snapList = Object.values(snapshots || {}).filter(Boolean);
+                        if (snapList.length > 0) {
+                            characters = snapList;
+                            window.lastKnownCharacters = snapList;
+                            window.lastKnownCharactersUid = targetUid;
+                        }
                     }
+                } catch (err) {
+                    console.warn('[Home] Erreur lecture personnages en cache:', err);
                 }
-            } catch (err) {
-                console.warn('[Home] Erreur lecture personnages en cache:', err);
             }
         }
 
@@ -5289,6 +5298,7 @@ function showAccountRoadmap() {
         if (window.lastKnownCharacters && window.lastKnownCharacters.length > 0) {
             globalPersoData = window.lastKnownCharacters;
             window.globalPersoData = window.lastKnownCharacters;
+            window.globalPersoUid = window.lastKnownCharactersUid || null;
         }
     }
     if (!container || !globalPersoData || globalPersoData.length === 0) return;

@@ -2,7 +2,7 @@
 // Rendu modulaire de la page d'accueil moderne (Tableau de bord 2 colonnes)
 
 import { t, LANG } from '../../scripts/i18n.js';
-import { getWeeklyFarmingSchedule, getLocalizedItemName } from '../roadmap/farmingEngine.js';
+import { getWeeklyFarmingSchedule, getLocalizedItemName, calculateCharacterAscensionCost } from '../roadmap/farmingEngine.js';
 import {
     getItemIconHtml,
     renderMaterialPill
@@ -54,6 +54,8 @@ const DID_YOU_KNOW_TIPS = [
         en: "You can export a high-resolution build card in a single click using the export button in the showcase toolbar."
     }
 ];
+
+let sessionTipIndex = null;
 
 function formatMora(num) {
     if (!num) return '0';
@@ -133,7 +135,7 @@ function renderBossTips(boss, lang) {
  * Rendu compact et calibré (hauteur uniforme) d'une carte de personnage pour le carrousel de l'accueil.
  * Organisé en 3 rangées horizontales stables pour éliminer tout décalage vertical (layout shift).
  */
-function renderDashboardCharacterCard(charData) {
+function renderDashboardCharacterCard(charData, targetUid = null) {
     const rot = charData.bookRotation;
     const items = rot?.items || {};
     const cost = charData.totalCost || {};
@@ -177,7 +179,7 @@ function renderDashboardCharacterCard(charData) {
     ` : '';
 
     return `
-        <div style="background:var(--shadow-subtle); border-radius:8px; padding:8px 10px; display:flex; flex-direction:column; gap:8px; min-height:124px; box-sizing:border-box; justify-content:space-between;">
+        <div onclick="openRoadmapFromHome('${targetUid || ''}')" style="background:var(--shadow-subtle); border-radius:8px; padding:8px 10px; display:flex; flex-direction:column; gap:8px; min-height:124px; box-sizing:border-box; justify-content:space-between; cursor:pointer;" title="${t('home.openRoadmap')}">
             <!-- Rangée 1 : En-tête Personnage avec infos sous le nom -->
             <div style="display:flex; align-items:center; gap:10px; min-width:0;">
                 <img src="${charData.charAvatar}" alt="${charData.charNom}" style="width:38px; height:38px; border-radius:6px; background:var(--shadow-subtle); object-fit:cover; flex-shrink:0;">
@@ -221,14 +223,14 @@ function renderDashboardCharacterCard(charData) {
  * Rendu compact et calibré (hauteur uniforme) d'une carte d'arme pour le carrousel de l'accueil.
  * Organisé avec la même géométrie exacte que la carte de personnage (3 rangées stables).
  */
-function renderDashboardWeaponCard(weaponData) {
+function renderDashboardWeaponCard(weaponData, targetUid = null) {
     const rot = weaponData.weaponRotation;
     const items = rot?.items || {};
     const cost = weaponData.totalCost || {};
     const repMat = items.gold || items.purple || items.blue || items.green;
 
     return `
-        <div style="background:var(--shadow-subtle); border-radius:8px; padding:8px 10px; display:flex; flex-direction:column; gap:8px; min-height:124px; box-sizing:border-box; justify-content:space-between;">
+        <div onclick="openRoadmapFromHome('${targetUid || ''}')" style="background:var(--shadow-subtle); border-radius:8px; padding:8px 10px; display:flex; flex-direction:column; gap:8px; min-height:124px; box-sizing:border-box; justify-content:space-between; cursor:pointer;" title="${t('home.openRoadmap')}">
             <!-- Rangée 1 : En-tête Arme avec infos sous le nom -->
             <div style="display:flex; align-items:center; gap:10px; min-width:0;">
                 <img src="${weaponData.weaponIcon}" alt="${weaponData.weaponName}" style="width:38px; height:38px; border-radius:6px; background:var(--shadow-subtle); object-fit:contain; flex-shrink:0;">
@@ -273,6 +275,155 @@ function renderDashboardWeaponCard(weaponData) {
                 ${renderMaterialPill(items.purple?.icon, cost.purple, getLocalizedItemName(items.purple?.name), '#c084fc')}
                 ${renderMaterialPill(items.gold?.icon, cost.gold, getLocalizedItemName(items.gold?.name), '#f59e0b')}
                 ${cost.mora > 0 ? renderMaterialPill('UI_ItemIcon_202', formatMora(cost.mora), t('roadmap.farming.mora'), '#fbbf24') : ''}
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Rendu compact et calibré (hauteur uniforme 124px) d'une carte d'élévation de personnage pour le carrousel.
+ * 3 rangées stables garantissant 0 layout shift.
+ */
+function renderDashboardAscensionCard(charData, targetUid = null) {
+    const currentLang = (LANG === 'en') ? 'en' : 'fr';
+    const ascCost = charData.recommendedAscensionCost || charData.fullAscensionCost || charData.ascensionCost || (typeof calculateCharacterAscensionCost === 'function' ? calculateCharacterAscensionCost(charData.currentAsc || 0, charData.targetAsc || 6) : null);
+    const bossCount = ascCost?.boss || 0;
+    const specCount = ascCost?.specialty || 0;
+    const moraCount = ascCost?.mora || 0;
+
+    return `
+        <div onclick="openRoadmapFromHome('${targetUid || ''}')" style="background:var(--shadow-subtle); border-radius:8px; padding:8px 10px; display:flex; flex-direction:column; gap:8px; min-height:124px; box-sizing:border-box; justify-content:space-between; cursor:pointer;" title="${t('home.openRoadmap')}">
+            <!-- Rangée 1 : En-tête Personnage avec nom et badges -->
+            <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                <img src="${charData.charAvatar}" alt="${charData.charNom}" style="width:38px; height:38px; border-radius:6px; background:var(--shadow-subtle); object-fit:cover; flex-shrink:0;">
+                <div style="min-width:0; display:flex; flex-direction:column; gap:2px;">
+                    <div style="display:flex; align-items:center; gap:6px; min-width:0; flex-wrap:wrap;">
+                        <span style="font-size:13px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${charData.charNom}</span>
+                        ${charData.isFocus ? `<span style="font-size:9px; background:var(--accent-blue); color:#fff; padding:1px 5px; border-radius:4px; font-weight:normal; text-transform:uppercase;">Focus</span>` : ''}
+                        <span style="font-size:9px; background:rgba(245, 158, 11, 0.18); color:#fbbf24; padding:1px 6px; border-radius:4px; font-weight:normal;">
+                            ${t('roadmap.farming.ascensionMaterialsBadge')}
+                        </span>
+                    </div>
+                    <div style="font-size:11px; color:var(--text-grey); display:flex; align-items:center; gap:5px; margin-top:1px;">
+                        ${charData.worldBoss?.icon ? getItemIconHtml(charData.worldBoss.icon, getLocalizedItemName(charData.worldBoss.name), 'width:14px; height:14px; object-fit:contain; flex-shrink:0;') : ''}
+                        <span style="color:var(--text-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            ${getLocalizedItemName(charData.worldBoss?.name) || t('home.worldBossAndSpecialty')}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rangée 2 : Objectif de niveau / palier d'élévation -->
+            <div style="display:flex; align-items:center; gap:6px; min-height:24px; overflow-x:auto; scrollbar-width:none;">
+                <div style="display:inline-flex; align-items:center; gap:6px; background:var(--shadow-subtle); padding:2px 7px; border-radius:5px; font-size:11px; white-space:nowrap; flex-shrink:0;">
+                    <span style="color:var(--text-grey); font-size:10px;">${t('ui.char.level', charData.currentLvl || 1)} (${t('roadmap.farming.ascShort', charData.currentAsc || 0)})</span>
+                    <span style="color:var(--text-grey); font-size:9px;">➔</span>
+                    <span style="color:#fbbf24; font-weight:normal; font-size:11px;">${t('ui.char.level', charData.targetLvlLabel || '80/90')} (${t('roadmap.farming.ascShort', charData.targetAsc || 6)})</span>
+                </div>
+            </div>
+
+            <!-- Rangée 3 : Matériaux requis (Boss + Spécialité + Moras) -->
+            <div style="display:flex; align-items:center; gap:5px; min-height:24px; overflow-x:auto; scrollbar-width:none;">
+                ${charData.worldBoss?.icon ? renderMaterialPill(charData.worldBoss.icon, bossCount > 0 ? bossCount : '', getLocalizedItemName(charData.worldBoss.name), '#f59e0b') : ''}
+                ${charData.specialty?.icon ? renderMaterialPill(charData.specialty.icon, specCount > 0 ? specCount : '', getLocalizedItemName(charData.specialty.name), '#60a5fa') : ''}
+                ${moraCount > 0 ? renderMaterialPill('UI_ItemIcon_202', formatMora(moraCount), t('roadmap.farming.mora'), '#fbbf24') : ''}
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Rendu compact et calibré (hauteur uniforme 124px) de la slide recommandation d'artéfacts
+ * pour les journées libres lorsqu'aucun personnage n'a de besoins d'élévation ou de donjons.
+ * Style neutre standard (var(--shadow-subtle)).
+ */
+function renderDashboardFreeDayArtifactSlide(topDomain, currentLang, isFallback = false, targetUid = null) {
+    const splitIconHtml = renderDomainSplitIcon(topDomain.set1?.icon, topDomain.set2?.icon, topDomain.set1?.name, topDomain.set2?.name, 30);
+
+    const domainHeaderHtml = `
+        <div style="display:flex; align-items:center; gap:12px; min-width:0; margin-bottom:4px;">
+            <div style="display:inline-flex; align-items:center; gap:3px; border-radius:6px; flex-shrink:0;">
+                ${splitIconHtml || `<img src="/assets/simulator/icons/icon_artifacts.svg" style="width:30px; height:30px; object-fit:contain;" alt="">`}
+            </div>
+            <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                <span style="font-size:14px; font-weight:normal; color:var(--text-always-white); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                    ${topDomain.domainName}
+                </span>
+                <span style="font-size:11px; color:var(--text-grey); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                    ${topDomain.regionName ? `${topDomain.regionName} • ` : ''}${t('roadmap.farming.freeDayBadge')}
+                </span>
+            </div>
+        </div>
+    `;
+
+    // Récupérer les bénéficiaires uniques parmi les deux sets
+    const beneficiaries = [];
+    const seen = new Set();
+    [...(topDomain.set1?.chars || []), ...(topDomain.set2?.chars || [])].forEach(c => {
+        const id = c.perso?.id || c.perso?.nom;
+        if (id && !seen.has(id)) {
+            seen.add(id);
+            beneficiaries.push(c);
+        }
+    });
+
+    const bothSetsUseful = topDomain.bothSetsUseful;
+
+    return `
+        ${domainHeaderHtml}
+        <div onclick="openRoadmapFromHome('${targetUid || ''}')" style="background:var(--shadow-subtle); border-radius:8px; padding:8px 10px; display:flex; flex-direction:column; gap:8px; min-height:124px; box-sizing:border-box; justify-content:space-between; cursor:pointer;" title="${t('home.openRoadmap')}">
+            <!-- Rangée 1 : En-tête Recommandation + Badges -->
+            <div style="display:flex; flex-direction:column; gap:3px; min-width:0;">
+                <div style="display:flex; align-items:center; gap:6px; min-width:0; flex-wrap:wrap;">
+                    <span style="font-size:13px; font-weight:normal; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                        ${t('home.recommendedArtifactDomain')}
+                    </span>
+                    ${bothSetsUseful ? `
+                        <span style="font-size:9px; background:rgba(34, 197, 94, 0.18); color:#4ade80; padding:1px 5px; border-radius:4px; font-weight:normal; white-space:nowrap;">
+                            ${t('home.dualValue')}
+                        </span>
+                    ` : ''}
+                </div>
+                <div style="font-size:11px; color:var(--text-grey); display:flex; align-items:center; gap:5px; margin-top:1px;">
+                    <span style="color:var(--text-grey); font-weight:normal;">
+                        ${t('home.freeDayArtifactDesc')}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Rangée 2 : Personnages bénéficiaires (ou indication dernier donjon si aucun) -->
+            <div style="display:flex; align-items:center; gap:6px; min-height:24px; overflow-x:auto; scrollbar-width:none;">
+                ${beneficiaries.length > 0 ? `
+                    <span style="font-size:11px; color:var(--text-grey); flex-shrink:0;">
+                        ${currentLang === 'en' ? 'For :' : 'Pour :'}
+                    </span>
+                    ${beneficiaries.map(c => `
+                        <div style="display:inline-flex; align-items:center; gap:4px; background:var(--shadow-subtle); padding:2px 6px; border-radius:5px; font-size:11px; white-space:nowrap; flex-shrink:0;" title="${c.perso?.nom || ''} (${c.label || ''})">
+                            ${c.perso?.image ? `<img src="${c.perso.image}" alt="" style="width:14px; height:14px; border-radius:50%; object-fit:cover; flex-shrink:0;">` : ''}
+                            <span style="color:var(--text-primary); font-size:11px;">${c.perso?.nom || ''}</span>
+                        </div>
+                    `).join('')}
+                ` : `
+                    <div style="display:inline-flex; align-items:center; gap:6px; font-size:11px; color:var(--text-grey);">
+                        <span>${currentLang === 'en' ? 'Latest artifact domain available' : 'Tout dernier donjon disponible'}</span>
+                    </div>
+                `}
+            </div>
+
+            <!-- Rangée 3 : Les deux sets d'artéfacts du donjon -->
+            <div style="display:flex; align-items:center; gap:6px; min-height:24px; overflow-x:auto; scrollbar-width:none;">
+                ${topDomain.set1?.name ? `
+                    <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); padding:2px 8px; border-radius:5px; font-size:11px; white-space:nowrap; flex-shrink:0;" title="${topDomain.set1.name}">
+                        ${topDomain.set1.icon ? `<img src="${topDomain.set1.icon}" alt="" style="width:16px; height:16px; object-fit:contain; flex-shrink:0;">` : ''}
+                        <span style="color:var(--text-primary); font-size:11px;">${topDomain.set1.name}</span>
+                    </div>
+                ` : ''}
+                ${topDomain.set2?.name ? `
+                    <div style="display:inline-flex; align-items:center; gap:5px; background:var(--shadow-subtle); padding:2px 8px; border-radius:5px; font-size:11px; white-space:nowrap; flex-shrink:0;" title="${topDomain.set2.name}">
+                        ${topDomain.set2.icon ? `<img src="${topDomain.set2.icon}" alt="" style="width:16px; height:16px; object-fit:contain; flex-shrink:0;">` : ''}
+                        <span style="color:var(--text-primary); font-size:11px;">${topDomain.set2.name}</span>
+                    </div>
+                ` : ''}
             </div>
         </div>
     `;
@@ -472,7 +623,7 @@ function buildDailyFarmingSlides(characters = [], activeServer = 'EU', focusChar
                 type: 'character',
                 html: `
                     ${domainHeaderHtml}
-                    ${renderDashboardCharacterCard(char)}
+                    ${renderDashboardCharacterCard(char, targetUid)}
                 `
             });
         });
@@ -513,16 +664,93 @@ function buildDailyFarmingSlides(characters = [], activeServer = 'EU', focusChar
                 type: 'weapon',
                 html: `
                     ${domainHeaderHtml}
-                    ${renderDashboardWeaponCard(w)}
+                    ${renderDashboardWeaponCard(w, targetUid)}
                 `
             });
         });
     }
 
-    // 3. Fallback : si aucun besoin de personnage/arme enregistré pour aujourd'hui,
-    // on affiche les donjons ouverts du jour par nation
+    // 3. Journée libre : si aucun besoin de personnage/arme enregistré pour aujourd'hui
     const hasCharOrWeaponNeeds = slides.some(s => s.type === 'character' || s.type === 'weapon');
     if (!hasCharOrWeaponNeeds) {
+        // A. Personnages nécessitant une élévation de niveau / boss mondial (Option A : 1 slide par personnage)
+        const charactersNeedingAscension = schedule?.charactersNeedingAscension || [];
+        if (charactersNeedingAscension.length > 0) {
+            const sortedAscChars = charactersNeedingAscension.map(c => ({
+                ...c,
+                isFocus: resolvedFocus ? (c.charNom === resolvedFocus) : false
+            }));
+            sortedAscChars.sort((a, b) => (b.isFocus ? 1 : 0) - (a.isFocus ? 1 : 0));
+
+            sortedAscChars.forEach(char => {
+                const domainHeaderHtml = `
+                    <div style="display:flex; align-items:center; gap:12px; min-width:0; margin-bottom:4px;">
+                        <div style="display:inline-flex; align-items:center; gap:3px; background:var(--shadow-subtle); border-radius:6px; padding:3px 6px; flex-shrink:0;">
+                            ${char.worldBoss?.icon ? getItemIconHtml(char.worldBoss.icon, getLocalizedItemName(char.worldBoss.name), 'width:24px; height:24px; object-fit:contain;') : ''}
+                            ${char.specialty?.icon ? getItemIconHtml(char.specialty.icon, getLocalizedItemName(char.specialty.name), 'width:24px; height:24px; object-fit:contain;') : ''}
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                            <span style="font-size:14px; font-weight:normal; color:var(--text-always-white); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                ${getLocalizedItemName(char.worldBoss?.name) || t('roadmap.farming.ascensionMaterialsBadge')}
+                            </span>
+                            <span style="font-size:11px; color:var(--text-grey); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                ${t('roadmap.farming.freeDayBadge')} • ${t('home.worldBossAndSpecialty')}
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                slides.push({
+                    type: 'ascension',
+                    html: `
+                        ${domainHeaderHtml}
+                        ${renderDashboardAscensionCard(char, targetUid)}
+                    `
+                });
+            });
+        }
+
+        // B. Recommandation intelligente du donjon d'artéfacts le plus rentable en alternative (ou en carte unique si 0 élévation)
+        // Vérification anti-doublon stricte : ajoutée uniquement si aucune carte d'artéfacts n'est déjà présente (Carnage ou autre)
+        const hasArtifactSlideAlready = slides.some(s => s.type === 'stygian-artifact' || s.type === 'freeday-artifact');
+        if (!hasArtifactSlideAlready) {
+            let topDomain = null;
+            let isFallback = false;
+
+            if (characters && characters.length > 0) {
+                const domainRankings = calculateDomainRankings(characters, resolvedFocus, 'priorities');
+                if (domainRankings && domainRankings.length > 0) {
+                    topDomain = domainRankings[0];
+                }
+            }
+
+            if (!topDomain && ARTIFACT_DOMAINS && ARTIFACT_DOMAINS.length > 0) {
+                isFallback = true;
+                const lastDom = ARTIFACT_DOMAINS[ARTIFACT_DOMAINS.length - 1];
+                const set1Key = lastDom.sets[0];
+                const set2Key = lastDom.sets[1];
+                topDomain = {
+                    domain: lastDom,
+                    domainName: lastDom.name[currentLang] || lastDom.name['fr'] || lastDom.name['en'] || lastDom.id,
+                    regionName: lastDom.region[currentLang] || lastDom.region['fr'] || lastDom.region['en'] || '',
+                    set1: { key: set1Key, name: getLocalizedSetName(set1Key, characters), icon: getSetIcon(set1Key, characters), chars: [] },
+                    set2: { key: set2Key, name: getLocalizedSetName(set2Key, characters), icon: getSetIcon(set2Key, characters), chars: [] },
+                    bothSetsUseful: false,
+                    efficiencyKey: 'veryHigh'
+                };
+            }
+
+            if (topDomain) {
+                slides.push({
+                    type: 'freeday-artifact',
+                    html: renderDashboardFreeDayArtifactSlide(topDomain, currentLang, isFallback, targetUid)
+                });
+            }
+        }
+    }
+
+    // 4. Fallback ultime : si aucune slide n'a pu être générée (ex. vitrine complètement vide)
+    if (slides.length === 0) {
         FARMING_DOMAINS.forEach(dom => {
             const matchingRot = (dom.rotations || []).find(r => dayIdx === 0 || (r.days && r.days.includes(dayIdx)));
             if (matchingRot) {
@@ -608,10 +836,16 @@ export function renderHomeDashboardHtml(data) {
     const focusCharNom = data.focusCharNom || (typeof localStorage !== 'undefined' ? localStorage.getItem('guoba_roadmap_focus_char') : null);
     const slides = buildDailyFarmingSlides(characters, activeServer, focusCharNom, cycles, activeProfile?.uid);
 
-    // Autres comptes récents (en excluant le compte mis en vedette s'il existe)
-    const otherProfiles = featuredProfile
+    // Autres comptes récents (en excluant le compte mis en vedette s'il existe, tout en gardant le favori en tête)
+    const remainingProfiles = featuredProfile
         ? profiles.filter(p => String(p.uid) !== String(featuredProfile.uid))
         : profiles;
+    const otherProfiles = favoriteUid
+        ? [
+            ...remainingProfiles.filter(p => String(p.uid) === String(favoriteUid)),
+            ...remainingProfiles.filter(p => String(p.uid) !== String(favoriteUid))
+        ]
+        : remainingProfiles;
 
     // La région est considérée comme déjà déterminée si l'utilisateur est connecté avec un compte lié ou favori
     const isServerDetermined = Boolean(
@@ -642,8 +876,8 @@ export function renderHomeDashboardHtml(data) {
     // ─────────────────────────────────────────────────────────────
     const stygianRecordSec = activeProfile?.stygianSec;
     const stygianRecordIdx = activeProfile?.stygianIndex;
-    const abyssStars = activeProfile?.abyssStars ?? 36;
-    const theaterStars = activeProfile?.theaterStars ?? 18;
+    const abyssStars = activeProfile?.abyssStars ?? 0;
+    const theaterStars = activeProfile?.theaterStars ?? 0;
 
     const isAbyssEndingSoon = (cycles.abyss?.daysLeft ?? 99) < 3;
     const isTheaterEndingSoon = (cycles.theater?.daysLeft ?? 99) < 3;
@@ -774,7 +1008,7 @@ export function renderHomeDashboardHtml(data) {
                 <div style="background:var(--shadow-subtle); border-radius:6px; padding:10px 12px; display:flex; flex-direction:column; justify-content:space-between; gap:8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:12px; color:var(--text-primary);">${t('home.spiralAbyss')}</span>
-                        <span style="font-size:11px; background:rgba(37, 51, 85, 0.6); var(--text-always-white); border: 1px solid var(--border-subtle); padding:1px 6px; border-radius:4px; display:flex; align-items:center; gap:3px;">
+                        <span style="font-size:11px; background:rgba(37, 51, 85, 0.6); color: var(--text-always-white); border: 1px solid var(--border-subtle); padding:1px 6px; border-radius:4px; display:flex; align-items:center; gap:3px;">
                             <img src="${ICON_PATH}icon_abyss_star.webp" style="width:14px; height:14px;" alt="">
                             ${abyssStars}
                         </span>
@@ -786,7 +1020,7 @@ export function renderHomeDashboardHtml(data) {
                 <div style="background:var(--shadow-subtle); border-radius:6px; padding:10px 12px; display:flex; flex-direction:column; justify-content:space-between; gap:8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:12px; color:var(--text-primary);">${t('home.imaginariumTheater')}</span>
-                        <span style="font-size:11px; background:rgba(82, 42, 138, 0.6); var(--text-always-white); border: 1px solid var(--border-subtle); padding:1px 6px; border-radius:4px; display:flex; align-items:center; gap:3px;">
+                        <span style="font-size:11px; background:rgba(82, 42, 138, 0.6); color: var(--text-always-white); border: 1px solid var(--border-subtle); padding:1px 6px; border-radius:4px; display:flex; align-items:center; gap:3px;">
                             <img src="${ICON_PATH}icon_theater_star.webp" style="width:14px; height:14px;" alt="">
                             ${theaterStars}
                         </span>
@@ -805,7 +1039,10 @@ export function renderHomeDashboardHtml(data) {
     // ─────────────────────────────────────────────────────────────
     // WIDGET 3 : LE SAVIEZ-VOUS ?
     // ─────────────────────────────────────────────────────────────
-    const randomTip = DID_YOU_KNOW_TIPS[Math.floor(Math.random() * DID_YOU_KNOW_TIPS.length)];
+    if (sessionTipIndex === null) {
+        sessionTipIndex = Math.floor(Math.random() * DID_YOU_KNOW_TIPS.length);
+    }
+    const randomTip = DID_YOU_KNOW_TIPS[sessionTipIndex];
     const tipText = currentLang === 'en' ? randomTip.en : randomTip.fr;
 
     const didYouKnowWidgetHtml = `
@@ -908,34 +1145,38 @@ export function renderHomeDashboardHtml(data) {
     const otherCardsHtml = otherProfiles.map(p => renderProfileCard(p, false)).join('');
 
     return `
-        <div class="dash-container" style="display: flex; gap: 20px; width: 100%; box-sizing: border-box;">
-            <!-- COLONNE GAUCHE : PROFILS RÉCENTS -->
-            <div class="dash-col-left" style="flex: 1.15; min-width: 0; display: flex; flex-direction: column; gap: 20px;">
-                <div class="dash-left-top" style="padding: 10px; margin: -10px -10px 0 -10px;">
-                    <h2 id="home-title" style="color: var(--text-primary); font-size: 26px; margin: 0 0 ${featuredProfile ? '14px' : '4px'} 0; font-weight: normal;">
-                        ${greetingTitle}
-                    </h2>
-                    ${featuredHtml}
-                </div>
+        <div class="dash-page" style="display: flex; flex-direction: column; width: 100%; box-sizing: border-box;">
+            <h2 id="home-title" style="color: var(--text-primary); font-size: 26px; margin: 0 0 14px 0; font-weight: normal;">
+                ${greetingTitle}
+            </h2>
 
-                ${otherCardsHtml ? `
-                    <div class="dash-left-bottom" style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 12px;">
-                        ${featuredProfile ? `
-                            <h3 class="dash-recent-header" style="color: var(--text-grey); font-size: 15px; margin: 0 0 4px 0; font-weight: normal; flex-shrink: 0;">
-                                ${t('home.recentProfiles')}
-                            </h3>
-                        ` : ''}
-                        <div class="dash-recent-list-wrapper" style="flex: 1; min-height: 0; position: relative;">
-                            <div class="dash-recent-list" style="display: flex; flex-direction: column; gap: 14px;">
-                                ${otherCardsHtml}
+            <div class="dash-container" style="display: flex; gap: 20px; width: 100%; box-sizing: border-box;">
+                <!-- COLONNE GAUCHE : PROFILS RÉCENTS -->
+                <div class="dash-col-left" style="flex: 1.15; min-width: 0; display: flex; flex-direction: column; gap: 20px;">
+                    ${featuredHtml ? `
+                        <div class="dash-left-top" style="padding: 10px; margin: -10px -10px 0 -10px;">
+                            ${featuredHtml}
+                        </div>
+                    ` : ''}
+
+                    ${otherCardsHtml ? `
+                        <div class="dash-left-bottom" style="flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 12px;">
+                            ${featuredProfile ? `
+                                <h3 class="dash-recent-header" style="color: var(--text-grey); font-size: 15px; margin: 0 0 4px 0; font-weight: normal; flex-shrink: 0;">
+                                    ${t('home.recentProfiles')}
+                                </h3>
+                            ` : ''}
+                            <div class="dash-recent-list-wrapper" style="flex: 1; min-height: 0; position: relative;">
+                                <div class="dash-recent-list" style="display: flex; flex-direction: column; gap: 14px;">
+                                    ${otherCardsHtml}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ` : ''}
-            </div>
+                    ` : ''}
+                </div>
 
-            <!-- COLONNE DROITE : WIDGETS DU COCKPIT -->
-            <div class="dash-col-right" style="flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 12px; margin-top: 49px;">
+                <!-- COLONNE DROITE : WIDGETS DU COCKPIT -->
+                <div class="dash-col-right" style="flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 12px;">
                 <!-- WIDGET 1 : AUJOURD'HUI (CARROUSEL AUTO) -->
                 <div id="dash-farming-carousel" class="dash-widget" style="background:var(--bg-panel); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:12px; position:relative;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -983,6 +1224,7 @@ export function renderHomeDashboardHtml(data) {
 
                 <!-- WIDGET 3 : LE SAVIEZ-VOUS ? -->
                 ${didYouKnowWidgetHtml}
+                </div>
             </div>
         </div>
     `;
@@ -1064,7 +1306,9 @@ export function initHomeDashboardInteractions() {
     };
 
     window.openRoadmapFromHome = function (targetUid) {
-        if (typeof window.showAccountRoadmap === 'function' && window.globalPersoData && window.globalPersoData.length > 0) {
+        const hasLoadedTarget = window.globalPersoData && window.globalPersoData.length > 0
+            && (!targetUid || String(window.globalPersoUid) === String(targetUid));
+        if (typeof window.showAccountRoadmap === 'function' && hasLoadedTarget) {
             window.showAccountRoadmap();
         } else if (targetUid) {
             const inp = document.getElementById('uidInput');
